@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta name="robots" content="noindex, nofollow">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
 <title>Novo processo de Welcome Kit</title>
 <style>
   :root{
@@ -105,6 +105,14 @@
   .alerta{margin-top:var(--sp-lg);padding:14px 16px;border-radius:var(--r-lg);
     background:var(--coral);color:#fff;font-size:14px;font-weight:500}
   .alerta b{font-weight:700}
+  .solnote{margin-top:var(--sp-lg);padding:16px 18px;border-radius:var(--r-lg);
+    background:rgba(255,255,255,.06);border-left:3px solid var(--primary)}
+  .solnote h5{margin:0;font-size:12px;font-weight:700;letter-spacing:.05em;color:#9AB6FF;text-transform:uppercase}
+  .solnote p{margin-top:8px}
+  .volume{display:flex;align-items:baseline;gap:14px;margin-top:var(--sp-md);
+    padding:16px 18px;border-radius:var(--r-lg);background:rgba(255,255,255,.06)}
+  .volume b{flex:none;font-size:24px;font-weight:700;color:#fff;line-height:1}
+  .volume span{font-size:14px;font-weight:400;color:#C0CBE2}
 
   /* pendências */
   .pend{list-style:none;padding:0;margin:var(--sp-xl) 0 0}
@@ -127,7 +135,7 @@
     <h1 style="margin-top:var(--sp-lg)">Welcome Kit</h1>
     <p class="lead">Passar o Welcome Kit para pedido direto com os fornecedores, em vez de compra e reenvio pela Seazone. O kit já está montado; o que trava é a nota fiscal dos amenities.</p>
     <div class="kpis">
-      <div><b>3</b><span>fornecedores no novo fluxo</span></div>
+      <div><b>2</b><span>fornecedores no pedido direto</span></div>
       <div><b>9</b><span>itens de enxoval por fornecedor</span></div>
       <div><b>1</b><span>impedimento fiscal em aberto</span></div>
     </div>
@@ -176,12 +184,12 @@
       </div>
 
       <div class="grupo">
-        <h4>Vestuário <em>SOMAR MALHAS</em></h4>
+        <h4>Vestuário <em>SEAZONE</em></h4>
         <ul class="itens">
           <li><span class="nome">Camisetas de Limpeza</span><span class="qtd">2x</span></li>
           <li><span class="nome">Camisetas de Franqueado</span><span class="qtd">2x</span></li>
         </ul>
-        <span class="forn">SEGUE COMO É HOJE</span>
+        <span class="forn">PASSA A SAIR DIRETO DA SEAZONE, NÃO MAIS DA SOMAR MALHAS</span>
 
         <h4 style="margin-top:var(--sp-2xl)">Amenities <em>HARUS</em></h4>
         <ul class="itens">
@@ -190,7 +198,7 @@
           <li><span class="nome">Condicionador — 125 unidades</span><span class="qtd">1x</span></li>
           <li><span class="nome">Shampoo 2 em 1 — 125 unidades</span><span class="qtd">1x</span></li>
         </ul>
-        <span class="forn" style="color:var(--error)">ITEM COM IMPEDIMENTO FISCAL — VER SEÇÃO 4</span>
+        <span class="forn" style="color:var(--primary)">ITEM FORNECIDO PELA SEAZONE — VER SEÇÕES 4 E 5</span>
       </div>
     </div>
 
@@ -310,16 +318,31 @@
   <!-- ============ 5. SOLUÇÃO ============ -->
   <section>
     <div class="sechead"><span class="num">5</span><h2>Solução proposta</h2></div>
-    <p class="sub">Aceitar a regra da Harus e tratar os amenities como exceção: a Seazone compra, recebe no próprio endereço e reenvia para as franquias. O enxoval segue por pedido direto, sem intermediação.</p>
+    <p class="sub">Aceitar a regra da Harus e tratar os amenities como item da Seazone: a Seazone compra, recebe no próprio endereço e reenvia para as franquias, do mesmo jeito que já faz com os materiais que ficam na sede. As camisetas entram na mesma lógica. O enxoval segue por pedido direto, sem intermediação.</p>
 
     <div class="sol">
       <h4>Amenities: compra e reenvio pela Seazone</h4>
-      <p>Só os amenities saem do modelo de pedido direto. Matinali e RM continuam entregando na franquia com a nota no nome da Seazone.</p>
+      <p>Amenities e camisetas saem do modelo de pedido direto e passam a ser itens Seazone. Matinali e RM continuam entregando na franquia com a nota no nome da Seazone.</p>
       <ul class="passos">
         <li><b>1</b><span>A Seazone compra os amenities da Harus — nota fiscal no nome da Seazone.</span></li>
         <li><b>2</b><span>A Harus entrega no endereço do CNPJ da nota, como exige.</span></li>
         <li><b>3</b><span>A Seazone reenvia os amenities para a franquia junto com os itens de marca do Welcome Kit.</span></li>
       </ul>
+      <div class="solnote">
+        <h5>Enquadramento dos amenities</h5>
+        <p>Os amenities serão considerados como itens fornecidos pela Seazone, assim como os materiais que ficam na sede, como capachos, flyers, chaveiros e demais itens relacionados à Parte&nbsp;2 e aos itens Seazone.</p>
+      </div>
+
+      <div class="volume">
+        <b>8</b>
+        <span>kits de amenities comprados por mês, volume alinhado à nossa meta comercial.</span>
+      </div>
+
+      <div class="solnote">
+        <h5>Camisetas</h5>
+        <p>As camisetas de limpeza e de franqueado também passam a sair direto da Seazone, e não mais por pedido à Somar Malhas — entram junto com os demais itens Seazone no envio para a franquia.</p>
+      </div>
+
       <div class="alerta"><b>Considerar o frete de envio.</b> O reenvio Seazone → franquia é um custo novo, que hoje não existe no fluxo de pedido direto. Precisa entrar na conta do kit antes de fechar o processo.</div>
     </div>
   </section>
