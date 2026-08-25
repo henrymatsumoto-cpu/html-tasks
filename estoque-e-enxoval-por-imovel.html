@@ -1,0 +1,462 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta name="robots" content="noindex, nofollow">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Estoque e Enxoval por Imóvel — como as duas telas funcionam</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,400;7..72,600;7..72,700&family=Archivo:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* neutros tingidos no hue do navy Seazone */
+    --papel:      oklch(0.985 0.004 262);
+    --papel-fundo:oklch(0.955 0.008 262);
+    --tinta:      oklch(0.24 0.045 262);
+    --tinta-fraca:oklch(0.48 0.028 262);
+    --linha:      oklch(0.89 0.012 262);
+    --linha-forte:oklch(0.80 0.02 262);
+    --azul:       oklch(0.52 0.235 262);
+    --azul-fraco: oklch(0.94 0.035 262);
+    --coral:      oklch(0.68 0.165 28);
+    --coral-fraco:oklch(0.95 0.03 28);
+    --verde:      oklch(0.52 0.12 155);
+    --ambar:      oklch(0.62 0.13 75);
+
+    --s1: 4px; --s2: 8px; --s3: 12px; --s4: 16px; --s6: 24px;
+    --s8: 32px; --s12: 48px; --s16: 64px; --s24: 96px;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--papel-fundo);
+    color: var(--tinta);
+    font-family: Archivo, "Segoe UI", sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+  }
+  ::selection { background: var(--azul-fraco); }
+
+  /* ── faixa de topo ───────────────────────────────────────────────────── */
+  .topo {
+    background: var(--papel);
+    border-bottom: 1px solid var(--linha);
+    padding: var(--s16) var(--s6) var(--s12);
+  }
+  .faixa { max-width: 1180px; margin: 0 auto; }
+  .kicker {
+    font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--coral); font-weight: 600; margin: 0 0 var(--s3);
+  }
+  h1 {
+    font-family: Literata, Georgia, serif;
+    font-size: clamp(2rem, 5vw, 3.4rem);
+    line-height: 1.05; font-weight: 700; letter-spacing: -0.02em;
+    margin: 0 0 var(--s4); max-width: 22ch;
+  }
+  .abertura {
+    font-family: Literata, Georgia, serif;
+    font-size: clamp(1.05rem, 2vw, 1.3rem);
+    line-height: 1.55; color: var(--tinta-fraca);
+    max-width: 62ch; margin: 0;
+  }
+  .meta {
+    display: flex; flex-wrap: wrap; gap: var(--s2) var(--s6);
+    margin-top: var(--s8); padding-top: var(--s4);
+    border-top: 1px solid var(--linha);
+    font-size: 0.8rem; color: var(--tinta-fraca);
+  }
+  .meta b { color: var(--tinta); font-weight: 600; }
+
+  /* ── corpo em duas colunas: texto + notas ─────────────────────────────── */
+  main { max-width: 1180px; margin: 0 auto; padding: var(--s12) var(--s6) var(--s24); }
+  .bloco {
+    display: grid; gap: var(--s6) var(--s12);
+    grid-template-columns: minmax(0, 1fr);
+    margin-bottom: var(--s16);
+  }
+  @media (min-width: 1000px) {
+    .bloco { grid-template-columns: minmax(0, 68ch) minmax(200px, 1fr); align-items: start; }
+    .bloco > .nota { grid-column: 2; }
+    .bloco > :not(.nota) { grid-column: 1; }
+  }
+  h2 {
+    font-family: Literata, Georgia, serif;
+    font-size: clamp(1.5rem, 3vw, 2.1rem); line-height: 1.15;
+    font-weight: 700; letter-spacing: -0.015em;
+    margin: var(--s8) 0 var(--s2);
+  }
+  h2 .num {
+    display: block; font-family: Archivo, sans-serif; font-size: 0.72rem;
+    letter-spacing: 0.14em; text-transform: uppercase; color: var(--azul);
+    font-weight: 600; margin-bottom: var(--s2);
+  }
+  h3 {
+    font-size: 1.02rem; font-weight: 600; letter-spacing: -0.005em;
+    margin: var(--s8) 0 var(--s2);
+  }
+  p { margin: 0 0 var(--s4); max-width: 68ch; }
+  .rota {
+    font-size: 0.78rem; color: var(--tinta-fraca);
+    margin: 0 0 var(--s6);
+  }
+  .rota code { font-size: 0.78rem; }
+  code {
+    font-family: ui-monospace, Menlo, Consolas, monospace;
+    font-size: 0.85em; background: var(--papel);
+    border: 1px solid var(--linha); border-radius: 4px;
+    padding: 0.08em 0.36em;
+  }
+  strong { font-weight: 600; }
+  ul { margin: 0 0 var(--s4); padding-left: var(--s6); max-width: 68ch; }
+  li { margin-bottom: var(--s2); }
+  li::marker { color: var(--linha-forte); }
+
+  /* nota lateral: some pro fim do fluxo no mobile, sem virar card */
+  .nota {
+    font-size: 0.86rem; line-height: 1.5; color: var(--tinta-fraca);
+    border-top: 2px solid var(--coral); padding-top: var(--s3);
+  }
+  .nota b { display: block; color: var(--tinta); font-weight: 600; margin-bottom: var(--s1); }
+
+  /* ── tabelas ─────────────────────────────────────────────────────────── */
+  .tabela { width: 100%; overflow-x: auto; margin: 0 0 var(--s6); }
+  table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+  caption {
+    text-align: left; font-size: 0.72rem; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--tinta-fraca);
+    padding-bottom: var(--s2);
+  }
+  th {
+    text-align: left; font-weight: 600; font-size: 0.76rem;
+    letter-spacing: 0.06em; text-transform: uppercase; color: var(--tinta-fraca);
+    border-bottom: 1px solid var(--linha-forte); padding: var(--s2) var(--s3) var(--s2) 0;
+    white-space: nowrap;
+  }
+  td {
+    border-bottom: 1px solid var(--linha); padding: var(--s3) var(--s3) var(--s3) 0;
+    vertical-align: top;
+  }
+  tr:last-child td { border-bottom: 0; }
+  .num-col { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .mais { color: var(--verde); font-weight: 600; }
+  .menos { color: var(--coral); font-weight: 600; }
+  .zero { color: var(--linha-forte); }
+
+  /* ── formula / regra em destaque, sem virar card genérico ─────────────── */
+  .formula {
+    font-family: Literata, Georgia, serif; font-size: 1.05rem;
+    background: var(--papel); border: 1px solid var(--linha);
+    border-radius: 2px; padding: var(--s4) var(--s6);
+    margin: 0 0 var(--s6); max-width: 68ch;
+  }
+  .formula .op { color: var(--azul); font-weight: 600; padding: 0 0.15em; }
+  .formula small { display: block; font-family: Archivo, sans-serif; font-size: 0.8rem;
+    color: var(--tinta-fraca); margin-top: var(--s2); }
+
+  .status-linha { display: flex; flex-wrap: wrap; gap: var(--s6); margin: 0 0 var(--s6); }
+  .status-linha div { font-size: 0.9rem; }
+  .status-linha b { display: block; font-size: 0.76rem; letter-spacing: 0.08em;
+    text-transform: uppercase; margin-bottom: var(--s1); }
+  .st-repor b { color: var(--coral); }
+  .st-atencao b { color: var(--ambar); }
+  .st-ok b { color: var(--verde); }
+
+  figure { margin: 0 0 var(--s6); }
+  figure svg { width: 100%; height: auto; display: block; }
+  figcaption { font-size: 0.8rem; color: var(--tinta-fraca); margin-top: var(--s2); }
+
+  .aviso {
+    font-size: 0.92rem; background: var(--coral-fraco);
+    border: 1px solid oklch(0.85 0.06 28); border-radius: 2px;
+    padding: var(--s4); margin: 0 0 var(--s6); max-width: 68ch;
+  }
+  .aviso b { color: oklch(0.44 0.14 28); }
+
+  hr.regua { border: 0; border-top: 1px solid var(--linha); margin: var(--s16) 0 0; }
+  footer {
+    max-width: 1180px; margin: 0 auto; padding: var(--s8) var(--s6) var(--s16);
+    font-size: 0.82rem; color: var(--tinta-fraca);
+  }
+  footer p { max-width: 68ch; }
+</style>
+</head>
+<body>
+
+<div class="topo">
+  <div class="faixa">
+    <p class="kicker">Jornada Completa Enxoval · documentação interna</p>
+    <h1>Estoque e Enxoval por Imóvel</h1>
+    <p class="abertura">
+      Duas telas que respondem perguntas diferentes. <b>Estoque</b> pergunta quantas peças a
+      franquia tem na mão agora e quantas deveria ter. <b>Enxoval por Imóvel</b> pergunta
+      quanto enxoval um imóvel já recebeu na vida — e o que sobrou dele.
+    </p>
+    <p class="meta">
+      <span><b>Atualizado</b> 20/08/2026</span>
+      <span><b>App</b> jornada-enxoval.seazone.com.br</span>
+      <span><b>Teste</b> stg-jornada-enxoval.seazone.com.br</span>
+      <span><b>Banco</b> schema <code>enxoval</code> (compartilhado entre os dois)</span>
+    </p>
+  </div>
+</div>
+
+<main>
+
+  <!-- ══════════════════ ESTOQUE ══════════════════ -->
+  <section class="bloco">
+    <h2><span class="num">Tela 1</span>Estoque por franquia</h2>
+    <p class="rota">Rota <code>/estoque</code> · escrita liberada · visível para a categoria <strong>Franquia</strong> (travada na própria) e para <strong>Administrador</strong> (todas, com simulação pelo seletor da sidebar)</p>
+
+    <p>
+      A tela mostra, item por item, quanto a franquia tem <strong>em mãos</strong>, quanto está
+      <strong>na lavanderia</strong>, e compara esse total com o mínimo e o ideal calculados a
+      partir dos imóveis que ela atende. É a única das duas telas onde alguém digita algo.
+    </p>
+
+    <p class="nota">
+      <b>Por que duas posições e não uma</b>
+      Peça na lavanderia continua sendo da franquia, mas não está disponível para troca. Somar
+      tudo numa coluna esconderia justamente o problema que a tela existe para mostrar.
+    </p>
+
+    <h3>Como o saldo é formado</h3>
+    <p>
+      Nada é gravado como “posição atual”. O que existe é um <strong>ledger</strong> — a tabela
+      <code>enxoval.estoque_movimentacoes</code> — e as posições saem da soma dos lançamentos.
+      Cada linha guarda o efeito que teve nas duas posições no momento em que foi feita.
+    </p>
+
+    <figure>
+      <svg viewBox="0 0 720 190" role="img" aria-label="Diagrama das quatro movimentações entre estoque e lavanderia">
+        <defs>
+          <marker id="p" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+            <path d="M0,1 L8,4.5 L0,8 z" fill="oklch(0.52 0.235 262)"/>
+          </marker>
+          <marker id="pc" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+            <path d="M0,1 L8,4.5 L0,8 z" fill="oklch(0.68 0.165 28)"/>
+          </marker>
+        </defs>
+        <rect x="150" y="60" width="180" height="70" fill="oklch(0.985 0.004 262)" stroke="oklch(0.80 0.02 262)"/>
+        <text x="240" y="88" text-anchor="middle" font-family="Archivo,sans-serif" font-size="14" font-weight="600" fill="oklch(0.24 0.045 262)">Estoque atual</text>
+        <text x="240" y="108" text-anchor="middle" font-family="Archivo,sans-serif" font-size="11" fill="oklch(0.48 0.028 262)">em mãos na franquia</text>
+
+        <rect x="440" y="60" width="180" height="70" fill="oklch(0.985 0.004 262)" stroke="oklch(0.80 0.02 262)"/>
+        <text x="530" y="88" text-anchor="middle" font-family="Archivo,sans-serif" font-size="14" font-weight="600" fill="oklch(0.24 0.045 262)">Lavanderia</text>
+        <text x="530" y="108" text-anchor="middle" font-family="Archivo,sans-serif" font-size="11" fill="oklch(0.48 0.028 262)">em uso ou lavagem</text>
+
+        <line x1="40" y1="95" x2="145" y2="95" stroke="oklch(0.52 0.235 262)" stroke-width="1.5" marker-end="url(#p)"/>
+        <text x="42" y="84" font-family="Archivo,sans-serif" font-size="11" font-weight="600" fill="oklch(0.52 0.235 262)">Entrada</text>
+
+        <path d="M330,78 L435,78" stroke="oklch(0.52 0.235 262)" stroke-width="1.5" marker-end="url(#p)"/>
+        <text x="345" y="70" font-family="Archivo,sans-serif" font-size="11" fill="oklch(0.48 0.028 262)">Saída p/ lavanderia</text>
+
+        <path d="M435,115 L330,115" stroke="oklch(0.52 0.235 262)" stroke-width="1.5" marker-end="url(#p)"/>
+        <text x="345" y="132" font-family="Archivo,sans-serif" font-size="11" fill="oklch(0.48 0.028 262)">Retorno</text>
+
+        <path d="M530,60 L530,26" stroke="oklch(0.68 0.165 28)" stroke-width="1.5" marker-end="url(#pc)"/>
+        <text x="540" y="26" font-family="Archivo,sans-serif" font-size="11" font-weight="600" fill="oklch(0.68 0.165 28)">Estragou (baixa) — debita a lavanderia primeiro</text>
+        <path d="M240,60 L240,26 L520,26" stroke="oklch(0.68 0.165 28)" stroke-width="1.5" stroke-dasharray="4 3" fill="none"/>
+        <text x="150" y="170" font-family="Archivo,sans-serif" font-size="11" fill="oklch(0.48 0.028 262)">…e só o que faltar sai do estoque atual (linha tracejada)</text>
+      </svg>
+      <figcaption>Os quatro lançamentos possíveis. Nenhum deles pode deixar saldo negativo.</figcaption>
+    </figure>
+
+    <div class="tabela">
+      <table>
+        <caption>Efeito de cada lançamento</caption>
+        <thead>
+          <tr><th>Lançamento</th><th>O que é</th><th class="num-col">Atual</th><th class="num-col">Lavanderia</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Entrada</strong></td><td>Compra ou reposição chegando na franquia</td><td class="num-col mais">+ qtd</td><td class="num-col zero">—</td></tr>
+          <tr><td><strong>Saída p/ lavanderia</strong></td><td>Peças que saíram para uso ou lavagem</td><td class="num-col menos">− qtd</td><td class="num-col mais">+ qtd</td></tr>
+          <tr><td><strong>Retorno da lavanderia</strong></td><td>Peças que voltaram para o estoque</td><td class="num-col mais">+ qtd</td><td class="num-col menos">− qtd</td></tr>
+          <tr><td><strong>Estragou / baixa</strong></td><td>Dano, perda ou descarte definitivo</td><td class="num-col menos">− resto</td><td class="num-col menos">− o que houver</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p class="nota">
+      <b>Por que o efeito fica gravado na linha</b>
+      A baixa depende do estado do momento: se havia 5 peças na lavanderia e se dá baixa de 8,
+      são 5 da lavanderia e 3 do estoque. Recalcular isso depois, de trás para frente, daria
+      número diferente — então cada linha carrega o próprio efeito, e a gravação acontece em
+      transação com trava por franquia e item.
+    </p>
+
+    <h3>Mínimo e ideal: de onde vêm os números</h3>
+    <p>
+      Não são digitados. O app roda o <strong>motor de regras por imóvel</strong> da franquia —
+      um por um, não a partir de uma soma de camas — e acumula o resultado.
+    </p>
+    <p class="formula">
+      Mínimo = enxoval de <span class="op">2</span> trocas &nbsp;·&nbsp;
+      Ideal = enxoval de <span class="op">3</span> trocas
+      <small>Somados imóvel por imóvel, porque jacuzzi conta presença (um ou quatro dá o mesmo acréscimo) e o cluster depende da cidade de cada imóvel.</small>
+    </p>
+
+    <h3>Status de cada item</h3>
+    <div class="status-linha">
+      <div class="st-repor"><b>Repor</b>total abaixo do mínimo</div>
+      <div class="st-atencao"><b>Atenção</b>até 30% acima do mínimo</div>
+      <div class="st-ok"><b>OK</b>acima disso, ou item sem mínimo calculado</div>
+    </div>
+    <p>
+      Item que não tem regra cadastrada em <strong>Configuração Itens</strong> aparece com
+      mínimo e ideal em branco: dá para movimentar, mas o app não tem como dizer se está
+      faltando.
+    </p>
+
+    <h3>O gatilho do kanban</h3>
+    <p>
+      Pedido que entra na fase <strong>Enviado</strong> vira entrada no estoque da franquia,
+      sem ninguém lançar. A regra é declarativa, e é isso que a torna segura:
+    </p>
+    <p class="formula">
+      As entradas do pedido <span class="op">X</span> existem
+      <span class="op">se e somente se</span> o pedido X está em Enviado.
+      <small>Mover duas vezes, mover em duas abas, editar quantidade, voltar de fase, excluir o card — tudo converge para o mesmo resultado, sem lançamento dobrado.</small>
+    </p>
+    <p>
+      Um reconciliador roda a cada 15 minutos (e pode ser chamado à mão em
+      <code>POST /api/estoque/reconciliar</code>). Ele acerta o que estiver fora do lugar e
+      apaga linhas de sistema órfãs — de pedido que saiu de Enviado ou que não existe mais.
+    </p>
+
+    <div class="aviso">
+      <b>Consequência que já apareceu na prática:</b> em 20/08/2026 a base de Pedidos foi
+      limpa e o reconciliador removeu 4.012 movimentações que existiam por causa daqueles
+      pedidos. Sobraram as 4 lançadas à mão. Isso é o comportamento correto — o estoque não
+      inventa entrada sem pedido que a justifique —, mas vale saber antes de limpar base.
+    </div>
+
+    <p class="nota">
+      <b>Franquia sem vínculo</b>
+      A franquia é casada com o Sapron por nome normalizado. Quando o vínculo não resolve, a
+      pessoa vê uma tela de pendência em vez do estoque de todas as franquias, e a tela de
+      Usuários destaca o cadastro incompleto.
+    </p>
+  </section>
+
+  <hr class="regua">
+
+  <!-- ══════════════════ ENXOVAL POR IMÓVEL ══════════════════ -->
+  <section class="bloco">
+    <h2><span class="num">Tela 2</span>Enxoval por Imóvel</h2>
+    <p class="rota">Rota <code>/estoque-imoveis</code> · somente leitura · visível apenas para <strong>Administrador</strong></p>
+
+    <p>
+      Aqui a pergunta é histórica: <strong>quanto enxoval este imóvel já recebeu</strong>, quando
+      foi a última compra, quanto foi perdido em dano de hóspede e o que sobra hoje. Nada é
+      editável — a tela compõe três fontes e mostra a conta.
+    </p>
+
+    <figure>
+      <svg viewBox="0 0 720 210" role="img" aria-label="Diagrama das três fontes que compõem a tela de enxoval por imóvel">
+        <rect x="0" y="20" width="210" height="56" fill="oklch(0.985 0.004 262)" stroke="oklch(0.80 0.02 262)"/>
+        <text x="14" y="42" font-family="Archivo,sans-serif" font-size="13" font-weight="600" fill="oklch(0.24 0.045 262)">Sapron — compras</text>
+        <text x="14" y="60" font-family="Archivo,sans-serif" font-size="11" fill="oklch(0.68 0.165 28)">congelado em 31/01/2026</text>
+
+        <rect x="0" y="92" width="210" height="56" fill="oklch(0.985 0.004 262)" stroke="oklch(0.80 0.02 262)"/>
+        <text x="14" y="114" font-family="Archivo,sans-serif" font-size="13" font-weight="600" fill="oklch(0.24 0.045 262)">Pedidos do app</text>
+        <text x="14" y="132" font-family="Archivo,sans-serif" font-size="11" fill="oklch(0.48 0.028 262)">fase Enviado, itemizados</text>
+
+        <rect x="0" y="164" width="210" height="42" fill="oklch(0.985 0.004 262)" stroke="oklch(0.80 0.02 262)"/>
+        <text x="14" y="190" font-family="Archivo,sans-serif" font-size="13" font-weight="600" fill="oklch(0.24 0.045 262)">Danos de hóspede</text>
+
+        <path d="M215,48 L300,48 L300,100" stroke="oklch(0.52 0.235 262)" stroke-width="1.5" fill="none"/>
+        <path d="M215,120 L300,120" stroke="oklch(0.52 0.235 262)" stroke-width="1.5" fill="none"/>
+        <rect x="300" y="88" width="150" height="64" fill="oklch(0.94 0.035 262)" stroke="oklch(0.52 0.235 262)"/>
+        <text x="375" y="112" text-anchor="middle" font-family="Archivo,sans-serif" font-size="12" font-weight="600" fill="oklch(0.24 0.045 262)">Dedupe ±30 dias</text>
+        <text x="375" y="130" text-anchor="middle" font-family="Archivo,sans-serif" font-size="10.5" fill="oklch(0.48 0.028 262)">vale o pedido do app</text>
+
+        <path d="M455,120 L540,120" stroke="oklch(0.52 0.235 262)" stroke-width="1.5" fill="none"/>
+        <path d="M215,185 L540,185 L540,140" stroke="oklch(0.68 0.165 28)" stroke-width="1.5" fill="none" stroke-dasharray="4 3"/>
+        <rect x="540" y="88" width="180" height="64" fill="oklch(0.985 0.004 262)" stroke="oklch(0.24 0.045 262)" stroke-width="1.5"/>
+        <text x="630" y="112" text-anchor="middle" font-family="Archivo,sans-serif" font-size="13" font-weight="600" fill="oklch(0.24 0.045 262)">Saldo estimado</text>
+        <text x="630" y="130" text-anchor="middle" font-family="Archivo,sans-serif" font-size="10.5" fill="oklch(0.48 0.028 262)">por item, no detalhe</text>
+      </svg>
+      <figcaption>As três fontes, o filtro que evita contar a mesma compra duas vezes, e o resultado.</figcaption>
+    </figure>
+
+    <h3>A regra que evita contar duas vezes</h3>
+    <p>
+      Desde 13/08/2026 o app é a <strong>fonte da verdade</strong> de compra de enxoval. O Sapron
+      virou histórico: compra registrada lá depois de <strong>31/01/2026</strong> não conta,
+      aconteça o que acontecer com a origem. Do Sapron segue vivo apenas o dano de hóspede.
+    </p>
+    <p>
+      Na virada, as duas fontes se sobrepõem em janeiro. Quando existe pedido do app em
+      <strong>Enviado</strong> a até <strong>30 dias</strong> de uma compra do Sapron, as duas
+      são o mesmo evento — e vale a do app, que é itemizada e tem valor. Pedido
+      <strong>cancelado não suprime</strong> nada: cancelado não é compra.
+    </p>
+    <p class="nota">
+      <b>Tamanho real do problema</b>
+      A sobreposição afeta 217 de 10.063 peças de janeiro de 2026 — 2,2%. O consolidado total
+      é de 716.387 peças. As linhas descartadas aparecem riscadas no detalhe do imóvel, fora
+      da soma, para quem quiser auditar.
+    </p>
+
+    <h3>Saldo estimado por item</h3>
+    <p class="formula">
+      compras do Sapron
+      <span class="op">+</span> pedidos enviados no app
+      <span class="op">−</span> danos com resolução “Repor item”
+      <small>É estimativa, não contagem física: ninguém confere peça por peça no imóvel. Serve para enxergar o imóvel que ficou descoberto.</small>
+    </p>
+
+    <h3>O que a listagem oferece</h3>
+    <ul>
+      <li>Busca por código, franquia ou cidade, com ordenação nas colunas e páginas de 100.</li>
+      <li>Peças compradas no consolidado, com a quebra <code>sapron + app</code> ao lado.</li>
+      <li>Data da última compra, quantidade e valor de danos, e nº de pedidos do app.</li>
+      <li>Exportação em CSV da tabela inteira.</li>
+      <li>Detalhe por imóvel com o saldo item a item e a lista de danos.</li>
+    </ul>
+
+    <p class="nota">
+      <b>De quanto em quanto tempo atualiza</b>
+      Os espelhos do Sapron (imóveis, franquias, proprietários e danos) são sincronizados a cada
+      4 horas. As compras ficam fora desse ciclo de propósito — são retrato de um histórico
+      encerrado, recarregado só sob demanda.
+    </p>
+  </section>
+
+  <hr class="regua">
+
+  <!-- ══════════════════ REFERÊNCIA ══════════════════ -->
+  <section class="bloco">
+    <h2><span class="num">Referência</span>Onde cada coisa mora</h2>
+    <div class="tabela">
+      <table>
+        <caption>Arquivos e endpoints</caption>
+        <thead><tr><th>Assunto</th><th>Onde</th></tr></thead>
+        <tbody>
+          <tr><td>Regras puras do estoque (deltas, validação, status)</td><td><code>src/lib/estoque-utils.ts</code></td></tr>
+          <tr><td>Ledger, gatilho do kanban e reconciliação</td><td><code>src/lib/estoque-db.ts</code></td></tr>
+          <tr><td>Mínimo e ideal por franquia</td><td><code>src/lib/demanda-franquia.ts</code></td></tr>
+          <tr><td>Consolidação de compras e dedupe</td><td><code>src/lib/compras-consolidadas.ts</code></td></tr>
+          <tr><td>Tela de Estoque</td><td><code>src/components/estoque/</code>, <code>/api/estoque</code></td></tr>
+          <tr><td>Tela de Enxoval por Imóvel</td><td><code>src/app/(dashboard)/estoque-imoveis/</code></td></tr>
+          <tr><td>Quem vê o quê</td><td><code>src/lib/visao-core.ts</code> — <code>verEstoque</code>, <code>verEstoquePorImovel</code></td></tr>
+          <tr><td>Reconciliar à mão</td><td><code>POST /api/estoque/reconciliar</code> (Bearer)</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <p>
+    Documento gerado a partir do código em 20/08/2026 — versão no ar: prd
+    <code>703c823</code>, stg <code>3f9e332</code>. Uso interno Seazone.
+  </p>
+</footer>
+
+</body>
+</html>

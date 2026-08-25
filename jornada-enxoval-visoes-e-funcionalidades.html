@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta name="robots" content="noindex, nofollow">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jornada Completa Enxoval — visões e funcionalidades</title>
+<style>
+  :root{
+    --navy:#00143D;
+    --primary:#0055FF;
+    --primary-hover:#0044CC;
+    --primary-light:#E8F0FE;
+    --coral:#FC6058;
+    --fg:#080E32;
+    --bg:#FFFFFF;
+    --muted:#F3F3F5;
+    --muted-fg:#6B6E84;
+    --border:#E6E7EA;
+    --success:#22C55E;
+    --warning:#F54A00;
+
+    --sp-xs:4px; --sp-sm:8px; --sp-md:16px; --sp-lg:24px;
+    --sp-xl:32px; --sp-2xl:48px; --sp-3xl:72px;
+    --r-lg:8px; --r-xl:12px; --r-full:9999px;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;background:var(--bg);color:var(--fg);
+    font-family:"Helvetica Neue",Helvetica,sans-serif;
+    font-size:14px;font-weight:500;line-height:1.5;
+  }
+  h1{font-size:clamp(32px,4.6vw,48px);font-weight:700;line-height:1.1;margin:0}
+  h2{font-size:30px;font-weight:500;line-height:1.2;margin:0}
+  h3{font-size:24px;font-weight:500;line-height:1.3;margin:0}
+  h4{font-size:20px;font-weight:500;line-height:1.4;margin:0}
+  p{font-size:16px;font-weight:500;line-height:1.6;margin:0}
+  .lead{font-size:20px;font-weight:500;line-height:1.5;color:var(--muted-fg)}
+  .body-reg{font-size:14px;font-weight:400;line-height:1.55}
+  .detail{font-size:12px;font-weight:500;line-height:1.4}
+  .detail-reg{font-size:12px;font-weight:400;line-height:1.4}
+  .mut{color:var(--muted-fg)}
+  .wrap{max-width:1100px;margin:0 auto;padding:0 var(--sp-lg)}
+
+  /* header */
+  header{background:var(--navy);color:#fff;padding:var(--sp-3xl) 0 var(--sp-2xl)}
+  header .lead{color:#AFBBD6;max-width:64ch;margin-top:var(--sp-md)}
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(255,255,255,.28);
+    border-radius:var(--r-full);padding:6px 14px;font-size:12px;font-weight:700;letter-spacing:.05em;
+    color:#CBD5EE;
+  }
+  .urlrow{display:flex;flex-wrap:wrap;gap:var(--sp-lg);margin-top:var(--sp-xl)}
+  .urlrow div{border-top:1px solid rgba(255,255,255,.2);padding-top:10px;min-width:180px}
+  .urlrow b{display:block;font-size:15px;font-weight:700}
+  .urlrow span{color:#8FA1C6}
+
+  /* sections */
+  section{padding:var(--sp-3xl) 0;border-bottom:1px solid var(--border)}
+  .sechead{display:flex;gap:var(--sp-md);align-items:baseline;margin-bottom:var(--sp-md)}
+  .num{
+    flex:none;width:28px;height:28px;border-radius:var(--r-full);
+    display:grid;place-items:center;font-size:12px;font-weight:700;
+    background:var(--primary-light);color:var(--primary);
+  }
+  .sub{max-width:70ch;margin-bottom:var(--sp-xl)}
+
+  /* mockup */
+  figure{margin:0}
+  .mock{border:1px solid var(--border);border-radius:var(--r-xl);overflow:hidden;background:var(--muted)}
+  .mock svg{display:block;width:100%;height:auto}
+  figcaption{padding:10px 14px;background:#fff;border-top:1px solid var(--border);color:var(--muted-fg)}
+
+  /* listas de funcionalidade */
+  .feats{list-style:none;padding:0;margin:var(--sp-xl) 0 0}
+  .feats li{
+    display:grid;grid-template-columns:150px 1fr;gap:var(--sp-lg);
+    padding:16px 0;border-top:1px solid var(--border);align-items:baseline;
+  }
+  .feats li:last-child{border-bottom:1px solid var(--border)}
+  .feats b{font-size:15px;font-weight:700}
+  .feats p{font-size:14px;font-weight:400;color:#3C4260}
+  @media (max-width:700px){.feats li{grid-template-columns:1fr;gap:4px}}
+
+  /* visões */
+  .perfis{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:var(--sp-lg);margin-top:var(--sp-xl)}
+  .perfil{padding:var(--sp-lg);border-radius:var(--r-xl);background:var(--muted)}
+  .perfil.adm{background:var(--navy);color:#fff}
+  .perfil.adm p{color:#B9C4DC}
+  .perfil h4{margin-bottom:8px}
+  .perfil p{font-size:14px;font-weight:400;color:#3C4260;margin-top:6px}
+  .chip{
+    display:inline-block;background:#fff;border:1px solid var(--border);
+    border-radius:var(--r-full);padding:3px 10px;font-size:12px;font-weight:700;
+    margin:0 6px 6px 0;
+  }
+  .perfil.adm .chip{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.25);color:#fff}
+  .chips{margin-top:12px}
+
+  table{border-collapse:collapse;width:100%;margin-top:var(--sp-xl);font-size:13px}
+  caption{text-align:left;color:var(--muted-fg);font-size:12px;padding-bottom:10px}
+  th,td{text-align:center;padding:11px 8px;border-bottom:1px solid var(--border)}
+  th{font-weight:700;font-size:12px}
+  thead th{border-bottom:1px solid var(--fg)}
+  th:first-child,td:first-child{text-align:left;font-weight:700}
+  td.y{color:var(--primary);font-weight:700}
+  td.n{color:#C3C6D2}
+  td.p{color:var(--warning);font-weight:700;font-size:11px}
+  .tblwrap{overflow-x:auto}
+
+  /* etapas */
+  .fluxo{display:flex;flex-wrap:wrap;gap:8px;margin-top:var(--sp-lg);align-items:center}
+  .fase{
+    border:1px solid var(--border);border-radius:var(--r-full);
+    padding:7px 14px;font-size:13px;font-weight:700;background:#fff;
+  }
+  .fase.fim{background:var(--primary);border-color:var(--primary);color:#fff}
+  .fase.cancel{background:var(--muted);color:var(--muted-fg);border-style:dashed}
+  .arrow{color:#C3C6D2;font-weight:700}
+  .regra{
+    margin-top:var(--sp-lg);padding:var(--sp-lg);background:var(--primary-light);
+    border-radius:var(--r-xl);
+  }
+  .regra b{display:block;margin-bottom:6px}
+  .regra p{font-size:14px;font-weight:400;color:#1B2A57}
+
+  /* treinamentos */
+  .train{background:var(--navy);color:#fff;padding:var(--sp-3xl) 0}
+  .train h2{color:#fff}
+  .train .lead{color:#AFBBD6;margin-top:10px}
+  .tlist{list-style:none;padding:0;margin:var(--sp-xl) 0 0;display:grid;gap:2px}
+  .tlist li{
+    display:flex;align-items:center;gap:var(--sp-md);
+    padding:16px 18px;border-radius:var(--r-lg);background:rgba(255,255,255,.06);
+  }
+  .tlist li.next{background:var(--coral);color:#fff}
+  .tlist .who{flex:1;font-size:16px;font-weight:700}
+  .tlist .st{font-size:13px;font-weight:700;letter-spacing:.02em}
+  .tlist .mark{
+    flex:none;width:26px;height:26px;border-radius:var(--r-full);
+    display:grid;place-items:center;font-size:13px;font-weight:700;
+    background:rgba(255,255,255,.16);
+  }
+  .tlist li.done .mark{background:var(--success);color:#04250F}
+  .tlist li.next .mark{background:#fff;color:var(--coral)}
+  .tlist small{display:block;font-size:12px;font-weight:400;color:#B9C4DC;margin-top:2px}
+  .tlist li.next small{color:rgba(255,255,255,.85)}
+
+  .nota{
+    display:flex;gap:14px;align-items:flex-start;margin-top:var(--sp-2xl);
+    padding:var(--sp-lg);border-radius:var(--r-xl);background:var(--muted);
+  }
+  .nota p{font-size:14px;font-weight:400;color:#3C4260}
+  .nota b{font-weight:700;color:var(--fg)}
+
+  footer{padding:var(--sp-xl) 0 var(--sp-2xl);color:var(--muted-fg)}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <span class="eyebrow">DOCUMENTO DE APRESENTAÇÃO · AGOSTO 2026</span>
+    <h1 style="margin-top:var(--sp-lg)">Jornada Completa<br>Enxoval</h1>
+    <p class="lead">O app que substituiu a calculadora de enxoval e as planilhas de pedidos. Calcula o enxoval do imóvel, abre o pedido, acompanha até a entrega e controla a recompra de 2 anos — cada time vendo apenas a parte que é dele.</p>
+    <div class="urlrow detail">
+      <div><b>jornada-enxoval.seazone.com.br</b><span>ambiente em produção</span></div>
+      <div><b>Login com Google</b><span>conta Seazone ou franquia</span></div>
+      <div><b>Em uso desde 21/08/2026</b><span>planilhas descontinuadas</span></div>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <!-- ================= VISÕES ================= -->
+  <section>
+    <div class="sechead"><span class="num">1</span><h2>Visões: quem entra vê só o que usa</h2></div>
+    <p class="sub">A tela que aparece depende da categoria do usuário — não existe menu com abas bloqueadas nem link que burle a permissão. Quem é Administrador tem um seletor de <b>Visão</b> no rodapé da barra lateral e pode olhar o app pelos olhos de qualquer time, inclusive escolhendo uma franquia específica, para conferir o que a pessoa está vendo.</p>
+
+    <figure>
+      <div class="mock">
+        <svg viewBox="0 0 900 300" role="img" aria-label="Barra lateral do app com o menu de abas e, no rodapé, o seletor de Visão aberto mostrando os times Administrador, Comercial, Implantação, CS Proprietário, Franquia e o grupo Fornecedores.">
+          <rect width="900" height="300" fill="#F3F3F5"/>
+          <!-- sidebar -->
+          <rect x="40" y="24" width="200" height="252" rx="10" fill="#00143D"/>
+          <rect x="86" y="46" width="108" height="16" rx="4" fill="#4C7BFF" opacity=".85"/>
+          <g fill="#8FA1C6" font-family="Helvetica" font-size="11">
+            <text x="60" y="92">Calculadora</text>
+            <text x="60" y="116">Pedidos de Itens</text>
+            <text x="60" y="140">Recompra de Enxoval</text>
+            <text x="60" y="164">Relatório</text>
+            <text x="60" y="188">Configuração</text>
+            <text x="60" y="212">Usuários</text>
+          </g>
+          <rect x="50" y="102" width="180" height="20" rx="6" fill="#0055FF" opacity=".28"/>
+          <line x1="52" y1="232" x2="228" y2="232" stroke="#3B4E7A"/>
+          <text x="60" y="252" fill="#CBD5EE" font-family="Helvetica" font-size="10" font-weight="bold">VISÃO: ADMINISTRADOR ▾</text>
+          <!-- dropdown -->
+          <rect x="256" y="60" width="250" height="196" rx="10" fill="#FFFFFF" stroke="#E6E7EA"/>
+          <text x="272" y="82" fill="#6B6E84" font-family="Helvetica" font-size="9" font-weight="bold">TIMES</text>
+          <g font-family="Helvetica" font-size="11" fill="#080E32">
+            <text x="272" y="102">Administrador</text>
+            <text x="272" y="124">Comercial</text>
+            <text x="272" y="146">Implantação</text>
+            <text x="272" y="168">CS Proprietário</text>
+            <text x="272" y="190">Franquia</text>
+          </g>
+          <rect x="264" y="90" width="234" height="18" rx="5" fill="#E8F0FE"/>
+          <text x="272" y="102" fill="#0055FF" font-family="Helvetica" font-size="11" font-weight="bold">Administrador</text>
+          <text x="272" y="214" fill="#6B6E84" font-family="Helvetica" font-size="9" font-weight="bold">FORNECEDORES</text>
+          <g font-family="Helvetica" font-size="11" fill="#080E32">
+            <text x="272" y="234">Matinali</text>
+            <text x="272" y="250">RM Enxoval</text>
+          </g>
+          <!-- callout -->
+          <line x1="516" y1="158" x2="560" y2="158" stroke="#C3C6D2"/>
+          <text x="570" y="146" fill="#080E32" font-family="Helvetica" font-size="12" font-weight="bold">Só o Administrador troca de visão.</text>
+          <text x="570" y="166" fill="#6B6E84" font-family="Helvetica" font-size="11">Os outros times entram direto na visão fixa</text>
+          <text x="570" y="182" fill="#6B6E84" font-family="Helvetica" font-size="11">da categoria — sem opção de mudar.</text>
+        </svg>
+      </div>
+      <figcaption class="detail-reg">Barra lateral e o seletor de Visão (representação da tela)</figcaption>
+    </figure>
+
+    <div class="perfis">
+      <div class="perfil adm">
+        <h4>Administrador</h4>
+        <p>Enxerga o app inteiro, edita cadastros e regras de cálculo, gerencia usuários e simula qualquer outra visão.</p>
+        <div class="chips"><span class="chip">Tudo</span><span class="chip">Simula visões</span></div>
+      </div>
+      <div class="perfil">
+        <h4>Comercial</h4>
+        <p>Só a calculadora, em modo simulação: escolhe UF e município (inclusive cidade sem atuação) e vê o custo do enxoval. Não seleciona imóvel nem abre pedido.</p>
+        <div class="chips"><span class="chip">Calculadora</span></div>
+      </div>
+      <div class="perfil">
+        <h4>Implantação</h4>
+        <p>Calculadora completa (busca o imóvel, confirma o pedido) e os dois quadros: Pedidos de Itens e Recompra de Enxoval.</p>
+        <div class="chips"><span class="chip">Calculadora</span><span class="chip">Pedidos</span><span class="chip">Recompra</span></div>
+      </div>
+      <div class="perfil">
+        <h4>CS Proprietário</h4>
+        <p>Mesmo acesso da Implantação — é o time que conduz o contato com o proprietário na recompra.</p>
+        <div class="chips"><span class="chip">Calculadora</span><span class="chip">Pedidos</span><span class="chip">Recompra</span></div>
+      </div>
+      <div class="perfil">
+        <h4>Fornecedor</h4>
+        <p>Um quadro com <b>apenas os pedidos dele</b>, a aba Análise com os próprios indicadores e a tabela de preços/frete da coluna dele em leitura. Não vê documento do proprietário nem pedido de outro fornecedor.</p>
+        <div class="chips"><span class="chip">Meus pedidos</span><span class="chip">Análise</span></div>
+      </div>
+      <div class="perfil">
+        <h4>Franquia</h4>
+        <p>Vê somente o estoque da própria franquia, sem acesso a pedidos, cadastros ou relatórios. Detalhado no documento de Estoque.</p>
+        <div class="chips"><span class="chip">Estoque</span></div>
+      </div>
+    </div>
+
+    <div class="tblwrap">
+      <table>
+        <caption>Resumo de acesso por categoria — as abas Estoque e Enxoval por Imóvel são tratadas no documento próprio.</caption>
+        <thead>
+          <tr><th>Aba</th><th>Admin</th><th>Comercial</th><th>Implantação</th><th>CS Prop.</th><th>Fornecedor</th><th>Franquia</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Calculadora</td><td class="y">sim</td><td class="p">simulação</td><td class="y">sim</td><td class="y">sim</td><td class="p">sem confirmar</td><td class="n">—</td></tr>
+          <tr><td>Pedidos de Itens</td><td class="y">sim</td><td class="n">—</td><td class="y">sim</td><td class="y">sim</td><td class="p">só os dele</td><td class="n">—</td></tr>
+          <tr><td>Recompra de Enxoval</td><td class="y">sim</td><td class="n">—</td><td class="y">sim</td><td class="y">sim</td><td class="n">—</td><td class="n">—</td></tr>
+          <tr><td>Relatório</td><td class="y">sim</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="p">Análise</td><td class="n">—</td></tr>
+          <tr><td>Configuração</td><td class="y">sim</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="p">leitura</td><td class="n">—</td></tr>
+          <tr><td>Usuários</td><td class="y">sim</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ================= CALCULADORA ================= -->
+  <section>
+    <div class="sechead"><span class="num">2</span><h2>Calculadora de enxoval</h2></div>
+    <p class="sub">Substitui a planilha de cálculo. Digita o código do imóvel e o app monta o pedido inteiro: proprietário, franquia de destino, configuração de camas e banheiros, itens com quantidade, frete e total.</p>
+
+    <figure>
+      <div class="mock">
+        <svg viewBox="0 0 900 400" role="img" aria-label="Tela da calculadora: busca do imóvel por código, dados do proprietário e da franquia, configuração do imóvel com quantidades de camas e banheiros, lista de itens do pedido e painel de resumo com itens, frete e total.">
+          <rect width="900" height="400" fill="#F3F3F5"/>
+          <rect x="24" y="20" width="150" height="360" rx="8" fill="#00143D"/>
+          <g fill="#8FA1C6" font-family="Helvetica" font-size="10">
+            <text x="40" y="60">Calculadora</text><text x="40" y="82">Pedidos de Itens</text>
+            <text x="40" y="104">Recompra</text><text x="40" y="126">Relatório</text>
+          </g>
+          <rect x="30" y="48" width="138" height="17" rx="5" fill="#0055FF" opacity=".3"/>
+
+          <!-- hero -->
+          <rect x="190" y="20" width="686" height="52" rx="8" fill="#00143D"/>
+          <text x="208" y="44" fill="#FFFFFF" font-family="Helvetica" font-size="14" font-weight="bold">Calculadora de Enxoval</text>
+          <text x="208" y="60" fill="#8FA1C6" font-family="Helvetica" font-size="10">1 Imóvel  ·  2 Franquia  ·  3 Configuração do Imóvel  ·  4 Itens do Pedido</text>
+
+          <!-- passo 1 -->
+          <rect x="190" y="84" width="470" height="64" rx="8" fill="#FFFFFF" stroke="#E6E7EA"/>
+          <text x="204" y="102" fill="#0055FF" font-family="Helvetica" font-size="9" font-weight="bold">1 · IMÓVEL</text>
+          <rect x="204" y="110" width="180" height="24" rx="6" fill="#FFFFFF" stroke="#0055FF"/>
+          <text x="214" y="126" fill="#080E32" font-family="Helvetica" font-size="11" font-weight="bold">TPZ0422</text>
+          <text x="396" y="120" fill="#6B6E84" font-family="Helvetica" font-size="10">Proprietário e franquia</text>
+          <text x="396" y="133" fill="#6B6E84" font-family="Helvetica" font-size="10">preenchidos automaticamente</text>
+
+          <!-- passo 3 -->
+          <rect x="190" y="158" width="470" height="76" rx="8" fill="#FFFFFF" stroke="#E6E7EA"/>
+          <text x="204" y="176" fill="#0055FF" font-family="Helvetica" font-size="9" font-weight="bold">3 · CONFIGURAÇÃO DO IMÓVEL</text>
+          <g font-family="Helvetica" font-size="9" fill="#6B6E84">
+            <text x="204" y="196">Casal</text><text x="284" y="196">Solteiro</text><text x="364" y="196">Banheiros</text><text x="454" y="196">Jacuzzi</text>
+          </g>
+          <g>
+            <rect x="204" y="202" width="60" height="22" rx="6" fill="#F3F3F5" stroke="#E6E7EA"/>
+            <rect x="284" y="202" width="60" height="22" rx="6" fill="#F3F3F5" stroke="#E6E7EA"/>
+            <rect x="364" y="202" width="60" height="22" rx="6" fill="#F3F3F5" stroke="#E6E7EA"/>
+            <rect x="454" y="202" width="60" height="22" rx="6" fill="#F3F3F5" stroke="#E6E7EA"/>
+          </g>
+          <g font-family="Helvetica" font-size="11" font-weight="bold" fill="#080E32">
+            <text x="230" y="218">2</text><text x="310" y="218">1</text><text x="390" y="218">2</text><text x="480" y="218">1</text>
+          </g>
+
+          <!-- itens -->
+          <rect x="190" y="244" width="470" height="136" rx="8" fill="#FFFFFF" stroke="#E6E7EA"/>
+          <text x="204" y="262" fill="#0055FF" font-family="Helvetica" font-size="9" font-weight="bold">4 · ITENS DO PEDIDO</text>
+          <line x1="204" y1="270" x2="646" y2="270" stroke="#E6E7EA"/>
+          <g font-family="Helvetica" font-size="10">
+            <text x="204" y="288" fill="#080E32">Lençol com elástico casal</text><text x="500" y="288" fill="#6B6E84">6</text><text x="560" y="288" fill="#080E32" font-weight="bold">R$ 312,00</text>
+            <text x="204" y="310" fill="#080E32">Fronha</text><text x="500" y="310" fill="#6B6E84">12</text><text x="560" y="310" fill="#080E32" font-weight="bold">R$ 136,68</text>
+            <text x="204" y="332" fill="#080E32">Toalha de banho</text><text x="500" y="332" fill="#6B6E84">9</text><text x="560" y="332" fill="#080E32" font-weight="bold">R$ 261,00</text>
+            <text x="204" y="354" fill="#080E32">Edredom</text><text x="500" y="354" fill="#6B6E84">3</text><text x="560" y="354" fill="#080E32" font-weight="bold">R$ 297,00</text>
+          </g>
+          <line x1="204" y1="362" x2="646" y2="362" stroke="#E6E7EA" stroke-dasharray="3 3"/>
+          <text x="204" y="374" fill="#6B6E84" font-family="Helvetica" font-size="9">quantidade calculada pelas regras — editável</text>
+
+          <!-- resumo -->
+          <rect x="672" y="84" width="204" height="296" rx="8" fill="#00143D"/>
+          <text x="688" y="106" fill="#FFFFFF" font-family="Helvetica" font-size="12" font-weight="bold">Resumo do pedido</text>
+          <line x1="688" y1="116" x2="860" y2="116" stroke="#3B4E7A"/>
+          <g font-family="Helvetica" font-size="10" fill="#8FA1C6">
+            <text x="688" y="140">Fornecedor</text><text x="688" y="176">Destino</text><text x="688" y="212">Cluster</text>
+          </g>
+          <g font-family="Helvetica" font-size="11" font-weight="bold" fill="#FFFFFF">
+            <text x="688" y="156">Matinali  ▾</text><text x="688" y="192">Balneário Piçarras / SC</text><text x="688" y="228">Padrão</text>
+          </g>
+          <line x1="688" y1="246" x2="860" y2="246" stroke="#3B4E7A"/>
+          <g font-family="Helvetica" font-size="10" fill="#8FA1C6">
+            <text x="688" y="266">Itens</text><text x="688" y="288">Frete</text>
+          </g>
+          <g font-family="Helvetica" font-size="10" fill="#FFFFFF" text-anchor="end">
+            <text x="860" y="266">R$ 1.006,68</text><text x="860" y="288">R$ 95,00</text>
+          </g>
+          <text x="688" y="320" fill="#8FA1C6" font-family="Helvetica" font-size="10">Total</text>
+          <text x="860" y="322" fill="#FFFFFF" font-family="Helvetica" font-size="17" font-weight="bold" text-anchor="end">R$ 1.101,68</text>
+          <rect x="688" y="342" width="172" height="26" rx="13" fill="#0055FF"/>
+          <text x="774" y="359" fill="#FFFFFF" font-family="Helvetica" font-size="11" font-weight="bold" text-anchor="middle">Confirmar Pedido</text>
+        </svg>
+      </div>
+      <figcaption class="detail-reg">Calculadora — busca do imóvel, configuração, itens e resumo (representação da tela)</figcaption>
+    </figure>
+
+    <ul class="feats">
+      <li><b>Busca do imóvel</b><p>Digita o código e o app traz proprietário (nome, telefone, documento) e a franquia responsável hoje, direto do espelho do Sapron. Dá para buscar também por proprietário ou cidade.</p></li>
+      <li><b>Configuração editável</b><p>Camas, banheiros e jacuzzi vêm do cadastro do imóvel, mas podem ser ajustados na hora. O que difere do Sapron fica destacado, com um botão para voltar ao original.</p></li>
+      <li><b>Cálculo por regras</b><p>As quantidades saem das regras cadastradas (item × tipo de cama × cluster da cidade), não de fórmula escondida. Cada quantidade pode ser corrigida à mão e volta ao cálculo com um clique.</p></li>
+      <li><b>Fornecedor e frete</b><p>Fornecedor sai da região atendida e o frete da tabela dele para aquela UF, diferenciando capital e interior. O fornecedor pode ser trocado à mão — trocar reprecifica o pedido inteiro.</p></li>
+      <li><b>Simulação</b><p>Na visão Comercial, escolhe UF e qualquer município do Brasil para orçar antes de existir imóvel cadastrado.</p></li>
+      <li><b>Confirmar pedido</b><p>Gera o card no quadro de Pedidos de Itens com número próprio (P-0001, P-0002…), já registrando quem confirmou.</p></li>
+    </ul>
+  </section>
+
+  <!-- ================= PEDIDOS ================= -->
+  <section>
+    <div class="sechead"><span class="num">3</span><h2>Pedidos de Itens</h2></div>
+    <p class="sub">O quadro onde o pedido caminha, do link de pagamento até o embarque. Substitui as planilhas de pedidos da Matinali e da RM.</p>
+
+    <figure>
+      <div class="mock">
+        <svg viewBox="0 0 900 340" role="img" aria-label="Quadro de Pedidos de Itens com as colunas Aguardando Link de Pagamento, Aguardando pagamento, Pagamento Confirmado, Enviado, Link Expirado e Cancelado, com cards mostrando código do imóvel, fornecedor, total e etiquetas.">
+          <rect width="900" height="340" fill="#F3F3F5"/>
+          <!-- toolbar -->
+          <rect x="24" y="18" width="200" height="24" rx="6" fill="#FFFFFF" stroke="#E6E7EA"/>
+          <text x="36" y="35" fill="#6B6E84" font-family="Helvetica" font-size="10">Buscar imóvel…</text>
+          <rect x="236" y="18" width="110" height="24" rx="12" fill="#FFFFFF" stroke="#E6E7EA"/>
+          <text x="248" y="35" fill="#080E32" font-family="Helvetica" font-size="10">Fornecedor ▾</text>
+          <rect x="356" y="18" width="80" height="24" rx="12" fill="#FFFFFF" stroke="#E6E7EA"/>
+          <text x="368" y="35" fill="#080E32" font-family="Helvetica" font-size="10">Time ▾</text>
+
+          <g font-family="Helvetica" font-size="9" font-weight="bold" fill="#080E32">
+            <text x="30" y="66">AGUARDANDO LINK</text>
+            <text x="176" y="66">AGUARDANDO PGTO</text>
+            <text x="322" y="66">PGTO CONFIRMADO</text>
+            <text x="468" y="66">ENVIADO</text>
+            <text x="614" y="66">LINK EXPIRADO</text>
+            <text x="760" y="66">CANCELADO</text>
+          </g>
+          <g>
+            <rect x="24" y="74" width="136" height="242" rx="8" fill="#EBECF0"/>
+            <rect x="170" y="74" width="136" height="242" rx="8" fill="#EBECF0"/>
+            <rect x="316" y="74" width="136" height="242" rx="8" fill="#EBECF0"/>
+            <rect x="462" y="74" width="136" height="242" rx="8" fill="#E8F0FE"/>
+            <rect x="608" y="74" width="136" height="242" rx="8" fill="#F1F1F4" stroke="#DDDEE4" stroke-dasharray="4 3"/>
+            <rect x="754" y="74" width="136" height="242" rx="8" fill="#F1F1F4" stroke="#DDDEE4" stroke-dasharray="4 3"/>
+          </g>
+
+          <!-- card 1 -->
+          <rect x="32" y="84" width="120" height="72" rx="6" fill="#FFFFFF" stroke="#E6E7EA"/>
+          <text x="42" y="102" fill="#080E32" font-family="Helvetica" font-size="11" font-weight="bold">P-0031 · LNK0102</text>
+          <rect x="42" y="108" width="52" height="13" rx="6" fill="#E8F0FE"/>
+          <text x="46" y="118" fill="#1D4ED8" font-family="Helvetica" font-size="8" font-weight="bold">Implantação</text>
+          <rect x="98" y="108" width="42" height="13" rx="6" fill="#D9F2EF"/>
+          <text x="102" y="118" fill="#0F6A61" font-family="Helvetica" font-size="8" font-weight="bold">Matinali</text>
+          <text x="42" y="136" fill="#6B6E84" font-family="Helvetica" font-size="9">hoje · Agente</text>
+          <text x="42" y="150" fill="#080E32" font-family="Helvetica" font-size="11" font-weight="bold">R$ 1.245,00</text>
+
+          <!-- card 2 -->
+          <rect x="32" y="164" width="120" height="58" rx="6" fill="#FFFFFF" stroke="#E6E7EA"/>
+          <text x="42" y="182" fill="#080E32" font-family="Helvetica" font-size="11" font-weight="bold">P-0032 · OJU0208</text>
+          <text x="42" y="198" fill="#6B6E84" font-family="Helvetica" font-size="9">2 dias na etapa</text>
+          <text x="42" y="214" fill="#080E32" font-family="Helvetica" font-size="11" font-weight="bold">R$ 892,40</text>
+
+          <!-- card pgto confirmado com atraso -->
+          <rect x="324" y="84" width="120" height="76" rx="6" fill="#FFFFFF" stroke="#E6E7EA"/>
+          <text x="334" y="102" fill="#080E32" font-family="Helvetica" font-size="11" font-weight="bold">P-0028 · LBO203</text>
+          <text x="334" y="120" fill="#6B6E84" font-family="Helvetica" font-size="9">9 dias na etapa</text>
+          <text x="334" y="136" fill="#E7000B" font-family="Helvetica" font-size="9" font-weight="bold">9d sem embarque</text>
+          <text x="334" y="153" fill="#080E32" font-family="Helvetica" font-size="11" font-weight="bold">R$ 2.106,00</text>
+
+          <!-- card enviado -->
+          <rect x="470" y="84" width="120" height="76" rx="6" fill="#FFFFFF" stroke="#B9D0FF"/>
+          <text x="480" y="102" fill="#080E32" font-family="Helvetica" font-size="11" font-weight="bold">P-0019 · JMF0052</text>
+          <text x="480" y="120" fill="#6B6E84" font-family="Helvetica" font-size="9">NF 4471 · 20/08</text>
+          <text x="480" y="136" fill="#0F6A61" font-family="Helvetica" font-size="9" font-weight="bold">despachado em 3d</text>
+          <text x="480" y="153" fill="#080E32" font-family="Helvetica" font-size="11" font-weight="bold">R$ 1.640,10</text>
+
+          <!-- card cancelado -->
+          <rect x="762" y="84" width="120" height="58" rx="6" fill="#FAFAFB" stroke="#DDDEE4"/>
+          <text x="772" y="102" fill="#6B6E84" font-family="Helvetica" font-size="11" font-weight="bold">P-0011 · SRS1005</text>
+          <text x="772" y="118" fill="#6B6E84" font-family="Helvetica" font-size="9">Adiamento da compra</text>
+          <text x="772" y="134" fill="#6B6E84" font-family="Helvetica" font-size="10">R$ 780,00</text>
+
+          <text x="24" y="332" fill="#6B6E84" font-family="Helvetica" font-size="9">arrasta o card entre etapas · cada coluna rola por dentro · 25 cards por vez</text>
+        </svg>
+      </div>
+      <figcaption class="detail-reg">Quadro de Pedidos de Itens (representação da tela)</figcaption>
+    </figure>
+
+    <h4 style="margin-top:var(--sp-xl)">O caminho do pedido</h4>
+    <div class="fluxo">
+      <span class="fase">Aguardando Link de Pagamento</span><span class="arrow">→</span>
+      <span class="fase">Aguardando pagamento</span><span class="arrow">→</span>
+      <span class="fase">Pagamento Confirmado</span><span class="arrow">→</span>
+      <span class="fase fim">Enviado</span>
+      <span class="arrow">·</span><span class="fase cancel">Link Expirado</span>
+      <span class="fase cancel">Cancelado</span>
+    </div>
+
+    <div class="regra">
+      <b>Para mover um pedido para Enviado, três campos são obrigatórios</b>
+      <p>Nota fiscal de compra, data de emissão da NF e data de embarque — e o pedido precisa ter passado por Pagamento Confirmado. Se faltar algo, o app avisa e abre o card no campo pendente. Cancelar exige escolher o motivo numa lista.</p>
+    </div>
+
+    <ul class="feats">
+      <li><b>Card do pedido</b><p>Mostra número, imóvel, fornecedor, valor e etiquetas de time, dias na etapa e alerta de despacho. Abrir o card revela o pedido completo: proprietário, franquia com endereço, itens e todos os campos de acompanhamento.</p></li>
+      <li><b>Itens editáveis</b><p>Valor unitário e total podem ser corrigidos no card — um recalcula o outro e o total do pedido acompanha.</p></li>
+      <li><b>Campos por etapa</b><p>Cada seção do card pertence a uma etapa (link de pagamento, dados de NF, logística). Fora da etapa dela, a seção só aparece se já foi preenchida, marcada como “registrado na etapa X”.</p></li>
+      <li><b>Comentários e histórico</b><p>Comentários com autor e data no card, e histórico de etapas registrando quem criou e quem moveu — inclusive quando quem criou foi uma automação.</p></li>
+      <li><b>Orçamento em PDF</b><p>Botão gera uma folha A4 com imóvel, proprietário, franquia e a tabela de itens, para enviar ao proprietário. O fornecedor não vê o documento do proprietário.</p></li>
+      <li><b>Pedido automático</b><p>Pedidos vindos do agente de adequação entram direto no quadro, com a área, o analista e o link do orçamento. O app confere e corrige franquia de destino, frete e cluster na entrada.</p></li>
+      <li><b>Alerta de atraso</b><p>Card acima de 7 dias sem embarque desde o pagamento confirmado fica em vermelho, com a contagem de dias visível.</p></li>
+    </ul>
+  </section>
+
+  <!-- ================= RECOMPRA ================= -->
+  <section>
+    <div class="sechead"><span class="num">4</span><h2>Recompra de Enxoval</h2></div>
+    <p class="sub">O quadro da troca de enxoval a cada 2 anos. Hoje espelha automaticamente os cards do PIPE 12 do Pipefy, de hora em hora, sem escrever nada de volta lá.</p>
+
+    <figure>
+      <div class="mock">
+        <svg viewBox="0 0 900 300" role="img" aria-label="Quadro de Recompra com as etapas Caixa de Entrada, Contato com Proprietário, Imóvel com Pendência, Recompra Validada e Cancelado; um card em pendência mostra mudas pendentes e data de vencimento em vermelho.">
+          <rect width="900" height="300" fill="#F3F3F5"/>
+          <g font-family="Helvetica" font-size="9" font-weight="bold" fill="#080E32">
+            <text x="30" y="36">CAIXA DE ENTRADA</text>
+            <text x="206" y="36">CONTATO COM PROP.</text>
+            <text x="382" y="36">IMÓVEL COM PENDÊNCIA</text>
+            <text x="558" y="36">RECOMPRA VALIDADA</text>
+            <text x="734" y="36">CANCELADO</text>
+          </g>
+          <g>
+            <rect x="24" y="44" width="166" height="228" rx="8" fill="#EBECF0"/>
+            <rect x="200" y="44" width="166" height="228" rx="8" fill="#EBECF0"/>
+            <rect x="376" y="44" width="166" height="228" rx="8" fill="#EBECF0"/>
+            <rect x="552" y="44" width="166" height="228" rx="8" fill="#E8F0FE"/>
+            <rect x="728" y="44" width="148" height="228" rx="8" fill="#F1F1F4" stroke="#DDDEE4" stroke-dasharray="4 3"/>
+          </g>
+
+          <!-- caixa de entrada -->
+          <rect x="32" y="54" width="150" height="60" rx="6" fill="#FFFFFF" stroke="#E6E7EA"/>
+          <text x="42" y="72" fill="#080E32" font-family="Helvetica" font-size="11" font-weight="bold">MET0703</text>
+          <text x="42" y="88" fill="#6B6E84" font-family="Helvetica" font-size="9">Espelho do PIPE 12</text>
+          <text x="42" y="105" fill="#6B6E84" font-family="Helvetica" font-size="9">Resp.: Raquel Szabo</text>
+
+          <!-- contato -->
+          <rect x="208" y="54" width="150" height="72" rx="6" fill="#FFFFFF" stroke="#E6E7EA"/>
+          <text x="218" y="72" fill="#080E32" font-family="Helvetica" font-size="11" font-weight="bold">SMA0514</text>
+          <rect x="218" y="80" width="58" height="14" rx="7" fill="#E8F0FE"/>
+          <text x="224" y="90" fill="#0055FF" font-family="Helvetica" font-size="8" font-weight="bold">☑ 4 / 6</text>
+          <text x="218" y="108" fill="#6B6E84" font-family="Helvetica" font-size="9">termo assinado</text>
+          <text x="218" y="120" fill="#6B6E84" font-family="Helvetica" font-size="9">aguardando retorno</text>
+
+          <!-- pendência vencida -->
+          <rect x="384" y="54" width="150" height="84" rx="6" fill="#FFF5F5" stroke="#E7000B"/>
+          <text x="394" y="72" fill="#080E32" font-family="Helvetica" font-size="11" font-weight="bold">TPZ0422</text>
+          <rect x="394" y="80" width="76" height="14" rx="7" fill="#FFE3E3"/>
+          <text x="399" y="90" fill="#E7000B" font-family="Helvetica" font-size="8" font-weight="bold">⏰ Vencimento</text>
+          <text x="394" y="110" fill="#080E32" font-family="Helvetica" font-size="9" font-weight="bold">1 de 3 mudas pendente</text>
+          <text x="394" y="126" fill="#6B6E84" font-family="Helvetica" font-size="9">venc. 18/08</text>
+          <rect x="384" y="146" width="150" height="56" rx="6" fill="#FFFFFF" stroke="#E6E7EA"/>
+          <text x="394" y="164" fill="#080E32" font-family="Helvetica" font-size="11" font-weight="bold">INR1103</text>
+          <text x="394" y="180" fill="#6B6E84" font-family="Helvetica" font-size="9">2 de 3 mudas pendente</text>
+          <text x="394" y="194" fill="#6B6E84" font-family="Helvetica" font-size="9">venc. 09/09</text>
+
+          <!-- validada -->
+          <rect x="560" y="54" width="150" height="72" rx="6" fill="#FFFFFF" stroke="#B9D0FF"/>
+          <text x="570" y="72" fill="#080E32" font-family="Helvetica" font-size="11" font-weight="bold">KVI0405</text>
+          <text x="570" y="90" fill="#0F6A61" font-family="Helvetica" font-size="9" font-weight="bold">gerou P-0034</text>
+          <text x="570" y="106" fill="#6B6E84" font-family="Helvetica" font-size="9">3 mudas · Matinali</text>
+          <text x="570" y="120" fill="#080E32" font-family="Helvetica" font-size="10" font-weight="bold">R$ 1.980,00</text>
+
+          <text x="376" y="292" fill="#6B6E84" font-family="Helvetica" font-size="9">coluna ordenada por urgência do vencimento</text>
+        </svg>
+      </div>
+      <figcaption class="detail-reg">Quadro de Recompra de Enxoval (representação da tela)</figcaption>
+    </figure>
+
+    <div class="fluxo">
+      <span class="fase">Caixa de Entrada</span><span class="arrow">→</span>
+      <span class="fase">Contato com Proprietário</span><span class="arrow">→</span>
+      <span class="fase">Imóvel com Pendência</span><span class="arrow">→</span>
+      <span class="fase fim">Recompra Validada</span>
+      <span class="arrow">·</span><span class="fase cancel">Cancelado</span>
+    </div>
+
+    <ul class="feats">
+      <li><b>Retrato de hoje</b><p>Ao abrir o card, o app recalcula com a situação atual: configuração do imóvel, proprietário, franquia responsável hoje (que define destino, frete e fornecedor) e preços vigentes. Um aviso mostra o que mudou desde que o card nasceu.</p></li>
+      <li><b>Checklist de contato</b><p>Seis passos dentro da etapa de contato — primeiro contato, tentativa de ligação, termo enviado, termo assinado, proposta apresentada, aguardando retorno — cada um guardando quem marcou e quando.</p></li>
+      <li><b>Pendência em mudas</b><p>Quando o proprietário aceita parte da troca (2 de 3 mudas, por exemplo), o card entra em pendência com o número de mudas que falta e uma data de vencimento. A coluna fica ordenada por urgência e o card vencido aparece em vermelho.</p></li>
+      <li><b>Dois pedidos, no tempo certo</b><p>Entrar na pendência já gera o pedido do que foi autorizado. Quando o restante é validado depois, sai um segundo pedido só com os itens pendentes — sem repetir o que já foi comprado.</p></li>
+      <li><b>Configuração editável</b><p>O imóvel pode ser corrigido dentro do card em qualquer etapa não final; a diferença em relação ao Sapron aparece destacada e o cálculo refaz na hora, sem alterar o Sapron.</p></li>
+    </ul>
+  </section>
+
+  <!-- ================= RELATÓRIO ================= -->
+  <section>
+    <div class="sechead"><span class="num">5</span><h2>Relatório e Análise</h2></div>
+    <p class="sub">O painel de números do enxoval. O Administrador vê tudo em <b>Relatório</b>; cada fornecedor vê os mesmos indicadores filtrados nos pedidos dele, na aba <b>Análise</b>.</p>
+
+    <figure>
+      <div class="mock">
+        <svg viewBox="0 0 900 300" role="img" aria-label="Painel de relatório com filtros de período e fornecedor, indicadores de valor vendido, frete, comissão e peças, tempo médio de despacho e gráfico de linha de 12 meses por fornecedor.">
+          <rect width="900" height="300" fill="#F3F3F5"/>
+          <!-- filtros -->
+          <rect x="24" y="18" width="110" height="24" rx="12" fill="#FFFFFF" stroke="#E6E7EA"/>
+          <text x="36" y="35" fill="#080E32" font-family="Helvetica" font-size="10">Agosto 2026 ▾</text>
+          <rect x="144" y="18" width="110" height="24" rx="12" fill="#FFFFFF" stroke="#E6E7EA"/>
+          <text x="156" y="35" fill="#080E32" font-family="Helvetica" font-size="10">Fornecedor ▾</text>
+          <rect x="264" y="18" width="110" height="24" rx="12" fill="#FFFFFF" stroke="#E6E7EA"/>
+          <text x="276" y="35" fill="#6B6E84" font-family="Helvetica" font-size="10">ou intervalo…</text>
+
+          <!-- tiles -->
+          <g>
+            <rect x="24" y="56" width="200" height="76" rx="8" fill="#FFFFFF" stroke="#E6E7EA"/>
+            <rect x="236" y="56" width="200" height="76" rx="8" fill="#FFFFFF" stroke="#E6E7EA"/>
+            <rect x="448" y="56" width="200" height="76" rx="8" fill="#FC6058"/>
+            <rect x="660" y="56" width="216" height="76" rx="8" fill="#FFFFFF" stroke="#E6E7EA"/>
+          </g>
+          <g font-family="Helvetica" font-size="9" font-weight="bold">
+            <text x="40" y="76" fill="#6B6E84">VALOR VENDIDO</text>
+            <text x="252" y="76" fill="#6B6E84">FRETE</text>
+            <text x="464" y="76" fill="#FFFFFF">COMISSÃO 5% (SEM FRETE)</text>
+            <text x="676" y="76" fill="#6B6E84">PEÇAS COMPRADAS</text>
+          </g>
+          <g font-family="Helvetica" font-size="20" font-weight="bold">
+            <text x="40" y="108" fill="#080E32">R$ 184.320</text>
+            <text x="252" y="108" fill="#080E32">R$ 9.140</text>
+            <text x="464" y="108" fill="#FFFFFF">R$ 8.759</text>
+            <text x="676" y="108" fill="#080E32">12.480</text>
+          </g>
+          <g font-family="Helvetica" font-size="9" fill="#6B6E84">
+            <text x="40" y="124">por data de emissão da NF</text>
+            <text x="252" y="124">no período</text>
+            <text x="676" y="124">em 63 pedidos enviados</text>
+          </g>
+          <text x="464" y="124" fill="#FFE7E5" font-family="Helvetica" font-size="9">calculada sobre o valor sem frete</text>
+
+          <!-- despacho -->
+          <rect x="24" y="144" width="288" height="132" rx="8" fill="#FFFFFF" stroke="#E6E7EA"/>
+          <text x="40" y="166" fill="#080E32" font-family="Helvetica" font-size="12" font-weight="bold">Tempo de despacho</text>
+          <text x="40" y="182" fill="#6B6E84" font-family="Helvetica" font-size="9">do pagamento confirmado até o embarque</text>
+          <text x="40" y="212" fill="#0055FF" font-family="Helvetica" font-size="24" font-weight="bold">4,2</text>
+          <text x="78" y="212" fill="#6B6E84" font-family="Helvetica" font-size="10">dias em média</text>
+          <line x1="40" y1="226" x2="296" y2="226" stroke="#E6E7EA"/>
+          <g font-family="Helvetica" font-size="10">
+            <text x="40" y="244" fill="#080E32">Matinali</text><text x="296" y="244" fill="#080E32" font-weight="bold" text-anchor="end">4,0 d</text>
+            <text x="40" y="264" fill="#080E32">Aguardando embarque hoje</text><text x="296" y="264" fill="#E7000B" font-weight="bold" text-anchor="end">7</text>
+          </g>
+
+          <!-- gráfico -->
+          <rect x="324" y="144" width="552" height="132" rx="8" fill="#FFFFFF" stroke="#E6E7EA"/>
+          <text x="340" y="166" fill="#080E32" font-family="Helvetica" font-size="12" font-weight="bold">Valor vendido — 12 meses</text>
+          <g stroke="#F0F1F4">
+            <line x1="340" y1="188" x2="860" y2="188"/><line x1="340" y1="216" x2="860" y2="216"/><line x1="340" y1="244" x2="860" y2="244"/>
+          </g>
+          <polyline fill="none" stroke="#0055FF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
+            points="348,246 392,238 436,242 480,228 524,232 568,214 612,220 656,200 700,206 744,190 788,196 832,178"/>
+          <polyline fill="none" stroke="#9AB6FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="5 4"
+            points="348,258 392,256 436,252 480,254 524,248 568,250 612,246 656,248 700,252 744,254 788,258 832,260"/>
+          <g font-family="Helvetica" font-size="9" fill="#6B6E84">
+            <text x="348" y="268">set</text><text x="480" y="268">dez</text><text x="612" y="268">mar</text><text x="744" y="268">jun</text>
+          </g>
+          <circle cx="700" cy="164" r="4" fill="#0055FF"/><text x="710" y="168" fill="#6B6E84" font-family="Helvetica" font-size="9">Matinali</text>
+          <circle cx="778" cy="164" r="4" fill="#9AB6FF"/><text x="788" y="168" fill="#6B6E84" font-family="Helvetica" font-size="9">RM Enxoval</text>
+        </svg>
+      </div>
+      <figcaption class="detail-reg">Relatório — indicadores, tempo de despacho e série de 12 meses (representação da tela)</figcaption>
+    </figure>
+
+    <ul class="feats">
+      <li><b>Período flexível</b><p>Filtra por mês/ano ou por intervalo de datas, combinando com fornecedor.</p></li>
+      <li><b>Venda e comissão</b><p>Considera vendido o pedido enviado com data de emissão de NF no período; a comissão de 5% é calculada sobre o valor sem frete.</p></li>
+      <li><b>Tempo de despacho</b><p>Média e maior tempo entre o pagamento confirmado e o embarque, com alerta a partir de 7 dias e a lista de pedidos ainda sem embarque.</p></li>
+      <li><b>Cancelamentos por motivo</b><p>Agrupa os pedidos cancelados pelo motivo escolhido, mostrando onde a operação está perdendo pedido.</p></li>
+      <li><b>Itens comprados</b><p>Quantidade e valor por item no período, além do total de peças.</p></li>
+    </ul>
+  </section>
+
+  <!-- ================= CONFIG ================= -->
+  <section>
+    <div class="sechead"><span class="num">6</span><h2>Configuração e Usuários</h2></div>
+    <p class="sub">A parte do Administrador: é aqui que o cálculo é ensinado ao app. Nada é fixo no código — item, preço, regra, frete e cluster são cadastro.</p>
+
+    <ul class="feats">
+      <li><b>Itens</b><p>Nome e descrição de cada item, com o texto que o fornecedor usa na nota.</p></li>
+      <li><b>Preços</b><p>Valor por item e por fornecedor. Renomear um item propaga para as regras.</p></li>
+      <li><b>Regras de cálculo</b><p>Quantidade por item × tipo de cama/banheiro × cluster, com marcação de item fixo (o edredom, por exemplo, não multiplica pelo número de mudas).</p></li>
+      <li><b>Fornecedores e frete</b><p>Regiões atendidas por fornecedor e tabela de frete das 27 UFs, separando capital e interior.</p></li>
+      <li><b>Cluster</b><p>Relação cidade → cluster; cidade sem cadastro cai no cluster Padrão.</p></li>
+      <li><b>Tabelas espelho</b><p>Imóveis, proprietários e franquias vindos do Sapron, com atualização automática e botão de sincronizar. São leitura — o app não altera o Sapron.</p></li>
+      <li><b>Usuários</b><p>Cadastro com categoria e franquia, último login registrado. Entrada é por conta Google; quem não tem cadastro entra como Comercial, com acesso apenas à calculadora em simulação.</p></li>
+    </ul>
+
+    <div class="nota">
+      <span aria-hidden="true">📄</span>
+      <p><b>Fora deste documento:</b> as abas <b>Estoque</b> e <b>Enxoval por Imóvel</b> têm documento próprio — <i>estoque-e-enxoval-por-imovel.html</i> — com as regras de movimentação, as fontes de dado e as permissões dessas duas telas.</p>
+    </div>
+  </section>
+
+</div>
+
+<!-- ================= TREINAMENTOS ================= -->
+<div class="train">
+  <div class="wrap">
+    <h2>Treinamentos</h2>
+    <p class="lead">Cada público que opera o app recebeu treinamento na visão dele.</p>
+    <ul class="tlist">
+      <li class="done"><span class="mark">✓</span><span class="who">CS<small>calculadora, pedidos e recompra</small></span><span class="st">REALIZADO</span></li>
+      <li class="done"><span class="mark">✓</span><span class="who">Implantação<small>calculadora, pedidos e recompra</small></span><span class="st">REALIZADO</span></li>
+      <li class="done"><span class="mark">✓</span><span class="who">Matinali<small>visão do fornecedor: quadro próprio e Análise</small></span><span class="st">REALIZADO</span></li>
+      <li class="done"><span class="mark">✓</span><span class="who">RM Enxoval<small>visão do fornecedor: quadro próprio e Análise</small></span><span class="st">REALIZADO</span></li>
+      <li class="next"><span class="mark">›</span><span class="who">Time de Franquias<small>quarta-feira, 26/08, às 13h30</small></span><span class="st">AGENDADO</span></li>
+    </ul>
+  </div>
+</div>
+
+<div class="wrap">
+  <footer>
+    <p class="detail-reg">Jornada Completa Enxoval · documento interno Seazone · as telas deste documento são representações, não capturas do ambiente.</p>
+  </footer>
+</div>
+
+</body>
+</html>
