@@ -1,0 +1,614 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Validação — Lavanderia por imóvel e despesas de enxoval</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,400;7..72,600;7..72,700&family=Archivo:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --papel:      oklch(0.985 0.004 262);
+    --papel-fundo:oklch(0.955 0.008 262);
+    --tinta:      oklch(0.24 0.045 262);
+    --tinta-fraca:oklch(0.48 0.028 262);
+    --linha:      oklch(0.89 0.012 262);
+    --linha-forte:oklch(0.80 0.02 262);
+    --azul:       oklch(0.52 0.235 262);
+    --azul-fraco: oklch(0.94 0.035 262);
+    --coral:      oklch(0.68 0.165 28);
+    --coral-fraco:oklch(0.95 0.03 28);
+    --verde:      oklch(0.52 0.12 155);
+    --verde-fraco:oklch(0.94 0.04 155);
+    --ambar:      oklch(0.62 0.13 75);
+
+    --s1: 4px; --s2: 8px; --s3: 12px; --s4: 16px; --s6: 24px;
+    --s8: 32px; --s12: 48px; --s16: 64px; --s24: 96px;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+  body {
+    margin: 0; background: var(--papel-fundo); color: var(--tinta);
+    font-family: Archivo, "Segoe UI", sans-serif; font-size: 16px; line-height: 1.6;
+  }
+  ::selection { background: var(--azul-fraco); }
+
+  .topo { background: var(--papel); border-bottom: 1px solid var(--linha);
+          padding: var(--s16) var(--s6) var(--s12); }
+  .faixa { max-width: 1180px; margin: 0 auto; }
+  .kicker { font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase;
+            color: var(--coral); font-weight: 600; margin: 0 0 var(--s3); }
+  h1 { font-family: Literata, Georgia, serif; font-size: clamp(2rem, 5vw, 3.4rem);
+       line-height: 1.05; font-weight: 700; letter-spacing: -0.02em;
+       margin: 0 0 var(--s4); max-width: 20ch; }
+  .abertura { font-family: Literata, Georgia, serif; font-size: clamp(1.05rem, 2vw, 1.3rem);
+              line-height: 1.55; color: var(--tinta-fraca); max-width: 62ch; margin: 0; }
+  .meta { display: flex; flex-wrap: wrap; gap: var(--s2) var(--s6); margin-top: var(--s8);
+          padding-top: var(--s4); border-top: 1px solid var(--linha);
+          font-size: 0.8rem; color: var(--tinta-fraca); }
+  .meta b { color: var(--tinta); font-weight: 600; }
+
+  main { max-width: 1180px; margin: 0 auto; padding: var(--s12) var(--s6) var(--s24); }
+  .bloco { display: grid; gap: var(--s6) var(--s12); grid-template-columns: minmax(0, 1fr);
+           margin-bottom: var(--s16); }
+  @media (min-width: 1000px) {
+    .bloco { grid-template-columns: minmax(0, 70ch) minmax(200px, 1fr); align-items: start; }
+    .bloco > .nota { grid-column: 2; }
+    .bloco > :not(.nota) { grid-column: 1; }
+    .bloco > .largo { grid-column: 1 / -1; }
+  }
+  h2 { font-family: Literata, Georgia, serif; font-size: clamp(1.5rem, 3vw, 2.1rem);
+       line-height: 1.15; font-weight: 700; letter-spacing: -0.015em; margin: var(--s8) 0 var(--s2); }
+  h2 .num { display: block; font-family: Archivo, sans-serif; font-size: 0.72rem;
+            letter-spacing: 0.14em; text-transform: uppercase; color: var(--azul);
+            font-weight: 600; margin-bottom: var(--s2); }
+  h3 { font-size: 1.02rem; font-weight: 600; letter-spacing: -0.005em; margin: var(--s8) 0 var(--s2); }
+  p { margin: 0 0 var(--s4); max-width: 70ch; }
+  .rota { font-size: 0.78rem; color: var(--tinta-fraca); margin: 0 0 var(--s6); }
+  code { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 0.85em;
+         background: var(--papel); border: 1px solid var(--linha); border-radius: 4px;
+         padding: 0.08em 0.36em; }
+  strong { font-weight: 600; }
+  ul { margin: 0 0 var(--s4); padding-left: var(--s6); max-width: 70ch; }
+  li { margin-bottom: var(--s2); }
+  li::marker { color: var(--linha-forte); }
+
+  .nota { font-size: 0.86rem; line-height: 1.5; color: var(--tinta-fraca);
+          border-top: 2px solid var(--coral); padding-top: var(--s3); }
+  .nota b { display: block; color: var(--tinta); font-weight: 600; margin-bottom: var(--s1); }
+
+  .aviso { font-size: 0.92rem; background: var(--coral-fraco);
+           border: 1px solid oklch(0.85 0.06 28); border-radius: 2px;
+           padding: var(--s4); margin: 0 0 var(--s6); max-width: 70ch; }
+  .aviso b { color: oklch(0.44 0.14 28); }
+
+  /* ── simulação de tela ────────────────────────────────────────────────
+     Não é print do app: é a mesma estrutura redesenhada aqui, pra mostrar
+     onde cada coisa fica sem depender de login. */
+  .tela { background: var(--papel); border: 1px solid var(--linha-forte);
+          border-radius: 6px; overflow: hidden; margin: 0 0 var(--s3);
+          box-shadow: 0 1px 0 oklch(0.80 0.02 262 / 0.35); }
+  .tela + figcaption, figure > figcaption { font-size: 0.8rem; color: var(--tinta-fraca);
+          margin: 0 0 var(--s6); }
+  figure { margin: 0 0 var(--s6); }
+  .tela-barra { display: flex; align-items: center; gap: var(--s2);
+                padding: var(--s2) var(--s3); border-bottom: 1px solid var(--linha);
+                background: var(--papel-fundo); font-size: 0.72rem; color: var(--tinta-fraca);
+                letter-spacing: 0.06em; text-transform: uppercase; }
+  .tela-corpo { padding: var(--s4); }
+  .secao-titulo { display: flex; align-items: baseline; gap: var(--s2);
+                  border-left: 3px solid var(--coral); padding-left: var(--s3);
+                  margin: 0 0 var(--s3); }
+  .secao-titulo h4 { margin: 0; font-size: 0.98rem; font-weight: 600; }
+  .secao-titulo .seta { color: var(--tinta-fraca); font-size: 0.85rem; }
+  .secao-titulo .resumo { margin-left: auto; font-size: 0.78rem; color: var(--tinta-fraca); }
+  .campo { border: 1px solid var(--linha-forte); border-radius: 6px;
+           padding: var(--s2) var(--s3); font-size: 0.88rem; color: var(--tinta-fraca);
+           background: #fff; max-width: 420px; }
+  .chips { display: flex; flex-wrap: wrap; gap: var(--s2); margin-top: var(--s2); }
+  .chip { border: 1px solid var(--linha-forte); background: var(--papel-fundo);
+          border-radius: 999px; padding: 2px var(--s3); font-size: 0.8rem; }
+  .chip span { color: var(--tinta-fraca); margin-left: var(--s1); }
+
+  table.ui { width: 100%; border-collapse: collapse; font-size: 0.86rem; margin-top: var(--s3); }
+  table.ui th { text-align: left; font-weight: 600; font-size: 0.7rem; letter-spacing: 0.06em;
+                text-transform: uppercase; color: var(--tinta-fraca);
+                border-bottom: 1px solid var(--linha-forte); padding: var(--s2) var(--s2); }
+  table.ui td { border-bottom: 1px solid var(--linha); padding: var(--s2); vertical-align: middle; }
+  table.ui tr:nth-child(even) td { background: oklch(0.975 0.005 262); }
+  table.ui .c { text-align: center; }
+  table.ui .n { text-align: center; font-variant-numeric: tabular-nums; }
+  .radio { display: inline-block; width: 14px; height: 14px; border-radius: 50%;
+           border: 1.5px solid var(--linha-forte); vertical-align: middle; background: #fff; }
+  .radio.on { border-color: var(--coral); box-shadow: inset 0 0 0 3px var(--coral); }
+  .badge { display: inline-block; border-radius: 999px; padding: 1px var(--s3);
+           font-size: 0.72rem; color: #fff; }
+  .badge.lavagem { background: var(--ambar); }
+  .badge.ok { background: var(--verde); }
+  .btn { display: inline-block; border-radius: 999px; padding: var(--s2) var(--s4);
+         font-size: 0.82rem; background: var(--azul); color: #fff; }
+  .btn.off { background: oklch(0.86 0.01 262); color: oklch(0.62 0.02 262); }
+  .btn.ghost { background: #fff; color: var(--tinta); border: 1px solid var(--linha-forte); }
+  .rodape-form { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s3);
+                 justify-content: flex-end; border-top: 1px solid var(--linha);
+                 margin-top: var(--s3); padding-top: var(--s3); font-size: 0.82rem;
+                 color: var(--tinta-fraca); }
+  .erro-inline { color: oklch(0.52 0.19 28); font-size: 0.78rem; width: 100%; text-align: right; }
+  .cel-verde { background: var(--verde-fraco) !important; }
+  .cel-vermelha { background: var(--coral-fraco) !important; }
+
+  /* ── checklist de validação ──────────────────────────────────────────── */
+  .check { list-style: none; padding: 0; max-width: 70ch; }
+  .check li { display: flex; gap: var(--s3); align-items: flex-start;
+              border-bottom: 1px solid var(--linha); padding: var(--s3) 0; margin: 0; }
+  .check .box { flex: 0 0 auto; width: 16px; height: 16px; margin-top: 4px;
+                border: 1.5px solid var(--linha-forte); border-radius: 3px; background: #fff; }
+  .check b { font-weight: 600; }
+  .check small { display: block; color: var(--tinta-fraca); font-size: 0.84rem; }
+
+  .tabela { width: 100%; overflow-x: auto; margin: 0 0 var(--s6); }
+  table.dados { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+  table.dados th { text-align: left; font-weight: 600; font-size: 0.76rem; letter-spacing: 0.06em;
+       text-transform: uppercase; color: var(--tinta-fraca);
+       border-bottom: 1px solid var(--linha-forte); padding: var(--s2) var(--s3) var(--s2) 0; white-space: nowrap; }
+  table.dados td { border-bottom: 1px solid var(--linha); padding: var(--s3) var(--s3) var(--s3) 0;
+       vertical-align: top; }
+  table.dados tr:last-child td { border-bottom: 0; }
+  .num-col { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+  .indice { display: flex; flex-wrap: wrap; gap: var(--s2) var(--s4); margin: 0 0 var(--s8);
+            font-size: 0.86rem; }
+  .indice a { color: var(--azul); text-decoration: none; border-bottom: 1px solid transparent; }
+  .indice a:hover { border-bottom-color: var(--azul); }
+
+  hr.regua { border: 0; border-top: 1px solid var(--linha); margin: var(--s16) 0 0; }
+  footer { max-width: 1180px; margin: 0 auto; padding: var(--s8) var(--s6) var(--s16);
+           font-size: 0.82rem; color: var(--tinta-fraca); }
+  footer p { max-width: 70ch; }
+  footer a { color: var(--azul); }
+</style>
+</head>
+<body>
+
+<div class="topo">
+  <div class="faixa">
+    <p class="kicker">Jornada Completa Enxoval · entrega de 28/08/2026</p>
+    <h1>Lavanderia por imóvel e despesas de enxoval</h1>
+    <p class="abertura">
+      Treze entregas subiram para produção hoje. Duas telas mudaram: a <b>aba Estoque</b>,
+      que a franquia usa todo dia para lançar a lavanderia, e a <b>aba Enxoval por Imóvel</b>,
+      que responde quanto enxoval cada imóvel já recebeu. Esta página existe para você
+      conferir cada mudança na tela.
+    </p>
+    <p class="meta">
+      <span><b>Em produção</b> jornada-enxoval.seazone.com.br</span>
+      <span><b>Imagem</b> <code>ee99317-20260828170555</code></span>
+      <span><b>PRs</b> #88 a #101</span>
+      <span><b>Migração</b> <code>estoque_movimentacoes.em_casa</code> aplicada</span>
+    </p>
+  </div>
+</div>
+
+<main>
+
+  <p class="indice">
+    <a href="#estoque">1. Aba Estoque</a>
+    <a href="#lavanderia">1.1 Lavanderia por imóvel</a>
+    <a href="#concluidas">1.2 Lavagens concluídas</a>
+    <a href="#disponivel">1.3 Disponível hoje</a>
+    <a href="#imovel">2. Aba Enxoval por Imóvel</a>
+    <a href="#checklist">3. Checklist de validação</a>
+  </p>
+
+  <!-- ══════════════════ ABA ESTOQUE ══════════════════ -->
+  <section class="bloco" id="estoque">
+    <h2><span class="num">Aba 1</span>Estoque da franquia</h2>
+    <p class="rota">Rota <code>/estoque</code> · Administrador e Franquia</p>
+
+    <p>
+      A tela foi reordenada para a ordem do dia da franquia: ela abre o app para
+      <strong>lançar a lavanderia que acabou de sair</strong>, não para consultar. O que é
+      consulta desceu e nasce fechado — antes era meia tela de rolagem até chegar no que ela
+      veio fazer.
+    </p>
+
+    <figure class="largo">
+      <div class="tela">
+        <div class="tela-barra">Estoque da franquia · ordem nova das seções</div>
+        <div class="tela-corpo">
+          <div class="secao-titulo"><span class="seta">▾</span><h4>Lavanderia por imóvel</h4></div>
+          <p style="font-size:.84rem;color:var(--tinta-fraca);margin:0 0 var(--s4) var(--s4)">
+            aberta — é o que a franquia veio fazer</p>
+          <div class="secao-titulo"><span class="seta">▾</span><h4>Em estoque</h4></div>
+          <p style="font-size:.84rem;color:var(--tinta-fraca);margin:0 0 var(--s4) var(--s4)">
+            aberta — a contagem que ela informa</p>
+          <div class="secao-titulo"><span class="seta">▸</span><h4>Lavagens concluídas</h4>
+            <span class="resumo">clique para abrir</span></div>
+          <div class="secao-titulo"><span class="seta">▸</span><h4>Disponível hoje</h4>
+            <span class="resumo">3 item(ns) com muita peça na lavanderia</span></div>
+          <div class="secao-titulo"><span class="seta">▸</span><h4>Histórico de movimentações</h4>
+            <span class="resumo">clique para abrir</span></div>
+        </div>
+      </div>
+      <figcaption>
+        As três últimas seções nascem <strong>recolhidas</strong>. Fechadas, elas nem chamam a
+        API — o histórico só busca as movimentações quando alguém abre.
+      </figcaption>
+    </figure>
+
+    <p class="nota">
+      <b>Por que fechado por padrão</b>
+      São quatro tabelas na mesma tela e três delas são de consulta. Quem lança a rodada do dia
+      não deveria rolar por elas antes de começar.
+    </p>
+  </section>
+
+  <!-- ── 1.1 lavanderia por imóvel ── -->
+  <section class="bloco" id="lavanderia">
+    <h3 style="font-size:1.3rem">1.1 &nbsp;Lavanderia por imóvel — agora com vários imóveis</h3>
+
+    <p>
+      Antes era um imóvel por vez: escolhia, conferia, enviava, repetia. Agora a franquia marca
+      <strong>quantos imóveis quiser</strong> na mesma rodada. Cada imóvel entra com a
+      <strong>muda calculada dele</strong> (camas, banheiros e cluster), e a quantidade de cada
+      peça <strong>soma sozinha</strong> conforme ela vai marcando — não precisa alterar nada.
+    </p>
+
+    <p>
+      O dropdown mostra <strong>só o código</strong> do imóvel; o subtítulo com cidade e
+      proprietário saiu. Marcar não fecha a lista, então dá para marcar cinco seguidos, e o que
+      já foi escolhido vira uma pastilha com ✕.
+    </p>
+
+    <figure class="largo">
+      <div class="tela">
+        <div class="tela-barra">Lavanderia por imóvel · seleção múltipla</div>
+        <div class="tela-corpo">
+          <p style="font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--tinta-fraca);margin:0 0 var(--s1)">Imóveis (ativos da franquia)</p>
+          <div class="campo">Busque pelo código e marque quantos quiser…</div>
+          <div class="chips">
+            <span class="chip">GRLA1802 <span>✕</span></span>
+            <span class="chip">GRLA1303 <span>✕</span></span>
+            <span class="chip">GRLB1804 <span>✕</span></span>
+          </div>
+
+          <table class="ui">
+            <thead>
+              <tr>
+                <th>Item</th>
+                <th class="c">Quantidade</th>
+                <th class="c">🧺 Lavanderia</th>
+                <th class="c">🏠 Lavagem em Casa</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>FRONHA</td><td class="n">14</td><td class="c"><i class="radio on"></i></td><td class="c"><i class="radio"></i></td></tr>
+              <tr><td>TOALHA BANHO</td><td class="n">9</td><td class="c"><i class="radio on"></i></td><td class="c"><i class="radio"></i></td></tr>
+              <tr><td>TOALHA ROSTO</td><td class="n">8</td><td class="c"><i class="radio on"></i></td><td class="c"><i class="radio"></i></td></tr>
+              <tr><td>TAPETE</td><td class="n">8</td><td class="c"><i class="radio"></i></td><td class="c"><i class="radio on"></i></td></tr>
+              <tr><td>MANTA QUEEN</td><td class="n">6</td><td class="c"><i class="radio"></i></td><td class="c"><i class="radio"></i></td></tr>
+            </tbody>
+          </table>
+
+          <div class="rodape-form">
+            <span>58 peça(s) · 3 imóvel(is)</span>
+            <span class="btn off">Enviar para lavanderia</span>
+            <span class="erro-inline">Marque Lavanderia ou Lavagem em Casa em 1 item(ns): MANTA QUEEN</span>
+          </div>
+        </div>
+      </div>
+      <figcaption>
+        Com <strong>3 imóveis marcados</strong> a quantidade é a soma das mudas e fica fixa.
+        Com <strong>um imóvel só</strong>, o campo volta a ser editável. A linha da MANTA QUEEN
+        ainda não tem escolha — por isso o botão está travado e o aviso aparece.
+      </figcaption>
+    </figure>
+
+    <h3>Lavanderia ou Lavagem em Casa: uma das duas, obrigatória</h3>
+    <p>
+      Cada item tem duas colunas e a franquia marca qual foi. É <strong>uma ou a outra</strong>,
+      nunca as duas, e <strong>não existe padrão</strong>: a linha nasce vazia. Enquanto houver
+      item sem escolha, o envio fica bloqueado com o aviso dizendo quais faltam.
+    </p>
+    <p>
+      Nos dois casos a peça <strong>sai do Disponível hoje</strong> — ela está fora, suja — e
+      volta quando a remessa é concluída. O que muda é só o registro de onde ela está, que
+      aparece com 🧺 ou 🏠 na remessa e no histórico.
+    </p>
+
+    <p class="nota">
+      <b>Por que sem padrão</b>
+      Um padrão silencioso carimbaria “lavanderia” em peça que ficou na casa, e ninguém
+      perceberia. O bloqueio é a única forma de o registro dizer a verdade.
+    </p>
+
+    <h3>Um envio, uma remessa por imóvel</h3>
+    <p>
+      Mandar 3 imóveis de uma vez cria <strong>3 remessas</strong>, uma para cada — porque a
+      volta acontece por imóvel: a lavanderia devolve o pacote de um antes do outro. O
+      <strong>Concluído continua sendo do imóvel inteiro</strong>. Tudo é gravado numa
+      transação só: ou a rodada inteira entra, ou nenhuma.
+    </p>
+
+    <figure class="largo">
+      <div class="tela">
+        <div class="tela-barra">Remessas na lavanderia · só o que está fora</div>
+        <div class="tela-corpo">
+          <table class="ui">
+            <thead>
+              <tr><th>Imóvel</th><th>Enviado em</th><th class="c">Peças</th><th>Status</th><th></th></tr>
+            </thead>
+            <tbody>
+              <tr><td>▸ GRLA1802</td><td>28/08/26 09:14</td><td class="n">20</td><td><span class="badge lavagem">Lavagem</span></td><td><span class="btn ghost">Marcar concluído</span></td></tr>
+              <tr><td>▾ GRLA1303</td><td>28/08/26 09:14</td><td class="n">18</td><td><span class="badge lavagem">Lavagem</span></td><td><span class="btn ghost">Marcar concluído</span></td></tr>
+              <tr><td colspan="5" style="background:var(--papel-fundo)">
+                <span class="chip">🧺 FRONHA · <b>5</b></span>
+                <span class="chip">🧺 TOALHA BANHO · <b>3</b></span>
+                <span class="chip">🏠 TAPETE · <b>3</b></span>
+                <span class="chip">🧺 TOALHA ROSTO · <b>3</b></span>
+              </td></tr>
+              <tr><td>▸ GRLB1804</td><td>28/08/26 09:14</td><td class="n">20</td><td><span class="badge lavagem">Lavagem</span></td><td><span class="btn ghost">Marcar concluído</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <figcaption>
+        Aqui vive <strong>só o que está fora</strong>. Clicar na linha abre as peças, com o
+        marcador de onde cada uma foi lavada.
+      </figcaption>
+    </figure>
+  </section>
+
+  <!-- ── 1.2 lavagens concluídas ── -->
+  <section class="bloco" id="concluidas">
+    <h3 style="font-size:1.3rem">1.2 &nbsp;Lavagens concluídas — seção própria, fechada</h3>
+
+    <p>
+      O histórico de lavagem saiu de dentro do lançamento (era um botão “Ver concluídas”) e
+      virou <strong>seção própria, fechada por padrão</strong>. Abrindo, mostra as remessas que
+      já voltaram: o imóvel, quando foi enviada, <strong>quando foi concluída</strong>, quantas
+      peças e a observação. Clicar na linha abre as peças, como era antes.
+    </p>
+
+    <figure class="largo">
+      <div class="tela">
+        <div class="tela-barra">Lavagens concluídas · fechada (padrão)</div>
+        <div class="tela-corpo">
+          <div class="secao-titulo"><span class="seta">▸</span><h4>Lavagens concluídas</h4></div>
+        </div>
+      </div>
+      <div class="tela">
+        <div class="tela-barra">Lavagens concluídas · aberta</div>
+        <div class="tela-corpo">
+          <div class="secao-titulo"><span class="seta">▾</span><h4>Lavagens concluídas</h4></div>
+          <table class="ui">
+            <thead>
+              <tr><th>Imóvel</th><th>Enviada em</th><th>Concluída em</th><th class="c">Peças</th><th>Observação</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>▸ GRLA1303</td><td>26/08/26 08:40</td><td>27/08/26 17:02</td><td class="n">20</td><td>coleta da manhã</td></tr>
+              <tr><td>▾ GRLA1202</td><td>26/08/26 08:40</td><td>27/08/26 17:02</td><td class="n">21</td><td></td></tr>
+              <tr><td colspan="5" style="background:var(--papel-fundo)">
+                <span class="chip">🧺 FRONHA · <b>5</b></span>
+                <span class="chip">🧺 LENÇOL CASAL · <b>2</b></span>
+                <span class="chip">🧺 TOALHA BANHO · <b>4</b></span>
+                <span class="chip">🏠 TAPETE · <b>3</b></span>
+              </td></tr>
+              <tr><td>▸ GRLB1804</td><td>25/08/26 09:05</td><td>26/08/26 16:20</td><td class="n">24</td><td></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <figcaption>
+        Fechada, a seção nem chama a API. Ela recarrega sozinha quando você conclui uma remessa
+        lá em cima.
+      </figcaption>
+    </figure>
+
+    <p class="nota">
+      <b>Por que saiu de lá</b>
+      A lista de concluídas cresce para sempre — a franquia lança várias por dia — e competia
+      com o lançamento do dia dentro da mesma seção.
+    </p>
+  </section>
+
+  <!-- ── 1.3 disponível hoje ── -->
+  <section class="bloco" id="disponivel">
+    <h3 style="font-size:1.3rem">1.3 &nbsp;Disponível hoje — régua nova de um terço</h3>
+
+    <p>
+      A cor da coluna <strong>Disponível</strong> passou a olhar quanto está
+      <strong>na lavanderia</strong>, não quanto sobrou. Passou de <strong>um terço</strong> do
+      estoque fora, vermelho; abaixo disso, verde. Com 3 mudas, mais de um terço fora quer dizer
+      que sobrou menos de duas mudas na prateleira.
+    </p>
+
+    <figure class="largo">
+      <div class="tela">
+        <div class="tela-barra">Disponível hoje</div>
+        <div class="tela-corpo">
+          <table class="ui">
+            <thead>
+              <tr><th>Item</th><th class="c">Estoque</th><th class="c">Lavanderia</th><th class="c">Disponível</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>FRONHA</td><td class="n">90</td><td class="n">18</td><td class="n cel-verde">72</td></tr>
+              <tr><td>TOALHA BANHO</td><td class="n">60</td><td class="n">26</td><td class="n cel-vermelha">34</td></tr>
+              <tr><td>TAPETE</td><td class="n">30</td><td class="n">9</td><td class="n cel-verde">21</td></tr>
+              <tr><td>MANTA QUEEN</td><td class="n">24</td><td class="n">10</td><td class="n cel-vermelha">14</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <figcaption>
+        TOALHA BANHO tem 26 de 60 fora (43%) e MANTA QUEEN 10 de 24 (42%) — os dois passam de
+        um terço e acendem. FRONHA está em 20% e TAPETE em 30%: verdes.
+      </figcaption>
+    </figure>
+
+    <h3>Outros ajustes que entraram na aba</h3>
+    <ul>
+      <li>O campo de contagem <strong>não pisca mais</strong> o valor antigo ao gravar.</li>
+      <li>O botão <strong>“+ Registrar movimentação”</strong> avulso saiu — movimentação de lavanderia agora é sempre por imóvel.</li>
+      <li>O <strong>ditado por voz</strong> chegou a entrar e foi <strong>revertido</strong> antes de subir para produção; o que ficou daquela leva é a reordenação da aba e a padronização dos títulos.</li>
+      <li>No histórico, a saída lavada em casa aparece com o marcador <strong>🏠 em casa</strong>.</li>
+    </ul>
+  </section>
+
+  <hr class="regua">
+
+  <!-- ══════════════════ ABA ENXOVAL POR IMÓVEL ══════════════════ -->
+  <section class="bloco" id="imovel">
+    <h2><span class="num">Aba 2</span>Enxoval por Imóvel</h2>
+    <p class="rota">Rota <code>/estoque-imoveis</code> · leitura dos espelhos do Sapron</p>
+
+    <p>
+      Esta aba responde quanto enxoval um imóvel já recebeu. Ela ganhou uma
+      <strong>quebra por peça</strong> — clicar na linha do imóvel abre uma subtabela item a
+      item — e duas fontes novas: a <strong>compra lançada como despesa</strong> no Sapron e o
+      <strong>saldo</strong> contra a perda por dano.
+    </p>
+
+    <figure class="largo">
+      <div class="tela">
+        <div class="tela-barra">Enxoval por imóvel · linha aberta</div>
+        <div class="tela-corpo">
+          <table class="ui">
+            <thead>
+              <tr><th>Código</th><th>Franquia</th><th>Cidade</th><th class="c">Peças ideal</th><th class="c">Perda por danos</th><th class="c">Compra por Despesas</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>▾ AAR0203</td><td>Agatha de Assis</td><td>Anápolis/GO</td><td class="n">33</td><td class="n">4</td><td class="n">3</td></tr>
+              <tr><td colspan="6" style="background:var(--papel-fundo);padding:0">
+                <table class="ui" style="margin:0">
+                  <thead><tr><th>Item</th><th class="c">Ideal</th><th class="c">Danos</th><th class="c">Despesas</th><th class="c">Saldo</th></tr></thead>
+                  <tbody>
+                    <tr><td>Fronha</td><td class="n">9</td><td class="n">1</td><td class="n">1</td><td class="n">0</td></tr>
+                    <tr><td>Toalha de banho</td><td class="n">6</td><td class="n">2</td><td class="n">1</td><td class="n" style="color:oklch(0.52 0.19 28);font-weight:600">−1</td></tr>
+                    <tr><td>Lençol/Virol Casal</td><td class="n">3</td><td class="n">1</td><td class="n">1</td><td class="n">0</td></tr>
+                    <tr><td>Tapete</td><td class="n">3</td><td class="n">0</td><td class="n">0</td><td class="n">0</td></tr>
+                    <tr><td>Manta queen size</td><td class="n">3</td><td class="n">0</td><td class="n">0</td><td class="n">0</td></tr>
+                  </tbody>
+                </table>
+              </td></tr>
+              <tr><td>▸ GRLA1802</td><td>Agatha de Assis</td><td>Anápolis/GO</td><td class="n">48</td><td class="n">0</td><td class="n">2</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <figcaption>
+        <strong>Saldo = Despesas − Danos.</strong> Negativo (vermelho) quer dizer que se
+        quebrou mais do que se repôs; zero ou positivo está em dia.
+      </figcaption>
+    </figure>
+
+    <h3>Despesas: só duas das três subcategorias</h3>
+    <p>
+      A categoria <em>Enxoval</em> do financeiro do Sapron tem três subcategorias de peça.
+      Agora entram só duas:
+    </p>
+
+    <div class="tabela">
+      <table class="dados">
+        <thead>
+          <tr><th>Subcategoria</th><th class="num-col">Linhas</th><th>Entra na coluna?</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Compra por desgaste do enxoval</td><td class="num-col">157</td><td>✅ sim</td></tr>
+          <tr><td>Danos de enxoval pelo hóspede</td><td class="num-col">433</td><td>✅ sim</td></tr>
+          <tr><td>Compra enxoval na implantação</td><td class="num-col">18</td><td>❌ não — é o enxoval inicial do imóvel, não reposição</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>
+      A despesa de dano <strong>não duplica</strong> a coluna de perda: a perda vem do
+      <code>guest_damage</code>, que é a única fonte com quantidade, e a despesa é a
+      <em>compra</em> da peça que substituiu a danificada. São colunas separadas, e é isso que
+      faz o saldo andar.
+    </p>
+
+    <div class="aviso">
+      <b>Atenção — a despesa não registra quantidade.</b> A tabela do Sapron diz
+      <em>quais</em> peças, não quantas: a quantidade só existe no texto livre da descrição
+      (“Compra 3 panos de prato”). Cada item lançado conta como <strong>1 peça</strong>. Ler o
+      número da descrição seria adivinhar.
+    </div>
+
+    <h3>Nomes de peça: Tapete, e lençol com virol</h3>
+    <p>
+      As fontes escrevem a mesma peça de jeitos diferentes — o catálogo do app usa
+      <code>TAPETE</code>, o Sapron usa <code>Toalha de piso</code> e a operação digita
+      “toalha de pano” (e até <code>Tapete de banehiro</code>, com 121 lançamentos). Tudo isso
+      agora cai na <strong>mesma linha, chamada Tapete</strong>.
+    </p>
+    <p>
+      Do mesmo jeito, <strong>lençol e virol viraram uma peça só, por tamanho</strong>: a
+      operação trata as duas como a mesma coisa e o dano chegava nas três grafias sem ninguém
+      saber qual era. <code>Pano de prato</code> e <code>Pano de copa</code> seguem separados.
+    </p>
+
+    <p class="nota">
+      <b>O que não casa aparece cru</b>
+      Nome que não bate com nenhum outro vira linha própria, com a grafia da origem. Sumir é
+      pior que duplicar.
+    </p>
+  </section>
+
+  <hr class="regua">
+
+  <!-- ══════════════════ CHECKLIST ══════════════════ -->
+  <section class="bloco" id="checklist">
+    <h2><span class="num">Validação</span>O que conferir no app</h2>
+
+    <p>
+      Tudo abaixo já está em <strong>produção</strong>. O caminho é
+      <code>Estoque</code> e <code>Enxoval por imóvel</code> no menu.
+    </p>
+
+    <ul class="check">
+      <li><span class="box"></span><span><b>Ordem da tela de Estoque</b>
+        <small>Lavanderia por imóvel é a primeira; Lavagens concluídas, Disponível hoje e Histórico aparecem fechados, só com o título.</small></span></li>
+      <li><span class="box"></span><span><b>Marcar 3 imóveis e ver a quantidade somar</b>
+        <small>Os três viram pastilhas; cada peça mostra a soma das mudas; o campo fica fixo. Desmarque até sobrar um: o campo volta a ser editável.</small></span></li>
+      <li><span class="box"></span><span><b>Tentar enviar sem marcar onde lavou</b>
+        <small>O botão deve estar apagado e o aviso em coral deve listar os itens que faltam.</small></span></li>
+      <li><span class="box"></span><span><b>Marcar Lavanderia numa linha e Lavagem em Casa noutra, e enviar</b>
+        <small>Devem nascer três remessas — uma por imóvel — e as peças devem aparecer com 🧺 e 🏠 ao clicar na linha.</small></span></li>
+      <li><span class="box"></span><span><b>Concluir uma remessa</b>
+        <small>Ela some de “Remessas na lavanderia”, aparece em “Lavagens concluídas” com a data de conclusão, e as peças voltam ao Disponível hoje.</small></span></li>
+      <li><span class="box"></span><span><b>Conferir a cor do Disponível hoje</b>
+        <small>Vermelho só quando mais de um terço do estoque daquele item está na lavanderia.</small></span></li>
+      <li><span class="box"></span><span><b>Abrir a linha de um imóvel em Enxoval por Imóvel</b>
+        <small>A subtabela deve trazer Ideal, Danos, Despesas e Saldo, com a linha “Tapete” no lugar de “Toalha de piso”.</small></span></li>
+      <li><span class="box"></span><span><b>Testar no celular</b>
+        <small>As tabelas viram cartões abaixo de 768px — inclusive as remessas e as lavagens concluídas.</small></span></li>
+    </ul>
+
+    <div class="aviso">
+      <b>Um efeito ainda pendente.</b> A regra nova das despesas só muda os dados no
+      <strong>próximo sync de 4 h</strong>. Quando ele rodar, a coluna “Compra por Despesas”
+      sai de 157 para cerca de 590 linhas — é esperado, não é erro.
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <p>
+    Documento gerado em 28/08/2026 para validação da entrega.
+    Produção: <a href="https://jornada-enxoval.seazone.com.br">jornada-enxoval.seazone.com.br</a> ·
+    Teste: <a href="https://stg-jornada-enxoval.seazone.com.br">stg-jornada-enxoval.seazone.com.br</a>.
+  </p>
+  <p>
+    As telas desta página são <strong>simulações</strong> — a mesma estrutura redesenhada aqui
+    para mostrar onde cada coisa fica, já que o app exige login. Os números dos exemplos são
+    ilustrativos; os volumes citados nas tabelas de dados (157 / 433 / 18 linhas de despesa,
+    121 lançamentos de “Tapete de banehiro”) foram medidos no banco do Sapron.
+  </p>
+</footer>
+
+</body>
+</html>
