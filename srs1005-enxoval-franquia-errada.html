@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>SRS1005 — Enxoval entregue na franquia errada</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Public+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink: oklch(0.24 0.02 250);
+    --ink-2: oklch(0.46 0.018 250);
+    --ink-3: oklch(0.62 0.015 250);
+    --paper: oklch(0.985 0.004 250);
+    --paper-2: oklch(0.955 0.006 250);
+    --line: oklch(0.89 0.008 250);
+    --brand: oklch(0.52 0.15 245);
+    --alert: oklch(0.55 0.16 30);
+    --ok: oklch(0.52 0.11 155);
+    --space-1:4px; --space-2:8px; --space-3:12px; --space-4:16px;
+    --space-6:24px; --space-8:32px; --space-12:48px; --space-16:64px; --space-24:96px;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; background:var(--paper); color:var(--ink);
+    font-family:"Public Sans", ui-sans-serif, sans-serif;
+    font-size:16.5px; line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:940px; margin:0 auto; padding:var(--space-12) var(--space-6) var(--space-24)}
+  h1,h2,h3{font-family:"Bricolage Grotesque", serif; line-height:1.05; margin:0; letter-spacing:-0.02em}
+  h1{font-size:clamp(2.1rem, 5vw, 3.4rem); font-weight:800}
+  h2{font-size:clamp(1.25rem,2.4vw,1.6rem); font-weight:700; margin-bottom:var(--space-4)}
+  h3{font-size:1.05rem; font-weight:700}
+  p{max-width:70ch; margin:0 0 var(--space-4)}
+
+  header{display:grid; gap:var(--space-4); padding-bottom:var(--space-8); border-bottom:1px solid var(--line)}
+  .eyebrow{font-size:.78rem; letter-spacing:.14em; text-transform:uppercase; color:var(--ink-3); font-weight:600}
+  .lede{font-size:1.15rem; color:var(--ink-2); max-width:62ch}
+  .meta{display:flex; flex-wrap:wrap; gap:var(--space-2) var(--space-6); font-size:.86rem; color:var(--ink-2); padding-top:var(--space-2)}
+  .meta b{color:var(--ink); font-weight:600}
+  .tag{display:inline-block; font-size:.74rem; font-weight:600; letter-spacing:.08em; text-transform:uppercase;
+       padding:4px 10px; border-radius:999px; background:color-mix(in oklch, var(--alert) 14%, var(--paper)); color:var(--alert)}
+
+  section{padding-top:var(--space-12)}
+
+  .facts{display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); gap:var(--space-6) var(--space-8);
+         margin-top:var(--space-6); padding:var(--space-6) 0; border-top:1px solid var(--line); border-bottom:1px solid var(--line)}
+  .fact span{display:block; font-size:.78rem; text-transform:uppercase; letter-spacing:.1em; color:var(--ink-3); margin-bottom:6px}
+  .fact strong{font-family:"Bricolage Grotesque",serif; font-size:1.15rem; font-weight:700; display:block}
+  .fact em{font-style:normal; color:var(--ink-2); font-size:.9rem}
+
+  .rota{display:grid; grid-template-columns:1fr auto 1fr; gap:var(--space-4); align-items:center; margin:var(--space-6) 0}
+  .rota .p{padding:var(--space-4) var(--space-6); background:var(--paper-2); border:1px solid var(--line); border-radius:2px}
+  .rota .p .who{font-family:"Bricolage Grotesque",serif; font-weight:700; font-size:1.05rem}
+  .rota .p .onde{color:var(--ink-2); font-size:.9rem}
+  .rota .p.errado{background:color-mix(in oklch, var(--alert) 8%, var(--paper)); border-color:color-mix(in oklch, var(--alert) 30%, var(--line))}
+  .rota .p.certo{background:color-mix(in oklch, var(--ok) 8%, var(--paper)); border-color:color-mix(in oklch, var(--ok) 30%, var(--line))}
+  .rota .arrow{font-size:1.4rem; color:var(--ink-3)}
+  .rota .rot{font-size:.72rem; letter-spacing:.12em; text-transform:uppercase; font-weight:700; margin-bottom:4px}
+  .rota .errado .rot{color:var(--alert)} .rota .certo .rot{color:var(--ok)}
+
+  ol.tl{list-style:none; margin:var(--space-6) 0 0; padding:0; display:grid; gap:var(--space-6)}
+  ol.tl li{display:grid; grid-template-columns:78px 1fr; gap:var(--space-6); align-items:start}
+  ol.tl time{font-family:"Bricolage Grotesque",serif; font-weight:700; color:var(--ink-3); font-size:.95rem; padding-top:2px}
+  ol.tl p{margin:0}
+  ol.tl .quem{font-weight:600}
+
+  .opt{padding:var(--space-8) 0; border-top:1px solid var(--line)}
+  .opt-head{display:flex; flex-wrap:wrap; align-items:baseline; gap:var(--space-3); margin-bottom:var(--space-3)}
+  .opt-num{font-family:"Bricolage Grotesque",serif; font-size:2.4rem; font-weight:800; color:var(--ink-3); line-height:1}
+  .status{font-size:.72rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; padding:3px 9px; border-radius:999px}
+  .status.out{background:var(--paper-2); color:var(--ink-3); text-decoration:line-through}
+  .status.viva{background:color-mix(in oklch, var(--ok) 15%, var(--paper)); color:var(--ok)}
+  .opt.descartada{opacity:.72}
+
+  table{border-collapse:collapse; width:100%; max-width:520px; margin:var(--space-4) 0 var(--space-2); font-size:.95rem}
+  th,td{text-align:left; padding:var(--space-3) var(--space-4); border-bottom:1px solid var(--line)}
+  th{font-size:.76rem; text-transform:uppercase; letter-spacing:.1em; color:var(--ink-3); font-weight:600}
+  td.n{text-align:right; font-variant-numeric:tabular-nums; font-weight:600}
+  tr.total td{border-bottom:none; font-family:"Bricolage Grotesque",serif; font-size:1.25rem; font-weight:800; padding-top:var(--space-4)}
+
+  ul.plain{margin:0 0 var(--space-4); padding-left:1.1em; max-width:70ch}
+  ul.plain li{margin-bottom:var(--space-2)}
+
+  .call{margin-top:var(--space-12); padding:var(--space-8); background:var(--ink); color:var(--paper); border-radius:2px}
+  .call h2{color:var(--paper)}
+  .call p{color:oklch(0.86 0.01 250)}
+  .call a{color:var(--paper)}
+
+  footer{margin-top:var(--space-12); padding-top:var(--space-6); border-top:1px solid var(--line); font-size:.85rem; color:var(--ink-3)}
+  a{color:var(--brand)}
+  @media (max-width:640px){
+    .rota{grid-template-columns:1fr}
+    .rota .arrow{transform:rotate(90deg); justify-self:start}
+    ol.tl li{grid-template-columns:1fr; gap:var(--space-1)}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="eyebrow">Suporte Operação · Compra e monitoramento de itens</div>
+  <h1>O enxoval do SRS1005 foi entregue a 1.100 km de onde deveria</h1>
+  <p class="lede">Pedido feito na calculadora antiga saiu endereçado para a franquia de Ilhéus (BA) em vez da de Maceió (AL). Erro interno, sem culpa do fornecedor. Falta decidir como recuperar o material.</p>
+  <div class="meta">
+    <span><b>Imóvel</b> SRS1005</span>
+    <span><b>Aberto em</b> 24/08/2026</span>
+    <span><b>Solicitante</b> Laira Capra</span>
+    <span><b>Responsável</b> Wania</span>
+    <span class="tag">Em aberto</span>
+  </div>
+</header>
+
+<section>
+  <h2>O que aconteceu</h2>
+  <p>O pedido de enxoval do imóvel SRS1005 foi lançado pela analista de implantação na calculadora antiga, onde imóvel e franquia eram selecionados manualmente. A franquia escolhida foi a errada, e o fornecedor RM despachou corretamente para o endereço que recebeu.</p>
+
+  <div class="rota">
+    <div class="p errado">
+      <div class="rot">Recebeu</div>
+      <div class="who">Luanda Tavares Santana</div>
+      <div class="onde">Bairro Pontal<br>Ilhéus — BA</div>
+    </div>
+    <div class="arrow">→</div>
+    <div class="p certo">
+      <div class="rot">Deveria receber</div>
+      <div class="who">Naihana Loyola Andriani</div>
+      <div class="onde">Bairro Jatiúca<br>Maceió — AL</div>
+    </div>
+  </div>
+
+  <div class="facts">
+    <div class="fact"><span>Causa raiz</span><strong>Erro manual</strong><em>Franquia selecionada errada na calculadora antiga</em></div>
+    <div class="fact"><span>Responsabilidade</span><strong>Interna</strong><em>Fornecedor entregou conforme o pedido</em></div>
+    <div class="fact"><span>Reincidência</span><strong>Bloqueada</strong><em>Calculadora nova não permite mais essa escolha</em></div>
+  </div>
+</section>
+
+<section>
+  <h2>Como chegamos até aqui</h2>
+  <ol class="tl">
+    <li><time>24/08</time><p><span class="quem">Laira</span> abre o suporte: o enxoval chegou na Luanda, mas era da Naihana.</p></li>
+    <li><time>25/08</time><p><span class="quem">Wania</span> confere a planilha de implantação — o destino registrado era mesmo a Luanda, então não houve falha do fornecedor.</p></li>
+    <li><time>25/08</time><p><span class="quem">Implantação</span> rebate: todas as tratativas do SRS1005 foram com a Naihana (chamado 20404). Endereços em estados diferentes.</p></li>
+    <li><time>26/08</time><p><span class="quem">Henry</span> identifica a origem: pedido feito na calculadora antiga, franquia errada no lançamento — confirmado como erro manual da analista.</p></li>
+    <li><time>26/08</time><p><span class="quem">Ricardo</span> orienta: tratar como erro interno com a RM, tentar viabilizar a devolução sem custo e comunicar as duas franquias.</p></li>
+    <li><time>27/08</time><p>Suporte segue aberto aguardando o retorno da RM sobre coleta e reenvio.</p></li>
+  </ol>
+</section>
+
+<section>
+  <h2>Opções de resolução</h2>
+
+  <div class="opt descartada">
+    <div class="opt-head">
+      <div class="opt-num">01</div>
+      <h3>Aproveitar o enxoval onde ele está</h3>
+      <span class="status out">Inviável</span>
+    </div>
+    <p>A ideia inicial era não mover nada: destinar o enxoval já entregue a outro imóvel da própria Luanda, em Ilhéus, e a Seazone arcaria com os itens a mais para fechar o kit desse imóvel — evitando frete de coleta e de reenvio.</p>
+    <p><strong>Por que caiu:</strong> o enxoval do imóvel que estávamos avaliando para receber o material foi cancelado. Sem imóvel de destino em Ilhéus, não há como aproveitar a entrega no lugar.</p>
+  </div>
+
+  <div class="opt">
+    <div class="opt-head">
+      <div class="opt-num">02</div>
+      <h3>Coletar em Ilhéus e reentregar em Maceió</h3>
+      <span class="status viva">Em apuração</span>
+    </div>
+    <p>A RM recolhe o enxoval na Luanda e reenvia para a Naihana, no endereço correto. É a opção que resolve as duas pontas: a franqueada certa recebe o material e a errada não fica com item que não pediu.</p>
+    <p><strong>Os valores abaixo são estimativa.</strong> O Ricardo, da RM, está levantando o custo real da coleta e do reenvio — o número final pode mudar.</p>
+    <table>
+      <thead><tr><th>Frete</th><th class="n">Valor estimado</th></tr></thead>
+      <tbody>
+        <tr><td>Retirada em Ilhéus (BA)</td><td class="n">R$ 120,00</td></tr>
+        <tr><td>Entrega em Maceió (AL)</td><td class="n">R$ 140,00</td></tr>
+        <tr class="total"><td>Estimativa total</td><td class="n">R$ 260,00</td></tr>
+      </tbody>
+    </table>
+    <ul class="plain">
+      <li>Primeira tentativa: negociar a operação <strong>sem custo</strong> com a RM, dando visibilidade de que foi erro interno e de que a calculadora nova já elimina a reincidência.</li>
+      <li>Se a RM não absorver, o valor apurado entra como custo Seazone — com desconto no próximo repasse, conforme alinhado.</li>
+    </ul>
+  </div>
+</section>
+
+<div class="call">
+  <h2>Próximos passos</h2>
+  <p><strong>1.</strong> Aguardar o Ricardo (RM) fechar o custo real da coleta e do reenvio e negociar a isenção.</p>
+  <p><strong>2.</strong> Agendar a coleta na Luanda e a entrega na Naihana, com prazo confirmado.</p>
+  <p><strong>3.</strong> Comunicar as duas franqueadas sobre o ocorrido e a tratativa antes de encerrar o suporte.</p>
+</div>
+
+<footer>
+  Suporte no Slack: #suporte-operação · Card no Suporte Unificado 76841f97 · Chamado de implantação: Central de Atividades 20404 · Documento gerado em 28/08/2026.
+</footer>
+
+</div>
+</body>
+</html>
