@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
-<title>Validação — Lavanderia por imóvel e despesas de enxoval</title>
+<title>Validação — Jornada Completa Enxoval, aba por aba</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,400;7..72,600;7..72,700&family=Archivo:wght@400;500;600&display=swap" rel="stylesheet">
@@ -148,6 +148,38 @@
   .check b { font-weight: 600; }
   .check small { display: block; color: var(--tinta-fraca); font-size: 0.84rem; }
 
+  /* kanban / cards / tiles dos mocks das outras abas */
+  .kanban { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: var(--s2); }
+  .coluna { background: var(--papel-fundo); border: 1px solid var(--linha);
+            border-radius: 6px; padding: var(--s2); min-width: 0; }
+  .coluna h5 { margin: 0 0 var(--s2); font-size: 0.68rem; letter-spacing: 0.06em;
+               text-transform: uppercase; color: var(--tinta-fraca); font-weight: 600; }
+  .cartao { background: #fff; border: 1px solid var(--linha); border-radius: 5px;
+            padding: var(--s2); margin-bottom: var(--s2); font-size: 0.78rem; }
+  .cartao b { display: block; font-size: 0.82rem; }
+  .cartao small { color: var(--tinta-fraca); display: block; }
+  .cartao.alerta { border-left: 3px solid var(--coral); }
+  .tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+           gap: var(--s2); }
+  .tile { border: 1px solid var(--linha); border-radius: 6px; padding: var(--s3); background: #fff; }
+  .tile span { display: block; font-size: 0.7rem; letter-spacing: 0.06em;
+               text-transform: uppercase; color: var(--tinta-fraca); }
+  .tile b { font-family: Literata, Georgia, serif; font-size: 1.5rem; font-weight: 700;
+            line-height: 1.2; }
+  .campos { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: var(--s2); }
+  .campos div { border: 1px solid var(--linha); border-radius: 5px; padding: var(--s2) var(--s3);
+                font-size: 0.8rem; background: #fff; }
+  .campos div span { display: block; font-size: 0.68rem; letter-spacing: 0.05em;
+                     text-transform: uppercase; color: var(--tinta-fraca); }
+  .fluxo { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s2);
+           font-size: 0.8rem; margin: 0 0 var(--s4); }
+  .fluxo em { font-style: normal; border: 1px solid var(--linha-forte); border-radius: 999px;
+              padding: 2px var(--s3); background: #fff; }
+  .fluxo i { color: var(--linha-forte); font-style: normal; }
+  .fluxo em.fim { border-color: var(--verde); color: var(--verde); }
+  .fluxo em.mau { border-color: var(--coral); color: oklch(0.52 0.19 28); }
+
   .tabela { width: 100%; overflow-x: auto; margin: 0 0 var(--s6); }
   table.dados { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
   table.dados th { text-align: left; font-weight: 600; font-size: 0.76rem; letter-spacing: 0.06em;
@@ -174,13 +206,13 @@
 
 <div class="topo">
   <div class="faixa">
-    <p class="kicker">Jornada Completa Enxoval · entrega de 28/08/2026</p>
-    <h1>Lavanderia por imóvel e despesas de enxoval</h1>
+    <p class="kicker">Jornada Completa Enxoval · documento de validação · 28/08/2026</p>
+    <h1>O app inteiro, aba por aba</h1>
     <p class="abertura">
-      Treze entregas subiram para produção hoje. Duas telas mudaram: a <b>aba Estoque</b>,
-      que a franquia usa todo dia para lançar a lavanderia, e a <b>aba Enxoval por Imóvel</b>,
-      que responde quanto enxoval cada imóvel já recebeu. Esta página existe para você
-      conferir cada mudança na tela.
+      O que cada aba faz, quem enxerga cada uma e o que mudou na entrega de hoje —
+      treze PRs que subiram para produção. As duas telas reformadas hoje,
+      <b>Estoque</b> e <b>Enxoval por Imóvel</b>, aparecem com mais detalhe; as outras
+      estão aqui para você conferir o conjunto de uma vez.
     </p>
     <p class="meta">
       <span><b>Em produção</b> jornada-enxoval.seazone.com.br</span>
@@ -194,17 +226,270 @@
 <main>
 
   <p class="indice">
-    <a href="#estoque">1. Aba Estoque</a>
-    <a href="#lavanderia">1.1 Lavanderia por imóvel</a>
-    <a href="#concluidas">1.2 Lavagens concluídas</a>
-    <a href="#disponivel">1.3 Disponível hoje</a>
-    <a href="#imovel">2. Aba Enxoval por Imóvel</a>
-    <a href="#checklist">3. Checklist de validação</a>
+    <a href="#visoes">Quem vê o quê</a>
+    <a href="#calculadora">1. Calculadora</a>
+    <a href="#pedidos">2. Pedidos de Itens</a>
+    <a href="#agentes">3. Agentes</a>
+    <a href="#recompra">4. Recompra</a>
+    <a href="#estoque">5. Estoque ✦</a>
+    <a href="#imovel">6. Enxoval por Imóvel ✦</a>
+    <a href="#relatorio">7. Relatório e Análise</a>
+    <a href="#config">8. Configuração e Usuários</a>
+    <a href="#checklist">9. Checklist de validação</a>
   </p>
+  <p style="font-size:.84rem;color:var(--tinta-fraca);margin-top:calc(-1 * var(--s4))">
+    ✦ abas reformadas na entrega de hoje.
+  </p>
+
+  <!-- ══════════════════ VISÕES ══════════════════ -->
+  <section class="bloco" id="visoes">
+    <h2><span class="num">Antes de tudo</span>Quem vê o quê</h2>
+
+    <p>
+      A tela que aparece depende da <strong>categoria do usuário</strong> — não existe menu com
+      aba bloqueada nem link que burle a permissão. O Administrador tem um seletor de
+      <strong>Visão</strong> no rodapé da barra lateral e pode olhar o app pelos olhos de
+      qualquer time, inclusive escolhendo uma franquia específica.
+    </p>
+
+    <div class="tabela largo">
+      <table class="dados">
+        <thead>
+          <tr><th>Aba</th><th>Admin</th><th>Comercial</th><th>Implantação</th><th>CS Prop.</th><th>Fornecedor</th><th>Franquia</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Calculadora Enxoval</td><td>sim</td><td>simulação</td><td>sim</td><td>sim</td><td>sem confirmar</td><td>—</td></tr>
+          <tr><td>Pedidos de Itens</td><td>sim</td><td>—</td><td>sim</td><td>sim</td><td>só os dele</td><td>—</td></tr>
+          <tr><td>Recompra de Enxoval</td><td>sim</td><td>—</td><td>sim</td><td>sim</td><td>—</td><td>—</td></tr>
+          <tr><td>Estoque</td><td>sim</td><td>—</td><td>—</td><td>—</td><td>—</td><td>a própria</td></tr>
+          <tr><td>Enxoval por Imóvel</td><td>sim</td><td>—</td><td>sim</td><td>sim</td><td>—</td><td>—</td></tr>
+          <tr><td>Relatório · Análise</td><td>Relatório</td><td>—</td><td>—</td><td>—</td><td>Análise</td><td>—</td></tr>
+          <tr><td>Configuração</td><td>sim</td><td>—</td><td>—</td><td>—</td><td>leitura parcial</td><td>—</td></tr>
+          <tr><td>Usuários</td><td>sim</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p class="nota">
+      <b>Mudou em 27/08</b>
+      A aba <strong>Estoque</strong> ficou restrita a Administrador e Franquia — Implantação e
+      CS Proprietário deixaram de vê-la. As duas continuam com <strong>Enxoval por
+      Imóvel</strong>.
+    </p>
+  </section>
+
+  <!-- ══════════════════ CALCULADORA ══════════════════ -->
+  <section class="bloco" id="calculadora">
+    <h2><span class="num">Aba 1</span>Calculadora Enxoval</h2>
+    <p class="rota">Rota <code>/</code> · é a tela inicial do app · substitui a planilha de cálculo</p>
+
+    <p>
+      Digita o código do imóvel e o app monta o pedido inteiro: proprietário, franquia de
+      destino, configuração de camas e banheiros, itens com quantidade, frete e total. É aqui
+      que a <strong>compra nasce</strong> — confirmar gera o card no quadro de Pedidos.
+    </p>
+
+    <figure class="largo">
+      <div class="tela">
+        <div class="tela-barra">Calculadora Enxoval</div>
+        <div class="tela-corpo">
+          <div class="campo" style="margin-bottom:var(--s3)">Busque o imóvel pelo código, proprietário ou cidade…</div>
+          <div class="campos">
+            <div><span>Imóvel</span> AAR0203 · Anápolis/GO</div>
+            <div><span>Proprietário</span> Fulano de Tal · (62) 9····-····</div>
+            <div><span>Franquia</span> Agatha de Assis Anápolis</div>
+            <div><span>Fornecedor</span> Matinali <em style="color:var(--azul)">trocável</em></div>
+          </div>
+          <table class="ui">
+            <thead><tr><th>Item</th><th class="c">Regra</th><th class="c">Qtd</th><th class="c">Unitário</th><th class="c">Total</th></tr></thead>
+            <tbody>
+              <tr><td>FRONHA</td><td class="c">2 por cama × 3 mudas</td><td class="n">9</td><td class="n">R$ 19,90</td><td class="n">R$ 179,10</td></tr>
+              <tr><td>TOALHA BANHO</td><td class="c">2 por banheiro × 3 mudas</td><td class="n">6</td><td class="n">R$ 34,90</td><td class="n">R$ 209,40</td></tr>
+              <tr><td>EDREDOM QUEEN</td><td class="c">item fixo — não multiplica</td><td class="n">1</td><td class="n">R$ 189,00</td><td class="n">R$ 189,00</td></tr>
+            </tbody>
+          </table>
+          <div class="rodape-form">
+            <span>Frete GO interior · R$ 120,00</span>
+            <span style="color:var(--tinta)"><b>Total R$ 697,50</b></span>
+            <span class="btn">Confirmar pedido</span>
+          </div>
+        </div>
+      </div>
+      <figcaption>Simulação da tela — a quantidade vem das regras cadastradas e pode ser corrigida à mão, voltando ao cálculo com um clique.</figcaption>
+    </figure>
+
+    <ul>
+      <li><strong>Configuração editável</strong> — camas, banheiros e jacuzzi vêm do cadastro do imóvel, mas podem ser ajustados na hora; o que difere do Sapron fica destacado, com botão para voltar ao original.</li>
+      <li><strong>Fornecedor e frete</strong> — o fornecedor sai da região atendida e o frete da tabela dele para aquela UF, separando capital e interior. Trocar o fornecedor reprecifica o pedido inteiro.</li>
+      <li><strong>Itens avulsos</strong> — dá para lançar item fora das regras, à mão.</li>
+      <li><strong>Compra não vinculada a imóvel</strong> — um toggle permite pedido sem imóvel, usado junto com a franquia <strong>Decor</strong> (criada em 27/08, aparece no topo da lista e pede endereço na hora).</li>
+      <li><strong>Simulação</strong> — na visão Comercial, escolhe UF e qualquer município do Brasil para orçar antes de o imóvel existir.</li>
+    </ul>
+  </section>
+
+  <!-- ══════════════════ PEDIDOS ══════════════════ -->
+  <section class="bloco" id="pedidos">
+    <h2><span class="num">Aba 2</span>Pedidos de Itens — a compra</h2>
+    <p class="rota">Rota <code>/pedidos</code> · substitui as planilhas de pedido da Matinali e da RM</p>
+
+    <p>
+      O quadro onde a compra caminha, do link de pagamento até o embarque. Cada card é um
+      pedido com número próprio (P-0001, P-0002…).
+    </p>
+
+    <p class="fluxo">
+      <em>Aguardando Link de Pagamento</em><i>→</i>
+      <em>Aguardando pagamento</em><i>→</i>
+      <em>Pagamento Confirmado</em><i>→</i>
+      <em class="fim">Enviado</em>
+      <i>·</i><em class="mau">Link Expirado</em><em class="mau">Cancelado</em>
+    </p>
+
+    <figure class="largo">
+      <div class="tela">
+        <div class="tela-barra">Pedidos de Itens · quadro</div>
+        <div class="tela-corpo">
+          <div class="campos" style="margin-bottom:var(--s3)">
+            <div><span>Filtro</span> Todas as franquias ▾</div>
+            <div><span>Filtro</span> Todos os fornecedores ▾</div>
+            <div><span>Busca</span> imóvel, número, proprietário…</div>
+          </div>
+          <div class="kanban">
+            <div class="coluna"><h5>Aguardando link</h5>
+              <div class="cartao"><b>P-2031 · GRLA1802</b><small>🏢 Agatha de Assis</small><small>Matinali · R$ 697,50</small></div>
+            </div>
+            <div class="coluna"><h5>Aguardando pagamento</h5>
+              <div class="cartao"><b>P-2029 · VST034</b><small>🏢 Vitrine Sul</small><small>RM Enxoval · R$ 1.204,00</small></div>
+              <div class="cartao"><b>P-2028 · AAR0203</b><small>🏢 Agatha de Assis</small><small>Matinali · R$ 512,30</small></div>
+            </div>
+            <div class="coluna"><h5>Pagamento confirmado</h5>
+              <div class="cartao alerta"><b>P-2019 · GRLB1804</b><small>🏢 Agatha de Assis</small><small>9 dias sem embarque</small></div>
+            </div>
+            <div class="coluna"><h5>Enviado</h5>
+              <div class="cartao"><b>P-2010 · MAR1102</b><small>NF 4471 · 26/08</small><small>Transportadora + rastreio</small></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <figcaption>Simulação da tela. O card em vermelho passou de 7 dias entre pagamento confirmado e embarque.</figcaption>
+    </figure>
+
+    <h3>O que trava e o que registra</h3>
+    <ul>
+      <li><strong>Para mover para Enviado</strong>: nota fiscal de compra, data de emissão da NF, data de embarque e — desde 26/08 — <strong>transportadora e código de rastreio</strong>. O pedido também precisa ter passado por Pagamento Confirmado.</li>
+      <li><strong>Cancelar exige motivo</strong> de uma lista fechada; é isso que o relatório conta por motivo.</li>
+      <li><strong>Autor de tudo</strong> — quem criou e quem moveu cada card fica registrado no servidor desde 25/08; movimentação anterior a essa data não tem autor e a tela diz isso.</li>
+      <li><strong>Comentários com anexo</strong> (PDF ou foto) dentro do card.</li>
+      <li><strong>Orçamento em PDF</strong> e link público para enviar ao proprietário — o link público não mostra os dados do proprietário.</li>
+      <li><strong>Franquia no rosto do card</strong> e filtro por franquia na barra (27/08), nos dois quadros.</li>
+    </ul>
+
+    <p class="nota">
+      <b>Fornecedor vê o quê</b>
+      Só os pedidos dele. Desde 27/08 ele voltou a ver o CPF/CNPJ do proprietário no card, na
+      calculadora e no orçamento em PDF — o link público continua sem o bloco do proprietário.
+    </p>
+  </section>
+
+  <!-- ══════════════════ AGENTES ══════════════════ -->
+  <section class="bloco" id="agentes">
+    <h2><span class="num">Aba 2 · automação</span>Os agentes que mexem no quadro</h2>
+
+    <p>
+      Dois robôs escrevem no quadro de Pedidos. Eles assinam o que fazem, então dá para saber
+      no histórico do card o que foi pessoa e o que foi automação.
+    </p>
+
+    <h3>Agente de análise de pagamento</h3>
+    <p>
+      No ar desde 24/08, roda <strong>de hora em hora, das 8h às 19h</strong>. Ele abre os links
+      de pagamento da Rede de cada card em <em>Aguardando pagamento</em> e decide sozinho:
+    </p>
+    <ul>
+      <li>algum link <strong>pago</strong> → move para <strong>Pagamento Confirmado</strong>;</li>
+      <li>todos <strong>expirados</strong> → move para <strong>Link Expirado</strong>;</li>
+      <li>qualquer outra combinação → <strong>não mexe</strong>.</li>
+    </ul>
+    <p>
+      A decisão é determinística — não tem IA no meio — e ele assina a movimentação como
+      <strong>“Agente de análise de pagamento”</strong>. Uma rodada leva cerca de 14 minutos
+      para ~55 cards.
+    </p>
+
+    <div class="aviso">
+      <b>O que ele ainda não resolve.</b> Pix e crédito são ordens separadas: confirmado o
+      pagamento, <strong>o link irmão continua vivo</strong> na Rede e ainda aceita pagamento —
+      risco de cobrança em duplicidade. Até existir a integração oficial, vale cancelar o outro
+      link no portal da Rede depois de cada confirmação.
+    </div>
+
+    <h3>Agente de adequação (externo)</h3>
+    <p>
+      Cria pedidos direto no quadro, com a área, o analista e o link do orçamento. O app confere
+      e corrige franquia de destino, frete e cluster na entrada. Cards dele têm o motivo de
+      cancelamento próprio <strong>“Erro Agente”</strong>.
+    </p>
+    <p class="nota">
+      <b>Ponto aberto</b>
+      Esse agente é de outro time. Ele carimba a data de criação com a hora do cron (não a do
+      pedido) e chega a sobrescrever o fornecedor; os cards dele merecem conferência.
+    </p>
+  </section>
+
+  <!-- ══════════════════ RECOMPRA ══════════════════ -->
+  <section class="bloco" id="recompra">
+    <h2><span class="num">Aba 3</span>Recompra de Enxoval</h2>
+    <p class="rota">Rota <code>/recompra</code> · espelha o PIPE 12 do Pipefy de hora em hora, sem escrever de volta lá</p>
+
+    <p>
+      O quadro da troca de enxoval a cada 2 anos. Ao abrir o card, o app
+      <strong>recalcula com a situação de hoje</strong> — configuração do imóvel, proprietário,
+      franquia responsável agora (que define destino, frete e fornecedor) e preços vigentes — e
+      avisa o que mudou desde que o card nasceu.
+    </p>
+
+    <p class="fluxo">
+      <em>Caixa de Entrada</em><i>→</i>
+      <em>Contato com Proprietário</em><i>→</i>
+      <em>Imóvel com Pendência</em><i>→</i>
+      <em class="fim">Recompra Validada</em>
+      <i>·</i><em class="mau">Cancelado</em>
+    </p>
+
+    <figure class="largo">
+      <div class="tela">
+        <div class="tela-barra">Recompra de Enxoval · quadro</div>
+        <div class="tela-corpo">
+          <div class="kanban">
+            <div class="coluna"><h5>Caixa de entrada</h5>
+              <div class="cartao"><b>R-118 · AAR0203</b><small>🏢 Agatha de Assis</small><small>criado à mão · hoje</small></div>
+            </div>
+            <div class="coluna"><h5>Contato com proprietário</h5>
+              <div class="cartao"><b>R-114 · VST034</b><small>checklist 4/6</small><small>termo assinado ✓</small></div>
+            </div>
+            <div class="coluna"><h5>Imóvel com pendência</h5>
+              <div class="cartao alerta"><b>R-101 · MAR1102</b><small>faltam 2 mudas</small><small>vence 30/08</small></div>
+            </div>
+            <div class="coluna"><h5>Recompra validada</h5>
+              <div class="cartao"><b>R-097 · GRLA1802</b><small>pedido P-2028 gerado</small></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <figcaption>Simulação da tela. A coluna de pendência fica ordenada por urgência e o card vencido aparece em vermelho.</figcaption>
+    </figure>
+
+    <ul>
+      <li><strong>Checklist de contato</strong> — seis passos (primeiro contato, tentativa de ligação, termo enviado, termo assinado, proposta apresentada, aguardando retorno), cada um guardando quem marcou e quando.</li>
+      <li><strong>Pendência em mudas</strong> — quando o proprietário aceita parte da troca (2 de 3 mudas), o card entra em pendência com o que falta e uma data de vencimento.</li>
+      <li><strong>Dois pedidos, no tempo certo</strong> — entrar na pendência já gera o pedido do que foi autorizado; validar o resto depois gera um segundo pedido só com o que faltava, sem repetir o que já foi comprado.</li>
+      <li><strong>Card manual</strong> (25/08) — botão “+ Novo card” cria a recompra de um imóvel na hora, com o retrato de hoje; se o imóvel já tem recompra em aberto, o app avisa antes.</li>
+    </ul>
+  </section>
 
   <!-- ══════════════════ ABA ESTOQUE ══════════════════ -->
   <section class="bloco" id="estoque">
-    <h2><span class="num">Aba 1</span>Estoque da franquia</h2>
+    <h2><span class="num">Aba 5 · reformada hoje</span>Estoque da franquia</h2>
     <p class="rota">Rota <code>/estoque</code> · Administrador e Franquia</p>
 
     <p>
@@ -247,7 +532,7 @@
 
   <!-- ── 1.1 lavanderia por imóvel ── -->
   <section class="bloco" id="lavanderia">
-    <h3 style="font-size:1.3rem">1.1 &nbsp;Lavanderia por imóvel — agora com vários imóveis</h3>
+    <h3 style="font-size:1.3rem">5.1 &nbsp;Lavanderia por imóvel — agora com vários imóveis</h3>
 
     <p>
       Antes era um imóvel por vez: escolhia, conferia, enviava, repetia. Agora a franquia marca
@@ -363,7 +648,7 @@
 
   <!-- ── 1.2 lavagens concluídas ── -->
   <section class="bloco" id="concluidas">
-    <h3 style="font-size:1.3rem">1.2 &nbsp;Lavagens concluídas — seção própria, fechada</h3>
+    <h3 style="font-size:1.3rem">5.2 &nbsp;Lavagens concluídas — seção própria, fechada</h3>
 
     <p>
       O histórico de lavagem saiu de dentro do lançamento (era um botão “Ver concluídas”) e
@@ -416,7 +701,7 @@
 
   <!-- ── 1.3 disponível hoje ── -->
   <section class="bloco" id="disponivel">
-    <h3 style="font-size:1.3rem">1.3 &nbsp;Disponível hoje — régua nova de um terço</h3>
+    <h3 style="font-size:1.3rem">5.3 &nbsp;Disponível hoje — régua nova de um terço</h3>
 
     <p>
       A cor da coluna <strong>Disponível</strong> passou a olhar quanto está
@@ -461,7 +746,7 @@
 
   <!-- ══════════════════ ABA ENXOVAL POR IMÓVEL ══════════════════ -->
   <section class="bloco" id="imovel">
-    <h2><span class="num">Aba 2</span>Enxoval por Imóvel</h2>
+    <h2><span class="num">Aba 6 · reformada hoje</span>Enxoval por Imóvel</h2>
     <p class="rota">Rota <code>/estoque-imoveis</code> · leitura dos espelhos do Sapron</p>
 
     <p>
@@ -559,9 +844,89 @@
 
   <hr class="regua">
 
+  <!-- ══════════════════ RELATÓRIO ══════════════════ -->
+  <section class="bloco" id="relatorio">
+    <h2><span class="num">Aba 7</span>Relatório e Análise</h2>
+    <p class="rota">Rotas <code>/relatorio</code> (interno) e <code>/analise</code> (fornecedor, com os dados dele)</p>
+
+    <p>
+      O painel de números do enxoval. Filtra por mês/ano ou intervalo de datas, combinando com
+      fornecedor.
+    </p>
+
+    <figure class="largo">
+      <div class="tela">
+        <div class="tela-barra">Relatório · agosto/2026</div>
+        <div class="tela-corpo">
+          <div class="tiles">
+            <div class="tile"><span>Valor vendido</span><b>R$ 46.390</b></div>
+            <div class="tile"><span>Comissão 5%</span><b>R$ 2.164</b></div>
+            <div class="tile"><span>Pedidos enviados</span><b>38</b></div>
+            <div class="tile"><span>Despacho médio</span><b>3,4 dias</b></div>
+            <div class="tile"><span>Peças compradas</span><b>2.417</b></div>
+          </div>
+          <table class="ui">
+            <thead><tr><th>Pedidos considerados no fechamento</th><th>Franquia</th><th>NF</th><th class="c">Valor</th><th class="c">Comissão</th></tr></thead>
+            <tbody>
+              <tr><td>P-2010 · MAR1102</td><td>Vitrine Sul</td><td>4471 · 26/08</td><td class="n">R$ 1.204,00</td><td class="n">R$ 54,20</td></tr>
+              <tr><td>P-2007 · AAR0203</td><td>Agatha de Assis</td><td>4468 · 25/08</td><td class="n">R$ 697,50</td><td class="n">R$ 28,88</td></tr>
+            </tbody>
+          </table>
+          <div class="rodape-form"><span class="btn ghost">⤓ Baixar para Excel</span><span class="btn ghost">↻ Atualizar</span></div>
+        </div>
+      </div>
+      <figcaption>Simulação da tela. A lista nominal do que entrou no fechamento e o botão de atualizar entraram em 27/08.</figcaption>
+    </figure>
+
+    <ul>
+      <li><strong>Venda e comissão</strong> — desde 27/08 o que manda é a <strong>data de emissão da NF</strong>, não a fase do card: nota emitida sem embarque passou a contar, e mês já apurado parou de mudar de valor quando um card sai de Enviado. A comissão segue 5% sobre o valor sem frete.</li>
+      <li><strong>Tempo de despacho</strong> — média e maior tempo entre pagamento confirmado e embarque, com alerta a partir de 7 dias e a lista de quem ainda não embarcou.</li>
+      <li><strong>Cancelamentos por motivo</strong> — mostra onde a operação está perdendo pedido.</li>
+      <li><strong>Itens comprados</strong> — quantidade e valor por item no período.</li>
+    </ul>
+  </section>
+
+  <!-- ══════════════════ CONFIGURAÇÃO ══════════════════ -->
+  <section class="bloco" id="config">
+    <h2><span class="num">Aba 8</span>Configuração e Usuários</h2>
+    <p class="rota">Grupo <code>/configuracao/*</code> e <code>/usuarios</code> · Administrador</p>
+
+    <p>
+      Vista por cima: é aqui que o cálculo é <strong>ensinado</strong> ao app. Quase nada é fixo
+      no código — item, preço, regra, frete e cluster são cadastro, e mudar aqui muda o próximo
+      pedido calculado.
+    </p>
+
+    <div class="tabela largo">
+      <table class="dados">
+        <thead><tr><th>Tela</th><th>O que dá para configurar</th></tr></thead>
+        <tbody>
+          <tr><td>Itens — Descrição</td><td>Nome e descrição de cada item, com o texto que o fornecedor usa na nota</td></tr>
+          <tr><td>Itens — Valores</td><td>Preço por item e por fornecedor</td></tr>
+          <tr><td>Configuração Itens</td><td>As <strong>regras de cálculo</strong>: quantidade por item × tipo de cama/banheiro × cluster, e quais itens são fixos (o edredom não multiplica pelo número de mudas)</td></tr>
+          <tr><td>Fornecedores</td><td>Quais regiões cada fornecedor atende — é o que escolhe o fornecedor do pedido</td></tr>
+          <tr><td>Fornecedores — Frete</td><td>Tabela de frete das 27 UFs, separando capital e interior</td></tr>
+          <tr><td>Cluster</td><td>Relação cidade → cluster; cidade sem cadastro cai no cluster Padrão</td></tr>
+          <tr><td>Imóvel · Proprietários · Franquias</td><td>Espelhos do Sapron, em leitura, com sincronização automática de 4 h e botão de sincronizar. O app <strong>nunca escreve</strong> no Sapron</td></tr>
+          <tr><td>Integrações <em>(só Administrador)</em></td><td>Token do Pipefy (gatilho da recompra) e o <strong>token de consulta externa</strong>, gerado ali — o valor aparece uma única vez</td></tr>
+          <tr><td>Gerenciamento de Usuários</td><td>Categoria e franquia de cada pessoa, com último login. Entrada é por conta Google; quem não tem cadastro entra como Comercial, só com a calculadora em simulação</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p class="nota">
+      <b>Cuidado com o token</b>
+      O token de <strong>sync</strong> dá escrita (cria e altera cards, regrava espelhos). Para
+      outro time consultar “este imóvel tem pedido pago?”, use o <strong>token de
+      consulta</strong> de Integrações, que é só leitura.
+    </p>
+  </section>
+
+  <hr class="regua">
+
   <!-- ══════════════════ CHECKLIST ══════════════════ -->
   <section class="bloco" id="checklist">
-    <h2><span class="num">Validação</span>O que conferir no app</h2>
+    <h2><span class="num">9 · Validação</span>O que conferir no app</h2>
 
     <p>
       Tudo abaixo já está em <strong>produção</strong>. O caminho é
@@ -583,6 +948,10 @@
         <small>Vermelho só quando mais de um terço do estoque daquele item está na lavanderia.</small></span></li>
       <li><span class="box"></span><span><b>Abrir a linha de um imóvel em Enxoval por Imóvel</b>
         <small>A subtabela deve trazer Ideal, Danos, Despesas e Saldo, com a linha “Tapete” no lugar de “Toalha de piso”.</small></span></li>
+      <li><span class="box"></span><span><b>Conferir a comissão do mês no Relatório</b>
+        <small>Ela passou a seguir a data de emissão da NF; a lista “Pedidos considerados no fechamento” mostra exatamente o que entrou, e dá para baixar em Excel.</small></span></li>
+      <li><span class="box"></span><span><b>Olhar um card criado pelo agente de pagamento</b>
+        <small>No histórico do card, a movimentação deve estar assinada como “Agente de análise de pagamento”.</small></span></li>
       <li><span class="box"></span><span><b>Testar no celular</b>
         <small>As tabelas viram cartões abaixo de 768px — inclusive as remessas e as lavagens concluídas.</small></span></li>
     </ul>
@@ -598,7 +967,7 @@
 
 <footer>
   <p>
-    Documento gerado em 28/08/2026 para validação da entrega.
+    Documento gerado em 28/08/2026: o app inteiro, aba por aba, com a entrega do dia em destaque.
     Produção: <a href="https://jornada-enxoval.seazone.com.br">jornada-enxoval.seazone.com.br</a> ·
     Teste: <a href="https://stg-jornada-enxoval.seazone.com.br">stg-jornada-enxoval.seazone.com.br</a>.
   </p>
