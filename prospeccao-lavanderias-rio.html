@@ -1,0 +1,674 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prospecção de Lavanderias — Rio de Janeiro</title>
+<style>
+  :root{
+    --color-primary:#0055FF; --color-primary-hover:#0044CC; --color-primary-light:#E8F0FE;
+    --color-foreground:#080E32; --color-background:#FFFFFF; --color-muted:#F3F3F5;
+    --color-muted-fg:#6B6E84; --color-border:#E6E7EA;
+    --color-success:#22C55E; --color-error:#E7000B; --color-warning:#F54A00;
+    --radius-lg:8px; --radius-xl:12px; --radius-full:9999px;
+    --space-xs:4px; --space-sm:8px; --space-md:16px; --space-lg:24px;
+    --space-xl:32px; --space-2xl:48px; --space-3xl:64px; --space-4xl:96px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;
+    background:var(--color-background); color:var(--color-foreground);
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1020px;margin:0 auto;padding:var(--space-2xl) var(--space-lg) var(--space-3xl)}
+
+  h1{font-size:48px;font-weight:700;line-height:1.1}
+  h2{font-size:30px;font-weight:500;line-height:1.2}
+  h3{font-size:24px;font-weight:500;line-height:1.3}
+  h4{font-size:20px;font-weight:500;line-height:1.4}
+  p{font-size:16px;font-weight:700;line-height:1.6}
+  .lead{font-size:20px;font-weight:500;line-height:1.5}
+  .body{font-size:14px;font-weight:500;line-height:1.5}
+  .body-reg{font-size:14px;font-weight:400;line-height:1.5}
+  .detail{font-size:12px;font-weight:500;line-height:1.4}
+  .detail-reg{font-size:12px;font-weight:400;line-height:1.4}
+  .muted{color:var(--color-muted-fg)}
+  .prose{max-width:68ch}
+
+  /* ---------- header ---------- */
+  header{padding-bottom:var(--space-2xl)}
+  .eyebrow{
+    display:inline-block;background:var(--color-primary-light);color:var(--color-primary);
+    border-radius:var(--radius-full);padding:6px 14px;margin-bottom:var(--space-md);
+    font-size:12px;font-weight:500;letter-spacing:.04em;
+  }
+  header h1{max-width:22ch}
+  header .lead{color:var(--color-muted-fg);margin-top:var(--space-md);max-width:64ch}
+
+  section{padding-top:var(--space-3xl)}
+  section.tight{padding-top:var(--space-2xl)}
+  .sechead{margin-bottom:var(--space-lg)}
+  .sechead .sub{color:var(--color-muted-fg);margin-top:var(--space-xs);max-width:66ch}
+
+  /* ---------- stat band (sem cards) ---------- */
+  .band{
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+    border-top:1px solid var(--color-border);border-bottom:1px solid var(--color-border);
+  }
+  .band > div{padding:var(--space-lg) var(--space-lg) var(--space-lg) 0}
+  .band > div + div{border-left:1px solid var(--color-border);padding-left:var(--space-lg)}
+  .band .n{font-size:40px;font-weight:700;line-height:1}
+  .band .lbl{color:var(--color-muted-fg);margin-top:var(--space-sm);font-size:14px;font-weight:500;max-width:18ch}
+  .band .ok{color:var(--color-success)}
+  .band .no{color:var(--color-error)}
+  .band .wait{color:var(--color-warning)}
+
+  /* ---------- badges ---------- */
+  .badge{
+    display:inline-block;border-radius:var(--radius-full);padding:4px 12px;
+    font-size:12px;font-weight:500;white-space:nowrap;
+  }
+  .b-ok{background:#E9FAEF;color:#137A38}
+  .b-no{background:#FDECEC;color:var(--color-error)}
+  .b-wait{background:#FEEDE4;color:#B23600}
+  .b-neutral{background:var(--color-muted);color:var(--color-muted-fg)}
+
+  /* ---------- barreiras: numeradas, sem accent strip ---------- */
+  .barreiras{list-style:none;display:grid;gap:var(--space-xl)}
+  .barreiras li{display:grid;grid-template-columns:64px 1fr;gap:var(--space-lg);align-items:start}
+  .barreiras .num{
+    font-size:40px;font-weight:700;line-height:1;
+    color:var(--color-border);letter-spacing:-.02em;
+  }
+  .barreiras h4{margin-bottom:var(--space-sm)}
+  .barreiras p{max-width:64ch}
+
+  /* ---------- cadastradas ---------- */
+  .cads{display:grid;gap:var(--space-md);grid-template-columns:repeat(auto-fit,minmax(270px,1fr))}
+  .cad{
+    background:var(--color-background);border:1px solid var(--color-border);
+    border-radius:var(--radius-xl);padding:var(--space-lg);
+    display:flex;flex-direction:column;
+  }
+  .cad.hero{grid-column:span 2;background:var(--color-primary-light);border-color:#CFE0FF}
+  .cad .top{display:flex;justify-content:space-between;align-items:flex-start;gap:var(--space-md)}
+  .cad h4{margin-bottom:2px}
+  .cad dl{margin-top:var(--space-lg);border-top:1px solid var(--color-border);padding-top:var(--space-md)}
+  .cad.hero dl{border-top-color:#CFE0FF}
+  .cad dl > div{display:flex;justify-content:space-between;gap:var(--space-md);padding:5px 0}
+  .cad dt{color:var(--color-muted-fg);font-size:14px;font-weight:500}
+  .cad dd{font-size:14px;font-weight:700;text-align:right}
+  .note{
+    margin-top:var(--space-md);border:1px solid var(--color-border);
+    border-radius:var(--radius-lg);padding:12px 14px;background:var(--color-muted);
+    font-size:12px;font-weight:500;color:var(--color-muted-fg);
+  }
+  .note strong{color:var(--color-foreground);font-weight:700}
+  .cad.hero .note{background:rgba(255,255,255,.7);border-color:#CFE0FF}
+
+  /* ---------- distâncias ---------- */
+  .dists{display:grid;gap:var(--space-lg)}
+  .dist{display:grid;grid-template-columns:130px 1fr;gap:var(--space-lg);align-items:baseline}
+  .dist .km{font-size:30px;font-weight:700;color:var(--color-primary)}
+  .bar{height:6px;background:var(--color-muted);border-radius:var(--radius-full);overflow:hidden;margin-top:10px}
+  .bar span{display:block;height:100%;background:var(--color-primary);border-radius:var(--radius-full)}
+  .origem{
+    display:inline-block;background:var(--color-muted);border-radius:var(--radius-lg);
+    padding:10px 14px;margin-bottom:var(--space-lg);
+    font-size:12px;font-weight:500;color:var(--color-muted-fg);
+  }
+
+  /* ---------- tabela ---------- */
+  .tabtitle{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+  .tabtitle .tag{
+    background:var(--color-foreground);color:#fff;border-radius:var(--radius-full);
+    padding:3px 10px;font-size:12px;font-weight:500;
+  }
+  .tabtitle .who{font-size:20px;font-weight:500}
+  .tabtitle .vs{font-size:14px;font-weight:500;color:var(--color-muted-fg)}
+  .tablewrap{overflow-x:auto;border:1px solid var(--color-border);border-radius:var(--radius-xl)}
+  table{width:100%;border-collapse:collapse;min-width:700px}
+  th{
+    text-align:left;padding:14px 20px;background:var(--color-muted);
+    color:var(--color-muted-fg);font-size:12px;font-weight:500;white-space:nowrap;
+  }
+  td{padding:16px 20px;border-top:1px solid var(--color-border);font-size:14px;font-weight:500;vertical-align:top}
+  th.wrap{white-space:normal;min-width:150px}
+  td.name{font-weight:700;white-space:nowrap}
+  td.why{max-width:42ch;font-weight:400;color:var(--color-muted-fg)}
+  tbody tr:nth-child(even){background:#FAFAFB}
+
+  /* ---------- fecho ---------- */
+  .fecho{display:grid;gap:var(--space-2xl);grid-template-columns:1fr 1fr}
+  .fecho h4{margin-bottom:var(--space-sm)}
+  .fecho p{max-width:52ch}
+  @media (max-width:720px){
+    h1{font-size:34px} h2{font-size:26px}
+    .fecho{grid-template-columns:1fr;gap:var(--space-lg)}
+    .cad.hero{grid-column:auto}
+    .band > div + div{border-left:0;border-top:1px solid var(--color-border);padding-left:0}
+    .dist{grid-template-columns:1fr;gap:var(--space-xs)}
+    .barreiras li{grid-template-columns:44px 1fr;gap:var(--space-md)}
+  }
+  footer{margin-top:var(--space-3xl);border-top:1px solid var(--color-border);padding-top:var(--space-lg);color:var(--color-muted-fg)}
+  @media print{.tablewrap,.cad{break-inside:avoid}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <span class="eyebrow">Operação · Franquias RJ</span>
+    <h1>Prospecção de lavanderias no Rio de Janeiro</h1>
+    <p class="lead">Levantamento de fornecedores por região para atender as franquias da Zona Sul — Copacabana, Ipanema e Leblon. Nove lavanderias contatadas, três cadastradas, todas com ressalva de volume mínimo ou distância. Inclui a comparação da tabela de preços da Mattos contra o valor-teto, com o deslocamento diluído por endereço de coleta.</p>
+  </header>
+
+  <div class="band">
+    <div><div class="n">9</div><div class="lbl">Lavanderias contatadas</div></div>
+    <div><div class="n ok">3</div><div class="lbl">Cadastradas</div></div>
+    <div><div class="n no">3</div><div class="lbl">Descartadas pelo modelo de cobrança</div></div>
+    <div><div class="n wait">3</div><div class="lbl">Sem retorno ou indisponíveis</div></div>
+  </div>
+
+  <section>
+    <div class="sechead">
+      <h2>As duas barreiras</h2>
+      <p class="sub">Juntas, eliminam ou inviabilizam praticamente todo o mercado prospectado.</p>
+    </div>
+    <ul class="barreiras">
+      <li>
+        <span class="num">01</span>
+        <div>
+          <h4>Não trabalham por peça</h4>
+          <p class="body-reg muted">A cobrança do mercado local é por quilo ou por cesto. Para a operação Seazone, que precisa rastrear item por item do enxoval, esses modelos não servem: não há como conciliar o que foi enviado com o que voltou, nem repassar custo por imóvel.</p>
+        </div>
+      </li>
+      <li>
+        <span class="num">02</span>
+        <div>
+          <h4>Volume mínimo por coleta</h4>
+          <p class="body-reg muted">As que cobram por peça exigem de 50 a 200 peças por coleta. A operação das franquias no Rio ainda é pequena e não gera esse volume hoje — o mínimo viraria custo ocioso.</p>
+        </div>
+      </li>
+    </ul>
+  </section>
+
+  <section>
+    <div class="sechead">
+      <h2>Cadastradas</h2>
+      <p class="sub">As três que trabalham por peça. Cada uma tem uma ressalva ainda aberta.</p>
+    </div>
+    <div class="cads">
+
+      <div class="cad hero">
+        <div class="top">
+          <div>
+            <h4>Ambiental Wash</h4>
+            <div class="detail muted">Barra da Tijuca · com loja física</div>
+          </div>
+          <span class="badge b-ok">Cadastrada</span>
+        </div>
+        <dl>
+          <div><dt>Cobrança</dt><dd>Por peça</dd></div>
+          <div><dt>Volume mínimo</dt><dd>Não exige</dd></div>
+          <div><dt>Distância — Adriana Carla Coutinho Pestana</dt><dd>24,4 km</dd></div>
+          <div><dt>Distância — Jorge de Figueiredo Sampaio Filho</dt><dd>27,5 km</dd></div>
+        </dl>
+        <div class="note"><strong>Única sem exigência de volume mínimo</strong> — a mais compatível com a operação atual. O ponto fraco é a distância: fica na Barra, longe das duas áreas de atuação.</div>
+      </div>
+
+      <div class="cad">
+        <div class="top">
+          <div>
+            <h4>Mattos Lavanderia</h4>
+            <div class="detail muted">Só coleta e entrega</div>
+          </div>
+          <span class="badge b-ok">Cadastrada</span>
+        </div>
+        <dl>
+          <div><dt>Cobrança</dt><dd>Por peça</dd></div>
+          <div><dt>Volume mínimo</dt><dd>50 peças</dd></div>
+          <div><dt>Loja física</dt><dd>Não possui</dd></div>
+        </dl>
+        <div class="note">Menor mínimo entre as cadastradas, mas opera sem endereço de atendimento — tudo depende do ciclo de coleta.</div>
+      </div>
+
+      <div class="cad">
+        <div class="top">
+          <div>
+            <h4>Lavaê Copacabana</h4>
+            <div class="detail muted">Copacabana · dentro da região</div>
+          </div>
+          <span class="badge b-ok">Cadastrada</span>
+        </div>
+        <dl>
+          <div><dt>Cobrança</dt><dd>Por peça</dd></div>
+          <div><dt>Volume mínimo</dt><dd>200 peças</dd></div>
+          <div><dt>Loja física</dt><dd>Sim</dd></div>
+        </dl>
+        <div class="note">A mais bem localizada, mas o mínimo de 200 peças por coleta é o mais alto do levantamento — inviável no volume de hoje.</div>
+      </div>
+
+    </div>
+  </section>
+
+  <section>
+    <div class="sechead">
+      <h2>Distância da Ambiental Wash até as franquias</h2>
+      <p class="sub">Distância rodoviária até a borda mais próxima de cada área de atuação.</p>
+    </div>
+    <div class="origem">Origem: Av. Embaixador Abelardo Bueno, 3500 — Barra da Tijuca, RJ · 22775-040</div>
+    <div class="dists">
+      <div class="dist">
+        <div class="km">24,4 km</div>
+        <div>
+          <p>Polígono da Adriana Carla Coutinho Pestana</p>
+          <div class="detail muted">Ipanema e Leblon · RJ-GIG-002 e RJ-GIG-003</div>
+          <div class="bar"><span style="width:89%"></span></div>
+        </div>
+      </div>
+      <div class="dist">
+        <div class="km">27,5 km</div>
+        <div>
+          <p>Polígono do Jorge de Figueiredo Sampaio Filho</p>
+          <div class="detail muted">Copacabana · RJ-GIG-001 e RJ-GIG-004</div>
+          <div class="bar"><span style="width:100%"></span></div>
+        </div>
+      </div>
+    </div>
+    <p class="detail-reg muted prose" style="margin-top:24px">Cerca de 25 a 30 minutos sem trânsito. No horário de pico no trecho Barra ↔ Zona Sul, pode dobrar.</p>
+  </section>
+
+  <section>
+    <div class="sechead">
+      <h2>Risco: as franquias moram longe das próprias áreas</h2>
+      <p class="sub">Os endereços cadastrados no Sapron ficam fora dos polígonos que cada franquia atende — e isso encarece qualquer arranjo de logística de enxoval.</p>
+    </div>
+
+    <div class="dists">
+      <div class="dist">
+        <div class="km">69,7 km</div>
+        <div>
+          <p>Jorge de Figueiredo Sampaio Filho — Magé até Copacabana</p>
+          <div class="detail muted">Rua Veneza, Guia de Pacobaíba, Magé/RJ · ~1 h de carro · 28 km em linha reta</div>
+          <div class="bar"><span style="width:100%"></span></div>
+        </div>
+      </div>
+      <div class="dist">
+        <div class="km">29,0 km</div>
+        <div>
+          <p>Adriana Carla Coutinho Pestana — Madureira até Ipanema</p>
+          <div class="detail muted">Rua Maria Maia, Madureira, Rio de Janeiro/RJ · ~27 min de carro · 17,7 km em linha reta</div>
+          <div class="bar"><span style="width:42%"></span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="fecho" style="margin-top:32px">
+      <div>
+        <h4>Por que isso é um problema</h4>
+        <p class="body-reg muted">Nenhum dos dois franqueados mora dentro da área que atende. No caso do Jorge de Figueiredo Sampaio Filho, a linha reta é de 28 km mas a rota chega a 70 km, porque Magé fica do outro lado da Baía de Guanabara — o trajeto contorna a baía ou passa pela Ponte Rio-Niterói, o que no pico passa de 1h30. Toda coleta, entrega ou vistoria de enxoval que dependa do deslocamento do franqueado carrega esse custo.</p>
+      </div>
+      <div>
+        <h4>Efeito direto no custo</h4>
+        <p class="body-reg muted">É exatamente o que aparece na tabela da Mattos: R$ 110,00 de coleta em Magé contra R$ 60,00 em Madureira — praticamente proporcional à quilometragem de rota. O custo de deslocamento das lavanderias está precificando a distância entre a casa do franqueado e a região de atuação, não a operação em si.</p>
+      </div>
+    </div>
+    <p class="detail-reg muted prose" style="margin-top:20px">Distâncias rodoviárias até a borda mais próxima do polígono de cada franquia. Endereços conforme cadastro no Sapron (<em>account_user.main_address</em>); coordenadas geocodificadas pelo logradouro, sem o número — margem de algumas centenas de metros, irrelevante nessa escala.</p>
+  </section>
+
+  <section>
+    <div class="sechead">
+      <h2>Mattos Lavanderia — preço por peça vs. valor-teto</h2>
+      <p class="sub">A tabela do Pipefy não inclui o deslocamento, cobrado por coleta e variável conforme o endereço. Diluído na base de 50 peças — o mínimo que eles exigem por coleta.</p>
+    </div>
+
+    <div class="band" style="margin-bottom:32px">
+      <div><div class="n">R$ 110,00</div><div class="lbl">Coleta em Magé <span class="detail-reg">(+R$ 2,20 por peça)</span></div></div>
+      <div><div class="n">R$ 60,00</div><div class="lbl">Coleta em Madureira <span class="detail-reg">(+R$ 1,20 por peça)</span></div></div>
+      <div><div class="n ok">R$ 0,00</div><div class="lbl">Coleta em Copacabana ou Ipanema</div></div>
+    </div>
+
+    <p class="prose" style="margin-bottom:24px">Não existe custo de deslocamento se a coleta for feita em Copacabana ou Ipanema — é onde estão os imóveis das duas franquias. Os R$ 110,00 e R$ 60,00 só entram na conta se a coleta acontecer no endereço de cadastro do franqueado: Magé, no caso do Jorge de Figueiredo Sampaio Filho, e Madureira, no caso da Adriana Carla Coutinho Pestana.</p>
+
+    <div class="tabtitle">
+      <span class="tag">Tabela 1</span>
+      <span class="who">Mattos Lavanderia</span>
+      <span class="vs">preço por peça · com e sem deslocamento · vs. valor-teto</span>
+    </div>
+    <div class="tablewrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Item</th>
+            <th class="wrap">Copacabana / Ipanema<br><span style="text-transform:none">sem deslocamento</span></th>
+            <th class="wrap">Magé — Jorge de Figueiredo Sampaio Filho<br><span style="text-transform:none">+R$ 2,20 por peça</span></th>
+            <th class="wrap">Madureira — Adriana Carla Coutinho Pestana<br><span style="text-transform:none">+R$ 1,20 por peça</span></th>
+            <th>Valor-teto</th>
+            <th>Situação sem deslocamento</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="name">Toalha de rosto</td>
+            <td>R$ 4,00</td>
+            <td><strong>R$ 6,20</strong></td>
+            <td><strong>R$ 5,20</strong></td>
+            <td>R$ 3,00</td>
+            <td><span class="badge b-no">+R$ 1,00 acima</span></td>
+          </tr>
+          <tr>
+            <td class="name">Toalha de banho</td>
+            <td>R$ 7,00</td>
+            <td><strong>R$ 9,20</strong></td>
+            <td><strong>R$ 8,20</strong></td>
+            <td>R$ 4,00</td>
+            <td><span class="badge b-no">+R$ 3,00 acima</span></td>
+          </tr>
+          <tr>
+            <td class="name">Tapete</td>
+            <td>R$ 4,00</td>
+            <td><strong>R$ 6,20</strong></td>
+            <td><strong>R$ 5,20</strong></td>
+            <td>R$ 3,00</td>
+            <td><span class="badge b-no">+R$ 1,00 acima</span></td>
+          </tr>
+          <tr>
+            <td class="name">Manta queen size</td>
+            <td>R$ 14,00</td>
+            <td><strong>R$ 16,20</strong></td>
+            <td><strong>R$ 15,20</strong></td>
+            <td>R$ 15,00</td>
+            <td><span class="badge b-ok">−R$ 1,00 de folga</span></td>
+          </tr>
+          <tr>
+            <td class="name">Lençol solteiro</td>
+            <td>R$ 4,00</td>
+            <td><strong>R$ 6,20</strong></td>
+            <td><strong>R$ 5,20</strong></td>
+            <td>R$ 5,00</td>
+            <td><span class="badge b-ok">−R$ 1,00 de folga</span></td>
+          </tr>
+          <tr>
+            <td class="name">Lençol casal</td>
+            <td>R$ 4,00</td>
+            <td><strong>R$ 6,20</strong></td>
+            <td><strong>R$ 5,20</strong></td>
+            <td>R$ 5,00</td>
+            <td><span class="badge b-ok">−R$ 1,00 de folga</span></td>
+          </tr>
+          <tr>
+            <td class="name">Lençol queen size</td>
+            <td>R$ 5,00</td>
+            <td><strong>R$ 7,20</strong></td>
+            <td><strong>R$ 6,20</strong></td>
+            <td>R$ 5,00</td>
+            <td><span class="badge b-wait">no limite</span></td>
+          </tr>
+          <tr>
+            <td class="name">Lençol king size</td>
+            <td>R$ 5,00</td>
+            <td><strong>R$ 7,20</strong></td>
+            <td><strong>R$ 6,20</strong></td>
+            <td>R$ 5,00</td>
+            <td><span class="badge b-wait">no limite</span></td>
+          </tr>
+          <tr>
+            <td class="name">Fronha</td>
+            <td>R$ 2,00</td>
+            <td><strong>R$ 4,20</strong></td>
+            <td><strong>R$ 3,20</strong></td>
+            <td>R$ 3,00</td>
+            <td><span class="badge b-ok">−R$ 1,00 de folga</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="fecho" style="margin-top:32px">
+      <div>
+        <h4>O que o deslocamento muda</h4>
+        <p class="body-reg muted">Coletando em Copacabana ou Ipanema, sem frete, 3 dos 9 itens estouram o teto, 2 encostam no limite e 4 ficam com folga. Basta entrar qualquer um dos deslocamentos e a folga desaparece: com os R$ 60,00 de Madureira, todos os 9 itens passam do teto; com os R$ 110,00 de Magé, os 9 passam com margem ainda maior.</p>
+      </div>
+      <div>
+        <h4>Ressalvas dos dados</h4>
+        <p class="body-reg muted">A Mattos não trabalha com edredom nem capa de edredom, então esses itens ficam fora da comparação. O rateio só se sustenta se a coleta fechar 50 peças; abaixo disso o frete por peça sobe — numa coleta de 25 peças em Magé, o acréscimo dobra para R$ 4,40.</p>
+      </div>
+    </div>
+    <p class="detail-reg muted prose" style="margin-top:20px">Fonte dos preços: Pipefy pipe 305902386, card “Rio de Janeiro” (fase Ativo), campo Nome da Lavanderia = MATTOS LAVANDERIA · endereço de cadastro R. da Relação, 49 E — Centro/Lapa, RJ · tel. +55 21 96689-8530 · primeiro contato e aprovação em 17/08/2026. Endereços das franquias conforme cadastro no Sapron: Jorge de Figueiredo Sampaio Filho — Rua Veneza, 474, Magé/RJ; Adriana Carla Coutinho Pestana — Rua Maria Maia, 144, Madureira, Rio de Janeiro/RJ. Valores-teto conforme a aba <em>Lavanderias</em> da planilha de referência.</p>
+  </section>
+
+  <section>
+    <div class="sechead">
+      <h2>Ambiental Wash — preço por peça vs. valor-teto</h2>
+      <p class="sub">Não há custo de coleta a diluir: a Ambiental Wash não cobra deslocamento nem exige volume mínimo. Os valores abaixo são os cadastrados no Pipefy, direto contra o teto.</p>
+    </div>
+
+    <div class="tabtitle">
+      <span class="tag">Tabela 2</span>
+      <span class="who">Ambiental Wash</span>
+      <span class="vs">preço por peça vs. valor-teto · com a Mattos ao lado para referência</span>
+    </div>
+    <div class="tablewrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Item</th>
+            <th>Ambiental Wash</th>
+            <th>Valor-teto</th>
+            <th>Situação</th>
+            <th>Mattos<br><span style="text-transform:none">sem deslocamento</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="name">Toalha de rosto</td>
+            <td><strong>R$ 3,50</strong></td>
+            <td>R$ 3,00</td>
+            <td><span class="badge b-no">+R$ 0,50 acima</span></td>
+            <td>R$ 4,00</td>
+          </tr>
+          <tr>
+            <td class="name">Toalha de banho</td>
+            <td><strong>R$ 5,00</strong></td>
+            <td>R$ 4,00</td>
+            <td><span class="badge b-no">+R$ 1,00 acima</span></td>
+            <td>R$ 7,00</td>
+          </tr>
+          <tr>
+            <td class="name">Tapete</td>
+            <td><strong>R$ 3,50</strong></td>
+            <td>R$ 3,00</td>
+            <td><span class="badge b-no">+R$ 0,50 acima</span></td>
+            <td>R$ 4,00</td>
+          </tr>
+          <tr>
+            <td class="name">Manta queen size</td>
+            <td><strong>R$ 15,00</strong></td>
+            <td>R$ 15,00</td>
+            <td><span class="badge b-wait">no limite</span></td>
+            <td>R$ 14,00</td>
+          </tr>
+          <tr>
+            <td class="name">Lençol solteiro</td>
+            <td><strong>R$ 7,00</strong></td>
+            <td>R$ 5,00</td>
+            <td><span class="badge b-no">+R$ 2,00 acima</span></td>
+            <td>R$ 4,00</td>
+          </tr>
+          <tr>
+            <td class="name">Lençol casal</td>
+            <td><strong>R$ 7,00</strong></td>
+            <td>R$ 5,00</td>
+            <td><span class="badge b-no">+R$ 2,00 acima</span></td>
+            <td>R$ 4,00</td>
+          </tr>
+          <tr>
+            <td class="name">Lençol queen size</td>
+            <td><strong>R$ 7,00</strong></td>
+            <td>R$ 5,00</td>
+            <td><span class="badge b-no">+R$ 2,00 acima</span></td>
+            <td>R$ 5,00</td>
+          </tr>
+          <tr>
+            <td class="name">Lençol king size</td>
+            <td><strong>R$ 7,00</strong></td>
+            <td>R$ 5,00</td>
+            <td><span class="badge b-no">+R$ 2,00 acima</span></td>
+            <td>R$ 5,00</td>
+          </tr>
+          <tr>
+            <td class="name">Fronha</td>
+            <td><strong>R$ 4,00</strong></td>
+            <td>R$ 3,00</td>
+            <td><span class="badge b-no">+R$ 1,00 acima</span></td>
+            <td>R$ 2,00</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="fecho" style="margin-top:32px">
+      <div>
+        <h4>Leitura</h4>
+        <p class="body-reg muted">Sem frete para diluir, a Ambiental Wash ainda fica acima do teto em 8 dos 9 itens — só a manta queen encosta no limite. Os lençóis a R$ 7,00 contra teto de R$ 5,00 são o maior desvio, e pesam muito por serem os itens de maior giro no enxoval.</p>
+      </div>
+      <div>
+        <h4>Comparando as duas</h4>
+        <p class="body-reg muted">A Ambiental Wash é mais barata em toalha de banho, toalha de rosto e tapete; a Mattos leva vantagem em todos os lençóis, na fronha e na manta. Sem custo de coleta, a Mattos sai na frente na maior parte da cesta; com a coleta cobrada, a Ambiental Wash passa a ser a mais competitiva.</p>
+      </div>
+    </div>
+    <p class="detail-reg muted prose" style="margin-top:20px">Fonte: Pipefy pipe 305902386, card “Rio de Janeiro” (Ambiental Wash | Lavanderia Delivery na Barra da Tijuca) · Av. Embaixador Abelardo Bueno, 3500 — Barra da Tijuca, RJ, 22775-040 · tel. +55 21 99403-3287 · primeiro contato e aprovação em 17/08/2026. Assim como a Mattos, não trabalha com edredom nem capa de edredom.</p>
+  </section>
+
+  <section>
+    <div class="sechead">
+      <h2>Todas as lavanderias contatadas</h2>
+      <p class="sub">Status e justificativa de cada contato.</p>
+    </div>
+    <div class="tabtitle">
+      <span class="tag">Tabela 3</span>
+      <span class="who">Todas as lavanderias</span>
+      <span class="vs">status e justificativa de cada contato</span>
+    </div>
+    <div class="tablewrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Lavanderia</th>
+            <th>Cobrança</th>
+            <th>Status</th>
+            <th>Justificativa</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="name">Ambiental Wash</td>
+            <td>Por peça</td>
+            <td><span class="badge b-ok">Cadastrada</span></td>
+            <td class="why">Sem quantidade mínima. Fica na Barra da Tijuca — 24,4 km da Adriana Carla Coutinho Pestana e 27,5 km do Jorge de Figueiredo Sampaio Filho.</td>
+          </tr>
+          <tr>
+            <td class="name">Mattos Lavanderia</td>
+            <td>Por peça</td>
+            <td><span class="badge b-ok">Cadastrada</span></td>
+            <td class="why">Mínimo de 50 peças. Não tem local físico — trabalham com coleta e entrega.</td>
+          </tr>
+          <tr>
+            <td class="name">Lavaê Copacabana LTDA</td>
+            <td>Por peça</td>
+            <td><span class="badge b-ok">Cadastrada</span></td>
+            <td class="why">Mínimo de 200 peças por coleta.</td>
+          </tr>
+          <tr>
+            <td class="name">Santa Clara Lava</td>
+            <td>Por quilo</td>
+            <td><span class="badge b-no">Descartada</span></td>
+            <td class="why">Cobrança por quilo — R$ 39,90, com 15% de desconto para Airbnb. Não trabalha por peça.</td>
+          </tr>
+          <tr>
+            <td class="name">Feel Clean Copacabana</td>
+            <td>Por cesto</td>
+            <td><span class="badge b-no">Descartada</span></td>
+            <td class="why">Trabalham por cesto e não por peça.</td>
+          </tr>
+          <tr>
+            <td class="name">Lave e Pegue Glória</td>
+            <td>Por cesto</td>
+            <td><span class="badge b-no">Descartada</span></td>
+            <td class="why">Autoatendimento, cobrança por cesto a R$ 20,00. Não trabalha por peça.</td>
+          </tr>
+          <tr>
+            <td class="name">LavaStays Lavanderia</td>
+            <td class="muted">Não informado</td>
+            <td><span class="badge b-wait">Indisponível</span></td>
+            <td class="why">Fechada para reforma, com previsão de reabertura em 2 meses.</td>
+          </tr>
+          <tr>
+            <td class="name">Dry Deckers Lavanderia</td>
+            <td class="muted">Não informado</td>
+            <td><span class="badge b-neutral">Sem retorno</span></td>
+            <td class="why">Contato feito, sem retorno.</td>
+          </tr>
+          <tr>
+            <td class="name">Maran Industrial</td>
+            <td class="muted">Não informado</td>
+            <td><span class="badge b-neutral">Sem retorno</span></td>
+            <td class="why">Não respondeu ao contato.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <div class="fecho">
+      <div>
+        <h4>Onde isso nos deixa</h4>
+        <p class="body-reg muted">Das nove prospectadas, só três trabalham por peça — o único modelo compatível com o controle de enxoval da Seazone. Dessas, duas exigem volume acima do que a operação do Rio gera hoje, e a única sem mínimo fica a mais de 24 km das áreas de atuação.</p>
+      </div>
+      <div>
+        <h4>Em aberto</h4>
+        <p class="body-reg muted">Ambiental Wash resolve o volume, mas não a distância. Lavaê resolve a distância, mas não o volume. Caminhos a avaliar: consolidar as coletas das duas franquias num mesmo ciclo para bater o mínimo, ou reabrir a conversa com a LavaStays quando ela voltar da reforma.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sechead">
+      <h2>Resumo — o impasse de cada cadastrada</h2>
+      <p class="sub">Nenhuma das três está pronta para operar como está. Cada uma travou por um motivo diferente.</p>
+    </div>
+    <ul class="barreiras">
+      <li>
+        <span class="num">01</span>
+        <div>
+          <h4>Lavaê Copacabana <span class="badge b-no" style="vertical-align:middle">volume mínimo</span></h4>
+          <p class="body-reg muted">Exige 200 peças por coleta — o mínimo mais alto do levantamento. A operação das franquias no Rio ainda é baixa e não gera esse volume, então o mínimo não seria atingido e viraria custo ocioso. É a melhor localizada, mas o volume trava.</p>
+        </div>
+      </li>
+      <li>
+        <span class="num">02</span>
+        <div>
+          <h4>Ambiental Wash <span class="badge b-no" style="vertical-align:middle">distância</span></h4>
+          <p class="body-reg muted">É a única sem exigência de volume mínimo, mas fica na Barra da Tijuca, longe dos polígonos: 24,4 km do polígono da Adriana Carla Coutinho Pestana e 27,5 km do polígono do Jorge de Figueiredo Sampaio Filho. A distância encarece e alonga cada ciclo de coleta e entrega.</p>
+        </div>
+      </li>
+      <li>
+        <span class="num">03</span>
+        <div>
+          <h4>Mattos Lavanderia <span class="badge b-no" style="vertical-align:middle">cobra coleta</span></h4>
+          <p class="body-reg muted">Cobra a coleta por cima do preço por peça, e o valor depende do endereço: R$ 110,00 em Magé (Jorge de Figueiredo Sampaio Filho) e R$ 60,00 em Madureira (Adriana Carla Coutinho Pestana). Diluído em 50 peças, isso soma R$ 2,20 ou R$ 1,20 em cada item e joga todos os 9 itens acima do valor-teto. Só fica viável se a coleta for em Copacabana ou Ipanema, onde não há custo de deslocamento.</p>
+        </div>
+      </li>
+    </ul>
+  </section>
+
+  <footer>
+    <p class="detail-reg">Prospecção de lavanderias · Franquias Rio de Janeiro · Agosto de 2026 · Seazone</p>
+  </footer>
+
+</div>
+</body>
+</html>
