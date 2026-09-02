@@ -92,6 +92,65 @@
 
   footer{margin-top:var(--space-12); padding-top:var(--space-6); border-top:1px solid var(--line); font-size:.85rem; color:var(--ink-3)}
   a{color:var(--brand)}
+
+  /* --- figuras: replica da aba da planilha e da thread do Slack --- */
+  figure{margin:var(--space-8) 0 var(--space-6)}
+  figcaption{font-size:.85rem; color:var(--ink-3); margin-top:var(--space-3); max-width:70ch}
+  figcaption b{color:var(--ink-2); font-weight:600}
+
+  .sheet{border:1px solid var(--line); background:#fff; overflow-x:auto}
+  .sheet-bar{display:flex; align-items:center; gap:var(--space-3); padding:var(--space-3) var(--space-4);
+             border-bottom:1px solid var(--line); background:var(--paper-2); font-size:.82rem; color:var(--ink-2)}
+  .sheet-bar .file{font-weight:600; color:var(--ink)}
+  .sheet-bar .tab{margin-left:auto; font-size:.74rem; letter-spacing:.08em; text-transform:uppercase; font-weight:700;
+                  padding:3px 10px; border:1px solid var(--line); background:#fff; color:var(--ink-2)}
+  .sheet table{border-collapse:collapse; width:100%; min-width:660px; max-width:none; margin:0; font-size:.92rem}
+  .sheet th, .sheet td{border-bottom:1px solid var(--line); border-right:1px solid var(--line);
+                       padding:7px 12px; text-align:left; font-weight:400; color:var(--ink);
+                       text-transform:none; letter-spacing:0; font-size:.92rem}
+  .sheet thead th{background:var(--paper-2); color:var(--ink-3); font-size:.72rem; font-weight:600;
+                  letter-spacing:.1em; text-align:center}
+  .sheet .gut{width:38px; background:var(--paper-2); color:var(--ink-3); text-align:center;
+              font-size:.74rem; font-variant-numeric:tabular-nums}
+  .sheet .lab{color:var(--ink-2); width:210px}
+  .sheet .val{font-weight:500}
+  .sheet .note{border-right:none; width:230px; background:var(--paper); color:var(--ink-3); font-size:.78rem; line-height:1.4}
+  .sheet tr:last-child td{border-bottom:none}
+  .sheet .chev{color:var(--ink-3); float:right; padding-left:var(--space-3); font-size:.7rem}
+
+  .sheet tr.manual .lab, .sheet tr.manual .val{font-weight:600}
+  .sheet tr.ok .val{background:color-mix(in oklch, var(--ok) 12%, #fff); box-shadow:inset 0 0 0 1.5px var(--ok)}
+  .sheet tr.bad .val{background:color-mix(in oklch, var(--alert) 12%, #fff); box-shadow:inset 0 0 0 1.5px var(--alert)}
+  .sheet tr.derivada .val{color:var(--ink-2)}
+  .sheet tr.derivada .val em{font-style:normal; color:var(--alert); font-weight:600}
+  .n-ok{color:var(--ok); font-weight:600}
+  .n-bad{color:var(--alert); font-weight:600}
+
+  .legenda{display:flex; flex-wrap:wrap; gap:var(--space-3) var(--space-6); margin-top:var(--space-4); font-size:.82rem; color:var(--ink-2)}
+  .legenda span{display:flex; align-items:center; gap:var(--space-2)}
+  .legenda i{width:12px; height:12px; display:inline-block; border:1.5px solid var(--line)}
+  .legenda i.ok{border-color:var(--ok); background:color-mix(in oklch, var(--ok) 12%, #fff)}
+  .legenda i.bad{border-color:var(--alert); background:color-mix(in oklch, var(--alert) 12%, #fff)}
+  .legenda i.der{border-color:var(--line); background:var(--paper-2)}
+
+  .thread{border:1px solid var(--line); background:#fff}
+  .msg{display:grid; grid-template-columns:44px 1fr; gap:var(--space-4); padding:var(--space-4) var(--space-6)}
+  .msg + .msg{border-top:1px solid var(--line)}
+  .msg.destaque{background:color-mix(in oklch, var(--brand) 5%, #fff)}
+  .msg .av{width:44px; height:44px; object-fit:cover; border-radius:6px; display:block}
+  .msg .mono{width:44px; height:44px; border-radius:6px; background:var(--ink); color:var(--paper);
+             display:grid; place-items:center; font-family:"Bricolage Grotesque",serif; font-weight:700; font-size:.95rem}
+  .msg .quem{display:flex; flex-wrap:wrap; align-items:baseline; gap:var(--space-2) var(--space-3); margin-bottom:4px}
+  .msg .quem b{font-size:.98rem}
+  .msg .quem .cargo{font-size:.78rem; color:var(--ink-3)}
+  .msg .quem time{font-size:.76rem; color:var(--ink-3); font-variant-numeric:tabular-nums}
+  .msg .corpo{font-size:.95rem; color:var(--ink); margin:0}
+  .msg .corpo strong{background:color-mix(in oklch, var(--alert) 14%, #fff); font-weight:600; padding:0 3px}
+  .msg .corpo .men{color:var(--brand); background:color-mix(in oklch, var(--brand) 10%, #fff); padding:0 3px; border-radius:3px}
+  @media (max-width:640px){
+    .msg{grid-template-columns:32px 1fr; gap:var(--space-3); padding:var(--space-4)}
+    .msg .av,.msg .mono{width:32px; height:32px}
+  }
   @media (max-width:640px){
     .rota{grid-template-columns:1fr}
     .rota .arrow{transform:rotate(90deg); justify-self:start}
@@ -117,7 +176,67 @@
 
 <section>
   <h2>O que aconteceu</h2>
-  <p>O pedido de enxoval do imóvel SRS1005 foi lançado pela analista de implantação na calculadora antiga, onde imóvel e franquia eram selecionados manualmente. A franquia escolhida foi a errada, e o fornecedor RM despachou corretamente para o endereço que recebeu.</p>
+  <p>O pedido de enxoval do SRS1005 não foi montado em um sistema que puxa a franquia a partir do imóvel. Ele foi montado na <b>calculadora antiga</b> — uma planilha em que a analista de implantação preenche, na aba <b>Resumo Onboarding</b>, dois campos <b>manuais e independentes</b>: o <b>código do imóvel</b> e a <b>franquia</b>.</p>
+  <p>Esse é o ponto central: <strong>todo o bloco de entrega — telefone, endereço, estado, cidade, CEP e região — é derivado da franquia selecionada, não do imóvel</strong>. Trocar o imóvel não troca o destino. No SRS1005, apenas metade do preenchimento foi atualizada: o código do imóvel foi trocado corretamente, e a franquia ficou como estava do pedido anterior — Luanda Tavares Santana, de Ilhéus (BA). A planilha então preencheu o endereço de Ilhéus, o pedido foi emitido assim, e a RM despachou exatamente para o endereço que recebeu.</p>
+
+  <figure>
+    <div class="sheet">
+      <div class="sheet-bar">
+        <span class="file">Calculadora antiga · planilha de implantação</span>
+        <span class="tab">Aba “Resumo Onboarding”</span>
+      </div>
+      <table>
+        <thead>
+          <tr><th class="gut"></th><th style="width:210px">B</th><th>C</th><th class="note"></th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="gut">2</td><td class="lab">Nome Proprietário</td><td class="val">Proprietário do SRS1005</td><td class="note"></td></tr>
+          <tr><td class="gut">3</td><td class="lab">Telefone</td><td class="val">+55 ••• ••••-••••</td><td class="note"></td></tr>
+          <tr><td class="gut">4</td><td class="lab">CPF</td><td class="val">•••.•••.•••-••</td><td class="note"></td></tr>
+          <tr class="manual ok"><td class="gut">5</td><td class="lab">Cod Imóvel</td><td class="val">SRS1005 <span class="chev">▾</span></td><td class="note"><span class="n-ok">1ª escolha manual — correta.</span> A analista atualizou o imóvel.</td></tr>
+          <tr class="manual bad"><td class="gut">6</td><td class="lab">Franquia</td><td class="val">Luanda Tavares Santana <span class="chev">▾</span></td><td class="note"><span class="n-bad">2ª escolha manual — não foi alterada.</span> Deveria ser Naihana Loyola Andriani.</td></tr>
+          <tr class="derivada"><td class="gut">7</td><td class="lab">Telefone da franquia</td><td class="val">+55 73 •••••-••••</td><td class="note">↳ derivado da linha 6</td></tr>
+          <tr class="derivada"><td class="gut">8</td><td class="lab">Endereço franquia</td><td class="val">Bairro <em>Pontal</em></td><td class="note">↳ derivado da linha 6</td></tr>
+          <tr class="derivada"><td class="gut">9</td><td class="lab">Estado</td><td class="val"><em>BA</em></td><td class="note">↳ derivado da linha 6</td></tr>
+          <tr class="derivada"><td class="gut">10</td><td class="lab">Cidade</td><td class="val"><em>Ilhéus</em></td><td class="note">↳ derivado da linha 6</td></tr>
+          <tr class="derivada"><td class="gut">11</td><td class="lab">CEP franquia</td><td class="val"><em>•••••-•••</em> (Ilhéus)</td><td class="note">↳ é este CEP que vai no pedido</td></tr>
+          <tr class="derivada"><td class="gut">12</td><td class="lab">Região</td><td class="val">Nordeste</td><td class="note">↳ derivado da linha 6</td></tr>
+          <tr><td class="gut">15</td><td class="lab">Cluster</td><td class="val">Padrão</td><td class="note"></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="legenda">
+      <span><i class="ok"></i> Campo manual preenchido certo</span>
+      <span><i class="bad"></i> Campo manual não atualizado</span>
+      <span><i class="der"></i> Campo automático, herdado da franquia</span>
+    </div>
+    <figcaption>Réplica da aba usada no pedido (valores pessoais mascarados). <b>Duas seleções manuais, uma só atualizada:</b> as linhas 7 a 12 nascem da linha 6, então a franquia errada arrastou o endereço de entrega inteiro para Ilhéus — 1.100 km de Maceió, onde o imóvel está.</figcaption>
+  </figure>
+
+  <h2 style="margin-top:var(--space-12)">Quem confirmou a causa</h2>
+  <p>No dia 26/08, ao apurar o caso, levantamos duas hipóteses: troca de franquia do imóvel durante a implantação, ou seleção errada na calculadora. A coordenação de implantação confirmou a segunda.</p>
+
+  <figure>
+    <div class="thread">
+      <div class="msg">
+        <div class="mono">HY</div>
+        <div>
+          <div class="quem"><b>Henry Matsumoto</b><span class="cargo">Tecnologia</span><time>26/08/2026 · 10:33</time></div>
+          <p class="corpo"><span class="men">@Jéssica Passos</span> sabe se esse imóvel teve alguma troca de franquia durante o processo de implantação? O pedido foi feito pela Maria Eduarda pela calculadora antiga e o imóvel estava endereçado a Luanda Tavares Santana.</p>
+        </div>
+      </div>
+      <div class="msg destaque">
+        <img class="av" src="data:image/jpeg;base64,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" alt="Foto de perfil de Jéssica Passos">
+        <div>
+          <div class="quem"><b>Jéssica Passos</b><span class="cargo">Coordenadora CS Onboarding — Implantação</span><time>26/08/2026 · 10:39</time></div>
+          <p class="corpo"><span class="men">@Henry Matsumoto</span> Acredito que tenha sido um <strong>erro manual da analista na escolha da franquia na calculadora</strong>.</p>
+        </div>
+      </div>
+    </div>
+    <figcaption>Thread do suporte no Slack (<a href="https://seazone-fund.slack.com/archives/C0AM2DBTRT5/p1787614885818169">#suporte-operação</a>). A confirmação descarta troca de franquia no cadastro e fixa a causa na seleção manual da planilha.</figcaption>
+  </figure>
+
+  <p>Antes disso, no dia 25/08, a própria implantação já havia registrado que <b>todas as tratativas do SRS1005 foram feitas com a Naihana</b> (chamado 20404) — ou seja, o imóvel nunca foi da Luanda; só o campo “Franquia” da planilha é que ficou nela.</p>
 
   <div class="rota">
     <div class="p errado">
@@ -134,7 +253,7 @@
   </div>
 
   <div class="facts">
-    <div class="fact"><span>Causa raiz</span><strong>Erro manual</strong><em>Franquia selecionada errada na calculadora antiga</em></div>
+    <div class="fact"><span>Causa raiz</span><strong>Erro manual</strong><em>Franquia não atualizada na aba Resumo Onboarding</em></div>
     <div class="fact"><span>Responsabilidade</span><strong>Interna</strong><em>Fornecedor entregou conforme o pedido</em></div>
     <div class="fact"><span>Reincidência</span><strong>Bloqueada</strong><em>Calculadora nova não permite mais essa escolha</em></div>
   </div>
@@ -197,7 +316,7 @@
 </div>
 
 <footer>
-  Suporte no Slack: #suporte-operação · Card no Suporte Unificado 76841f97 · Chamado de implantação: Central de Atividades 20404 · Documento gerado em 28/08/2026.
+  Suporte no Slack: #suporte-operação · Card no Suporte Unificado 76841f97 · Chamado de implantação: Central de Atividades 20404 · Documento gerado em 28/08/2026 · atualizado em 02/09/2026.
 </footer>
 
 </div>
