@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HUB de Serviços — visões e funcionalidades</title>
+<style>
+  :root{
+    --bg:#0B1020; --bg2:#0F1629; --card:#151D33; --card2:#1B2542;
+    --line:#26314F; --fg:#E8ECF6; --muted:#9AA6C4; --dim:#6E7A99;
+    --blue:#4C8DFF; --blue-soft:#1A2B55; --coral:#FC6058; --green:#3DDC84; --amber:#FFC857;
+    --r:12px; --r-full:9999px;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.6 "Helvetica Neue",Helvetica,Arial,sans-serif}
+  a{color:var(--blue);text-decoration:none} a:hover{text-decoration:underline}
+  .wrap{max-width:1040px;margin:0 auto;padding:0 24px}
+
+  header.hero{padding:72px 0 48px;border-bottom:1px solid var(--line);background:radial-gradient(1200px 400px at 20% -10%,#17305f 0%,transparent 60%)}
+  .eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--blue);font-weight:700}
+  h1{font-size:clamp(34px,5vw,52px);line-height:1.05;margin:12px 0 16px;letter-spacing:-.02em}
+  .lead{font-size:19px;color:var(--muted);max-width:66ch;margin:0}
+  .hero-meta{display:flex;flex-wrap:wrap;gap:10px;margin-top:28px}
+  .pill{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:var(--r-full);padding:6px 14px;font-size:13px;color:var(--muted);background:var(--bg2)}
+  .pill b{color:var(--fg)}
+
+  nav.toc{position:sticky;top:0;z-index:5;background:rgba(11,16,32,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+  nav.toc .wrap{display:flex;gap:4px;overflow-x:auto;padding:10px 24px;scrollbar-width:none}
+  nav.toc a{white-space:nowrap;padding:7px 14px;border-radius:var(--r-full);font-size:13px;color:var(--muted)}
+  nav.toc a:hover{background:var(--card);color:var(--fg);text-decoration:none}
+
+  section{padding:56px 0;border-bottom:1px solid var(--line)}
+  section:last-of-type{border-bottom:0}
+  h2{font-size:30px;margin:0 0 8px;letter-spacing:-.01em}
+  h3{font-size:20px;margin:32px 0 10px}
+  h4{font-size:16px;margin:0 0 6px}
+  .sub{color:var(--muted);font-size:16px;margin:0 0 28px;max-width:70ch}
+  p{margin:0 0 12px}
+  .muted{color:var(--muted)}
+
+  .grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:20px}
+  .card .tag{display:inline-block;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--blue);font-weight:700;margin-bottom:8px}
+  .card ul{margin:8px 0 0;padding-left:18px;color:var(--muted)} .card li{margin:4px 0}
+  .card li b{color:var(--fg);font-weight:600}
+
+  .persona{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+  .persona .card{border-top:3px solid var(--blue)}
+  .persona .card.fr{border-top-color:var(--green)}
+  .persona .card.pr{border-top-color:var(--amber)}
+  .persona .card.in{border-top-color:var(--dim)}
+
+  .menu{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 24px}
+  .menu span{border:1px solid var(--line);background:var(--bg2);border-radius:var(--r-full);padding:5px 12px;font-size:13px;color:var(--muted)}
+  .menu span.g{background:transparent;border-style:dashed;color:var(--dim)}
+
+  .flow{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));counter-reset:step}
+  .step{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:16px;position:relative}
+  .step::before{counter-increment:step;content:counter(step);position:absolute;top:-12px;left:14px;background:var(--blue);color:#fff;border-radius:var(--r-full);width:24px;height:24px;font-size:12px;font-weight:700;display:grid;place-items:center}
+  .step h4{margin-top:6px}
+  .step p{font-size:13.5px;color:var(--muted);margin:0}
+
+  .status{display:inline-block;border-radius:var(--r-full);padding:2px 10px;font-size:12px;font-weight:700}
+  .ok{background:#123826;color:var(--green)} .pend{background:#3a2f10;color:var(--amber)} .rej{background:#3c1a1a;color:var(--coral)}
+
+  table{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;font-size:14px}
+  .twrap{overflow-x:auto;border-radius:var(--r)}
+  th,td{padding:10px 14px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+  th{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.06em;font-weight:600;background:var(--bg2)}
+  tr:last-child td{border-bottom:0}
+  td.c{text-align:center}
+
+  .kpis{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
+  .kpi{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:16px}
+  .kpi b{display:block;font-size:30px;line-height:1;margin-bottom:6px}
+  .kpi span{color:var(--muted);font-size:13px}
+
+  .note{background:var(--blue-soft);border:1px solid #2b4380;border-radius:var(--r);padding:14px 18px;color:var(--fg);margin:16px 0}
+  .note.warn{background:#3a2f10;border-color:#6b5520}
+  footer{padding:40px 0 64px;color:var(--dim);font-size:13px}
+  @media (max-width:640px){header.hero{padding:48px 0 32px} section{padding:40px 0} h2{font-size:26px}}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <span class="eyebrow">Seazone · Franquias · Documentação de produto</span>
+    <h1>HUB de Serviços</h1>
+    <p class="lead">Onde a franquia encontra prestador e lavanderia homologados, indica quem conhece e acompanha o que indicou. E onde o time Seazone valida, mede e cuida da base.</p>
+    <div class="hero-meta">
+      <span class="pill">Acesso: <b><a href="https://hub-servicos.seazone.com.br">hub-servicos.seazone.com.br</a></b></span>
+      <span class="pill">Atualizado em <b>08/09/2026</b></span>
+      <span class="pill">Funciona no <b>celular</b> e no computador</span>
+      <span class="pill">Tema <b>claro ou escuro</b></span>
+    </div>
+  </div>
+</header>
+
+<nav class="toc"><div class="wrap">
+  <a href="#visao-geral">Visão geral</a>
+  <a href="#perfis">Quem usa</a>
+  <a href="#franquia">Visão da franquia</a>
+  <a href="#admin">Visão do administrador</a>
+  <a href="#prestador">Porta do prestador</a>
+  <a href="#ciclo">Ciclo de um cadastro</a>
+  <a href="#numeros">Números de hoje</a>
+</div></nav>
+
+<main class="wrap">
+
+<section id="visao-geral">
+  <h2>O que é o Hub</h2>
+  <p class="sub">Uma base única de prestadores de serviço e lavanderias, organizada por categoria, estado e cidade, que só mostra quem já foi validado pelo time Seazone.</p>
+  <div class="grid">
+    <div class="card"><span class="tag">Problema</span><h4>Cada franquia procurava sozinha</h4><p class="muted">Eletricista, piscineiro, lavanderia: cada praça descobria seus fornecedores por conta própria, sem registro e sem reaproveitar o que outra franquia já tinha encontrado.</p></div>
+    <div class="card"><span class="tag">Resposta</span><h4>Uma base homologada e compartilhada</h4><p class="muted">Todo prestador passa por validação antes de aparecer. A franquia busca por serviço e cidade, vê contato, preço e observações, e pode favoritar e avaliar.</p></div>
+    <div class="card"><span class="tag">Entrada</span><h4>Várias portas, um destino</h4><p class="muted">Indicação da franquia, autocadastro do prestador pelo assistente conversacional, campanhas na SIA e grupos do Facebook, cadastro manual do admin e carga de planilha. Tudo cai no mesmo painel de validação.</p></div>
+  </div>
+</section>
+
+<section id="perfis">
+  <h2>Quem usa e o que vê</h2>
+  <p class="sub">O menu lateral muda conforme o perfil. A mesma regra vale para o menu, para o acesso à tela e para o que a tela mostra: quem não pode ver, não vê nem pela URL.</p>
+  <div class="persona">
+    <div class="card fr"><span class="tag">Franquia</span><h4>Consulta e indica</h4><ul><li>Meu painel</li><li>Buscar prestador, Lavanderias, Meus favoritos</li><li>Indicar prestador, Indicar lavanderia, Minhas indicações</li></ul></div>
+    <div class="card"><span class="tag">Seazone · administrador</span><h4>Valida e opera a base</h4><ul><li>Painel de validação</li><li>Grupos do Facebook, Fornecedores internos, Monitoramento, Cobertura por cidade, Configurações</li><li>Tudo que a franquia vê, mais edição e cadastro direto</li></ul></div>
+    <div class="card in"><span class="tag">Seazone · interno</span><h4>Só consulta</h4><ul><li>Pessoa do time com conta @seazone que não está na lista de administradores</li><li>Buscar prestador, Lavanderias, Meus favoritos</li></ul></div>
+    <div class="card pr"><span class="tag">Prestador</span><h4>Se cadastra sozinho</h4><ul><li>Não faz login</li><li>Central de Prestadores, assistente de cadastro, formulário do site</li></ul></div>
+  </div>
+  <div class="note">O administrador tem um <b>seletor de visão</b> no rodapé do menu para enxergar o Hub exatamente como uma franquia, como um interno sem administração ou como um prestador. Um aviso fixo lembra que o preview está ativo e devolve ao modo admin com um clique.</div>
+</section>
+
+<section id="franquia">
+  <h2>Visão da franquia</h2>
+  <p class="sub">Menu em dois blocos: <b>Franquia</b> (Meu painel) e <b>Consulta</b> / <b>Indicações</b>.</p>
+  <div class="menu"><span class="g">Franquia</span><span>Meu painel</span><span class="g">Consulta</span><span>Buscar prestador</span><span>Lavanderias</span><span>Meus favoritos</span><span class="g">Indicações</span><span>Indicar prestador</span><span>Indicar lavanderia</span><span>Minhas indicações</span></div>
+
+  <h3>Meu painel</h3>
+  <p>Página inicial da franquia. Mostra três contadores da base (prestadores validados, lavanderias homologadas e categorias de serviço) e atalhos para as ações mais usadas: buscar prestador, indicar prestador, acompanhar indicações, favoritos e lavanderias.</p>
+
+  <h3>Buscar prestador</h3>
+  <div class="grid">
+    <div class="card"><h4>Por categoria</h4><p class="muted">Uma grade com as categorias de serviço (limpeza, manutenção elétrica e hidráulica, ar-condicionado, piscina, jardinagem, pintura, chaveiro, dedetização, montagem de móveis, marido de aluguel e outros). Clicar numa categoria lista os prestadores homologados dela.</p></div>
+    <div class="card"><h4>Por filtros</h4><p class="muted">Tipo de serviço, estado e cidade. A lista de cidades só mostra onde existe prestador cadastrado, então a franquia não perde tempo com cidade vazia.</p></div>
+    <div class="card"><h4>Ficha do prestador</h4><p class="muted">Contato, cidade, endereço, região de atendimento, horário, site e redes, observação e a lista de serviços com o preço de cada um (unitário e em volume, ou "a combinar"). Valor de visita para orçamento e valor por hora quando informados.</p></div>
+    <div class="card"><h4>Favoritar, avaliar e comentar</h4><p class="muted">Coração para salvar nos favoritos. Estrelas e comentário para registrar como foi a experiência, visível para as outras franquias que consultarem o mesmo prestador.</p></div>
+    <div class="card"><h4>Não achou? Prospecção na internet</h4><p class="muted">Quando a busca não retorna ninguém, aparece o botão <b>Prospectar fornecedores</b>. Uma busca com inteligência artificial traz sugestões de fornecedores da região com nome e telefone. Nada entra na base sozinho: escolher uma sugestão abre o formulário de indicação já preenchido, e o cadastro segue o fluxo normal de validação.</p></div>
+  </div>
+
+  <h3>Lavanderias</h3>
+  <p>Consulta das lavanderias homologadas, com filtro por estado e cidade. Cada card abre a ficha completa: contato, endereço, se faz coleta e entrega, observação e a <b>grade de preço por peça</b> (fronha, toalhas, lençóis, mantas, edredons e capas, nos quatro tamanhos). Dá para favoritar do mesmo jeito que o prestador.</p>
+
+  <h3>Meus favoritos</h3>
+  <p>Os prestadores e lavanderias que a pessoa salvou, separados em duas listas, com acesso à ficha completa a partir dali. Cada usuário tem a própria lista.</p>
+
+  <h3>Indicar prestador</h3>
+  <p>Formulário em etapas, pensado para o celular. Digitar o CEP preenche cidade, estado, bairro e rua. A franquia informa nome, contato, e-mail, número e complemento, marca os <b>serviços prestados</b> (com um campo "Qual serviço?" quando escolhe "Outros"), horário de atendimento (com opções de 24h, fins de semana e feriados), observação e um anexo opcional (print ou orçamento). Antes de enviar, uma tela de revisão mostra tudo para conferir e voltar se algo estiver errado.</p>
+
+  <h3>Indicar lavanderia</h3>
+  <p>Mesmo modelo, com os campos da lavanderia: nome, endereço, estado, contato, e-mail, se faz coleta e entrega, a grade de preços por peça, observação e anexo.</p>
+
+  <h3>Minhas indicações</h3>
+  <p>Lista do que a franquia indicou e o status de cada uma: <span class="status ok">validada</span> <span class="status pend">pendente</span> <span class="status rej">recusada</span>. Quando é recusada, o motivo escrito pelo time Seazone aparece ali. Pendente significa "aguardando validação do time Seazone".</p>
+</section>
+
+<section id="admin">
+  <h2>Visão do administrador</h2>
+  <p class="sub">Quem está na lista de administradores entra com a conta Google @seazone.com.br e ganha o bloco <b>Administrador</b> no menu, além de tudo que a franquia vê.</p>
+  <div class="menu"><span class="g">Administrador</span><span>Painel de validação</span><span>Grupos do Facebook</span><span>Fornecedores internos</span><span>Monitoramento</span><span>Cobertura por cidade</span><span>Configurações</span><span class="g">Consulta</span><span>Buscar prestador</span><span>Lavanderias</span><span>Meus favoritos</span></div>
+
+  <h3>Painel de validação</h3>
+  <p>É a fila de trabalho. Todo cadastro que entra no Hub, de qualquer origem, aparece aqui em três colunas: <span class="status pend">Pendentes</span> <span class="status ok">Validados</span> <span class="status rej">Reprovados</span>. No celular as colunas ficam empilhadas.</p>
+  <div class="grid">
+    <div class="card"><h4>Filtros</h4><p class="muted">Prestadores ou lavanderias. Canal de origem: indicação de franquia, prospecção por IA, cadastro no site, assistente Mia (WhatsApp), grupo do Facebook, SIA, cadastro manual do admin e carga de planilha. Um filtro isola só o que o robô de validação recusou.</p></div>
+    <div class="card"><h4>Contadores</h4><p class="muted">Quantos estão em cada status e dois números do robô: "Aprovados pelo bot" e "Bot recusou, revisar".</p></div>
+    <div class="card"><h4>Ficha completa em popup</h4><p class="muted">Clicar no card abre tudo que foi cadastrado, inclusive campos vazios (aparecem como "—"), o canal de origem, quem indicou, anexo e o veredito do robô com os motivos.</p></div>
+    <div class="card"><h4>Editar dados</h4><p class="muted">Corrige qualquer campo: nome, contato, endereço, tipo de pessoa, CPF/CNPJ, horário, região, site, observação. No prestador, as categorias e o preço de cada uma; na lavanderia, a grade por peça. Um aviso destaca cadastro sem categoria, porque ele não aparece em nenhuma busca.</p></div>
+    <div class="card"><h4>Validar ou reprovar</h4><p class="muted">Validar coloca o cadastro na busca da franquia na hora. Reprovar pede um motivo, que a franquia lê em "Minhas indicações". Também é possível excluir um cadastro.</p></div>
+    <div class="card"><h4>Robô de validação</h4><p class="muted">Botão <b>Validar pendentes com o bot</b> roda as regras em lote em tudo que ainda não passou por ele. Em cada card pendente há um <b>Rodar o bot</b> individual, útil depois de corrigir um telefone ou marcar a categoria que faltava. O robô nunca desfaz decisão humana.</p></div>
+    <div class="card"><h4>Categoria pelo lead</h4><p class="muted">Quem chegou pela campanha da SIA já tinha sido levantado por categoria. O botão <b>Preencher categorias pelo lead</b> cruza telefone com a base de prospecção e marca a categoria de quem não marcou nenhuma, sem chutar preço. O card avisa quando a categoria veio do lead.</p></div>
+  </div>
+
+  <h3>Lavanderias (com poderes de admin)</h3>
+  <p>A mesma consulta da franquia, com dois extras: o botão <b>Cadastrar lavanderia</b>, que grava a lavanderia já validada (quem cadastra é quem aprovaria, então não faz sentido mandar para a própria fila), e um lápis em cada card para <b>editar</b> a ficha, incluindo a observação e a grade de preço por peça.</p>
+
+  <h3>Grupos do Facebook</h3>
+  <div class="grid">
+    <div class="card"><h4>Grupos salvos</h4><p class="muted">Diretório de grupos de prestadores por estado e cidade, com link, observação e a marcação "já publiquei neste grupo".</p></div>
+    <div class="card"><h4>Descobrir novos grupos</h4><p class="muted">Sugestões geradas com inteligência artificial a partir de estado, cidades e foco (por exemplo, refrigeração). Achou um bom, adiciona ao diretório.</p></div>
+    <div class="card"><h4>Mensagem pronta e imagem</h4><p class="muted">Texto sugerido para postar no grupo já com o link do assistente de cadastro (canal Facebook) e imagem para baixar.</p></div>
+    <div class="card"><h4>Monitoramento</h4><p class="muted">Quantos cadastros entraram pelo link do Facebook e em que status estão.</p></div>
+  </div>
+
+  <h3>Fornecedores internos</h3>
+  <p>Cadastro separado dos fornecedores da própria Seazone (contabilidade, software, marketing e afins), com logo, CNPJ, contato, e-mail, site, endereço, categoria e observações. Não se mistura com os prestadores que a franquia consulta.</p>
+
+  <h3>Monitoramento</h3>
+  <div class="twrap"><table>
+    <thead><tr><th>Aba</th><th>Para que serve</th></tr></thead>
+    <tbody>
+      <tr><td><b>Tipos de serviço</b></td><td>Cria e edita as categorias que aparecem em toda busca e formulário. Em cada categoria, define os textos das perguntas de preço do assistente (valor unitário e valor em volume, por exemplo "Valor da diária" e "Fazendo 10 diárias no mês, fica"). "Outros" é sempre a última da lista.</td></tr>
+      <tr><td><b>Monitoramento do bot</b></td><td>Funil do assistente de cadastro por período e canal: quantos abriram o link, quantos responderam alguma pergunta, quantos concluíram. Mostra em que pergunta as pessoas mais abandonam e as últimas conversas com a última atividade.</td></tr>
+      <tr><td><b>Leads prospectados</b></td><td>Base de empresas levantadas na Receita Federal por atividade e cidade (mais de 50 mil), com filtro por estado, cidade, serviço, tipo de telefone (celular recebe WhatsApp, fixo só ligação) e nome. Destaca quem ainda não se cadastrou no Hub, que é o público das campanhas.</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>Cobertura por cidade</h3>
+  <p>Cruza quantos imóveis a Seazone administra em cada cidade (ativos e em onboarding) com quantos prestadores validados existem lá. Filtra por estado, cidade e serviço. Escolhendo um serviço, a contagem passa a ser só daquele serviço. Escolhendo uma cidade, aparecem as categorias com quantos prestadores tem em cada, e as vazias ficam marcadas como o que precisa ser captado.</p>
+  <div class="note warn">Dois alertas acendem na tabela: cidade com <b>mais de 40 imóveis por prestador</b> e cidade com <b>imóvel e nenhum prestador</b>. O número de imóveis é uma foto do Sapron com a data à vista na tela, atualizada pelo time.</div>
+
+  <h3>Configurações</h3>
+  <div class="grid">
+    <div class="card"><h4>Acessos internos</h4><p class="muted">Lista de quem entrou no Hub com conta @seazone.com.br, com último acesso e busca por nome ou e-mail. É aqui que se marca quem é administrador. Logar com Google autentica, mas não dá poder de admin sozinho.</p></div>
+    <div class="card"><h4>Visualizar como</h4><p class="muted">Ativa o preview como franquia, como Seazone sem administração ou como prestador, para ver exatamente o que cada perfil enxerga. "Encerrar preview" volta ao normal.</p></div>
+  </div>
+</section>
+
+<section id="prestador">
+  <h2>A porta do prestador</h2>
+  <p class="sub">O prestador não faz login. Ele entra por links públicos e se cadastra sozinho.</p>
+  <div class="grid">
+    <div class="card"><span class="tag">Página inicial pública</span><h4>Central de Prestadores</h4><p class="muted">Apresenta a Seazone e oferece três portas: "Sou prestador" (cadastro), "Sou franquia" e "Sou do time Seazone" (login). Lista os serviços que a operação precisa.</p></div>
+    <div class="card"><span class="tag">Assistente conversacional</span><h4>Cadastro em forma de conversa</h4><p class="muted">Pergunta uma coisa por vez: nome, telefone, cidade, serviços, preços (com as perguntas configuradas por categoria), horário, documentos. Campos que não bloqueiam podem ser pulados. No fim, mostra um resumo com "Está certo, continuar" ou "Corrigir alguma coisa".</p></div>
+    <div class="card"><span class="tag">Canais</span><h4>O mesmo assistente, origens separadas</h4><p class="muted">O link muda conforme a campanha (grupos do Facebook, disparo da SIA), e o Hub registra de onde cada cadastro veio. Isso alimenta os filtros do painel e o funil do monitoramento.</p></div>
+    <div class="card"><span class="tag">Formulário do site</span><h4>Cadastro de fornecedor / Trabalhe conosco</h4><p class="muted">Versão em formulário tradicional do mesmo cadastro, para quem prefere preencher tudo de uma vez.</p></div>
+  </div>
+</section>
+
+<section id="ciclo">
+  <h2>Ciclo de vida de um cadastro</h2>
+  <p class="sub">Do momento em que alguém indica ou se cadastra até aparecer na busca da franquia.</p>
+  <div class="flow">
+    <div class="step"><h4>Entrada</h4><p>Franquia indica, prestador se cadastra pelo assistente ou pelo site, admin cadastra à mão ou carrega planilha.</p></div>
+    <div class="step"><h4>Robô de validação</h4><p>Regras automáticas rodam antes de qualquer humano olhar. Antes de julgar, tenta completar a categoria pelo lead da prospecção.</p></div>
+    <div class="step"><h4>Três saídas</h4><p>Passou em tudo: <b>validado na hora</b>. Falhou em algo: <b>pendente</b> com os motivos, para revisão humana. Sem nenhum serviço: <b>recusado</b>, porque nunca seria encontrado.</p></div>
+    <div class="step"><h4>Revisão humana</h4><p>Admin abre a ficha, corrige o que precisar, roda o robô de novo ou decide direto: validar ou reprovar com motivo.</p></div>
+    <div class="step"><h4>Na base</h4><p>Validado aparece na busca por categoria, estado e cidade. A franquia consulta, favorita, avalia e acompanha em "Minhas indicações".</p></div>
+  </div>
+
+  <h3>O que o robô olha</h3>
+  <div class="twrap"><table>
+    <thead><tr><th>Resultado</th><th>Situações</th></tr></thead>
+    <tbody>
+      <tr><td><span class="status rej">Recusa direto</span></td><td>Cadastro sem nenhum serviço, mesmo depois de tentar recuperar a categoria pelo lead.</td></tr>
+      <tr><td><span class="status pend">Manda para revisão</span></td><td>Nome vazio, curto ou de teste. Sem telefone ou telefone impossível. CPF/CNPJ preenchido e inválido. Sem cidade ou estado. Termos não aceitos. Telefone ou documento que já existe em outro cadastro.</td></tr>
+      <tr><td><span class="status ok">Só avisa</span></td><td>Sem CPF/CNPJ, sem e-mail, sem endereço, sem preço, preço fora da faixa, sem horário, telefone fixo. Preço nunca bloqueia: valor estranho é assunto de negociação, não de cadastro.</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section id="numeros">
+  <h2>Números de hoje</h2>
+  <p class="sub">Retrato da base em 08/09/2026.</p>
+  <div class="kpis">
+    <div class="kpi"><b>710</b><span>prestadores validados</span></div>
+    <div class="kpi"><b>77</b><span>lavanderias homologadas</span></div>
+    <div class="kpi"><b>12</b><span>categorias de serviço</span></div>
+    <div class="kpi"><b>116</b><span>franquias ativas</span></div>
+    <div class="kpi"><b>2.390</b><span>conversas no assistente</span></div>
+    <div class="kpi"><b>50 mil+</b><span>leads prospectados</span></div>
+  </div>
+  <p class="muted" style="margin-top:20px">Origem dos prestadores: SIA 427, assistente do Facebook 251, planilha 155, site 6. Praças com mais prestadores: Florianópolis, Maceió, Blumenau, Anápolis e Salvador.</p>
+</section>
+
+</main>
+
+<footer><div class="wrap">HUB de Serviços · Seazone Franquias · documento interno, não divulgar fora do time.</div></footer>
+</body>
+</html>
