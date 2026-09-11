@@ -86,13 +86,6 @@
   .tag.sql{border-color:#2F5B48;color:var(--ok);background:rgba(61,220,145,.08)}
   .tag.dados{border-color:#5A4A2A;color:var(--warn);background:rgba(255,176,32,.08)}
 
-  .alerts{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
-  .alert{border:1px solid var(--border);border-radius:var(--r-lg);padding:16px 18px;background:var(--surface)}
-  .alert .h{display:flex;align-items:center;gap:8px;font-weight:600;font-size:14px}
-  .dot{width:8px;height:8px;border-radius:50%;flex:none}
-  .dot.warn{background:var(--warn)} .dot.ok{background:var(--ok)}
-  .alert p{margin-top:6px;font-size:13px;color:var(--muted-fg)}
-
   .legend{display:flex;flex-wrap:wrap;gap:var(--sp-lg);color:var(--muted-fg);font-size:12.5px;margin-bottom:var(--sp-lg)}
   .legend span{display:inline-flex;align-items:center;gap:7px}
 
@@ -361,29 +354,6 @@
   </div>
 </section>
 
-<section>
-  <div class="wrap">
-    <div class="sechead"><span class="num">7</span><div><h2>Ainda em aberto</h2></div></div>
-    <div class="alerts">
-      <div class="alert">
-        <div class="h"><span class="dot warn"></span>Termos e Privacidade sumiram do rodapé</div>
-        <p>Os links entregues na PR #36 caíram numa edição posterior feita no Lovable. No login continuam lá — decidir se voltam ao rodapé.</p>
-      </div>
-      <div class="alert">
-        <div class="h"><span class="dot warn"></span>Trava de "somente CNPJ" desligada</div>
-        <p>O toggle existe no admin, mas os 11 fornecedores estão com ele desligado, inclusive a Reveev. Ligar quando a regra valer de fato.</p>
-      </div>
-      <div class="alert">
-        <div class="h"><span class="dot warn"></span>Temas fora do FAQ</div>
-        <p>SeazoCoins, retirada na sede, kits, estoque/esgotado e itens personalizados ficaram de fora da Ajuda por decisão nossa — reavaliar quando o fluxo estabilizar.</p>
-      </div>
-      <div class="alert">
-        <div class="h"><span class="dot ok"></span>Banco conferido</div>
-        <p>As cinco migrations da semana foram aplicadas e validadas: as funções de cancelamento e os rankings respondem, e negam acesso anônimo onde deviam.</p>
-      </div>
-    </div>
-  </div>
-</section>
 
 <footer>
   <div class="wrap">
