@@ -1,0 +1,333 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HUB de Serviços — o que mudou na semana (04–10/09/2026)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Figtree:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    color-scheme: dark;
+    --bg:      oklch(17% 0.018 262);
+    --bg-deep: oklch(13.5% 0.02 262);
+    --surface: oklch(21.5% 0.019 262);
+    --surface-2: oklch(25% 0.02 262);
+    --line:    oklch(31% 0.018 262);
+    --line-soft: oklch(26% 0.015 262);
+    --fg:      oklch(93% 0.012 262);
+    --fg-2:    oklch(72% 0.018 262);
+    --fg-3:    oklch(58% 0.018 262);
+    --coral:   oklch(72% 0.155 32);
+    --coral-deep: oklch(33% 0.075 32);
+    --mint:    oklch(78% 0.115 168);
+    --mint-deep: oklch(30% 0.055 168);
+    --amber:   oklch(80% 0.115 78);
+    --amber-deep: oklch(31% 0.055 78);
+    --s-1:4px; --s-2:8px; --s-3:12px; --s-4:16px; --s-6:24px;
+    --s-8:32px; --s-12:48px; --s-16:64px; --s-24:96px;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0; background:var(--bg); color:var(--fg);
+    font-family:"Figtree",ui-sans-serif,sans-serif;
+    font-size:16.5px; line-height:1.62;
+  }
+  .wrap{max-width:1000px; margin:0 auto; padding:0 var(--s-6)}
+  a{color:var(--coral); text-decoration:none; border-bottom:1px solid color-mix(in oklch, var(--coral) 35%, transparent)}
+  a:hover{border-bottom-color:var(--coral)}
+  code{font-family:ui-monospace,Menlo,monospace; font-size:.88em; color:var(--fg-2);
+       background:var(--surface-2); padding:2px 6px; border-radius:5px}
+  h1,h2,h3{font-family:"Bricolage Grotesque",ui-sans-serif,sans-serif; letter-spacing:-.02em; margin:0}
+
+  /* ————— cabeçalho ————— */
+  header{padding:var(--s-24) 0 var(--s-12); background:
+      radial-gradient(110% 80% at 88% -10%, color-mix(in oklch, var(--coral) 16%, transparent), transparent 62%),
+      var(--bg-deep);
+      border-bottom:1px solid var(--line)}
+  .eyebrow{display:inline-flex; align-items:center; gap:var(--s-3);
+    font-size:12px; letter-spacing:.16em; text-transform:uppercase;
+    font-weight:700; color:var(--fg-3)}
+  .eyebrow::before{content:""; width:28px; height:2px; background:var(--coral)}
+  h1{font-weight:800; font-size:clamp(36px,6.4vw,66px); line-height:.98;
+     margin:var(--s-6) 0 var(--s-4); max-width:17ch}
+  .lede{font-size:clamp(17px,2vw,20px); color:var(--fg-2); max-width:60ch; margin:0}
+  .numeros{display:flex; flex-wrap:wrap; gap:var(--s-8) var(--s-16);
+    margin-top:var(--s-12); padding-top:var(--s-6); border-top:1px solid var(--line-soft)}
+  .numeros div{min-width:92px}
+  .numeros b{display:block; font-family:"Bricolage Grotesque",sans-serif; font-weight:700;
+    font-size:34px; line-height:1; letter-spacing:-.03em}
+  .numeros span{font-size:12.5px; text-transform:uppercase; letter-spacing:.1em;
+    color:var(--fg-3); font-weight:700}
+
+  /* ————— seções ————— */
+  section{padding:var(--s-16) 0}
+  section + section{border-top:1px solid var(--line-soft)}
+  .titulo{display:flex; align-items:baseline; gap:var(--s-4); margin-bottom:var(--s-2)}
+  .titulo h2{font-weight:700; font-size:clamp(24px,3.4vw,34px)}
+  .titulo em{font-style:normal; font-size:12px; letter-spacing:.14em; text-transform:uppercase;
+    color:var(--fg-3); font-weight:700}
+  .sub{color:var(--fg-2); max-width:64ch; margin:0 0 var(--s-8)}
+
+  /* ————— linha do tempo ————— */
+  .dia{display:grid; grid-template-columns:120px 1fr; gap:var(--s-8);
+    padding:var(--s-8) 0; border-top:1px solid var(--line-soft)}
+  .dia:first-of-type{border-top:0}
+  .data{position:sticky; top:var(--s-4); align-self:start}
+  .data b{display:block; font-family:"Bricolage Grotesque",sans-serif; font-weight:800;
+    font-size:30px; line-height:1; letter-spacing:-.03em}
+  .data span{font-size:12px; letter-spacing:.12em; text-transform:uppercase;
+    color:var(--fg-3); font-weight:700}
+  .item + .item{margin-top:var(--s-8); padding-top:var(--s-8); border-top:1px dashed var(--line-soft)}
+  .item h3{font-weight:700; font-size:20px; margin-bottom:var(--s-2)}
+  .item p{margin:0 0 var(--s-3); color:var(--fg-2); max-width:68ch}
+  .item ul{margin:0 0 var(--s-3); padding-left:1.1em; color:var(--fg-2)}
+  .item li{margin:var(--s-1) 0}
+  .item li::marker{color:var(--fg-3)}
+  .tags{display:flex; flex-wrap:wrap; gap:var(--s-2); margin-top:var(--s-3)}
+  .tag{font-size:11.5px; font-weight:700; letter-spacing:.08em; text-transform:uppercase;
+    padding:4px 10px; border-radius:999px; background:var(--surface-2); color:var(--fg-2)}
+  .tag.pr{background:var(--coral-deep); color:var(--coral)}
+  .tag.sql{background:var(--amber-deep); color:var(--amber)}
+  .tag.alfred{background:var(--mint-deep); color:var(--mint)}
+
+  /* ————— quem ganha o quê ————— */
+  .publicos{display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:var(--s-6)}
+  .publico{background:var(--surface); border:1px solid var(--line); border-radius:14px;
+    padding:var(--s-6)}
+  .publico h3{font-size:18px; font-weight:700; margin-bottom:var(--s-3)}
+  .publico ul{margin:0; padding-left:1.05em; color:var(--fg-2); font-size:15.5px}
+  .publico li{margin:var(--s-2) 0}
+
+  /* ————— incidente ————— */
+  .incidente{background:var(--bg-deep); border:1px solid var(--line); border-radius:16px;
+    padding:var(--s-8); margin-top:var(--s-6)}
+  .incidente h3{font-size:20px; font-weight:700; margin-bottom:var(--s-3)}
+  .passos{list-style:none; margin:var(--s-6) 0 0; padding:0; counter-reset:p}
+  .passos li{counter-increment:p; display:grid; grid-template-columns:34px 1fr; gap:var(--s-4);
+    padding:var(--s-3) 0; color:var(--fg-2)}
+  .passos li::before{content:counter(p); font-family:"Bricolage Grotesque",sans-serif;
+    font-weight:800; font-size:15px; color:var(--coral);
+    background:var(--coral-deep); border-radius:999px;
+    width:28px; height:28px; display:grid; place-items:center}
+
+  /* ————— tabela ————— */
+  .rolagem{overflow-x:auto; margin-top:var(--s-6)}
+  table{border-collapse:collapse; width:100%; font-size:15px; min-width:520px}
+  th{text-align:left; font-size:11.5px; letter-spacing:.12em; text-transform:uppercase;
+    color:var(--fg-3); font-weight:700; padding:0 var(--s-4) var(--s-3) 0;
+    border-bottom:1px solid var(--line)}
+  td{padding:var(--s-3) var(--s-4) var(--s-3) 0; border-bottom:1px solid var(--line-soft);
+    color:var(--fg-2); vertical-align:top}
+  td b{color:var(--fg); font-weight:600}
+
+  /* ————— pendências ————— */
+  .pendencia{display:grid; grid-template-columns:auto 1fr; gap:var(--s-4);
+    padding:var(--s-4) 0; border-bottom:1px solid var(--line-soft)}
+  .bolinha{width:9px; height:9px; border-radius:999px; background:var(--amber); margin-top:9px}
+  .bolinha.ok{background:var(--mint)}
+  .pendencia b{font-weight:600}
+  .pendencia span{display:block; color:var(--fg-2); font-size:15px}
+
+  footer{padding:var(--s-12) 0 var(--s-24); color:var(--fg-3); font-size:14px;
+    border-top:1px solid var(--line-soft)}
+
+  @media (max-width:640px){
+    .dia{grid-template-columns:1fr; gap:var(--s-3)}
+    .data{position:static; display:flex; align-items:baseline; gap:var(--s-3)}
+    .data b{font-size:24px}
+    header{padding:var(--s-16) 0 var(--s-8)}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <span class="eyebrow">HUB de Serviços · Franquias</span>
+    <h1>O que mudou na semana</h1>
+    <p class="lede">04 a 10 de setembro de 2026. A semana em que o Hub saiu do Coolify pro EKS, apanhou do cache do Cloudflare e, já estabilizado, ganhou cinco melhorias seguidas na área de lavanderias e no painel do admin.</p>
+    <div class="numeros">
+      <div><b>9</b><span>PRs no ar</span></div>
+      <div><b>5</b><span>migrações SQL</span></div>
+      <div><b>5</b><span>dias de deploy</span></div>
+      <div><b>1</b><span>incidente resolvido</span></div>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+<section>
+  <div class="titulo"><h2>Linha do tempo</h2><em>dia a dia</em></div>
+  <p class="sub">Cada item é um PR mergeado na <code>main</code> — que no Hub significa deploy automático em produção, ~6 minutos depois.</p>
+
+  <div class="dia">
+    <div class="data"><b>04/09</b><span>quinta</span></div>
+    <div>
+      <div class="item">
+        <h3>Mudança de casa: Coolify → EKS</h3>
+        <p>O Hub passou a rodar na infra padrão da Seazone. Deploy virou GitOps: merge na <code>main</code> dispara a pipeline, que grava a tag no <code>gitops-seazone</code> e o ArgoCD sincroniza sozinho.</p>
+        <div class="tags"><span class="tag pr">PR #116–#119</span><span class="tag">infra</span></div>
+      </div>
+      <div class="item">
+        <h3>Seletor de visão pro admin na sidebar</h3>
+        <p>O admin troca entre Administrador, Franquia, Seazone sem administração e Prestador direto no rodapé do menu, sem ir em Configurações. Não altera permissão — só o que a tela exibe. Trocar de visão mantém a tela atual, quando ela é permitida.</p>
+        <div class="tags"><span class="tag pr">PR #120</span><span class="tag">admin</span></div>
+      </div>
+      <div class="item">
+        <h3>Correção do site em branco</h3>
+        <p>Primeiro deploy no EKS derrubou a página. Detalhe completo na seção abaixo.</p>
+        <div class="tags"><span class="tag pr">PR #121 · #122</span><span class="tag">incidente</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="dia">
+    <div class="data"><b>07/09</b><span>domingo</span></div>
+    <div>
+      <div class="item">
+        <h3>Lavanderia: edição na própria aba, observação e preços na indicação</h3>
+        <ul>
+          <li><b>Lápis de edição</b> no card da aba Lavanderias — o admin corrige a ficha ali mesmo, reaproveitando a tela do painel de aprovação.</li>
+          <li><b>Campo Observação</b> (texto longo) no cadastro, na edição, na indicação e no detalhe.</li>
+          <li><b>Indicação da franquia</b> passou a usar a mesma grade de preço por peça que o admin usa.</li>
+          <li><b>Bug corrigido:</b> o botão "Próximo" da etapa 2 enviava a indicação sem passar pela etapa 3 — o mesmo defeito que já tinha acontecido em Indicar Prestador.</li>
+          <li>O dropdown de franquia passou a mostrar o <b>nome do franqueado</b> em vez da razão social.</li>
+        </ul>
+        <div class="tags"><span class="tag pr">PR #123</span><span class="tag sql">sql 050 · 051</span><span class="tag">lavanderias</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="dia">
+    <div class="data"><b>08/09</b><span>segunda</span></div>
+    <div>
+      <div class="item">
+        <h3>Avaliação de lavanderia</h3>
+        <p>A franquia consultava a lavanderia sem poder dizer se foi boa ou ruim. Agora a lavanderia tem nota de 0 a 5 e comentário opcional, uma avaliação por pessoa logada, média no card da consulta e dos favoritos. Clicar na mesma nota remove a avaliação — igualzinho ao prestador.</p>
+        <div class="tags"><span class="tag pr">PR #124</span><span class="tag sql">sql 052</span><span class="tag alfred">Alfred 9.1</span></div>
+      </div>
+      <div class="item">
+        <h3>Tela de login nova</h3>
+        <p>O <code>/login</code> saiu de dentro do menu lateral e virou um card centralizado em fundo navy: ícone coral, botão pill "Entrar com Google" e o aviso de que o acesso é restrito às contas @seazone. O caminho do prestador continua logo abaixo do card.</p>
+        <div class="tags"><span class="tag pr">PR #125</span><span class="tag">visual</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="dia">
+    <div class="data"><b>09/09</b><span>terça</span></div>
+    <div>
+      <div class="item">
+        <h3>Admin cadastra prestador direto</h3>
+        <p>Botão "+ Cadastrar prestador" no Painel de validação, com os mesmos campos do formulário público: PF/PJ, contato, endereço por CEP, categorias com preço por serviço, visita, horário, anexo. Entra <b>já validado</b>, sem fila e sem bot, marcado como canal admin. Exige pelo menos uma categoria — validado sem categoria não aparece em busca nenhuma.</p>
+        <div class="tags"><span class="tag pr">PR #126</span><span class="tag sql">sql 053</span><span class="tag alfred">Alfred 8.6</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="dia">
+    <div class="data"><b>10/09</b><span>quarta</span></div>
+    <div>
+      <div class="item">
+        <h3>Acervo de documentos da lavanderia</h3>
+        <p>Antes cabia um anexo só, subido na indicação. Agora cada lavanderia tem um bloco <b>Documentos</b> com vários arquivos, cada um com descrição e data: contrato hoje, tabela de preço mês que vem, alvará depois.</p>
+        <ul>
+          <li>Aparece na ficha, no formulário de edição e no cadastro manual.</li>
+          <li>No cadastro a lavanderia ainda não tem id — os arquivos ficam numa fila em memória e sobem logo após o insert; falha de upload não desfaz o cadastro, vira aviso.</li>
+          <li>PDF e imagem até 10 MB, abertura por link assinado de 60 segundos, exclusão com confirmação.</li>
+          <li><b>Só o admin vê.</b> A tela esconde, mas quem garante é o banco: as policies da tabela e do bucket exigem estar em <code>hub_admins</code> — a franquia não alcança nem pela API.</li>
+          <li>Excluir a lavanderia limpa os arquivos do bucket junto.</li>
+        </ul>
+        <div class="tags"><span class="tag pr">PR #128</span><span class="tag sql">sql 054</span><span class="tag alfred">Alfred 8.4</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="titulo"><h2>O que mudou para quem usa</h2><em>por perfil</em></div>
+  <div class="publicos">
+    <div class="publico">
+      <h3>Franquia</h3>
+      <ul>
+        <li>Avaliar a lavanderia com nota e comentário, e ver a média antes de escolher.</li>
+        <li>Indicar lavanderia informando o preço peça a peça, na mesma grade do admin.</li>
+        <li>Indicação não "pula" mais a última etapa.</li>
+        <li>Tela de entrada mais limpa.</li>
+      </ul>
+    </div>
+    <div class="publico">
+      <h3>Admin / Seazone</h3>
+      <ul>
+        <li>Editar a ficha da lavanderia pelo lápis, sem sair da aba.</li>
+        <li>Campo de observação livre na lavanderia.</li>
+        <li>Cadastrar prestador já validado pelo painel.</li>
+        <li>Guardar contratos e documentos por lavanderia.</li>
+        <li>Trocar de visão pelo rodapé do menu.</li>
+        <li>Dropdown de franquia pelo nome do franqueado.</li>
+      </ul>
+    </div>
+    <div class="publico">
+      <h3>Prestador</h3>
+      <ul>
+        <li>Nada mudou no autocadastro — o formulário público continua igual.</li>
+        <li>O cadastro feito pelo admin não pede aceite de termos em nome dele.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="titulo"><h2>O incidente do site em branco</h2><em>04/09</em></div>
+  <p class="sub">Vale registrar porque a causa não estava no código do Hub, e a correção mudou como o site serve arquivos para sempre.</p>
+  <div class="incidente">
+    <h3>Cache do Cloudflare guardou HTML como se fosse JavaScript</h3>
+    <ol class="passos">
+      <li>Durante o rollout convivem o pod novo e o antigo. O HTML novo pediu um arquivo <code>/assets/index-&lt;hash&gt;.js</code> que só existia no pod novo.</li>
+      <li>O pod antigo, seguindo o fallback de SPA do Caddy, respondeu <code>index.html</code> para essa URL — com status 200.</li>
+      <li>O Cloudflare guardou essa resposta por um ano. Todo visitante passou a receber HTML no lugar do JavaScript: tela branca.</li>
+      <li>Correção: arquivo inexistente em <code>/assets/*</code> agora responde 404 com <code>no-store</code> (o Cloudflare não guarda), arquivo existente vai como <code>immutable</code> e o <code>index.html</code> com <code>no-cache</code>.</li>
+      <li>Cada build passou a carimbar um <code>__BUILD_ID__</code> no bundle, então todo deploy gera um hash novo e sai sozinho de qualquer URL envenenada.</li>
+    </ol>
+    <p style="margin-top:var(--s-6); color:var(--fg-2)">Lição que ficou: <b>deploy verde não é site no ar.</b> Depois de cada deploy vale conferir o <code>content-type</code> do bundle.</p>
+  </div>
+</section>
+
+<section>
+  <div class="titulo"><h2>Banco de dados</h2><em>migrações da semana</em></div>
+  <p class="sub">O Supabase do Hub é compartilhado com a Central de Qualidade, então as migrações são aplicadas à mão, sempre antes do merge do PR que depende delas.</p>
+  <div class="rolagem">
+    <table>
+      <thead><tr><th>Arquivo</th><th>O que faz</th><th>Aplicada</th></tr></thead>
+      <tbody>
+        <tr><td><b>050</b> observacao_lavanderia</td><td>Campo de observação na lavanderia</td><td>07/09</td></tr>
+        <tr><td><b>051</b> nome_franqueado</td><td>Nome do franqueado na franquia, usado no dropdown</td><td>07/09</td></tr>
+        <tr><td><b>052</b> avaliacoes_lavanderia</td><td>Tabela de avaliação da lavanderia + 4 policies</td><td>08/09</td></tr>
+        <tr><td><b>053</b> admin_cadastra_prestador</td><td>Permissão de inserção de prestador pelo admin</td><td>09/09</td></tr>
+        <tr><td><b>054</b> documentos_lavanderia</td><td>Tabela de documentos + bucket privado, admin-only</td><td>10/09</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section>
+  <div class="titulo"><h2>Em aberto</h2><em>próximos passos</em></div>
+  <div class="pendencia"><span class="bolinha"></span><div><b>PR #129 — sincronizar main → staging</b><span>Todos os checks verdes e Alfred aprovado; falta só mergear.</span></div></div>
+  <div class="pendencia"><span class="bolinha"></span><div><b>PR #127 — atualização do Vitest</b><span>Abertura automática do Dependabot, sem impacto para o usuário.</span></div></div>
+  <div class="pendencia"><span class="bolinha"></span><div><b>Dívida técnica</b><span>O formulário de novo prestador duplica marcação do cadastro público; ainda não foi extraído um componente comum.</span></div></div>
+  <div class="pendencia"><span class="bolinha ok"></span><div><b>Ambiente de staging</b><span>Não existe de fato: a pipeline escuta a branch, mas o GitOps só tem produção e o banco é um só. Teste ainda é em produção, com cuidado.</span></div></div>
+</section>
+
+<footer>
+  <div>hub-servicos.seazone.com.br · repositório <code>seazone-tech/hub-servicos</code> · período 04–10/09/2026</div>
+  <div style="margin-top:var(--s-2)">Documento interno — não divulgar fora do time.</div>
+</footer>
+
+</div>
+</body>
+</html>
