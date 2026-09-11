@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Lojinha Seazone — quem vê o quê e por que não existe carrinho pronto</title>
+<style>
+  :root{
+    --bg:#0B0D14;
+    --surface:#12151F;
+    --surface-2:#171B28;
+    --fg:#EDEFF5;
+    --muted-fg:#8A90A6;
+    --border:#242938;
+    --primary:#4D8BFF;
+    --primary-dim:#1B2540;
+    --ok:#3DDC91;
+    --ok-dim:#10291F;
+    --warn:#FFB020;
+    --warn-dim:#2A2010;
+    --roxo:#A78BFA;
+
+    --sp-sm:8px; --sp-md:16px; --sp-lg:24px;
+    --sp-xl:32px; --sp-2xl:48px; --sp-3xl:80px;
+    --r:8px; --r-lg:14px; --r-full:9999px;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0;background:var(--bg);color:var(--fg);
+    font-family:"Helvetica Neue",Helvetica,sans-serif;
+    font-size:14px;font-weight:500;line-height:1.55;
+  }
+  a{color:var(--primary);text-decoration:none}
+  a:hover{text-decoration:underline}
+  code{font-family:ui-monospace,"SF Mono",Menlo,monospace;font-size:.92em;color:#B9C2DA}
+  h1{font-size:clamp(30px,4.6vw,46px);font-weight:700;line-height:1.08;margin:0;letter-spacing:-.02em}
+  h2{font-size:26px;font-weight:600;line-height:1.2;margin:0;letter-spacing:-.01em}
+  h3{font-size:16px;font-weight:700;margin:0}
+  p{margin:0;font-size:15px;line-height:1.6}
+  .wrap{max-width:1060px;margin:0 auto;padding:0 var(--sp-lg)}
+  .muted{color:var(--muted-fg)}
+
+  header{padding:var(--sp-3xl) 0 var(--sp-xl);border-bottom:1px solid var(--border)}
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:var(--sp-sm);
+    background:var(--primary-dim);color:var(--primary);
+    border-radius:var(--r-full);padding:6px 14px;
+    font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+  }
+  header h1{margin-top:var(--sp-md)}
+  header p.lead{margin-top:var(--sp-md);max-width:66ch;font-size:18px;color:var(--muted-fg)}
+  .stats{display:flex;flex-wrap:wrap;gap:var(--sp-2xl);margin-top:var(--sp-xl)}
+  .stat .n{font-size:34px;font-weight:700;line-height:1;font-variant-numeric:tabular-nums}
+  .stat .l{margin-top:6px;color:var(--muted-fg);font-size:12px;letter-spacing:.04em;text-transform:uppercase}
+
+  section{padding:var(--sp-2xl) 0;border-top:1px solid var(--border)}
+  section:first-of-type{border-top:0}
+  .sechead{display:flex;align-items:baseline;gap:var(--sp-md);margin-bottom:var(--sp-lg)}
+  .num{
+    flex:none;width:26px;height:26px;display:grid;place-items:center;
+    border:1px solid var(--primary);color:var(--primary);
+    border-radius:var(--r-full);font-size:12px;font-weight:700;
+  }
+  .sechead p{color:var(--muted-fg);font-size:14px;margin-top:6px;max-width:70ch}
+
+  /* exemplo pokemon */
+  .telas{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:var(--sp-md);margin-top:var(--sp-lg)}
+  .tela{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden}
+  .tela .top{padding:12px var(--sp-md);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:8px}
+  .tela .top b{font-size:13px}
+  .tela .body{padding:var(--sp-md);display:grid;gap:8px}
+  .item{display:flex;align-items:center;gap:10px;font-size:13.5px;color:var(--muted-fg)}
+  .dot{width:7px;height:7px;border-radius:var(--r-full);background:var(--border);flex:none}
+  .item.on{color:var(--fg)} .item.on .dot{background:var(--ok)}
+  .item.off{opacity:.42;text-decoration:line-through}
+  .badge{font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;padding:4px 10px;border-radius:var(--r-full)}
+  .b-ok{background:var(--ok-dim);color:var(--ok)}
+  .b-no{background:#2A1418;color:#FF7A85}
+
+  /* tabela publicos */
+  .tbl{width:100%;border-collapse:collapse;margin-top:var(--sp-md);font-size:13.5px}
+  .tbl th,.tbl td{text-align:left;padding:12px 14px;border-bottom:1px solid var(--border);vertical-align:top}
+  .tbl th{font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted-fg);font-weight:700}
+  .tbl td.n{font-variant-numeric:tabular-nums;white-space:nowrap}
+  .tbl tr:hover td{background:var(--surface)}
+  .tag{display:inline-block;font-size:11px;font-weight:700;padding:3px 9px;border-radius:var(--r-full);background:var(--surface-2);color:var(--muted-fg);border:1px solid var(--border)}
+  .scroll{overflow-x:auto}
+
+  .callout{
+    margin-top:var(--sp-lg);background:var(--surface);border:1px solid var(--border);
+    border-radius:var(--r-lg);padding:var(--sp-lg);display:grid;gap:10px
+  }
+  .callout.warn{background:var(--warn-dim);border-color:#4A3A16}
+  .callout.ok{background:var(--ok-dim);border-color:#1D4434}
+  .callout h3{display:flex;align-items:center;gap:10px}
+  .callout p{font-size:14.5px;color:#C6CBDC}
+  .callout.warn h3{color:var(--warn)} .callout.ok h3{color:var(--ok)}
+
+  .fluxo{display:grid;gap:var(--sp-sm);margin-top:var(--sp-lg);counter-reset:passo}
+  .passo{
+    background:var(--surface);border:1px solid var(--border);border-radius:var(--r);
+    padding:14px var(--sp-md);display:grid;grid-template-columns:30px 1fr;gap:14px;align-items:start
+  }
+  .passo .p{
+    counter-increment:passo;width:24px;height:24px;border-radius:var(--r-full);
+    background:var(--primary-dim);color:var(--primary);display:grid;place-items:center;
+    font-size:12px;font-weight:700
+  }
+  .passo .p::before{content:counter(passo)}
+  .passo b{display:block;font-size:14px}
+  .passo span{font-size:13.5px;color:var(--muted-fg)}
+  .robo{color:var(--roxo);font-weight:700}
+
+  .duas{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:var(--sp-md);margin-top:var(--sp-lg)}
+  .box{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);padding:var(--sp-lg);display:grid;gap:10px;align-content:start}
+  .box ul{margin:0;padding-left:18px;color:var(--muted-fg);font-size:13.5px;display:grid;gap:6px}
+
+  footer{padding:var(--sp-2xl) 0 var(--sp-3xl);border-top:1px solid var(--border);color:var(--muted-fg);font-size:13px}
+  @media(max-width:640px){
+    header{padding-top:var(--sp-2xl)}
+    .stats{gap:var(--sp-lg)}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <span class="eyebrow">Lojinha Seazone · interno</span>
+    <h1>Quem vê o quê na lojinha<br>e por que não existe carrinho pronto</h1>
+    <p class="lead">Cada item e cada categoria da lojinha tem um público-alvo. Quem não é do público simplesmente não enxerga o item — nem na tela inicial, nem na busca, nem pelo link direto. Abaixo: como isso funciona, quais são os públicos e o que dá (e o que não dá) para fazer com carrinho montado para outra pessoa.</p>
+    <div class="stats">
+      <div class="stat"><div class="n">245</div><div class="l">itens ativos</div></div>
+      <div class="stat"><div class="n">92</div><div class="l">com público restrito</div></div>
+      <div class="stat"><div class="n">6</div><div class="l">públicos + “Todos”</div></div>
+      <div class="stat"><div class="n">101</div><div class="l">itens via Mercado Livre</div></div>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+<section>
+  <div class="sechead">
+    <span class="num"></span>
+    <div>
+      <h2>O item não fica escondido — ele não existe para quem não é do público</h2>
+      <p>A visibilidade não é um filtro de tela nem uma permissão de compra: a lojinha monta a vitrine já com os itens do seu público. Um proprietário ou uma franquia nunca vai ver <b>“Cartas Pokemon”</b>, porque esse item é marcado como <span class="tag">Seazoners</span>. Ele não aparece na home, não aparece na categoria, não retorna na busca e não aparece em “mais vendidos”.</p>
+    </div>
+  </div>
+
+  <div class="telas">
+    <div class="tela">
+      <div class="top"><b>Vendo como Seazoner</b><span class="badge b-ok">vê</span></div>
+      <div class="body">
+        <div class="item on"><span class="dot"></span>Cartas Pokemon</div>
+        <div class="item on"><span class="dot"></span>Figurinhas Copa</div>
+        <div class="item on"><span class="dot"></span>Amenities · Shampoo 250un</div>
+        <div class="item on"><span class="dot"></span>Kit de enxoval</div>
+      </div>
+    </div>
+    <div class="tela">
+      <div class="top"><b>Vendo como Franquia</b><span class="badge b-no">não vê</span></div>
+      <div class="body">
+        <div class="item off"><span class="dot"></span>Cartas Pokemon</div>
+        <div class="item off"><span class="dot"></span>Figurinhas Copa</div>
+        <div class="item on"><span class="dot"></span>Amenities · Shampoo 250un</div>
+        <div class="item on"><span class="dot"></span>Kit de enxoval</div>
+      </div>
+    </div>
+    <div class="tela">
+      <div class="top"><b>Vendo como Proprietário</b><span class="badge b-no">não vê</span></div>
+      <div class="body">
+        <div class="item off"><span class="dot"></span>Cartas Pokemon</div>
+        <div class="item off"><span class="dot"></span>Figurinhas Copa</div>
+        <div class="item off"><span class="dot"></span>Amenities · Shampoo 250un</div>
+        <div class="item on"><span class="dot"></span>Kit de enxoval</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout">
+    <h3>Vale para categoria inteira também</h3>
+    <p>A mesma marcação existe nas categorias. “Itens Para Seazoners” e “SeazoCoins” são só de Seazoner; “Decor” e “Camas e Colchão” só aparecem para quem é Decor; “Parcerias”, “Itens de divulgação” e “Itens de padronização do imóvel” só para franquia. Se a categoria não é do seu público, ela não aparece no menu — mesmo que tenha item liberado dentro.</p>
+  </div>
+</section>
+
+<section>
+  <div class="sechead">
+    <span class="num"></span>
+    <div>
+      <h2>Os públicos que existem hoje</h2>
+      <p>São 6 públicos, e um item pode combinar vários (ex.: “Amenities” é visível para Seazoner + Franquia + Fornecedor ao mesmo tempo). Quando nenhum é marcado, o item fica como <b>Todos</b> e aparece para qualquer pessoa logada.</p>
+    </div>
+  </div>
+
+  <div class="scroll">
+  <table class="tbl">
+    <thead>
+      <tr><th>Público</th><th>Quem é</th><th>Itens ativos que enxerga além dos “Todos”</th><th class="n">Qtd.</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><span class="tag">Todos</span></td><td>Qualquer pessoa logada na lojinha</td><td>É a base que todo mundo vê</td><td class="n">153</td></tr>
+      <tr><td><span class="tag">Seazoners</span></td><td>Time interno Seazone</td><td>Brindes internos, SeazoCoins, produtos de limpeza, amenities, eletrônicos</td><td class="n">57</td></tr>
+      <tr><td><span class="tag">Franquias</span></td><td>Franqueado e equipe da franquia</td><td>Welcome Kit, padronização do imóvel, divulgação, parcerias, uniforme</td><td class="n">69</td></tr>
+      <tr><td><span class="tag">Proprietários</span></td><td>Dono do imóvel</td><td>Nenhum item exclusivo hoje — enxerga só a vitrine “Todos”</td><td class="n">0</td></tr>
+      <tr><td><span class="tag">Fornecedores</span></td><td>Parceiros que fornecem para a rede</td><td>Itens de kit, uniforme de limpeza, amenities</td><td class="n">52</td></tr>
+      <tr><td><span class="tag">Suprimento</span></td><td>Time de suprimentos</td><td>Kits montados, Welcome Kit por peça, insumos de operação</td><td class="n">13</td></tr>
+      <tr><td><span class="tag">Decor</span></td><td>Time/parceiro de decoração</td><td>Camas, colchões, bases, itens de decoração</td><td class="n">6</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p class="muted" style="margin-top:12px;font-size:13px">O público de cada pessoa vem do cadastro dela na lojinha (tipo de usuário + as marcações Decor e Suprimento). Trocar o público de um item é 1 clique no admin — a vitrine muda na hora, sem depender de deploy.</p>
+</section>
+
+<section>
+  <div class="sechead">
+    <span class="num"></span>
+    <div>
+      <h2>Carrinho montado para outra pessoa comprar: com Mercado Livre, não dá</h2>
+      <p>Hoje <b>101 dos 245 itens ativos</b> não são vendidos pela Seazone — são links do Mercado Livre. A lojinha só faz a curadoria e leva a pessoa para lá.</p>
+    </div>
+  </div>
+
+  <div class="callout warn">
+    <h3>Limitação do próprio Mercado Livre</h3>
+    <p>O Mercado Livre não permite montar um carrinho com vários itens e mandar esse carrinho pronto para outra pessoa finalizar. O carrinho vive dentro da conta de quem está logado; o que dá para compartilhar é o link de <b>um produto por vez</b>, e a pessoa monta o pedido dela, escolhe frete e paga na conta dela. Não existe link de pagamento de um carrinho montado por terceiro.</p>
+    <p>Consequência prática: para esses 101 itens não há “monto o pedido e mando pro proprietário pagar”. O caminho é mandar os links e a pessoa comprar.</p>
+  </div>
+
+  <div class="duas">
+    <div class="box">
+      <h3>Itens do Mercado Livre</h3>
+      <ul>
+        <li>Compra acontece fora da lojinha</li>
+        <li>Pagamento e frete na conta de quem compra</li>
+        <li>Sem carrinho compartilhável (limitação do ML)</li>
+        <li>Sem controle de status do pedido pela Seazone</li>
+      </ul>
+    </div>
+    <div class="box">
+      <h3>Itens internos (fornecedor Seazone)</h3>
+      <ul>
+        <li>Pedido nasce e vive dentro da lojinha</li>
+        <li>Preço, frete e fornecedor já configurados</li>
+        <li>Dá para gerar link de pagamento</li>
+        <li>Status do pedido acompanhado ponta a ponta</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="sechead">
+    <span class="num"></span>
+    <div>
+      <h2>Só com itens internos, o carrinho pronto é possível — e já existe no enxoval</h2>
+      <p>Dá para montar um carrinho fechado na lojinha e mandar para o proprietário pagar, desde que só com itens internos. Isso exige ajuste de configuração na lojinha (carrinho de terceiro, link de pagamento e regra de quem paga). Não é invenção nova: é exatamente o que já roda no <b>Jornada Completa Enxoval</b>.</p>
+    </div>
+  </div>
+
+  <div class="fluxo">
+    <div class="passo"><span class="p"></span><div><b>O imóvel sai da vistoria</b><span>O pedido de enxoval já chega montado — quem cria é <span class="robo">um agente</span>, com base no que o imóvel precisa. Ninguém digita o pedido do zero.</span></div></div>
+    <div class="passo"><span class="p"></span><div><b>O time confere e ajusta</b><span>Revisa as peças, o fornecedor e os valores dentro do app.</span></div></div>
+    <div class="passo"><span class="p"></span><div><b>Pega o link de pagamento e manda pro proprietário</b><span>É só copiar e enviar. O proprietário paga sem precisar montar nada.</span></div></div>
+    <div class="passo"><span class="p"></span><div><b>O pagamento é confirmado sozinho</b><span><span class="robo">Outro agente</span> lê os links da adquirente, confirma o pagamento e move o card de fase automaticamente.</span></div></div>
+    <div class="passo"><span class="p"></span><div><b>Segue o fluxo até a entrega</b><span>Pedido enviado ao fornecedor e acompanhado até chegar no imóvel.</span></div></div>
+  </div>
+
+  <div class="callout ok">
+    <h3>O que faltaria para trazer isso para a lojinha</h3>
+    <p>Permitir que uma pessoa monte o carrinho em nome de outra, gerar o link de pagamento desse carrinho e definir a regra de quem paga e para onde entrega. A limitação real não é técnica de carrinho — é que os itens do Mercado Livre nunca poderão entrar nele. Um carrinho pronto na lojinha seria, na prática, uma vitrine “só itens internos”.</p>
+  </div>
+</section>
+
+</main>
+
+<footer class="wrap">
+  Documento interno · dados da lojinha em 11/09/2026 (245 itens ativos, 16 categorias ativas). Números de visibilidade contam itens ativos com público restrito, fora os 153 marcados como “Todos”.
+</footer>
+
+</body>
+</html>
