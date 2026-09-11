@@ -141,6 +141,90 @@
     .data b{font-size:24px}
     header{padding:var(--s-16) 0 var(--s-8)}
   }
+
+  /* ————— mockups de tela ————— */
+  .tela{background:var(--bg-deep); border:1px solid var(--line); border-radius:14px;
+    overflow:hidden; margin:var(--s-4) 0 var(--s-2)}
+  .tela .barra{display:flex; align-items:center; gap:var(--s-2); padding:10px var(--s-4);
+    background:var(--surface); border-bottom:1px solid var(--line)}
+  .tela .barra i{width:9px; height:9px; border-radius:999px; background:var(--line); display:block}
+  .tela .barra em{font-style:normal; margin-left:var(--s-3); font-size:12px; color:var(--fg-3);
+    font-family:ui-monospace,Menlo,monospace}
+  .tela .corpo{padding:var(--s-6)}
+  .legenda{font-size:13.5px; color:var(--fg-3); margin:0 0 var(--s-6)}
+
+  .mk-topo{font-size:13px; color:var(--fg-3); font-weight:700; letter-spacing:.08em;
+    text-transform:uppercase; margin-bottom:var(--s-3)}
+  .mk-titulo{font-family:"Bricolage Grotesque",sans-serif; font-weight:700; font-size:21px;
+    letter-spacing:-.02em; margin:0 0 var(--s-2)}
+  .mk-linha{display:flex; flex-wrap:wrap; gap:var(--s-3)}
+  .mk-contadores{display:grid; grid-template-columns:repeat(auto-fit,minmax(130px,1fr)); gap:var(--s-3)}
+  .mk-contador{background:var(--surface); border:1px solid var(--line); border-radius:12px;
+    padding:var(--s-4)}
+  .mk-contador b{display:block; font-family:"Bricolage Grotesque",sans-serif; font-weight:800;
+    font-size:26px; line-height:1; letter-spacing:-.03em}
+  .mk-contador span{font-size:12px; color:var(--fg-3)}
+  .mk-atalhos{display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+    gap:var(--s-3); margin-top:var(--s-4)}
+  .mk-atalho{background:var(--surface-2); border-radius:10px; padding:var(--s-3) var(--s-4);
+    font-size:14px; font-weight:600; color:var(--fg-2)}
+  .mk-atalho.destaque{background:var(--coral-deep); color:var(--coral)}
+
+  .mk-cats{display:grid; grid-template-columns:repeat(auto-fit,minmax(112px,1fr)); gap:var(--s-3)}
+  .mk-cat{background:var(--surface); border:1px solid var(--line); border-radius:12px;
+    padding:var(--s-4) var(--s-3); text-align:center; font-size:13.5px; color:var(--fg-2)}
+  .mk-cat u{display:block; font-size:19px; text-decoration:none; margin-bottom:6px}
+
+  .mk-filtros{display:flex; flex-wrap:wrap; gap:var(--s-2); margin-bottom:var(--s-4)}
+  .mk-campo{flex:1 1 150px; background:var(--surface); border:1px solid var(--line);
+    border-radius:9px; padding:9px var(--s-3); font-size:13.5px; color:var(--fg-3)}
+  .mk-btn{background:var(--coral); color:oklch(20% .03 32); border-radius:999px;
+    padding:9px 18px; font-size:13.5px; font-weight:700; display:inline-block}
+  .mk-btn.fantasma{background:transparent; border:1px solid var(--line); color:var(--fg-2)}
+
+  .mk-ficha{display:grid; grid-template-columns:1fr; gap:var(--s-4)}
+  .mk-bloco{background:var(--surface); border:1px solid var(--line); border-radius:12px; padding:var(--s-4)}
+  .mk-bloco h4{margin:0 0 var(--s-2); font-size:13px; letter-spacing:.08em; text-transform:uppercase;
+    color:var(--fg-3); font-weight:700; font-family:"Figtree",sans-serif}
+  .mk-dados{display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:var(--s-3);
+    font-size:14px; color:var(--fg-2)}
+  .mk-dados b{display:block; font-size:12px; color:var(--fg-3); font-weight:700}
+  .mk-servicos{display:grid; gap:8px; font-size:14px}
+  .mk-servico{display:flex; justify-content:space-between; gap:var(--s-3);
+    padding-bottom:8px; border-bottom:1px solid var(--line-soft); color:var(--fg-2)}
+  .mk-servico b{color:var(--fg); font-weight:600}
+  .mk-acoes{display:flex; flex-wrap:wrap; align-items:center; gap:var(--s-3); font-size:14px; color:var(--fg-2)}
+  .mk-estrelas{color:var(--amber); letter-spacing:2px; font-size:17px}
+
+  .mk-etapas{display:flex; gap:var(--s-2); margin-bottom:var(--s-4); flex-wrap:wrap}
+  .mk-etapa{flex:1 1 110px; background:var(--surface); border:1px solid var(--line);
+    border-radius:9px; padding:9px var(--s-3); font-size:13px; color:var(--fg-3)}
+  .mk-etapa.ativa{background:var(--coral-deep); border-color:var(--coral); color:var(--coral); font-weight:700}
+
+  .mk-status{display:inline-block; border-radius:999px; padding:3px 11px;
+    font-size:12px; font-weight:700}
+  .mk-status.ok{background:var(--mint-deep); color:var(--mint)}
+  .mk-status.aguardando{background:var(--amber-deep); color:var(--amber)}
+  .mk-status.nao{background:var(--coral-deep); color:var(--coral)}
+  .mk-lista{display:grid; gap:var(--s-3)}
+  .mk-item{display:flex; justify-content:space-between; align-items:center; gap:var(--s-3);
+    background:var(--surface); border:1px solid var(--line); border-radius:10px;
+    padding:var(--s-3) var(--s-4); font-size:14px; color:var(--fg-2); flex-wrap:wrap}
+  .mk-item b{color:var(--fg); font-weight:600; display:block}
+  .mk-item small{color:var(--fg-3)}
+
+  .mk-precos{display:grid; grid-template-columns:repeat(auto-fit,minmax(120px,1fr)); gap:8px;
+    font-size:13.5px; color:var(--fg-2)}
+  .mk-preco{background:var(--surface-2); border-radius:8px; padding:8px 10px}
+  .mk-preco b{display:block; color:var(--fg); font-weight:600}
+
+  .funcionalidade{padding:var(--s-8) 0; border-top:1px solid var(--line-soft)}
+  .funcionalidade:first-of-type{border-top:0}
+  .funcionalidade h3{font-family:"Bricolage Grotesque",sans-serif; font-weight:700;
+    font-size:22px; letter-spacing:-.02em; margin:0 0 var(--s-2)}
+  .funcionalidade p{margin:0 0 var(--s-3); color:var(--fg-2); max-width:68ch}
+  .funcionalidade ul{margin:0 0 var(--s-3); padding-left:1.1em; color:var(--fg-2)}
+  .funcionalidade li{margin:var(--s-1) 0}
 </style>
 </head>
 <body>
@@ -149,10 +233,11 @@
   <div class="wrap">
     <span class="eyebrow">HUB de Serviços · Franquias</span>
     <h1>O que mudou na semana</h1>
-    <p class="lede">04 a 10 de setembro de 2026. Uma semana inteira de melhorias na área de lavanderias e no painel de quem administra o Hub — tudo já disponível para uso.</p>
+    <p class="lede">04 a 10 de setembro de 2026. Uma semana inteira de melhorias na área de lavanderias e no painel de quem administra o Hub — e, na sequência, um guia tela por tela de tudo o que a franquia consegue fazer lá dentro.</p>
     <div class="numeros">
       <div><b>7</b><span>melhorias no ar</span></div>
       <div><b>5</b><span>dias de entrega</span></div>
+      <div><b>7</b><span>telas da franquia</span></div>
       <div><b>1</b><span>pendência</span></div>
     </div>
   </div>
@@ -275,6 +360,269 @@
       <ul>
         <li>O cadastro público continua exatamente igual.</li>
         <li>Quando a Seazone cadastra por ele, o aceite de termos não é marcado em seu nome.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="titulo"><h2>Tudo o que a franquia consegue fazer</h2><em>tela por tela</em></div>
+  <p class="sub">As telas abaixo são ilustrações do que a franquia vê ao entrar no Hub — o desenho é simplificado, mas o conteúdo e os botões são os reais.</p>
+
+  <div class="funcionalidade">
+    <h3>1. Meu painel</h3>
+    <p>É a primeira tela depois do login. Mostra o tamanho da base e leva direto para o que mais se usa.</p>
+    <div class="tela">
+      <div class="barra"><i></i><i></i><i></i><em>hub-servicos.seazone.com.br</em></div>
+      <div class="corpo">
+        <div class="mk-topo">Franquia · Meu painel</div>
+        <div class="mk-contadores">
+          <div class="mk-contador"><b>412</b><span>prestadores validados</span></div>
+          <div class="mk-contador"><b>63</b><span>lavanderias homologadas</span></div>
+          <div class="mk-contador"><b>11</b><span>categorias de serviço</span></div>
+        </div>
+        <div class="mk-atalhos">
+          <div class="mk-atalho destaque">Buscar prestador</div>
+          <div class="mk-atalho">Indicar prestador</div>
+          <div class="mk-atalho">Minhas indicações</div>
+          <div class="mk-atalho">Meus favoritos</div>
+          <div class="mk-atalho">Lavanderias</div>
+        </div>
+      </div>
+    </div>
+    <p class="legenda">Os números são de exemplo — na tela real eles vêm da base.</p>
+  </div>
+
+  <div class="funcionalidade">
+    <h3>2. Buscar prestador</h3>
+    <p>Dois caminhos para a mesma base: escolher a categoria do serviço ou filtrar por estado e cidade. A lista de cidades só oferece onde existe prestador cadastrado, para ninguém perder tempo com cidade vazia.</p>
+    <div class="tela">
+      <div class="barra"><i></i><i></i><i></i><em>Buscar prestador</em></div>
+      <div class="corpo">
+        <div class="mk-filtros">
+          <div class="mk-campo">Tipo de serviço</div>
+          <div class="mk-campo">Estado</div>
+          <div class="mk-campo">Cidade</div>
+          <span class="mk-btn">Buscar</span>
+        </div>
+        <div class="mk-cats">
+          <div class="mk-cat"><u>🧹</u>Limpeza</div>
+          <div class="mk-cat"><u>💡</u>Elétrica</div>
+          <div class="mk-cat"><u>🚰</u>Hidráulica</div>
+          <div class="mk-cat"><u>❄️</u>Ar-condicionado</div>
+          <div class="mk-cat"><u>🏊</u>Piscina</div>
+          <div class="mk-cat"><u>🌿</u>Jardinagem</div>
+          <div class="mk-cat"><u>🎨</u>Pintura</div>
+          <div class="mk-cat"><u>🔑</u>Chaveiro</div>
+          <div class="mk-cat"><u>🐜</u>Dedetização</div>
+          <div class="mk-cat"><u>🛠️</u>Montagem</div>
+          <div class="mk-cat"><u>🧰</u>Marido de aluguel</div>
+          <div class="mk-cat"><u>➕</u>Outros</div>
+        </div>
+      </div>
+    </div>
+    <p><b>Não achou ninguém?</b> Quando a busca volta vazia aparece o botão <b>Prospectar fornecedores</b>: uma busca automática traz sugestões de empresas daquela região com nome e telefone. Nada entra na base sozinho — escolher uma sugestão abre a indicação já preenchida, e o cadastro segue a validação normal.</p>
+  </div>
+
+  <div class="funcionalidade">
+    <h3>3. Ficha do prestador</h3>
+    <p>Tudo o que a franquia precisa para decidir e ligar, na mesma tela.</p>
+    <div class="tela">
+      <div class="barra"><i></i><i></i><i></i><em>Ficha do prestador</em></div>
+      <div class="corpo">
+        <div class="mk-titulo">Eletricista Silva &amp; Filhos</div>
+        <div class="mk-acoes" style="margin-bottom:16px">
+          <span class="mk-estrelas">★★★★☆</span>
+          <span>4,2 · 9 avaliações</span>
+          <span class="mk-btn fantasma">♥ Favoritar</span>
+        </div>
+        <div class="mk-ficha">
+          <div class="mk-bloco">
+            <h4>Contato e atendimento</h4>
+            <div class="mk-dados">
+              <div><b>Telefone</b>(48) 9 9999-0000</div>
+              <div><b>Cidade</b>Florianópolis · SC</div>
+              <div><b>Região</b>Centro, Norte da Ilha</div>
+              <div><b>Horário</b>Seg a sáb, 8h–18h</div>
+              <div><b>Visita</b>R$ 80,00</div>
+              <div><b>Hora</b>R$ 120,00</div>
+            </div>
+          </div>
+          <div class="mk-bloco">
+            <h4>Serviços e preços</h4>
+            <div class="mk-servicos">
+              <div class="mk-servico"><b>Manutenção elétrica</b><span>R$ 150 · em volume R$ 120</span></div>
+              <div class="mk-servico"><b>Instalação de chuveiro</b><span>R$ 90</span></div>
+              <div class="mk-servico"><b>Troca de disjuntor</b><span>a combinar</span></div>
+            </div>
+          </div>
+          <div class="mk-bloco">
+            <h4>Observação</h4>
+            <div style="font-size:14px;color:var(--fg-2)">Atende emergência fora do horário com taxa. Emite nota.</div>
+          </div>
+          <div class="mk-bloco">
+            <h4>Como foi para outras franquias</h4>
+            <div style="font-size:14px;color:var(--fg-2)"><b>Franquia Floripa</b> — pontual, resolveu no mesmo dia. <span class="mk-estrelas" style="font-size:14px">★★★★★</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <ul>
+      <li><b>Favoritar</b> com o coração — cada pessoa tem a própria lista.</li>
+      <li><b>Avaliar</b> com nota de 0 a 5 e comentário, que as outras franquias leem.</li>
+      <li>Preço por serviço, valor de visita e valor por hora quando informados.</li>
+    </ul>
+  </div>
+
+  <div class="funcionalidade">
+    <h3>4. Lavanderias</h3>
+    <p>Mesma lógica do prestador, com os campos que importam para enxoval: coleta e entrega, e o preço peça a peça.</p>
+    <div class="tela">
+      <div class="barra"><i></i><i></i><i></i><em>Lavanderias</em></div>
+      <div class="corpo">
+        <div class="mk-filtros">
+          <div class="mk-campo">Estado</div>
+          <div class="mk-campo">Cidade</div>
+          <span class="mk-btn">Filtrar</span>
+        </div>
+        <div class="mk-titulo">Lavanderia Água Limpa</div>
+        <div class="mk-acoes" style="margin-bottom:16px">
+          <span class="mk-estrelas">★★★★★</span><span>4,8 · 5 avaliações</span>
+          <span class="mk-btn fantasma">♥ Favoritar</span>
+        </div>
+        <div class="mk-ficha">
+          <div class="mk-bloco">
+            <h4>Dados</h4>
+            <div class="mk-dados">
+              <div><b>Telefone</b>(48) 9 8888-1111</div>
+              <div><b>Cidade</b>São José · SC</div>
+              <div><b>Coleta e entrega</b>Sim, sem custo até 20 km</div>
+              <div><b>Prazo</b>48 horas</div>
+            </div>
+          </div>
+          <div class="mk-bloco">
+            <h4>Preço por peça</h4>
+            <div class="mk-precos">
+              <div class="mk-preco"><b>Fronha</b>R$ 3,00</div>
+              <div class="mk-preco"><b>Lençol solteiro</b>R$ 5,00</div>
+              <div class="mk-preco"><b>Lençol casal</b>R$ 7,00</div>
+              <div class="mk-preco"><b>Toalha banho</b>R$ 4,50</div>
+              <div class="mk-preco"><b>Edredom casal</b>R$ 25,00</div>
+              <div class="mk-preco"><b>Capa de edredom</b>R$ 12,00</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p class="legenda">A avaliação da lavanderia é a novidade de 08/09. A pasta de documentos (contrato, tabela de preço, alvará) fica na mesma ficha, mas só aparece para quem administra.</p>
+  </div>
+
+  <div class="funcionalidade">
+    <h3>5. Indicar prestador ou lavanderia</h3>
+    <p>Formulário em etapas, feito para preencher pelo celular. Digitar o CEP já traz cidade, estado, bairro e rua.</p>
+    <div class="tela">
+      <div class="barra"><i></i><i></i><i></i><em>Indicar prestador</em></div>
+      <div class="corpo">
+        <div class="mk-etapas">
+          <div class="mk-etapa">1 · Dados e endereço</div>
+          <div class="mk-etapa ativa">2 · Serviços e preços</div>
+          <div class="mk-etapa">3 · Revisão e envio</div>
+        </div>
+        <div class="mk-bloco" style="margin-bottom:12px">
+          <h4>Serviços que ele presta</h4>
+          <div class="mk-linha">
+            <span class="mk-btn fantasma">Limpeza</span>
+            <span class="mk-btn">Manutenção elétrica ✓</span>
+            <span class="mk-btn fantasma">Hidráulica</span>
+            <span class="mk-btn fantasma">Outros</span>
+          </div>
+        </div>
+        <div class="mk-bloco">
+          <h4>Preço de cada serviço</h4>
+          <div class="mk-dados">
+            <div><b>Manutenção elétrica — unitário</b>R$ 150,00</div>
+            <div><b>Fazendo 10 no mês, fica</b>R$ 120,00</div>
+            <div><b>Visita para orçamento</b>R$ 80,00</div>
+          </div>
+        </div>
+        <div class="mk-linha" style="margin-top:16px;justify-content:flex-end">
+          <span class="mk-btn fantasma">Voltar</span><span class="mk-btn">Próximo</span>
+        </div>
+      </div>
+    </div>
+    <ul>
+      <li>Anexo opcional: print de conversa, orçamento, cartão.</li>
+      <li>Horário de atendimento com opções de 24 horas, fins de semana e feriados.</li>
+      <li>Tela de revisão antes de enviar, para conferir e corrigir.</li>
+      <li>Na indicação de lavanderia entram coleta e entrega e a grade de preço por peça.</li>
+    </ul>
+  </div>
+
+  <div class="funcionalidade">
+    <h3>6. Minhas indicações</h3>
+    <p>O acompanhamento do que a franquia indicou. Quando o time Seazone recusa, o motivo aparece escrito aqui — sem precisar perguntar em grupo.</p>
+    <div class="tela">
+      <div class="barra"><i></i><i></i><i></i><em>Minhas indicações</em></div>
+      <div class="corpo">
+        <div class="mk-lista">
+          <div class="mk-item"><div><b>Eletricista Silva &amp; Filhos</b><small>indicado em 02/09 · manutenção elétrica</small></div><span class="mk-status ok">validada</span></div>
+          <div class="mk-item"><div><b>Lavanderia Água Limpa</b><small>indicada em 05/09 · São José</small></div><span class="mk-status aguardando">pendente</span></div>
+          <div class="mk-item"><div><b>Piscineiro do Bairro</b><small>motivo: telefone não atende e não há outro contato</small></div><span class="mk-status nao">recusada</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="funcionalidade">
+    <h3>7. Meus favoritos</h3>
+    <p>Os prestadores e as lavanderias que a pessoa salvou, em duas listas, com a ficha completa a um clique. A lista é de cada usuário, não da franquia inteira.</p>
+    <div class="tela">
+      <div class="barra"><i></i><i></i><i></i><em>Meus favoritos</em></div>
+      <div class="corpo">
+        <div class="mk-topo">Prestadores</div>
+        <div class="mk-lista" style="margin-bottom:20px">
+          <div class="mk-item"><div><b>Eletricista Silva &amp; Filhos</b><small>Florianópolis · SC</small></div><span class="mk-estrelas">★★★★☆</span></div>
+        </div>
+        <div class="mk-topo">Lavanderias</div>
+        <div class="mk-lista">
+          <div class="mk-item"><div><b>Lavanderia Água Limpa</b><small>São José · SC · coleta e entrega</small></div><span class="mk-estrelas">★★★★★</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="titulo"><h2>As outras visões</h2><em>quem mais usa o Hub</em></div>
+  <p class="sub">O menu muda conforme o perfil de quem entra. Quem não pode ver uma tela não a vê nem pelo endereço direto.</p>
+  <div class="publicos">
+    <div class="publico">
+      <h3>Seazone · administração</h3>
+      <ul>
+        <li><b>Painel de validação:</b> fila com pendentes, validados e reprovados; abre a ficha inteira, corrige qualquer campo, aprova ou recusa com motivo.</li>
+        <li><b>Robô de validação:</b> confere os cadastros antes de qualquer pessoa olhar, em lote ou um a um. Nunca desfaz decisão humana.</li>
+        <li><b>Cadastro direto</b> de prestador e de lavanderia, já aprovados.</li>
+        <li><b>Documentos da lavanderia:</b> contrato, tabela de preço, alvará.</li>
+        <li><b>Grupos do Facebook:</b> diretório de grupos por cidade, sugestão de novos grupos, mensagem e imagem prontas para postar.</li>
+        <li><b>Fornecedores internos:</b> base dos fornecedores da própria Seazone, separada da que a franquia consulta.</li>
+        <li><b>Monitoramento:</b> categorias de serviço, funil do assistente de cadastro e base de leads levantados na Receita Federal.</li>
+        <li><b>Cobertura por cidade:</b> cruza imóveis administrados com prestadores disponíveis e acende alerta onde falta gente.</li>
+        <li><b>Configurações:</b> quem já entrou no Hub, quem é administrador e o preview de cada visão.</li>
+      </ul>
+    </div>
+    <div class="publico">
+      <h3>Seazone · sem administração</h3>
+      <ul>
+        <li>Quem tem conta Seazone mas não administra o Hub entra só para consultar: buscar prestador, lavanderias e favoritos.</li>
+        <li>Não vê painel de validação nem cadastros.</li>
+      </ul>
+    </div>
+    <div class="publico">
+      <h3>Prestador</h3>
+      <ul>
+        <li>Não faz login. Chega pela Central de Prestadores, por link de campanha ou pelo formulário do site.</li>
+        <li><b>Assistente de cadastro:</b> conversa que pergunta uma coisa por vez — dados, serviços, preços, horário — e mostra um resumo no fim.</li>
+        <li>O Hub registra por qual caminho cada prestador chegou.</li>
       </ul>
     </div>
   </div>
