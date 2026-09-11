@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Lojinha Seazone — melhorias da semana (08–11/09/2026)</title>
+<style>
+  :root{
+    --bg:#0B0D14;
+    --surface:#12151F;
+    --fg:#EDEFF5;
+    --muted-fg:#8A90A6;
+    --border:#242938;
+    --primary:#4D8BFF;
+    --primary-dim:#1B2540;
+    --ok:#3DDC91;
+    --warn:#FFB020;
+    --danger:#FF6B6B;
+    --roxo:#A78BFA;
+
+    --sp-xs:4px; --sp-sm:8px; --sp-md:16px; --sp-lg:24px;
+    --sp-xl:32px; --sp-2xl:48px; --sp-3xl:80px;
+    --r:8px; --r-lg:14px; --r-full:9999px;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0;background:var(--bg);color:var(--fg);
+    font-family:"Helvetica Neue",Helvetica,sans-serif;
+    font-size:14px;font-weight:500;line-height:1.55;
+  }
+  a{color:var(--primary);text-decoration:none}
+  a:hover{text-decoration:underline}
+  h1{font-size:clamp(30px,4.6vw,46px);font-weight:700;line-height:1.08;margin:0;letter-spacing:-.02em}
+  h2{font-size:26px;font-weight:600;line-height:1.2;margin:0;letter-spacing:-.01em}
+  h3{font-size:17px;font-weight:600;margin:0}
+  p{margin:0;font-size:15px;line-height:1.6}
+  .mut{color:var(--muted-fg)}
+  .detail{font-size:12px;line-height:1.45}
+  .wrap{max-width:1060px;margin:0 auto;padding:0 var(--sp-lg)}
+
+  header{padding:var(--sp-3xl) 0 var(--sp-xl);border-bottom:1px solid var(--border)}
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:var(--sp-sm);
+    background:var(--primary-dim);color:var(--primary);
+    border-radius:var(--r-full);padding:6px 14px;
+    font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+  }
+  header p.lead{margin-top:var(--sp-md);max-width:66ch;font-size:18px;color:var(--muted-fg)}
+
+  .stats{display:flex;flex-wrap:wrap;gap:var(--sp-2xl);margin-top:var(--sp-xl)}
+  .stat .n{font-size:34px;font-weight:700;line-height:1;font-variant-numeric:tabular-nums}
+  .stat .l{margin-top:6px;color:var(--muted-fg);font-size:12px;letter-spacing:.04em;text-transform:uppercase}
+
+  section{padding:var(--sp-2xl) 0;border-top:1px solid var(--border)}
+  .sechead{display:flex;align-items:baseline;gap:var(--sp-md);margin-bottom:var(--sp-lg)}
+  .num{
+    flex:none;width:26px;height:26px;display:grid;place-items:center;
+    border:1px solid var(--primary);color:var(--primary);
+    border-radius:var(--r-full);font-size:12px;font-weight:700;
+  }
+  .sechead p{color:var(--muted-fg);font-size:14px}
+
+  ul.items{list-style:none;margin:0;padding:0;border-top:1px solid var(--border)}
+  ul.items li{
+    display:grid;grid-template-columns:78px 1fr;gap:var(--sp-md);
+    padding:16px 0;border-bottom:1px solid var(--border);align-items:start;
+  }
+  .tag{
+    display:inline-block;padding:3px 9px;border-radius:var(--r-full);
+    font-size:11px;font-weight:700;letter-spacing:.03em;white-space:nowrap;
+    border:1px solid var(--border);color:var(--muted-fg);
+  }
+  .tag.pr{border-color:#2C4E8F;color:#8FB6FF;background:rgba(77,139,255,.08)}
+  .tag.lov{border-color:#4A3A6B;color:var(--roxo);background:rgba(167,139,250,.08)}
+  .tag.sql{border-color:#2F5B48;color:var(--ok);background:rgba(61,220,145,.08)}
+  li .desc strong{font-weight:600}
+  li .desc .why{display:block;margin-top:4px;color:var(--muted-fg);font-size:13px}
+
+  .check{
+    display:flex;gap:12px;align-items:flex-start;
+    padding:13px 0;border-bottom:1px solid var(--border);
+  }
+  .check input{
+    appearance:none;flex:none;width:18px;height:18px;margin-top:2px;
+    border:1.5px solid #3A4157;border-radius:5px;background:transparent;cursor:pointer;
+    transition:background .12s ease,border-color .12s ease;
+  }
+  .check input:checked{background:var(--ok);border-color:var(--ok)}
+  .check input:checked::after{content:"";display:block;width:5px;height:9px;margin:1px 0 0 5px;border:solid #0B0D14;border-width:0 2px 2px 0;transform:rotate(45deg)}
+  .check input:focus-visible{outline:2px solid var(--primary);outline-offset:2px}
+  .check label{cursor:pointer}
+  .check .who{color:var(--muted-fg);font-size:12px;display:block;margin-top:3px}
+  .check.done label>span:first-child{text-decoration:line-through;color:var(--muted-fg)}
+  .progress{display:flex;align-items:center;gap:12px;margin-bottom:var(--sp-lg)}
+  .track{flex:1;height:6px;background:#1B2030;border-radius:var(--r-full);overflow:hidden}
+  .fill{height:100%;width:0;background:var(--ok);transition:width .2s ease}
+  .pct{font-variant-numeric:tabular-nums;color:var(--muted-fg);font-size:13px;min-width:6ch;text-align:right}
+
+  .alerts{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+  .alert{border:1px solid var(--border);border-radius:var(--r-lg);padding:16px 18px;background:var(--surface)}
+  .alert .h{display:flex;align-items:center;gap:8px;font-weight:600;font-size:14px}
+  .dot{width:8px;height:8px;border-radius:50%;flex:none}
+  .dot.warn{background:var(--warn)} .dot.danger{background:var(--danger)} .dot.ok{background:var(--ok)}
+  .alert p{margin-top:6px;font-size:13px;color:var(--muted-fg)}
+
+  footer{padding:var(--sp-xl) 0 var(--sp-3xl);border-top:1px solid var(--border);color:var(--muted-fg)}
+  @media (max-width:680px){
+    header{padding-top:var(--sp-2xl)}
+    ul.items li{grid-template-columns:1fr;gap:6px}
+    .stats{gap:var(--sp-lg)}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <span class="eyebrow">Validação · Lojinha Seazone</span>
+    <h1>O que melhorou na lojinha<br>nesta semana</h1>
+    <p class="lead">Consolidado das entregas de 08 a 11 de setembro de 2026 no <code>seazone-tech/novalojaseazone</code> — 21 PRs revisadas pelo Alfred, mais os ajustes feitos direto no Lovable e 5 migrations de banco.</p>
+    <div class="stats">
+      <div class="stat"><div class="n">21</div><div class="l">PRs mergeadas</div></div>
+      <div class="stat"><div class="n">5</div><div class="l">Migrations aplicadas</div></div>
+      <div class="stat"><div class="n">6</div><div class="l">Frentes de produto</div></div>
+      <div class="stat"><div class="n">8,8</div><div class="l">Nota média Alfred</div></div>
+    </div>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <div class="sechead"><span class="num">1</span><div><h2>Loja aberta para quem não tem login</h2><p>A maior mudança da semana: o catálogo deixou de exigir conta para ser visto.</p></div></div>
+    <ul class="items">
+      <li><span class="tag pr">PR #18</span><div class="desc"><strong>Catálogo público</strong><span class="why">Sem login, o visitante vê os produtos de visibilidade <em>Todos</em> (Home e /produtos seguem a mesma regra), adiciona ao carrinho e só precisa entrar no checkout. O proprietário voltou a acessar carrinho, checkout e meus pedidos.</span></div></li>
+      <li><span class="tag pr">PR #19</span><div class="desc"><strong>Categorias voltaram a carregar para visitante</strong><span class="why">O <code>REVOKE SELECT ON suppliers</code> derrubava o join produto→fornecedor (erro 42501) e deixava a categoria vazia. Agora o anônimo lê só as colunas necessárias — CNPJ e Pix seguem bloqueados.</span></div></li>
+      <li><span class="tag lov">Lovable</span><div class="desc"><strong>Carrinho sem login</strong><span class="why">O carrinho saiu da rota protegida: o visitante vê os itens e o botão vira "Entre para finalizar sua compra".</span></div></li>
+      <li><span class="tag pr">PR #27</span><div class="desc"><strong>Login devolve para a página de origem</strong><span class="why">Path, query e hash são guardados antes do OAuth e restaurados depois — inclusive quando passa pelo onboarding.</span></div></li>
+      <li><span class="tag pr">PR #28</span><div class="desc"><strong>Login no mobile mostra a proposta de valor</strong><span class="why">Os 4 blocos de benefício foram para cima do botão de acesso.</span></div></li>
+      <li><span class="tag pr">PR #36</span><div class="desc"><strong>Linha de segurança e termos no login</strong><span class="why">Selo de acesso seguro + "Ao entrar, você concorda com os Termos de Uso e a Política de Privacidade", apontando para o site institucional.</span></div></li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="sechead"><span class="num">2</span><div><h2>Achar produto ficou mais fácil</h2><p>Busca, menu e endereços das páginas.</p></div></div>
+    <ul class="items">
+      <li><span class="tag pr">PR #20</span><div class="desc"><strong>Busca ignora acento</strong><span class="why">"lencol" acha "Lençol", em produtos e em fornecedores.</span></div></li>
+      <li><span class="tag pr">PR #29 · #33</span><div class="desc"><strong>Busca global no cabeçalho</strong><span class="why">Buscar de qualquer página leva para os resultados. O redesenho maior do header foi revertido a pedido — ficou o layout antigo com a busca.</span></div></li>
+      <li><span class="tag pr">PR #35</span><div class="desc"><strong>Submenu de Categorias no menu</strong><span class="why">Abre só as categorias liberadas para a visão do usuário; no mobile vira lista expansível.</span></div></li>
+      <li><span class="tag pr">PR #38</span><div class="desc"><strong>URLs em português</strong><span class="why">/produtos, /carrinho, /finalizar-compra, /meus-pedidos, /fornecedores… Todas as rotas antigas redirecionam preservando query e hash, e o 404 passou a ter cabeçalho e menu, com atalhos para Início, Produtos e Ajuda.</span></div></li>
+      <li><span class="tag lov">Lovable</span><div class="desc"><strong>Menu lateral de volta para todo mundo</strong><span class="why">A barra lateral do desktop voltou, inclusive para visitante; o menu horizontal ficou no mobile.</span></div></li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="sechead"><span class="num">3</span><div><h2>Vitrine: o que o card mostra</h2><p>Sinalização de produto e ordem do catálogo.</p></div></div>
+    <ul class="items">
+      <li><span class="tag pr">PR #21</span><div class="desc"><strong>Enxoval Padrão</strong><span class="why">Admin marca o produto (ícone de cama), o card e o modal ganham tag verde e o item sobe para o topo da categoria.</span></div></li>
+      <li><span class="tag lov">Lovable</span><div class="desc"><strong>Item Mínimo</strong><span class="why">Segunda marcação, tag roxa, ordenada logo depois do Enxoval Padrão.</span></div></li>
+      <li><span class="tag pr">PR #39</span><div class="desc"><strong>Tags "Mais vendido" e "Mais visto"</strong><span class="why">Top 5 por categoria, somando todos os fornecedores do mesmo produto e ignorando pedido cancelado. Item de indicação entra pelo nº de cliques. A Home abre com esses destaques.</span></div></li>
+      <li><span class="tag pr">PR #22</span><div class="desc"><strong>Item de indicação identificado</strong><span class="why">No lugar de "Fornecedor: Sem fornecedor", o card diz "Indicação Seazone · comprar no Mercado Livre".</span></div></li>
+      <li><span class="tag pr">PR #24 · #25</span><div class="desc"><strong>Formas de pagamento em ordem</strong><span class="why">Pix → Boleto → Link de crédito 1x, 2x… → demais, com o texto exatamente como o fornecedor cadastrou (nada é reescrito).</span></div></li>
+      <li><span class="tag lov">Lovable</span><div class="desc"><strong>Home e cards redesenhados</strong><span class="why">Ordem Destaques → Categorias → Ofertas, banner menor, grid mais denso, selo de oferta mostrando o % de desconto, faixa de preço no card e preços alinhados à esquerda.</span></div></li>
+      <li><span class="tag pr">PR #40</span><div class="desc"><strong>Correção de vazamento de catálogo</strong><span class="why">A Home checava só a visibilidade do produto: um item "Todos" dentro de categoria restrita aparecia para quem não devia. Agora exige produto <em>e</em> categoria liberados.</span></div></li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="sechead"><span class="num">4</span><div><h2>Pedidos e atendimento</h2><p>Cancelamento e a página de Ajuda.</p></div></div>
+    <ul class="items">
+      <li><span class="tag pr">PR #37</span><div class="desc"><strong>Cliente cancela o próprio pedido</strong><span class="why">Botão em Meus Pedidos; o cancelamento espelha o kanban do fornecedor, estorna SeazoCoins e libera estoque. Pedido já despachado não cancela — cai para o time de fornecedores.</span></div></li>
+      <li><span class="tag pr">PR #39</span><div class="desc"><strong>Cancelamento por fornecedor</strong><span class="why">Pedido com vários fornecedores pode cancelar só um bloco; o pedido só fica "cancelado" quando nenhum fornecedor sobra ativo.</span></div></li>
+      <li><span class="tag sql">Banco</span><div class="desc"><strong>Trigger de cancelamento corrigido (11/09)</strong><span class="why">A trava que impede o cliente de mexer em campos do card bloqueava também o cancelamento legítimo. Agora ela reconhece a chamada vinda de <code>cancel_own_order()</code>.</span></div></li>
+      <li><span class="tag pr">PR #37</span><div class="desc"><strong>Página de Ajuda (/ajuda)</strong><span class="why">FAQ público em accordion, com busca sem acento e contato por WhatsApp. Discurso alinhado: fornecedores homologados, despacho médio de 3 dias após o pagamento, item de indicação é compra no Mercado Livre (a Seazone não rastreia), problema com produto vai para o time de fornecedores — nunca direto com o fornecedor.</span></div></li>
+      <li><span class="tag lov">Lovable</span><div class="desc"><strong>NF e transportadora obrigatórias</strong><span class="why">O fornecedor passa a ser obrigado a informar nota e transportadora ao despachar.</span></div></li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="sechead"><span class="num">5</span><div><h2>Cadastro e checkout</h2></div></div>
+    <ul class="items">
+      <li><span class="tag pr">PR #23</span><div class="desc"><strong>Primeiro acesso mais curto</strong><span class="why">O onboarding pede só nome, e-mail (travado) e telefone. O endereço saiu dali — quem informa é o checkout, que agora salva no perfil para a próxima compra já vir preenchida.</span></div></li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="sechead"><span class="num">6</span><div><h2>Segurança dos dados de pagamento</h2></div></div>
+    <ul class="items">
+      <li><span class="tag pr">PR #26</span><div class="desc"><strong>Pix, CNPJ e links de pagamento fora das APIs públicas</strong><span class="why">Removidos de <code>loja-full-export</code>, <code>claude-data-export</code> e <code>api-pedidos</code>. Quem precisa desses dados usa o endpoint novo <code>admin-supplier-payment-info</code>, que exige login com papel de admin.</span></div></li>
+      <li><span class="tag pr">PR #19</span><div class="desc"><strong>Acesso anônimo por coluna</strong><span class="why">O visitante lê apenas o necessário da tabela de fornecedores; CNPJ e chave Pix continuam devolvendo 401.</span></div></li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="sechead"><span class="num">7</span><div><h2>Checklist de validação em produção</h2><p>Marque conforme for testando — fica salvo neste navegador.</p></div></div>
+    <div class="progress"><div class="track"><div class="fill" id="fill"></div></div><span class="pct" id="pct">0 / 0</span></div>
+    <div id="checks">
+      <div class="check"><input type="checkbox" id="c1"><label for="c1"><span>Abrir a loja em aba anônima: Home e /produtos mostram só os itens de visibilidade "Todos"</span><span class="who">Sem login</span></label></div>
+      <div class="check"><input type="checkbox" id="c2"><label for="c2"><span>Entrar numa categoria sem login e confirmar que os produtos aparecem (nada de categoria vazia)</span><span class="who">Sem login</span></label></div>
+      <div class="check"><input type="checkbox" id="c3"><label for="c3"><span>Adicionar item ao carrinho sem login, entrar com o Google e conferir que o item continua lá</span><span class="who">Sem login → login</span></label></div>
+      <div class="check"><input type="checkbox" id="c4"><label for="c4"><span>Clicar em "Entrar" numa página interna e conferir que volta para a mesma página depois do login</span><span class="who">Sem login → login</span></label></div>
+      <div class="check"><input type="checkbox" id="c5"><label for="c5"><span>Buscar "lencol" (sem cedilha) na busca do cabeçalho e ver o resultado correto</span><span class="who">Qualquer perfil</span></label></div>
+      <div class="check"><input type="checkbox" id="c6"><label for="c6"><span>Abrir o submenu Categorias no desktop e no mobile e conferir que só aparecem as categorias da sua visão</span><span class="who">Qualquer perfil</span></label></div>
+      <div class="check"><input type="checkbox" id="c7"><label for="c7"><span>Acessar uma URL antiga (ex.: /products) e confirmar o redirect para /produtos</span><span class="who">Qualquer perfil</span></label></div>
+      <div class="check"><input type="checkbox" id="c8"><label for="c8"><span>Digitar uma rota inexistente e conferir que o 404 mantém cabeçalho e menu</span><span class="who">Qualquer perfil</span></label></div>
+      <div class="check"><input type="checkbox" id="c9"><label for="c9"><span>Conferir as tags no card: Enxoval Padrão (verde), Item Mínimo (roxa), Mais vendido, Mais visto, % de desconto</span><span class="who">Qualquer perfil</span></label></div>
+      <div class="check"><input type="checkbox" id="c10"><label for="c10"><span>Conferir que um produto "Todos" dentro de categoria restrita NÃO aparece na Home de quem não vê a categoria</span><span class="who">Proprietário / franquia</span></label></div>
+      <div class="check"><input type="checkbox" id="c11"><label for="c11"><span>Abrir um produto de indicação e ver "Indicação Seazone · comprar no Mercado Livre"</span><span class="who">Qualquer perfil</span></label></div>
+      <div class="check"><input type="checkbox" id="c12"><label for="c12"><span>No modal do produto e no checkout, conferir a ordem Pix → Boleto → Link de crédito, com o texto original do fornecedor</span><span class="who">Comprador</span></label></div>
+      <div class="check"><input type="checkbox" id="c13"><label for="c13"><span>Fazer um pedido de teste e cancelar em Meus Pedidos (pedido não despachado)</span><span class="who">Comprador</span></label></div>
+      <div class="check"><input type="checkbox" id="c14"><label for="c14"><span>Pedido com dois fornecedores: cancelar só um bloco e conferir que o pedido segue ativo</span><span class="who">Comprador</span></label></div>
+      <div class="check"><input type="checkbox" id="c15"><label for="c15"><span>Tentar cancelar pedido já despachado e conferir a mensagem de bloqueio</span><span class="who">Comprador</span></label></div>
+      <div class="check"><input type="checkbox" id="c16"><label for="c16"><span>Despachar um pedido como fornecedor e conferir que NF e transportadora são obrigatórias</span><span class="who">Fornecedor</span></label></div>
+      <div class="check"><input type="checkbox" id="c17"><label for="c17"><span>Abrir /ajuda sem login, buscar um termo no FAQ e testar o botão de WhatsApp</span><span class="who">Sem login</span></label></div>
+      <div class="check"><input type="checkbox" id="c18"><label for="c18"><span>Primeiro acesso de um usuário novo: onboarding pede só nome, e-mail e telefone</span><span class="who">Usuário novo</span></label></div>
+      <div class="check"><input type="checkbox" id="c19"><label for="c19"><span>Segunda compra do mesmo usuário: endereço do checkout já vem preenchido</span><span class="who">Comprador</span></label></div>
+      <div class="check"><input type="checkbox" id="c20"><label for="c20"><span>Abrir loja-full-export e conferir que não há chave Pix, CNPJ nem link de pagamento no retorno</span><span class="who">Admin / técnico</span></label></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="sechead"><span class="num">8</span><div><h2>Pendências e pontos de atenção</h2></div></div>
+    <div class="alerts">
+      <div class="alert">
+        <div class="h"><span class="dot warn"></span>Rodapé perdeu Termos e Privacidade</div>
+        <p>Os links entregues na PR #36 sumiram do rodapé numa edição feita depois pelo Lovable. No login continuam lá. Decidir se voltam.</p>
+      </div>
+      <div class="alert">
+        <div class="h"><span class="dot warn"></span>Reveev ainda sem a trava de CNPJ</div>
+        <p>O toggle "Vende somente para CNPJ" existe no admin desde agosto, mas os 11 fornecedores estão com ele desligado — inclusive a Reveev.</p>
+      </div>
+      <div class="alert">
+        <div class="h"><span class="dot ok"></span>Migrations aplicadas e conferidas</div>
+        <p>As funções de cancelamento e as RPCs de ranking foram validadas com a chave pública: respondem, e negam acesso anônimo onde deviam.</p>
+      </div>
+      <div class="alert">
+        <div class="h"><span class="dot warn"></span>SeazoCoins fora do FAQ</div>
+        <p>SeazoCoins, retirada na sede, kits, estoque e itens personalizados ficaram de fora da Ajuda por decisão nossa — reavaliar quando o fluxo estabilizar.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap detail">
+    Repositório <code>seazone-tech/novalojaseazone</code> · período de 08 a 11 de setembro de 2026 · documento interno de validação.
+  </div>
+</footer>
+
+<script>
+  (function(){
+    var KEY = "lojinha-semana-0911";
+    var boxes = Array.prototype.slice.call(document.querySelectorAll('#checks input[type=checkbox]'));
+    var fill = document.getElementById('fill');
+    var pct = document.getElementById('pct');
+    var saved = {};
+    try { saved = JSON.parse(localStorage.getItem(KEY) || "{}"); } catch (e) {}
+
+    function render(){
+      var done = 0;
+      boxes.forEach(function(b){
+        b.parentElement.classList.toggle('done', b.checked);
+        if (b.checked) done++;
+      });
+      fill.style.width = (boxes.length ? (done / boxes.length) * 100 : 0) + '%';
+      pct.textContent = done + ' / ' + boxes.length;
+    }
+
+    boxes.forEach(function(b){
+      if (saved[b.id]) b.checked = true;
+      b.addEventListener('change', function(){
+        saved[b.id] = b.checked;
+        try { localStorage.setItem(KEY, JSON.stringify(saved)); } catch (e) {}
+        render();
+      });
+    });
+    render();
+  })();
+</script>
+</body>
+</html>
