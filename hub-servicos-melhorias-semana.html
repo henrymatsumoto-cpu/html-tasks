@@ -149,12 +149,11 @@
   <div class="wrap">
     <span class="eyebrow">HUB de Serviços · Franquias</span>
     <h1>O que mudou na semana</h1>
-    <p class="lede">04 a 10 de setembro de 2026. A semana em que o Hub saiu do Coolify pro EKS, apanhou do cache do Cloudflare e, já estabilizado, ganhou cinco melhorias seguidas na área de lavanderias e no painel do admin.</p>
+    <p class="lede">04 a 10 de setembro de 2026. Uma semana inteira de melhorias na área de lavanderias e no painel de quem administra o Hub — tudo já disponível para uso.</p>
     <div class="numeros">
-      <div><b>9</b><span>PRs no ar</span></div>
-      <div><b>5</b><span>migrações SQL</span></div>
-      <div><b>5</b><span>dias de deploy</span></div>
-      <div><b>1</b><span>incidente resolvido</span></div>
+      <div><b>7</b><span>melhorias no ar</span></div>
+      <div><b>5</b><span>dias de entrega</span></div>
+      <div><b>1</b><span>pendência</span></div>
     </div>
   </div>
 </header>
@@ -163,25 +162,25 @@
 
 <section>
   <div class="titulo"><h2>Linha do tempo</h2><em>dia a dia</em></div>
-  <p class="sub">Cada item é um PR mergeado na <code>main</code> — que no Hub significa deploy automático em produção, ~6 minutos depois.</p>
+  <p class="sub">Cada item abaixo já está disponível no Hub para quem usa.</p>
 
   <div class="dia">
     <div class="data"><b>04/09</b><span>quinta</span></div>
     <div>
       <div class="item">
-        <h3>Mudança de casa: Coolify → EKS</h3>
-        <p>O Hub passou a rodar na infra padrão da Seazone. Deploy virou GitOps: merge na <code>main</code> dispara a pipeline, que grava a tag no <code>gitops-seazone</code> e o ArgoCD sincroniza sozinho.</p>
-        <div class="tags"><span class="tag pr">PR #116–#119</span><span class="tag">infra</span></div>
+        <h3>O Hub mudou de casa</h3>
+        <p>O sistema passou a rodar na estrutura oficial da Seazone, a mesma dos outros produtos. Para quem usa nada muda no dia a dia: é o mesmo endereço, com mais estabilidade e com as melhorias chegando mais rápido.</p>
+        <div class="tags"><span class="tag">bastidores</span></div>
       </div>
       <div class="item">
-        <h3>Seletor de visão pro admin na sidebar</h3>
-        <p>O admin troca entre Administrador, Franquia, Seazone sem administração e Prestador direto no rodapé do menu, sem ir em Configurações. Não altera permissão — só o que a tela exibe. Trocar de visão mantém a tela atual, quando ela é permitida.</p>
-        <div class="tags"><span class="tag pr">PR #120</span><span class="tag">admin</span></div>
+        <h3>Trocar de visão ficou mais fácil</h3>
+        <p>Quem administra o Hub consegue ver o sistema como Franquia, como Seazone ou como Prestador — útil para tirar dúvida de alguém sem pedir print. Antes isso ficava escondido em Configurações; agora está no rodapé do menu lateral, sempre à mão. Trocar de visão não muda a permissão de ninguém e mantém a tela em que você já estava.</p>
+        <div class="tags"><span class="tag">administração</span></div>
       </div>
       <div class="item">
-        <h3>Correção do site em branco</h3>
-        <p>Primeiro deploy no EKS derrubou a página. Detalhe completo na seção abaixo.</p>
-        <div class="tags"><span class="tag pr">PR #121 · #122</span><span class="tag">incidente</span></div>
+        <h3>Instabilidade no dia da mudança</h3>
+        <p>Na virada, o site ficou algumas horas abrindo em branco por causa de um cache que guardou a página errada. Foi identificado e corrigido no mesmo dia, e ficou uma proteção para que não se repita nas próximas atualizações.</p>
+        <div class="tags"><span class="tag">resolvido</span></div>
       </div>
     </div>
   </div>
@@ -190,15 +189,15 @@
     <div class="data"><b>07/09</b><span>domingo</span></div>
     <div>
       <div class="item">
-        <h3>Lavanderia: edição na própria aba, observação e preços na indicação</h3>
+        <h3>Lavanderias: editar, observar e indicar com preço</h3>
         <ul>
-          <li><b>Lápis de edição</b> no card da aba Lavanderias — o admin corrige a ficha ali mesmo, reaproveitando a tela do painel de aprovação.</li>
-          <li><b>Campo Observação</b> (texto longo) no cadastro, na edição, na indicação e no detalhe.</li>
-          <li><b>Indicação da franquia</b> passou a usar a mesma grade de preço por peça que o admin usa.</li>
-          <li><b>Bug corrigido:</b> o botão "Próximo" da etapa 2 enviava a indicação sem passar pela etapa 3 — o mesmo defeito que já tinha acontecido em Indicar Prestador.</li>
-          <li>O dropdown de franquia passou a mostrar o <b>nome do franqueado</b> em vez da razão social.</li>
+          <li><b>Edição pelo lápis:</b> quem administra corrige os dados da lavanderia direto no card, sem procurar a ficha em outro lugar.</li>
+          <li><b>Campo de observação:</b> espaço livre para anotar o que não cabe nos campos fixos — combinado de prazo, particularidade de atendimento, o que for.</li>
+          <li><b>Preço por peça na indicação:</b> quando a franquia indica uma lavanderia, informa o valor peça a peça na mesma tabela que a Seazone usa.</li>
+          <li><b>Correção:</b> em alguns casos a indicação era enviada antes da última etapa, sem os preços. Corrigido.</li>
+          <li><b>Nome do franqueado:</b> a lista de franquias passou a mostrar o nome do franqueado, em vez da razão social, que ninguém reconhecia.</li>
         </ul>
-        <div class="tags"><span class="tag pr">PR #123</span><span class="tag sql">sql 050 · 051</span><span class="tag">lavanderias</span></div>
+        <div class="tags"><span class="tag">lavanderias</span></div>
       </div>
     </div>
   </div>
@@ -208,13 +207,13 @@
     <div>
       <div class="item">
         <h3>Avaliação de lavanderia</h3>
-        <p>A franquia consultava a lavanderia sem poder dizer se foi boa ou ruim. Agora a lavanderia tem nota de 0 a 5 e comentário opcional, uma avaliação por pessoa logada, média no card da consulta e dos favoritos. Clicar na mesma nota remove a avaliação — igualzinho ao prestador.</p>
-        <div class="tags"><span class="tag pr">PR #124</span><span class="tag sql">sql 052</span><span class="tag alfred">Alfred 9.1</span></div>
+        <p>Até então a franquia consultava a lavanderia sem poder dizer se o atendimento foi bom ou ruim. Agora dá para dar uma nota de 0 a 5 e deixar um comentário, uma avaliação por pessoa. A média aparece no card, na busca e nos favoritos — então quem procura lavanderia já vê a experiência de quem usou antes. É o mesmo funcionamento que já existia para prestador.</p>
+        <div class="tags"><span class="tag">lavanderias</span><span class="tag">franquia</span></div>
       </div>
       <div class="item">
-        <h3>Tela de login nova</h3>
-        <p>O <code>/login</code> saiu de dentro do menu lateral e virou um card centralizado em fundo navy: ícone coral, botão pill "Entrar com Google" e o aviso de que o acesso é restrito às contas @seazone. O caminho do prestador continua logo abaixo do card.</p>
-        <div class="tags"><span class="tag pr">PR #125</span><span class="tag">visual</span></div>
+        <h3>Tela de entrada nova</h3>
+        <p>A tela de login ficou mais limpa e alinhada ao visual da Seazone: um cartão centralizado, o botão de entrar com a conta corporativa e o aviso de que o acesso é restrito às contas Seazone. O caminho de quem quer se cadastrar como prestador continua logo abaixo.</p>
+        <div class="tags"><span class="tag">visual</span></div>
       </div>
     </div>
   </div>
@@ -223,9 +222,9 @@
     <div class="data"><b>09/09</b><span>terça</span></div>
     <div>
       <div class="item">
-        <h3>Admin cadastra prestador direto</h3>
-        <p>Botão "+ Cadastrar prestador" no Painel de validação, com os mesmos campos do formulário público: PF/PJ, contato, endereço por CEP, categorias com preço por serviço, visita, horário, anexo. Entra <b>já validado</b>, sem fila e sem bot, marcado como canal admin. Exige pelo menos uma categoria — validado sem categoria não aparece em busca nenhuma.</p>
-        <div class="tags"><span class="tag pr">PR #126</span><span class="tag sql">sql 053</span><span class="tag alfred">Alfred 8.6</span></div>
+        <h3>Cadastrar prestador pelo painel</h3>
+        <p>Quando a Seazone já conhece o prestador, não faz sentido pedir para ele se cadastrar e depois aprovar. Agora existe o botão "Cadastrar prestador" no painel: preenche os mesmos dados do formulário público e o prestador entra já aprovado, aparecendo na busca na hora. É obrigatório informar ao menos uma categoria de serviço — sem isso ele não apareceria em busca nenhuma.</p>
+        <div class="tags"><span class="tag">administração</span><span class="tag">prestadores</span></div>
       </div>
     </div>
   </div>
@@ -234,16 +233,15 @@
     <div class="data"><b>10/09</b><span>quarta</span></div>
     <div>
       <div class="item">
-        <h3>Acervo de documentos da lavanderia</h3>
-        <p>Antes cabia um anexo só, subido na indicação. Agora cada lavanderia tem um bloco <b>Documentos</b> com vários arquivos, cada um com descrição e data: contrato hoje, tabela de preço mês que vem, alvará depois.</p>
+        <h3>Pasta de documentos da lavanderia</h3>
+        <p>Antes cabia um anexo só. Agora cada lavanderia tem uma pasta de documentos: contrato hoje, tabela de preço no mês que vem, alvará depois — cada arquivo com descrição e a data em que entrou.</p>
         <ul>
-          <li>Aparece na ficha, no formulário de edição e no cadastro manual.</li>
-          <li>No cadastro a lavanderia ainda não tem id — os arquivos ficam numa fila em memória e sobem logo após o insert; falha de upload não desfaz o cadastro, vira aviso.</li>
-          <li>PDF e imagem até 10 MB, abertura por link assinado de 60 segundos, exclusão com confirmação.</li>
-          <li><b>Só o admin vê.</b> A tela esconde, mas quem garante é o banco: as policies da tabela e do bucket exigem estar em <code>hub_admins</code> — a franquia não alcança nem pela API.</li>
-          <li>Excluir a lavanderia limpa os arquivos do bucket junto.</li>
+          <li>Disponível na ficha da lavanderia, na edição e no cadastro.</li>
+          <li>Aceita PDF e imagem até 10 MB, com exclusão confirmada antes de apagar.</li>
+          <li><b>Só quem administra vê.</b> A franquia não tem acesso a esses arquivos de nenhuma forma.</li>
+          <li>Apagar a lavanderia apaga os documentos dela junto.</li>
         </ul>
-        <div class="tags"><span class="tag pr">PR #128</span><span class="tag sql">sql 054</span><span class="tag alfred">Alfred 8.4</span></div>
+        <div class="tags"><span class="tag">lavanderias</span><span class="tag">administração</span></div>
       </div>
     </div>
   </div>
@@ -256,75 +254,43 @@
       <h3>Franquia</h3>
       <ul>
         <li>Avaliar a lavanderia com nota e comentário, e ver a média antes de escolher.</li>
-        <li>Indicar lavanderia informando o preço peça a peça, na mesma grade do admin.</li>
-        <li>Indicação não "pula" mais a última etapa.</li>
-        <li>Tela de entrada mais limpa.</li>
+        <li>Indicar lavanderia informando o preço peça a peça.</li>
+        <li>Indicação não é mais enviada sem a última etapa.</li>
+        <li>Tela de entrada mais simples.</li>
       </ul>
     </div>
     <div class="publico">
-      <h3>Admin / Seazone</h3>
+      <h3>Seazone / administração</h3>
       <ul>
-        <li>Editar a ficha da lavanderia pelo lápis, sem sair da aba.</li>
+        <li>Editar a lavanderia direto no card, pelo lápis.</li>
         <li>Campo de observação livre na lavanderia.</li>
-        <li>Cadastrar prestador já validado pelo painel.</li>
         <li>Guardar contratos e documentos por lavanderia.</li>
-        <li>Trocar de visão pelo rodapé do menu.</li>
-        <li>Dropdown de franquia pelo nome do franqueado.</li>
+        <li>Cadastrar prestador já aprovado, sem passar pela fila.</li>
+        <li>Ver o Hub como franquia, prestador ou Seazone pelo menu.</li>
+        <li>Lista de franquias pelo nome do franqueado.</li>
       </ul>
     </div>
     <div class="publico">
       <h3>Prestador</h3>
       <ul>
-        <li>Nada mudou no autocadastro — o formulário público continua igual.</li>
-        <li>O cadastro feito pelo admin não pede aceite de termos em nome dele.</li>
+        <li>O cadastro público continua exatamente igual.</li>
+        <li>Quando a Seazone cadastra por ele, o aceite de termos não é marcado em seu nome.</li>
       </ul>
     </div>
   </div>
 </section>
 
 <section>
-  <div class="titulo"><h2>O incidente do site em branco</h2><em>04/09</em></div>
-  <p class="sub">Vale registrar porque a causa não estava no código do Hub, e a correção mudou como o site serve arquivos para sempre.</p>
+  <div class="titulo"><h2>O que falta</h2><em>pendência única</em></div>
+  <p class="sub">Do lado do Hub está tudo entregue e funcionando. Resta uma única pendência, e ela é com o time de tecnologia:</p>
   <div class="incidente">
-    <h3>Cache do Cloudflare guardou HTML como se fosse JavaScript</h3>
-    <ol class="passos">
-      <li>Durante o rollout convivem o pod novo e o antigo. O HTML novo pediu um arquivo <code>/assets/index-&lt;hash&gt;.js</code> que só existia no pod novo.</li>
-      <li>O pod antigo, seguindo o fallback de SPA do Caddy, respondeu <code>index.html</code> para essa URL — com status 200.</li>
-      <li>O Cloudflare guardou essa resposta por um ano. Todo visitante passou a receber HTML no lugar do JavaScript: tela branca.</li>
-      <li>Correção: arquivo inexistente em <code>/assets/*</code> agora responde 404 com <code>no-store</code> (o Cloudflare não guarda), arquivo existente vai como <code>immutable</code> e o <code>index.html</code> com <code>no-cache</code>.</li>
-      <li>Cada build passou a carimbar um <code>__BUILD_ID__</code> no bundle, então todo deploy gera um hash novo e sai sozinho de qualquer URL envenenada.</li>
-    </ol>
-    <p style="margin-top:var(--s-6); color:var(--fg-2)">Lição que ficou: <b>deploy verde não é site no ar.</b> Depois de cada deploy vale conferir o <code>content-type</code> do bundle.</p>
+    <h3>Colocar o link do Hub dentro do Seazone Host</h3>
+    <p>Hoje a franquia só chega ao Hub por link direto. Falta a tech incluir o acesso ao Hub de Serviços dentro do Seazone Host, para que a franquia encontre a ferramenta no lugar onde ela já trabalha todo dia, sem depender de alguém mandar o endereço.</p>
   </div>
-</section>
-
-<section>
-  <div class="titulo"><h2>Banco de dados</h2><em>migrações da semana</em></div>
-  <p class="sub">O Supabase do Hub é compartilhado com a Central de Qualidade, então as migrações são aplicadas à mão, sempre antes do merge do PR que depende delas.</p>
-  <div class="rolagem">
-    <table>
-      <thead><tr><th>Arquivo</th><th>O que faz</th><th>Aplicada</th></tr></thead>
-      <tbody>
-        <tr><td><b>050</b> observacao_lavanderia</td><td>Campo de observação na lavanderia</td><td>07/09</td></tr>
-        <tr><td><b>051</b> nome_franqueado</td><td>Nome do franqueado na franquia, usado no dropdown</td><td>07/09</td></tr>
-        <tr><td><b>052</b> avaliacoes_lavanderia</td><td>Tabela de avaliação da lavanderia + 4 policies</td><td>08/09</td></tr>
-        <tr><td><b>053</b> admin_cadastra_prestador</td><td>Permissão de inserção de prestador pelo admin</td><td>09/09</td></tr>
-        <tr><td><b>054</b> documentos_lavanderia</td><td>Tabela de documentos + bucket privado, admin-only</td><td>10/09</td></tr>
-      </tbody>
-    </table>
-  </div>
-</section>
-
-<section>
-  <div class="titulo"><h2>Em aberto</h2><em>próximos passos</em></div>
-  <div class="pendencia"><span class="bolinha"></span><div><b>PR #129 — sincronizar main → staging</b><span>Todos os checks verdes e Alfred aprovado; falta só mergear.</span></div></div>
-  <div class="pendencia"><span class="bolinha"></span><div><b>PR #127 — atualização do Vitest</b><span>Abertura automática do Dependabot, sem impacto para o usuário.</span></div></div>
-  <div class="pendencia"><span class="bolinha"></span><div><b>Dívida técnica</b><span>O formulário de novo prestador duplica marcação do cadastro público; ainda não foi extraído um componente comum.</span></div></div>
-  <div class="pendencia"><span class="bolinha ok"></span><div><b>Ambiente de staging</b><span>Não existe de fato: a pipeline escuta a branch, mas o GitOps só tem produção e o banco é um só. Teste ainda é em produção, com cuidado.</span></div></div>
 </section>
 
 <footer>
-  <div>hub-servicos.seazone.com.br · repositório <code>seazone-tech/hub-servicos</code> · período 04–10/09/2026</div>
+  <div>HUB de Serviços · período de 04 a 10 de setembro de 2026</div>
   <div style="margin-top:var(--s-2)">Documento interno — não divulgar fora do time.</div>
 </footer>
 
