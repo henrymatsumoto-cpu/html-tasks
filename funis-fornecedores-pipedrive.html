@@ -46,12 +46,11 @@ header.topo{position:sticky;top:0;z-index:20;
 .topo h1{font-family:var(--display);font-weight:800;letter-spacing:-0.02em;
   font-size:clamp(1.05rem,2.4vw,1.45rem);margin:0;line-height:1.1}
 .topo .sub{color:var(--ink-3);font-size:0.82rem;margin:0}
-.topo .direita{margin-left:auto;font-family:var(--display);font-size:0.78rem;color:var(--ink-3);letter-spacing:0.02em}
 
 .wrap{max-width:1120px;margin:0 auto;padding:var(--s-7) var(--s-5) var(--s-8)}
 @media (max-width:640px){.wrap{padding:var(--s-5) var(--s-4) var(--s-7)}}
 
-.abertura{max-width:66ch;margin-bottom:var(--s-8)}
+.abertura{max-width:66ch;margin-bottom:var(--s-7)}
 .abertura p{color:var(--ink-2);margin:0 0 var(--s-4)}
 .abertura p strong{color:var(--ink);font-weight:600}
 .olho{font-family:var(--display);font-size:0.76rem;letter-spacing:0.14em;text-transform:uppercase;
@@ -63,11 +62,9 @@ h3{font-family:var(--display);font-weight:700;font-size:1.02rem;letter-spacing:-
 p{margin:0 0 var(--s-4)}
 .lead{color:var(--ink-2);max-width:62ch;margin:0 0 var(--s-6)}
 
-/* faixa de resumo dos dois funis */
-.duo{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:var(--s-5);margin-bottom:var(--s-8)}
+.duo{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:var(--s-5);margin-bottom:var(--s-7)}
 .duo article{background:var(--bg-elev);border:1px solid var(--line-soft);border-radius:2px;padding:var(--s-5)}
 .duo .id{font-family:var(--display);font-size:0.74rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent)}
-.duo.cool .id{color:var(--cool)}
 .duo article h3{font-size:1.28rem;margin:var(--s-2) 0 var(--s-3)}
 .duo article p{color:var(--ink-2);font-size:0.94rem;margin:0}
 .duo article dl{display:grid;grid-template-columns:auto 1fr;gap:var(--s-2) var(--s-4);margin:var(--s-4) 0 0;
@@ -75,31 +72,23 @@ p{margin:0 0 var(--s-4)}
 .duo article dt{font-family:var(--display);color:var(--ink-3)}
 .duo article dd{margin:0;color:var(--ink-2)}
 
-/* seção de funil */
 section.funil{margin-bottom:var(--s-8);padding-top:var(--s-6);border-top:1px solid var(--line)}
 .cabeca{display:flex;flex-wrap:wrap;align-items:baseline;gap:var(--s-3) var(--s-4);margin-bottom:var(--s-4)}
 .pill{font-family:var(--display);font-size:0.72rem;letter-spacing:0.08em;text-transform:uppercase;
   border:1px solid var(--accent-deep);color:var(--accent);padding:3px 10px;border-radius:999px;white-space:nowrap}
 .pill.cool{border-color:var(--cool-deep);color:var(--cool)}
 
-/* trilho de etapas */
 .etapas{display:flex;gap:var(--s-2);overflow-x:auto;padding:var(--s-2) 0 var(--s-5);margin-bottom:var(--s-5)}
-.etapa{flex:1 0 148px;background:var(--bg-sunk);border:1px solid var(--line-soft);border-radius:2px;
-  padding:var(--s-3) var(--s-3) var(--s-4);position:relative}
+.etapa{flex:1 0 150px;background:var(--bg-sunk);border:1px solid var(--line-soft);border-radius:2px;
+  padding:var(--s-3) var(--s-3) var(--s-4)}
 .etapa .n{font-family:var(--display);font-size:0.7rem;color:var(--ink-3);letter-spacing:0.08em}
 .etapa .nome{font-family:var(--display);font-weight:700;font-size:0.96rem;margin:2px 0 var(--s-2);line-height:1.15}
-.etapa .desc{font-size:0.8rem;color:var(--ink-3);line-height:1.45}
-.etapa .qtd{font-family:var(--display);font-size:0.72rem;color:var(--ink-2);margin-top:var(--s-3);display:block}
-.etapa .qtd b{color:var(--accent);font-weight:700}
+.etapa .desc{font-size:0.82rem;color:var(--ink-3);line-height:1.45}
 .etapa.final{background:color-mix(in oklab,var(--ok) 9%,var(--bg-sunk));border-color:color-mix(in oklab,var(--ok) 35%,var(--line-soft))}
-.etapa.final .qtd b{color:var(--ok)}
 .etapa.perda{background:color-mix(in oklab,var(--bad) 8%,var(--bg-sunk));border-color:color-mix(in oklab,var(--bad) 30%,var(--line-soft))}
-.etapa.perda .qtd b{color:var(--bad)}
-.etapa.cool .qtd b{color:var(--cool)}
 
-/* colunas de conteúdo */
 .cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:var(--s-5) var(--s-6)}
-.cols > div > p, .cols > div > ul{color:var(--ink-2);font-size:0.94rem}
+.cols > div > p{color:var(--ink-2);font-size:0.94rem}
 ul.limpa{list-style:none;padding:0;margin:0 0 var(--s-4)}
 ul.limpa li{padding:var(--s-2) 0;border-bottom:1px solid var(--line-soft);font-size:0.9rem;color:var(--ink-2)}
 ul.limpa li:last-child{border-bottom:0}
@@ -107,7 +96,6 @@ ul.limpa li b{color:var(--ink);font-weight:600;font-family:var(--display)}
 code{font-family:var(--display);font-size:0.86em;background:var(--bg-sunk);border:1px solid var(--line-soft);
   padding:1px 5px;border-radius:2px;color:var(--ink-2)}
 
-/* tabela */
 table{width:100%;border-collapse:collapse;font-size:0.88rem;margin:0 0 var(--s-5)}
 th,td{text-align:left;padding:var(--s-3) var(--s-3) var(--s-3) 0;border-bottom:1px solid var(--line-soft);vertical-align:top}
 th{font-family:var(--display);font-weight:700;color:var(--ink-3);font-size:0.76rem;letter-spacing:0.06em;text-transform:uppercase}
@@ -115,25 +103,15 @@ td.campo{font-family:var(--display);color:var(--ink);white-space:nowrap}
 td small{color:var(--ink-3);display:block;font-size:0.82em}
 .tabela-scroll{overflow-x:auto}
 
-/* exemplo de card */
 .card-ex{background:var(--bg-sunk);border:1px solid var(--line-soft);border-radius:2px;padding:var(--s-4);
   font-size:0.86rem;color:var(--ink-2)}
 .card-ex .titulo{font-family:var(--display);font-weight:700;color:var(--ink);font-size:1rem;margin-bottom:var(--s-3)}
 .card-ex pre{white-space:pre-wrap;font-family:var(--serif);margin:0;color:var(--ink-3);font-size:0.84rem;line-height:1.5}
 
-/* nota */
 .nota{background:color-mix(in oklab,var(--warn) 7%,var(--bg-elev));
   border:1px solid color-mix(in oklab,var(--warn) 28%,var(--line-soft));
   border-radius:2px;padding:var(--s-4);font-size:0.9rem;color:var(--ink-2);margin:var(--s-5) 0 0}
 .nota b{font-family:var(--display);color:var(--warn)}
-
-/* números */
-.nums{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:var(--s-5);
-  border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:var(--s-5) 0;margin:0 0 var(--s-6)}
-.num b{font-family:var(--display);font-weight:800;font-size:clamp(1.6rem,4vw,2.2rem);
-  display:block;line-height:1;letter-spacing:-0.02em}
-.num span{font-size:0.82rem;color:var(--ink-3);font-family:var(--display)}
-.num.a b{color:var(--accent)} .num.c b{color:var(--cool)} .num.o b{color:var(--ok)}
 
 footer{border-top:1px solid var(--line);margin-top:var(--s-8);padding-top:var(--s-5);
   color:var(--ink-3);font-size:0.8rem;font-family:var(--display)}
@@ -143,47 +121,39 @@ footer{border-top:1px solid var(--line);margin-top:var(--s-8);padding-top:var(--
 
 <header class="topo">
   <h1>Funis de Fornecedores no Pipedrive</h1>
-  <p class="sub">Prospecção Fornecedores (60) &amp; Fornecedores — Cidades (61)</p>
-  <span class="direita">seazone-fd92b9 · foto do dia 15/09/2026</span>
+  <p class="sub">Fornecedores — Cidades (61) &amp; Prospecção Fornecedores (60)</p>
 </header>
 
 <div class="wrap">
 
   <div class="abertura">
-    <p class="olho">Por que existem dois</p>
-    <p>A Seazone precisa de dois fornecedores por praça para operar: <strong>lavanderia</strong> e <strong>fotógrafo</strong>. Achar isso é um trabalho de duas perguntas diferentes, e cada pergunta virou um funil.</p>
-    <p>O funil <strong>61</strong> responde <em>onde falta</em> — ele varre a operação (imóveis ativos, onboarding, franquias, Hub de Serviços) e transforma cada buraco de cobertura em um card de cidade/polígono. O funil <strong>60</strong> responde <em>quem atende</em> — cada empresa ou profissional pesquisado vira um card com telefone, CNPJ, endereço e vira uma negociação de verdade.</p>
-    <p>Na prática um alimenta o outro: card de cidade no 61 → pesquisa → vários cards de fornecedor no 60 → quando um é fechado, a cidade no 61 vira <em>Concluído</em>.</p>
-  </div>
-
-  <div class="nums">
-    <div class="num a"><b>76</b><span>cards no funil 60</span></div>
-    <div class="num c"><b>17</b><span>cards no funil 61</span></div>
-    <div class="num o"><b>3</b><span>cidades já prospectadas<br>(Caraguatatuba, Poços de Caldas, Pirenópolis)</span></div>
-    <div class="num"><b>2</b><span>categorias: Lavanderia e Fotógrafos</span></div>
+    <p class="olho">Resumo</p>
+    <p>A Seazone precisa de dois fornecedores em cada praça onde opera: <strong>lavanderia</strong> e <strong>fotógrafo</strong>. Encontrar esses fornecedores envolve duas perguntas diferentes, e cada pergunta tem o seu funil.</p>
+    <p>O funil <strong>Fornecedores — Cidades</strong> trabalha por <strong>praça</strong>: cada card é uma cidade ou polígono que ainda não tem fornecedor, e o funil controla quais praças serão prospectadas e em que ordem. O funil <strong>Prospecção Fornecedores</strong> trabalha por <strong>lead</strong>: cada card é uma empresa ou profissional encontrado na pesquisa, e o funil controla a tentativa de contato até o fechamento.</p>
+    <p>Um alimenta o outro: a cidade entra em prospecção no funil 61, a pesquisa gera os leads daquela cidade no funil 60, e quando um fornecedor é fechado e cadastrado no Hub de Serviços, a cidade é concluída no 61.</p>
   </div>
 
   <div class="duo">
     <article>
-      <span class="id">Pipeline 60</span>
-      <h3>Prospecção Fornecedores</h3>
-      <p>Um card = <strong>uma empresa/profissional</strong>. É o funil comercial clássico: contato, negociação, ganho ou perda.</p>
+      <span class="id" style="color:var(--cool)">Pipeline 61</span>
+      <h3>Fornecedores — Cidades</h3>
+      <p>Um card = <strong>uma cidade ou polígono</strong>. Define <em>onde</em> vamos prospectar.</p>
       <dl>
-        <dt>Unidade</dt><dd>Fornecedor</dd>
-        <dt>Entra em</dt><dd>Backlog (520)</dd>
-        <dt>Etapas</dt><dd>7</dd>
-        <dt>Título</dt><dd><code>Nome curto - Lavanderia</code></dd>
+        <dt>Unidade</dt><dd>Cidade / polígono</dd>
+        <dt>Entra em</dt><dd>Análise</dd>
+        <dt>Etapas</dt><dd>5</dd>
+        <dt>Título</dt><dd><code>Cidade - Lavanderia</code></dd>
       </dl>
     </article>
     <article>
-      <span class="id" style="color:var(--cool)">Pipeline 61</span>
-      <h3>Fornecedores — Cidades</h3>
-      <p>Um card = <strong>uma cidade ou polígono sem cobertura</strong>. É uma fila de trabalho, não uma negociação.</p>
+      <span class="id">Pipeline 60</span>
+      <h3>Prospecção Fornecedores</h3>
+      <p>Um card = <strong>um lead</strong> (empresa ou profissional). Define <em>com quem</em> vamos falar.</p>
       <dl>
-        <dt>Unidade</dt><dd>Cidade / polígono</dd>
-        <dt>Entra em</dt><dd>Análise (529)</dd>
-        <dt>Etapas</dt><dd>5</dd>
-        <dt>Título</dt><dd><code>Cidade - Lavanderia</code></dd>
+        <dt>Unidade</dt><dd>Fornecedor</dd>
+        <dt>Entra em</dt><dd>Backlog</dd>
+        <dt>Etapas</dt><dd>7</dd>
+        <dt>Título</dt><dd><code>Nome curto - Lavanderia</code></dd>
       </dl>
     </article>
   </div>
@@ -192,32 +162,32 @@ footer{border-top:1px solid var(--line);margin-top:var(--s-8);padding-top:var(--
   <section class="funil">
     <div class="cabeca">
       <h2 class="secao">Fornecedores — Cidades</h2>
-      <span class="pill cool">pipeline 61 · a montante</span>
+      <span class="pill cool">pipeline 61 · por praça</span>
     </div>
-    <p class="lead">Fila de descoberta. Nasce de uma análise automatizada que cruza Sapron (imóveis e polígonos), Hub de Serviços (lavanderias validadas) e a base de fotógrafos. Cada cidade que aparece sem fornecedor vira um card — e esse card é o pedido de trabalho para o funil 60.</p>
+    <p class="lead">Controla o mapa de cobertura: quais cidades ainda não têm lavanderia ou fotógrafo, quais já foram escolhidas para prospectar e quais já estão resolvidas.</p>
 
     <div class="etapas">
-      <div class="etapa cool"><span class="n">529</span><span class="nome">Análise</span><span class="desc">O robô jogou a cidade aqui. Ninguém olhou ainda — é preciso validar se o buraco é real.</span><span class="qtd">hoje: <b>17</b></span></div>
-      <div class="etapa cool"><span class="n">533</span><span class="nome">Backlog</span><span class="desc">Buraco confirmado, entrou na fila de prospecção. Aguardando alguém pegar.</span><span class="qtd">hoje: <b>0</b></span></div>
-      <div class="etapa cool"><span class="n">530</span><span class="nome">Prospecção</span><span class="desc">Pesquisa rodando. É aqui que nascem os cards do funil 60.</span><span class="qtd">hoje: <b>0</b></span></div>
-      <div class="etapa final"><span class="n">531</span><span class="nome">Concluído</span><span class="desc">Cidade coberta: fornecedor fechado e cadastrado no Hub.</span><span class="qtd">hoje: <b>0</b></span></div>
-      <div class="etapa perda"><span class="n">532</span><span class="nome">Cancelado</span><span class="desc">Não faz sentido prospectar (sem imóvel, cidade descontinuada, coberta por praça vizinha).</span><span class="qtd">hoje: <b>0</b></span></div>
+      <div class="etapa"><span class="n">529</span><span class="nome">Análise</span><span class="desc">Onde caem as cidades que a skill alimenta, para validação antes de virarem trabalho.</span></div>
+      <div class="etapa"><span class="n">533</span><span class="nome">Backlog</span><span class="desc">Cidades validadas — é o que vamos prospectar.</span></div>
+      <div class="etapa"><span class="n">530</span><span class="nome">Prospecção</span><span class="desc">Cidades com prospecção ativa acontecendo no momento.</span></div>
+      <div class="etapa final"><span class="n">531</span><span class="nome">Concluído</span><span class="desc">Onde a cidade termina: fornecedor fechado e cadastrado.</span></div>
+      <div class="etapa perda"><span class="n">532</span><span class="nome">Cancelado</span><span class="desc">Cidades que, por algum motivo, não fazem sentido prospectar.</span></div>
     </div>
 
     <div class="cols">
       <div>
         <h3>Como o card nasce</h3>
+        <p>Pela skill <code>/cidades-sem-fornecedor</code>, que cruza Sapron (imóveis e polígonos), Hub de Serviços (lavanderias validadas) e a base de fotógrafos:</p>
         <ul class="limpa">
           <li><b>Lavanderia</b> — cidade com franquia ativa ou imóvel ativo/onboarding e nenhuma lavanderia validada no Hub. Um card por polígono.</li>
           <li><b>Fotógrafo</b> — cidade sem fotógrafo ativo nem em contratação (recusado não conta). Sem polígono; a observação aponta a cidade mais próxima que tem.</li>
           <li><b>Polígonos</b> — entram os de atuação e os de prospecção ativa.</li>
-          <li><b>Dedupe</b> — por título + polígono, então rodar de novo não duplica.</li>
+          <li><b>Dedupe</b> — por título + polígono, então rodar a skill de novo não duplica card.</li>
         </ul>
-        <p>Rodado pela skill <code>/cidades-sem-fornecedor</code>. Primeira rodada em 14/09/2026: 6 cards de lavanderia e 11 de fotógrafo.</p>
       </div>
       <div>
         <h3>O que vai no card</h3>
-        <p>Pouca coisa e tudo contexto — não há fornecedor aqui, então telefone, CNPJ e e-mail ficam vazios de propósito.</p>
+        <p>Só contexto de decisão — não há fornecedor aqui, então telefone, CNPJ e e-mail ficam vazios de propósito.</p>
         <div class="card-ex">
           <div class="titulo">Arraial d'Ajuda - Lavanderia</div>
           <pre>Cidade de atuação: Arraial d'Ajuda, BA
@@ -237,25 +207,24 @@ Franquias:
         </div>
       </div>
     </div>
-    <div class="nota"><b>Pegadinha.</b> Aqui o código do polígono mora no campo <em>Profissão</em>. No funil 60 esse mesmo código mora em <em>Forma de pagamento</em>, e <em>Profissão</em> guarda o tipo da lavanderia. Os dois funis reaproveitam campos globais do Pipedrive com significados diferentes.</div>
   </section>
 
   <!-- ====================== FUNIL 60 ====================== -->
   <section class="funil">
     <div class="cabeca">
       <h2 class="secao">Prospecção Fornecedores</h2>
-      <span class="pill">pipeline 60 · a jusante</span>
+      <span class="pill">pipeline 60 · por lead</span>
     </div>
-    <p class="lead">Funil de negociação. Cada fornecedor encontrado na pesquisa vira um card completo, com tudo que o time precisa para ligar: telefone, e-mail, CNPJ, endereço, CEP, cidade, estado e o polígono da franquia que ele atenderia.</p>
+    <p class="lead">Controla o contato: cada fornecedor encontrado na pesquisa vira um card com tudo que o time precisa para ligar — telefone, e-mail, CNPJ, endereço, CEP, cidade, estado e o polígono da franquia que ele atenderia.</p>
 
     <div class="etapas">
-      <div class="etapa"><span class="n">520</span><span class="nome">Backlog</span><span class="desc">Todo card entra aqui, direto da pesquisa. Ainda não houve contato.</span><span class="qtd">hoje: <b>72</b></span></div>
-      <div class="etapa"><span class="n">521</span><span class="nome">1º Contato</span><span class="desc">Primeira abordagem feita (telefone, WhatsApp, e-mail).</span><span class="qtd">hoje: <b>0</b></span></div>
-      <div class="etapa"><span class="n">525</span><span class="nome">2º Contato</span><span class="desc">Retomada: quem não respondeu ou pediu para falar depois.</span><span class="qtd">hoje: <b>1</b></span></div>
-      <div class="etapa"><span class="n">526</span><span class="nome">3º Contato</span><span class="desc">Última tentativa antes de considerar perda por silêncio.</span><span class="qtd">hoje: <b>0</b></span></div>
-      <div class="etapa"><span class="n">528</span><span class="nome">Em negociação</span><span class="desc">Há interesse: discutindo preço, prazo, capacidade e condições.</span><span class="qtd">hoje: <b>2</b></span></div>
-      <div class="etapa final"><span class="n">523</span><span class="nome">Ganho</span><span class="desc">Fornecedor fechado — próximo passo é cadastrar no Hub de Serviços.</span><span class="qtd">hoje: <b>1</b></span></div>
-      <div class="etapa perda"><span class="n">527</span><span class="nome">Perda</span><span class="desc">Sem interesse, sem capacidade, preço inviável ou não respondeu.</span><span class="qtd">hoje: <b>0</b></span></div>
+      <div class="etapa"><span class="n">520</span><span class="nome">Backlog</span><span class="desc">Onde caem os leads da pesquisa, prontos para entrar em contato.</span></div>
+      <div class="etapa"><span class="n">521</span><span class="nome">1º Contato</span><span class="desc">Primeira tentativa de falar com o lead.</span></div>
+      <div class="etapa"><span class="n">525</span><span class="nome">2º Contato</span><span class="desc">Segunda tentativa, para quem não respondeu ou pediu retorno.</span></div>
+      <div class="etapa"><span class="n">526</span><span class="nome">3º Contato</span><span class="desc">Terceira e última tentativa de contato.</span></div>
+      <div class="etapa"><span class="n">528</span><span class="nome">Em negociação</span><span class="desc">Leads que deram retorno e com quem já estamos conversando.</span></div>
+      <div class="etapa final"><span class="n">523</span><span class="nome">Ganho</span><span class="desc">Fornecedores fechados.</span></div>
+      <div class="etapa perda"><span class="n">527</span><span class="nome">Perda</span><span class="desc">Cards que, por algum motivo, deram perda.</span></div>
     </div>
 
     <div class="cols">
@@ -263,34 +232,34 @@ Franquias:
         <h3>Como o card nasce</h3>
         <p>Pelas skills <code>/prospeccao-lavanderia</code> e <code>/prospeccao-fotografos</code>, sempre na mesma ordem de fontes:</p>
         <ul class="limpa">
-          <li><b>1. Receita Federal</b> — CNAE 9601 por município (traz CNPJ e endereço oficial).</li>
+          <li><b>1. Receita Federal</b> — CNAE 9601 por município, traz CNPJ e endereço oficial.</li>
           <li><b>2. Google</b> — busca web, Instagram, Facebook, guias locais.</li>
           <li><b>3. Google Maps</b> — varredura por bairro.</li>
           <li><b>4. Geocoding</b> — o endereço é testado ponto-em-polígono contra o polígono da franquia; quem cai fora sobe do mesmo jeito, marcado nas observações.</li>
         </ul>
         <h3>Regras que valem sempre</h3>
         <ul class="limpa">
-          <li><b>Sobe tudo</b> — tradicional, self-service, tapete/estofado, MEI sem nome, fora do polígono. O filtro é depois, no funil.</li>
+          <li><b>Sobe tudo</b> — tradicional, self-service, tapete/estofado, MEI sem nome, fora do polígono. O filtro acontece depois, no contato.</li>
           <li><b>Título curto</b> — <code>Botaro - Lavanderia</code>, nunca "Lavanderia Botaro Express (Sumaré) LTDA".</li>
-          <li><b>Só este funil</b> — os outros 18 pipelines do Pipedrive são de outros times e não se toca.</li>
+          <li><b>Só este funil</b> — os demais pipelines do Pipedrive são de outros times e não são tocados.</li>
         </ul>
       </div>
       <div>
         <h3>Campos do card</h3>
         <div class="tabela-scroll">
         <table>
-          <thead><tr><th>Campo</th><th>O que guarda</th><th>Preench.</th></tr></thead>
+          <thead><tr><th>Campo</th><th>O que guarda</th></tr></thead>
           <tbody>
-            <tr><td class="campo">Telefone</td><td>só dígitos, com DDI<small>5544991127652</small></td><td>75/76</td></tr>
-            <tr><td class="campo">E-mail</td><td>quando existe público</td><td>34/76</td></tr>
-            <tr><td class="campo">CNPJ</td><td>da Receita; MEIs sem registro ficam vazios</td><td>39/76</td></tr>
-            <tr><td class="campo">Endereço</td><td>rua completa<small>só grava via API v1 direta</small></td><td>69/76</td></tr>
-            <tr><td class="campo">CEP</td><td>só dígitos</td><td>37/76</td></tr>
-            <tr><td class="campo">Cidade de atuação</td><td>cidade da praça</td><td>76/76</td></tr>
-            <tr><td class="campo">Estado</td><td>UF</td><td>76/76</td></tr>
-            <tr><td class="campo">Forma de pagamento</td><td><em>código do polígono</em><small>SP-CAR-001, MG-PCL-001</small></td><td>58/76</td></tr>
-            <tr><td class="campo">Profissão</td><td><em>tipo/nicho</em><small>Tradicional, Self-service, Casamento…</small></td><td>76/76</td></tr>
-            <tr><td class="campo">Observações</td><td>fonte, redes sociais, divergências, se está fora do polígono</td><td>76/76</td></tr>
+            <tr><td class="campo">Telefone</td><td>só dígitos, com DDI<small>5544991127652</small></td></tr>
+            <tr><td class="campo">E-mail</td><td>quando existe público</td></tr>
+            <tr><td class="campo">CNPJ</td><td>da Receita Federal</td></tr>
+            <tr><td class="campo">Endereço</td><td>rua completa<small>só grava via API v1 direta</small></td></tr>
+            <tr><td class="campo">CEP</td><td>só dígitos</td></tr>
+            <tr><td class="campo">Cidade de atuação</td><td>cidade da praça</td></tr>
+            <tr><td class="campo">Estado</td><td>UF</td></tr>
+            <tr><td class="campo">Forma de pagamento</td><td><em>código do polígono</em><small>SP-CAR-001, MG-PCL-001</small></td></tr>
+            <tr><td class="campo">Profissão</td><td><em>tipo / nicho</em><small>Tradicional, Self-service, Casamento…</small></td></tr>
+            <tr><td class="campo">Observações</td><td>fonte, redes sociais, divergências, se está fora do polígono</td></tr>
           </tbody>
         </table>
         </div>
@@ -315,25 +284,24 @@ padrão local (35) — confirmar; fonte: Receita Federal</pre>
     <table>
       <thead><tr><th></th><th>61 · Cidades</th><th>60 · Fornecedores</th></tr></thead>
       <tbody>
-        <tr><td class="campo">Pergunta</td><td>Onde falta fornecedor?</td><td>Quem pode ser o fornecedor?</td></tr>
+        <tr><td class="campo">Pergunta</td><td>Onde vamos prospectar?</td><td>Com quem vamos falar?</td></tr>
         <tr><td class="campo">Unidade do card</td><td>cidade / polígono</td><td>empresa ou profissional</td></tr>
-        <tr><td class="campo">Origem</td><td>análise automática (Sapron + Hub)</td><td>pesquisa (Receita + Google + Maps)</td></tr>
-        <tr><td class="campo">Fecha quando</td><td>a cidade tem fornecedor no Hub</td><td>o contrato com aquele fornecedor fecha</td></tr>
+        <tr><td class="campo">Origem</td><td>skill de análise (Sapron + Hub)</td><td>pesquisa (Receita + Google + Maps)</td></tr>
+        <tr><td class="campo">Fecha quando</td><td>a cidade passa a ter fornecedor no Hub</td><td>o contrato com aquele fornecedor fecha</td></tr>
         <tr><td class="campo">Código do polígono</td><td>campo <em>Profissão</em></td><td>campo <em>Forma de pagamento</em></td></tr>
-        <tr><td class="campo">Volume esperado</td><td>dezenas (cidades)</td><td>dezenas por cidade</td></tr>
         <tr><td class="campo">Skill</td><td><code>/cidades-sem-fornecedor</code></td><td><code>/prospeccao-lavanderia</code> · <code>/prospeccao-fotografos</code></td></tr>
       </tbody>
     </table>
     </div>
 
     <h3>O ciclo completo</h3>
-    <p class="lead">61 · Análise → confirma o buraco → 61 · Prospecção → a pesquisa gera N cards em 60 · Backlog → contatos → 60 · Ganho → cadastro no Hub de Serviços → 61 · Concluído. Enquanto nenhum card do 60 chega em Ganho, a cidade continua aberta no 61 — é essa amarração que impede uma praça de ser esquecida.</p>
+    <p class="lead">Análise → Backlog → Prospecção no funil de cidades; a pesquisa daquela cidade gera os leads no Backlog do funil de fornecedores; os leads passam por 1º, 2º e 3º contato, entram em negociação e terminam em Ganho ou Perda; com o fornecedor fechado e cadastrado no Hub de Serviços, a cidade é movida para Concluído.</p>
 
-    <div class="nota"><b>Estado em 15/09/2026.</b> Os 17 cards do 61 ainda estão todos em Análise: a fila nasceu ontem e nenhuma cidade foi promovida para Prospecção. No 60, 72 dos 76 cards seguem em Backlog — o esforço até aqui foi de pesquisa (Caraguatatuba 09/09, Poços de Caldas 11/09, Pirenópolis 15/09), e a rodada de contato ainda não começou de fato.</div>
+    <div class="nota"><b>Detalhe de configuração.</b> O código do polígono fica em campos diferentes nos dois funis: no funil de cidades ele está em <em>Profissão</em>; no funil de fornecedores, em <em>Forma de pagamento</em> — lá o campo <em>Profissão</em> guarda o tipo da lavanderia ou o nicho do fotógrafo.</div>
   </section>
 
   <footer>
-    Dados lidos ao vivo da API do Pipedrive em 15/09/2026 · seazone-fd92b9.pipedrive.com · uso interno
+    Seazone · uso interno · seazone-fd92b9.pipedrive.com
   </footer>
 </div>
 </body>
