@@ -1,0 +1,816 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Processo de Prospecção de Fotógrafos — blocos para o canvas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;1,7..72,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme: dark;
+  --bg:            oklch(0.19 0.012 62);
+  --bg-elev:       oklch(0.235 0.014 62);
+  --bg-sunk:       oklch(0.165 0.011 62);
+  --line:          oklch(0.34 0.014 62);
+  --line-soft:     oklch(0.28 0.012 62);
+  --ink:           oklch(0.93 0.012 78);
+  --ink-2:         oklch(0.76 0.014 72);
+  --ink-3:         oklch(0.62 0.014 70);
+  --accent:        oklch(0.78 0.145 62);
+  --accent-deep:   oklch(0.60 0.125 55);
+  --ok:            oklch(0.76 0.12 150);
+  --wait:          oklch(0.74 0.10 95);
+  --corte:         oklch(0.74 0.15 25);
+
+  --s-1: 4px; --s-2: 8px; --s-3: 12px; --s-4: 16px;
+  --s-5: 24px; --s-6: 32px; --s-7: 48px; --s-8: 64px;
+
+  --serif: "Literata", Georgia, "Times New Roman", serif;
+  --display: "Bricolage Grotesque", "Trebuchet MS", sans-serif;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%; scroll-behavior:smooth}
+body{
+  margin:0; background:var(--bg); color:var(--ink);
+  font-family:var(--serif); font-size:16px; line-height:1.6;
+  padding-block: env(safe-area-inset-top,0px) env(safe-area-inset-bottom,0px);
+}
+a{color:var(--accent)}
+::selection{background:var(--accent-deep); color:oklch(0.15 0.01 62)}
+
+/* ---------- topo ---------- */
+header.topo{
+  position:sticky; top:0; z-index:20;
+  background:color-mix(in oklab, var(--bg-sunk) 92%, transparent);
+  backdrop-filter:blur(6px);
+  border-bottom:1px solid var(--line-soft);
+  padding: calc(var(--s-4) + env(safe-area-inset-top,0px)) var(--s-5) var(--s-4);
+  display:flex; flex-wrap:wrap; align-items:baseline; gap:var(--s-3) var(--s-5);
+}
+.topo h1{
+  font-family:var(--display); font-weight:800; letter-spacing:-0.02em;
+  font-size:clamp(1.1rem, 2.4vw, 1.5rem); margin:0; line-height:1.1;
+}
+.topo .sub{color:var(--ink-3); font-size:0.85rem; margin:0}
+.topo .direita{margin-left:auto; display:flex; gap:var(--s-4); align-items:center; flex-wrap:wrap}
+.contador{font-family:var(--display); font-size:0.8rem; color:var(--ink-2); letter-spacing:0.02em}
+.contador b{color:var(--accent); font-weight:700}
+
+/* ---------- layout ---------- */
+.wrap{
+  max-width:1180px; margin:0 auto; padding:var(--s-7) var(--s-5) var(--s-8);
+  display:grid; grid-template-columns: 220px minmax(0,1fr); gap:var(--s-7);
+  align-items:start;
+}
+@media (max-width: 880px){
+  .wrap{grid-template-columns:minmax(0,1fr); gap:var(--s-5); padding-top:var(--s-5)}
+  nav.indice{position:static; border:0; padding:0}
+}
+nav.indice{position:sticky; top:96px; font-family:var(--display); font-size:0.82rem}
+nav.indice p{color:var(--ink-3); letter-spacing:0.04em; margin:0 0 var(--s-3)}
+nav.indice ol{list-style:none; margin:0 0 var(--s-5); padding:0; display:flex; flex-direction:column; gap:2px}
+@media (max-width:880px){nav.indice ol{flex-direction:row; flex-wrap:wrap; gap:var(--s-2)}}
+nav.indice a{
+  display:flex; align-items:center; gap:var(--s-2); text-decoration:none;
+  color:var(--ink-2); padding:6px var(--s-2); border-radius:6px;
+}
+nav.indice a:hover{background:var(--bg-elev); color:var(--ink)}
+.ponto{width:7px; height:7px; border-radius:50%; flex:none; background:var(--wait)}
+.ponto.feito{background:var(--ok)}
+.ponto.corte{background:var(--corte)}
+
+/* ---------- blocos ---------- */
+section.bloco{padding-block:var(--s-6); border-top:1px solid var(--line-soft); scroll-margin-top:110px}
+section.bloco:first-of-type{border-top:0; padding-top:0}
+.cabeca{display:flex; align-items:flex-start; gap:var(--s-4); margin-bottom:var(--s-4)}
+.num{
+  font-family:var(--display); font-weight:800; font-size:2.1rem; line-height:0.9;
+  color:var(--accent-deep); flex:none; width:2.2ch; text-align:right;
+}
+.tit{flex:1; min-width:0}
+.tit h2{
+  font-family:var(--display); font-weight:700; letter-spacing:-0.015em;
+  font-size:clamp(1.15rem, 2.2vw, 1.45rem); margin:0 0 4px; line-height:1.15;
+}
+.tit .nota{margin:0; color:var(--ink-3); font-size:0.88rem; font-style:italic}
+.selo{
+  font-family:var(--display); font-size:0.7rem; letter-spacing:0.06em; text-transform:uppercase;
+  padding:4px 10px; border-radius:100px; white-space:nowrap; align-self:center;
+  background:color-mix(in oklab, var(--wait) 16%, transparent); color:var(--wait);
+  border:1px solid color-mix(in oklab, var(--wait) 34%, transparent);
+}
+.selo.feito{background:color-mix(in oklab, var(--ok) 15%, transparent); color:var(--ok);
+  border-color:color-mix(in oklab, var(--ok) 34%, transparent)}
+.selo.corte{background:color-mix(in oklab, var(--corte) 15%, transparent);
+  color:var(--corte); border-color:color-mix(in oklab, var(--corte) 34%, transparent)}
+
+.corpo{
+  background:var(--bg-elev); border:1px solid var(--line-soft); border-radius:10px;
+  padding:var(--s-5) var(--s-5) var(--s-4);
+}
+.corpo :is(h3,h4){font-family:var(--display); font-weight:700; letter-spacing:-0.01em; margin:var(--s-5) 0 var(--s-2); font-size:1rem}
+.corpo :is(h3,h4):first-child{margin-top:0}
+.corpo p{margin:0 0 var(--s-3); max-width:72ch}
+.corpo ul{margin:0 0 var(--s-3); padding-left:1.15em; max-width:72ch}
+.corpo li{margin-bottom:6px}
+.corpo li::marker{color:var(--accent-deep)}
+.corpo strong{color:oklch(0.97 0.02 78); font-weight:600}
+.corpo .val{font-family:var(--display); font-variant-numeric:tabular-nums}
+.corpo.apagar{border-color:color-mix(in oklab, var(--corte) 40%, var(--line-soft)); background:var(--bg-sunk)}
+.corpo.apagar p, .corpo.apagar li{color:var(--ink-3); text-decoration:line-through; text-decoration-color:color-mix(in oklab, var(--corte) 60%, transparent)}
+
+/* marca de lacuna a decidir, dentro do texto do canvas */
+.def{
+  font-family:var(--display); font-weight:600; font-size:0.92em;
+  color:var(--wait); background:color-mix(in oklab, var(--wait) 12%, transparent);
+  border-radius:4px; padding:1px 5px; white-space:normal;
+}
+.rodape-bloco{display:flex; gap:var(--s-3); align-items:center; margin-top:var(--s-4); flex-wrap:wrap}
+button.copiar{
+  font-family:var(--display); font-weight:600; font-size:0.85rem; letter-spacing:0.01em;
+  color:oklch(0.17 0.02 62); background:var(--accent); border:0; border-radius:100px;
+  padding:9px 18px; cursor:pointer;
+  transition: background 220ms cubic-bezier(0.22,1,0.36,1), transform 220ms cubic-bezier(0.22,1,0.36,1);
+}
+button.copiar:hover{background:oklch(0.84 0.15 66)}
+button.copiar:active{transform:scale(0.97)}
+button.copiar.ok{background:var(--ok)}
+button.copiar.fantasma{background:transparent; color:var(--ink-2); border:1px solid var(--line)}
+button.copiar.fantasma:hover{background:var(--bg-elev); color:var(--ink)}
+.dica{color:var(--ink-3); font-size:0.82rem; max-width:52ch}
+
+/* referência aos pontos da auditoria */
+.refs{display:flex; flex-wrap:wrap; gap:6px; margin-top:var(--s-3)}
+.ref{
+  font-family:var(--display); font-size:0.7rem; letter-spacing:0.04em;
+  color:var(--ink-3); border:1px solid var(--line-soft); border-radius:100px;
+  padding:2px 8px; text-decoration:none;
+}
+.ref:hover{color:var(--ink); border-color:var(--line)}
+
+.aviso{
+  background:var(--bg-sunk); border:1px dashed var(--line);
+  border-radius:10px; padding:var(--s-4) var(--s-5); color:var(--ink-2);
+  font-size:0.92rem; max-width:74ch; margin-bottom:var(--s-6);
+}
+.aviso b{color:var(--ink)}
+.aviso p{margin:0 0 var(--s-3)}
+.aviso p:last-child{margin-bottom:0}
+
+/* ---------- tabela de valores ---------- */
+table.valores{width:100%; border-collapse:collapse; font-family:var(--display); font-size:0.9rem; margin-bottom:var(--s-3)}
+table.valores th, table.valores td{padding:7px 10px; text-align:right; border-bottom:1px solid var(--line-soft); font-variant-numeric:tabular-nums}
+table.valores th:first-child, table.valores td:first-child{text-align:left; font-weight:500}
+table.valores thead th{color:var(--ink-3); font-size:0.76rem; letter-spacing:0.05em; text-transform:uppercase; font-weight:600}
+table.valores td.suspeito{color:var(--wait); font-weight:700}
+
+/* ---------- auditoria ---------- */
+.aud-topo{display:flex; flex-wrap:wrap; gap:var(--s-3); align-items:center; margin-bottom:var(--s-5)}
+.filtro{
+  font-family:var(--display); font-size:0.8rem; color:var(--ink-2);
+  background:transparent; border:1px solid var(--line-soft); border-radius:100px;
+  padding:6px 14px; cursor:pointer; transition:background 200ms cubic-bezier(0.22,1,0.36,1);
+}
+.filtro:hover{background:var(--bg-elev); color:var(--ink)}
+.filtro[aria-pressed="true"]{background:var(--accent); border-color:var(--accent); color:oklch(0.17 0.02 62); font-weight:700}
+.pontos{display:grid; gap:var(--s-3)}
+article.pt{
+  display:grid; grid-template-columns:62px minmax(0,1fr); gap:var(--s-4);
+  background:var(--bg-elev); border:1px solid var(--line-soft); border-radius:10px;
+  padding:var(--s-4) var(--s-5);
+}
+@media (max-width:620px){article.pt{grid-template-columns:minmax(0,1fr); gap:var(--s-2)}}
+article.pt[hidden]{display:none}
+.pt .id{font-family:var(--display); font-weight:800; font-size:0.95rem; color:var(--ink-3); letter-spacing:0.02em}
+.pt h4{font-family:var(--display); font-weight:700; font-size:1rem; margin:0 0 6px; letter-spacing:-0.01em}
+.pt p{margin:0 0 var(--s-2); font-size:0.94rem; color:var(--ink-2); max-width:72ch}
+.pt p:last-child{margin-bottom:0}
+.pt .marca{font-family:var(--display); font-size:0.72rem; letter-spacing:0.05em; text-transform:uppercase; font-weight:700}
+.pt[data-st="aplicado"] .marca{color:var(--ok)}
+.pt[data-st="aberto"] .marca{color:var(--wait)}
+.pt[data-st="semobjeto"] .marca{color:var(--ink-3)}
+.pt[data-st="novo"] .marca{color:var(--corte)}
+.pt .onde{font-size:0.82rem; color:var(--ink-3); font-family:var(--display)}
+
+footer{
+  max-width:1180px; margin:0 auto; padding:0 var(--s-5) var(--s-8);
+  color:var(--ink-3); font-size:0.82rem; font-family:var(--display);
+  border-top:1px solid var(--line-soft); padding-top:var(--s-5); max-width:1180px;
+}
+</style>
+</head>
+<body>
+
+<header class="topo">
+  <div>
+    <h1>Processo de Prospecção de Fotógrafos</h1>
+    <p class="sub">Canvas v2 — copie bloco por bloco e cole no Slack</p>
+  </div>
+  <div class="direita">
+    <span class="contador">blocos <b>1 a 9</b> · <b id="cAplicado">0</b> pontos resolvidos · atualizado 16/09</span>
+    <a href="https://seazone-fund.slack.com/docs/TDLTVAWQ6/F09GNUEDAJY" target="_blank" rel="noopener">abrir o canvas ↗</a>
+  </div>
+</header>
+
+<div class="wrap">
+  <nav class="indice">
+    <p>Blocos</p>
+    <ol id="nav"></ol>
+    <p><a href="#auditoria" style="text-decoration:none">Os 39 pontos ↓</a></p>
+  </nav>
+
+  <main>
+
+    <div class="aviso">
+      <p><b>Antes de sair colando.</b> O canvas que está no ar hoje descreve um processo <b>diferente</b> do que o HTML de validações auditou. O canvas fala em Pipefy (PIPE 23 e PIPE 7) e Blip Desk; a auditoria fala em dois funis do Pipedrive, rodada semanal, leva de 30 leads, tabela GOP, app de equipamento e contrato com testemunhas — ou seja, ela foi escrita sobre o <b>rascunho v2</b> do processo, não sobre o texto publicado.</p>
+      <p>Os blocos abaixo são o v2 já com as correções aplicadas. Onde o v2 tinha um número que eu não tenho de fonte confiável, deixei <span class="def">[DEFINIR: …]</span> em vez de inventar — é exatamente a lista de decisões que ainda depende de você, da liderança e do jurídico.</p>
+      <p><b>Confira os blocos 5 a 7 contra o seu rascunho v2</b> antes de publicar: reconstruí o fluxo a partir da auditoria e do canvas atual.</p>
+    </div>
+
+    <section class="bloco" id="b1">
+      <div class="cabeca">
+        <div class="num">1</div>
+        <div class="tit">
+          <h2>Identificação do Processo</h2>
+          <p class="nota">Mantido — só entra o substituto do Analista.</p>
+        </div>
+        <span class="selo feito">ajustado</span>
+      </div>
+      <div class="corpo" data-copiar>
+        <ul>
+          <li><strong>Nome do Processo:</strong> Prospecção de Fotógrafos</li>
+          <li><strong>Setor Responsável:</strong> Fornecedores</li>
+          <li><strong>Responsável Principal:</strong> @Wânia @Henry</li>
+          <li><strong>Substituto do Analista:</strong> <span class="def">[DEFINIR: nome]</span> — assume as etapas 4, 5, 6 e 8 na ausência do titular</li>
+          <li><strong>Versão:</strong> 2 · <strong>atualizado em</strong> <span class="def">[DEFINIR: data]</span> · <strong>próxima revisão:</strong> <span class="def">[DEFINIR: data]</span></li>
+        </ul>
+        <div class="refs" data-nao-copiar><a class="ref" href="#V22">V22</a><a class="ref" href="#D13">D13</a></div>
+      </div>
+      <div class="rodape-bloco">
+        <button class="copiar">Copiar bloco</button>
+        <span class="dica">as menções voltam a virar usuário quando você digita @ no canvas</span>
+      </div>
+    </section>
+
+    <section class="bloco" id="b2">
+      <div class="cabeca">
+        <div class="num">2</div>
+        <div class="tit">
+          <h2>Objetivo do Processo</h2>
+          <p class="nota">Reescrito em 15/09 — agora com a frase mensurável e os indicadores.</p>
+        </div>
+        <span class="selo feito">reescrito</span>
+      </div>
+      <div class="corpo" data-copiar>
+        <p>Garantir que toda cidade onde a Seazone atua tenha fotógrafo disponível, com qualidade de imagem e equipamento técnico dentro do padrão que a Seazone exige.</p>
+        <p>O processo cobre a jornada completa: identificar as cidades que ainda não têm cobertura fotográfica, prospectar e avaliar profissionais nessas praças, homologar quem atende ao nosso padrão técnico e manter a base de fotógrafos ativa e atualizada — de forma que nenhum imóvel entre em operação sem fotos no padrão Seazone e nenhuma franquia fique sem fotógrafo para acionar.</p>
+        <h3>Meta do processo</h3>
+        <p>Toda cidade com imóvel ativo ou com ativação prevista deve ter pelo menos <span class="def">[DEFINIR: nº]</span> fotógrafo(s) homologado(s) até <span class="def">[DEFINIR: nº]</span> dias antes da data prevista de ativação do primeiro imóvel.</p>
+        <h3>Resultados Esperados:</h3>
+        <ul>
+          <li>Evitar travas no processo de fotos profissionais por falta de fotógrafo na praça.</li>
+          <li>Antecipar a prospecção: identificar a cidade sem cobertura antes de o imóvel precisar da foto, e não depois.</li>
+          <li>Centralizar e padronizar a comunicação com os fotógrafos prospectados.</li>
+          <li>Tornar a seleção de fotógrafos mais assertiva e alinhada aos critérios técnicos e operacionais da empresa.</li>
+          <li>Garantir padrão de qualidade e equipamento uniforme em todas as cidades onde a Seazone atua.</li>
+          <li>Manter uma base de fotógrafos viva e rastreável, com histórico de cada prospecção e o status de cobertura de cada cidade.</li>
+        </ul>
+        <div class="refs" data-nao-copiar><a class="ref" href="#V01">V01</a><a class="ref" href="#V02">V02</a></div>
+      </div>
+      <div class="rodape-bloco"><button class="copiar">Copiar bloco</button></div>
+    </section>
+
+    <section class="bloco" id="b3">
+      <div class="cabeca">
+        <div class="num">3</div>
+        <div class="tit">
+          <h2>Escopo do Processo — Detalhamento</h2>
+          <p class="nota">Reescrito em 15/09 — entra a manutenção da base e a validação com a liderança.</p>
+        </div>
+        <span class="selo feito">reescrito</span>
+      </div>
+      <div class="corpo" data-copiar>
+        <h3>1. Inclui:</h3>
+        <ul>
+          <li>Análise periódica das cidades com necessidade — imóveis ativos, em onboarding e franquias — cruzando com a base de fotógrafos homologados.</li>
+          <li>Abertura automática do card da cidade sem cobertura no Pipedrive, com imóveis, franquias e a cidade coberta mais próxima.</li>
+          <li>Análise de viabilidade da prospecção e validação com a liderança.</li>
+          <li>Pesquisa e contato com fotógrafos da cidade, registrados no funil de prospecção.</li>
+          <li>Negociação dentro da tabela de valores e das regras de negócio.</li>
+          <li>Validação dos equipamentos mínimos e do processo de edição.</li>
+          <li>Coleta dos dados, homologação e encaminhamento para cadastro.</li>
+          <li>Atualização da base conforme fotógrafos entram, saem ou mudam de região — a saída de um fotógrafo devolve a cidade para o funil.</li>
+        </ul>
+        <h3>2. Não inclui:</h3>
+        <ul>
+          <li>Treinamento e acompanhamento pós-onboarding (time de Fotógrafos).</li>
+          <li>Produção, agendamento e edição das fotos.</li>
+          <li>Avaliação da qualidade das sessões já realizadas.</li>
+          <li>Análise por polígono — para fotógrafo a cobertura é por cidade.</li>
+        </ul>
+        <h3>3. Interfaces com outros processos:</h3>
+        <ul>
+          <li><strong>Automação:</strong> varre o Sapron e a base de fotógrafos e abre os cards das cidades.</li>
+          <li><strong>Fornecedores:</strong> pesquisa, contato e homologação do fotógrafo.</li>
+          <li><strong>Implantação:</strong> ativações de imóveis e franquias que geram a demanda.</li>
+          <li><strong>Fotógrafos:</strong> onboarding, teste prático, suporte técnico e qualidade das fotos.</li>
+        </ul>
+        <div class="refs" data-nao-copiar><a class="ref" href="#V20">V20</a><a class="ref" href="#D07">D07</a></div>
+      </div>
+      <div class="rodape-bloco"><button class="copiar">Copiar bloco</button></div>
+    </section>
+
+    <section class="bloco" id="b4">
+      <div class="cabeca">
+        <div class="num">4</div>
+        <div class="tit">
+          <h2>Responsáveis e Papéis</h2>
+          <p class="nota">Novo — cada papel com substituto nomeado.</p>
+        </div>
+        <span class="selo feito">reescrito</span>
+      </div>
+      <div class="corpo" data-copiar>
+        <ul>
+          <li><strong>Automação / Tecnologia:</strong> roda a análise periódica das cidades, abre os cards e mantém a integração com a base de fotógrafos. @Henry</li>
+          <li><strong>Analista de Fornecedores:</strong> analisa a viabilidade, pesquisa, faz o contato, negocia, homologa e encaminha para cadastro. @Wânia — substituto: <span class="def">[DEFINIR: nome]</span></li>
+          <li><strong>Liderança de Fornecedores:</strong> aprova a abertura da prospecção e as exceções de preço acima do teto. <span class="def">[DEFINIR: nome]</span></li>
+          <li><strong>Time de Fotógrafos:</strong> onboarding, treinamento, teste prático, suporte técnico e garantia de qualidade.</li>
+          <li><strong>Jurídico / DPO:</strong> modelo de contrato, base legal do tratamento de dados e prazo de descarte.</li>
+          <li><strong>Fotógrafo:</strong> executa o serviço de acordo com os parâmetros e padrões definidos.</li>
+          <li><strong>Testemunhas do contrato:</strong> <span class="def">[DEFINIR: titular 1]</span> e <span class="def">[DEFINIR: titular 2]</span> — suplentes: <span class="def">[DEFINIR: suplente 1]</span> e <span class="def">[DEFINIR: suplente 2]</span></li>
+        </ul>
+        <div class="refs" data-nao-copiar><a class="ref" href="#V22">V22</a><a class="ref" href="#D13">D13</a><a class="ref" href="#V14">V14</a></div>
+      </div>
+      <div class="rodape-bloco"><button class="copiar">Copiar bloco</button></div>
+    </section>
+
+    <section class="bloco" id="b5">
+      <div class="cabeca">
+        <div class="num">5</div>
+        <div class="tit">
+          <h2>Fluxo do Processo</h2>
+          <p class="nota">Reconstruído do v2 — 9 etapas, com a homologação separada do Ganho.</p>
+        </div>
+        <span class="selo feito">reescrito</span>
+      </div>
+      <div class="corpo" data-copiar>
+        <h3>Etapa 1 — Rodada de cidades sem cobertura</h3>
+        <ul>
+          <li><strong>Responsável:</strong> Automação</li>
+          <li><strong>Quando:</strong> toda sexta-feira. Sendo a sexta-feira feriado, a rodada ocorre no último dia útil anterior.</li>
+          <li><strong>O que faz:</strong> cruza imóveis ativos, imóveis em onboarding e franquias com a base de fotógrafos <strong>homologados</strong> e abre um card por cidade descoberta no funil de cidades, com imóveis, franquias, data prevista de ativação e a cidade coberta mais próxima.</li>
+          <li><strong>Regra de cobertura:</strong> só conta como coberta a cidade com fotógrafo homologado. Cidade com prospecção em andamento aparece como <strong>em tratativa</strong> — se a negociação terminar em Perda, a cidade volta a aparecer na rodada seguinte.</li>
+        </ul>
+        <h3>Etapa 2 — Análise de viabilidade</h3>
+        <ul>
+          <li><strong>Responsável:</strong> Analista de Fornecedores · <strong>SLA:</strong> 1 dia útil</li>
+          <li><strong>Critérios:</strong> distância até a cidade coberta mais próxima (<span class="def">[DEFINIR: km]</span>), quantidade de imóveis ativos e em onboarding, data prevista de ativação.</li>
+          <li><strong>Saídas:</strong> Aprovado → segue para a etapa 3. Cancelado → a cidade entra em quarentena de <span class="def">[DEFINIR: dias]</span> e só reabre antes disso se um novo imóvel for ativado ou se uma data de ativação for confirmada.</li>
+        </ul>
+        <h3>Etapa 3 — Validação com a liderança</h3>
+        <ul>
+          <li><strong>Responsável:</strong> Analista apresenta, Liderança aprova · <strong>SLA:</strong> 1 dia útil</li>
+          <li><strong>O que decide:</strong> abrir ou não a prospecção, e a alçada de exceção de preço para essa cidade — quem aprova: <span class="def">[DEFINIR: cargo]</span>, até <span class="def">[DEFINIR: valor ou % acima do teto]</span>.</li>
+        </ul>
+        <h3>Etapa 4 — Prospecção e primeiro contato</h3>
+        <ul>
+          <li><strong>Responsável:</strong> Analista de Fornecedores · <strong>SLA:</strong> <span class="def">[DEFINIR: dias úteis]</span></li>
+          <li><strong>Origem dos leads:</strong> base CNAE da Receita Federal, Instagram, Google/Maps e indicação da franquia. Todo lead vira card no funil de prospecção, etapa Backlog.</li>
+          <li><strong>Roteiro do primeiro contato</strong> — já na primeira conversa: aviso de privacidade, CNPJ, câmera e lente. Quem não tem CNPJ nem equipamento mínimo é descartado aqui, sem consumir a cadência inteira.</li>
+          <li><strong>Cadência:</strong> <span class="def">[DEFINIR: nº]</span> tentativas, uma a cada <span class="def">[DEFINIR: nº]</span> dias úteis. A cadência tem que caber dentro do SLA da etapa.</li>
+          <li><strong>Leva esgotada sem conversão:</strong> o card volta ao Coordenador com o resultado, e a decisão passa a ser entre ampliar o raio para a cidade vizinha, contratar com deslocamento ou assumir a cidade como não coberta.</li>
+        </ul>
+        <h3>Etapa 5 — Negociação</h3>
+        <ul>
+          <li><strong>Responsável:</strong> Analista de Fornecedores · <strong>SLA:</strong> <span class="def">[DEFINIR: dias úteis]</span></li>
+          <li><strong>Valores:</strong> abre na tabela de abertura e fecha no máximo no teto (bloco 6). Acima do teto, só com a aprovação da alçada definida na etapa 3.</li>
+          <li><strong>Regras de negócio:</strong> apresentar a lista fechada do bloco 6 — a mesma lista que está no contrato.</li>
+          <li><strong>Equipamento:</strong> o critério escrito no bloco 6 <strong>é</strong> a regra. O app de verificação é conveniência: se estiver fora do ar, o Analista aplica o critério diretamente.</li>
+          <li><strong>Decisões:</strong> ✅ avançar · ⏳ stand-by, se quiser se adequar (retomar em <span class="def">[DEFINIR: dias]</span>) · ❌ descartar, card para Perda com o motivo preenchido.</li>
+        </ul>
+        <h3>Etapa 6 — Coleta de dados e cadastro</h3>
+        <ul>
+          <li><strong>Responsável:</strong> Analista de Fornecedores · <strong>SLA:</strong> 1 dia útil</li>
+          <li><strong>Dados:</strong> nome completo, CNPJ, CPF, chave PIX, e-mail, endereço completo, região e/ou cidade de atuação, e o formulário de cadastro preenchido.</li>
+          <li><strong>Onde:</strong> cadastro no <span class="def">[DEFINIR: Artefato de fotógrafos ou PIPE 7 — qual é a fonte da verdade]</span>.</li>
+          <li><strong>Card:</strong> vai para <strong>Em homologação</strong> — não para Ganho.</li>
+        </ul>
+        <h3>Etapa 7 — Onboarding, treinamento e teste prático</h3>
+        <ul>
+          <li><strong>Responsável:</strong> Time de Fotógrafos · <strong>SLA:</strong> <span class="def">[DEFINIR: dias úteis — acordar com o time]</span></li>
+          <li><strong>Aprovado:</strong> card vai para Ganho e só aí o fotógrafo passa a contar como cobertura da cidade.</li>
+          <li><strong>Reprovado:</strong> card vai para Perda com o motivo, o cadastro é inativado e a cidade volta automaticamente para a fila de prospecção.</li>
+        </ul>
+        <h3>Etapa 8 — Contrato</h3>
+        <ul>
+          <li><strong>Responsável:</strong> Analista de Fornecedores · <strong>SLA:</strong> 3 dias úteis para a assinatura</li>
+          <li><strong>Assinam:</strong> fotógrafo, Seazone e duas testemunhas (bloco 4, com suplentes).</li>
+          <li><strong>Ordem:</strong> <span class="def">[DEFINIR: jurídico — assinar antes do treinamento, ou termo de adesão curto antes e contrato depois]</span>.</li>
+        </ul>
+        <h3>Etapa 9 — Manutenção da base</h3>
+        <ul>
+          <li><strong>Responsável:</strong> Analista de Fornecedores · <strong>SLA:</strong> <span class="def">[DEFINIR: dias úteis]</span></li>
+          <li><strong>Gatilho:</strong> fotógrafo avisa saída, muda de região, fica indisponível por <span class="def">[DEFINIR: período]</span> ou é desligado pelo time de Fotógrafos.</li>
+          <li><strong>O que faz:</strong> inativa o cadastro; se a cidade ficar descoberta, ela volta para o funil na rodada seguinte.</li>
+        </ul>
+        <div class="refs" data-nao-copiar><a class="ref" href="#D11">D11</a><a class="ref" href="#D06">D06</a><a class="ref" href="#V21">V21</a><a class="ref" href="#V14">V14</a><a class="ref" href="#D04">D04</a><a class="ref" href="#D08">D08</a><a class="ref" href="#D09">D09</a><a class="ref" href="#D02">D02</a><a class="ref" href="#V06">V06</a><a class="ref" href="#V07">V07</a><a class="ref" href="#D07">D07</a><a class="ref" href="#V09">V09</a></div>
+      </div>
+      <div class="rodape-bloco">
+        <button class="copiar">Copiar bloco</button>
+        <span class="dica">este é o bloco que mais muda em relação ao canvas atual — as etapas 8 e 9 não existem lá</span>
+      </div>
+    </section>
+
+    <section class="bloco" id="b6">
+      <div class="cabeca">
+        <div class="num">6</div>
+        <div class="tit">
+          <h2>Valores, regras de negócio e equipamento</h2>
+          <p class="nota">Novo bloco — tira o “entre elas” e fecha a faixa de 4 ou mais quartos.</p>
+        </div>
+        <span class="selo">tem célula a confirmar</span>
+      </div>
+      <div class="corpo" data-copiar>
+        <h3>Tabela de valores — Padrão</h3>
+        <table class="valores" data-tabela>
+          <thead><tr><th>Tipo de imóvel</th><th>Abertura</th><th>Teto</th><th>Margem</th></tr></thead>
+          <tbody>
+            <tr><td>Estúdio</td><td>R$ 180</td><td>R$ 200</td><td>11,1%</td></tr>
+            <tr><td>1 quarto</td><td>R$ 200</td><td>R$ 225</td><td>12,5%</td></tr>
+            <tr><td>2 quartos</td><td>R$ 225</td><td>R$ 250</td><td>11,1%</td></tr>
+            <tr><td>3 quartos</td><td class="suspeito">R$ 275 ?</td><td>R$ 300</td><td>9,1%</td></tr>
+            <tr><td>4 ou mais quartos</td><td>R$ 300</td><td>R$ 350</td><td>16,7%</td></tr>
+          </tbody>
+        </table>
+        <p><strong>Conferir:</strong> a abertura de 3 quartos sobe R$ 50 sobre a de 2 quartos, enquanto todos os outros degraus sobem R$ 20 ou R$ 25 — e é a linha com a menor margem de negociação da tabela. Se for digitação, o valor coerente é R$ 250. <span class="def">[DEFINIR: 250 ou 275]</span></p>
+        <h3>Tabela de valores — Grande Operação (GOP)</h3>
+        <p><span class="def">[COLAR: sua tabela GOP do rascunho v2]</span> — e junto dela, escrito no processo: o que caracteriza uma Grande Operação (<span class="def">[DEFINIR: volume mensal de sessões, nº de imóveis na praça ou tipo de contrato]</span>) e por que a margem de negociação da GOP é maior que a da Padrão, se for intencional.</p>
+        <h3>Regras de negócio — lista fechada</h3>
+        <ul>
+          <li>Refação da sessão sem custo adicional quando as fotos não forem aprovadas.</li>
+          <li>Prazo de entrega das fotos: <span class="def">[DEFINIR]</span></li>
+          <li>Quantidade mínima de fotos por sessão: <span class="def">[DEFINIR]</span></li>
+          <li>Direitos de uso das imagens pela Seazone: <span class="def">[DEFINIR]</span></li>
+          <li>Prazo de pagamento: <span class="def">[DEFINIR]</span></li>
+          <li>Política de cancelamento e reagendamento: <span class="def">[DEFINIR]</span></li>
+          <li>Deslocamento para cidade vizinha: <span class="def">[DEFINIR: R$ 1,20 por km — confirmar se a regra segue valendo]</span></li>
+        </ul>
+        <p>Esta lista é a mesma que entra no modelo de contrato — o que foi explicado ao fotógrafo e o que ele assina precisam ser a mesma coisa.</p>
+        <h3>Equipamento mínimo</h3>
+        <ul>
+          <li>Câmera DSLR ou Mirrorless, sensor APS-C ou Full Frame.</li>
+          <li>Lente grande-angular: 10–24 mm no APS-C, 16 mm no Full Frame.</li>
+          <li>Tripé obrigatório.</li>
+          <li>Edição em Lightroom.</li>
+        </ul>
+        <div class="refs" data-nao-copiar><a class="ref" href="#V12">V12</a><a class="ref" href="#V10">V10</a><a class="ref" href="#V11">V11</a><a class="ref" href="#V13">V13</a><a class="ref" href="#D05">D05</a><a class="ref" href="#D12">D12</a><a class="ref" href="#N02">N02</a></div>
+      </div>
+      <div class="rodape-bloco"><button class="copiar">Copiar bloco</button><span class="dica">a tabela sai como texto alinhado; no canvas você pode recriar como tabela se preferir</span></div>
+    </section>
+
+    <section class="bloco" id="b7">
+      <div class="cabeca">
+        <div class="num">7</div>
+        <div class="tit">
+          <h2>Documentos e Ferramentas</h2>
+          <p class="nota">Ajustado — cada ferramenta com o papel dela, e o dono do app de equipamento.</p>
+        </div>
+        <span class="selo feito">reescrito</span>
+      </div>
+      <div class="corpo" data-copiar>
+        <ul>
+          <li><strong>Pipedrive:</strong> funil de cidades (card da cidade descoberta) e funil de prospecção de fornecedores (card do fotógrafo). <span class="def">[DEFINIR: nome exato dos dois funis e das etapas, como aparecem na tela]</span></li>
+          <li><strong>Pipefy — PIPE 7, Jornada Fotógrafos:</strong> cadastro e onboarding com o time técnico.</li>
+          <li><strong>Artefato de fotógrafos:</strong> base de fotógrafos que a automação lê. <span class="def">[DEFINIR: é a fonte da verdade? com que frequência sincroniza?]</span></li>
+          <li><strong>Slack:</strong> canal de chamados da prospecção.</li>
+          <li><strong>Blip Desk:</strong> primeiro contato por WhatsApp, template <em>primeiro_contato_fornecedor_fotografo</em>.</li>
+          <li><strong>App de verificação de equipamento:</strong> verificaequipamento.lovable.app — dono: <span class="def">[DEFINIR: nome]</span>, lista de câmeras e lentes revisada a cada <span class="def">[DEFINIR: período]</span>. Fora do ar, vale o critério escrito no bloco 6.</li>
+          <li><strong>Drive — Valores e contrato:</strong> modelos de contrato e tabela vigente.</li>
+          <li><strong>Formulário de cadastro do fotógrafo:</strong> link no bloco do fluxo.</li>
+        </ul>
+        <div class="refs" data-nao-copiar><a class="ref" href="#V16">V16</a><a class="ref" href="#V09">V09</a><a class="ref" href="#V17">V17</a><a class="ref" href="#D09">D09</a><a class="ref" href="#D12">D12</a></div>
+      </div>
+      <div class="rodape-bloco"><button class="copiar">Copiar bloco</button></div>
+    </section>
+
+    <section class="bloco" id="b8">
+      <div class="cabeca">
+        <div class="num">8</div>
+        <div class="tit">
+          <h2>Prazos, SLA e Indicadores</h2>
+          <p class="nota">Reescrito — um SLA por etapa e dois lead times, no lugar do “SLA total”.</p>
+        </div>
+        <span class="selo">depende de 4 respostas</span>
+      </div>
+      <div class="corpo" data-copiar>
+        <p><strong>Todos os prazos deste processo são contados em dias úteis.</strong></p>
+        <table class="valores" data-tabela>
+          <thead><tr><th>Etapa</th><th>SLA</th></tr></thead>
+          <tbody>
+            <tr><td>1. Rodada de cidades sem cobertura</td><td>Imediato (automação)</td></tr>
+            <tr><td>2. Análise de viabilidade</td><td>1 dia útil</td></tr>
+            <tr><td>3. Validação com a liderança</td><td>1 dia útil</td></tr>
+            <tr><td>4. Prospecção e primeiro contato</td><td>[DEFINIR]</td></tr>
+            <tr><td>5. Negociação</td><td>[DEFINIR]</td></tr>
+            <tr><td>6. Coleta de dados e cadastro</td><td>1 dia útil</td></tr>
+            <tr><td>7. Onboarding, treinamento e teste prático</td><td>[DEFINIR — time de Fotógrafos]</td></tr>
+            <tr><td>8. Contrato</td><td>3 dias úteis</td></tr>
+            <tr><td>9. Manutenção da base</td><td>[DEFINIR]</td></tr>
+          </tbody>
+        </table>
+        <h3>Os dois lead times do processo</h3>
+        <ul>
+          <li><strong>Lead time de prospecção:</strong> da entrada do card na fila do Analista até o primeiro retorno de um fotógrafo. É o número que mede o time de Fornecedores.</li>
+          <li><strong>Lead time de cobertura da cidade:</strong> da abertura do card da cidade até o fotógrafo homologado. É o SLA do processo, e é ele que precisa caber na antecedência da meta do bloco 2.</li>
+        </ul>
+        <h3>Indicadores</h3>
+        <ul>
+          <li>Cidades descobertas em aberto (estoque).</li>
+          <li>Tempo médio para cobrir uma cidade.</li>
+          <li>Conversão de lead a homologado, por origem: Receita Federal, Instagram, Google, indicação da franquia.</li>
+          <li>Taxa de aprovação no teste prático.</li>
+          <li>Cidades que perderam cobertura no mês (saída de fotógrafo).</li>
+        </ul>
+        <p>Os números saem do Pipedrive e do PIPE 7, publicados <span class="def">[DEFINIR: frequência]</span> por <span class="def">[DEFINIR: quem]</span> para <span class="def">[DEFINIR: para quem]</span>.</p>
+        <div class="refs" data-nao-copiar><a class="ref" href="#V03">V03</a><a class="ref" href="#V04">V04</a><a class="ref" href="#V05">V05</a><a class="ref" href="#D01">D01</a><a class="ref" href="#D03">D03</a><a class="ref" href="#V15">V15</a><a class="ref" href="#D14">D14</a></div>
+      </div>
+      <div class="rodape-bloco"><button class="copiar">Copiar bloco</button></div>
+    </section>
+
+    <section class="bloco" id="b9">
+      <div class="cabeca">
+        <div class="num">9</div>
+        <div class="tit">
+          <h2>Dados pessoais e privacidade</h2>
+          <p class="nota">Bloco novo — o processo coleta CPF, PIX e endereço e monta listas a partir da Receita.</p>
+        </div>
+        <span class="selo">depende do jurídico</span>
+      </div>
+      <div class="corpo" data-copiar>
+        <ul>
+          <li><strong>Base legal da prospecção</strong> (montar lista de leads a partir de dados públicos e redes sociais): <span class="def">[DEFINIR: jurídico/DPO]</span></li>
+          <li><strong>Base legal do cadastro</strong> (CPF, CNPJ, chave PIX, endereço): <span class="def">[DEFINIR: jurídico/DPO]</span></li>
+          <li><strong>Aviso no primeiro contato:</strong> o roteiro diz de onde vieram os dados e para que serão usados.</li>
+          <li><strong>Onde os dados ficam e quem acessa:</strong> <span class="def">[DEFINIR]</span> — CPF e chave PIX com acesso mais restrito que o restante do cadastro.</li>
+          <li><strong>Descarte:</strong> cards em Perda são apagados do funil depois de <span class="def">[DEFINIR: prazo]</span>.</li>
+        </ul>
+        <div class="refs" data-nao-copiar><a class="ref" href="#V08">V08</a><a class="ref" href="#D10">D10</a></div>
+      </div>
+      <div class="rodape-bloco"><button class="copiar">Copiar bloco</button></div>
+    </section>
+
+    <section class="bloco" id="bx">
+      <div class="cabeca">
+        <div class="num">✕</div>
+        <div class="tit">
+          <h2>Apagar do canvas</h2>
+          <p class="nota">Trecho que sobrou de uma versão antiga, logo abaixo de “Página atualizada por…”.</p>
+        </div>
+        <span class="selo corte">apagar</span>
+      </div>
+      <div class="corpo apagar">
+        <p>Uma segunda cópia dos itens <strong>3, 4, 5 e 6</strong> está colada no fim do canvas. Ela contradiz a versão de cima em três pontos, e quem ler de baixo para cima vai seguir o texto errado:</p>
+        <ul>
+          <li>Diz que o pagamento de deslocamento é de R$ 1,20 por km — regra que não existe na versão de cima.</li>
+          <li>Descreve o equipamento de outro jeito: “APS-C lente 10–11 mm ou Full Frame lente 16–17 mm”, contra “10–24 mm ou 16 mm” da versão de cima.</li>
+          <li>Não tem a etapa de validação com a liderança nem o encaminhamento para o PIPE 7 com o detalhamento atual.</li>
+        </ul>
+        <p>Antes de apagar: decidir se a regra de deslocamento entra no bloco 6 e qual é a especificação de lente correta.</p>
+        <div class="refs"><a class="ref" href="#N01">N01</a><a class="ref" href="#N02">N02</a><a class="ref" href="#N03">N03</a></div>
+      </div>
+      <div class="rodape-bloco">
+        <span class="dica">tem também um “Confirmar se precisa dessa parte” escrito no meio do fluxo, na etapa de encaminhamento para cadastro — resolver e apagar a anotação.</span>
+      </div>
+    </section>
+
+    <section class="bloco" id="auditoria">
+      <div class="cabeca">
+        <div class="num">39</div>
+        <div class="tit">
+          <h2>Os 39 pontos, um por um</h2>
+          <p class="nota">36 do HTML de validações + 3 achados no canvas que está no ar. Clique para filtrar.</p>
+        </div>
+      </div>
+
+      <div class="aud-topo">
+        <button class="filtro" data-f="" aria-pressed="true">todos <span id="nTodos"></span></button>
+        <button class="filtro" data-f="aplicado" aria-pressed="false">já resolvido no texto <span id="nAplicado"></span></button>
+        <button class="filtro" data-f="aberto" aria-pressed="false">falta você decidir <span id="nAberto"></span></button>
+        <button class="filtro" data-f="novo" aria-pressed="false">achado novo <span id="nNovo"></span></button>
+      </div>
+
+      <div class="pontos" id="pontos"></div>
+
+      <div class="rodape-bloco">
+        <button class="copiar fantasma" id="copiarPendencias">Copiar só o que falta decidir</button>
+        <span class="dica">lista pronta para colar no HTML de validações ou mandar para a liderança e o jurídico</span>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<footer>
+  Fonte: canvas “Processo de Prospecção de Fotógrafos” (F09GNUEDAJY, lido em 16/09/2026) + HTML de validações de 16/09.
+  Os blocos 5 a 8 foram reconstruídos a partir da auditoria — confira contra o rascunho v2 antes de publicar.
+</footer>
+
+<script>
+(function(){
+  /* ---------- os 39 pontos ---------- */
+  var PONTOS = [
+    {id:"V01", t:"Objetivo mensurável", st:"aplicado", onde:"bloco 2",
+     d:"A auditoria dizia que a seção 2 estava em branco; no canvas de hoje ela está escrita, mas sem número e sem prazo. O bloco 2 passa a ter a frase de meta — falta preencher o nº de fotógrafos e a antecedência."},
+    {id:"V02", t:"Quantos fotógrafos cobrem uma cidade", st:"aberto", onde:"bloco 2",
+     d:"Um basta? Tem meta de redundância para férias, doença ou fim de semana? Sem esse número a meta do bloco 2 não fecha, e a automação da etapa 1 não sabe quando parar de abrir o card."},
+    {id:"V03", t:"O que o SLA total mede", st:"aplicado", onde:"bloco 8",
+     d:"O canvas atual nem declara SLA total — as 5 linhas da tabela somam 8 dias úteis e não cobrem onboarding nem contrato. O bloco 8 troca o número único por dois lead times separados; falta dizer qual deles é cobrado."},
+    {id:"V04", t:"Prazo da etapa do time de Fotógrafos", st:"aberto", onde:"bloco 8, etapa 7",
+     d:"Onboarding, treinamento e teste prático continuam sem prazo. Como o contrato vem depois e é de Fornecedores, sem esse número o lead time de cobertura é indeterminável. Vale acordar um prazo, mesmo que largo."},
+    {id:"V05", t:"Dias úteis ou corridos", st:"aplicado", onde:"bloco 8",
+     d:"O bloco 8 abre declarando que todos os prazos são em dias úteis. Só confirmar que é isso mesmo — o canvas atual alterna entre “1 dia útil” e “3 dias”."},
+    {id:"V06", t:"Reprovação no teste prático", st:"aplicado", onde:"etapa 7",
+     d:"Escrito: card para Perda com motivo, cadastro inativado, cidade de volta à fila. Falta confirmar o nome da etapa de Perda e quem executa a inativação."},
+    {id:"V07", t:"Contrato antes do treinamento", st:"aberto", onde:"etapa 8",
+     d:"Pergunta para o jurídico: treinar e aplicar teste prático sem instrumento assinado expõe a empresa a alegação de vínculo? Convém antecipar a assinatura ou usar um termo de adesão curto antes do treinamento?"},
+    {id:"V08", t:"Base legal e guarda dos dados", st:"aberto", onde:"bloco 9",
+     d:"O bloco 9 já existe com a estrutura da resposta — base legal da prospecção, base legal do cadastro, onde os dados ficam, quem acessa e prazo de descarte. O conteúdo é do jurídico/DPO."},
+    {id:"V09", t:"Fonte da verdade dos fotógrafos", st:"aberto", onde:"etapa 6, bloco 7",
+     d:"Artefato de fotógrafos, PIPE 7 e os funis do Pipedrive disputam o papel. Definir de qual a automação lê, qual o Analista atualiza, e com que frequência sincronizam."},
+    {id:"V10", t:"O que define uma Grande Operação", st:"aberto", onde:"bloco 6",
+     d:"A tabela GOP não está no canvas publicado — ela vem do rascunho v2. Seja qual for, sem critério escrito o desconto de 20 a 25% fica a critério de quem conduz a conversa."},
+    {id:"V11", t:"Margem diferente entre as tabelas", st:"aberto", onde:"bloco 6",
+     d:"Na Padrão a distância entre abertura e teto vai de 9,1% a 16,7%; na GOP, de 25% a 33,3% — mais espaço para ceder justamente onde o preço já é o mais baixo. Se for intencional, registrar o motivo; se não, igualar."},
+    {id:"V12", t:"As células de R$ 275 e R$ 180", st:"aplicado", onde:"bloco 6",
+     d:"Confirmado no canvas: a abertura de 3 quartos é R$ 275, degrau de +R$ 50 onde os outros sobem R$ 20 ou R$ 25, e a linha com a menor margem da tabela. A célula está marcada no bloco 6 com a sugestão de R$ 250. O R$ 180 do achado é o estúdio da abertura, e está coerente."},
+    {id:"V13", t:"Lista completa das regras de negócio", st:"aplicado", onde:"bloco 6",
+     d:"A lista fechada está escrita no bloco 6, com sete linhas — só a refação sem custo já tem conteúdo. As outras seis precisam do número: prazo de entrega, mínimo de fotos, direitos de uso, prazo de pagamento, cancelamento e deslocamento."},
+    {id:"V14", t:"Quem aprova exceção de preço", st:"aplicado", onde:"etapa 3",
+     d:"A validação com a liderança virou a etapa 3 do fluxo — e é lá que a alçada de exceção é aprovada. Falta dizer quem aprova e até quanto acima do teto."},
+    {id:"V15", t:"Indicadores da liderança", st:"aplicado", onde:"bloco 8",
+     d:"Cinco indicadores propostos no bloco 8, todos extraíveis do Pipedrive e do PIPE 7. Confirmar quais interessam, quem publica, com que frequência e para quem."},
+    {id:"V16", t:"Dono do verificaequipamento.lovable.app", st:"aberto", onde:"bloco 7",
+     d:"O app não aparece no canvas publicado, mas está no fluxo real. Entrou no bloco 7 com dono e periodicidade de revisão a preencher — e com a regra de que, fora do ar, vale o critério escrito."},
+    {id:"V17", t:"Prospecção ou Backlog", st:"aberto", onde:"bloco 7",
+     d:"A confusão de nomes é real, mas os nomes citados na auditoria são do Pipedrive e os do canvas são do Pipefy (Caixa de entrada, Contato inicial – Validação de informações, Homologado/Cadastrado, Perdido). Antes de padronizar o texto, decidir em qual ferramenta o processo roda de verdade."},
+    {id:"V18", t:"Canal do primeiro contato e script", st:"aplicado", onde:"etapa 4, bloco 7",
+     d:"O canvas responde: WhatsApp pelo Blip Desk, com o template primeiro_contato_fornecedor_fotografo. Fica de pé só a parte do fallback — ligação ou e-mail quando não há resposta no WhatsApp?"},
+    {id:"V19", t:"Leva de leads esgotada", st:"aplicado", onde:"etapa 4",
+     d:"O degrau de exceção está escrito: o card volta ao Coordenador e a decisão é entre ampliar o raio, contratar com deslocamento ou assumir a cidade como não coberta. Falta definir o tamanho da leva."},
+    {id:"V20", t:"Saída e mudança de região", st:"aplicado", onde:"etapa 9",
+     d:"Virou a etapa 9, com gatilho, responsável e o retorno da cidade para o funil. Falta o SLA e a definição de “indisponível por quanto tempo”."},
+    {id:"V21", t:"Quarentena da cidade cancelada", st:"aplicado", onde:"etapa 2",
+     d:"Escrito na etapa 2, com as duas condições que reabrem antes do prazo — novo imóvel ativado ou data de ativação confirmada. Falta o número de dias."},
+    {id:"V22", t:"Substituto do Analista e testemunhas", st:"aplicado", onde:"blocos 1 e 4",
+     d:"Os campos estão criados nos blocos 1 e 4, inclusive os suplentes das testemunhas. Falta preencher os nomes."},
+    {id:"D01", t:"Separar o SLA total em dois", st:"aplicado", onde:"bloco 8",
+     d:"Feito: lead time de prospecção e lead time de cobertura da cidade, com a definição de cada um e de qual é o SLA do processo."},
+    {id:"D02", t:"Etapa Em homologação antes do Ganho", st:"aplicado", onde:"etapas 6 e 7",
+     d:"Feito: o cadastro manda o card para Em homologação, e só o teste prático aprovado leva para Ganho. O caminho da reprovação está escrito junto."},
+    {id:"D03", t:"Cadência dentro do SLA da etapa", st:"aberto", onde:"etapa 4",
+     d:"A regra está escrita — a cadência tem que caber no SLA —, mas os dois números continuam em aberto. Três tentativas a cada três dias consomem 6 a 9 dias úteis: ou o SLA vira duas semanas, ou a cadência aperta."},
+    {id:"D04", t:"CNPJ, câmera e lente no primeiro contato", st:"aplicado", onde:"etapa 4",
+     d:"Feito: as três perguntas entraram no roteiro do primeiro contato, junto com o aviso de privacidade. Descarta cedo quem não passaria, sobretudo o lead de Instagram e Google."},
+    {id:"D05", t:"Mesmas regras no processo e no contrato", st:"aplicado", onde:"bloco 6",
+     d:"Feito no texto: o bloco 6 diz explicitamente que a lista é a mesma do contrato. Falta o passo prático — revisar o modelo do Drive contra a lista depois de preenchida."},
+    {id:"D06", t:"Cobertura só com fotógrafo homologado", st:"aplicado", onde:"etapa 1",
+     d:"Escrito como regra de cobertura, com o estado “em tratativa” para a cidade em negociação. A mudança precisa ser feita também na automação, não só no texto."},
+    {id:"D07", t:"Etapa de manutenção da base", st:"aplicado", onde:"etapa 9",
+     d:"Feito — ver V20."},
+    {id:"D08", t:"Degrau de exceção da prospecção", st:"aplicado", onde:"etapa 4",
+     d:"Feito — ver V19."},
+    {id:"D09", t:"Critério de equipamento é a regra", st:"aplicado", onde:"etapa 5, blocos 6 e 7",
+     d:"Feito: o critério mínimo está escrito no bloco 6 e o app aparece no bloco 7 como conveniência, com a instrução de aplicar o critério direto quando ele estiver fora do ar."},
+    {id:"D10", t:"Aviso de privacidade e descarte", st:"aplicado", onde:"etapa 4, bloco 9",
+     d:"O aviso entrou no roteiro do primeiro contato e o descarte virou linha do bloco 9. O prazo é do jurídico."},
+    {id:"D11", t:"Regra de feriado na rodada", st:"aplicado", onde:"etapa 1",
+     d:"Feito, na redação sugerida: sendo a sexta-feira feriado, a rodada ocorre no último dia útil anterior. Era o único item que não dependia de resposta nenhuma."},
+    {id:"D12", t:"Nomes de etapas e faixa de 4+ quartos", st:"aplicado", onde:"blocos 6 e 7",
+     d:"A faixa mais alta virou “4 ou mais quartos” na tabela. Os nomes das etapas ficaram marcados para conferência na tela — ver V17."},
+    {id:"D13", t:"Substituto e suplentes na seção 4", st:"aplicado", onde:"bloco 4",
+     d:"Campos criados — ver V22."},
+    {id:"D14", t:"Indicadores e onde são medidos", st:"aplicado", onde:"bloco 8",
+     d:"Lista escrita, com a origem de cada número. Falta frequência, quem publica e para quem."},
+    {id:"N01", t:"O canvas tem uma versão antiga colada no fim", st:"novo", onde:"apagar",
+     d:"Achado hoje, no canvas publicado: abaixo de “Página atualizada por…” há uma segunda cópia dos itens 3 a 6, de uma versão anterior, que contradiz a de cima. Quem ler até o fim segue o texto errado. Apagar depois de resolver N02."},
+    {id:"N02", t:"Deslocamento de R$ 1,20 por km", st:"novo", onde:"bloco 6",
+     d:"Aparece só na versão antiga do canvas, e em lugar nenhum da versão atual — e a auditoria já apontava a falta de uma regra de deslocamento. Decidir: a regra vale? Entra na lista do bloco 6 ou morre com o trecho antigo?"},
+    {id:"N03", t:"Anotação de rascunho dentro do processo", st:"novo", onde:"etapa 6",
+     d:"No meio do fluxo, na etapa de encaminhamento para cadastro, está escrito “Confirmar se precisa dessa parte”. É uma anotação de rascunho publicada como se fosse processo. Resolver e apagar. A especificação de lente também diverge entre as duas versões: 10–24 mm / 16 mm em cima, 10–11 mm / 16–17 mm embaixo."}
+  ];
+
+  var NOME_ST = {aplicado:"já resolvido no texto", aberto:"falta você decidir", semobjeto:"perdeu o objeto", novo:"achado novo"};
+
+  var alvo = document.getElementById('pontos');
+  PONTOS.forEach(function(p){
+    var art = document.createElement('article');
+    art.className = 'pt'; art.id = p.id; art.dataset.st = p.st;
+    art.innerHTML =
+      '<div><div class="id">' + p.id + '</div><div class="marca">' + NOME_ST[p.st] + '</div></div>' +
+      '<div><h4>' + p.t + '</h4><p>' + p.d + '</p><p class="onde">↳ ' + p.onde + '</p></div>';
+    alvo.appendChild(art);
+  });
+
+  /* contadores */
+  function conta(st){ return PONTOS.filter(function(p){ return p.st === st; }).length; }
+  document.getElementById('nTodos').textContent = PONTOS.length;
+  ['aplicado','aberto','novo'].forEach(function(st){
+    document.getElementById('n' + st.charAt(0).toUpperCase() + st.slice(1)).textContent = conta(st);
+  });
+  document.getElementById('cAplicado').textContent = conta('aplicado');
+
+  /* filtros */
+  var filtros = document.querySelectorAll('.filtro');
+  filtros.forEach(function(b){
+    b.addEventListener('click', function(){
+      var f = b.dataset.f;
+      filtros.forEach(function(o){ o.setAttribute('aria-pressed', String(o === b)); });
+      document.querySelectorAll('article.pt').forEach(function(a){
+        a.hidden = !!f && a.dataset.st !== f;
+      });
+    });
+  });
+
+  /* índice lateral */
+  var nav = document.getElementById('nav');
+  document.querySelectorAll('section.bloco').forEach(function(sec){
+    if (sec.id === 'auditoria') return;
+    var selo = sec.querySelector('.selo');
+    var titulo = sec.querySelector('.tit h2').textContent;
+    var classe = selo && selo.classList.contains('feito') ? ' feito'
+               : selo && selo.classList.contains('corte') ? ' corte' : '';
+    var li = document.createElement('li');
+    li.innerHTML = '<a href="#' + sec.id + '"><span class="ponto' + classe + '"></span>' + titulo + '</a>';
+    nav.appendChild(li);
+  });
+
+  /* copiar bloco como texto de canvas */
+  document.querySelectorAll('button.copiar').forEach(function(btn){
+    if (btn.id) return;
+    btn.addEventListener('click', function(){
+      var corpo = btn.closest('section').querySelector('[data-copiar]');
+      copiar(montarTexto(corpo), btn);
+    });
+  });
+
+  document.getElementById('copiarPendencias').addEventListener('click', function(){
+    var btn = this;
+    var linhas = ['PROSPECÇÃO DE FOTÓGRAFOS — o que ainda falta decidir', ''];
+    PONTOS.filter(function(p){ return p.st === 'aberto'; }).forEach(function(p){
+      linhas.push('[ ] ' + p.id + ' · ' + p.t + '  (' + p.onde + ')');
+      linhas.push('    ' + p.d);
+      linhas.push('');
+    });
+    linhas.push('Os demais pontos já estão escritos no texto novo do canvas, mas vários têm lacunas [DEFINIR: ...] esperando esses números.');
+    copiar(linhas.join('\n'), btn);
+  });
+
+  function copiar(texto, btn){
+    navigator.clipboard.writeText(texto).then(function(){
+      var antes = btn.textContent;
+      btn.textContent = 'copiado ✓';
+      btn.classList.add('ok');
+      setTimeout(function(){ btn.textContent = antes; btn.classList.remove('ok'); }, 1600);
+    });
+  }
+
+  /* vira o HTML do bloco em texto simples, do jeito que o canvas aceita */
+  function montarTexto(el){
+    var partes = [];
+    el.childNodes.forEach(function(no){
+      if (no.nodeType !== 1) return;
+      if (no.hasAttribute && no.hasAttribute('data-nao-copiar')) return;
+      var tag = no.tagName.toLowerCase();
+      if (tag === 'h3' || tag === 'h4') partes.push('\n' + limpo(no));
+      else if (tag === 'p') partes.push(limpo(no));
+      else if (tag === 'ul') {
+        no.querySelectorAll(':scope > li').forEach(function(li){ partes.push('• ' + limpo(li)); });
+      }
+      else if (tag === 'table') {
+        var largura = [];
+        var linhas = [];
+        no.querySelectorAll('tr').forEach(function(tr){
+          var celulas = [];
+          tr.querySelectorAll('th,td').forEach(function(c, i){
+            var v = limpo(c);
+            celulas.push(v);
+            largura[i] = Math.max(largura[i] || 0, v.length);
+          });
+          linhas.push(celulas);
+        });
+        linhas.forEach(function(cel){
+          partes.push(cel.map(function(v, i){ return i === 0 ? pad(v, largura[0]) : pad(v, largura[i]); }).join('   ').replace(/\s+$/,''));
+        });
+      }
+    });
+    return partes.join('\n').replace(/\n{3,}/g, '\n\n').trim();
+  }
+  function limpo(el){ return el.textContent.trim().replace(/\s+/g, ' '); }
+  function pad(v, n){ while (v.length < n) v += ' '; return v; }
+})();
+</script>
+</body>
+</html>
