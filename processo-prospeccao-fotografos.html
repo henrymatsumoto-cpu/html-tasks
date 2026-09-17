@@ -128,6 +128,12 @@ section.bloco:first-of-type{border-top:0; padding-top:0}
   color:var(--wait); background:color-mix(in oklab, var(--wait) 12%, transparent);
   border-radius:4px; padding:1px 5px; white-space:normal;
 }
+.ok17{
+  font-family:var(--display); font-weight:600; font-size:0.94em;
+  color:var(--ok); background:color-mix(in oklab, var(--ok) 12%, transparent);
+  border-radius:4px; padding:1px 5px; white-space:normal;
+}
+td.ok17c{color:var(--ok); font-weight:600}
 .rodape-bloco{display:flex; gap:var(--s-3); align-items:center; margin-top:var(--s-4); flex-wrap:wrap}
 button.copiar{
   font-family:var(--display); font-weight:600; font-size:0.85rem; letter-spacing:0.01em;
@@ -227,6 +233,7 @@ footer{
     <div class="aviso">
       <p><b>Antes de sair colando.</b> O canvas que está no ar hoje descreve um processo <b>diferente</b> do que o HTML de validações auditou. O canvas fala em Pipefy (PIPE 23 e PIPE 7) e Blip Desk; a auditoria fala em dois funis do Pipedrive, rodada semanal, leva de 30 leads, tabela GOP, app de equipamento e contrato com testemunhas — ou seja, ela foi escrita sobre o <b>rascunho v2</b> do processo, não sobre o texto publicado.</p>
       <p>Os blocos abaixo são o v2 já com as correções aplicadas. Onde o v2 tinha um número que eu não tenho de fonte confiável, deixei <span class="def">[DEFINIR: …]</span> em vez de inventar — é exatamente a lista de decisões que ainda depende de você, da liderança e do jurídico.</p>
+      <p><b>Atualizado em 17/09/2026.</b> As decisões tomadas na revisão do canvas entraram aqui e aparecem <span class="ok17">destacadas assim</span>: meta de 2 fotógrafos, quarentena de 15 dias, cadência de contato, SLAs das etapas, fonte da verdade da base, substituto e testemunhas, e o bloco de dados pessoais. O que continua <span class="def">[DEFINIR]</span> é o que ainda depende da liderança, do jurídico ou de quem montou a tabela de preços.</p>
       <p><b>Confira os blocos 5 a 7 contra o seu rascunho v2</b> antes de publicar: reconstruí o fluxo a partir da auditoria e do canvas atual.</p>
     </div>
 
@@ -244,8 +251,8 @@ footer{
           <li><strong>Nome do Processo:</strong> Prospecção de Fotógrafos</li>
           <li><strong>Setor Responsável:</strong> Fornecedores</li>
           <li><strong>Responsável Principal:</strong> @Wânia @Henry</li>
-          <li><strong>Substituto do Analista:</strong> <span class="def">[DEFINIR: nome]</span> — assume as etapas 4, 5, 6 e 8 na ausência do titular</li>
-          <li><strong>Versão:</strong> 2 · <strong>atualizado em</strong> <span class="def">[DEFINIR: data]</span> · <strong>próxima revisão:</strong> <span class="def">[DEFINIR: data]</span></li>
+          <li><strong>Substituto do Analista:</strong> <span class="ok17">Coordenador de Fornecedores</span> — assume as etapas 4, 5, 6 e 8 na ausência do titular</li>
+          <li><strong>Versão:</strong> <span class="ok17">3</span> · <strong>atualizado em</strong> <span class="ok17">17/09/2026</span> · <strong>próxima revisão:</strong> <span class="ok17">a cada 6 meses, ou quando a tabela de valores mudar</span></li>
         </ul>
         <div class="refs" data-nao-copiar><a class="ref" href="#V22">V22</a><a class="ref" href="#D13">D13</a></div>
       </div>
@@ -268,7 +275,8 @@ footer{
         <p>Garantir que toda cidade onde a Seazone atua tenha fotógrafo disponível, com qualidade de imagem e equipamento técnico dentro do padrão que a Seazone exige.</p>
         <p>O processo cobre a jornada completa: identificar as cidades que ainda não têm cobertura fotográfica, prospectar e avaliar profissionais nessas praças, homologar quem atende ao nosso padrão técnico e manter a base de fotógrafos ativa e atualizada — de forma que nenhum imóvel entre em operação sem fotos no padrão Seazone e nenhuma franquia fique sem fotógrafo para acionar.</p>
         <h3>Meta do processo</h3>
-        <p>Toda cidade com imóvel ativo ou com ativação prevista deve ter pelo menos <span class="def">[DEFINIR: nº]</span> fotógrafo(s) homologado(s) até <span class="def">[DEFINIR: nº]</span> dias antes da data prevista de ativação do primeiro imóvel.</p>
+        <p>Toda cidade com imóvel ativo ou com ativação prevista deve ter pelo menos <span class="ok17">2 fotógrafos homologados</span>, com a prospecção encerrada em até <span class="ok17">1 semana contada do início da prospecção</span> e sempre antes da data prevista de ativação do primeiro imóvel.</p>
+        <p><span class="ok17"><b>Cidade coberta</b> é a cidade com dois fotógrafos de contrato assinado e teste prático aprovado. Com apenas um, conta como <b>parcialmente coberta</b> e continua na fila. Negociação em andamento é <b>em tratativa</b> — não é cobertura e não tira a cidade da análise semanal.</span></p>
         <h3>Resultados Esperados:</h3>
         <ul>
           <li>Evitar travas no processo de fotos profissionais por falta de fotógrafo na praça.</li>
@@ -335,12 +343,12 @@ footer{
       <div class="corpo" data-copiar>
         <ul>
           <li><strong>Automação / Tecnologia:</strong> roda a análise periódica das cidades, abre os cards e mantém a integração com a base de fotógrafos. @Henry</li>
-          <li><strong>Analista de Fornecedores:</strong> analisa a viabilidade, pesquisa, faz o contato, negocia, homologa e encaminha para cadastro. @Wânia — substituto: <span class="def">[DEFINIR: nome]</span></li>
+          <li><strong>Analista de Fornecedores:</strong> analisa a viabilidade, pesquisa, faz o contato, negocia, homologa e encaminha para cadastro. @Wânia — substituto: <span class="ok17">Coordenador de Fornecedores</span></li>
           <li><strong>Liderança de Fornecedores:</strong> aprova a abertura da prospecção e as exceções de preço acima do teto. <span class="def">[DEFINIR: nome]</span></li>
           <li><strong>Time de Fotógrafos:</strong> onboarding, treinamento, teste prático, suporte técnico e garantia de qualidade.</li>
           <li><strong>Jurídico / DPO:</strong> modelo de contrato, base legal do tratamento de dados e prazo de descarte.</li>
           <li><strong>Fotógrafo:</strong> executa o serviço de acordo com os parâmetros e padrões definidos.</li>
-          <li><strong>Testemunhas do contrato:</strong> <span class="def">[DEFINIR: titular 1]</span> e <span class="def">[DEFINIR: titular 2]</span> — suplentes: <span class="def">[DEFINIR: suplente 1]</span> e <span class="def">[DEFINIR: suplente 2]</span></li>
+          <li><strong>Testemunhas do contrato:</strong> <span class="ok17">Coordenador de Fornecedores</span> e <span class="ok17">Coordenador de Fotógrafos</span> — suplentes: <span class="ok17">Gerente de BackOffice</span> e <span class="ok17">Gerente de Implantação</span></li>
         </ul>
         <div class="refs" data-nao-copiar><a class="ref" href="#V22">V22</a><a class="ref" href="#D13">D13</a><a class="ref" href="#V14">V14</a></div>
       </div>
@@ -368,24 +376,24 @@ footer{
         <ul>
           <li><strong>Responsável:</strong> Analista de Fornecedores · <strong>SLA:</strong> 1 dia útil</li>
           <li><strong>Critérios:</strong> distância até a cidade coberta mais próxima (<span class="def">[DEFINIR: km]</span>), quantidade de imóveis ativos e em onboarding, data prevista de ativação.</li>
-          <li><strong>Saídas:</strong> Aprovado → segue para a etapa 3. Cancelado → a cidade entra em quarentena de <span class="def">[DEFINIR: dias]</span> e só reabre antes disso se um novo imóvel for ativado ou se uma data de ativação for confirmada.</li>
+          <li><strong>Saídas:</strong> Aprovado → segue para a etapa 3. Cancelado → a cidade entra em quarentena de <span class="ok17">15 dias</span> e só reabre antes disso se um novo imóvel for ativado, se uma data de ativação for confirmada <span class="ok17">ou se a franquia pedir</span>.</li>
         </ul>
         <h3>Etapa 3 — Validação com a liderança</h3>
         <ul>
           <li><strong>Responsável:</strong> Analista apresenta, Liderança aprova · <strong>SLA:</strong> 1 dia útil</li>
-          <li><strong>O que decide:</strong> abrir ou não a prospecção, e a alçada de exceção de preço para essa cidade — quem aprova: <span class="def">[DEFINIR: cargo]</span>, até <span class="def">[DEFINIR: valor ou % acima do teto]</span>.</li>
+          <li><strong>O que decide:</strong> abrir ou não a prospecção, e a alçada de exceção de preço para essa cidade — quem aprova: <span class="ok17">Liderança de Fornecedores, em até 1 dia útil</span>, até <span class="def">[DEFINIR: valor ou % acima do teto]</span>.</li>
         </ul>
         <h3>Etapa 4 — Prospecção e primeiro contato</h3>
         <ul>
-          <li><strong>Responsável:</strong> Analista de Fornecedores · <strong>SLA:</strong> <span class="def">[DEFINIR: dias úteis]</span></li>
+          <li><strong>Responsável:</strong> Analista de Fornecedores · <strong>SLA:</strong> <span class="ok17">3 dias úteis contados do início da prospecção, na segunda-feira</span></li>
           <li><strong>Origem dos leads:</strong> base CNAE da Receita Federal, Instagram, Google/Maps e indicação da franquia. Todo lead vira card no funil de prospecção, etapa Backlog.</li>
           <li><strong>Roteiro do primeiro contato</strong> — já na primeira conversa: aviso de privacidade, CNPJ, câmera e lente. Quem não tem CNPJ nem equipamento mínimo é descartado aqui, sem consumir a cadência inteira.</li>
-          <li><strong>Cadência:</strong> <span class="def">[DEFINIR: nº]</span> tentativas, uma a cada <span class="def">[DEFINIR: nº]</span> dias úteis. A cadência tem que caber dentro do SLA da etapa.</li>
+          <li><strong>Cadência:</strong> <span class="ok17">3 tentativas — no dia, no 2º e no 3º dia útil</span>, movendo o card por <em>1º Contato</em>, <em>2º Contato</em> e <em>3º Contato</em>. Sem resposta até o 3º dia útil, o card vai para <em>Perda</em> com o motivo "falta de retorno".</li>
           <li><strong>Leva esgotada sem conversão:</strong> o card volta ao Coordenador com o resultado, e a decisão passa a ser entre ampliar o raio para a cidade vizinha, contratar com deslocamento ou assumir a cidade como não coberta.</li>
         </ul>
         <h3>Etapa 5 — Negociação</h3>
         <ul>
-          <li><strong>Responsável:</strong> Analista de Fornecedores · <strong>SLA:</strong> <span class="def">[DEFINIR: dias úteis]</span></li>
+          <li><strong>Responsável:</strong> Analista de Fornecedores · <strong>SLA:</strong> <span class="ok17">3 dias úteis do primeiro retorno, em paralelo à prospecção — sem retorno por 3 dias úteis, card para Perda</span></li>
           <li><strong>Valores:</strong> abre na tabela de abertura e fecha no máximo no teto (bloco 6). Acima do teto, só com a aprovação da alçada definida na etapa 3.</li>
           <li><strong>Regras de negócio:</strong> apresentar a lista fechada do bloco 6 — a mesma lista que está no contrato.</li>
           <li><strong>Equipamento:</strong> o critério escrito no bloco 6 <strong>é</strong> a regra. O app de verificação é conveniência: se estiver fora do ar, o Analista aplica o critério diretamente.</li>
@@ -395,12 +403,12 @@ footer{
         <ul>
           <li><strong>Responsável:</strong> Analista de Fornecedores · <strong>SLA:</strong> 1 dia útil</li>
           <li><strong>Dados:</strong> nome completo, CNPJ, CPF, chave PIX, e-mail, endereço completo, região e/ou cidade de atuação, e o formulário de cadastro preenchido.</li>
-          <li><strong>Onde:</strong> cadastro no <span class="def">[DEFINIR: Artefato de fotógrafos ou PIPE 7 — qual é a fonte da verdade]</span>.</li>
+          <li><strong>Onde:</strong> cadastro no <span class="ok17"><b>Artefato de fotógrafos</b>, que é a fonte da verdade da base; o Pipedrive registra a jornada comercial, não a base</span>.</li>
           <li><strong>Card:</strong> vai para <strong>Em homologação</strong> — não para Ganho.</li>
         </ul>
         <h3>Etapa 7 — Onboarding, treinamento e teste prático</h3>
         <ul>
-          <li><strong>Responsável:</strong> Time de Fotógrafos · <strong>SLA:</strong> <span class="def">[DEFINIR: dias úteis — acordar com o time]</span></li>
+          <li><strong>Responsável:</strong> Time de Fotógrafos · <strong>SLA:</strong> <span class="ok17">definido pelo time de Fotógrafos</span> — Fornecedores não crava prazo de etapa que não opera</li>
           <li><strong>Aprovado:</strong> card vai para Ganho e só aí o fotógrafo passa a contar como cobertura da cidade.</li>
           <li><strong>Reprovado:</strong> card vai para Perda com o motivo, o cadastro é inativado e a cidade volta automaticamente para a fila de prospecção.</li>
         </ul>
@@ -412,7 +420,7 @@ footer{
         </ul>
         <h3>Etapa 9 — Manutenção da base</h3>
         <ul>
-          <li><strong>Responsável:</strong> Analista de Fornecedores · <strong>SLA:</strong> <span class="def">[DEFINIR: dias úteis]</span></li>
+          <li><strong>Responsável:</strong> Analista de Fornecedores · <strong>SLA:</strong> <span class="ok17">2 dias úteis do aviso até a base atualizada</span></li>
           <li><strong>Gatilho:</strong> fotógrafo avisa saída, muda de região, fica indisponível por <span class="def">[DEFINIR: período]</span> ou é desligado pelo time de Fotógrafos.</li>
           <li><strong>O que faz:</strong> inativa o cadastro; se a cidade ficar descoberta, ela volta para o funil na rodada seguinte.</li>
         </ul>
@@ -482,9 +490,9 @@ footer{
       </div>
       <div class="corpo" data-copiar>
         <ul>
-          <li><strong>Pipedrive:</strong> funil de cidades (card da cidade descoberta) e funil de prospecção de fornecedores (card do fotógrafo). <span class="def">[DEFINIR: nome exato dos dois funis e das etapas, como aparecem na tela]</span></li>
+          <li><strong>Pipedrive:</strong> <span class="ok17"><b>Fornecedores - Cidades</b> (card da cidade, etapas Análise · Prospecção · Cancelado · Concluído) e <b>Prospecção Fornecedores</b> (card do fotógrafo, etapas Backlog · 1º Contato · 2º Contato · 3º Contato · Em homologação · Ganho · Perda)</span>.</li>
           <li><strong>Pipefy — PIPE 7, Jornada Fotógrafos:</strong> cadastro e onboarding com o time técnico.</li>
-          <li><strong>Artefato de fotógrafos:</strong> base de fotógrafos que a automação lê. <span class="def">[DEFINIR: é a fonte da verdade? com que frequência sincroniza?]</span></li>
+          <li><strong>Artefato de fotógrafos:</strong> base de fotógrafos que a automação lê. <span class="ok17">É a fonte da verdade da base</span> — <span class="def">[DEFINIR: com que frequência sincroniza]</span></li>
           <li><strong>Slack:</strong> canal de chamados da prospecção.</li>
           <li><strong>Blip Desk:</strong> primeiro contato por WhatsApp, template <em>primeiro_contato_fornecedor_fotografo</em>.</li>
           <li><strong>App de verificação de equipamento:</strong> verificaequipamento.lovable.app — dono: <span class="def">[DEFINIR: nome]</span>, lista de câmeras e lentes revisada a cada <span class="def">[DEFINIR: período]</span>. Fora do ar, vale o critério escrito no bloco 6.</li>
@@ -510,21 +518,23 @@ footer{
         <table class="valores" data-tabela>
           <thead><tr><th>Etapa</th><th>SLA</th></tr></thead>
           <tbody>
-            <tr><td>1. Rodada de cidades sem cobertura</td><td>Imediato (automação)</td></tr>
-            <tr><td>2. Análise de viabilidade</td><td>1 dia útil</td></tr>
+            <tr><td>1. Rodada de cidades sem cobertura</td><td>Toda sexta-feira (automática) — feriado, no último dia útil anterior</td></tr>
+            <tr><td>2. Análise de viabilidade</td><td>1 dia útil — mesma sexta</td></tr>
             <tr><td>3. Validação com a liderança</td><td>1 dia útil</td></tr>
-            <tr><td>4. Prospecção e primeiro contato</td><td>[DEFINIR]</td></tr>
-            <tr><td>5. Negociação</td><td>[DEFINIR]</td></tr>
-            <tr><td>6. Coleta de dados e cadastro</td><td>1 dia útil</td></tr>
-            <tr><td>7. Onboarding, treinamento e teste prático</td><td>[DEFINIR — time de Fotógrafos]</td></tr>
-            <tr><td>8. Contrato</td><td>3 dias úteis</td></tr>
-            <tr><td>9. Manutenção da base</td><td>[DEFINIR]</td></tr>
+            <tr><td>4. Prospecção e primeiro contato</td><td class="ok17c">3 dias úteis — começa na segunda</td></tr>
+            <tr><td>5. Negociação</td><td class="ok17c">3 dias úteis do primeiro retorno, em paralelo à prospecção</td></tr>
+            <tr><td>6. Coleta de dados e cadastro</td><td>1 dia útil após o aceite</td></tr>
+            <tr><td>7. Onboarding, treinamento e teste prático</td><td class="ok17c">definido pelo time de Fotógrafos</td></tr>
+            <tr><td>8. Contrato</td><td>3 dias úteis, considerando a assinatura</td></tr>
+            <tr><td>9. Manutenção da base</td><td class="ok17c">2 dias úteis do aviso</td></tr>
+            <tr><td><b>Lead time de Fornecedores</b></td><td class="ok17c"><b>10 dias úteis</b> — tudo menos a etapa 7</td></tr>
           </tbody>
         </table>
         <h3>Os dois lead times do processo</h3>
         <ul>
-          <li><strong>Lead time de prospecção:</strong> da entrada do card na fila do Analista até o primeiro retorno de um fotógrafo. É o número que mede o time de Fornecedores.</li>
-          <li><strong>Lead time de cobertura da cidade:</strong> da abertura do card da cidade até o fotógrafo homologado. É o SLA do processo, e é ele que precisa caber na antecedência da meta do bloco 2.</li>
+          <li><strong>Lead time de prospecção:</strong> <span class="ok17">3 dias úteis</span> contados do início da prospecção — a segunda-feira em que o Analista pega o card. É o número que mede o time de Fornecedores.</li>
+          <li><strong>Lead time de cobertura da cidade:</strong> <span class="ok17">10 dias úteis de Fornecedores + o prazo da etapa 7</span> — do início da prospecção à assinatura do contrato do segundo fotógrafo. Os 10 dias são o que Fornecedores assume; o trecho de onboarding, treinamento e teste prático corre no time de Fotógrafos e fecha o número quando eles definirem o prazo.</li>
+          <li><span class="ok17">Regras de perda não são prazo de execução: fotógrafo sem retorno por 3 dias úteis na negociação vai para Perda; lead sem resposta até o 3º dia útil da cadência vai para Perda.</span></li>
         </ul>
         <h3>Indicadores</h3>
         <ul>
@@ -551,11 +561,13 @@ footer{
       </div>
       <div class="corpo" data-copiar>
         <ul>
-          <li><strong>Base legal da prospecção</strong> (montar lista de leads a partir de dados públicos e redes sociais): <span class="def">[DEFINIR: jurídico/DPO]</span></li>
+          <li><strong>Base legal da prospecção</strong> (montar lista de leads a partir de dados públicos e redes sociais): <span class="ok17">Prospecção Fornecedores</span> — <span class="def">[CONFERIR com o jurídico: a LGPD pede uma hipótese do art. 7º, provavelmente legítimo interesse]</span></li>
           <li><strong>Base legal do cadastro</strong> (CPF, CNPJ, chave PIX, endereço): <span class="def">[DEFINIR: jurídico/DPO]</span></li>
           <li><strong>Aviso no primeiro contato:</strong> o roteiro diz de onde vieram os dados e para que serão usados.</li>
-          <li><strong>Onde os dados ficam e quem acessa:</strong> <span class="def">[DEFINIR]</span> — CPF e chave PIX com acesso mais restrito que o restante do cadastro.</li>
-          <li><strong>Descarte:</strong> cards em Perda são apagados do funil depois de <span class="def">[DEFINIR: prazo]</span>.</li>
+          <li><strong>Onde os dados ficam:</strong> <span class="ok17">Pipedrive (jornada comercial) e Artefato de fotógrafos (cadastro). Sem planilhas paralelas.</span></li>
+          <li><strong>Quem acessa CPF e chave PIX:</strong> <span class="ok17">apenas o Coordenador de Implantação e o time de Fornecedores</span> — acesso mais restrito que o restante do cadastro.</li>
+          <li><strong>Descarte:</strong> <span class="ok17">cards em Perda não são apagados do Pipedrive, para manter o registro</span> — <span class="def">[CONFERIR com o jurídico: guarda sem prazo x art. 16 da LGPD]</span></li>
+          <li><strong>Fotógrafo descredenciado:</strong> <span class="ok17">cadastro inativado na etapa 9; dados fiscais mantidos pelo prazo legal do contrato.</span></li>
         </ul>
         <div class="refs" data-nao-copiar><a class="ref" href="#V08">V08</a><a class="ref" href="#D10">D10</a></div>
       </div>
