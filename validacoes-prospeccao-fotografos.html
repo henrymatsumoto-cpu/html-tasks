@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Validações — Prospecção de Fotógrafos</title>
+<style>
+:root{
+  --plane:#f5f6f4; --surface:#ffffff; --surface-2:#eef0ec;
+  --ink:#14181a; --ink-2:#4d5459; --ink-3:#7f8789;
+  --line:#e2e4df; --line-strong:#c6c9c2;
+  --accent:#0f5c52; --accent-soft:#e3efec;
+  --todo:#7f8789; --doing:#b57c00; --done:#0a7d0a;
+  --font-b: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-m: ui-monospace, "SFMono-Regular", Menlo, Consolas, "Liberation Mono", monospace;
+  --font-d: Georgia, "Iowan Old Style", "Times New Roman", serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --plane:#0e100f; --surface:#17191a; --surface-2:#212423;
+    --ink:#f4f6f3; --ink-2:#b6bcb9; --ink-3:#8b9290;
+    --line:#2b2e2d; --line-strong:#3d413f;
+    --accent:#6fcfbb; --accent-soft:#14312c;
+    --todo:#8b9290; --doing:#e0a43a; --done:#4cb84c;
+  }
+}
+:root[data-theme="dark"]{
+  --plane:#0e100f; --surface:#17191a; --surface-2:#212423;
+  --ink:#f4f6f3; --ink-2:#b6bcb9; --ink-3:#8b9290;
+  --line:#2b2e2d; --line-strong:#3d413f;
+  --accent:#6fcfbb; --accent-soft:#14312c;
+  --todo:#8b9290; --doing:#e0a43a; --done:#4cb84c;
+}
+
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--plane);color:var(--ink);font-family:var(--font-b);font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased}
+.wrap{max-width:880px;margin:0 auto;padding-inline:20px;padding-block:0 80px}
+h1,h2,h3{margin:0}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:3px}
+
+/* ---------- header ---------- */
+.masthead{background:var(--surface);border-bottom:1px solid var(--line)}
+.masthead .wrap{padding-block:30px 24px}
+.eyebrow{font-family:var(--font-m);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);display:flex;align-items:center;gap:9px;margin-bottom:12px}
+.eyebrow::before{content:"";width:22px;height:2px;background:var(--accent);flex:none}
+h1{font-family:var(--font-d);font-size:clamp(26px,5vw,38px);font-weight:700;line-height:1.1;letter-spacing:-.015em}
+.sub{color:var(--ink-2);margin:12px 0 0;max-width:64ch}
+
+.howto{
+  margin-top:22px;padding:16px 18px;border:1px solid var(--line);border-left:3px solid var(--accent);
+  border-radius:8px;background:var(--accent-soft);
+}
+.howto h2{font-size:14px;font-family:var(--font-m);letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin-bottom:8px}
+.howto ol{margin:0;padding-left:20px;font-size:14px;color:var(--ink)}
+.howto li{margin-bottom:5px}
+.howto li:last-child{margin-bottom:0}
+
+.whobox{display:grid;grid-template-columns:1fr 200px;gap:12px;margin-top:18px}
+.whobox .field{display:flex;flex-direction:column;gap:4px}
+
+.progwrap{margin-top:22px}
+.progtop{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:8px}
+.progtop .n{font-family:var(--font-d);font-size:21px;font-weight:700}
+.progtop .n span{font-family:var(--font-b);font-size:14px;font-weight:400;color:var(--ink-2)}
+.legendmini{display:flex;gap:14px;flex-wrap:wrap;font-size:12.5px;color:var(--ink-2)}
+.legendmini i{display:inline-flex;align-items:center;gap:6px;font-style:normal}
+.sw{width:9px;height:9px;border-radius:2px;flex:none}
+.pbar{height:8px;background:var(--surface-2);border-radius:99px;overflow:hidden;display:flex;border:1px solid var(--line)}
+.pbar i{height:100%;display:block;transition:width .25s ease}
+
+/* ---------- toolbar ---------- */
+.toolbar{position:sticky;top:0;z-index:20;background:var(--plane);border-bottom:1px solid var(--line);padding-block:11px}
+.toolbar .inner{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.chip{
+  font-size:12.5px;padding:4px 12px;border-radius:99px;cursor:pointer;font-family:var(--font-b);
+  border:1px solid var(--line-strong);background:var(--surface);color:var(--ink-2);
+  display:inline-flex;align-items:center;gap:7px;
+}
+.chip:hover{border-color:var(--ink-3)}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--plane);border-color:var(--ink)}
+.chip.go{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:600}
+.chip.go:hover{filter:brightness(1.08)}
+:root[data-theme="dark"] .chip.go, :root:not([data-theme="light"]) .chip.go{color:#0e100f}
+@media (prefers-color-scheme: light){:root:not([data-theme="dark"]) .chip.go{color:#fff}}
+.tlbl{font-family:var(--font-m);font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-3);margin-right:2px}
+.spacer{flex:1}
+.saveflag{font-family:var(--font-m);font-size:11px;color:var(--ink-3)}
+
+/* ---------- blocks ---------- */
+.block{margin-top:42px}
+.bhead{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.bnum{font-family:var(--font-m);font-size:12px;font-weight:600;color:var(--accent);letter-spacing:.06em}
+h2.btitle{font-family:var(--font-d);font-size:clamp(19px,3vw,25px);font-weight:700;letter-spacing:-.01em}
+.blede{color:var(--ink-2);font-size:14px;max-width:68ch;margin:6px 0 18px}
+.bcount{font-family:var(--font-m);font-size:11.5px;color:var(--ink-3);margin-left:auto;font-variant-numeric:tabular-nums}
+
+/* ---------- item ---------- */
+.item{
+  background:var(--surface);border:1px solid var(--line);border-radius:10px;
+  padding:16px 18px;margin-bottom:10px;border-left:3px solid var(--todo);
+  break-inside:avoid;
+}
+.item[data-st="doing"]{border-left-color:var(--doing)}
+.item[data-st="done"]{border-left-color:var(--done)}
+.ihead{display:flex;gap:12px;align-items:flex-start}
+.icode{font-family:var(--font-m);font-size:11.5px;font-weight:600;color:var(--ink-3);padding-top:3px;flex:none;min-width:34px}
+.ititle{flex:1;min-width:0}
+.ititle h3{font-size:15.5px;font-weight:600;line-height:1.35}
+.q{margin:7px 0 0;font-size:14px;color:var(--ink-2)}
+.refs{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;align-items:center}
+.owner{
+  font-family:var(--font-m);font-size:10px;letter-spacing:.06em;text-transform:uppercase;font-weight:600;
+  padding:2px 8px;border-radius:4px;border:1px solid var(--line-strong);color:var(--ink-2);white-space:nowrap;
+}
+.owner.mine{background:var(--accent);border-color:var(--accent);color:#fff}
+:root[data-theme="dark"] .owner.mine,:root:not([data-theme="light"]) .owner.mine{color:#0e100f}
+@media (prefers-color-scheme: light){:root:not([data-theme="dark"]) .owner.mine{color:#fff}}
+.ref{font-family:var(--font-m);font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-3)}
+.ref b{color:var(--ink-2);font-weight:600}
+.ref.dep{color:var(--doing)}
+
+.states{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}
+.sbtn{
+  font-size:12px;padding:4px 11px;border-radius:99px;cursor:pointer;font-family:var(--font-b);
+  border:1px solid var(--line-strong);background:transparent;color:var(--ink-2);
+  display:inline-flex;align-items:center;gap:6px;
+}
+.sbtn:hover{border-color:var(--ink-3);color:var(--ink)}
+.sbtn[aria-pressed="true"]{border-color:var(--ink);background:var(--surface-2);color:var(--ink);font-weight:600}
+.sbtn .mk{font-family:var(--font-m);font-size:11px}
+
+.fields{display:grid;grid-template-columns:1fr 190px;gap:10px;margin-top:12px}
+.field{display:flex;flex-direction:column;gap:4px;min-width:0}
+.field label{font-family:var(--font-m);font-size:10px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-3)}
+textarea,input[type=text]{
+  font-family:var(--font-b);font-size:13.5px;color:var(--ink);background:var(--plane);
+  border:1px solid var(--line);border-radius:7px;padding:8px 10px;resize:vertical;width:100%;line-height:1.5;
+}
+textarea{min-height:62px}
+textarea::placeholder,input::placeholder{color:var(--ink-3)}
+
+.empty{padding:26px 0;color:var(--ink-3);font-size:14px}
+footer{margin-top:48px;padding-top:20px;border-top:1px solid var(--line);color:var(--ink-3);font-size:12.5px;line-height:1.6}
+footer strong{color:var(--ink-2);font-weight:600}
+
+/* ---------- print ---------- */
+@media print{
+  :root{--plane:#fff;--surface:#fff;--surface-2:#f2f2f2;--ink:#000;--ink-2:#333;--ink-3:#666;--line:#ccc;--line-strong:#999;--accent:#0f5c52}
+  body{background:#fff;font-size:11pt}
+  .toolbar,.states,.howto{display:none}
+  .item{border:1px solid #ccc;box-shadow:none;page-break-inside:avoid}
+  textarea{min-height:70px;background:#fff}
+  .wrap{max-width:none;padding:0}
+  a[href]::after{content:""}
+}
+
+@media (max-width:560px){
+  .fields,.whobox{grid-template-columns:1fr}
+  .icode{min-width:30px}
+}
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="wrap">
+    <div class="eyebrow">Fornecedores · Prospecção de Fotógrafos</div>
+    <h1>Validações do processo</h1>
+    <p class="sub">Levantamento das informações que faltam no documento do processo e das correções pendentes. Cada item indica quem é o responsável por responder.</p>
+
+    <div class="howto">
+      <h2>Como usar este arquivo</h2>
+      <ol>
+        <li>Abra no navegador (duplo clique no arquivo) e responda direto nos campos.</li>
+        <li>O preenchimento é salvo automaticamente neste computador e neste navegador — pode fechar e voltar depois.</li>
+        <li>Ao terminar, clique em <b>Baixar respostas</b> no topo e envie o arquivo gerado de volta. O botão <b>Copiar respostas</b> serve para colar direto num e-mail ou no Slack.</li>
+        <li>Nem tudo é seu: use os filtros de responsável no topo para separar o que precisa cobrar de outras áreas.</li>
+        <li><b>Já vem preenchido com a revisão de 17/09/2026.</b> Os 36 itens foram respondidos com o que ficou decidido no canvas v3: <b>21 respondidos/aplicados</b>, <b>10 parciais</b> (falta um pedaço, indicado em cada um) e <b>5 pendentes</b> — V07 e V08 com o jurídico, V11 e V12 com quem montou a tabela de preços, V16 com Tecnologia e D05 esperando a lista de regras de negócio (V13). Use "Só pendentes" para ver o que ainda falta cobrar.</li>
+      </ol>
+    </div>
+
+    <div class="whobox">
+      <div class="field">
+        <label for="meta-nome">Preenchido por</label>
+        <input type="text" id="meta-nome" placeholder="Seu nome">
+      </div>
+      <div class="field">
+        <label for="meta-data">Data</label>
+        <input type="text" id="meta-data" placeholder="dd/mm/aaaa">
+      </div>
+    </div>
+
+    <div class="progwrap">
+      <div class="progtop">
+        <div class="n" id="pnum">0 <span>de 36 concluídos</span></div>
+        <div class="legendmini">
+          <i><span class="sw" style="background:var(--todo)"></span>Pendente</i>
+          <i><span class="sw" style="background:var(--doing)"></span>Em andamento</i>
+          <i><span class="sw" style="background:var(--done)"></span>Concluído</i>
+        </div>
+      </div>
+      <div class="pbar"><i id="pdone" style="width:0;background:var(--done)"></i><i id="pdoing" style="width:0;background:var(--doing)"></i></div>
+    </div>
+  </div>
+</header>
+
+<div class="toolbar">
+  <div class="wrap" style="padding-block:0">
+    <div class="inner">
+      <span class="tlbl">Responsável</span>
+      <span id="ownerchips"></span>
+      <button class="chip" id="f-todo" aria-pressed="false">Só pendentes</button>
+      <span class="spacer"></span>
+      <span class="saveflag" id="saveflag"></span>
+      <button class="chip" id="copy">Copiar respostas</button>
+      <button class="chip go" id="dl">Baixar respostas</button>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+  <section class="block">
+    <div class="bhead">
+      <span class="bnum">Bloco 1</span>
+      <h2 class="btitle">Perguntas em aberto</h2>
+      <span class="bcount" id="c1">0/22</span>
+    </div>
+    <p class="blede">Informações que não constam do documento do processo e que dependem de uma definição interna. Enquanto não houver resposta, o processo não pode ser corrigido — as correções do bloco 2 dependem delas.</p>
+    <div id="list1"></div>
+    <p class="empty" id="e1" hidden>Nenhum item com os filtros atuais.</p>
+  </section>
+
+  <section class="block">
+    <div class="bhead">
+      <span class="bnum">Bloco 2</span>
+      <h2 class="btitle">Correções a aplicar</h2>
+      <span class="bcount" id="c2">0/14</span>
+    </div>
+    <p class="blede">Ajustes no documento do processo e na configuração dos funis do Pipedrive. A maior parte depende da resposta de uma pergunta do bloco 1 — a dependência está indicada em cada item.</p>
+    <div id="list2"></div>
+    <p class="empty" id="e2" hidden>Nenhum item com os filtros atuais.</p>
+  </section>
+
+  <footer>
+    <p><strong>Origem.</strong> Os 36 itens vêm de uma auditoria documental do processo “Prospecção de Fotógrafos”, feita em 16/09/2026 sobre o texto do canvas. A análise não foi verificada contra o Pipedrive, a base de fotógrafos ou os contratos vigentes — contradições internas e cálculos de prazo são conclusivos sobre o documento, o restante são hipóteses a confirmar.</p>
+    <p style="margin-top:10px"><strong>Privacidade.</strong> Este arquivo funciona offline e não envia nada para lugar nenhum. O que você digita fica gravado apenas neste navegador, até você baixar ou copiar as respostas.</p>
+  </footer>
+</div>
+
+<script>
+var OWNERS = {
+  COORD:{s:"Coordenação", n:"Coordenação de Fornecedores"},
+  LID:  {s:"Liderança",   n:"Liderança de Fornecedores"},
+  ANA:  {s:"Analista",    n:"Analista de Fornecedores"},
+  FOTO: {s:"Fotógrafos",  n:"Time de Fotógrafos"},
+  JUR:  {s:"Jurídico",    n:"Jurídico / DPO"},
+  AUTO: {s:"Automação",   n:"Automação / Tecnologia"}
+};
+
+var ITEMS = [
+{id:"V01",b:1,o:"COORD",t:"Qual é o objetivo do processo?",q:"A seção 2 do documento está em branco. É preciso escrever o objetivo em uma frase mensurável, com número e prazo — por exemplo: “toda cidade com imóvel ativo ou em onboarding deve ter pelo menos um fotógrafo homologado até X dias antes da data prevista de ativação”. Sem isso não há meta nem indicador possível.",quem:"Coordenação + liderança",ach:"C1",sec:"Seção 2",dep:""},
+{id:"V02",b:1,o:"COORD",t:"Quantos fotógrafos tornam uma cidade “coberta”?",q:"O processo fala em cobertura o tempo todo, mas nunca define o número. Um fotógrafo basta? Existe meta de redundância para o caso de ele sair, adoecer ou ficar indisponível num fim de semana?",quem:"Coordenação",ach:"A4",sec:"Seções 2 e 5",dep:""},
+{id:"V03",b:1,o:"COORD",t:"O que o SLA de “1 semana” está medindo?",q:"A tabela da seção 6 declara “SLA Total do processo: 1 semana”, mas as etapas somam 13 dias úteis. O número de 1 semana descreve só a prospecção, ou a expectativa é mesmo cobrir a cidade em 5 dias úteis? É preciso decidir qual dos dois é o SLA que será cobrado.",quem:"Coordenação + liderança",ach:"C2",sec:"Seção 6",dep:""},
+{id:"V04",b:1,o:"FOTO",t:"Qual prazo o time de Fotógrafos assume para a etapa 6?",q:"Onboarding, treinamento e teste prático estão como “definido pelo time de Fotógrafos”. Como a etapa 7 (contrato) vem depois e é de Fornecedores, sem esse número o lead time do processo é indeterminável. Vale acordar um prazo, mesmo que largo.",quem:"Coordenação de Fotógrafos",ach:"C3",sec:"Etapa 6",dep:""},
+{id:"V05",b:1,o:"COORD",t:"Os prazos são em dias úteis ou corridos?",q:"O documento alterna entre “3 dias”, “1 dia útil” e “3 dias úteis” sem padrão, e a cadência de contato diz “uma a cada 3 dias” sem especificar. A diferença muda o SLA da etapa 3 em vários dias.",quem:"Coordenação",ach:"M3",sec:"Seção 6",dep:""},
+{id:"V06",b:1,o:"COORD",t:"O que acontece quando o fotógrafo reprova no teste prático?",q:"Hoje o card já está em “Ganho” e o cadastro já existe quando o teste acontece. O documento não diz o que fazer na reprovação: o card volta para Perda? O cadastro é inativado? A cidade volta para a fila de prospecção automaticamente, ou alguém precisa perceber?",quem:"Coordenação + time de Fotógrafos",ach:"C4",sec:"Etapas 5 e 6",dep:""},
+{id:"V07",b:1,o:"JUR",t:"O contrato deve ser assinado antes do treinamento?",q:"Hoje o fotógrafo é treinado e faz teste prático sem nenhum instrumento assinado. Pergunta para o jurídico: essa ordem expõe a empresa a alegação de vínculo? Convém antecipar a assinatura, ou usar um termo de adesão curto antes do treinamento?",quem:"Jurídico",ach:"C5",sec:"Etapas 5 a 7",dep:""},
+{id:"V08",b:1,o:"JUR",t:"Qual a base legal e a política de guarda dos dados pessoais?",q:"O processo coleta CPF, chave PIX, endereço e razão social, e monta listas de leads a partir da Receita Federal e de redes sociais de quem ainda não é fornecedor. Falta definir: base legal para prospecção e para cadastro, aviso no primeiro contato, onde os dados ficam, quem acessa, e por quanto tempo cards em Perda continuam no Pipedrive.",quem:"Jurídico / DPO",ach:"A2",sec:"Etapas 3 e 5",dep:""},
+{id:"V09",b:1,o:"COORD",t:"Qual base é a fonte da verdade dos fotógrafos?",q:"O cadastro é feito “no Artefato de fotógrafos”, os cards vivem em dois funis do Pipedrive e a automação da etapa 1 lê “a base de fotógrafos ativos e em contratação”. Qual dessas é a fonte oficial, de qual a automação lê, e com que frequência ela roda?",quem:"Coordenação + Automação",ach:"A3 · A4",sec:"Etapas 1 e 5",dep:""},
+{id:"V10",b:1,o:"COORD",t:"O que define uma “Grande Operação”?",q:"Existem duas tabelas de valores — Padrão e GOP —, mas nenhum critério escrito para decidir qual aplicar a um fotógrafo. Volume mensal de sessões? Número de imóveis na praça? Tipo de contrato? Enquanto não houver critério, o desconto de 20 a 25% fica a critério de quem conduz a conversa.",quem:"Coordenação",ach:"A5",sec:"Etapa 4",dep:""},
+{id:"V11",b:1,o:"COORD",t:"A margem de negociação diferente entre as tabelas é intencional?",q:"Na Padrão, a distância entre o valor de abertura e o teto é de 9,1% a 16,7%. Na GOP, de 25% a 33,3% — mais espaço para ceder justamente onde o preço já é o mais baixo. Se for intencional, vale registrar o motivo; se não, igualar.",quem:"Coordenação",ach:"A5",sec:"Etapa 4",dep:""},
+{id:"V12",b:1,o:"COORD",t:"As células de R$ 275 e R$ 180 estão corretas?",q:"Nas quatro tabelas os degraus de preço deveriam crescer conforme o imóvel cresce. Duas fogem disso: na abertura Padrão, 3 quartos a R$ 275 (degraus +20, +25, +50, +25) e no teto GOP, 1 quarto a R$ 180 (degraus +30, +20, +40, +40). Conferir com quem montou a tabela se são valores pensados ou erro de digitação.",quem:"Quem montou a tabela",ach:"A6",sec:"Etapa 4",dep:""},
+{id:"V13",b:1,o:"COORD",t:"Qual é a lista completa das regras de negócio?",q:"A etapa 4 manda reforçar as regras “entre elas refazer a sessão sem custo”, e essa lista não existe em lugar nenhum. Levantar todas: prazo de entrega, quantidade mínima de fotos, direitos de uso das imagens, refação sem custo, prazo de pagamento, política de cancelamento e — o que hoje não aparece — se há valor de deslocamento quando o fotógrafo atende cidade vizinha.",quem:"Coordenação + jurídico",ach:"A7",sec:"Etapa 4",dep:""},
+{id:"V14",b:1,o:"LID",t:"Quem aprova uma exceção de preço, e até quanto?",q:"O documento só prevê “não aceitou: card vai para Perda”. Numa cidade estratégica sem outro candidato, alguém vai autorizar algo acima do teto — falta dizer quem pode e até que valor. Ligado a isso: a “validação com a liderança” que aparece no escopo (seção 3) não existe em nenhuma das 7 etapas. Ela deve virar um gate na etapa 2 ou sair do escopo?",quem:"Liderança de Fornecedores",ach:"A8",sec:"Seções 3 e 5",dep:""},
+{id:"V15",b:1,o:"LID",t:"Quais indicadores a liderança quer acompanhar?",q:"O processo define SLAs, mas nenhum indicador de resultado. Ponto de partida sugerido: cidades descobertas em aberto, tempo médio para cobrir uma cidade, conversão de lead a Ganho por frente de busca (Receita Federal / Instagram / Google / indicação de franquia) e taxa de aprovação no teste prático. Confirmar quais interessam e quem publica.",quem:"Liderança de Fornecedores",ach:"A9",sec:"Processo",dep:""},
+{id:"V16",b:1,o:"COORD",t:"Quem mantém o verificaequipamento.lovable.app?",q:"A validação de equipamento depende de um app fora do parque de sistemas da empresa. Quem é o dono, com que frequência a lista de câmeras e lentes aceitas é atualizada, e o que o analista faz se ele estiver fora do ar no meio de uma negociação?",quem:"Coordenação + Tecnologia",ach:"M1",sec:"Etapa 4",dep:""},
+{id:"V17",b:1,o:"ANA",t:"A fila do analista é “Prospecção” ou “Backlog”?",q:"A etapa 2 diz que a cidade aprovada vai para “prospecção, a fila do Analista”; a etapa 3 diz que o Analista pega os cards de “Backlog”. E “Backlog” também é o nome da etapa onde nascem os cards de lead, no outro funil. Confirmar os nomes exatos das etapas nos dois funis do Pipedrive.",quem:"Analista de Fornecedores",ach:"M2",sec:"Etapas 2 e 3",dep:""},
+{id:"V18",b:1,o:"ANA",t:"Qual o canal de primeiro contato e existe script?",q:"O processo define quantas tentativas e com que intervalo, mas não por onde se fala com o fotógrafo nem o que se diz. WhatsApp, ligação e e-mail têm taxas de resposta muito diferentes, e é a taxa de resposta que determina o prazo de toda a etapa 3.",quem:"Analista de Fornecedores",ach:"M7",sec:"Etapa 3",dep:""},
+{id:"V19",b:1,o:"COORD",t:"O que fazer quando os 30 leads se esgotam sem conversão?",q:"Em cidade pequena, 30 leads podem ser o mercado inteiro. Abre-se uma segunda rodada? Amplia-se o raio para a cidade vizinha? Contrata-se com deslocamento? Ou a cidade volta para Cancelado? Hoje o documento não diz.",quem:"Coordenação",ach:"M6",sec:"Etapa 3",dep:""},
+{id:"V20",b:1,o:"COORD",t:"Como o processo fica sabendo que um fotógrafo saiu ou mudou de região?",q:"A seção 3 inclui isso no escopo, mas nenhuma das 7 etapas trata de saída ou mudança de praça — e é justamente a saída que descobre uma cidade de novo. Qual o gatilho, quem executa e como isso volta para o funil de cidades?",quem:"Coordenação + time de Fotógrafos",ach:"M4",sec:"Seção 3",dep:""},
+{id:"V21",b:1,o:"COORD",t:"Qual a quarentena de uma cidade Cancelada?",q:"A etapa 2 diz que a cidade cancelada “volta a aparecer na próxima rodada se a situação mudar”, mas a automação roda toda sexta sobre a mesma lista e nada verifica se algo mudou. Definir um prazo de quarentena e as condições que reabrem antes dele (novo imóvel ativado, data de ativação confirmada).",quem:"Coordenação + Automação",ach:"M5",sec:"Etapas 1 e 2",dep:""},
+{id:"V22",b:1,o:"COORD",t:"Quem substitui o Analista e as testemunhas do contrato?",q:"O Analista responde por 4 das 7 etapas e não tem substituto nomeado. As testemunhas do contrato são os dois Coordenadores, sem suplente — com SLA de 3 dias úteis para assinatura, a ausência de qualquer um trava o fechamento de um fotógrafo já treinado e aprovado.",quem:"Coordenação",ach:"B1 · B2",sec:"Seção 4 e Etapa 7",dep:""},
+
+{id:"D01",b:2,o:"COORD",t:"Separar o SLA total em dois indicadores",q:"Na seção 6, substituir a linha “SLA Total do processo” por dois números distintos: lead time da prospecção (da entrada na fila ao primeiro retorno) e lead time de cobertura da cidade (da abertura do card à assinatura). Só o segundo é o SLA do processo.",quem:"Coordenação",ach:"C2",sec:"Seção 6",dep:"V03 · V04"},
+{id:"D02",b:2,o:"ANA",t:"Criar a etapa “Em homologação” e mover o Ganho",q:"No funil Prospecção Fornecedores, inserir uma etapa entre o cadastro e o Ganho. O card só vai para Ganho depois do teste prático aprovado — o que limpa a métrica de conversão e impede que a base receba fotógrafo não validado. Escrever junto o caminho de reprovação.",quem:"Analista de Fornecedores",ach:"C4",sec:"Etapas 5 e 6",dep:"V06"},
+{id:"D03",b:2,o:"COORD",t:"Fazer a cadência caber no SLA da etapa 3",q:"3 tentativas a cada 3 dias consomem 6 a 9 dias; o SLA da etapa é de 1 semana. Ajustar um dos dois: prazo de 2 semanas, ou cadência de 2 em 2 dias. E declarar uma vez, no topo da seção 6, se todos os prazos são em dias úteis.",quem:"Coordenação",ach:"M3",sec:"Etapa 3 e Seção 6",dep:"V05"},
+{id:"D04",b:2,o:"ANA",t:"Levar CNPJ, câmera e lente para o primeiro contato",q:"Hoje o CNPJ só é verificado na negociação, depois de até 3 tentativas ao longo de 6 a 9 dias. Incluir as três perguntas no roteiro do primeiro contato descarta cedo quem não passaria — sobretudo os leads vindos de Instagram e Google, em geral informais.",quem:"Analista de Fornecedores",ach:"A1",sec:"Etapa 3",dep:"V18"},
+{id:"D05",b:2,o:"COORD",t:"Escrever as regras de negócio no processo e no contrato",q:"Substituir o “entre elas” da etapa 4 pela lista fechada, e usar exatamente a mesma lista nos modelos de contrato, para que o que foi explicado ao fotógrafo e o que ele assina sejam a mesma coisa.",quem:"Coordenação",ach:"A7",sec:"Etapa 4",dep:"V13"},
+{id:"D06",b:2,o:"AUTO",t:"Contar como cobertura só fotógrafo homologado",q:"Ajustar a automação da etapa 1 para não tratar “em contratação” como cobertura, e mostrar essas cidades num estado separado (“em tratativa”). Hoje a cidade some da lista por 13 dias ou mais mesmo que a negociação termine em Perda.",quem:"Automação",ach:"A4",sec:"Etapa 1",dep:"V02 · V09"},
+{id:"D07",b:2,o:"COORD",t:"Acrescentar a etapa de manutenção da base",q:"Uma etapa curta cobrindo saída e mudança de região do fotógrafo: o que dispara, quem executa, qual o SLA e como a cidade volta ao funil quando fica descoberta.",quem:"Coordenação",ach:"M4",sec:"Seção 5",dep:"V20"},
+{id:"D08",b:2,o:"COORD",t:"Escrever o degrau de exceção da prospecção",q:"Documentar o que acontece quando a leva de 30 leads se esgota: o card volta ao Coordenador com o resultado, e a decisão passa a ser entre ampliar o raio, contratar com deslocamento ou assumir a cidade como não coberta.",quem:"Coordenação",ach:"M6",sec:"Etapa 3",dep:"V19"},
+{id:"D09",b:2,o:"COORD",t:"Deixar o critério de equipamento escrito como a regra",q:"O critério mínimo já está no processo (DSLR ou mirrorless APS-C/Full Frame, grande-angular 10–24mm ou 16mm, tripé, Lightroom). Registrar que o app é conveniência: indisponível, o analista aplica o critério diretamente. Anotar também o dono do app.",quem:"Coordenação + Tecnologia",ach:"M1",sec:"Etapa 4",dep:"V16"},
+{id:"D10",b:2,o:"COORD",t:"Incluir aviso de privacidade e prazo de descarte",q:"Aviso de privacidade no roteiro do primeiro contato, e regra de descarte para cards em Perda no Pipedrive. Tratar CPF e chave PIX com acesso mais restrito que o restante do cadastro.",quem:"Coordenação + DPO",ach:"A2",sec:"Etapas 3 e 5",dep:"V08"},
+{id:"D11",b:2,o:"COORD",t:"Acrescentar a regra de feriado",q:"Uma linha resolve: “sendo a sexta-feira feriado, a rodada ocorre no último dia útil anterior”. Hoje, um feriado desliza o ciclo inteiro em uma semana, sem regra de recuperação. Este é o único item que não depende de nenhuma resposta.",quem:"Coordenação",ach:"B3",sec:"Etapas 1 e 2",dep:""},
+{id:"D12",b:2,o:"ANA",t:"Padronizar nomes de etapas e fechar a faixa de 4+ quartos",q:"Grafar as etapas exatamente como aparecem no Pipedrive (“Analise”, “Concluido”, “1° Contato” estão sem acento ou com o sinal errado), citar sempre a qual funil a etapa pertence, e fechar a faixa mais alta como “4 ou mais quartos” nas quatro tabelas — hoje a GOP diz só “4 quartos”, deixando um imóvel de 5 quartos sem valor definido.",quem:"Analista de Fornecedores",ach:"B4 · M2",sec:"Documento inteiro",dep:"V17"},
+{id:"D13",b:2,o:"COORD",t:"Nomear substituto e suplentes na seção 4",q:"Registrar quem assume cada etapa na ausência do Analista, e os suplentes das duas posições de testemunha do contrato.",quem:"Coordenação",ach:"B1 · B2",sec:"Seção 4 e Etapa 7",dep:"V22"},
+{id:"D14",b:2,o:"COORD",t:"Registrar os indicadores e onde são medidos",q:"Acrescentar ao processo a lista de indicadores escolhidos, de onde sai cada número (a maioria sai direto do Pipedrive), com que frequência é publicado e para quem.",quem:"Coordenação",ach:"A9",sec:"Seção 2 ou 6",dep:"V15"}
+];
+
+var LABELS = {1:{todo:"Pendente",doing:"Perguntado",done:"Respondido"},2:{todo:"Pendente",doing:"Em andamento",done:"Aplicado"}};
+var KEY = "seazone.validacoes.fotografos.v2-17set";
+
+var RESPOSTAS = {"V01": {"status": "done", "resposta": "Respondido na revisão de 17/09. Objetivo e meta escritos na seção 2: 100% das cidades com imóvel ativo ou em onboarding com pelo menos 2 fotógrafos homologados, e a prospecção de cada cidade encerrada em até 1 semana contada do INÍCIO da prospecção — sempre antes da data prevista de ativação do primeiro imóvel.", "responsavel": "Henry Yudi + Wânia (revisão 17/09/2026)"}, "V02": {"status": "done", "resposta": "Dois fotógrafos homologados por cidade, sem exceção por porte de praça. Cidade coberta = 2 fotógrafos com contrato assinado e teste prático aprovado. Com 1, é \"parcialmente coberta\" e continua na fila. Negociação em andamento é \"em tratativa\" — não conta como cobertura.", "responsavel": "Henry Yudi + Wânia (revisão 17/09/2026)"}, "V03": {"status": "done", "resposta": "O marco passou a ser o início da prospecção (a segunda-feira em que o Analista pega o card), não a abertura do card. A etapa de prospecção fechou em 3 dias úteis, dentro do teto de 1 semana que o objetivo promete. O \"SLA total\" foi substituído por dois números: lead time de prospecção = 3 dias úteis; lead time de Fornecedores = 10 dias úteis (todas as etapas menos onboarding/treinamento).", "responsavel": "Henry Yudi + Wânia (revisão 17/09/2026)"}, "V04": {"status": "doing", "resposta": "PENDENTE — com a Coordenação de Fotógrafos. Decisão de 17/09: Fornecedores não crava prazo de etapa que não opera, então a etapa e a tabela ficaram como \"SLA definido pelo time de Fotógrafos\". O lead time do processo foi publicado em duas partes (10 dias úteis de Fornecedores + o prazo da etapa 6) e vira um número único quando o time responder. Sugestão de partida, se ajudar a destravar: 5 dias úteis.", "responsavel": "Henry Yudi + Wânia (revisão 17/09/2026)"}, "V05": {"status": "done", "resposta": "Todos os prazos do processo são em dias úteis. Declarado uma vez, no topo da seção 6, e os textos das etapas foram uniformizados.", "responsavel": "Henry Yudi + Wânia (revisão 17/09/2026)"}, "V06": {"status": "done", "resposta": "Caminho da reprovação escrito na etapa 6: card vai para Perda com o motivo \"reprovado no teste prático\", o cadastro no Artefato é inativado e a cidade volta para a etapa Prospecção do funil de Cidades na mesma semana — se ainda houver leads na leva, o Analista retoma; se não, aplica o degrau de exceção da etapa 3. Junto disso, o Ganho saiu da etapa 5: criou-se \"Em homologação\", e o card só vai para Ganho com teste aprovado e contrato assinado.", "responsavel": "Henry Yudi + Wânia (revisão 17/09/2026)"}, "V07": {"status": "todo", "resposta": "PENDENTE — jurídico. A pergunta está registrada no processo, na etapa 7: hoje o fotógrafo é treinado e faz teste prático sem nenhum instrumento assinado; isso expõe a empresa a alegação de vínculo? Antecipar a assinatura para antes da etapa 6, ou usar um termo de adesão curto antes do treinamento? Nada mudou na ordem das etapas até a resposta.", "responsavel": "Henry Yudi + Wânia (revisão 17/09/2026)"}, "V08": {"status": "doing", "resposta": "PARCIALMENTE respondido em 17/09 — a seção 8 (Dados pessoais e guarda) foi criada e preenchida pela área: base legal declarada como \"Prospecção Fornecedores\"; aviso no roteiro do primeiro contato (os dados de contato ficam registrados no CRM da Seazone para fins de contratação); dados só no Pipedrive e no Artefato de fotógrafos, sem planilhas paralelas; CPF e chave PIX acessíveis apenas ao Coordenador de Implantação e ao time de Fornecedores; cards em Perda não são apagados, para manter o registro; fotógrafo descredenciado tem o cadastro inativado e os dados fiscais mantidos pelo prazo legal do contrato.\nFALTA a validação do DPO em dois pontos: (1) base legal na LGPD é uma das hipóteses do art. 7º (provavelmente legítimo interesse), e não o nome do funil; (2) guarda sem prazo, mesmo para card em Perda, tende a contrariar o art. 16 — vale definir um prazo ou anonimizar o contato depois de um período.", "responsavel": "Henry Yudi + Wânia (revisão 17/09/2026)"}, "V09": {"status": "done", "resposta": "O Artefato de fotógrafos é a fonte da verdade da base; o Pipedrive registra a jornada comercial, não a base. A automação da etapa 1 lê o Artefato e roda toda sexta-feira (feriado: último dia útil anterior), considerando apenas fotógrafos HOMOLOGADOS. Continua em aberto um detalhe operacional: com que frequência o Artefato sincroniza.", "responsavel": "Henry Yudi + Wânia (revisão 17/09/2026)"}, "V10": {"status": "done", "resposta": "Tabela Grande Operação se aplica quando existem 15 ou mais imóveis no mesmo prédio a serem fotografados. Critério escrito na etapa 4.", "responsavel": "Henry Yudi + Wânia (revisão 17/09/2026)"}, "V11": {"status": "todo", "resposta": "PENDENTE — com quem montou a tabela. A diferença de margem segue registrada no processo como ponto a conferir, junto com a V12. Na Padrão a distância entre abertura e teto vai de 9,1% a 16,7%; na GOP, de 25% a 33,3%. Se for intencional, escrever o motivo no processo; se não, igualar.", "responsavel": "Henry Yudi + Wânia (revisão 17/09/2026)"}, "V12": {"status": "todo", "resposta": "PENDENTE — com quem montou a tabela. A revisão refinou o achado e isolou DUAS células:\n(1) Abertura Padrão, 3 quartos a R$ 275 — degraus +20, +25, +50, +25; comprime a margem dessa faixa para 9,1%, a menor das 20 células. Com R$ 250 o degrau normaliza.\n(2) Teto GOP, Estúdio a R$ 150 — todas as outras faixas da GOP guardam 33,3% entre abertura e teto (135→180, 150→200, 180→240, 210→280); só o Estúdio guarda 25% (120→150). Com R$ 160 a margem fica igual em toda a tabela.\nQuem montou precisa dizer, em cada caso, qual número está certo: a abertura ou o teto.", "responsavel": "Henry Yudi + Wânia (revisão 17/09/2026)"}, "V13": {"status": "doing", "resposta": "PARCIAL. Ficou decidido que a lista de regras de negócio vive no CONTRATO — é a fonte que vale na negociação e depois dela —, e a etapa 4 passou a dizer isso. Mas a lista fechada em si ainda não foi levantada: prazo de entrega das fotos, quantidade mínima por sessão, direitos de uso das imagens, refação sem custo, prazo de pagamento, política de cancelamento/reagendamento e valor de deslocamento para cidade vizinha (a regra de R$ 1,20/km precisa ser confirmada). Enquanto não vier, o processo cita o contrato mas ninguém consegue conferir se os dois dizem a mesma coisa.", "responsavel": "Henry Yudi + Wânia (revisão 17/09/2026)"}, "V14": {"status": "doing", "resposta": "PARCIAL. Respondido o \"quem\": exceção de preço acima do teto só com aprovação da Liderança de Fornecedores, registrada no card, e apenas quando a cidade não tiver outro candidato viável. A Liderança também aprova prazo fora do SLA e contratação com deslocamento, e responde ao degrau de exceção da etapa 3 em até 1 dia útil. FALTA o \"até quanto\": valor ou % acima do teto que a alçada cobre.\nA segunda parte foi resolvida: a \"validação com a liderança\" deixou de ser etapa solta e virou esse gate de exceção, acionado só quando a leva não fecha.", "responsavel": "Henry Yudi + Wânia (revisão 17/09/2026)"}, "V15": {"status": "doing", "resposta": "PARCIAL. A lista de indicadores foi escrita no processo: cidades descobertas em aberto (estoque), cidades parcialmente cobertas, tempo médio para cobrir uma cidade, conversão de lead a homologado por origem (Receita Federal / Instagram / Google / indicação da franquia), taxa de aprovação no teste prático e cidades que perderam cobertura no mês. Os números saem do Pipedrive e do Artefato. FALTA definir com que frequência são publicados, por quem e para quem.", "responsavel": "Henry Yudi + Wânia (revisão 17/09/2026)"}, "V16": {"status": "todo", "resposta": "PENDENTE — Coordenação + Tecnologia. Continua sem dono nomeado e sem periodicidade de revisão da lista de câmeras e lentes. O que já foi resolvido é o plano B: o critério mínimo de equipamento está escrito no processo (DSLR ou mirrorless APS-C/Full Frame, grande-angular 10–24mm ou 16mm, tripé, Lightroom) e vale como regra — o app é conveniência; fora do ar, o Analista aplica o critério direto.", "responsavel": "Henry Yudi + Wânia (revisão 17/09/2026)"}, "V17": {"status": "done", "resposta": "Nomes fechados e padronizados nos dois funis do Pipedrive:\n• Fornecedores - Cidades (card da cidade): Análise · Prospecção · Cancelado · Concluído. A fila do Analista é \"Prospecção\".\n• Prospecção Fornecedores (card do fotógrafo): Backlog · 1º Contato · 2º Contato · 3º Contato · Em homologação · Ganho · Perda.\nO processo passou a citar sempre a qual funil a etapa pertence.", "responsavel": "Henry Yudi + Wânia (revisão 17/09/2026)"}, "V18": {"status": "done", "resposta": "Canal e roteiro escritos na etapa 3: WhatsApp, com ligação como segunda tentativa. No primeiro contato, além da apresentação, o Analista já faz as três perguntas eliminatórias — tem CNPJ?, qual câmera usa?, qual lente usa? — e informa que os dados de contato ficam registrados no CRM da Seazone para fins de contratação. Cadência: 3 tentativas, no dia, no 2º e no 3º dia útil, movendo o card por 1º, 2º e 3º Contato; sem resposta até o 3º dia útil, Perda por falta de retorno.", "responsavel": "Henry Yudi + Wânia (revisão 17/09/2026)"}, "V19": {"status": "done", "resposta": "Escrito como bloco de destaque na etapa 3: se ao fim da semana nenhum fotógrafo for fechado na cidade, o Analista monta um relatório com o motivo e leva à Liderança de Fornecedores, em até 1 dia útil, para aprovar uma das alternativas — liberar valor de deslocamento, prospectar em cidades próximas ou consultar um fotógrafo já homologado de cidade vizinha que aceite cobrir a região com deslocamento.", "responsavel": "Henry Yudi + Wânia (revisão 17/09/2026)"}, "V20": {"status": "done", "resposta": "Criada a etapa de Manutenção da base (última do fluxo), sob o Coordenador de Fornecedores com aviso do time de Fotógrafos: quando um fotógrafo sai, é descredenciado ou muda de região, Fornecedores é comunicado, o Analista inativa o cadastro no Artefato e registra data e motivo. Se a cidade ficar com menos de dois fotógrafos, um card dela é reaberto no funil Fornecedores - Cidades, na etapa Análise, marcado como reabertura por perda de cobertura e com prioridade na rodada da sexta seguinte. SLA: 2 dias úteis do aviso até a base atualizada.", "responsavel": "Henry Yudi + Wânia (revisão 17/09/2026)"}, "V21": {"status": "done", "resposta": "Quarentena de 15 dias para cidade em Cancelado. Ela volta antes disso se um imóvel novo for ativado na cidade, se uma data de ativação for confirmada ou se a franquia pedir. Também foi criada a lista fechada de motivos de cancelamento: sem imóvel previsto · cidade vizinha já cobre com deslocamento · volume não justifica · aguardando confirmação de ativação.", "responsavel": "Henry Yudi + Wânia (revisão 17/09/2026)"}, "V22": {"status": "done", "resposta": "Substituto do Analista: o Coordenador de Fornecedores, que assume as etapas 3, 4, 5 e 7 em férias e ausências. Testemunhas do contrato: Coordenador de Fornecedores e Coordenador de Fotógrafos, com Gerente de BackOffice e Gerente de Implantação como suplentes — assim a assinatura deixa de depender da agenda de duas pessoas específicas dentro do SLA de 3 dias úteis.", "responsavel": "Henry Yudi + Wânia (revisão 17/09/2026)"}, "D01": {"status": "done", "resposta": "APLICADO na seção 6. A linha \"SLA Total do processo\" saiu e deu lugar a: lead time de prospecção = 3 dias úteis do início da prospecção; lead time de Fornecedores = 10 dias úteis (etapas 1 a 5 e 7); lead time de cobertura da cidade = 10 dias úteis de Fornecedores + o prazo da etapa 6. A tabela ganhou a coluna de acumulado ancorada no início da prospecção, e a etapa 6 aparece como \"relógio de Fornecedores pausa\", já que o prazo é do outro time (V04).", "responsavel": "Henry Yudi + Wânia (revisão 17/09/2026)"}, "D02": {"status": "doing", "resposta": "TEXTO APLICADO, CONFIGURAÇÃO PENDENTE. As etapas 5 e 6 do processo já dizem que o card vai para \"Em homologação\" e que o Ganho só acontece com teste aprovado e contrato assinado, e o caminho de reprovação está escrito. Falta criar a etapa \"Em homologação\" no funil Prospecção Fornecedores, entre o cadastro e o Ganho — é mexida no Pipedrive, não no documento.", "responsavel": "Henry Yudi + Wânia (revisão 17/09/2026)"}, "D03": {"status": "done", "resposta": "APLICADO. A cadência virou 3 tentativas no dia, no 2º e no 3º dia útil (antes eram 3 em 3 dias, o que consumia de 6 a 9 dias), e a leva fecha em 3 dias úteis — que virou o próprio SLA da etapa. No topo da seção 6 ficou declarado que todos os prazos são em dias úteis.\nObservação de campo: a 2ª e a 3ª tentativa caem em dias seguidos, então quem viajou ou ficou uma semana fora do WhatsApp é perdido sem ter visto a mensagem. Se a taxa de resposta vier baixa, o ajuste mais barato é manter as três tentativas e esticar só a última para o 5º dia útil.", "responsavel": "Henry Yudi + Wânia (revisão 17/09/2026)"}, "D04": {"status": "done", "resposta": "APLICADO na etapa 3: as três perguntas eliminatórias (CNPJ, câmera, lente) entraram no roteiro do primeiro contato, junto com o aviso de privacidade. Quem não tem CNPJ ou equipamento sai da leva no primeiro dia, em vez de consumir três tentativas.", "responsavel": "Henry Yudi + Wânia (revisão 17/09/2026)"}, "D05": {"status": "todo", "resposta": "PENDENTE — depende da V13. O processo já aponta o contrato como a fonte das regras de negócio, mas a lista fechada ainda não existe, então não dá para espelhar processo e contrato. Assim que a lista vier, ela entra na etapa 4 e nos dois modelos de contrato com a mesma redação.", "responsavel": "Henry Yudi + Wânia (revisão 17/09/2026)"}, "D06": {"status": "doing", "resposta": "TEXTO APLICADO, AUTOMAÇÃO PENDENTE. A etapa 1 já está escrita como \"cruza com a base de fotógrafos HOMOLOGADOS\" e prevê os estados parcialmente coberta e em tratativa. Falta ajustar a automação para parar de tratar \"em contratação\" como cobertura e devolver esse estado separado — é mexida na skill/automação.", "responsavel": "Henry Yudi + Wânia (revisão 17/09/2026)"}, "D07": {"status": "done", "resposta": "APLICADO. Virou a etapa de Manutenção da base, com gatilho, responsável, SLA de 2 dias úteis e o caminho de volta da cidade para o funil quando a base cai abaixo de dois fotógrafos. Ver V20.", "responsavel": "Henry Yudi + Wânia (revisão 17/09/2026)"}, "D08": {"status": "done", "resposta": "APLICADO. O degrau de exceção está escrito na etapa 3, como bloco de destaque, com quem aprova (Liderança de Fornecedores) e em quanto tempo (1 dia útil), e com as três alternativas: deslocamento, cidades próximas ou fotógrafo homologado de cidade vizinha. Ver V19.", "responsavel": "Henry Yudi + Wânia (revisão 17/09/2026)"}, "D09": {"status": "doing", "resposta": "PARCIAL. O critério mínimo de equipamento ficou escrito como a regra, e o app registrado como conveniência — fora do ar, o Analista aplica o critério diretamente. Falta anotar o dono do app e a periodicidade de revisão da lista de câmeras e lentes (V16).", "responsavel": "Henry Yudi + Wânia (revisão 17/09/2026)"}, "D10": {"status": "doing", "resposta": "APLICADO com ressalva. O aviso de privacidade entrou no roteiro do primeiro contato (etapa 3), CPF e chave PIX ficaram com acesso restrito ao Coordenador de Implantação e ao time de Fornecedores, e a regra de descarte foi definida: cards em Perda NÃO são apagados do Pipedrive, para manter o registro. Essa última decisão precisa do aval do DPO — guarda sem prazo é o oposto do que o art. 16 da LGPD pede (ver V08).", "responsavel": "Henry Yudi + Wânia (revisão 17/09/2026)"}, "D11": {"status": "done", "resposta": "APLICADO. A regra está na etapa 1: \"sendo a sexta-feira feriado, a rodada acontece no último dia útil anterior\".", "responsavel": "Henry Yudi + Wânia (revisão 17/09/2026)"}, "D12": {"status": "done", "resposta": "APLICADO. As etapas passaram a ser grafadas como aparecem no Pipedrive e sempre com o funil ao lado (ver V17), e a faixa mais alta das quatro tabelas ficou como \"4 ou + quartos\", fechando o buraco do imóvel de 5 quartos na GOP.", "responsavel": "Henry Yudi + Wânia (revisão 17/09/2026)"}, "D13": {"status": "done", "resposta": "APLICADO na seção 4: substituto do Analista (Coordenador de Fornecedores, etapas 3, 4, 5 e 7) e suplentes das testemunhas (Gerente de BackOffice e Gerente de Implantação). Ver V22.", "responsavel": "Henry Yudi + Wânia (revisão 17/09/2026)"}, "D14": {"status": "doing", "resposta": "PARCIAL. A lista de indicadores e a origem de cada número estão no processo (Pipedrive e Artefato). Falta a frequência de publicação, quem publica e para quem — os três campos continuam em aberto (V15).", "responsavel": "Henry Yudi + Wânia (revisão 17/09/2026)"}};
+var state = {}, nodes = {}, meta = {nome:"Henry Yudi", data:"17/09/2026"};
+ITEMS.forEach(function(it){
+  var r = RESPOSTAS[it.id];
+  state[it.id] = r ? {status:r.status, resposta:r.resposta, responsavel:r.responsavel}
+                   : {status:"todo", resposta:"", responsavel:""};
+});
+
+/* ---------- storage ---------- */
+var saveTimer = null;
+function persist(){
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(function(){
+    try{
+      localStorage.setItem(KEY, JSON.stringify({meta:meta, state:state}));
+      flag("salvo");
+    }catch(e){ flag("não foi possível salvar neste navegador"); }
+  }, 400);
+}
+function flag(msg){
+  var f = document.getElementById('saveflag');
+  f.textContent = msg;
+  clearTimeout(flag._t);
+  flag._t = setTimeout(function(){ f.textContent = ""; }, 2000);
+}
+function restore(){
+  try{
+    var raw = localStorage.getItem(KEY);
+    if(!raw) return;
+    var d = JSON.parse(raw);
+    if(d && d.meta){ meta = {nome:d.meta.nome || "", data:d.meta.data || ""}; }
+    if(d && d.state){
+      Object.keys(d.state).forEach(function(k){
+        if(state[k]) state[k] = {
+          status: d.state[k].status || "todo",
+          resposta: d.state[k].resposta || "",
+          responsavel: d.state[k].responsavel || ""
+        };
+      });
+    }
+  }catch(e){}
+}
+
+/* ---------- build ---------- */
+function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+
+function buildItem(it){
+  var el = document.createElement('article');
+  el.className = 'item'; el.id = it.id; el.dataset.st = 'todo'; el.dataset.o = it.o;
+  var L = LABELS[it.b];
+  var refs = '<span class="owner" data-o="' + it.o + '">' + esc(OWNERS[it.o].s) + '</span>' +
+             '<span class="ref">Responde: <b>' + esc(it.quem) + '</b></span>' +
+             '<span class="ref">' + esc(it.sec) + '</span>' +
+             '<span class="ref">Achado <b>' + esc(it.ach) + '</b></span>' +
+             (it.dep ? '<span class="ref dep">Depende de <b>' + esc(it.dep) + '</b></span>' : '');
+
+  el.innerHTML =
+    '<div class="ihead">' +
+      '<div class="icode">' + it.id + '</div>' +
+      '<div class="ititle">' +
+        '<h3>' + esc(it.t) + '</h3>' +
+        '<p class="q">' + esc(it.q) + '</p>' +
+        '<div class="refs">' + refs + '</div>' +
+        '<div class="states">' +
+          '<button type="button" class="sbtn" data-s="todo" aria-pressed="true"><span class="mk">○</span>' + L.todo + '</button>' +
+          '<button type="button" class="sbtn" data-s="doing" aria-pressed="false"><span class="mk">◐</span>' + L.doing + '</button>' +
+          '<button type="button" class="sbtn" data-s="done" aria-pressed="false"><span class="mk">●</span>' + L.done + '</button>' +
+        '</div>' +
+        '<div class="fields">' +
+          '<div class="field">' +
+            '<label for="r-' + it.id + '">' + (it.b === 1 ? 'Resposta' : 'Como foi aplicado') + '</label>' +
+            '<textarea id="r-' + it.id + '" placeholder="' + (it.b === 1 ? 'Escreva aqui a resposta ou a decisão…' : 'Anote o que foi alterado e onde…') + '"></textarea>' +
+          '</div>' +
+          '<div class="field">' +
+            '<label for="w-' + it.id + '">Quem respondeu</label>' +
+            '<input type="text" id="w-' + it.id + '" placeholder="Nome">' +
+          '</div>' +
+        '</div>' +
+      '</div>' +
+    '</div>';
+
+  var sbtns = el.querySelectorAll('.sbtn');
+  var ta = el.querySelector('textarea');
+  var who = el.querySelector('input[type=text]');
+
+  sbtns.forEach(function(b){
+    b.addEventListener('click', function(){
+      if(state[it.id].status === b.dataset.s) return;
+      state[it.id].status = b.dataset.s;
+      paint(it.id); tally(); filter(); persist();
+    });
+  });
+  ta.addEventListener('input', function(){ state[it.id].resposta = ta.value; persist(); });
+  who.addEventListener('input', function(){ state[it.id].responsavel = who.value; persist(); });
+
+  nodes[it.id] = {el:el, sbtns:sbtns, ta:ta, who:who};
+  return el;
+}
+
+var l1 = document.getElementById('list1'), l2 = document.getElementById('list2');
+restore();
+ITEMS.forEach(function(it){ (it.b === 1 ? l1 : l2).appendChild(buildItem(it)); });
+
+function paint(id){
+  var n = nodes[id], s = state[id];
+  n.el.dataset.st = s.status;
+  n.sbtns.forEach(function(b){ b.setAttribute('aria-pressed', String(b.dataset.s === s.status)); });
+  if(n.ta.value !== s.resposta) n.ta.value = s.resposta;
+  if(n.who.value !== s.responsavel) n.who.value = s.responsavel;
+}
+ITEMS.forEach(function(it){ paint(it.id); });
+
+var mn = document.getElementById('meta-nome'), md = document.getElementById('meta-data');
+mn.value = meta.nome; md.value = meta.data;
+mn.addEventListener('input', function(){ meta.nome = mn.value; persist(); });
+md.addEventListener('input', function(){ meta.data = md.value; persist(); });
+if(!meta.data){ md.value = new Date().toLocaleDateString('pt-BR'); meta.data = md.value; }
+
+/* ---------- progress ---------- */
+function tally(){
+  var done = 0, doing = 0, d1 = 0, d2 = 0;
+  ITEMS.forEach(function(it){
+    var s = state[it.id].status;
+    if(s === 'done'){ done++; if(it.b === 1) d1++; else d2++; }
+    else if(s === 'doing') doing++;
+  });
+  var tot = ITEMS.length;
+  document.getElementById('pnum').innerHTML = done + ' <span>de ' + tot + ' concluídos</span>';
+  document.getElementById('pdone').style.width = (done / tot * 100) + '%';
+  document.getElementById('pdoing').style.width = (doing / tot * 100) + '%';
+  document.getElementById('c1').textContent = d1 + '/22';
+  document.getElementById('c2').textContent = d2 + '/14';
+}
+
+/* ---------- filters ---------- */
+var onlyTodo = false, ownerF = "";
+var oc = document.getElementById('ownerchips');
+Object.keys(OWNERS).forEach(function(k){
+  var b = document.createElement('button');
+  b.type = 'button'; b.className = 'chip'; b.setAttribute('aria-pressed','false');
+  b.textContent = OWNERS[k].s + ' (' + ITEMS.filter(function(i){ return i.o === k; }).length + ')';
+  b.title = OWNERS[k].n;
+  b.addEventListener('click', function(){
+    ownerF = (ownerF === k) ? "" : k;
+    oc.querySelectorAll('.chip').forEach(function(c){ c.setAttribute('aria-pressed', String(c.dataset.k === ownerF)); });
+    document.querySelectorAll('.owner').forEach(function(t){ t.classList.toggle('mine', !!ownerF && t.dataset.o === ownerF); });
+    filter();
+  });
+  b.dataset.k = k;
+  oc.appendChild(b);
+});
+function filter(){
+  var n1 = 0, n2 = 0;
+  ITEMS.forEach(function(it){
+    var vis = true;
+    if(onlyTodo && state[it.id].status === 'done') vis = false;
+    if(ownerF && it.o !== ownerF) vis = false;
+    nodes[it.id].el.hidden = !vis;
+    if(vis){ if(it.b === 1) n1++; else n2++; }
+  });
+  document.getElementById('e1').hidden = n1 !== 0;
+  document.getElementById('e2').hidden = n2 !== 0;
+}
+document.getElementById('f-todo').addEventListener('click', function(){
+  onlyTodo = !onlyTodo; this.setAttribute('aria-pressed', String(onlyTodo)); filter();
+});
+
+/* ---------- export ---------- */
+function buildText(){
+  var out = [];
+  out.push('VALIDAÇÕES — PROSPECÇÃO DE FOTÓGRAFOS');
+  out.push('Preenchido por: ' + (meta.nome || '—') + '   |   Data: ' + (meta.data || '—'));
+  var done = ITEMS.filter(function(i){ return state[i.id].status === 'done'; }).length;
+  out.push('Concluídos: ' + done + ' de ' + ITEMS.length);
+  out.push('');
+  [1,2].forEach(function(b){
+    out.push('');
+    out.push(b === 1 ? '=== BLOCO 1 — PERGUNTAS EM ABERTO ===' : '=== BLOCO 2 — CORREÇÕES A APLICAR ===');
+    out.push('');
+    ITEMS.filter(function(i){ return i.b === b; }).forEach(function(it){
+      var s = state[it.id], L = LABELS[it.b];
+      out.push('[' + (s.status === 'done' ? 'x' : ' ') + '] ' + it.id + ' · ' + it.t);
+      out.push('    Responsável: ' + OWNERS[it.o].n + '   |   Status: ' + L[s.status]);
+      if(s.resposta) out.push('    Resposta: ' + s.resposta.replace(/\r?\n/g, '\n              '));
+      if(s.responsavel) out.push('    Respondido por: ' + s.responsavel);
+      out.push('');
+    });
+  });
+  return out.join('\n');
+}
+
+document.getElementById('copy').addEventListener('click', function(){
+  var btn = this, txt = buildText();
+  function ok(){ btn.textContent = 'Copiado'; setTimeout(function(){ btn.textContent = 'Copiar respostas'; }, 1600); }
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(txt).then(ok).catch(fallback);
+  } else { fallback(); }
+  function fallback(){
+    var t = document.createElement('textarea');
+    t.value = txt; t.style.position = 'fixed'; t.style.opacity = '0';
+    document.body.appendChild(t); t.select();
+    try{ document.execCommand('copy'); ok(); }
+    catch(e){ btn.textContent = 'Não foi possível copiar'; setTimeout(function(){ btn.textContent = 'Copiar respostas'; }, 2200); }
+    document.body.removeChild(t);
+  }
+});
+
+document.getElementById('dl').addEventListener('click', function(){
+  var txt = buildText();
+  var blob = new Blob([txt], {type:'text/plain;charset=utf-8'});
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  var stamp = (meta.data || new Date().toLocaleDateString('pt-BR')).replace(/\//g, '-');
+  a.href = url;
+  a.download = 'respostas-prospeccao-fotografos-' + stamp + '.txt';
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  setTimeout(function(){ URL.revokeObjectURL(url); }, 4000);
+  var btn = this;
+  btn.textContent = 'Arquivo gerado';
+  setTimeout(function(){ btn.textContent = 'Baixar respostas'; }, 2000);
+});
+
+tally(); filter();
+</script>
+</body>
+</html>
