@@ -781,26 +781,26 @@ Responsável por publicar: ______ · Onde: ______</pre>
     <header><span class="em">🔒</span><h3>8. Dados pessoais e guarda</h3><span class="tag novo">Seção nova</span><span class="tag conf">jurídico / DPO</span>
       <span class="copyrow"><button class="btn" data-copy>Copiar</button></span></header>
     <div class="body">
-      <p>O processo monta listas de pessoas físicas a partir da Receita Federal e de redes sociais, contata quem nunca pediu contato e depois guarda CPF, chave PIX, endereço e razão social. Isso precisa de uma linha escrita, e hoje não tem nenhuma.</p>
+      <p>O processo monta listas de pessoas físicas a partir da Receita Federal e de redes sociais, contata quem nunca pediu contato e depois guarda CPF, chave PIX, endereço e razão social.</p>
       <ul>
-        <li><b>Base legal da prospecção:</b> ______</li>
+        <li><b>Base legal da prospecção:</b> <span class="added">Prospecção Fornecedores</span></li>
         <li><b>Aviso no primeiro contato:</b> o Analista informa que os dados de contato ficam registrados no CRM da Seazone para fins de contratação (já incluído no roteiro da etapa 3).</li>
         <li><b>Onde os dados ficam:</b> Pipedrive (jornada comercial) e Artefato de fotógrafos (cadastro). Sem planilhas paralelas.</li>
-        <li><b>Quem acessa CPF e chave PIX:</b> ______ — acesso mais restrito que o restante do cadastro.</li>
-        <li><b>Descarte:</b> cards em Perda são apagados do Pipedrive depois de ______ meses.</li>
+        <li><b>Quem acessa CPF e chave PIX:</b> <span class="added">apenas o Coordenador de Implantação e o time de Fornecedores</span> — acesso mais restrito que o restante do cadastro.</li>
+        <li><b>Descarte:</b> <span class="added">cards em Perda não são apagados do Pipedrive, para manter o registro.</span></li>
         <li><b>Fotógrafo descredenciado:</b> cadastro inativado na etapa 8; dados fiscais mantidos pelo prazo legal do contrato.</li>
       </ul>
-      <div class="note ask"><span class="lbl">Quem decide</span>Todas as lacunas desta seção são do Jurídico / DPO. É o item de maior risco da auditoria e o único que não depende de nenhuma outra resposta para começar a ser respondido.</div>
+      <div class="note why"><span class="lbl">Preenchido em 17/09</span>Os campos em aberto foram respondidos pela área: base legal, acesso restrito a CPF e chave PIX e a regra de descarte. Falta só a validação do Jurídico / DPO — em especial dois pontos: se "Prospecção Fornecedores" é mesmo a base legal que eles querem declarar (a LGPD pede uma das hipóteses do art. 7º, como legítimo interesse) e se manter os cards em Perda para sempre se sustenta sem um prazo de guarda escrito.</div>
     </div>
     <pre class="raw">8. Dados pessoais e guarda
 
 O processo monta listas de pessoas físicas a partir da Receita Federal e de redes sociais, contata quem nunca pediu contato e depois guarda CPF, chave PIX, endereço e razão social.
 
-- Base legal da prospecção: ______
+- Base legal da prospecção: Prospecção Fornecedores
 - Aviso no primeiro contato: o Analista informa que os dados de contato ficam registrados no CRM da Seazone para fins de contratação.
 - Onde os dados ficam: Pipedrive (jornada comercial) e Artefato de fotógrafos (cadastro). Sem planilhas paralelas.
-- Quem acessa CPF e chave PIX: ______ — acesso mais restrito que o restante do cadastro.
-- Descarte: cards em Perda são apagados do Pipedrive depois de ______ meses.
+- Quem acessa CPF e chave PIX: apenas o Coordenador de Implantação e o time de Fornecedores — acesso mais restrito que o restante do cadastro.
+- Descarte: cards em Perda não são apagados do Pipedrive, para manter o registro.
 - Fotógrafo descredenciado: cadastro inativado na etapa 8; dados fiscais mantidos pelo prazo legal do contrato.</pre>
   </article>
 
@@ -865,9 +865,9 @@ var R = [
 {g:"v2",id:"V07",st:"no",t:"O contrato deve ser assinado antes do treinamento?",w:"Jurídico",
  v:"Inalterado. O fotógrafo é treinado e faz teste prático sem nenhum instrumento assinado, e só depois vem o contrato.",
  r:"Pergunta direta para o jurídico, não dá para decidir aqui: essa ordem expõe a empresa a alegação de vínculo? Se expuser, a saída barata é um termo de adesão curto antes da etapa 6, mantendo o contrato cheio no fim."},
-{g:"v2",id:"V08",st:"no",t:"Qual a base legal e a política de guarda dos dados pessoais?",w:"Jurídico / DPO",
- v:"Nada no canvas sobre isso. O processo continua montando listas de pessoas físicas a partir da Receita e de redes sociais, contatando quem não pediu contato e guardando CPF, chave PIX, endereço e razão social.",
- r:"Maior risco da auditoria e o único que não depende de nenhuma outra resposta. Propus uma seção 8 inteira com os campos a preencher — leve para o DPO como está."},
+{g:"v2",id:"V08",st:"half",t:"Qual a base legal e a política de guarda dos dados pessoais?",w:"Jurídico / DPO",
+ v:"A seção 8 foi criada e preenchida pela área em 17/09: base legal declarada como Prospecção Fornecedores, aviso no roteiro da etapa 3, dados só no Pipedrive e no Artefato, acesso a CPF e chave PIX restrito ao Coordenador de Implantação e ao time de Fornecedores, cards em Perda mantidos para registro e dados fiscais guardados pelo prazo legal do contrato.",
+ r:"Deixou de ser lacuna e virou texto para o DPO validar. Dois pontos merecem atenção na validação: base legal na LGPD é uma das hipóteses do art. 7º (aqui provavelmente legítimo interesse), e não o nome do funil; e guarda sem prazo, mesmo para card perdido, costuma ser o oposto do que a lei pede — vale amarrar um prazo ou pelo menos anonimizar o contato depois de um tempo."},
 {g:"v2",id:"V09",st:"no",t:"Qual base é a fonte da verdade dos fotógrafos?",w:"Coordenação + Automação",
  v:"Inalterado. O cadastro é feito no Artefato de fotógrafos, os cards vivem em dois funis do Pipedrive e a automação lê 'a base de fotógrafos ativos e em contratação'.",
  r:"Recomendo declarar: o Artefato de fotógrafos é a fonte da verdade da base e é dele que a automação lê; o Pipedrive registra a jornada comercial, não a base. Uma frase na etapa 5 resolve, e ela também conserta o V06 de tabela."},
