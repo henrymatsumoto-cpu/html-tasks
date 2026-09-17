@@ -1,0 +1,1058 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Canvas ajustado — Prospecção de Fotógrafos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,400;7..72,600;7..72,700&family=Karla:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:        oklch(0.19 0.012 195);
+  --bg-2:      oklch(0.235 0.013 195);
+  --panel:     oklch(0.255 0.014 196);
+  --panel-2:   oklch(0.295 0.015 196);
+  --line:      oklch(0.35 0.016 196);
+  --line-2:    oklch(0.44 0.018 196);
+  --ink:       oklch(0.945 0.008 190);
+  --ink-2:     oklch(0.79 0.012 192);
+  --ink-3:     oklch(0.635 0.014 194);
+  --teal:      oklch(0.80 0.115 178);
+  --teal-dim:  oklch(0.36 0.055 180);
+  --ochre:     oklch(0.815 0.135 78);
+  --ochre-dim: oklch(0.355 0.065 72);
+  --sage:      oklch(0.815 0.125 145);
+  --sage-dim:  oklch(0.345 0.060 148);
+  --clay:      oklch(0.755 0.135 32);
+  --clay-dim:  oklch(0.345 0.075 30);
+
+  --s1:4px; --s2:8px; --s3:12px; --s4:16px; --s5:24px; --s6:32px; --s7:48px; --s8:64px; --s9:96px;
+
+  --d: Literata, Georgia, serif;
+  --b: Karla, "Segoe UI", sans-serif;
+  --m: "JetBrains Mono", ui-monospace, Consolas, monospace;
+  --ease: cubic-bezier(0.22,1,0.36,1);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:110px}
+body{
+  margin:0;background:var(--bg);color:var(--ink);
+  font-family:var(--b);font-size:16px;line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,h4{margin:0;font-family:var(--d);font-weight:700;letter-spacing:-0.015em;line-height:1.18}
+p{margin:0}
+a{color:var(--teal);text-decoration-thickness:1px;text-underline-offset:3px}
+:focus-visible{outline:2px solid var(--teal);outline-offset:3px;border-radius:4px}
+
+.shell{max-width:1060px;margin:0 auto;padding-inline:var(--s5)}
+@media(max-width:640px){.shell{padding-inline:var(--s4)}}
+
+/* ---------- masthead ---------- */
+.mast{border-bottom:1px solid var(--line);background:
+  radial-gradient(120% 140% at 88% -20%, var(--teal-dim) 0%, transparent 58%),
+  var(--bg-2);}
+.mast .shell{padding-block:var(--s7) var(--s5)}
+.kicker{font-family:var(--m);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--teal);margin-bottom:var(--s4)}
+.mast h1{font-size:clamp(30px,5.4vw,50px);max-width:16ch}
+.mast .dek{margin-top:var(--s4);color:var(--ink-2);max-width:62ch;font-size:17px}
+.stamp{margin-top:var(--s5);display:flex;flex-wrap:wrap;gap:var(--s2) var(--s5);font-family:var(--m);font-size:11.5px;color:var(--ink-3);letter-spacing:.04em}
+.stamp b{color:var(--ink-2);font-weight:500}
+
+/* ---------- scoreboard ---------- */
+.score{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;margin-top:var(--s6);background:var(--line);border:1px solid var(--line)}
+.score>div{background:var(--bg-2);padding:var(--s4) var(--s4) var(--s3)}
+.score .n{font-family:var(--d);font-size:34px;font-weight:700;line-height:1;letter-spacing:-.03em}
+.score .l{font-size:13px;color:var(--ink-3);margin-top:var(--s2);line-height:1.35}
+.n.ok{color:var(--sage)} .n.mid{color:var(--ochre)} .n.no{color:var(--clay)} .n.new{color:var(--teal)}
+
+/* ---------- tabs ---------- */
+.tabs{position:sticky;top:0;z-index:40;background:color-mix(in oklab, var(--bg) 88%, transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.tabs .shell{display:flex;gap:var(--s5);align-items:stretch;overflow-x:auto}
+.tab{
+  appearance:none;background:none;border:0;border-bottom:2px solid transparent;
+  font-family:var(--b);font-size:14.5px;font-weight:600;color:var(--ink-3);
+  padding:var(--s4) 2px var(--s3);cursor:pointer;white-space:nowrap;
+  transition:color .25s var(--ease), border-color .25s var(--ease);
+}
+.tab:hover{color:var(--ink-2)}
+.tab[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--teal)}
+.tab .c{font-family:var(--m);font-size:11px;color:var(--ink-3);margin-left:6px}
+
+main{padding-block:var(--s7) var(--s9)}
+.view[hidden]{display:none}
+
+/* ---------- intro / veredicto ---------- */
+.verdict{border:1px solid var(--line);background:var(--panel);padding:var(--s5);margin-bottom:var(--s7)}
+.verdict h2{font-size:23px;margin-bottom:var(--s3)}
+.verdict p{color:var(--ink-2);max-width:72ch}
+.verdict p+p{margin-top:var(--s3)}
+.verdict .hl{color:var(--ink);font-weight:600;font-family:var(--b)}
+
+/* ---------- legend ---------- */
+.legend{display:flex;flex-wrap:wrap;gap:var(--s3);margin-bottom:var(--s6)}
+.tag{
+  font-family:var(--m);font-size:10.5px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;
+  padding:3px 9px;border:1px solid var(--line-2);color:var(--ink-2);white-space:nowrap;
+}
+.tag.novo{color:var(--teal);border-color:var(--teal);background:var(--teal-dim)}
+.tag.alt{color:var(--ochre);border-color:var(--ochre);background:var(--ochre-dim)}
+.tag.keep{color:var(--ink-3)}
+.tag.conf{color:var(--clay);border-color:var(--clay);background:var(--clay-dim)}
+.tag.ok{color:var(--sage);border-color:var(--sage);background:var(--sage-dim)}
+
+/* ---------- canvas mock ---------- */
+.sec{border:1px solid var(--line);background:var(--panel);margin-bottom:var(--s5)}
+.sec>header{display:flex;gap:var(--s3);align-items:center;flex-wrap:wrap;padding:var(--s4) var(--s5);border-bottom:1px solid var(--line);background:var(--panel-2)}
+.sec>header h3{font-size:19px;flex:1;min-width:220px}
+.sec>header .em{font-size:18px;filter:saturate(.85)}
+.body{padding:var(--s5)}
+.body>*+*{margin-top:var(--s4)}
+.body ul{margin:0;padding-left:1.15em}
+.body li{margin-bottom:var(--s2);color:var(--ink-2)}
+.body li::marker{color:var(--ink-3)}
+.body b,.body strong{color:var(--ink);font-weight:600}
+.body em{color:var(--ink-2)}
+.lbl{font-family:var(--m);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);display:block;margin-bottom:var(--s2)}
+
+.marked{background:var(--ochre-dim);box-shadow:0 0 0 2px var(--ochre-dim);color:var(--ink)}
+.added{background:var(--teal-dim);box-shadow:0 0 0 2px var(--teal-dim);color:var(--ink)}
+
+.note{border:1px solid var(--line-2);background:var(--bg);padding:var(--s4);font-size:14.5px;color:var(--ink-2)}
+.note.why{border-color:var(--teal);background:var(--teal-dim)}
+.note.ask{border-color:var(--clay);background:var(--clay-dim)}
+.note .lbl{color:inherit;opacity:.85}
+
+/* steps */
+.step{border:1px solid var(--line);background:var(--bg-2);margin-top:var(--s4)}
+.step>summary{
+  list-style:none;cursor:pointer;padding:var(--s3) var(--s4);display:flex;gap:var(--s3);align-items:baseline;
+  font-weight:600;font-size:15.5px;
+}
+.step>summary::-webkit-details-marker{display:none}
+.step>summary:hover{background:var(--panel)}
+.step .idx{font-family:var(--m);font-size:12px;color:var(--teal);font-weight:700;flex:none;width:1.4em}
+.step .sum-t{flex:1}
+.step .chev{color:var(--ink-3);font-size:12px;transition:transform .25s var(--ease)}
+.step[open] .chev{transform:rotate(90deg)}
+.step .inner{padding:0 var(--s4) var(--s4) calc(var(--s4) + 1.4em)}
+.step .inner>*+*{margin-top:var(--s3)}
+
+/* table */
+.tbl{width:100%;border-collapse:collapse;font-size:14.5px}
+.tbl th,.tbl td{text-align:left;padding:var(--s3);border:1px solid var(--line);vertical-align:top}
+.tbl th{background:var(--panel-2);font-family:var(--m);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);font-weight:500}
+.tbl td{color:var(--ink-2)}
+.tbl td:first-child{color:var(--ink);font-weight:500}
+.tbl tr:last-child td{background:var(--panel-2);color:var(--ink);font-weight:600}
+.tbl .num{font-family:var(--m);font-variant-numeric:tabular-nums}
+.tblwrap{overflow-x:auto}
+
+/* price grid */
+.prices{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:var(--s4)}
+.pcard{border:1px solid var(--line);background:var(--bg-2);padding:var(--s4)}
+.pcard h4{font-family:var(--m);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--teal);font-weight:500;margin-bottom:var(--s3)}
+.pcard dl{margin:0;display:grid;grid-template-columns:1fr auto;gap:6px var(--s3);font-size:14.5px}
+.pcard dt{color:var(--ink-2)}
+.pcard dd{margin:0;font-family:var(--m);font-variant-numeric:tabular-nums;color:var(--ink);font-weight:500}
+.pcard dd.flag{color:var(--clay)}
+
+/* copy */
+.copyrow{display:flex;gap:var(--s2);align-items:center;flex-wrap:wrap;margin-left:auto}
+.btn{
+  appearance:none;font-family:var(--b);font-size:12.5px;font-weight:600;cursor:pointer;
+  padding:6px 13px;border:1px solid var(--line-2);background:var(--bg);color:var(--ink-2);
+  transition:border-color .2s var(--ease), color .2s var(--ease), background .2s var(--ease);
+}
+.btn:hover{border-color:var(--teal);color:var(--teal)}
+.btn.on{border-color:var(--sage);color:var(--sage);background:var(--sage-dim)}
+.raw{display:none}
+
+/* ---------- respostas ---------- */
+.filters{display:flex;gap:var(--s2);flex-wrap:wrap;align-items:center;margin-bottom:var(--s5);padding-bottom:var(--s4);border-bottom:1px solid var(--line)}
+.filters .lbl{margin:0 var(--s2) 0 0}
+.fbtn{
+  appearance:none;font-family:var(--b);font-size:12.5px;cursor:pointer;padding:5px 12px;
+  border:1px solid var(--line-2);background:transparent;color:var(--ink-2);
+  transition:all .2s var(--ease);
+}
+.fbtn:hover{border-color:var(--ink-3);color:var(--ink)}
+.fbtn[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink);font-weight:600}
+
+.grp{margin-bottom:var(--s7)}
+.grp>h3{font-size:24px;margin-bottom:var(--s2)}
+.grp>.sub{color:var(--ink-3);font-size:14.5px;margin-bottom:var(--s5);max-width:70ch}
+
+.ans{border:1px solid var(--line);background:var(--panel);margin-bottom:var(--s3)}
+.ans>summary{list-style:none;cursor:pointer;padding:var(--s4);display:grid;grid-template-columns:52px 1fr auto;gap:var(--s3);align-items:baseline}
+.ans>summary::-webkit-details-marker{display:none}
+.ans>summary:hover{background:var(--panel-2)}
+.ans .code{font-family:var(--m);font-size:12px;font-weight:700;color:var(--ink-3)}
+.ans .t{font-size:15.5px;font-weight:600;line-height:1.35}
+.ans .who{font-size:13px;color:var(--ink-3);margin-top:3px}
+.ans .inner{padding:0 var(--s4) var(--s4) calc(52px + var(--s4) + var(--s3))}
+.ans .inner>*+*{margin-top:var(--s3)}
+.ans .inner p{color:var(--ink-2);max-width:78ch}
+.ans[data-st="ok"]{border-color:color-mix(in oklab, var(--sage) 45%, var(--line))}
+.ans[data-st="mid"]{border-color:color-mix(in oklab, var(--ochre) 35%, var(--line))}
+@media(max-width:640px){
+  .ans>summary{grid-template-columns:44px 1fr;}
+  .ans>summary .tag{grid-column:2}
+  .ans .inner{padding-left:var(--s4)}
+}
+.rec{border:1px solid var(--line-2);background:var(--bg);padding:var(--s3) var(--s4);font-size:14.5px}
+.rec .lbl{color:var(--teal)}
+.rec p{color:var(--ink)!important}
+
+footer{border-top:1px solid var(--line);margin-top:var(--s9);padding-block:var(--s5) var(--s8)}
+footer p{font-size:13.5px;color:var(--ink-3);max-width:80ch}
+footer p+p{margin-top:var(--s3)}
+footer b{color:var(--ink-2);font-weight:600}
+
+@media print{
+  body{background:#fff;color:#000}
+  .tabs,.btn,.filters{display:none}
+  .view[hidden]{display:block!important}
+  details{open:true}
+}
+</style>
+</head>
+<body>
+
+<header class="mast">
+  <div class="shell">
+    <p class="kicker">Fornecedores · Prospecção de Fotógrafos</p>
+    <h1>Como o canvas deve ficar</h1>
+    <p class="dek">Revisão da versão 2 do processo (objetivo reescrito, box de exceção da prospecção) contra os 36 pontos levantados na auditoria. Duas entregas aqui: o canvas ajustado, seção por seção, pronto para colar no Slack — e a resposta a cada ponto.</p>
+    <div class="stamp">
+      <span>Revisão sobre o canvas de <b>17/09/2026</b></span>
+      <span>Auditoria original de <b>16/09/2026</b></span>
+      <span>Base: <b>9 prints do canvas + 36 validações</b></span>
+    </div>
+    <div class="score">
+      <div><div class="n ok">2</div><div class="l">pontos resolvidos na v2</div></div>
+      <div><div class="n mid">6</div><div class="l">resolvidos pela metade</div></div>
+      <div><div class="n no">28</div><div class="l">ainda abertos</div></div>
+      <div><div class="n new">6</div><div class="l">achados novos da v2</div></div>
+      <div><div class="n">1</div><div class="l">seção nova + 1 etapa nova propostas</div></div>
+    </div>
+  </div>
+</header>
+
+<nav class="tabs">
+  <div class="shell">
+    <button class="tab" id="t-canvas" aria-selected="true" aria-controls="v-canvas">Canvas ajustado<span class="c">8 seções</span></button>
+    <button class="tab" id="t-resp" aria-selected="false" aria-controls="v-resp">Respostas às validações<span class="c">42</span></button>
+  </div>
+</nav>
+
+<main class="shell">
+
+<!-- ===================== CANVAS ===================== -->
+<section class="view" id="v-canvas">
+
+  <div class="verdict">
+    <h2>O objetivo novo: quase lá</h2>
+    <p>O texto que você escreveu resolve o pior do problema — antes a seção estava em branco. Ele diz o <span class="hl">porquê</span> com clareza e os resultados esperados são bons. O que falta é uma linha só: <span class="hl">um número e um prazo</span>. Do jeito que está, ninguém consegue dizer no fim do mês se o processo cumpriu o objetivo ou não, porque "toda cidade tenha fotógrafo disponível" não tem medida.</p>
+    <p>Falta também <span class="hl">definir o que é "ter fotógrafo"</span>. Hoje a etapa 1 considera coberta a cidade que tem fotógrafo "ativo <em>ou em contratação</em>" — ou seja, uma cidade some da lista assim que alguém começa a conversar com um fotógrafo lá, e continua fora da lista mesmo que a negociação termine em Perda três semanas depois. Enquanto a definição não estiver escrita no objetivo, a automação vai continuar contando desse jeito.</p>
+    <p>Abaixo, o canvas inteiro com os ajustes aplicados. Cada seção tem o botão <span class="hl">Copiar</span>, que devolve o texto puro para colar direto no canvas do Slack.</p>
+  </div>
+
+  <div class="legend">
+    <span class="tag novo">Trecho novo</span>
+    <span class="tag alt">Trecho alterado</span>
+    <span class="tag conf">Precisa de decisão de alguém</span>
+    <span class="tag keep">Sem marca = igual ao canvas de hoje</span>
+  </div>
+
+  <!-- 1 -->
+  <article class="sec">
+    <header><span class="em">📌</span><h3>1. Identificação do Processo</h3><span class="tag alt">Alterado</span>
+      <span class="copyrow"><button class="btn" data-copy>Copiar</button></span></header>
+    <div class="body">
+      <ul>
+        <li><b>Nome do Processo:</b> Prospecção de Fotógrafos</li>
+        <li><b>Setor Responsável:</b> Fornecedores</li>
+        <li><b>Responsável Principal:</b> @Wania Helena Lageano Espindola @Henry Yudi</li>
+        <li class="marked"><b>Versão:</b> 3 — revisada em 17/09/2026</li>
+        <li class="marked"><b>Próxima revisão:</b> a cada 6 meses, ou quando a tabela de valores mudar</li>
+      </ul>
+      <div class="note why"><span class="lbl">Por quê</span>Um processo com tabela de preço dentro envelhece rápido. Sem data de versão, ninguém sabe se está olhando o preço vigente.</div>
+    </div>
+    <pre class="raw">1. Identificação do Processo
+- Nome do Processo: Prospecção de Fotógrafos
+- Setor Responsável: Fornecedores
+- Responsável Principal: @Wania Helena Lageano Espindola @Henry Yudi
+- Versão: 3 — revisada em 17/09/2026
+- Próxima revisão: a cada 6 meses, ou quando a tabela de valores mudar</pre>
+  </article>
+
+  <!-- 2 -->
+  <article class="sec">
+    <header><span class="em">🎯</span><h3>2. Objetivo do Processo</h3><span class="tag alt">Alterado</span><span class="tag conf">1 decisão</span>
+      <span class="copyrow"><button class="btn" data-copy>Copiar</button></span></header>
+    <div class="body">
+      <p>Garantir que toda cidade onde a Seazone atua tenha fotógrafo disponível, com qualidade de imagem e equipamento técnico dentro do padrão que a Seazone exige.</p>
+      <p>O processo cobre a jornada completa: identificar as cidades que ainda não têm cobertura fotográfica, prospectar e avaliar profissionais nessas praças, homologar quem atende ao nosso padrão técnico e manter a base de fotógrafos ativa e atualizada — de forma que nenhum imóvel entre em operação sem fotos no padrão Seazone e nenhuma franquia fique sem fotógrafo para acionar.</p>
+
+      <div class="note why">
+        <span class="lbl">Acrescentar — a meta</span>
+        <p class="added"><b>Meta:</b> 100% das cidades com imóvel ativo ou em onboarding com pelo menos <b>1 fotógrafo homologado</b>, e a cidade coberta em até <b>18 dias úteis</b> contados da abertura do card — sempre antes da data prevista de ativação do primeiro imóvel.</p>
+      </div>
+
+      <div class="note why">
+        <span class="lbl">Acrescentar — a definição de coberta</span>
+        <p class="added"><b>Cidade coberta</b> é a cidade com pelo menos um fotógrafo de <b>contrato assinado e teste prático aprovado</b>. Cidade com negociação em andamento conta como <b>em tratativa</b>, não como coberta, e continua aparecendo na análise semanal.</p>
+      </div>
+
+      <ul>
+        <li><b>Resultados Esperados:</b></li>
+        <li>Evitar travas no processo de fotos profissionais por falta de fotógrafo na praça.</li>
+        <li>Antecipar a prospecção: identificar a cidade sem cobertura antes de o imóvel precisar da foto, e não depois.</li>
+        <li>Centralizar e padronizar a comunicação com os fotógrafos prospectados.</li>
+        <li>Tornar a seleção de fotógrafos mais assertiva e alinhada aos critérios técnicos e operacionais da empresa.</li>
+        <li>Garantir padrão de qualidade e equipamento uniforme em todas as cidades onde a Seazone atua.</li>
+        <li>Manter uma base de fotógrafos viva e rastreável, com histórico de cada prospecção e o status de cobertura de cada cidade.</li>
+      </ul>
+
+      <div class="note ask"><span class="lbl">Quem decide</span>Os <b>18 dias úteis</b> vieram da soma das etapas na tabela nova da seção 6 — não de uma promessa que alguém já tenha feito. Coordenação e liderança precisam bater o martelo: esse é o prazo que o processo assume, ou outro? E <b>1 fotógrafo basta</b> para considerar a cidade coberta, ou cidade com muitos imóveis exige um segundo, para o caso de o primeiro sair, adoecer ou não atender num feriado?</div>
+    </div>
+    <pre class="raw">2. Objetivo do Processo
+
+Garantir que toda cidade onde a Seazone atua tenha fotógrafo disponível, com qualidade de imagem e equipamento técnico dentro do padrão que a Seazone exige.
+
+O processo cobre a jornada completa: identificar as cidades que ainda não têm cobertura fotográfica, prospectar e avaliar profissionais nessas praças, homologar quem atende ao nosso padrão técnico e manter a base de fotógrafos ativa e atualizada — de forma que nenhum imóvel entre em operação sem fotos no padrão Seazone e nenhuma franquia fique sem fotógrafo para acionar.
+
+Meta: 100% das cidades com imóvel ativo ou em onboarding com pelo menos 1 fotógrafo homologado, e a cidade coberta em até 18 dias úteis contados da abertura do card — sempre antes da data prevista de ativação do primeiro imóvel.
+
+Cidade coberta é a cidade com pelo menos um fotógrafo de contrato assinado e teste prático aprovado. Cidade com negociação em andamento conta como "em tratativa", não como coberta, e continua aparecendo na análise semanal.
+
+Resultados Esperados:
+- Evitar travas no processo de fotos profissionais por falta de fotógrafo na praça.
+- Antecipar a prospecção: identificar a cidade sem cobertura antes de o imóvel precisar da foto, e não depois.
+- Centralizar e padronizar a comunicação com os fotógrafos prospectados.
+- Tornar a seleção de fotógrafos mais assertiva e alinhada aos critérios técnicos e operacionais da empresa.
+- Garantir padrão de qualidade e equipamento uniforme em todas as cidades onde a Seazone atua.
+- Manter uma base de fotógrafos viva e rastreável, com histórico de cada prospecção e o status de cobertura de cada cidade.</pre>
+  </article>
+
+  <!-- 3 -->
+  <article class="sec">
+    <header><span class="em">📑</span><h3>3. Escopo do Processo</h3><span class="tag alt">Alterado</span>
+      <span class="copyrow"><button class="btn" data-copy>Copiar</button></span></header>
+    <div class="body">
+      <p class="lbl">1. Inclui</p>
+      <ul>
+        <li>Análise periódica das cidades com necessidade — imóveis ativos, em onboarding e franquias — cruzando com a base de fotógrafos <span class="marked">homologados</span>.</li>
+        <li>Abertura automática do card da cidade sem cobertura no Pipedrive, com imóveis, franquias e a cidade coberta mais próxima.</li>
+        <li>Análise de viabilidade da prospecção <span class="marked">e, quando houver exceção de preço ou de prazo, validação com a liderança (etapa 2 e etapa 4)</span>.</li>
+        <li>Pesquisa e contato com fotógrafos da cidade, registrados no funil de prospecção.</li>
+        <li>Negociação dentro da tabela de valores e das regras de negócio.</li>
+        <li>Validação dos equipamentos mínimos e do processo de edição.</li>
+        <li>Coleta dos dados, homologação e encaminhamento para cadastro.</li>
+        <li>Atualização da base conforme fotógrafos entram, saem ou mudam de região <span class="marked">(etapa 8)</span>.</li>
+      </ul>
+
+      <p class="lbl">2. Não inclui</p>
+      <ul>
+        <li><span class="marked">Execução</span> do treinamento e do acompanhamento pós-onboarding — é do time de Fotógrafos. <span class="marked">A etapa 6 aparece no fluxo apenas como interface, porque o contrato (etapa 7) depende dela.</span></li>
+        <li>Produção, agendamento e edição das fotos.</li>
+        <li>Avaliação da qualidade das sessões já realizadas.</li>
+      </ul>
+
+      <p class="lbl">3. Interfaces com outros processos</p>
+      <ul>
+        <li><em>Automação:</em> varre o Sapron e a base de fotógrafos e abre os cards das cidades.</li>
+        <li><em>Fornecedores:</em> pesquisa, contato e homologação do fotógrafo.</li>
+        <li><em>Implantação:</em> ativações de imóveis e franquias que geram a demanda.</li>
+        <li><em>Fotógrafos:</em> onboarding, suporte técnico e qualidade das fotos.</li>
+      </ul>
+
+      <div class="note why"><span class="lbl">Por quê</span>Hoje o escopo diz que treinamento <b>não</b> faz parte do processo, mas a etapa 6 do fluxo é exatamente treinamento e teste prático. E a "validação com a liderança" está listada no escopo sem existir em nenhuma das 7 etapas. Duas contradições internas que a redação acima fecha.</div>
+    </div>
+    <pre class="raw">3. Escopo do Processo — Detalhamento
+
+1. Inclui:
+- Análise periódica das cidades com necessidade — imóveis ativos, em onboarding e franquias — cruzando com a base de fotógrafos homologados.
+- Abertura automática do card da cidade sem cobertura no Pipedrive, com imóveis, franquias e a cidade coberta mais próxima.
+- Análise de viabilidade da prospecção e, quando houver exceção de preço ou de prazo, validação com a liderança (etapa 2 e etapa 4).
+- Pesquisa e contato com fotógrafos da cidade, registrados no funil de prospecção.
+- Negociação dentro da tabela de valores e das regras de negócio.
+- Validação dos equipamentos mínimos e do processo de edição.
+- Coleta dos dados, homologação e encaminhamento para cadastro.
+- Atualização da base conforme fotógrafos entram, saem ou mudam de região (etapa 8).
+
+2. Não inclui:
+- Execução do treinamento e do acompanhamento pós-onboarding — é do time de Fotógrafos. A etapa 6 aparece no fluxo apenas como interface, porque o contrato (etapa 7) depende dela.
+- Produção, agendamento e edição das fotos.
+- Avaliação da qualidade das sessões já realizadas.
+
+3. Interfaces com outros processos:
+- Automação: varre o Sapron e a base de fotógrafos e abre os cards das cidades.
+- Fornecedores: pesquisa, contato e homologação do fotógrafo.
+- Implantação: ativações de imóveis e franquias que geram a demanda.
+- Fotógrafos: onboarding, suporte técnico e qualidade das fotos.</pre>
+  </article>
+
+  <!-- 4 -->
+  <article class="sec">
+    <header><span class="em">👥</span><h3>4. Responsáveis e Papéis</h3><span class="tag alt">Alterado</span><span class="tag conf">1 decisão</span>
+      <span class="copyrow"><button class="btn" data-copy>Copiar</button></span></header>
+    <div class="body">
+      <ul>
+        <li><em>Coordenador de Fornecedores:</em> analisa as cidades geradas pela automação e decide a necessidade de prospectar.</li>
+        <li><em>Analista de Fornecedores:</em> ativa a skill de prospecção de fotógrafos, entra em contato, negocia e valida equipamentos e regras de negócio.</li>
+        <li><em>Time de Fotógrafos:</em> responsável por onboarding, treinamento, suporte técnico e garantia de qualidade.</li>
+        <li><em>Fotógrafo:</em> executa o serviço de acordo com os parâmetros e padrões definidos.</li>
+        <li class="marked"><em>Liderança de Fornecedores:</em> aprova exceções — valor acima do teto da tabela, prazo fora do SLA e contratação com deslocamento.</li>
+        <li class="marked"><em>Substituto do Analista:</em> ______ — assume as etapas 3, 4, 5 e 7 nas férias e ausências.</li>
+        <li class="marked"><em>Testemunhas do contrato:</em> Coordenador de Fornecedores e Coordenador de Fotógrafos. Suplentes: ______ e ______.</li>
+      </ul>
+      <div class="note ask"><span class="lbl">Quem decide</span>O Analista responde por 4 das 7 etapas e hoje não tem substituto nomeado. As duas testemunhas do contrato também não têm suplente — com SLA de 3 dias úteis para assinatura, a ausência de qualquer um dos dois trava o fechamento de um fotógrafo que já foi treinado e aprovado. Preencher os três campos em branco.</div>
+    </div>
+    <pre class="raw">4. Responsáveis e Papéis
+- Coordenador de Fornecedores: analisa as cidades geradas pela automação e decide a necessidade de prospectar.
+- Analista de Fornecedores: ativa a skill de prospecção de fotógrafos, entra em contato, negocia e valida equipamentos e regras de negócio.
+- Time de Fotógrafos: responsável por onboarding, treinamento, suporte técnico e garantia de qualidade.
+- Fotógrafo: executa o serviço de acordo com os parâmetros e padrões definidos.
+- Liderança de Fornecedores: aprova exceções — valor acima do teto da tabela, prazo fora do SLA e contratação com deslocamento.
+- Substituto do Analista: ______ — assume as etapas 3, 4, 5 e 7 nas férias e ausências.
+- Testemunhas do contrato: Coordenador de Fornecedores e Coordenador de Fotógrafos. Suplentes: ______ e ______.</pre>
+  </article>
+
+  <!-- 5 -->
+  <article class="sec">
+    <header><span class="em">🔄</span><h3>5. Fluxo do Processo</h3><span class="tag alt">Alterado</span><span class="tag novo">+1 etapa</span>
+      <span class="copyrow"><button class="btn" data-copy>Copiar</button></span></header>
+    <div class="body">
+
+      <details class="step" open>
+        <summary><span class="idx">1</span><span class="sum-t">Análise periódica das cidades</span><span class="chev">›</span></summary>
+        <div class="inner">
+          <p><b>Responsável:</b> Coordenador de Fornecedores</p>
+          <p>Roda a skill que cruza imóveis ativos, imóveis em onboarding e franquias com a base de fotógrafos <span class="marked">homologados</span>. A skill abre um card por cidade sem cobertura no funil <b>Fornecedores - Cidades</b> (Pipedrive), na etapa <b>Análise</b>, já com os imóveis, as franquias e a cidade coberta mais próxima.</p>
+          <p class="added">Cidade que já tem fotógrafo <b>em tratativa</b> continua aparecendo na lista, marcada como tal — só sai quando o contrato é assinado. Cidade em quarentena (ver etapa 2) fica de fora até o prazo vencer, salvo se um imóvel novo for ativado ou uma data de ativação for confirmada.</p>
+          <p class="added">Se a sexta-feira for feriado, a rodada acontece no último dia útil anterior.</p>
+          <p><b>SLA:</b> toda sexta-feira.</p>
+          <div class="note why"><span class="lbl">Por quê</span>Hoje a skill considera coberta a cidade com fotógrafo "ativo <b>ou em contratação</b>". Uma negociação que termina em Perda tira a cidade da lista por três semanas sem ninguém perceber. E, com feriado na sexta, o ciclo inteiro desliza uma semana — sem regra de recuperação escrita.</div>
+        </div>
+      </details>
+
+      <details class="step">
+        <summary><span class="idx">2</span><span class="sum-t">Decisão e priorização</span><span class="chev">›</span></summary>
+        <div class="inner">
+          <p><b>Responsável:</b> Coordenador de Fornecedores</p>
+          <p>Avalia cada card da etapa <b>Análise</b> considerando a distância até a cidade coberta mais próxima, a quantidade de imóveis ativos e em onboarding e as datas previstas de ativação.</p>
+          <ul>
+            <li><b>Cidade aprovada:</b> move o card para <span class="marked">a etapa <b>Prospecção</b> do mesmo funil — que é a fila do Analista</span>.</li>
+            <li><b>Cidade que não justifica agora:</b> move para <b>Cancelado</b> com o motivo escrito no card.</li>
+          </ul>
+          <p class="added"><b>Quarentena:</b> cidade em Cancelado fica fora das rodadas por <b>60 dias</b>. Volta antes disso se um imóvel novo for ativado na cidade, se uma data de ativação for confirmada ou se a franquia pedir.</p>
+          <p class="added"><b>Motivos de cancelamento</b> (escolher um): sem imóvel previsto · cidade vizinha já cobre com deslocamento · volume não justifica · aguardando confirmação de ativação.</p>
+          <p><b>SLA:</b> toda sexta-feira.</p>
+          <div class="note why"><span class="lbl">Por quê</span>Hoje o texto diz que a cidade cancelada "volta a aparecer na próxima rodada se a situação mudar" — mas a rodada roda toda sexta sobre a mesma lista e nada verifica se algo mudou. Sem quarentena e sem motivo padronizado, ou a cidade volta toda semana, ou some para sempre. E a etapa 3 chama essa mesma fila de "Backlog": os dois nomes precisam virar um só.</div>
+        </div>
+      </details>
+
+      <details class="step">
+        <summary><span class="idx">3</span><span class="sum-t">Início da prospecção</span><span class="chev">›</span></summary>
+        <div class="inner">
+          <p><b>Responsável:</b> Analista de Fornecedores</p>
+          <p>Toda segunda-feira o Analista pega os cards da etapa <span class="marked"><b>Prospecção</b> do funil <b>Fornecedores - Cidades</b></span> e inicia a prospecção da cidade.</p>
+          <p>Roda a skill de prospecção de fotógrafos para gerar os possíveis leads. A skill busca em três frentes:</p>
+          <ul>
+            <li>Base da Receita Federal pelos CNAEs de fotografia no município (traz CNPJ, endereço, telefone e e-mail formais)</li>
+            <li>Instagram e Facebook (principal fonte da categoria, mostra nicho e portfólio)</li>
+            <li>Google/site do profissional (confirma que está ativo e completa o contato)</li>
+          </ul>
+          <p>A priorização é por quem fotografa ambiente interno: imóvel, arquitetura e interiores primeiro; depois corporativo, produto e estúdio; por último casamento e evento. Drone/aéreo só interessa se a pessoa também fotografar o interior, e empresa de tour virtual 360 não entra. Entra na leva quem tem telefone, até 30 leads por rodada, sem repetir quem já tem card no funil.</p>
+          <p>Em paralelo, o Analista fala com a franquia da região para saber se ela tem indicação de fotógrafo — a indicação entra na mesma leva e tem prioridade no contato.</p>
+          <p>Cada lead vira um card no funil <b>Prospecção Fornecedores</b> (Pipedrive), na etapa <b>Backlog</b>, com nome do fotógrafo, telefone, e-mail, cidade e estado, nicho no campo Profissão e, nas observações, as redes sociais e onde o profissional foi encontrado.</p>
+          <p class="added"><b>Canal e roteiro do primeiro contato:</b> WhatsApp, com ligação como segunda tentativa. No primeiro contato, além da apresentação, o Analista já pergunta as três coisas que eliminam o lead: <b>tem CNPJ?</b>, <b>qual câmera usa?</b> e <b>qual lente usa?</b> — e informa que os dados de contato ficam registrados no CRM da Seazone para fins de contratação.</p>
+          <p class="marked"><b>Cadência de contato:</b> 3 tentativas — no dia, no 2º e no 4º dia útil — movendo o card por <em>1º Contato</em>, <em>2º Contato</em> e <em>3º Contato</em>. Sem resposta até o 5º dia útil, o card vai para <em>Perda</em> com o motivo "falta de retorno".</p>
+          <p><b>SLA:</b> 1 semana (5 dias úteis), da segunda-feira ao fechamento da leva.</p>
+          <div class="note ask">
+            <span class="lbl">Mantido da v2 — só com o aprovador nomeado</span>
+            <p>Se ao fim da semana nenhum fotógrafo for fechado na cidade, o Analista monta um relatório com o motivo e leva para <span class="added">a <b>Liderança de Fornecedores</b>, em até 1 dia útil,</span> a aprovação das alternativas: liberar valor de deslocamento, prospectar em cidades próximas ou consultar um fotógrafo já homologado de cidade vizinha que aceite cobrir a região com deslocamento.</p>
+          </div>
+          <div class="note why"><span class="lbl">Por quê</span>Esse box é a melhor adição da v2 — resolve o buraco de "e quando os 30 leads acabam?". Só faltava dizer <b>quem</b> aprova e <b>em quanto tempo</b>. Já a cadência de 3 em 3 dias não cabia no SLA de 1 semana: três tentativas consumiam de 6 a 9 dias. De 2 em 2 dias úteis, a leva fecha em 5.</div>
+        </div>
+      </details>
+
+      <details class="step">
+        <summary><span class="idx">4</span><span class="sum-t">Negociação</span><span class="chev">›</span></summary>
+        <div class="inner">
+          <p><b>Responsável:</b> Analista de Fornecedores</p>
+          <p>Todo fotógrafo que deu o primeiro retorno fica na etapa <em>Em negociação</em> do funil <b>Prospecção Fornecedores</b> — a conversa inteira acontece com o card parado aí, sem movimentação a cada contato. <span class="added">As etapas 1º/2º/3º Contato valem só para quem ainda não respondeu.</span></p>
+          <p><b>Validação do equipamento:</b> pedir a câmera e a lente que ele usa e conferir em verificaequipamento.lovable.app. O equipamento mínimo é:</p>
+          <ul>
+            <li>Câmera DSLR ou Mirrorless (sensor APS-C ou Full Frame)</li>
+            <li>Lente grande-angular (10–24mm ou 16mm)</li>
+            <li>Tripé obrigatório</li>
+            <li>Uso de Lightroom para edição</li>
+          </ul>
+          <p class="added">O critério acima é a regra; o app é conveniência. Se ele estiver fora do ar, o Analista aplica o critério direto e segue a negociação. Dono do app: ______.</p>
+
+          <p class="lbl">Com o equipamento aprovado, enviar a tabela inicial</p>
+          <div class="prices">
+            <div class="pcard"><h4>Start da negociação — Padrão</h4>
+              <dl><dt>Estúdio</dt><dd>R$ 180,00</dd>
+              <dt>1 quarto</dt><dd>R$ 200,00</dd>
+              <dt>2 quartos</dt><dd>R$ 225,00</dd>
+              <dt>3 quartos</dt><dd class="flag">R$ 275,00 ?</dd>
+              <dt>4 ou + quartos</dt><dd>R$ 300,00</dd></dl>
+            </div>
+            <div class="pcard"><h4>Start — Grande Operação</h4>
+              <dl><dt>Estúdio</dt><dd>R$ 120,00</dd>
+              <dt>1 quarto</dt><dd>R$ 135,00</dd>
+              <dt>2 quartos</dt><dd>R$ 150,00</dd>
+              <dt>3 quartos</dt><dd>R$ 180,00</dd>
+              <dt class="marked">4 ou + quartos</dt><dd>R$ 210,00</dd></dl>
+            </div>
+            <div class="pcard"><h4>Tabela real (teto) — Padrão</h4>
+              <dl><dt>Estúdio</dt><dd>R$ 200,00</dd>
+              <dt>1 quarto</dt><dd>R$ 225,00</dd>
+              <dt>2 quartos</dt><dd>R$ 250,00</dd>
+              <dt>3 quartos</dt><dd>R$ 300,00</dd>
+              <dt>4 ou + quartos</dt><dd>R$ 350,00</dd></dl>
+            </div>
+            <div class="pcard"><h4>Tabela real (teto) — GOP</h4>
+              <dl><dt>Estúdio</dt><dd class="flag">R$ 150,00 ?</dd>
+              <dt>1 quarto</dt><dd>R$ 180,00</dd>
+              <dt>2 quartos</dt><dd>R$ 200,00</dd>
+              <dt>3 quartos</dt><dd>R$ 240,00</dd>
+              <dt>4 ou + quartos</dt><dd>R$ 280,00</dd></dl>
+            </div>
+          </div>
+
+          <div class="note ask"><span class="lbl">Duas células para conferir</span>
+            <p><b>Teto GOP, Estúdio a R$ 150.</b> Todas as outras faixas da GOP guardam exatos 33,3% entre a abertura e o teto (135→180, 150→200, 180→240, 210→280). Só o Estúdio guarda 25% (120→150). Com <b>R$ 160</b> a margem fica igual em toda a tabela e os degraus viram +20, +20, +40, +40, em vez de +30, +20, +40, +40.</p>
+            <p><b>Abertura Padrão, 3 quartos a R$ 275.</b> Os degraus da tabela são +20, +25, <b>+50</b>, +25 — o salto do 2 para o 3 quartos é o dobro dos vizinhos, e isso comprime a margem de negociação dessa faixa para 9,1%, a menor das 20 células. Com R$ 250 o degrau normaliza, mas a margem sobe para 20%. Quem montou a tabela precisa dizer qual dos dois números está certo: a abertura ou o teto.</p>
+          </div>
+
+          <p class="added"><b>Quando aplicar a tabela Grande Operação:</b> ______ — definir o critério objetivo (volume mensal de sessões contratadas, nº de imóveis Seazone na praça ou tipo de contrato). Enquanto não houver critério escrito, um desconto de 25% a 33% fica a cargo de quem conduz a conversa.</p>
+
+          <p class="lbl">Regras de negócio a reforçar na negociação</p>
+          <p class="added">A lista fechada abaixo é a mesma que vai no contrato — o que foi explicado ao fotógrafo e o que ele assina precisam ser a mesma coisa.</p>
+          <ul class="added">
+            <li>Refação da sessão sem custo adicional caso as fotos não sejam aprovadas.</li>
+            <li>Prazo de entrega das fotos: ______</li>
+            <li>Quantidade mínima de fotos por imóvel: ______</li>
+            <li>Direitos de uso das imagens pela Seazone e pela franquia: ______</li>
+            <li>Prazo e forma de pagamento: ______</li>
+            <li>Política de cancelamento e remarcação da sessão: ______</li>
+            <li>Valor de deslocamento quando atender cidade vizinha: ______</li>
+          </ul>
+          <p>Se o fotógrafo possui os equipamentos, concorda com os valores, possui CNPJ e concorda com as regras de negócio, segue para homologação e cadastro. Não aceitou: card vai para <em>Perda</em> com o motivo registrado.</p>
+          <p class="added"><b>Exceção de preço:</b> acima do teto da tabela, só com aprovação da Liderança de Fornecedores, registrada no card, e apenas quando a cidade não tiver outro candidato viável.</p>
+          <p><b>SLA:</b> 3 dias úteis, em paralelo à prospecção. Fotógrafo que ficar 3 dias úteis sem retorno na negociação vai para <em>Perda</em> por falta de retorno.</p>
+        </div>
+      </details>
+
+      <details class="step">
+        <summary><span class="idx">5</span><span class="sum-t">Cadastro do fotógrafo</span><span class="chev">›</span></summary>
+        <div class="inner">
+          <p><b>Responsável:</b> Analista de Fornecedores</p>
+          <p>Com a negociação fechada, coletar os dados do fotógrafo: nome completo, endereço completo, chave PIX, CPF, CNPJ, razão social, regiões que irá atender e valores fechados em contrato.</p>
+          <p>Com os dados, o cadastro é feito no <b>Artefato de fotógrafos</b> — <span class="marked">que é a fonte da verdade da base; o Pipedrive registra a jornada comercial, não a base.</span></p>
+          <p class="marked">O card do fotógrafo vai para a etapa <b>Em homologação</b> do funil <b>Prospecção Fornecedores</b>. <b>Ganho</b> só depois do teste prático aprovado e do contrato assinado (etapa 7).</p>
+          <p><b>SLA:</b> 1 dia útil após o aceite.</p>
+          <div class="note why"><span class="lbl">Por quê</span>Hoje o card vai para <b>Ganho</b> aqui, antes de qualquer teste prático. Isso infla a conversão do funil e, pior, coloca na base um fotógrafo que ainda pode reprovar. Uma etapa a mais no Pipedrive resolve os dois.</div>
+        </div>
+      </details>
+
+      <details class="step">
+        <summary><span class="idx">6</span><span class="sum-t">Onboarding, treinamento e teste prático</span><span class="chev">›</span></summary>
+        <div class="inner">
+          <p><b>Responsável:</b> Time de Fotógrafos</p>
+          <p>A partir do cadastro, a responsabilidade passa para o time de Fotógrafos: onboarding, treinamento, teste prático e validação da qualidade. O processo está descrito no canvas <em>Gestão de Fotógrafos Parceiros</em>.</p>
+          <p class="added"><b>Aprovado:</b> o time de Fotógrafos avisa Fornecedores e o card segue para a etapa 7.</p>
+          <p class="added"><b>Reprovado:</b> o card vai para <em>Perda</em> com o motivo "reprovado no teste prático", o cadastro no Artefato é inativado e a cidade volta para a etapa <b>Prospecção</b> do funil de Cidades na mesma semana — se ainda houver leads na leva, o Analista retoma; se não, aplica o degrau de exceção da etapa 3.</p>
+          <p class="marked"><b>SLA:</b> ______ dias úteis — a acordar com a Coordenação de Fotógrafos (sugestão: 5).</p>
+          <div class="note ask"><span class="lbl">Quem decide</span>Enquanto essa etapa não tiver prazo, o lead time do processo inteiro é indeterminável — e é justamente ela que fica entre o cadastro e o contrato. Vale acordar um número, mesmo largo. E o caminho da reprovação precisa existir: hoje o fotógrafo já está na base e o card já está em Ganho quando o teste acontece.</div>
+        </div>
+      </details>
+
+      <details class="step">
+        <summary><span class="idx">7</span><span class="sum-t">Contrato e fechamento</span><span class="chev">›</span></summary>
+        <div class="inner">
+          <p><b>Responsável:</b> Analista de Fornecedores</p>
+          <p>Com o fotógrafo validado após o treinamento e o teste prático, a responsabilidade volta para Fornecedores apenas para a formalização do contrato.</p>
+          <p><b>Modelo de contrato:</b> Contrato PJ Padrão · Contrato GOPs.</p>
+          <p>Fazer uma <em>cópia</em> do documento e preencher com os dados do fotógrafo (nome completo, CPF, CNPJ, razão social, regiões de atendimento e valores fechados). <span class="added">As regras de negócio no contrato são as mesmas sete listadas na etapa 4.</span></p>
+          <p>Enviar o contrato para assinatura pelo <em>Clicksign</em>, tendo como testemunhas o Coordenador de Fornecedores e o Coordenador de Fotógrafos <span class="added">(ou seus suplentes, seção 4)</span>.</p>
+          <p class="marked">Contrato assinado: o card do fotógrafo vai para <b>Ganho</b> no funil Prospecção Fornecedores, o fotógrafo passa a contar como cobertura ativa da cidade e o card da cidade vai para <b>Concluído</b> no funil Fornecedores - Cidades.</p>
+          <p class="added">O Analista avisa a franquia da região de que a cidade está coberta e quem é o fotógrafo.</p>
+          <p><b>SLA:</b> 3 dias úteis, considerando a assinatura.</p>
+          <div class="note ask"><span class="lbl">Pergunta para o jurídico</span>Hoje o fotógrafo é treinado e faz teste prático <b>sem nenhum instrumento assinado</b>. Essa ordem expõe a empresa a alegação de vínculo? Convém antecipar a assinatura para antes da etapa 6, ou usar um termo de adesão curto antes do treinamento?</div>
+        </div>
+      </details>
+
+      <details class="step">
+        <summary><span class="idx">8</span><span class="sum-t">Manutenção da base <span class="tag novo" style="margin-left:8px">Etapa nova</span></span><span class="chev">›</span></summary>
+        <div class="inner">
+          <p><b>Responsável:</b> Coordenador de Fornecedores, com aviso do time de Fotógrafos</p>
+          <p class="added">Quando um fotógrafo sai, é descredenciado ou muda de região, o time de Fotógrafos comunica Fornecedores. O Analista inativa o cadastro no Artefato de fotógrafos e registra a data e o motivo.</p>
+          <p class="added">Se a saída deixar a cidade sem nenhum fotógrafo homologado, um card da cidade é reaberto no funil <b>Fornecedores - Cidades</b>, na etapa <b>Análise</b>, marcado como reabertura por perda de cobertura — e entra na rodada da sexta seguinte com prioridade.</p>
+          <p class="added"><b>SLA:</b> 2 dias úteis do aviso até a base atualizada.</p>
+          <div class="note why"><span class="lbl">Por quê</span>A seção 3 já listava "atualização da base conforme fotógrafos entram, <b>saem</b> ou mudam de região" no escopo, mas nenhuma das 7 etapas tratava disso. E é exatamente a saída de um fotógrafo que descobre uma cidade de novo — sem essa etapa, a descoberta só acontece quando alguém precisa da foto e não tem quem faça.</div>
+        </div>
+      </details>
+    </div>
+    <pre class="raw">5. Fluxo do Processo
+
+1. Análise periódica das cidades
+Responsável: Coordenador de Fornecedores
+Descrição: Roda a skill que cruza imóveis ativos, imóveis em onboarding e franquias com a base de fotógrafos homologados. A skill abre um card por cidade sem cobertura no funil Fornecedores - Cidades (Pipedrive), na etapa Análise, já com os imóveis, as franquias e a cidade coberta mais próxima.
+Cidade que já tem fotógrafo em tratativa continua aparecendo na lista, marcada como tal — só sai quando o contrato é assinado. Cidade em quarentena (ver etapa 2) fica de fora até o prazo vencer, salvo se um imóvel novo for ativado ou uma data de ativação for confirmada.
+Se a sexta-feira for feriado, a rodada acontece no último dia útil anterior.
+SLA: toda sexta-feira.
+
+2. Decisão e priorização
+Responsável: Coordenador de Fornecedores
+Descrição: Avalia cada card da etapa Análise considerando a distância até a cidade coberta mais próxima, a quantidade de imóveis ativos e em onboarding e as datas previstas de ativação.
+- Cidade aprovada: move o card para a etapa Prospecção do mesmo funil — que é a fila do Analista.
+- Cidade que não justifica agora: move para Cancelado com o motivo escrito no card.
+Quarentena: cidade em Cancelado fica fora das rodadas por 60 dias. Volta antes disso se um imóvel novo for ativado na cidade, se uma data de ativação for confirmada ou se a franquia pedir.
+Motivos de cancelamento (escolher um): sem imóvel previsto · cidade vizinha já cobre com deslocamento · volume não justifica · aguardando confirmação de ativação.
+SLA: toda sexta-feira.
+
+3. Início da prospecção
+Responsável: Analista de Fornecedores
+Descrição:
+- Toda segunda-feira o Analista pega os cards da etapa Prospecção do funil Fornecedores - Cidades e inicia a prospecção da cidade.
+- Roda a skill de prospecção de fotógrafos para gerar os possíveis leads. A skill busca em três frentes: Base da Receita Federal pelos CNAEs de fotografia no município (traz CNPJ, endereço, telefone e e-mail formais); Instagram e Facebook (principal fonte da categoria, mostra nicho e portfólio); Google/site do profissional (confirma que está ativo e completa o contato).
+- A priorização é por quem fotografa ambiente interno: imóvel, arquitetura e interiores primeiro; depois corporativo, produto e estúdio; por último casamento e evento. Drone/aéreo só interessa se a pessoa também fotografar o interior, e empresa de tour virtual 360 não entra. Entra na leva quem tem telefone, até 30 leads por rodada, sem repetir quem já tem card no funil.
+- Em paralelo, o Analista fala com a franquia da região para saber se ela tem indicação de fotógrafo — a indicação entra na mesma leva e tem prioridade no contato.
+- Cada lead vira um card no funil Prospecção Fornecedores (Pipedrive), na etapa Backlog, com nome do fotógrafo, telefone, e-mail, cidade e estado, nicho no campo Profissão e, nas observações, as redes sociais e onde o profissional foi encontrado.
+- Canal e roteiro do primeiro contato: WhatsApp, com ligação como segunda tentativa. No primeiro contato, além da apresentação, o Analista já pergunta as três coisas que eliminam o lead: tem CNPJ?, qual câmera usa? e qual lente usa? — e informa que os dados de contato ficam registrados no CRM da Seazone para fins de contratação.
+- Cadência de contato: 3 tentativas — no dia, no 2º e no 4º dia útil — movendo o card por 1º Contato, 2º Contato e 3º Contato. Sem resposta até o 5º dia útil, o card vai para Perda com o motivo "falta de retorno".
+SLA: 1 semana (5 dias úteis), da segunda-feira ao fechamento da leva.
+
+[callout] Se ao fim da semana nenhum fotógrafo for fechado na cidade, o Analista monta um relatório com o motivo e leva para a Liderança de Fornecedores, em até 1 dia útil, a aprovação das alternativas: liberar valor de deslocamento, prospectar em cidades próximas ou consultar um fotógrafo já homologado de cidade vizinha que aceite cobrir a região com deslocamento.
+
+4. Negociação
+Responsável: Analista de Fornecedores
+Descrição:
+- Todo fotógrafo que deu o primeiro retorno fica na etapa Em negociação do funil Prospecção Fornecedores — a conversa inteira acontece com o card parado aí, sem movimentação a cada contato. As etapas 1º/2º/3º Contato valem só para quem ainda não respondeu.
+- Validação do equipamento: pedir a câmera e a lente que ele usa e conferir em verificaequipamento.lovable.app. Equipamento mínimo: Câmera DSLR ou Mirrorless (sensor APS-C ou Full Frame); Lente grande-angular (10–24mm ou 16mm); Tripé obrigatório; Uso de Lightroom para edição.
+- O critério acima é a regra; o app é conveniência. Se ele estiver fora do ar, o Analista aplica o critério direto e segue a negociação. Dono do app: ______.
+- Com o equipamento aprovado, enviar a tabela inicial (start da negociação):
+  Start da negociação: Estúdio R$ 180,00 / 1 quarto R$ 200,00 / 2 quartos R$ 225,00 / 3 quartos R$ 275,00 (confirmar) / 4 ou + quartos R$ 300,00
+  Start da negociação Grande Operação: Estúdio R$ 120,00 / 1 quarto R$ 135,00 / 2 quartos R$ 150,00 / 3 quartos R$ 180,00 / 4 ou + quartos R$ 210,00
+- Se não aceitar, apresentar a tabela real como margem de negociação:
+  Valores: Estúdio R$ 200,00 / 1 quarto R$ 225,00 / 2 quartos R$ 250,00 / 3 quartos R$ 300,00 / 4 ou + quartos R$ 350,00
+  Valores GOPs: Estúdio R$ 150,00 (confirmar) / 1 quarto R$ 180,00 / 2 quartos R$ 200,00 / 3 quartos R$ 240,00 / 4 ou + quartos R$ 280,00
+- Quando aplicar a tabela Grande Operação: ______ (definir critério objetivo).
+- Regras de negócio a reforçar na negociação (a mesma lista vai no contrato):
+  1. Refação da sessão sem custo adicional caso as fotos não sejam aprovadas.
+  2. Prazo de entrega das fotos: ______
+  3. Quantidade mínima de fotos por imóvel: ______
+  4. Direitos de uso das imagens pela Seazone e pela franquia: ______
+  5. Prazo e forma de pagamento: ______
+  6. Política de cancelamento e remarcação da sessão: ______
+  7. Valor de deslocamento quando atender cidade vizinha: ______
+- Se o fotógrafo possui os equipamentos, concorda com os valores, possui CNPJ e concorda com as regras de negócio, segue para homologação e cadastro. Não aceitou: card vai para Perda com o motivo registrado.
+- Exceção de preço: acima do teto da tabela, só com aprovação da Liderança de Fornecedores, registrada no card, e apenas quando a cidade não tiver outro candidato viável.
+SLA: 3 dias úteis, em paralelo à prospecção.
+
+[callout] Fotógrafo que ficar 3 dias úteis sem retorno na negociação vai para Perda por falta de retorno.
+
+5. Cadastro do fotógrafo
+Responsável: Analista de Fornecedores
+Descrição:
+- Com a negociação fechada, coletar os dados do fotógrafo: nome completo, endereço completo, chave PIX, CPF, CNPJ, razão social, regiões que irá atender, valores fechados em contrato.
+- Com os dados, o cadastro é feito no Artefato de fotógrafos — que é a fonte da verdade da base; o Pipedrive registra a jornada comercial, não a base.
+- O card do fotógrafo vai para a etapa Em homologação do funil Prospecção Fornecedores. Ganho só depois do teste prático aprovado e do contrato assinado (etapa 7).
+SLA: 1 dia útil após o aceite.
+
+6. Onboarding, treinamento e teste prático
+Responsável: Time de Fotógrafos
+Descrição:
+- A partir do cadastro, a responsabilidade passa para o time de Fotógrafos: onboarding, treinamento, teste prático e validação da qualidade. O processo está descrito no canvas Gestão de Fotógrafos Parceiros.
+- Aprovado: o time de Fotógrafos avisa Fornecedores e o card segue para a etapa 7.
+- Reprovado: o card vai para Perda com o motivo "reprovado no teste prático", o cadastro no Artefato é inativado e a cidade volta para a etapa Prospecção do funil de Cidades na mesma semana — se ainda houver leads na leva, o Analista retoma; se não, aplica o degrau de exceção da etapa 3.
+SLA: ______ dias úteis — a acordar com a Coordenação de Fotógrafos (sugestão: 5).
+
+7. Contrato e fechamento
+Responsável: Analista de Fornecedores
+Descrição:
+- Com o fotógrafo validado após o treinamento e o teste prático, a responsabilidade volta para Fornecedores apenas para a formalização do contrato.
+- Modelo de contrato: Contrato PJ Padrão / Contrato GOPs.
+- Fazer uma cópia do documento e preencher com os dados do fotógrafo (nome completo, CPF, CNPJ, razão social, regiões de atendimento e valores fechados). As regras de negócio no contrato são as mesmas sete listadas na etapa 4.
+- Enviar o contrato para assinatura pelo Clicksign, tendo como testemunhas o Coordenador de Fornecedores e o Coordenador de Fotógrafos (ou seus suplentes, seção 4).
+- Contrato assinado: o card do fotógrafo vai para Ganho no funil Prospecção Fornecedores, o fotógrafo passa a contar como cobertura ativa da cidade e o card da cidade vai para Concluído no funil Fornecedores - Cidades.
+- O Analista avisa a franquia da região de que a cidade está coberta e quem é o fotógrafo.
+SLA: 3 dias úteis, considerando a assinatura.
+
+8. Manutenção da base
+Responsável: Coordenador de Fornecedores, com aviso do time de Fotógrafos
+Descrição:
+- Quando um fotógrafo sai, é descredenciado ou muda de região, o time de Fotógrafos comunica Fornecedores. O Analista inativa o cadastro no Artefato de fotógrafos e registra a data e o motivo.
+- Se a saída deixar a cidade sem nenhum fotógrafo homologado, um card da cidade é reaberto no funil Fornecedores - Cidades, na etapa Análise, marcado como reabertura por perda de cobertura — e entra na rodada da sexta seguinte com prioridade.
+SLA: 2 dias úteis do aviso até a base atualizada.</pre>
+  </article>
+
+  <!-- 6 -->
+  <article class="sec">
+    <header><span class="em">⏳</span><h3>6. Prazos e SLA</h3><span class="tag alt">Refeita</span>
+      <span class="copyrow"><button class="btn" data-copy>Copiar</button></span></header>
+    <div class="body">
+      <p class="lbl">Todos os prazos abaixo são em dias úteis</p>
+      <div class="tblwrap">
+      <table class="tbl">
+        <thead><tr><th>Etapa</th><th>SLA</th><th>Acumulado</th></tr></thead>
+        <tbody>
+          <tr><td>1. Análise periódica das cidades</td><td>Toda sexta-feira (automática)</td><td class="num">dia 0</td></tr>
+          <tr><td>2. Decisão e priorização</td><td>1 dia útil — mesma sexta</td><td class="num">dia 1</td></tr>
+          <tr><td>3. Prospecção</td><td>5 dias úteis — começa na segunda</td><td class="num">dia 6</td></tr>
+          <tr><td>4. Negociação</td><td>3 dias úteis do primeiro retorno</td><td class="num">dia 9</td></tr>
+          <tr><td>5. Cadastro do fotógrafo</td><td>1 dia útil após o aceite</td><td class="num">dia 10</td></tr>
+          <tr><td>6. Onboarding, treinamento e teste prático</td><td><span class="marked">5 dias úteis — a confirmar com Fotógrafos</span></td><td class="num">dia 15</td></tr>
+          <tr><td>7. Contrato e fechamento</td><td>3 dias úteis, considerando a assinatura</td><td class="num">dia 18</td></tr>
+          <tr><td>8. Manutenção da base</td><td>2 dias úteis do aviso</td><td class="num">avulso</td></tr>
+          <tr><td>Lead time de prospecção</td><td>5 dias úteis — da fila ao primeiro retorno</td><td class="num">—</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p class="added"><b>Lead time de cobertura da cidade: 18 dias úteis</b> — da abertura do card à assinatura do contrato. Este é o SLA do processo.</p>
+      <p class="added">Regras de perda não são prazo de execução e ficam registradas à parte: fotógrafo sem retorno por 3 dias úteis na negociação vai para Perda; lead sem resposta até o 5º dia útil da cadência vai para Perda.</p>
+      <div class="note why"><span class="lbl">Por quê</span>A tabela de hoje declara "SLA Total do processo: 1 semana", mas as próprias etapas listadas nela somam bem mais do que isso. Um dos dois números está errado, e enquanto os dois convivem ninguém sabe qual será cobrado. A leitura mais provável é que "1 semana" sempre foi o prazo da <b>prospecção</b> — por isso ele continua na tabela, com esse nome, e o prazo do processo inteiro ganha um número próprio.</div>
+    </div>
+    <pre class="raw">6. Prazos e SLA
+Todos os prazos abaixo são em dias úteis.
+
+Etapa | SLA | Acumulado
+1. Análise periódica das cidades | Toda sexta-feira (automática) | dia 0
+2. Decisão e priorização | 1 dia útil — mesma sexta | dia 1
+3. Prospecção | 5 dias úteis — começa na segunda | dia 6
+4. Negociação | 3 dias úteis do primeiro retorno | dia 9
+5. Cadastro do fotógrafo | 1 dia útil após o aceite | dia 10
+6. Onboarding, treinamento e teste prático | 5 dias úteis (a confirmar com Fotógrafos) | dia 15
+7. Contrato e fechamento | 3 dias úteis, considerando a assinatura | dia 18
+8. Manutenção da base | 2 dias úteis do aviso | avulso
+Lead time de prospecção | 5 dias úteis — da fila ao primeiro retorno | —
+
+Lead time de cobertura da cidade: 18 dias úteis — da abertura do card à assinatura do contrato. Este é o SLA do processo.
+
+Regras de perda não são prazo de execução: fotógrafo sem retorno por 3 dias úteis na negociação vai para Perda; lead sem resposta até o 5º dia útil da cadência vai para Perda.</pre>
+  </article>
+
+  <!-- 7 -->
+  <article class="sec">
+    <header><span class="em">📊</span><h3>7. Indicadores</h3><span class="tag novo">Seção nova</span><span class="tag conf">confirmar quais</span>
+      <span class="copyrow"><button class="btn" data-copy>Copiar</button></span></header>
+    <div class="body">
+      <p>O processo hoje tem prazos, mas nenhum indicador de resultado — não dá para saber se ele está funcionando. Ponto de partida para a liderança escolher:</p>
+      <div class="tblwrap">
+      <table class="tbl">
+        <thead><tr><th>Indicador</th><th>De onde sai</th><th>Frequência</th></tr></thead>
+        <tbody>
+          <tr><td>Cidades descobertas em aberto</td><td>Funil Fornecedores - Cidades (etapas Análise e Prospecção)</td><td>Semanal</td></tr>
+          <tr><td>Tempo médio para cobrir uma cidade</td><td>Pipedrive — abertura do card até Concluído</td><td>Mensal</td></tr>
+          <tr><td>Conversão de lead a contrato por frente de busca</td><td>Funil Prospecção Fornecedores, campo de origem (Receita / Instagram / Google / indicação de franquia)</td><td>Mensal</td></tr>
+          <tr><td>Taxa de aprovação no teste prático</td><td>Etapa Em homologação → Ganho vs. Perda</td><td>Mensal</td></tr>
+          <tr><td>Cidades cobertas por deslocamento</td><td>Cards fechados via degrau de exceção da etapa 3</td><td>Mensal</td></tr>
+          <tr><td>Preço médio fechado vs. teto da tabela</td><td>Valores registrados no card</td><td>Trimestral</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p class="added">Responsável por publicar: ______ · Onde: ______</p>
+    </div>
+    <pre class="raw">7. Indicadores
+
+Indicador | De onde sai | Frequência
+Cidades descobertas em aberto | Funil Fornecedores - Cidades (etapas Análise e Prospecção) | Semanal
+Tempo médio para cobrir uma cidade | Pipedrive — abertura do card até Concluído | Mensal
+Conversão de lead a contrato por frente de busca | Funil Prospecção Fornecedores, campo de origem (Receita / Instagram / Google / indicação de franquia) | Mensal
+Taxa de aprovação no teste prático | Etapa Em homologação -> Ganho vs. Perda | Mensal
+Cidades cobertas por deslocamento | Cards fechados via degrau de exceção da etapa 3 | Mensal
+Preço médio fechado vs. teto da tabela | Valores registrados no card | Trimestral
+
+Responsável por publicar: ______ · Onde: ______</pre>
+  </article>
+
+  <!-- 8 -->
+  <article class="sec">
+    <header><span class="em">🔒</span><h3>8. Dados pessoais e guarda</h3><span class="tag novo">Seção nova</span><span class="tag conf">jurídico / DPO</span>
+      <span class="copyrow"><button class="btn" data-copy>Copiar</button></span></header>
+    <div class="body">
+      <p>O processo monta listas de pessoas físicas a partir da Receita Federal e de redes sociais, contata quem nunca pediu contato e depois guarda CPF, chave PIX, endereço e razão social. Isso precisa de uma linha escrita, e hoje não tem nenhuma.</p>
+      <ul>
+        <li><b>Base legal da prospecção:</b> ______ (legítimo interesse, provavelmente — confirmar com o DPO).</li>
+        <li><b>Aviso no primeiro contato:</b> o Analista informa que os dados de contato ficam registrados no CRM da Seazone para fins de contratação (já incluído no roteiro da etapa 3).</li>
+        <li><b>Onde os dados ficam:</b> Pipedrive (jornada comercial) e Artefato de fotógrafos (cadastro). Sem planilhas paralelas.</li>
+        <li><b>Quem acessa CPF e chave PIX:</b> ______ — acesso mais restrito que o restante do cadastro.</li>
+        <li><b>Descarte:</b> cards em Perda são apagados do Pipedrive depois de ______ meses.</li>
+        <li><b>Fotógrafo descredenciado:</b> cadastro inativado na etapa 8; dados fiscais mantidos pelo prazo legal do contrato.</li>
+      </ul>
+      <div class="note ask"><span class="lbl">Quem decide</span>Todas as lacunas desta seção são do Jurídico / DPO. É o item de maior risco da auditoria e o único que não depende de nenhuma outra resposta para começar a ser respondido.</div>
+    </div>
+    <pre class="raw">8. Dados pessoais e guarda
+
+O processo monta listas de pessoas físicas a partir da Receita Federal e de redes sociais, contata quem nunca pediu contato e depois guarda CPF, chave PIX, endereço e razão social.
+
+- Base legal da prospecção: ______ (legítimo interesse, provavelmente — confirmar com o DPO).
+- Aviso no primeiro contato: o Analista informa que os dados de contato ficam registrados no CRM da Seazone para fins de contratação.
+- Onde os dados ficam: Pipedrive (jornada comercial) e Artefato de fotógrafos (cadastro). Sem planilhas paralelas.
+- Quem acessa CPF e chave PIX: ______ — acesso mais restrito que o restante do cadastro.
+- Descarte: cards em Perda são apagados do Pipedrive depois de ______ meses.
+- Fotógrafo descredenciado: cadastro inativado na etapa 8; dados fiscais mantidos pelo prazo legal do contrato.</pre>
+  </article>
+
+  <div class="note ask" style="margin-top:32px">
+    <span class="lbl">O que muda fora do canvas</span>
+    <p style="margin-top:8px">Três ajustes acima não são texto — são configuração, e alguém precisa executar:</p>
+    <ul style="margin-top:8px;padding-left:1.15em;color:inherit">
+      <li>Criar a etapa <b>Em homologação</b> no funil Prospecção Fornecedores, entre o cadastro e o Ganho.</li>
+      <li>Corrigir a automação da etapa 1 para não contar "em contratação" como cobertura, e devolver esse estado separado.</li>
+      <li>Grafar as etapas do Pipedrive com acento e sinal certos (<em>Análise</em>, <em>Concluído</em>, <em>1º Contato</em>) e unificar Backlog / Prospecção na fila de cidades.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ===================== RESPOSTAS ===================== -->
+<section class="view" id="v-resp" hidden>
+  <div class="verdict">
+    <h2>O que a versão 2 resolveu, e o que não</h2>
+    <p>Comparei os 9 prints do canvas de hoje com os 36 pontos do arquivo de validações. <span class="hl">Dois pontos foram fechados</span> — a seção 2 em branco e o "e quando os 30 leads acabam?". <span class="hl">Seis andaram pela metade.</span> Os outros 28 continuam iguais. Encontrei também <span class="hl">6 coisas novas</span>, quase todas criadas pelas próprias mudanças da v2.</p>
+    <p>Abaixo, ponto a ponto: o que mudou, e a resposta ou recomendação quando dá para dar uma. Onde a decisão é de gente — preço, jurídico, prazo de outro time — está marcado como tal, e o texto correspondente já está no canvas ajustado da outra aba, com a lacuna no lugar certo.</p>
+  </div>
+
+  <div class="filters">
+    <span class="lbl">Filtrar</span>
+    <button class="fbtn" data-f="all" aria-pressed="true">Tudo</button>
+    <button class="fbtn" data-f="ok" aria-pressed="false">Resolvido</button>
+    <button class="fbtn" data-f="mid" aria-pressed="false">Pela metade</button>
+    <button class="fbtn" data-f="no" aria-pressed="false">Aberto</button>
+    <span style="flex:1"></span>
+    <button class="fbtn" id="expand" aria-pressed="false">Abrir todos</button>
+  </div>
+
+  <div id="respout"></div>
+</section>
+
+<footer>
+  <p><b>Origem.</b> Auditoria documental de 16/09/2026 sobre o texto do canvas, revisada em 17/09/2026 contra os 9 prints da versão atual. As contradições internas e as contas de prazo e de preço são conclusivas sobre o documento; o restante são hipóteses a confirmar com o Pipedrive, a base de fotógrafos e os contratos vigentes.</p>
+  <p><b>Como usar.</b> A aba <b>Canvas ajustado</b> tem o botão Copiar em cada seção — o texto sai em formato de colar no canvas do Slack, com as lacunas <em>______</em> onde falta decisão. A aba <b>Respostas</b> é o retorno ao arquivo de validações e serve de pauta para a conversa com Coordenação, Fotógrafos e Jurídico.</p>
+</footer>
+</main>
+
+<script>
+var R = [
+{g:"v2",id:"V01",st:"mid",t:"Qual é o objetivo do processo?",w:"Coordenação",
+ v:"A seção 2 saiu do branco e ficou boa: diz o porquê, delimita a jornada e lista seis resultados esperados. O que falta é a parte mensurável — não há número nem prazo, então ninguém consegue dizer no fim do mês se o processo cumpriu o objetivo.",
+ r:"Acrescentar duas frases: a meta (100% das cidades com imóvel ativo ou em onboarding com ao menos 1 fotógrafo homologado, cidade coberta em até 18 dias úteis da abertura do card) e a definição de cidade coberta. Texto pronto na aba Canvas ajustado, seção 2."},
+{g:"v2",id:"V02",st:"no",t:"Quantos fotógrafos tornam uma cidade coberta?",w:"Coordenação",
+ v:"Continua sem número. O objetivo novo diz 'tenha fotógrafo disponível', no singular, o que sugere um — mas não está escrito, e a automação não sabe disso.",
+ r:"Recomendo escrever: 1 homologado cobre a cidade; cidade com 10 ou mais imóveis ativos exige um segundo, porque hoje a saída de um único fotógrafo descobre a praça inteira sem aviso. O número 10 é chute meu — Coordenação define."},
+{g:"v2",id:"V03",st:"no",t:"O que o SLA de 1 semana está medindo?",w:"Coordenação + liderança",
+ v:"A tabela da seção 6 continua declarando 'SLA Total do processo: 1 semana' enquanto as etapas listadas nela somam muito mais. A v2 melhorou uma coisa: a negociação agora está marcada como paralela à prospecção, o que encurta a soma.",
+ r:"Com os prazos da v2 e 5 dias úteis para a etapa 6, a soma dá 18 dias úteis. O '1 semana' quase certamente sempre foi o prazo da prospecção. Proposta: manter '1 semana' com o nome de lead time de prospecção e criar lead time de cobertura = 18 dias úteis, que passa a ser o SLA do processo. Tabela refeita na outra aba."},
+{g:"v2",id:"V04",st:"no",t:"Qual prazo o time de Fotógrafos assume para a etapa 6?",w:"Coordenação de Fotógrafos",
+ v:"Segue como 'definido pelo time de Fotógrafos', tanto na etapa quanto na tabela de SLA.",
+ r:"É a única peça que falta para o lead time do processo existir. Sugestão de partida: 5 dias úteis. Precisa do aceite da Coordenação de Fotógrafos — e um número largo resolve melhor que nenhum."},
+{g:"v2",id:"V05",st:"no",t:"Os prazos são em dias úteis ou corridos?",w:"Coordenação",
+ v:"Continua misturado: '1 dia útil' no cadastro, '3 Dias' na negociação, '3 dias úteis' no contrato e 'uma a cada 3 dias' na cadência, sem dizer qual.",
+ r:"Declarar uma vez, no topo da seção 6: todos os prazos deste processo são em dias úteis. Uma linha fecha o assunto inteiro."},
+{g:"v2",id:"V06",st:"no",t:"O que acontece quando o fotógrafo reprova no teste prático?",w:"Coordenação + Fotógrafos",
+ v:"Inalterado, e continua sendo o furo mais caro do fluxo: na etapa 5 o card já vai para Ganho e o cadastro já existe; o teste prático só acontece na etapa 6. Fotógrafo reprovado fica na base e no Ganho.",
+ r:"Duas coisas: criar a etapa Em homologação no Pipedrive entre o cadastro e o Ganho, e escrever o caminho da reprovação (card para Perda, cadastro inativado, cidade de volta para Prospecção na mesma semana). Redação pronta nas etapas 5 e 6 da outra aba."},
+{g:"v2",id:"V07",st:"no",t:"O contrato deve ser assinado antes do treinamento?",w:"Jurídico",
+ v:"Inalterado. O fotógrafo é treinado e faz teste prático sem nenhum instrumento assinado, e só depois vem o contrato.",
+ r:"Pergunta direta para o jurídico, não dá para decidir aqui: essa ordem expõe a empresa a alegação de vínculo? Se expuser, a saída barata é um termo de adesão curto antes da etapa 6, mantendo o contrato cheio no fim."},
+{g:"v2",id:"V08",st:"no",t:"Qual a base legal e a política de guarda dos dados pessoais?",w:"Jurídico / DPO",
+ v:"Nada no canvas sobre isso. O processo continua montando listas de pessoas físicas a partir da Receita e de redes sociais, contatando quem não pediu contato e guardando CPF, chave PIX, endereço e razão social.",
+ r:"Maior risco da auditoria e o único que não depende de nenhuma outra resposta. Propus uma seção 8 inteira com os campos a preencher — leve para o DPO como está."},
+{g:"v2",id:"V09",st:"no",t:"Qual base é a fonte da verdade dos fotógrafos?",w:"Coordenação + Automação",
+ v:"Inalterado. O cadastro é feito no Artefato de fotógrafos, os cards vivem em dois funis do Pipedrive e a automação lê 'a base de fotógrafos ativos e em contratação'.",
+ r:"Recomendo declarar: o Artefato de fotógrafos é a fonte da verdade da base e é dele que a automação lê; o Pipedrive registra a jornada comercial, não a base. Uma frase na etapa 5 resolve, e ela também conserta o V06 de tabela."},
+{g:"v2",id:"V10",st:"no",t:"O que define uma Grande Operação?",w:"Coordenação",
+ v:"Inalterado. Duas tabelas de valores, nenhum critério escrito para escolher qual aplicar.",
+ r:"Enquanto não houver critério, um desconto de 25% a 33% fica a cargo de quem conduz a conversa. Critérios possíveis: volume mensal de sessões contratadas, nº de imóveis Seazone na praça ou tipo de contrato. Coordenação escolhe um e escreve o corte."},
+{g:"v2",id:"V11",st:"no",t:"A margem de negociação diferente entre as tabelas é intencional?",w:"Coordenação",
+ v:"Recalculei com os números da v2 e o desenho continua igual: na Padrão a distância entre abertura e teto vai de 9,1% a 16,7%; na GOP, de 25% a 33,3%. Ou seja, há muito mais espaço para ceder justamente onde o preço já é o mais baixo.",
+ r:"Se for intencional — a lógica seria 'GOP é volume, então abro baixo e tenho margem' — vale registrar o motivo em uma linha. Se não for, igualar as margens. Não dá para responder isso sem quem montou a tabela."},
+{g:"v2",id:"V12",st:"no",t:"As células de R$ 275 e R$ 150 estão corretas?",w:"Quem montou a tabela",
+ v:"Refiz a conta sobre a v2 e uma das duas células mudou de lugar. No teto da GOP, o número fora de padrão é o Estúdio, não o 1 quarto: todas as outras faixas guardam exatos 33,3% sobre a abertura (135→180, 150→200, 180→240, 210→280) e só o Estúdio guarda 25% (120→150). Na abertura Padrão, confirma-se o 3 quartos a R$ 275 — degraus de +20, +25, +50, +25, com o salto do 2 para o 3 quartos valendo o dobro dos vizinhos.",
+ r:"Teto GOP: R$ 160 no Estúdio deixa a margem em 33,3% na tabela inteira e os degraus em +20, +20, +40, +40. Abertura Padrão: R$ 275 comprime a margem dessa faixa para 9,1%, a menor das 20 células — mas trocar por R$ 250 joga a margem para 20%, também fora do padrão. Aqui é preciso saber qual dos dois números está certo, a abertura ou o teto de R$ 300."},
+{g:"v2",id:"V13",st:"mid",t:"Qual é a lista completa das regras de negócio?",w:"Coordenação + jurídico",
+ v:"A etapa 4 continua com o 'entre elas refazer a sessão sem custo' e a lista não existe. Andou uma coisa: o deslocamento apareceu na v2, mas como alternativa de exceção na etapa 3, não como regra com valor.",
+ r:"Levantar as sete: prazo de entrega, quantidade mínima de fotos, direitos de uso das imagens, refação sem custo, prazo e forma de pagamento, política de cancelamento e valor de deslocamento. Deixei a lista pronta com as lacunas na etapa 4 da outra aba — e a mesma lista tem que ir para os dois modelos de contrato."},
+{g:"v2",id:"V14",st:"mid",t:"Quem aprova uma exceção, e até quanto?",w:"Liderança de Fornecedores",
+ v:"O box novo da etapa 3 criou uma aprovação de alternativas — bom — mas não diz quem aprova. E a 'validação com a liderança' que aparece no escopo continua não existindo em nenhuma etapa. Exceção de preço acima do teto segue sem previsão: o documento só prevê 'não aceitou: card vai para Perda'.",
+ r:"Nomear a Liderança de Fornecedores como aprovador nos dois lugares — no box da etapa 3 e numa linha nova na etapa 4 para exceção de preço, com registro obrigatório no card. Assim o escopo para de mentir e a exceção deixa de ser informal."},
+{g:"v2",id:"V15",st:"no",t:"Quais indicadores a liderança quer acompanhar?",w:"Liderança de Fornecedores",
+ v:"Inalterado. O processo tem prazos e nenhum indicador de resultado.",
+ r:"Montei uma seção 7 com seis indicadores e a origem de cada número — quase todos saem direto do Pipedrive, sem trabalho manual. A liderança escolhe quais ficam e quem publica."},
+{g:"v2",id:"V16",st:"mid",t:"Quem mantém o verificaequipamento.lovable.app?",w:"Coordenação + Tecnologia",
+ v:"O dono continua sem nome. O que melhorou é que a v2 escreve o critério mínimo de equipamento direto na etapa 4 — então a regra já não depende só do app.",
+ r:"Falta uma frase dizendo isso em voz alta: o critério é a regra, o app é conveniência; fora do ar, o Analista aplica o critério direto. E anotar o dono, para a lista de câmeras e lentes aceitas não envelhecer sozinha."},
+{g:"v2",id:"V17",st:"no",t:"A fila do Analista é Prospecção ou Backlog?",w:"Analista",
+ v:"A contradição continua, agora mais visível: a etapa 2 manda mover a cidade aprovada para 'prospecção, a fila do Analista' e a etapa 3 diz que na segunda-feira o Analista pega os cards 'da etapa Backlog'. E Backlog também é o nome da etapa onde nascem os leads, no outro funil.",
+ r:"Escolher um nome para a fila de cidades — recomendo Prospecção, que é como a etapa 2 chama — e citar sempre a qual funil a etapa pertence, porque os dois funis têm etapas de nome parecido. Confirmar os nomes exatos direto no Pipedrive antes de escrever."},
+{g:"v2",id:"V18",st:"no",t:"Qual o canal de primeiro contato e existe script?",w:"Analista",
+ v:"Inalterado. O processo define quantas tentativas e com que intervalo, mas não por onde se fala nem o que se diz. O único indício é 'entra na leva quem tem telefone'.",
+ r:"Escrever: WhatsApp primeiro, ligação como segunda tentativa. E aproveitar o roteiro para embutir a triagem do D04 e o aviso de privacidade do V08 — três problemas resolvidos no mesmo parágrafo."},
+{g:"v2",id:"V19",st:"ok",t:"O que fazer quando os 30 leads se esgotam sem conversão?",w:"Coordenação",
+ v:"Resolvido na v2. O box vermelho no fim da etapa 3 cobre exatamente isso: relatório com o motivo e três alternativas — liberar deslocamento, prospectar em cidades próximas ou usar fotógrafo homologado de cidade vizinha. É a melhor adição da versão.",
+ r:"Só faltam dois detalhes: quem aprova (Liderança de Fornecedores) e em quanto tempo (1 dia útil). Com isso o degrau fica completo."},
+{g:"v2",id:"V20",st:"no",t:"Como o processo fica sabendo que um fotógrafo saiu?",w:"Coordenação + Fotógrafos",
+ v:"Inalterado. A seção 3 lista 'atualização da base conforme fotógrafos entram, saem ou mudam de região' no escopo, e nenhuma das 7 etapas trata disso.",
+ r:"Propus a etapa 8, Manutenção da base: o time de Fotógrafos avisa, o Analista inativa o cadastro e, se a cidade ficar descoberta, o card da cidade é reaberto com prioridade. É a saída de fotógrafo que descobre uma cidade de novo — sem essa etapa, a descoberta só acontece quando alguém precisa da foto e não tem quem faça."},
+{g:"v2",id:"V21",st:"no",t:"Qual a quarentena de uma cidade Cancelada?",w:"Coordenação + Automação",
+ v:"Inalterado: 'ela volta a aparecer na próxima rodada se a situação mudar'. Só que a rodada roda toda sexta sobre a mesma lista e nada verifica se algo mudou.",
+ r:"Sugeri 60 dias de quarentena, com três gatilhos de reabertura antecipada (imóvel novo ativado, data de ativação confirmada, pedido da franquia) e uma lista curta de motivos de cancelamento. O número é sugestão; os gatilhos são o que importa."},
+{g:"v2",id:"V22",st:"no",t:"Quem substitui o Analista e as testemunhas do contrato?",w:"Coordenação",
+ v:"Inalterado. A seção 4 lista quatro papéis e nenhum backup. O Analista responde por 4 das 7 etapas.",
+ r:"Três campos a preencher na seção 4: substituto do Analista e os suplentes das duas testemunhas. Com SLA de 3 dias úteis para assinatura, a ausência de um coordenador trava o fechamento de um fotógrafo já treinado e aprovado."},
+
+{g:"d",id:"D01",st:"no",t:"Separar o SLA total em dois indicadores",w:"Coordenação",
+ v:"Não aplicado. A linha 'SLA Total do processo: 1 semana' segue na tabela.",
+ r:"Tabela refeita na outra aba, com acumulado por etapa, lead time de prospecção (5 dias úteis) e lead time de cobertura (18 dias úteis). Depende de V03 e V04."},
+{g:"d",id:"D02",st:"no",t:"Criar a etapa Em homologação e mover o Ganho",w:"Analista",
+ v:"Não aplicado. O Ganho continua na etapa 5, antes do teste prático.",
+ r:"É mudança de configuração no Pipedrive, não só de texto. Redação pronta nas etapas 5, 6 e 7. Depende de V06."},
+{g:"d",id:"D03",st:"no",t:"Fazer a cadência caber no SLA da etapa 3",w:"Coordenação",
+ v:"Não aplicado: 3 tentativas a cada 3 dias continuam consumindo de 6 a 9 dias dentro de um SLA de 1 semana.",
+ r:"Proposta: tentativas no dia, no 2º e no 4º dia útil, com perda no 5º. A leva fecha exatamente dentro da semana e o SLA de 1 semana passa a ser verdade. Depende de V05."},
+{g:"d",id:"D04",st:"no",t:"Levar CNPJ, câmera e lente para o primeiro contato",w:"Analista",
+ v:"Não aplicado. O CNPJ só é verificado na negociação, depois de até três tentativas ao longo de vários dias.",
+ r:"Três perguntas no roteiro do primeiro contato descartam cedo quem não passaria — sobretudo os leads de Instagram e Google, em geral informais. Ganho direto de dias no lead time. Depende de V18."},
+{g:"d",id:"D05",st:"no",t:"Escrever as regras de negócio no processo e no contrato",w:"Coordenação",
+ v:"Não aplicado.",
+ r:"Substituir o 'entre elas' pela lista fechada e usar exatamente a mesma lista nos dois modelos de contrato, para que o que foi explicado e o que é assinado sejam a mesma coisa. Depende de V13."},
+{g:"d",id:"D06",st:"no",t:"Contar como cobertura só fotógrafo homologado",w:"Automação",
+ v:"Não aplicado. A etapa 1 continua cruzando com 'a base de fotógrafos ativos e em contratação'.",
+ r:"Ajustar a automação e devolver 'em tratativa' como estado separado, para a cidade não sumir da lista por semanas por causa de uma negociação que pode terminar em Perda. Depende de V02 e V09."},
+{g:"d",id:"D07",st:"no",t:"Acrescentar a etapa de manutenção da base",w:"Coordenação",
+ v:"Não aplicado.",
+ r:"Virou a etapa 8 proposta, com gatilho, responsável, SLA de 2 dias úteis e o caminho de volta da cidade para o funil. Depende de V20."},
+{g:"d",id:"D08",st:"ok",t:"Escrever o degrau de exceção da prospecção",w:"Coordenação",
+ v:"Aplicado na v2, no box do fim da etapa 3. Cobre relatório, motivo e as três alternativas.",
+ r:"Ajuste fino apenas: nomear a Liderança de Fornecedores como quem aprova e dar 1 dia útil de prazo."},
+{g:"d",id:"D09",st:"mid",t:"Deixar o critério de equipamento escrito como a regra",w:"Coordenação + Tecnologia",
+ v:"Meio caminho andado: o critério mínimo (DSLR ou mirrorless APS-C/Full Frame, grande-angular 10–24mm ou 16mm, tripé, Lightroom) está escrito na etapa 4 da v2.",
+ r:"Falta a frase que diz que o app é conveniência e o nome do dono do app. Duas linhas."},
+{g:"d",id:"D10",st:"no",t:"Incluir aviso de privacidade e prazo de descarte",w:"Coordenação + DPO",
+ v:"Não aplicado.",
+ r:"Aviso no roteiro do primeiro contato (etapa 3) e regra de descarte na seção 8 proposta. CPF e chave PIX com acesso mais restrito que o restante. Depende de V08."},
+{g:"d",id:"D11",st:"no",t:"Acrescentar a regra de feriado",w:"Coordenação",
+ v:"Não aplicado.",
+ r:"Continua sendo o único item que não depende de resposta de ninguém. Uma linha na etapa 1: sendo a sexta-feira feriado, a rodada ocorre no último dia útil anterior. Hoje um feriado desliza o ciclo inteiro em uma semana."},
+{g:"d",id:"D12",st:"mid",t:"Padronizar nomes de etapas e fechar a faixa de 4+ quartos",w:"Analista",
+ v:"Metade resolvida: as duas tabelas de teto já dizem '4 ou + quartos' na v2. A tabela de abertura da GOP ainda diz só '4 quartos', deixando um imóvel de 5 quartos sem valor de partida. Os nomes das etapas continuam sem acento ('Analise', 'Concluido') e o conflito Backlog/Prospecção segue de pé.",
+ r:"Fechar a faixa na abertura GOP, grafar as etapas exatamente como aparecem no Pipedrive e citar sempre a qual funil cada etapa pertence. Depende de V17."},
+{g:"d",id:"D13",st:"no",t:"Nomear substituto e suplentes na seção 4",w:"Coordenação",
+ v:"Não aplicado.",
+ r:"Campos já posicionados na seção 4 da outra aba. Depende de V22."},
+{g:"d",id:"D14",st:"no",t:"Registrar os indicadores e onde são medidos",w:"Coordenação",
+ v:"Não aplicado.",
+ r:"Virou a seção 7 proposta, com a origem de cada número e a frequência. Depende de V15."},
+
+{g:"n",id:"N01",st:"no",t:"O escopo diz que treinamento não faz parte, e a etapa 6 é treinamento",w:"Coordenação",
+ v:"Contradição interna nova, criada pelo detalhamento da seção 3. O item 'não inclui' diz 'treinamento e acompanhamento pós-onboarding (time de Fotógrafos)', mas a etapa 6 do fluxo é 'onboarding, treinamento e teste prático'.",
+ r:"Escrever que a execução é do time de Fotógrafos e que a etapa 6 aparece no fluxo como interface, porque o contrato depende dela. Redação na seção 3 da outra aba."},
+{g:"n",id:"N02",st:"no",t:"A tabela de SLA registra regra de perda como se fosse prazo",w:"Coordenação",
+ v:"Na linha 'Negociação', a tabela da seção 6 traz '3 Dias sem retorno do fotógrafo — em paralelo a prospecção'. Isso é o critério de perda, não o prazo de execução da etapa. Quem lê a tabela para saber quanto a negociação demora não encontra resposta.",
+ r:"Separar: SLA da negociação = 3 dias úteis do primeiro retorno; regras de perda em um bloco próprio embaixo da tabela."},
+{g:"n",id:"N03",st:"no",t:"Card parado em Em negociação x mover por 1º/2º/3º Contato",w:"Analista",
+ v:"A etapa 4 da v2 diz que a conversa inteira acontece com o card parado em 'Em negociação'. A etapa 3 manda mover o card por 1º, 2º e 3º Contato a cada tentativa. Na prática não se contradizem — as etapas de contato são para quem ainda não respondeu — mas o documento não diz isso, e quem lê as duas seções seguidas fica sem saber.",
+ r:"Uma frase na etapa 4: as etapas 1º/2º/3º Contato valem só para quem ainda não respondeu."},
+{g:"n",id:"N04",st:"no",t:"Cidade coberta mais próxima aparece três vezes sem critério de distância",w:"Coordenação + Automação",
+ v:"O termo é usado no escopo, na etapa 1 e na etapa 2 como insumo de decisão, mas nenhum raio ou distância máxima está definido. O Coordenador decide 'considerando a distância', sem régua.",
+ r:"Definir a distância a partir da qual o deslocamento deixa de ser alternativa e a cidade precisa de fotógrafo próprio — provavelmente em km rodados, e o mesmo número serve para calcular o valor de deslocamento do V13."},
+{g:"n",id:"N05",st:"no",t:"Dois funis com etapas de nome parecido no mesmo parágrafo",w:"Analista",
+ v:"A etapa 3 movimenta cards nos dois funis dentro do mesmo bloco de texto — a cidade em Fornecedores - Cidades e os leads em Prospecção Fornecedores — e os dois têm uma etapa chamada Backlog. Quem lê rápido move o card errado.",
+ r:"Citar o funil junto do nome da etapa em toda menção, sem exceção. É o mesmo remédio do V17 e custa nada."},
+{g:"n",id:"N06",st:"no",t:"O objetivo promete algo à franquia que nenhuma etapa entrega",w:"Coordenação",
+ v:"O objetivo novo termina com 'nenhuma franquia fique sem fotógrafo para acionar'. Mas a franquia só aparece uma vez no fluxo inteiro, na etapa 3, dando indicação de fotógrafo. Ninguém avisa a franquia quando a cidade passa a ter cobertura.",
+ r:"Ou o resultado esperado sai do objetivo, ou entra uma linha na etapa 7: contrato assinado, o Analista avisa a franquia da região de que a cidade está coberta e quem é o fotógrafo. Recomendo a segunda — custa uma mensagem e fecha o ciclo com quem sente a dor."}
+];
+
+var GROUPS = [
+ {k:"v2", t:"Bloco 1 — Perguntas em aberto", s:"Os 22 pontos que dependem de uma definição interna. Enquanto não houver resposta, as correções do bloco 2 ficam paradas."},
+ {k:"d",  t:"Bloco 2 — Correções a aplicar", s:"Os 14 ajustes no documento e na configuração dos funis. A maior parte depende de uma resposta do bloco 1."},
+ {k:"n",  t:"Novos — achados da versão 2", s:"Seis coisas que não estavam na auditoria de ontem. Quase todas nasceram das próprias mudanças da v2, que é o normal quando um documento ganha detalhe."}
+];
+
+var STL = {ok:["Resolvido","ok"], mid:["Pela metade","alt"], no:["Aberto","conf"]};
+
+var out = document.getElementById('respout');
+GROUPS.forEach(function(g){
+  var n = R.filter(function(x){return x.g===g.k}).length;
+  var sec = document.createElement('section');
+  sec.className = 'grp';
+  sec.innerHTML = '<h3>'+g.t+'</h3><p class="sub">'+g.s+' <b style="color:var(--ink-2)">'+n+' itens.</b></p>';
+  R.filter(function(x){return x.g===g.k}).forEach(function(x){
+    var d = document.createElement('details');
+    d.className='ans'; d.dataset.st = x.st;
+    var st = STL[x.st];
+    d.innerHTML =
+      '<summary><span class="code">'+x.id+'</span>'+
+      '<span><span class="t">'+x.t+'</span><span class="who">'+x.w+'</span></span>'+
+      '<span class="tag '+st[1]+'">'+st[0]+'</span></summary>'+
+      '<div class="inner"><p><span class="lbl">O que mudou na v2</span>'+x.v+'</p>'+
+      '<div class="rec"><span class="lbl">Resposta / recomendação</span><p>'+x.r+'</p></div></div>';
+    sec.appendChild(d);
+  });
+  out.appendChild(sec);
+});
+
+/* tabs */
+var views = {'t-canvas':'v-canvas','t-resp':'v-resp'};
+Object.keys(views).forEach(function(tid){
+  document.getElementById(tid).addEventListener('click', function(){
+    Object.keys(views).forEach(function(k){
+      var sel = k===tid;
+      document.getElementById(k).setAttribute('aria-selected', String(sel));
+      document.getElementById(views[k]).hidden = !sel;
+    });
+    window.scrollTo({top:0, behavior:'smooth'});
+  });
+});
+
+/* filtros */
+var cur='all';
+document.querySelectorAll('.fbtn[data-f]').forEach(function(b){
+  b.addEventListener('click', function(){
+    cur=b.dataset.f;
+    document.querySelectorAll('.fbtn[data-f]').forEach(function(o){o.setAttribute('aria-pressed', String(o===b))});
+    document.querySelectorAll('.ans').forEach(function(a){
+      a.hidden = !(cur==='all' || a.dataset.st===cur);
+    });
+    document.querySelectorAll('.grp').forEach(function(g){
+      g.hidden = g.querySelectorAll('.ans:not([hidden])').length===0;
+    });
+  });
+});
+var exp=document.getElementById('expand');
+exp.addEventListener('click', function(){
+  var on = exp.getAttribute('aria-pressed')!=='true';
+  exp.setAttribute('aria-pressed', String(on));
+  exp.textContent = on ? 'Fechar todos' : 'Abrir todos';
+  document.querySelectorAll('.ans').forEach(function(a){a.open=on});
+});
+
+/* copiar */
+document.querySelectorAll('[data-copy]').forEach(function(b){
+  b.addEventListener('click', function(){
+    var txt = b.closest('.sec').querySelector('.raw').textContent;
+    function ok(){ b.textContent='Copiado'; b.classList.add('on');
+      setTimeout(function(){b.textContent='Copiar'; b.classList.remove('on')},1800); }
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(txt).then(ok, fb);
+    } else fb();
+    function fb(){
+      var t=document.createElement('textarea'); t.value=txt;
+      t.style.position='fixed'; t.style.opacity='0';
+      document.body.appendChild(t); t.select();
+      try{document.execCommand('copy'); ok();}catch(e){b.textContent='Copie manualmente'}
+      document.body.removeChild(t);
+    }
+  });
+});
+</script>
+</body>
+</html>
