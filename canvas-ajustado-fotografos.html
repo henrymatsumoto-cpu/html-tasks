@@ -698,7 +698,7 @@ SLA: 2 dias úteis do aviso até a base atualizada.</pre>
     <header><span class="em">⏳</span><h3>6. Prazos e SLA</h3><span class="tag alt">Refeita</span>
       <span class="copyrow"><button class="btn" data-copy>Copiar</button></span></header>
     <div class="body">
-      <p class="lbl">Todos os prazos são em dias úteis. O acumulado é contado do início da prospecção — a segunda-feira em que o Analista pega o card</p>
+      <p class="lbl">Todos os prazos são em dias úteis. O acumulado é contado do início da prospecção — a segunda-feira em que o Analista pega o card — e mede só o relógio de Fornecedores: a etapa 6 corre no time de Fotógrafos e entra no total quando eles definirem o prazo</p>
       <div class="tblwrap">
       <table class="tbl">
         <thead><tr><th>Etapa</th><th>SLA</th><th>Acumulado</th></tr></thead>
@@ -708,19 +708,20 @@ SLA: 2 dias úteis do aviso até a base atualizada.</pre>
           <tr><td>3. Prospecção</td><td>3 dias úteis — começa na segunda</td><td class="num">dia 3</td></tr>
           <tr><td>4. Negociação</td><td>3 dias úteis do primeiro retorno</td><td class="num">dia 6</td></tr>
           <tr><td>5. Cadastro do fotógrafo</td><td>1 dia útil após o aceite</td><td class="num">dia 7</td></tr>
-          <tr><td>6. Onboarding, treinamento e teste prático</td><td><span class="marked">definido pelo time de Fotógrafos</span></td><td class="num">—</td></tr>
-          <tr><td>7. Contrato e fechamento</td><td>3 dias úteis, considerando a assinatura</td><td class="num">dia 10 + etapa 6</td></tr>
+          <tr><td>6. Onboarding, treinamento e teste prático</td><td><span class="marked">definido pelo time de Fotógrafos</span></td><td class="num">relógio de Fornecedores pausa</td></tr>
+          <tr><td>7. Contrato e fechamento</td><td>3 dias úteis, considerando a assinatura</td><td class="num">dia 10</td></tr>
           <tr><td>8. Manutenção da base</td><td>2 dias úteis do aviso</td><td class="num">avulso</td></tr>
           <tr><td>Lead time de prospecção</td><td>3 dias úteis do início da prospecção</td><td class="num">dia 3</td></tr>
+          <tr><td><b>Lead time de Fornecedores</b></td><td><b>10 dias úteis</b> — etapas 1 a 5 e 7</td><td class="num">dia 10</td></tr>
         </tbody>
       </table>
       </div>
       <p class="added"><b>Lead time de cobertura da cidade: 10 dias úteis de Fornecedores + o prazo da etapa 6</b> — do início da prospecção à assinatura do contrato do segundo fotógrafo. Os 10 dias são o que Fornecedores assume (etapas 1 a 5 e 7); o trecho de onboarding, treinamento e teste prático corre no time de Fotógrafos e fecha o número quando eles definirem o prazo.</p>
       <p class="added">Regras de perda não são prazo de execução e ficam registradas à parte: fotógrafo sem retorno por 3 dias úteis na negociação vai para Perda; lead sem resposta até o 5º dia útil da cadência vai para Perda.</p>
-      <div class="note why"><span class="lbl">Por quê</span>A tabela de hoje declara "SLA Total do processo: 1 semana", mas as próprias etapas listadas nela somam bem mais do que isso. Um dos dois números está errado, e enquanto os dois convivem ninguém sabe qual será cobrado. Resolvido em 17/09: o prazo da prospecção passou a ser de <b>3 dias úteis</b>, contados do início dela e não da abertura do card, e o prazo do processo inteiro ganhou um número próprio ancorado no mesmo marco. O objetivo segue prometendo 1 semana, que é o teto — a etapa entrega dentro dele.</div>
+      <div class="note why"><span class="lbl">Por quê</span>A tabela de hoje declara "SLA Total do processo: 1 semana", mas as próprias etapas listadas nela somam bem mais do que isso. Um dos dois números está errado, e enquanto os dois convivem ninguém sabe qual será cobrado. Resolvido em 17/09: o prazo da prospecção passou a ser de <b>3 dias úteis</b>, contados do início dela e não da abertura do card, e o prazo do processo inteiro ganhou um número próprio ancorado no mesmo marco. O objetivo segue prometendo 1 semana, que é o teto — a etapa entrega dentro dele. A tabela passou a separar o que cada time assume: <b>10 dias úteis</b> é o compromisso de Fornecedores e vale como SLA cobrável hoje; a etapa 6 aparece sem número porque o prazo é do time de Fotógrafos, e o lead time de cobertura só vira um número único quando eles responderem (V04).</div>
     </div>
     <pre class="raw">6. Prazos e SLA
-Todos os prazos são em dias úteis. O acumulado é contado do início da prospecção — a segunda-feira em que o Analista pega o card.
+Todos os prazos são em dias úteis. O acumulado é contado do início da prospecção — a segunda-feira em que o Analista pega o card — e mede só o relógio de Fornecedores: a etapa 6 corre no time de Fotógrafos e entra no total quando eles definirem o prazo.
 
 Etapa | SLA | Acumulado
 1. Análise periódica das cidades | Toda sexta-feira (automática) | sexta anterior
@@ -728,10 +729,11 @@ Etapa | SLA | Acumulado
 3. Prospecção | 3 dias úteis — começa na segunda | dia 3
 4. Negociação | 3 dias úteis do primeiro retorno | dia 6
 5. Cadastro do fotógrafo | 1 dia útil após o aceite | dia 7
-6. Onboarding, treinamento e teste prático | definido pelo time de Fotógrafos | —
-7. Contrato e fechamento | 3 dias úteis, considerando a assinatura | dia 10 + etapa 6
+6. Onboarding, treinamento e teste prático | definido pelo time de Fotógrafos | relógio de Fornecedores pausa
+7. Contrato e fechamento | 3 dias úteis, considerando a assinatura | dia 10
 8. Manutenção da base | 2 dias úteis do aviso | avulso
 Lead time de prospecção | 3 dias úteis do início da prospecção | dia 3
+Lead time de Fornecedores | 10 dias úteis — etapas 1 a 5 e 7 | dia 10
 
 Lead time de cobertura da cidade: 10 dias úteis de Fornecedores + o prazo da etapa 6 — do início da prospecção à assinatura do contrato do segundo fotógrafo. Os 10 dias são o que Fornecedores assume (etapas 1 a 5 e 7); o trecho de onboarding, treinamento e teste prático corre no time de Fotógrafos.
 
