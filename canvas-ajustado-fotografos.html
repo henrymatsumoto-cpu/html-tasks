@@ -243,9 +243,9 @@ footer b{color:var(--ink-2);font-weight:600}
       <span>Base: <b>9 prints do canvas + 36 validações</b></span>
     </div>
     <div class="score">
-      <div><div class="n ok">3</div><div class="l">resolvidos</div></div>
+      <div><div class="n ok">5</div><div class="l">resolvidos</div></div>
       <div><div class="n mid">6</div><div class="l">resolvidos pela metade</div></div>
-      <div><div class="n no">27</div><div class="l">ainda abertos</div></div>
+      <div><div class="n no">25</div><div class="l">ainda abertos</div></div>
       <div><div class="n new">6</div><div class="l">achados novos da v2</div></div>
       <div><div class="n">1</div><div class="l">seção nova + 1 etapa nova propostas</div></div>
     </div>
@@ -420,10 +420,10 @@ Resultados Esperados:
         <li><em>Time de Fotógrafos:</em> responsável por onboarding, treinamento, suporte técnico e garantia de qualidade.</li>
         <li><em>Fotógrafo:</em> executa o serviço de acordo com os parâmetros e padrões definidos.</li>
         <li class="marked"><em>Liderança de Fornecedores:</em> aprova exceções — valor acima do teto da tabela, prazo fora do SLA e contratação com deslocamento.</li>
-        <li class="marked"><em>Substituto do Analista:</em> ______ — assume as etapas 3, 4, 5 e 7 nas férias e ausências.</li>
-        <li class="marked"><em>Testemunhas do contrato:</em> Coordenador de Fornecedores e Coordenador de Fotógrafos. Suplentes: ______ e ______.</li>
+        <li class="marked"><em>Substituto do Analista:</em> Coordenador — assume as etapas 3, 4, 5 e 7 nas férias e ausências.</li>
+        <li class="marked"><em>Testemunhas do contrato:</em> Coordenador de Fornecedores e Coordenador de Fotógrafos. Suplentes: Gerente de BackOffice e Gerente de Implantação.</li>
       </ul>
-      <div class="note ask"><span class="lbl">Quem decide</span>O Analista responde por 4 das 7 etapas e hoje não tem substituto nomeado. As duas testemunhas do contrato também não têm suplente — com SLA de 3 dias úteis para assinatura, a ausência de qualquer um dos dois trava o fechamento de um fotógrafo que já foi treinado e aprovado. Preencher os três campos em branco.</div>
+      <div class="note why"><span class="lbl">Resolvido em 17/09</span>Os três campos foram preenchidos: o Coordenador cobre o Analista nas etapas 3, 4, 5 e 7, e as testemunhas do contrato ganharam Gerente de BackOffice e Gerente de Implantação como suplentes. Com isso a assinatura deixa de depender da agenda de duas pessoas específicas dentro do SLA de 3 dias úteis.</div>
     </div>
     <pre class="raw">4. Responsáveis e Papéis
 - Coordenador de Fornecedores: analisa as cidades geradas pela automação e decide a necessidade de prospectar.
@@ -431,8 +431,8 @@ Resultados Esperados:
 - Time de Fotógrafos: responsável por onboarding, treinamento, suporte técnico e garantia de qualidade.
 - Fotógrafo: executa o serviço de acordo com os parâmetros e padrões definidos.
 - Liderança de Fornecedores: aprova exceções — valor acima do teto da tabela, prazo fora do SLA e contratação com deslocamento.
-- Substituto do Analista: ______ — assume as etapas 3, 4, 5 e 7 nas férias e ausências.
-- Testemunhas do contrato: Coordenador de Fornecedores e Coordenador de Fotógrafos. Suplentes: ______ e ______.</pre>
+- Substituto do Analista: Coordenador — assume as etapas 3, 4, 5 e 7 nas férias e ausências.
+- Testemunhas do contrato: Coordenador de Fornecedores e Coordenador de Fotógrafos. Suplentes: Gerente de BackOffice e Gerente de Implantação.</pre>
   </article>
 
   <!-- 5 -->
@@ -834,7 +834,7 @@ O processo monta listas de pessoas físicas a partir da Receita Federal e de red
 <section class="view" id="v-resp" hidden>
   <div class="verdict">
     <h2>O que a versão 2 resolveu, e o que não</h2>
-    <p>Comparei os 9 prints do canvas de hoje com os 36 pontos do arquivo de validações. <span class="hl">Três pontos foram fechados</span> — a seção 2 em branco, o "e quando os 30 leads acabam?" e, em 17/09, a definição de quantos fotógrafos cobrem uma cidade. <span class="hl">Seis andaram pela metade.</span> Os outros 27 continuam iguais. Encontrei também <span class="hl">6 coisas novas</span>, quase todas criadas pelas próprias mudanças da v2.</p>
+    <p>Comparei os 9 prints do canvas de hoje com os 36 pontos do arquivo de validações. <span class="hl">Cinco pontos já estão fechados</span> — a seção 2 em branco, o "e quando os 30 leads acabam?" e, na revisão de 17/09, a meta de dois fotógrafos por cidade e os dois itens de substituição da seção 4. <span class="hl">Seis andaram pela metade.</span> Os outros 25 continuam iguais. Encontrei também <span class="hl">6 coisas novas</span>, quase todas criadas pelas próprias mudanças da v2.</p>
     <p>Abaixo, ponto a ponto: o que mudou, e a resposta ou recomendação quando dá para dar uma. Onde a decisão é de gente — preço, jurídico, prazo de outro time — está marcado como tal, e o texto correspondente já está no canvas ajustado da outra aba, com a lacuna no lugar certo.</p>
   </div>
 
@@ -922,9 +922,9 @@ var R = [
 {g:"v2",id:"V21",st:"no",t:"Qual a quarentena de uma cidade Cancelada?",w:"Coordenação + Automação",
  v:"Inalterado: 'ela volta a aparecer na próxima rodada se a situação mudar'. Só que a rodada roda toda sexta sobre a mesma lista e nada verifica se algo mudou.",
  r:"Sugeri 60 dias de quarentena, com três gatilhos de reabertura antecipada (imóvel novo ativado, data de ativação confirmada, pedido da franquia) e uma lista curta de motivos de cancelamento. O número é sugestão; os gatilhos são o que importa."},
-{g:"v2",id:"V22",st:"no",t:"Quem substitui o Analista e as testemunhas do contrato?",w:"Coordenação",
- v:"Inalterado. A seção 4 lista quatro papéis e nenhum backup. O Analista responde por 4 das 7 etapas.",
- r:"Três campos a preencher na seção 4: substituto do Analista e os suplentes das duas testemunhas. Com SLA de 3 dias úteis para assinatura, a ausência de um coordenador trava o fechamento de um fotógrafo já treinado e aprovado."},
+{g:"v2",id:"V22",st:"ok",t:"Quem substitui o Analista e as testemunhas do contrato?",w:"Coordenação",
+ v:"Respondido por você em 17/09. Substituto do Analista: o Coordenador. Suplentes das testemunhas: Gerente de BackOffice e Gerente de Implantação.",
+ r:"Já escrito na seção 4. Vale checar um efeito colateral: nas ausências do Analista, o Coordenador passa a executar as etapas 3, 4, 5 e 7 e a decidir a etapa 2 — ou seja, quem prospecta e negocia é a mesma pessoa que aprovou a cidade. Se isso incomodar, a saída é a Liderança assumir a etapa 2 enquanto durar a substituição."},
 
 {g:"d",id:"D01",st:"no",t:"Separar o SLA total em dois indicadores",w:"Coordenação",
  v:"Não aplicado. A linha 'SLA Total do processo: 1 semana' segue na tabela.",
@@ -962,9 +962,9 @@ var R = [
 {g:"d",id:"D12",st:"mid",t:"Padronizar nomes de etapas e fechar a faixa de 4+ quartos",w:"Analista",
  v:"Metade resolvida: as duas tabelas de teto já dizem '4 ou + quartos' na v2. A tabela de abertura da GOP ainda diz só '4 quartos', deixando um imóvel de 5 quartos sem valor de partida. Os nomes das etapas continuam sem acento ('Analise', 'Concluido') e o conflito Backlog/Prospecção segue de pé.",
  r:"Fechar a faixa na abertura GOP, grafar as etapas exatamente como aparecem no Pipedrive e citar sempre a qual funil cada etapa pertence. Depende de V17."},
-{g:"d",id:"D13",st:"no",t:"Nomear substituto e suplentes na seção 4",w:"Coordenação",
- v:"Não aplicado.",
- r:"Campos já posicionados na seção 4 da outra aba. Depende de V22."},
+{g:"d",id:"D13",st:"ok",t:"Nomear substituto e suplentes na seção 4",w:"Coordenação",
+ v:"Aplicado em 17/09 — os três nomes estão na seção 4.",
+ r:"Nada pendente. Só falta refletir isso nos modelos de contrato, onde o campo de testemunha costuma vir com nome fixo."},
 {g:"d",id:"D14",st:"no",t:"Registrar os indicadores e onde são medidos",w:"Coordenação",
  v:"Não aplicado.",
  r:"Virou a seção 7 proposta, com a origem de cada número e a frequência. Depende de V15."},
