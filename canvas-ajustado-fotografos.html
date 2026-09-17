@@ -574,8 +574,8 @@ Resultados Esperados:
           <p>A partir do cadastro, a responsabilidade passa para o time de Fotógrafos: onboarding, treinamento, teste prático e validação da qualidade. O processo está descrito no canvas <em>Gestão de Fotógrafos Parceiros</em>.</p>
           <p class="added"><b>Aprovado:</b> o time de Fotógrafos avisa Fornecedores e o card segue para a etapa 7.</p>
           <p class="added"><b>Reprovado:</b> o card vai para <em>Perda</em> com o motivo "reprovado no teste prático", o cadastro no Artefato é inativado e a cidade volta para a etapa <b>Prospecção</b> do funil de Cidades na mesma semana — se ainda houver leads na leva, o Analista retoma; se não, aplica o degrau de exceção da etapa 3.</p>
-          <p class="marked"><b>SLA:</b> 5 dias úteis.</p>
-          <div class="note ask"><span class="lbl">Quem decide</span>Enquanto essa etapa não tiver prazo, o lead time do processo inteiro é indeterminável — e é justamente ela que fica entre o cadastro e o contrato. Vale acordar um número, mesmo largo. E o caminho da reprovação precisa existir: hoje o fotógrafo já está na base e o card já está em Ganho quando o teste acontece.</div>
+          <p class="marked"><b>SLA:</b> definido pelo time de Fotógrafos.</p>
+          <div class="note ask"><span class="lbl">Quem decide</span>O prazo desta etapa é do time de Fotógrafos — Fornecedores não define o SLA de um time que não opera. Enquanto esse número não vier, o lead time do processo fica em duas partes: os 10 dias úteis de Fornecedores mais o prazo da etapa 6. Vale acordar um número com a Coordenação de Fotógrafos, mesmo largo.</div>
         </div>
       </details>
 
@@ -672,7 +672,7 @@ Descrição:
 - A partir do cadastro, a responsabilidade passa para o time de Fotógrafos: onboarding, treinamento, teste prático e validação da qualidade. O processo está descrito no canvas Gestão de Fotógrafos Parceiros.
 - Aprovado: o time de Fotógrafos avisa Fornecedores e o card segue para a etapa 7.
 - Reprovado: o card vai para Perda com o motivo "reprovado no teste prático", o cadastro no Artefato é inativado e a cidade volta para a etapa Prospecção do funil de Cidades na mesma semana — se ainda houver leads na leva, o Analista retoma; se não, aplica o degrau de exceção da etapa 3.
-SLA: 5 dias úteis.
+SLA: definido pelo time de Fotógrafos.
 
 7. Contrato e fechamento
 Responsável: Analista de Fornecedores
@@ -708,14 +708,14 @@ SLA: 2 dias úteis do aviso até a base atualizada.</pre>
           <tr><td>3. Prospecção</td><td>3 dias úteis — começa na segunda</td><td class="num">dia 3</td></tr>
           <tr><td>4. Negociação</td><td>3 dias úteis do primeiro retorno</td><td class="num">dia 6</td></tr>
           <tr><td>5. Cadastro do fotógrafo</td><td>1 dia útil após o aceite</td><td class="num">dia 7</td></tr>
-          <tr><td>6. Onboarding, treinamento e teste prático</td><td><span class="marked">5 dias úteis</span></td><td class="num">dia 12</td></tr>
-          <tr><td>7. Contrato e fechamento</td><td>3 dias úteis, considerando a assinatura</td><td class="num">dia 15</td></tr>
+          <tr><td>6. Onboarding, treinamento e teste prático</td><td><span class="marked">definido pelo time de Fotógrafos</span></td><td class="num">—</td></tr>
+          <tr><td>7. Contrato e fechamento</td><td>3 dias úteis, considerando a assinatura</td><td class="num">dia 10 + etapa 6</td></tr>
           <tr><td>8. Manutenção da base</td><td>2 dias úteis do aviso</td><td class="num">avulso</td></tr>
           <tr><td>Lead time de prospecção</td><td>3 dias úteis do início da prospecção</td><td class="num">dia 3</td></tr>
         </tbody>
       </table>
       </div>
-      <p class="added"><b>Lead time de cobertura da cidade: 15 dias úteis</b> — do início da prospecção à assinatura do contrato do segundo fotógrafo. Este é o SLA do processo.</p>
+      <p class="added"><b>Lead time de cobertura da cidade: 10 dias úteis de Fornecedores + o prazo da etapa 6</b> — do início da prospecção à assinatura do contrato do segundo fotógrafo. Os 10 dias são o que Fornecedores assume (etapas 1 a 5 e 7); o trecho de onboarding, treinamento e teste prático corre no time de Fotógrafos e fecha o número quando eles definirem o prazo.</p>
       <p class="added">Regras de perda não são prazo de execução e ficam registradas à parte: fotógrafo sem retorno por 3 dias úteis na negociação vai para Perda; lead sem resposta até o 5º dia útil da cadência vai para Perda.</p>
       <div class="note why"><span class="lbl">Por quê</span>A tabela de hoje declara "SLA Total do processo: 1 semana", mas as próprias etapas listadas nela somam bem mais do que isso. Um dos dois números está errado, e enquanto os dois convivem ninguém sabe qual será cobrado. Resolvido em 17/09: o prazo da prospecção passou a ser de <b>3 dias úteis</b>, contados do início dela e não da abertura do card, e o prazo do processo inteiro ganhou um número próprio ancorado no mesmo marco. O objetivo segue prometendo 1 semana, que é o teto — a etapa entrega dentro dele.</div>
     </div>
@@ -728,12 +728,12 @@ Etapa | SLA | Acumulado
 3. Prospecção | 3 dias úteis — começa na segunda | dia 3
 4. Negociação | 3 dias úteis do primeiro retorno | dia 6
 5. Cadastro do fotógrafo | 1 dia útil após o aceite | dia 7
-6. Onboarding, treinamento e teste prático | 5 dias úteis | dia 12
-7. Contrato e fechamento | 3 dias úteis, considerando a assinatura | dia 15
+6. Onboarding, treinamento e teste prático | definido pelo time de Fotógrafos | —
+7. Contrato e fechamento | 3 dias úteis, considerando a assinatura | dia 10 + etapa 6
 8. Manutenção da base | 2 dias úteis do aviso | avulso
 Lead time de prospecção | 3 dias úteis do início da prospecção | dia 3
 
-Lead time de cobertura da cidade: 15 dias úteis — do início da prospecção à assinatura do contrato do segundo fotógrafo. Este é o SLA do processo.
+Lead time de cobertura da cidade: 10 dias úteis de Fornecedores + o prazo da etapa 6 — do início da prospecção à assinatura do contrato do segundo fotógrafo. Os 10 dias são o que Fornecedores assume (etapas 1 a 5 e 7); o trecho de onboarding, treinamento e teste prático corre no time de Fotógrafos.
 
 Regras de perda não são prazo de execução: fotógrafo sem retorno por 3 dias úteis na negociação vai para Perda; lead sem resposta até o 5º dia útil da cadência vai para Perda.</pre>
   </article>
@@ -850,10 +850,10 @@ var R = [
  r:"Isso muda cinco lugares do processo, todos já ajustados: a meta e a definição de coberta (seção 2), o filtro da automação (etapa 1), o alvo da leva de 30 leads (etapa 3), a passagem do card da cidade para Concluído só quando o segundo assinar (etapa 7) e o gatilho de reabertura quando a base cai abaixo de dois (etapa 8). Criei também o estado parcialmente coberta, para a cidade com um só fotógrafo não sumir da fila, e o indicador que conta essas cidades."},
 {g:"v2",id:"V03",st:"ok",t:"O que o SLA de 1 semana está medindo?",w:"Coordenação + liderança",
  v:"A tabela da v2 declarava 'SLA Total do processo: 1 semana' enquanto as etapas listadas nela somavam muito mais. A v2 já tinha melhorado uma coisa: a negociação marcada como paralela à prospecção, o que encurta a soma.",
- r:"Resolvido em 17/09. O marco passou a ser o início da prospecção, o objetivo promete 1 semana como teto e a etapa 3 fechou em 3 dias úteis. A tabela foi refeita com esses números: prospecção no dia 3, cobertura da cidade no dia 15, com análise e decisão aparecendo como sexta anterior. As regras de perda saíram da coluna de prazo."},
+ r:"Resolvido em 17/09. O marco passou a ser o início da prospecção, o objetivo promete 1 semana como teto e a etapa 3 fechou em 3 dias úteis. A tabela foi refeita com esses números: prospecção no dia 3 e cobertura da cidade em 10 dias úteis de Fornecedores mais o prazo da etapa 6, com análise e decisão aparecendo como sexta anterior. As regras de perda saíram da coluna de prazo."},
 {g:"v2",id:"V04",st:"no",t:"Qual prazo o time de Fotógrafos assume para a etapa 6?",w:"Coordenação de Fotógrafos",
  v:"Segue como 'definido pelo time de Fotógrafos', tanto na etapa quanto na tabela de SLA.",
- r:"É a única peça que falta para o lead time do processo existir. Sugestão de partida: 5 dias úteis. Precisa do aceite da Coordenação de Fotógrafos — e um número largo resolve melhor que nenhum."},
+ r:"É a única peça que falta para o lead time do processo existir. Fornecedores não define prazo de um time que não opera, então a etapa e a tabela ficaram como 'definido pelo time de Fotógrafos' e o lead time virou 10 dias úteis de Fornecedores + etapa 6. Precisa do aceite da Coordenação de Fotógrafos — e um número largo resolve melhor que nenhum."},
 {g:"v2",id:"V05",st:"no",t:"Os prazos são em dias úteis ou corridos?",w:"Coordenação",
  v:"Continua misturado: '1 dia útil' no cadastro, '3 Dias' na negociação, '3 dias úteis' no contrato e 'uma a cada 3 dias' na cadência, sem dizer qual.",
  r:"Declarar uma vez, no topo da seção 6: todos os prazos deste processo são em dias úteis. Uma linha fecha o assunto inteiro."},
@@ -911,7 +911,7 @@ var R = [
 
 {g:"d",id:"D01",st:"ok",t:"Separar o SLA total em dois indicadores",w:"Coordenação",
  v:"Aplicado em 17/09 — a linha única virou dois indicadores separados.",
- r:"Tabela refeita na outra aba, com o acumulado ancorado no início da prospecção: lead time de prospecção 3 dias úteis e lead time de cobertura 15 dias úteis. Falta só o número da etapa 6 (V04) para o 15 virar definitivo."},
+ r:"Tabela refeita na outra aba, com o acumulado ancorado no início da prospecção: lead time de prospecção 3 dias úteis e lead time de cobertura 10 dias úteis de Fornecedores + o prazo da etapa 6. Falta só o número da etapa 6 (V04) para o total virar um número único."},
 {g:"d",id:"D02",st:"no",t:"Criar a etapa Em homologação e mover o Ganho",w:"Analista",
  v:"Não aplicado. O Ganho continua na etapa 5, antes do teste prático.",
  r:"É mudança de configuração no Pipedrive, não só de texto. Redação pronta nas etapas 5, 6 e 7. Depende de V06."},
