@@ -243,9 +243,9 @@ footer b{color:var(--ink-2);font-weight:600}
       <span>Base: <b>9 prints do canvas + 36 validações</b></span>
     </div>
     <div class="score">
-      <div><div class="n ok">5</div><div class="l">resolvidos</div></div>
+      <div><div class="n ok">6</div><div class="l">resolvidos</div></div>
       <div><div class="n mid">6</div><div class="l">resolvidos pela metade</div></div>
-      <div><div class="n no">25</div><div class="l">ainda abertos</div></div>
+      <div><div class="n no">24</div><div class="l">ainda abertos</div></div>
       <div><div class="n new">6</div><div class="l">achados novos da v2</div></div>
       <div><div class="n">1</div><div class="l">seção nova + 1 etapa nova propostas</div></div>
     </div>
@@ -462,7 +462,7 @@ Resultados Esperados:
             <li><b>Cidade aprovada:</b> move o card para <span class="marked">a etapa <b>Prospecção</b> do mesmo funil — que é a fila do Analista</span>.</li>
             <li><b>Cidade que não justifica agora:</b> move para <b>Cancelado</b> com o motivo escrito no card.</li>
           </ul>
-          <p class="added"><b>Quarentena:</b> cidade em Cancelado fica fora das rodadas por <b>60 dias</b>. Volta antes disso se um imóvel novo for ativado na cidade, se uma data de ativação for confirmada ou se a franquia pedir.</p>
+          <p class="added"><b>Quarentena:</b> cidade em Cancelado fica fora das rodadas por <b>15 dias</b>. Volta antes disso se um imóvel novo for ativado na cidade, se uma data de ativação for confirmada ou se a franquia pedir.</p>
           <p class="added"><b>Motivos de cancelamento</b> (escolher um): sem imóvel previsto · cidade vizinha já cobre com deslocamento · volume não justifica · aguardando confirmação de ativação.</p>
           <p><b>SLA:</b> toda sexta-feira.</p>
           <div class="note why"><span class="lbl">Por quê</span>Hoje o texto diz que a cidade cancelada "volta a aparecer na próxima rodada se a situação mudar" — mas a rodada roda toda sexta sobre a mesma lista e nada verifica se algo mudou. Sem quarentena e sem motivo padronizado, ou a cidade volta toda semana, ou some para sempre. E a etapa 3 chama essa mesma fila de "Backlog": os dois nomes precisam virar um só.</div>
@@ -629,7 +629,7 @@ Responsável: Coordenador de Fornecedores
 Descrição: Avalia cada card da etapa Análise considerando a distância até a cidade coberta mais próxima, a quantidade de imóveis ativos e em onboarding e as datas previstas de ativação.
 - Cidade aprovada: move o card para a etapa Prospecção do mesmo funil — que é a fila do Analista.
 - Cidade que não justifica agora: move para Cancelado com o motivo escrito no card.
-Quarentena: cidade em Cancelado fica fora das rodadas por 60 dias. Volta antes disso se um imóvel novo for ativado na cidade, se uma data de ativação for confirmada ou se a franquia pedir.
+Quarentena: cidade em Cancelado fica fora das rodadas por 15 dias. Volta antes disso se um imóvel novo for ativado na cidade, se uma data de ativação for confirmada ou se a franquia pedir.
 Motivos de cancelamento (escolher um): sem imóvel previsto · cidade vizinha já cobre com deslocamento · volume não justifica · aguardando confirmação de ativação.
 SLA: toda sexta-feira.
 
@@ -834,7 +834,7 @@ O processo monta listas de pessoas físicas a partir da Receita Federal e de red
 <section class="view" id="v-resp" hidden>
   <div class="verdict">
     <h2>O que a versão 2 resolveu, e o que não</h2>
-    <p>Comparei os 9 prints do canvas de hoje com os 36 pontos do arquivo de validações. <span class="hl">Cinco pontos já estão fechados</span> — a seção 2 em branco, o "e quando os 30 leads acabam?" e, na revisão de 17/09, a meta de dois fotógrafos por cidade e os dois itens de substituição da seção 4. <span class="hl">Seis andaram pela metade.</span> Os outros 25 continuam iguais. Encontrei também <span class="hl">6 coisas novas</span>, quase todas criadas pelas próprias mudanças da v2.</p>
+    <p>Comparei os 9 prints do canvas de hoje com os 36 pontos do arquivo de validações. <span class="hl">Seis pontos já estão fechados</span> — a seção 2 em branco, o "e quando os 30 leads acabam?" e, na revisão de 17/09, a meta de dois fotógrafos por cidade, os dois itens de substituição da seção 4 e a quarentena da cidade cancelada. <span class="hl">Seis andaram pela metade.</span> Os outros 24 continuam iguais. Encontrei também <span class="hl">6 coisas novas</span>, quase todas criadas pelas próprias mudanças da v2.</p>
     <p>Abaixo, ponto a ponto: o que mudou, e a resposta ou recomendação quando dá para dar uma. Onde a decisão é de gente — preço, jurídico, prazo de outro time — está marcado como tal, e o texto correspondente já está no canvas ajustado da outra aba, com a lacuna no lugar certo.</p>
   </div>
 
@@ -919,9 +919,9 @@ var R = [
 {g:"v2",id:"V20",st:"no",t:"Como o processo fica sabendo que um fotógrafo saiu?",w:"Coordenação + Fotógrafos",
  v:"Inalterado. A seção 3 lista 'atualização da base conforme fotógrafos entram, saem ou mudam de região' no escopo, e nenhuma das 7 etapas trata disso.",
  r:"Propus a etapa 8, Manutenção da base: o time de Fotógrafos avisa, o Analista inativa o cadastro e, se a cidade ficar descoberta, o card da cidade é reaberto com prioridade. É a saída de fotógrafo que descobre uma cidade de novo — sem essa etapa, a descoberta só acontece quando alguém precisa da foto e não tem quem faça."},
-{g:"v2",id:"V21",st:"no",t:"Qual a quarentena de uma cidade Cancelada?",w:"Coordenação + Automação",
- v:"Inalterado: 'ela volta a aparecer na próxima rodada se a situação mudar'. Só que a rodada roda toda sexta sobre a mesma lista e nada verifica se algo mudou.",
- r:"Sugeri 60 dias de quarentena, com três gatilhos de reabertura antecipada (imóvel novo ativado, data de ativação confirmada, pedido da franquia) e uma lista curta de motivos de cancelamento. O número é sugestão; os gatilhos são o que importa."},
+{g:"v2",id:"V21",st:"ok",t:"Qual a quarentena de uma cidade Cancelada?",w:"Coordenação + Automação",
+ v:"Respondido por você em 17/09: 15 dias, no lugar dos 60 que eu tinha sugerido. Com os três gatilhos de reabertura antecipada — imóvel novo ativado, data de ativação confirmada ou pedido da franquia — e a lista curta de motivos de cancelamento.",
+ r:"Já está na etapa 2. Só uma consequência a observar: 15 dias são três rodadas de sexta, então a mesma cidade reaparece para decisão a cada três semanas. Se o motivo do cancelamento for estrutural (cidade sem imóvel previsto), ela vai voltar muitas vezes sem nada ter mudado — nesse caso vale o Coordenador fechar direto, ou criar uma quarentena maior só para esse motivo."},
 {g:"v2",id:"V22",st:"ok",t:"Quem substitui o Analista e as testemunhas do contrato?",w:"Coordenação",
  v:"Respondido por você em 17/09. Substituto do Analista: o Coordenador. Suplentes das testemunhas: Gerente de BackOffice e Gerente de Implantação.",
  r:"Já escrito na seção 4. Vale checar um efeito colateral: nas ausências do Analista, o Coordenador passa a executar as etapas 3, 4, 5 e 7 e a decidir a etapa 2 — ou seja, quem prospecta e negocia é a mesma pessoa que aprovou a cidade. Se isso incomodar, a saída é a Liderança assumir a etapa 2 enquanto durar a substituição."},
