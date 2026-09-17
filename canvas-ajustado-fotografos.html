@@ -243,9 +243,9 @@ footer b{color:var(--ink-2);font-weight:600}
       <span>Base: <b>9 prints do canvas + 36 validações</b></span>
     </div>
     <div class="score">
-      <div><div class="n ok">2</div><div class="l">pontos resolvidos na v2</div></div>
+      <div><div class="n ok">3</div><div class="l">resolvidos</div></div>
       <div><div class="n mid">6</div><div class="l">resolvidos pela metade</div></div>
-      <div><div class="n no">28</div><div class="l">ainda abertos</div></div>
+      <div><div class="n no">27</div><div class="l">ainda abertos</div></div>
       <div><div class="n new">6</div><div class="l">achados novos da v2</div></div>
       <div><div class="n">1</div><div class="l">seção nova + 1 etapa nova propostas</div></div>
     </div>
@@ -316,9 +316,9 @@ footer b{color:var(--ink-2);font-weight:600}
       <p>Garantir que toda cidade onde a Seazone atua tenha fotógrafo disponível, com qualidade de imagem e equipamento técnico dentro do padrão que a Seazone exige.</p>
       <p>O processo cobre a jornada completa: identificar as cidades que ainda não têm cobertura fotográfica, prospectar e avaliar profissionais nessas praças, homologar quem atende ao nosso padrão técnico e manter a base de fotógrafos ativa e atualizada — de forma que nenhum imóvel entre em operação sem fotos no padrão Seazone e nenhuma franquia fique sem fotógrafo para acionar.</p>
 
-      <p class="added"><b>Meta:</b> 100% das cidades com imóvel ativo ou em onboarding com pelo menos <b>1 fotógrafo homologado</b>, e a cidade coberta em até <b>18 dias úteis</b> contados da abertura do card — sempre antes da data prevista de ativação do primeiro imóvel.</p>
+      <p class="added"><b>Meta:</b> 100% das cidades com imóvel ativo ou em onboarding com pelo menos <b>2 fotógrafos homologados</b>. A prospecção se encerra em até <b>1 semana — 5 dias úteis contados do início da prospecção</b>, e a cidade fica coberta em até <b>17 dias úteis</b> do mesmo marco, sempre antes da data prevista de ativação do primeiro imóvel.</p>
 
-      <p class="added"><b>Cidade coberta</b> é a cidade com pelo menos um fotógrafo de <b>contrato assinado e teste prático aprovado</b>. Cidade com negociação em andamento conta como <b>em tratativa</b>, não como coberta, e continua aparecendo na análise semanal.</p>
+      <p class="added"><b>Cidade coberta</b> é a cidade com <b>dois fotógrafos</b> de contrato assinado e teste prático aprovado. Com apenas um, a cidade conta como <b>parcialmente coberta</b> e continua na fila. Negociação em andamento conta como <b>em tratativa</b> — tratativa não é cobertura e não tira a cidade da análise semanal.</p>
 
       <ul>
         <li><b>Resultados Esperados:</b></li>
@@ -330,7 +330,7 @@ footer b{color:var(--ink-2);font-weight:600}
         <li>Manter uma base de fotógrafos viva e rastreável, com histórico de cada prospecção e o status de cobertura de cada cidade.</li>
       </ul>
 
-      <div class="note ask"><span class="lbl">Quem decide</span>Os <b>18 dias úteis</b> vieram da soma das etapas na tabela nova da seção 6 — não de uma promessa que alguém já tenha feito. Coordenação e liderança precisam bater o martelo: esse é o prazo que o processo assume, ou outro? E <b>1 fotógrafo basta</b> para considerar a cidade coberta, ou cidade com muitos imóveis exige um segundo, para o caso de o primeiro sair, adoecer ou não atender num feriado?</div>
+      <div class="note why"><span class="lbl">Decidido em 17/09</span>Dois fotógrafos por cidade, sem exceção por porte de praça. E o relógio começa no <b>início da prospecção</b>, não na abertura do card — a prospecção fecha em 1 semana, a cobertura em 17 dias úteis. O 17 ainda depende do prazo da etapa 6, que é do time de Fotógrafos: se eles pedirem mais que 5 dias úteis, o número sobe na mesma medida.</div>
     </div>
     <pre class="raw">2. Objetivo do Processo
 
@@ -338,9 +338,9 @@ Garantir que toda cidade onde a Seazone atua tenha fotógrafo disponível, com q
 
 O processo cobre a jornada completa: identificar as cidades que ainda não têm cobertura fotográfica, prospectar e avaliar profissionais nessas praças, homologar quem atende ao nosso padrão técnico e manter a base de fotógrafos ativa e atualizada — de forma que nenhum imóvel entre em operação sem fotos no padrão Seazone e nenhuma franquia fique sem fotógrafo para acionar.
 
-Meta: 100% das cidades com imóvel ativo ou em onboarding com pelo menos 1 fotógrafo homologado, e a cidade coberta em até 18 dias úteis contados da abertura do card — sempre antes da data prevista de ativação do primeiro imóvel.
+Meta: 100% das cidades com imóvel ativo ou em onboarding com pelo menos 2 fotógrafos homologados. A prospecção se encerra em até 1 semana — 5 dias úteis contados do início da prospecção — e a cidade fica coberta em até 17 dias úteis do mesmo marco, sempre antes da data prevista de ativação do primeiro imóvel.
 
-Cidade coberta é a cidade com pelo menos um fotógrafo de contrato assinado e teste prático aprovado. Cidade com negociação em andamento conta como "em tratativa", não como coberta, e continua aparecendo na análise semanal.
+Cidade coberta é a cidade com dois fotógrafos de contrato assinado e teste prático aprovado. Com apenas um, a cidade conta como parcialmente coberta e continua na fila. Negociação em andamento conta como "em tratativa" — tratativa não é cobertura e não tira a cidade da análise semanal.
 
 Resultados Esperados:
 - Evitar travas no processo de fotos profissionais por falta de fotógrafo na praça.
@@ -446,7 +446,7 @@ Resultados Esperados:
         <div class="inner">
           <p><b>Responsável:</b> Coordenador de Fornecedores</p>
           <p>Roda a skill que cruza imóveis ativos, imóveis em onboarding e franquias com a base de fotógrafos <span class="marked">homologados</span>. A skill abre um card por cidade sem cobertura no funil <b>Fornecedores - Cidades</b> (Pipedrive), na etapa <b>Análise</b>, já com os imóveis, as franquias e a cidade coberta mais próxima.</p>
-          <p class="added">Cidade que já tem fotógrafo <b>em tratativa</b> continua aparecendo na lista, marcada como tal — só sai quando o contrato é assinado. Cidade em quarentena (ver etapa 2) fica de fora até o prazo vencer, salvo se um imóvel novo for ativado ou uma data de ativação for confirmada.</p>
+          <p class="added">A cidade só sai da lista quando tiver <b>2 fotógrafos homologados</b>. Com 1, continua na lista como <b>parcialmente coberta</b>; com negociação em andamento, aparece como <b>em tratativa</b> — nenhum dos dois estados tira a cidade da lista. Cidade em quarentena (ver etapa 2) fica de fora até o prazo vencer, salvo se um imóvel novo for ativado ou uma data de ativação for confirmada.</p>
           <p class="added">Se a sexta-feira for feriado, a rodada acontece no último dia útil anterior.</p>
           <p><b>SLA:</b> toda sexta-feira.</p>
           <div class="note why"><span class="lbl">Por quê</span>Hoje a skill considera coberta a cidade com fotógrafo "ativo <b>ou em contratação</b>". Uma negociação que termina em Perda tira a cidade da lista por três semanas sem ninguém perceber. E, com feriado na sexta, o ciclo inteiro desliza uma semana — sem regra de recuperação escrita.</div>
@@ -485,7 +485,8 @@ Resultados Esperados:
           <p>Cada lead vira um card no funil <b>Prospecção Fornecedores</b> (Pipedrive), na etapa <b>Backlog</b>, com nome do fotógrafo, telefone, e-mail, cidade e estado, nicho no campo Profissão e, nas observações, as redes sociais e onde o profissional foi encontrado.</p>
           <p class="added"><b>Canal e roteiro do primeiro contato:</b> WhatsApp, com ligação como segunda tentativa. No primeiro contato, além da apresentação, o Analista já pergunta as três coisas que eliminam o lead: <b>tem CNPJ?</b>, <b>qual câmera usa?</b> e <b>qual lente usa?</b> — e informa que os dados de contato ficam registrados no CRM da Seazone para fins de contratação.</p>
           <p class="marked"><b>Cadência de contato:</b> 3 tentativas — no dia, no 2º e no 4º dia útil — movendo o card por <em>1º Contato</em>, <em>2º Contato</em> e <em>3º Contato</em>. Sem resposta até o 5º dia útil, o card vai para <em>Perda</em> com o motivo "falta de retorno".</p>
-          <p><b>SLA:</b> 1 semana (5 dias úteis), da segunda-feira ao fechamento da leva.</p>
+          <p class="added">A leva trabalha até fechar <b>2 fotógrafos</b> na cidade. Fechando só um, a cidade fica parcialmente coberta e volta para a fila na rodada seguinte.</p>
+          <p><b>SLA:</b> 1 semana — 5 dias úteis contados do início da prospecção, na segunda-feira.</p>
           <div class="callout">
             <span class="cl">Bloco de destaque no canvas</span>
             <p>Se ao fim da semana nenhum fotógrafo for fechado na cidade, o Analista monta um relatório com o motivo e leva para <span class="added">a <b>Liderança de Fornecedores</b>, em até 1 dia útil,</span> a aprovação das alternativas: liberar valor de deslocamento, prospectar em cidades próximas ou consultar um fotógrafo já homologado de cidade vizinha que aceite cobrir a região com deslocamento.</p>
@@ -596,7 +597,7 @@ Resultados Esperados:
           <p><b>Modelo de contrato:</b> Contrato PJ Padrão · Contrato GOPs.</p>
           <p>Fazer uma <em>cópia</em> do documento e preencher com os dados do fotógrafo (nome completo, CPF, CNPJ, razão social, regiões de atendimento e valores fechados). <span class="added">As regras de negócio no contrato são as mesmas sete listadas na etapa 4.</span></p>
           <p>Enviar o contrato para assinatura pelo <em>Clicksign</em>, tendo como testemunhas o Coordenador de Fornecedores e o Coordenador de Fotógrafos <span class="added">(ou seus suplentes, seção 4)</span>.</p>
-          <p class="marked">Contrato assinado: o card do fotógrafo vai para <b>Ganho</b> no funil Prospecção Fornecedores, o fotógrafo passa a contar como cobertura ativa da cidade e o card da cidade vai para <b>Concluído</b> no funil Fornecedores - Cidades.</p>
+          <p class="marked">Contrato assinado: o card do fotógrafo vai para <b>Ganho</b> no funil Prospecção Fornecedores e o fotógrafo passa a contar como cobertura ativa da cidade. O card da cidade vai para <b>Concluído</b> no funil Fornecedores - Cidades <b>quando o segundo fotógrafo assinar</b>; com apenas um, volta para a etapa <b>Prospecção</b> como parcialmente coberta.</p>
           <p class="added">O Analista avisa a franquia da região de que a cidade está coberta e quem é o fotógrafo.</p>
           <p><b>SLA:</b> 3 dias úteis, considerando a assinatura.</p>
           <div class="note ask"><span class="lbl">Pergunta para o jurídico</span>Hoje o fotógrafo é treinado e faz teste prático <b>sem nenhum instrumento assinado</b>. Essa ordem expõe a empresa a alegação de vínculo? Convém antecipar a assinatura para antes da etapa 6, ou usar um termo de adesão curto antes do treinamento?</div>
@@ -608,7 +609,7 @@ Resultados Esperados:
         <div class="inner">
           <p><b>Responsável:</b> Coordenador de Fornecedores, com aviso do time de Fotógrafos</p>
           <p class="added">Quando um fotógrafo sai, é descredenciado ou muda de região, o time de Fotógrafos comunica Fornecedores. O Analista inativa o cadastro no Artefato de fotógrafos e registra a data e o motivo.</p>
-          <p class="added">Se a saída deixar a cidade sem nenhum fotógrafo homologado, um card da cidade é reaberto no funil <b>Fornecedores - Cidades</b>, na etapa <b>Análise</b>, marcado como reabertura por perda de cobertura — e entra na rodada da sexta seguinte com prioridade.</p>
+          <p class="added">Se a saída deixar a cidade com <b>menos de dois</b> fotógrafos homologados, um card da cidade é reaberto no funil <b>Fornecedores - Cidades</b>, na etapa <b>Análise</b>, marcado como reabertura por perda de cobertura — e entra na rodada da sexta seguinte com prioridade.</p>
           <p class="added"><b>SLA:</b> 2 dias úteis do aviso até a base atualizada.</p>
           <div class="note why"><span class="lbl">Por quê</span>A seção 3 já listava "atualização da base conforme fotógrafos entram, <b>saem</b> ou mudam de região" no escopo, mas nenhuma das 7 etapas tratava disso. E é exatamente a saída de um fotógrafo que descobre uma cidade de novo — sem essa etapa, a descoberta só acontece quando alguém precisa da foto e não tem quem faça.</div>
         </div>
@@ -619,7 +620,7 @@ Resultados Esperados:
 1. Análise periódica das cidades
 Responsável: Coordenador de Fornecedores
 Descrição: Roda a skill que cruza imóveis ativos, imóveis em onboarding e franquias com a base de fotógrafos homologados. A skill abre um card por cidade sem cobertura no funil Fornecedores - Cidades (Pipedrive), na etapa Análise, já com os imóveis, as franquias e a cidade coberta mais próxima.
-Cidade que já tem fotógrafo em tratativa continua aparecendo na lista, marcada como tal — só sai quando o contrato é assinado. Cidade em quarentena (ver etapa 2) fica de fora até o prazo vencer, salvo se um imóvel novo for ativado ou uma data de ativação for confirmada.
+A cidade só sai da lista quando tiver 2 fotógrafos homologados. Com 1, continua na lista como parcialmente coberta; com negociação em andamento, aparece como em tratativa — nenhum dos dois estados tira a cidade da lista. Cidade em quarentena (ver etapa 2) fica de fora até o prazo vencer, salvo se um imóvel novo for ativado ou uma data de ativação for confirmada.
 Se a sexta-feira for feriado, a rodada acontece no último dia útil anterior.
 SLA: toda sexta-feira.
 
@@ -642,7 +643,8 @@ Descrição:
 - Cada lead vira um card no funil Prospecção Fornecedores (Pipedrive), na etapa Backlog, com nome do fotógrafo, telefone, e-mail, cidade e estado, nicho no campo Profissão e, nas observações, as redes sociais e onde o profissional foi encontrado.
 - Canal e roteiro do primeiro contato: WhatsApp, com ligação como segunda tentativa. No primeiro contato, além da apresentação, o Analista já pergunta as três coisas que eliminam o lead: tem CNPJ?, qual câmera usa? e qual lente usa? — e informa que os dados de contato ficam registrados no CRM da Seazone para fins de contratação.
 - Cadência de contato: 3 tentativas — no dia, no 2º e no 4º dia útil — movendo o card por 1º Contato, 2º Contato e 3º Contato. Sem resposta até o 5º dia útil, o card vai para Perda com o motivo "falta de retorno".
-SLA: 1 semana (5 dias úteis), da segunda-feira ao fechamento da leva.
+A leva trabalha até fechar 2 fotógrafos na cidade. Fechando só um, a cidade fica parcialmente coberta e volta para a fila na rodada seguinte.
+SLA: 1 semana — 5 dias úteis contados do início da prospecção, na segunda-feira.
 
 Se ao fim da semana nenhum fotógrafo for fechado na cidade, o Analista monta um relatório com o motivo e leva para a Liderança de Fornecedores, em até 1 dia útil, a aprovação das alternativas: liberar valor de deslocamento, prospectar em cidades próximas ou consultar um fotógrafo já homologado de cidade vizinha que aceite cobrir a região com deslocamento.
 
@@ -696,7 +698,7 @@ Descrição:
 - Modelo de contrato: Contrato PJ Padrão / Contrato GOPs.
 - Fazer uma cópia do documento e preencher com os dados do fotógrafo (nome completo, CPF, CNPJ, razão social, regiões de atendimento e valores fechados). As regras de negócio no contrato são as mesmas sete listadas na etapa 4.
 - Enviar o contrato para assinatura pelo Clicksign, tendo como testemunhas o Coordenador de Fornecedores e o Coordenador de Fotógrafos (ou seus suplentes, seção 4).
-- Contrato assinado: o card do fotógrafo vai para Ganho no funil Prospecção Fornecedores, o fotógrafo passa a contar como cobertura ativa da cidade e o card da cidade vai para Concluído no funil Fornecedores - Cidades.
+- Contrato assinado: o card do fotógrafo vai para Ganho no funil Prospecção Fornecedores e o fotógrafo passa a contar como cobertura ativa da cidade. O card da cidade vai para Concluído no funil Fornecedores - Cidades quando o segundo fotógrafo assinar; com apenas um, volta para a etapa Prospecção como parcialmente coberta.
 - O Analista avisa a franquia da região de que a cidade está coberta e quem é o fotógrafo.
 SLA: 3 dias úteis, considerando a assinatura.
 
@@ -704,7 +706,7 @@ SLA: 3 dias úteis, considerando a assinatura.
 Responsável: Coordenador de Fornecedores, com aviso do time de Fotógrafos
 Descrição:
 - Quando um fotógrafo sai, é descredenciado ou muda de região, o time de Fotógrafos comunica Fornecedores. O Analista inativa o cadastro no Artefato de fotógrafos e registra a data e o motivo.
-- Se a saída deixar a cidade sem nenhum fotógrafo homologado, um card da cidade é reaberto no funil Fornecedores - Cidades, na etapa Análise, marcado como reabertura por perda de cobertura — e entra na rodada da sexta seguinte com prioridade.
+- Se a saída deixar a cidade com menos de dois fotógrafos homologados, um card da cidade é reaberto no funil Fornecedores - Cidades, na etapa Análise, marcado como reabertura por perda de cobertura — e entra na rodada da sexta seguinte com prioridade.
 SLA: 2 dias úteis do aviso até a base atualizada.</pre>
   </article>
 
@@ -713,42 +715,42 @@ SLA: 2 dias úteis do aviso até a base atualizada.</pre>
     <header><span class="em">⏳</span><h3>6. Prazos e SLA</h3><span class="tag alt">Refeita</span>
       <span class="copyrow"><button class="btn" data-copy>Copiar</button></span></header>
     <div class="body">
-      <p class="lbl">Todos os prazos abaixo são em dias úteis</p>
+      <p class="lbl">Todos os prazos são em dias úteis. O acumulado é contado do início da prospecção — a segunda-feira em que o Analista pega o card</p>
       <div class="tblwrap">
       <table class="tbl">
         <thead><tr><th>Etapa</th><th>SLA</th><th>Acumulado</th></tr></thead>
         <tbody>
-          <tr><td>1. Análise periódica das cidades</td><td>Toda sexta-feira (automática)</td><td class="num">dia 0</td></tr>
-          <tr><td>2. Decisão e priorização</td><td>1 dia útil — mesma sexta</td><td class="num">dia 1</td></tr>
-          <tr><td>3. Prospecção</td><td>5 dias úteis — começa na segunda</td><td class="num">dia 6</td></tr>
-          <tr><td>4. Negociação</td><td>3 dias úteis do primeiro retorno</td><td class="num">dia 9</td></tr>
-          <tr><td>5. Cadastro do fotógrafo</td><td>1 dia útil após o aceite</td><td class="num">dia 10</td></tr>
-          <tr><td>6. Onboarding, treinamento e teste prático</td><td><span class="marked">5 dias úteis</span></td><td class="num">dia 15</td></tr>
-          <tr><td>7. Contrato e fechamento</td><td>3 dias úteis, considerando a assinatura</td><td class="num">dia 18</td></tr>
+          <tr><td>1. Análise periódica das cidades</td><td>Toda sexta-feira (automática)</td><td class="num">sexta anterior</td></tr>
+          <tr><td>2. Decisão e priorização</td><td>1 dia útil — mesma sexta</td><td class="num">sexta anterior</td></tr>
+          <tr><td>3. Prospecção</td><td>5 dias úteis — começa na segunda</td><td class="num">dia 5</td></tr>
+          <tr><td>4. Negociação</td><td>3 dias úteis do primeiro retorno</td><td class="num">dia 8</td></tr>
+          <tr><td>5. Cadastro do fotógrafo</td><td>1 dia útil após o aceite</td><td class="num">dia 9</td></tr>
+          <tr><td>6. Onboarding, treinamento e teste prático</td><td><span class="marked">5 dias úteis</span></td><td class="num">dia 14</td></tr>
+          <tr><td>7. Contrato e fechamento</td><td>3 dias úteis, considerando a assinatura</td><td class="num">dia 17</td></tr>
           <tr><td>8. Manutenção da base</td><td>2 dias úteis do aviso</td><td class="num">avulso</td></tr>
-          <tr><td>Lead time de prospecção</td><td>5 dias úteis — da fila ao primeiro retorno</td><td class="num">—</td></tr>
+          <tr><td>Lead time de prospecção</td><td>1 semana — 5 dias úteis do início da prospecção</td><td class="num">dia 5</td></tr>
         </tbody>
       </table>
       </div>
-      <p class="added"><b>Lead time de cobertura da cidade: 18 dias úteis</b> — da abertura do card à assinatura do contrato. Este é o SLA do processo.</p>
+      <p class="added"><b>Lead time de cobertura da cidade: 17 dias úteis</b> — do início da prospecção à assinatura do contrato do segundo fotógrafo. Este é o SLA do processo.</p>
       <p class="added">Regras de perda não são prazo de execução e ficam registradas à parte: fotógrafo sem retorno por 3 dias úteis na negociação vai para Perda; lead sem resposta até o 5º dia útil da cadência vai para Perda.</p>
-      <div class="note why"><span class="lbl">Por quê</span>A tabela de hoje declara "SLA Total do processo: 1 semana", mas as próprias etapas listadas nela somam bem mais do que isso. Um dos dois números está errado, e enquanto os dois convivem ninguém sabe qual será cobrado. A leitura mais provável é que "1 semana" sempre foi o prazo da <b>prospecção</b> — por isso ele continua na tabela, com esse nome, e o prazo do processo inteiro ganha um número próprio.</div>
+      <div class="note why"><span class="lbl">Por quê</span>A tabela de hoje declara "SLA Total do processo: 1 semana", mas as próprias etapas listadas nela somam bem mais do que isso. Um dos dois números está errado, e enquanto os dois convivem ninguém sabe qual será cobrado. Confirmado por você: "1 semana" sempre foi o prazo da <b>prospecção</b>, contado do início dela e não da abertura do card. Por isso ele continua na tabela com esse nome, e o prazo do processo inteiro ganha um número próprio, ancorado no mesmo marco.</div>
     </div>
     <pre class="raw">6. Prazos e SLA
-Todos os prazos abaixo são em dias úteis.
+Todos os prazos são em dias úteis. O acumulado é contado do início da prospecção — a segunda-feira em que o Analista pega o card.
 
 Etapa | SLA | Acumulado
-1. Análise periódica das cidades | Toda sexta-feira (automática) | dia 0
-2. Decisão e priorização | 1 dia útil — mesma sexta | dia 1
-3. Prospecção | 5 dias úteis — começa na segunda | dia 6
-4. Negociação | 3 dias úteis do primeiro retorno | dia 9
-5. Cadastro do fotógrafo | 1 dia útil após o aceite | dia 10
-6. Onboarding, treinamento e teste prático | 5 dias úteis | dia 15
-7. Contrato e fechamento | 3 dias úteis, considerando a assinatura | dia 18
+1. Análise periódica das cidades | Toda sexta-feira (automática) | sexta anterior
+2. Decisão e priorização | 1 dia útil — mesma sexta | sexta anterior
+3. Prospecção | 5 dias úteis — começa na segunda | dia 5
+4. Negociação | 3 dias úteis do primeiro retorno | dia 8
+5. Cadastro do fotógrafo | 1 dia útil após o aceite | dia 9
+6. Onboarding, treinamento e teste prático | 5 dias úteis | dia 14
+7. Contrato e fechamento | 3 dias úteis, considerando a assinatura | dia 17
 8. Manutenção da base | 2 dias úteis do aviso | avulso
-Lead time de prospecção | 5 dias úteis — da fila ao primeiro retorno | —
+Lead time de prospecção | 1 semana — 5 dias úteis do início da prospecção | dia 5
 
-Lead time de cobertura da cidade: 18 dias úteis — da abertura do card à assinatura do contrato. Este é o SLA do processo.
+Lead time de cobertura da cidade: 17 dias úteis — do início da prospecção à assinatura do contrato do segundo fotógrafo. Este é o SLA do processo.
 
 Regras de perda não são prazo de execução: fotógrafo sem retorno por 3 dias úteis na negociação vai para Perda; lead sem resposta até o 5º dia útil da cadência vai para Perda.</pre>
   </article>
@@ -764,7 +766,8 @@ Regras de perda não são prazo de execução: fotógrafo sem retorno por 3 dias
         <thead><tr><th>Indicador</th><th>De onde sai</th><th>Frequência</th></tr></thead>
         <tbody>
           <tr><td>Cidades descobertas em aberto</td><td>Funil Fornecedores - Cidades (etapas Análise e Prospecção)</td><td>Semanal</td></tr>
-          <tr><td>Tempo médio para cobrir uma cidade</td><td>Pipedrive — abertura do card até Concluído</td><td>Mensal</td></tr>
+          <tr><td>Cidades parcialmente cobertas (só 1 fotógrafo)</td><td>Artefato de fotógrafos — contagem de homologados por cidade</td><td>Semanal</td></tr>
+          <tr><td>Tempo médio para cobrir uma cidade</td><td>Pipedrive — entrada na etapa Prospecção até Concluído</td><td>Mensal</td></tr>
           <tr><td>Conversão de lead a contrato por frente de busca</td><td>Funil Prospecção Fornecedores, campo de origem (Receita / Instagram / Google / indicação de franquia)</td><td>Mensal</td></tr>
           <tr><td>Taxa de aprovação no teste prático</td><td>Etapa Em homologação → Ganho vs. Perda</td><td>Mensal</td></tr>
           <tr><td>Cidades cobertas por deslocamento</td><td>Cards fechados via degrau de exceção da etapa 3</td><td>Mensal</td></tr>
@@ -778,7 +781,8 @@ Regras de perda não são prazo de execução: fotógrafo sem retorno por 3 dias
 
 Indicador | De onde sai | Frequência
 Cidades descobertas em aberto | Funil Fornecedores - Cidades (etapas Análise e Prospecção) | Semanal
-Tempo médio para cobrir uma cidade | Pipedrive — abertura do card até Concluído | Mensal
+Cidades parcialmente cobertas (só 1 fotógrafo) | Artefato de fotógrafos — contagem de homologados por cidade | Semanal
+Tempo médio para cobrir uma cidade | Pipedrive — entrada na etapa Prospecção até Concluído | Mensal
 Conversão de lead a contrato por frente de busca | Funil Prospecção Fornecedores, campo de origem (Receita / Instagram / Google / indicação de franquia) | Mensal
 Taxa de aprovação no teste prático | Etapa Em homologação -> Ganho vs. Perda | Mensal
 Cidades cobertas por deslocamento | Cards fechados via degrau de exceção da etapa 3 | Mensal
@@ -830,7 +834,7 @@ O processo monta listas de pessoas físicas a partir da Receita Federal e de red
 <section class="view" id="v-resp" hidden>
   <div class="verdict">
     <h2>O que a versão 2 resolveu, e o que não</h2>
-    <p>Comparei os 9 prints do canvas de hoje com os 36 pontos do arquivo de validações. <span class="hl">Dois pontos foram fechados</span> — a seção 2 em branco e o "e quando os 30 leads acabam?". <span class="hl">Seis andaram pela metade.</span> Os outros 28 continuam iguais. Encontrei também <span class="hl">6 coisas novas</span>, quase todas criadas pelas próprias mudanças da v2.</p>
+    <p>Comparei os 9 prints do canvas de hoje com os 36 pontos do arquivo de validações. <span class="hl">Três pontos foram fechados</span> — a seção 2 em branco, o "e quando os 30 leads acabam?" e, em 17/09, a definição de quantos fotógrafos cobrem uma cidade. <span class="hl">Seis andaram pela metade.</span> Os outros 27 continuam iguais. Encontrei também <span class="hl">6 coisas novas</span>, quase todas criadas pelas próprias mudanças da v2.</p>
     <p>Abaixo, ponto a ponto: o que mudou, e a resposta ou recomendação quando dá para dar uma. Onde a decisão é de gente — preço, jurídico, prazo de outro time — está marcado como tal, e o texto correspondente já está no canvas ajustado da outra aba, com a lacuna no lugar certo.</p>
   </div>
 
@@ -857,13 +861,13 @@ O processo monta listas de pessoas físicas a partir da Receita Federal e de red
 var R = [
 {g:"v2",id:"V01",st:"mid",t:"Qual é o objetivo do processo?",w:"Coordenação",
  v:"A seção 2 saiu do branco e ficou boa: diz o porquê, delimita a jornada e lista seis resultados esperados. O que falta é a parte mensurável — não há número nem prazo, então ninguém consegue dizer no fim do mês se o processo cumpriu o objetivo.",
- r:"Acrescentar duas frases: a meta (100% das cidades com imóvel ativo ou em onboarding com ao menos 1 fotógrafo homologado, cidade coberta em até 18 dias úteis da abertura do card) e a definição de cidade coberta. Texto pronto na aba Canvas ajustado, seção 2."},
-{g:"v2",id:"V02",st:"no",t:"Quantos fotógrafos tornam uma cidade coberta?",w:"Coordenação",
- v:"Continua sem número. O objetivo novo diz 'tenha fotógrafo disponível', no singular, o que sugere um — mas não está escrito, e a automação não sabe disso.",
- r:"Recomendo escrever: 1 homologado cobre a cidade; cidade com 10 ou mais imóveis ativos exige um segundo, porque hoje a saída de um único fotógrafo descobre a praça inteira sem aviso. O número 10 é chute meu — Coordenação define."},
+ r:"Definido com você em 17/09: a meta é 100% das cidades com ao menos 2 fotógrafos homologados, prospecção encerrada em 1 semana contada do início da prospecção — não da abertura do card — e cidade coberta em 17 dias úteis do mesmo marco. Já escrito na seção 2 da aba Canvas ajustado."},
+{g:"v2",id:"V02",st:"ok",t:"Quantos fotógrafos tornam uma cidade coberta?",w:"Coordenação",
+ v:"Respondido por você em 17/09: são dois fotógrafos homologados por cidade, sem exceção por porte de praça.",
+ r:"Isso muda cinco lugares do processo, todos já ajustados: a meta e a definição de coberta (seção 2), o filtro da automação (etapa 1), o alvo da leva de 30 leads (etapa 3), a passagem do card da cidade para Concluído só quando o segundo assinar (etapa 7) e o gatilho de reabertura quando a base cai abaixo de dois (etapa 8). Criei também o estado parcialmente coberta, para a cidade com um só fotógrafo não sumir da fila, e o indicador que conta essas cidades."},
 {g:"v2",id:"V03",st:"no",t:"O que o SLA de 1 semana está medindo?",w:"Coordenação + liderança",
  v:"A tabela da seção 6 continua declarando 'SLA Total do processo: 1 semana' enquanto as etapas listadas nela somam muito mais. A v2 melhorou uma coisa: a negociação agora está marcada como paralela à prospecção, o que encurta a soma.",
- r:"Com os prazos da v2 e 5 dias úteis para a etapa 6, a soma dá 18 dias úteis. O '1 semana' quase certamente sempre foi o prazo da prospecção. Proposta: manter '1 semana' com o nome de lead time de prospecção e criar lead time de cobertura = 18 dias úteis, que passa a ser o SLA do processo. Tabela refeita na outra aba."},
+ r:"Confirmado por você em 17/09: o '1 semana' é o prazo da prospecção e conta do início dela, não da abertura do card. A tabela foi refeita com esse marco — prospecção fecha no dia 5 e a cobertura da cidade no dia 17, com a análise e a decisão aparecendo como sexta anterior. As regras de perda saíram da coluna de prazo."},
 {g:"v2",id:"V04",st:"no",t:"Qual prazo o time de Fotógrafos assume para a etapa 6?",w:"Coordenação de Fotógrafos",
  v:"Segue como 'definido pelo time de Fotógrafos', tanto na etapa quanto na tabela de SLA.",
  r:"É a única peça que falta para o lead time do processo existir. Sugestão de partida: 5 dias úteis. Precisa do aceite da Coordenação de Fotógrafos — e um número largo resolve melhor que nenhum."},
@@ -924,7 +928,7 @@ var R = [
 
 {g:"d",id:"D01",st:"no",t:"Separar o SLA total em dois indicadores",w:"Coordenação",
  v:"Não aplicado. A linha 'SLA Total do processo: 1 semana' segue na tabela.",
- r:"Tabela refeita na outra aba, com acumulado por etapa, lead time de prospecção (5 dias úteis) e lead time de cobertura (18 dias úteis). Depende de V03 e V04."},
+ r:"Tabela refeita na outra aba, com o acumulado ancorado no início da prospecção: lead time de prospecção 5 dias úteis e lead time de cobertura 17 dias úteis. Falta só o número da etapa 6 (V04) para o 17 virar definitivo."},
 {g:"d",id:"D02",st:"no",t:"Criar a etapa Em homologação e mover o Ganho",w:"Analista",
  v:"Não aplicado. O Ganho continua na etapa 5, antes do teste prático.",
  r:"É mudança de configuração no Pipedrive, não só de texto. Redação pronta nas etapas 5, 6 e 7. Depende de V06."},
