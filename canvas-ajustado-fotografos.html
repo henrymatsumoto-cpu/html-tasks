@@ -168,6 +168,11 @@ main{padding-block:var(--s7) var(--s9)}
 .btn:hover{border-color:var(--teal);color:var(--teal)}
 .btn.on{border-color:var(--sage);color:var(--sage);background:var(--sage-dim)}
 .raw{display:none}
+.msgbox{white-space:pre-wrap;font-family:var(--m);font-size:14px;line-height:1.7;color:var(--ink);
+  background:var(--bg);border:1px solid var(--line-2);border-left:3px solid var(--teal);padding:14px 16px;margin:10px 0}
+.msgbox b{font-weight:700}
+.conf-inline{font-family:var(--m);font-size:12px;color:var(--ochre);border-bottom:1px dashed var(--ochre-dim);padding-bottom:1px}
+
 
 
 /* modo limpo: o que se vê é o que se cola */
@@ -240,6 +245,7 @@ footer b{color:var(--ink-2);font-weight:600}
     <div class="stamp">
       <span>Revisão sobre o canvas de <b>17/09/2026</b></span>
       <span>Auditoria original de <b>16/09/2026</b></span>
+      <span>Cadência e objeções incluídas em <b>18/09/2026</b></span>
       <span>Base: <b>9 prints do canvas + 36 validações</b></span>
     </div>
     <div class="score">
@@ -247,14 +253,14 @@ footer b{color:var(--ink-2);font-weight:600}
       <div><div class="n mid">5</div><div class="l">resolvidos pela metade</div></div>
       <div><div class="n no">19</div><div class="l">ainda abertos</div></div>
       <div><div class="n new">6</div><div class="l">achados novos da v2</div></div>
-      <div><div class="n">1</div><div class="l">seção nova + 1 etapa nova propostas</div></div>
+      <div><div class="n">2</div><div class="l">seções novas + 1 etapa nova propostas</div></div>
     </div>
   </div>
 </header>
 
 <nav class="tabs">
   <div class="shell">
-    <button class="tab" id="t-canvas" aria-selected="true" aria-controls="v-canvas">Canvas ajustado<span class="c">8 seções</span></button>
+    <button class="tab" id="t-canvas" aria-selected="true" aria-controls="v-canvas">Canvas ajustado<span class="c">9 seções</span></button>
     <button class="tab" id="t-resp" aria-selected="false" aria-controls="v-resp">Respostas às validações<span class="c">42</span></button>
   </div>
 </nav>
@@ -484,7 +490,7 @@ Resultados Esperados:
           <p>Em paralelo, o Analista fala com a franquia da região para saber se ela tem indicação de fotógrafo — a indicação entra na mesma leva e tem prioridade no contato.</p>
           <p>Cada lead vira um card no funil <b>Prospecção Fornecedores</b> (Pipedrive), na etapa <b>Backlog</b>, com nome do fotógrafo, telefone, e-mail, cidade e estado, nicho no campo Profissão e, nas observações, as redes sociais e onde o profissional foi encontrado.</p>
           <p class="added"><b>Canal e roteiro do primeiro contato:</b> WhatsApp, com ligação como segunda tentativa. No primeiro contato, além da apresentação, o Analista já pergunta as três coisas que eliminam o lead: <b>tem CNPJ?</b>, <b>qual câmera usa?</b> e <b>qual lente usa?</b> — e informa que os dados de contato ficam registrados no CRM da Seazone para fins de contratação.</p>
-          <p class="marked"><b>Cadência de contato:</b> 3 tentativas — no dia, no 2º e no 3º dia útil — movendo o card por <em>1º Contato</em>, <em>2º Contato</em> e <em>3º Contato</em>. Sem resposta até o 3º dia útil, o card vai para <em>Perda</em> com o motivo "falta de retorno".</p>
+          <p class="marked"><b>Cadência de contato:</b> 3 dias úteis — uma rodada por dia (mensagem pela SIA, 1 hora de espera, ligação), movendo o card por <em>1º Contato</em>, <em>2º Contato</em> e <em>3º Contato</em>. Sem resposta até o 3º dia útil, o card vai para <em>Perda</em> com o motivo "falta de retorno". <span class="added">Os três templates de mensagem, os horários e o SLA de cada fase estão na seção 6.</span></p>
           <p class="added">A leva trabalha até fechar <b>2 fotógrafos</b> na cidade. Fechando só um, a cidade fica parcialmente coberta e volta para a fila na rodada seguinte.</p>
           <p><b>SLA:</b> 3 dias úteis contados do início da prospecção, na segunda-feira.</p>
           <div class="callout">
@@ -550,6 +556,7 @@ Resultados Esperados:
 
           <p class="added">Reforçar as regras de negócio com o fotógrafo — entre elas, refazer a sessão sem custo adicional caso as fotos não sejam aprovadas. <b>As regras de negócio estão no contrato.</b></p>
           <p>Se o fotógrafo possui os equipamentos, concorda com os valores, possui CNPJ e concorda com as regras de negócio, segue para homologação e cadastro. Não aceitou: card vai para <em>Perda</em> com o motivo registrado.</p>
+          <p class="added"><b>Objeções:</b> responder pela <b>matriz de objeções da seção 6</b> — preço, equipamento, exclusividade, volume, imóvel arrumado, deslocamento e as demais. Cada linha da matriz traz o limite: o que pode ser prometido e o que precisa de aprovação. Objeção nova vira linha da matriz depois de resolvida.</p>
           <p class="added"><b>Exceção de preço:</b> acima do teto da tabela, só com aprovação da Liderança de Fornecedores, registrada no card, e apenas quando a cidade não tiver outro candidato viável.</p>
           <p><b>SLA:</b> 3 dias úteis, em paralelo à prospecção. Fotógrafo que ficar 3 dias úteis sem retorno na negociação vai para <em>Perda</em> por falta de retorno.</p>
         </div>
@@ -695,7 +702,154 @@ SLA: 2 dias úteis do aviso até a base atualizada.</pre>
 
   <!-- 6 -->
   <article class="sec">
-    <header><span class="em">⏳</span><h3>6. Prazos e SLA</h3><span class="tag alt">Refeita</span>
+    <header><span class="em">📣</span><h3>6. Cadência de comunicação e matriz de objeções</h3><span class="tag novo">Seção nova</span>
+      <span class="copyrow"><button class="btn" data-copy>Copiar</button></span></header>
+    <div class="body">
+      <p>Esta seção é o que faz o kanban andar: define quantas tentativas, em que intervalo, com qual texto, o que responder quando o fotógrafo resistir e quando o card tem que sair da fase. <b>Dois relógios:</b> <span class="added">3 dias úteis para conseguir conversar</span> (etapa 3) e <span class="added">3 dias úteis a partir do primeiro retorno para fechar a negociação</span> (etapa 4).</p>
+
+      <p class="lbl">Cadência de contato — 3 dias úteis, 3 mensagens, até 4 ligações</p>
+      <div class="tblwrap">
+      <table class="tbl">
+        <thead><tr><th>Dia</th><th>Etapa do card</th><th>O que acontece</th><th>Saída</th></tr></thead>
+        <tbody>
+          <tr><td class="num">Dia 1<br>(segunda)</td><td>1º Contato</td><td>Mensagem 1 disparada pela SIA para todos os leads da cidade. Sem resposta em <b>1 hora</b> → ligação, <b>1ª tentativa</b>. Não atendeu → ligação, <b>2ª tentativa</b> no outro turno do mesmo dia.</td><td>Respondeu → Em negociação<br>Não → 2º Contato</td></tr>
+          <tr><td class="num">Dia 2</td><td>2º Contato</td><td>Mensagem 2 (genérica, mesmo template). Sem resposta em 1 hora → ligação, <b>3ª tentativa</b>.</td><td>Respondeu → Em negociação<br>Não → 3º Contato</td></tr>
+          <tr><td class="num">Dia 3</td><td>3º Contato</td><td>Mensagem 3 (última tentativa, tom de encerramento). Sem resposta em 1 hora → ligação, <b>4ª e última tentativa</b>.</td><td>Respondeu → Em negociação<br>Não → Perda</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p>Fim do dia 3 sem retorno: card para <em>Perda</em>, motivo <b>falta de retorno</b>. O lead volta a ser abordável depois de <span class="conf-inline">______ dias</span> de quarentena. Respondeu em qualquer ponto: a cadência para na hora, o card vai para <em>Em negociação</em> e começa o relógio de 3 dias úteis da etapa 4.</p>
+      <p><b>Regras da cadência:</b> a mensagem é sempre o template padrão — o disparo é geral para a cidade pela SIA e só as variáveis mudam. Ligação não substitui mensagem e mensagem não substitui ligação: as duas fazem parte da mesma tentativa. Toda tentativa fica registrada no card, com data e resultado. Ligação só em horário comercial.</p>
+
+      <p class="lbl">Mensagem 1 — primeiro contato (disparo geral da cidade)</p>
+      <div class="msgbox">Oi, {{nome}}! Aqui é {{analista}}, da Seazone. 👋
+A gente administra imóveis de temporada e está formando a base de fotógrafos parceiros em {{cidade}}.
+O trabalho é fotografar os imóveis por dentro para os anúncios: demanda recorrente, sem exclusividade nenhuma — você segue com seus outros clientes normalmente.
+Cheguei até você por {{origem}}; uso seu contato só para falar dessa parceria e, se preferir não receber, é só avisar que encerro por aqui.
+Faz sentido pra você? Posso te ligar hoje para explicar como funciona e os valores.</div>
+
+      <p class="lbl">Mensagem 2 — segundo contato (genérica)</p>
+      <div class="msgbox">Oi, {{nome}}! Passando aqui de novo sobre as fotos de imóveis de temporada em {{cidade}}.
+Se quiser, te mando os valores e como funciona a agenda — dá para resolver por aqui mesmo, é rápido.
+Tem algum horário melhor para eu te ligar?</div>
+
+      <p class="lbl">Mensagem 3 — terceiro contato (última tentativa)</p>
+      <div class="msgbox">Oi, {{nome}}! Esse é o meu último contato por aqui, para não ficar insistindo. 🙂
+Se em algum momento fizer sentido fotografar imóveis de temporada em {{cidade}}, é só me chamar neste número — sua vaga na nossa base continua aberta.
+Obrigado pela atenção e sucesso no seu trabalho!</div>
+
+      <p><b>Variáveis:</b> {{nome}}, {{cidade}}, {{analista}} e {{origem}} (Instagram, Google, Receita Federal ou indicação da franquia). A linha de origem e de opt-out da Mensagem 1 é o aviso de privacidade da seção 9 — ela não sai do template.</p>
+
+      <p class="lbl">Matriz de objeções — negociação</p>
+      <div class="tblwrap">
+      <table class="tbl">
+        <thead><tr><th>Objeção</th><th>O que responder</th><th>Limite</th></tr></thead>
+        <tbody>
+          <tr><td>"O valor está abaixo do que eu cobro"</td><td>O ganho não está no preço da sessão e sim no volume: demanda recorrente na cidade, sem custo de captação de cliente. E não pedimos exclusividade — ele mantém os outros trabalhos.</td><td>Abre na tabela de start e pode subir <b>até o teto</b> da tabela real. Acima do teto, só com aprovação da Liderança de Fornecedores, registrada no card.</td></tr>
+          <tr><td>"Não tenho o equipamento" (grande-angular, tripé)</td><td>Se houver interesse em adquirir, a gente espera: o card fica em stand-by e retomamos quando ele avisar. A angular não é preciosismo — é o que permite captar o ambiente inteiro por dentro, num ângulo bom, e é isso que vende a diária.</td><td>Stand-by por <span class="conf-inline">______ dias</span>. Sem intenção de adquirir, card para Perda na etapa 4.</td></tr>
+          <tr><td>"E se o imóvel estiver bagunçado?"</td><td>Não fica. A franquia entrega o imóvel limpo e arrumado antes da sessão — o fotógrafo chega, fotografa e vai embora. Arrumação e styling não são trabalho dele.</td><td>Regra do processo, não é negociável.</td></tr>
+          <tr><td>"Vocês pedem exclusividade?"</td><td>Não. Nunca pedimos exclusividade.</td><td>—</td></tr>
+          <tr><td>"Quantas sessões vou ter por mês?"</td><td>Não garantimos volume fixo. Mostrar o tamanho real da praça: imóveis ativos hoje e os que entram em ativação. É trabalho recorrente, não é job único.</td><td>Nunca prometer número de sessões.</td></tr>
+          <tr><td>"Já trabalho com uma imobiliária / com um concorrente"</td><td>Sem problema, não há exclusividade nem impedimento. O único cuidado é o uso das fotos feitas para a Seazone.</td><td>Direitos de uso: conforme o contrato.</td></tr>
+          <tr><td>"Não tenho CNPJ" / "sou MEI"</td><td>MEI resolve. CNPJ é requisito para o pagamento e para o contrato.</td><td>Sem CNPJ e sem intenção de abrir, descarte já na etapa 3.</td></tr>
+          <tr><td>"Quando eu recebo?"</td><td>Pagamento por PIX, no prazo previsto em contrato.</td><td>Prazo de pagamento: <span class="conf-inline">______</span></td></tr>
+          <tr><td>"Preciso me deslocar até a cidade vizinha"</td><td>Existe regra de deslocamento; apresentar exatamente o que está no contrato, sem combinar valor por fora.</td><td>Valor de deslocamento: <span class="conf-inline">______</span></td></tr>
+          <tr><td>"A edição está inclusa nesse valor?"</td><td>Sim: o valor é da sessão entregue, já tratada em Lightroom, com a quantidade mínima de fotos combinada.</td><td>Mínimo de fotos e prazo de entrega: <span class="conf-inline">______</span></td></tr>
+          <tr><td>"E se vocês não gostarem das fotos?"</td><td>Refação da sessão sem custo adicional quando as fotos não forem aprovadas — e o padrão esperado é mostrado no treinamento e no teste prático, antes de qualquer sessão real.</td><td>Regra de negócio já fechada, está no contrato.</td></tr>
+          <tr><td>"Com quem eu falo no dia? Quem abre o imóvel?"</td><td>A franquia agenda e dá o acesso; o fotógrafo tem um contato único para o dia da sessão.</td><td>—</td></tr>
+          <tr><td>"Posso usar as fotos no meu portfólio?"</td><td>Levar para o Analista antes de prometer.</td><td>Jurídico: <span class="conf-inline">______</span></td></tr>
+          <tr><td>"Faço vídeo e drone, cobro à parte"</td><td>O escopo deste processo é foto interna do imóvel. Anotar o interesse no card, mas não fechar extra na negociação.</td><td>Fora do escopo do processo.</td></tr>
+          <tr><td>"Ouvi falar mal" / "já trabalhei com vocês e não deu certo"</td><td>Ouvir, registrar no card o que aconteceu e escalar para o Coordenador antes de continuar.</td><td>Não improvisar resposta.</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p>Objeção que não estiver nesta lista vira uma linha nova aqui depois de resolvida — é assim que a matriz para de envelhecer.</p>
+
+      <p class="lbl">SLA das fases do contato</p>
+      <div class="tblwrap">
+      <table class="tbl">
+        <thead><tr><th>Fase</th><th>Prazo</th><th>Se estourar</th></tr></thead>
+        <tbody>
+          <tr><td>1º Contato</td><td>Dia 1 — mensagem + 1h + até 2 ligações</td><td>Move para 2º Contato</td></tr>
+          <tr><td>2º Contato</td><td>Dia 2 — mensagem + 1h + 1 ligação</td><td>Move para 3º Contato</td></tr>
+          <tr><td>3º Contato</td><td>Dia 3 — mensagem + 1h + 1 ligação</td><td>Perda, motivo falta de retorno</td></tr>
+          <tr><td>Em negociação</td><td>3 dias úteis do primeiro retorno</td><td>Perda por falta de retorno, ou stand-by com data marcada</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p>Card parado além do prazo da fase é fila: quem opera move ou perde, não deixa em silêncio. É esse acordo que mantém o processo linear e o kanban andando.</p>
+
+      <div class="note why" data-rev><span class="lbl">Por quê</span>O canvas tinha o número de tentativas, mas não tinha intervalo, texto nem critério de saída — três coisas que, faltando, param o funil: o analista fica sem saber quando ligar de novo, escreve uma mensagem diferente para cada lead e deixa card sem retorno parado no meio do funil. Com a cadência escrita, o disparo pela SIA vira um template só, cada fase tem prazo e saída, e a negociação deixa de depender de quem está negociando: a matriz de objeções dá a resposta e, principalmente, o <b>limite</b> de cada uma — quem pode subir preço, até onde, e o que não se promete.</div>
+    </div>
+    <pre class="raw">6. Cadência de comunicação e matriz de objeções
+
+Dois relógios: 3 dias úteis para conseguir conversar (etapa 3) e 3 dias úteis a partir do primeiro retorno para fechar a negociação (etapa 4).
+
+CADÊNCIA DE CONTATO — 3 dias úteis, 3 mensagens, até 4 ligações
+
+Dia | Etapa do card | O que acontece | Saída
+Dia 1 (segunda) | 1º Contato | Mensagem 1 disparada pela SIA para todos os leads da cidade. Sem resposta em 1 hora -> ligação, 1ª tentativa. Não atendeu -> ligação, 2ª tentativa no outro turno do mesmo dia. | Respondeu -> Em negociação / Não -> 2º Contato
+Dia 2 | 2º Contato | Mensagem 2 (genérica, mesmo template). Sem resposta em 1 hora -> ligação, 3ª tentativa. | Respondeu -> Em negociação / Não -> 3º Contato
+Dia 3 | 3º Contato | Mensagem 3 (última tentativa, tom de encerramento). Sem resposta em 1 hora -> ligação, 4ª e última tentativa. | Respondeu -> Em negociação / Não -> Perda
+
+Fim do dia 3 sem retorno: card para Perda, motivo "falta de retorno". O lead volta a ser abordável depois de ______ dias de quarentena. Respondeu em qualquer ponto: a cadência para na hora, o card vai para Em negociação e começa o relógio de 3 dias úteis da etapa 4.
+
+Regras da cadência: a mensagem é sempre o template padrão — o disparo é geral para a cidade pela SIA e só as variáveis mudam. Ligação não substitui mensagem e mensagem não substitui ligação: as duas fazem parte da mesma tentativa. Toda tentativa fica registrada no card, com data e resultado. Ligação só em horário comercial.
+
+MENSAGEM 1 — primeiro contato (disparo geral da cidade)
+Oi, {{nome}}! Aqui é {{analista}}, da Seazone.
+A gente administra imóveis de temporada e está formando a base de fotógrafos parceiros em {{cidade}}.
+O trabalho é fotografar os imóveis por dentro para os anúncios: demanda recorrente, sem exclusividade nenhuma — você segue com seus outros clientes normalmente.
+Cheguei até você por {{origem}}; uso seu contato só para falar dessa parceria e, se preferir não receber, é só avisar que encerro por aqui.
+Faz sentido pra você? Posso te ligar hoje para explicar como funciona e os valores.
+
+MENSAGEM 2 — segundo contato (genérica)
+Oi, {{nome}}! Passando aqui de novo sobre as fotos de imóveis de temporada em {{cidade}}.
+Se quiser, te mando os valores e como funciona a agenda — dá para resolver por aqui mesmo, é rápido.
+Tem algum horário melhor para eu te ligar?
+
+MENSAGEM 3 — terceiro contato (última tentativa)
+Oi, {{nome}}! Esse é o meu último contato por aqui, para não ficar insistindo.
+Se em algum momento fizer sentido fotografar imóveis de temporada em {{cidade}}, é só me chamar neste número — sua vaga na nossa base continua aberta.
+Obrigado pela atenção e sucesso no seu trabalho!
+
+Variáveis: {{nome}}, {{cidade}}, {{analista}} e {{origem}} (Instagram, Google, Receita Federal ou indicação da franquia). A linha de origem e de opt-out da Mensagem 1 é o aviso de privacidade da seção 9 — ela não sai do template.
+
+MATRIZ DE OBJEÇÕES — NEGOCIAÇÃO
+
+Objeção | O que responder | Limite
+"O valor está abaixo do que eu cobro" | O ganho não está no preço da sessão e sim no volume: demanda recorrente na cidade, sem custo de captação de cliente. E não pedimos exclusividade — ele mantém os outros trabalhos. | Abre na tabela de start e pode subir até o teto da tabela real. Acima do teto, só com aprovação da Liderança de Fornecedores, registrada no card.
+"Não tenho o equipamento" (grande-angular, tripé) | Se houver interesse em adquirir, a gente espera: o card fica em stand-by e retomamos quando ele avisar. A angular não é preciosismo — é o que permite captar o ambiente inteiro por dentro, num ângulo bom, e é isso que vende a diária. | Stand-by por ______ dias. Sem intenção de adquirir, card para Perda na etapa 4.
+"E se o imóvel estiver bagunçado?" | Não fica. A franquia entrega o imóvel limpo e arrumado antes da sessão — o fotógrafo chega, fotografa e vai embora. Arrumação e styling não são trabalho dele. | Regra do processo, não é negociável.
+"Vocês pedem exclusividade?" | Não. Nunca pedimos exclusividade. | —
+"Quantas sessões vou ter por mês?" | Não garantimos volume fixo. Mostrar o tamanho real da praça: imóveis ativos hoje e os que entram em ativação. É trabalho recorrente, não é job único. | Nunca prometer número de sessões.
+"Já trabalho com uma imobiliária / com um concorrente" | Sem problema, não há exclusividade nem impedimento. O único cuidado é o uso das fotos feitas para a Seazone. | Direitos de uso: conforme o contrato.
+"Não tenho CNPJ" / "sou MEI" | MEI resolve. CNPJ é requisito para o pagamento e para o contrato. | Sem CNPJ e sem intenção de abrir, descarte já na etapa 3.
+"Quando eu recebo?" | Pagamento por PIX, no prazo previsto em contrato. | Prazo de pagamento: ______
+"Preciso me deslocar até a cidade vizinha" | Existe regra de deslocamento; apresentar exatamente o que está no contrato, sem combinar valor por fora. | Valor de deslocamento: ______
+"A edição está inclusa nesse valor?" | Sim: o valor é da sessão entregue, já tratada em Lightroom, com a quantidade mínima de fotos combinada. | Mínimo de fotos e prazo de entrega: ______
+"E se vocês não gostarem das fotos?" | Refação da sessão sem custo adicional quando as fotos não forem aprovadas — e o padrão esperado é mostrado no treinamento e no teste prático, antes de qualquer sessão real. | Regra de negócio já fechada, está no contrato.
+"Com quem eu falo no dia? Quem abre o imóvel?" | A franquia agenda e dá o acesso; o fotógrafo tem um contato único para o dia da sessão. | —
+"Posso usar as fotos no meu portfólio?" | Levar para o Analista antes de prometer. | Jurídico: ______
+"Faço vídeo e drone, cobro à parte" | O escopo deste processo é foto interna do imóvel. Anotar o interesse no card, mas não fechar extra na negociação. | Fora do escopo do processo.
+"Ouvi falar mal" / "já trabalhei com vocês e não deu certo" | Ouvir, registrar no card o que aconteceu e escalar para o Coordenador antes de continuar. | Não improvisar resposta.
+
+Objeção que não estiver nesta lista vira uma linha nova aqui depois de resolvida.
+
+SLA DAS FASES DO CONTATO
+
+Fase | Prazo | Se estourar
+1º Contato | Dia 1 — mensagem + 1h + até 2 ligações | Move para 2º Contato
+2º Contato | Dia 2 — mensagem + 1h + 1 ligação | Move para 3º Contato
+3º Contato | Dia 3 — mensagem + 1h + 1 ligação | Perda, motivo falta de retorno
+Em negociação | 3 dias úteis do primeiro retorno | Perda por falta de retorno, ou stand-by com data marcada
+
+Card parado além do prazo da fase é fila: quem opera move ou perde, não deixa em silêncio.</pre>
+  </article>
+
+  <!-- 7 -->
+  <article class="sec">
+    <header><span class="em">⏳</span><h3>7. Prazos e SLA</h3><span class="tag alt">Refeita</span>
       <span class="copyrow"><button class="btn" data-copy>Copiar</button></span></header>
     <div class="body">
       <p class="lbl">Todos os prazos são em dias úteis. O acumulado é contado do início da prospecção — a segunda-feira em que o Analista pega o card — e mede só o relógio de Fornecedores: a etapa 6 corre no time de Fotógrafos e entra no total quando eles definirem o prazo</p>
@@ -717,10 +871,10 @@ SLA: 2 dias úteis do aviso até a base atualizada.</pre>
       </table>
       </div>
       <p class="added"><b>Lead time de cobertura da cidade: 10 dias úteis de Fornecedores + o prazo da etapa 6</b> — do início da prospecção à assinatura do contrato do segundo fotógrafo. Os 10 dias são o que Fornecedores assume (etapas 1 a 5 e 7); o trecho de onboarding, treinamento e teste prático corre no time de Fotógrafos e fecha o número quando eles definirem o prazo.</p>
-      <p class="added">Regras de perda não são prazo de execução e ficam registradas à parte: fotógrafo sem retorno por 3 dias úteis na negociação vai para Perda; lead sem resposta até o 5º dia útil da cadência vai para Perda.</p>
+      <p class="added">Regras de perda não são prazo de execução e ficam registradas à parte: fotógrafo sem retorno por 3 dias úteis na negociação vai para Perda; lead sem resposta até o 3º dia útil da cadência vai para Perda.</p>
       <div class="note why"><span class="lbl">Por quê</span>A tabela de hoje declara "SLA Total do processo: 1 semana", mas as próprias etapas listadas nela somam bem mais do que isso. Um dos dois números está errado, e enquanto os dois convivem ninguém sabe qual será cobrado. Resolvido em 17/09: o prazo da prospecção passou a ser de <b>3 dias úteis</b>, contados do início dela e não da abertura do card, e o prazo do processo inteiro ganhou um número próprio ancorado no mesmo marco. O objetivo segue prometendo 1 semana, que é o teto — a etapa entrega dentro dele. A tabela passou a separar o que cada time assume: <b>10 dias úteis</b> é o compromisso de Fornecedores e vale como SLA cobrável hoje; a etapa 6 aparece sem número porque o prazo é do time de Fotógrafos, e o lead time de cobertura só vira um número único quando eles responderem (V04).</div>
     </div>
-    <pre class="raw">6. Prazos e SLA
+    <pre class="raw">7. Prazos e SLA
 Todos os prazos são em dias úteis. O acumulado é contado do início da prospecção — a segunda-feira em que o Analista pega o card — e mede só o relógio de Fornecedores: a etapa 6 corre no time de Fotógrafos e entra no total quando eles definirem o prazo.
 
 Etapa | SLA | Acumulado
@@ -737,12 +891,12 @@ Lead time de Fornecedores | 10 dias úteis — etapas 1 a 5 e 7 | dia 10
 
 Lead time de cobertura da cidade: 10 dias úteis de Fornecedores + o prazo da etapa 6 — do início da prospecção à assinatura do contrato do segundo fotógrafo. Os 10 dias são o que Fornecedores assume (etapas 1 a 5 e 7); o trecho de onboarding, treinamento e teste prático corre no time de Fotógrafos.
 
-Regras de perda não são prazo de execução: fotógrafo sem retorno por 3 dias úteis na negociação vai para Perda; lead sem resposta até o 5º dia útil da cadência vai para Perda.</pre>
+Regras de perda não são prazo de execução: fotógrafo sem retorno por 3 dias úteis na negociação vai para Perda; lead sem resposta até o 3º dia útil da cadência vai para Perda.</pre>
   </article>
 
   <!-- 7 -->
   <article class="sec">
-    <header><span class="em">📊</span><h3>7. Indicadores</h3><span class="tag novo">Seção nova</span><span class="tag conf">confirmar quais</span>
+    <header><span class="em">📊</span><h3>8. Indicadores</h3><span class="tag novo">Seção nova</span><span class="tag conf">confirmar quais</span>
       <span class="copyrow"><button class="btn" data-copy>Copiar</button></span></header>
     <div class="body">
       <p>O processo hoje tem prazos, mas nenhum indicador de resultado — não dá para saber se ele está funcionando. Ponto de partida para a liderança escolher:</p>
@@ -762,7 +916,7 @@ Regras de perda não são prazo de execução: fotógrafo sem retorno por 3 dias
       </div>
       <p class="added"><b>Responsável por publicar:</b> ______ · <b>Onde:</b> ______</p>
     </div>
-    <pre class="raw">7. Indicadores
+    <pre class="raw">8. Indicadores
 
 Indicador | De onde sai | Frequência
 Cidades descobertas em aberto | Funil Fornecedores - Cidades (etapas Análise e Prospecção) | Semanal
@@ -778,7 +932,7 @@ Responsável por publicar: ______ · Onde: ______</pre>
 
   <!-- 8 -->
   <article class="sec">
-    <header><span class="em">🔒</span><h3>8. Dados pessoais e guarda</h3><span class="tag novo">Seção nova</span><span class="tag conf">jurídico / DPO</span>
+    <header><span class="em">🔒</span><h3>9. Dados pessoais e guarda</h3><span class="tag novo">Seção nova</span><span class="tag conf">jurídico / DPO</span>
       <span class="copyrow"><button class="btn" data-copy>Copiar</button></span></header>
     <div class="body">
       <p>O processo monta listas de pessoas físicas a partir da Receita Federal e de redes sociais, contata quem nunca pediu contato e depois guarda CPF, chave PIX, endereço e razão social.</p>
@@ -792,7 +946,7 @@ Responsável por publicar: ______ · Onde: ______</pre>
       </ul>
       <div class="note why"><span class="lbl">Preenchido em 17/09</span>Os campos em aberto foram respondidos pela área: base legal, acesso restrito a CPF e chave PIX e a regra de descarte. Falta só a validação do Jurídico / DPO — em especial dois pontos: se "Prospecção Fornecedores" é mesmo a base legal que eles querem declarar (a LGPD pede uma das hipóteses do art. 7º, como legítimo interesse) e se manter os cards em Perda para sempre se sustenta sem um prazo de guarda escrito.</div>
     </div>
-    <pre class="raw">8. Dados pessoais e guarda
+    <pre class="raw">9. Dados pessoais e guarda
 
 O processo monta listas de pessoas físicas a partir da Receita Federal e de redes sociais, contata quem nunca pediu contato e depois guarda CPF, chave PIX, endereço e razão social.
 
