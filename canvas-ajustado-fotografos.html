@@ -717,11 +717,15 @@ SLA: 2 dias úteis do aviso até a base atualizada.</pre>
 
       <h4 class="sub">Tentativa de contato — 1º dia <span class="pill">card em 1º Contato</span></h4>
       <p>É a segunda-feira em que o Analista pega o card da cidade. A Mensagem 1 é disparada pela SIA para todos os leads da leva daquela cidade, no mesmo template.</p>
-      <div class="msgbox">Oi, {{nome}}! Aqui é {{analista}}, da Seazone. 👋
-A gente administra imóveis de temporada e está formando a base de fotógrafos parceiros em {{cidade}}.
-O trabalho é fotografar os imóveis por dentro para os anúncios: demanda recorrente, sem exclusividade nenhuma — você segue com seus outros clientes normalmente.
-Encontrei seu contato nas minhas buscas por fotógrafos na região e guardei só para falar dessa parceria — se não fizer sentido pra você, é só me avisar que não incomodo mais.
-Faz sentido conversarmos? Posso te ligar ainda hoje para explicar como funciona e os valores.</div>
+      <div class="msgbox">Olá, {{nome}}.
+Aqui é {{analista}}, da Seazone. 👋
+
+A Seazone administra imóveis de temporada e está formando a base de fotógrafos parceiros em {{cidade}}.
+O trabalho parceiro é fotografar os imóveis por dentro para os anúncios: demanda recorrente, sem exclusividade nenhuma, você segue com seus outros clientes normalmente.
+
+Encontrei seu contato nas minhas buscas por fotógrafos na região. Gostaria de entender um pouco mais como funciona a parceria para ver se faz sentido?
+
+Caso se interesse favor responder essa mensagem para podermos tratar de valores e condições.</div>
       <ul>
         <li><b>Sem resposta em 1 hora:</b> ligação, <b>1ª tentativa</b>.</li>
         <li><b>Não atendeu:</b> ligação, <b>2ª tentativa</b>, no outro turno do mesmo dia.</li>
@@ -750,7 +754,7 @@ Obrigado pela atenção e sucesso no seu trabalho!</div>
         <li><b>Respondeu:</b> card para <em>Em negociação</em>.</li>
         <li><b>Fim do dia sem retorno:</b> card para <em>Perda</em>, motivo <b>falta de retorno</b>. O lead volta a ser abordável depois de <span class="conf-inline">______ dias</span> de quarentena.</li>
       </ul>
-      <p><b>Variáveis do template:</b> {{nome}}, {{cidade}} e {{analista}}. A linha de como encontramos o contato e de saída ("é só me avisar que não incomodo mais") é o aviso de privacidade da seção 9 — ela não sai do template, e a origem exata (Instagram, Google, Receita Federal ou indicação da franquia) fica registrada no card.</p>
+      <p><b>Variáveis do template:</b> {{nome}}, {{cidade}} e {{analista}}. A frase "encontrei seu contato nas minhas buscas por fotógrafos na região" é o aviso de origem exigido pela seção 9 e não sai do template; a origem exata (Instagram, Google, Receita Federal ou indicação da franquia) fica registrada no card. <span class="conf-inline">Quem pedir para não ser mais contatado sai da cadência na hora e o card vai para Perda com esse motivo</span> — o texto da mensagem não oferece essa saída de forma explícita, então a regra fica escrita aqui.</p>
 
       <h4 class="sub">Negociação — os 3 dias úteis seguintes</h4>
       <p>Contam do primeiro retorno do fotógrafo, com o card parado em <em>Em negociação</em>. Sem retorno por 3 dias úteis, card para <em>Perda</em> por falta de retorno; se ele pedir tempo para se adequar, fica em stand-by <b>com data marcada</b> para retomar — stand-by sem data é card parado.</p>
@@ -831,11 +835,15 @@ TENTATIVA DE CONTATO — 1º DIA (card em 1º Contato)
 É a segunda-feira em que o Analista pega o card da cidade. A Mensagem 1 é disparada pela SIA para todos os leads da leva daquela cidade, no mesmo template.
 
 Mensagem do 1º dia:
-Oi, {{nome}}! Aqui é {{analista}}, da Seazone.
-A gente administra imóveis de temporada e está formando a base de fotógrafos parceiros em {{cidade}}.
-O trabalho é fotografar os imóveis por dentro para os anúncios: demanda recorrente, sem exclusividade nenhuma — você segue com seus outros clientes normalmente.
-Encontrei seu contato nas minhas buscas por fotógrafos na região e guardei só para falar dessa parceria — se não fizer sentido pra você, é só me avisar que não incomodo mais.
-Faz sentido conversarmos? Posso te ligar ainda hoje para explicar como funciona e os valores.
+Olá, {{nome}}.
+Aqui é {{analista}}, da Seazone.
+
+A Seazone administra imóveis de temporada e está formando a base de fotógrafos parceiros em {{cidade}}.
+O trabalho parceiro é fotografar os imóveis por dentro para os anúncios: demanda recorrente, sem exclusividade nenhuma, você segue com seus outros clientes normalmente.
+
+Encontrei seu contato nas minhas buscas por fotógrafos na região. Gostaria de entender um pouco mais como funciona a parceria para ver se faz sentido?
+
+Caso se interesse favor responder essa mensagem para podermos tratar de valores e condições.
 
 - Sem resposta em 1 hora: ligação, 1ª tentativa.
 - Não atendeu: ligação, 2ª tentativa, no outro turno do mesmo dia.
@@ -866,7 +874,7 @@ Obrigado pela atenção e sucesso no seu trabalho!
 - Respondeu: card para Em negociação.
 - Fim do dia sem retorno: card para Perda, motivo "falta de retorno". O lead volta a ser abordável depois de ______ dias de quarentena.
 
-Variáveis do template: {{nome}}, {{cidade}} e {{analista}}. A linha de como encontramos o contato e de saída ("é só me avisar que não incomodo mais") é o aviso de privacidade da seção 9 — ela não sai do template, e a origem exata (Instagram, Google, Receita Federal ou indicação da franquia) fica registrada no card.
+Variáveis do template: {{nome}}, {{cidade}} e {{analista}}. A frase "encontrei seu contato nas minhas buscas por fotógrafos na região" é o aviso de origem exigido pela seção 9 e não sai do template; a origem exata (Instagram, Google, Receita Federal ou indicação da franquia) fica registrada no card. Quem pedir para não ser mais contatado sai da cadência na hora e o card vai para Perda com esse motivo.
 
 NEGOCIAÇÃO — OS 3 DIAS ÚTEIS SEGUINTES
 Contam do primeiro retorno do fotógrafo, com o card parado em Em negociação. Sem retorno por 3 dias úteis, card para Perda por falta de retorno; se ele pedir tempo para se adequar, fica em stand-by com data marcada para retomar — stand-by sem data é card parado.
