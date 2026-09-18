@@ -201,6 +201,12 @@ article.pt[hidden]{display:none}
 .pt[data-st="novo"] .marca{color:var(--corte)}
 .pt .onde{font-size:0.82rem; color:var(--ink-3); font-family:var(--display)}
 
+.corpo p.msg{
+  background:var(--bg); border:1px solid var(--line-soft); border-left:3px solid var(--accent);
+  border-radius:8px; padding:var(--s-4) var(--s-5); margin:var(--s-3) 0;
+  color:var(--ink); line-height:1.75; max-width:70ch;
+}
+
 footer{
   max-width:1180px; margin:0 auto; padding:0 var(--s-5) var(--s-8);
   color:var(--ink-3); font-size:0.82rem; font-family:var(--display);
@@ -216,7 +222,7 @@ footer{
     <p class="sub">Canvas v2 — copie bloco por bloco e cole no Slack</p>
   </div>
   <div class="direita">
-    <span class="contador">blocos <b>1 a 9</b> · <b id="cAplicado">0</b> pontos resolvidos · atualizado 16/09</span>
+    <span class="contador">blocos <b>1 a 10</b> · <b id="cAplicado">0</b> pontos resolvidos · atualizado 18/09</span>
     <a href="https://seazone-fund.slack.com/docs/TDLTVAWQ6/F09GNUEDAJY" target="_blank" rel="noopener">abrir o canvas ↗</a>
   </div>
 </header>
@@ -234,6 +240,7 @@ footer{
       <p><b>Antes de sair colando.</b> O canvas que está no ar hoje descreve um processo <b>diferente</b> do que o HTML de validações auditou. O canvas fala em Pipefy (PIPE 23 e PIPE 7) e Blip Desk; a auditoria fala em dois funis do Pipedrive, rodada semanal, leva de 30 leads, tabela GOP, app de equipamento e contrato com testemunhas — ou seja, ela foi escrita sobre o <b>rascunho v2</b> do processo, não sobre o texto publicado.</p>
       <p>Os blocos abaixo são o v2 já com as correções aplicadas. Onde o v2 tinha um número que eu não tenho de fonte confiável, deixei <span class="def">[DEFINIR: …]</span> em vez de inventar — é exatamente a lista de decisões que ainda depende de você, da liderança e do jurídico.</p>
       <p><b>Atualizado em 17/09/2026.</b> As decisões tomadas na revisão do canvas entraram aqui e aparecem <span class="ok17">destacadas assim</span>: meta de 2 fotógrafos, quarentena de 15 dias, cadência de contato, SLAs das etapas, fonte da verdade da base, substituto e testemunhas, e o bloco de dados pessoais. O que continua <span class="def">[DEFINIR]</span> é o que ainda depende da liderança, do jurídico ou de quem montou a tabela de preços.</p>
+      <p><b>18/09/2026 — bloco 6 novo:</b> cadência de comunicação (3 dias úteis para conseguir conversar: mensagem, 1 hora, ligação 1ª e 2ª tentativa), os três templates de mensagem para o disparo geral da cidade pela SIA, a matriz de objeções da negociação e o SLA de cada fase do contato. Com isso o funil fica linear: toda fase tem prazo e saída, e card parado vira Perda em vez de ficar em silêncio. Os blocos seguintes foram renumerados (Valores virou 7, Documentos 8, Prazos 9, Dados pessoais 10).</p>
       <p><b>Confira os blocos 5 a 7 contra o seu rascunho v2</b> antes de publicar: reconstruí o fluxo a partir da auditoria e do canvas atual.</p>
     </div>
 
@@ -388,15 +395,16 @@ footer{
           <li><strong>Responsável:</strong> Analista de Fornecedores · <strong>SLA:</strong> <span class="ok17">3 dias úteis contados do início da prospecção, na segunda-feira</span></li>
           <li><strong>Origem dos leads:</strong> base CNAE da Receita Federal, Instagram, Google/Maps e indicação da franquia. Todo lead vira card no funil de prospecção, etapa Backlog.</li>
           <li><strong>Roteiro do primeiro contato</strong> — já na primeira conversa: aviso de privacidade, CNPJ, câmera e lente. Quem não tem CNPJ nem equipamento mínimo é descartado aqui, sem consumir a cadência inteira.</li>
-          <li><strong>Cadência:</strong> <span class="ok17">3 tentativas — no dia, no 2º e no 3º dia útil</span>, movendo o card por <em>1º Contato</em>, <em>2º Contato</em> e <em>3º Contato</em>. Sem resposta até o 3º dia útil, o card vai para <em>Perda</em> com o motivo "falta de retorno".</li>
+          <li><strong>Cadência:</strong> <span class="ok17">3 dias úteis, 3 mensagens e até 4 ligações — uma rodada por dia útil (mensagem, 1 hora de espera, ligação)</span>, movendo o card por <em>1º Contato</em>, <em>2º Contato</em> e <em>3º Contato</em>. Sem resposta até o 3º dia útil, o card vai para <em>Perda</em> com o motivo "falta de retorno". Os templates de mensagem e o detalhe da cadência estão no bloco 6.</li>
           <li><strong>Leva esgotada sem conversão:</strong> o card volta ao Coordenador com o resultado, e a decisão passa a ser entre ampliar o raio para a cidade vizinha, contratar com deslocamento ou assumir a cidade como não coberta.</li>
         </ul>
         <h3>Etapa 5 — Negociação</h3>
         <ul>
           <li><strong>Responsável:</strong> Analista de Fornecedores · <strong>SLA:</strong> <span class="ok17">3 dias úteis do primeiro retorno, em paralelo à prospecção — sem retorno por 3 dias úteis, card para Perda</span></li>
-          <li><strong>Valores:</strong> abre na tabela de abertura e fecha no máximo no teto (bloco 6). Acima do teto, só com a aprovação da alçada definida na etapa 3.</li>
-          <li><strong>Regras de negócio:</strong> apresentar a lista fechada do bloco 6 — a mesma lista que está no contrato.</li>
-          <li><strong>Equipamento:</strong> o critério escrito no bloco 6 <strong>é</strong> a regra. O app de verificação é conveniência: se estiver fora do ar, o Analista aplica o critério diretamente.</li>
+          <li><strong>Valores:</strong> abre na tabela de abertura e fecha no máximo no teto (bloco 7). Acima do teto, só com a aprovação da alçada definida na etapa 3.</li>
+          <li><strong>Regras de negócio:</strong> apresentar a lista fechada do bloco 7 — a mesma lista que está no contrato.</li>
+          <li><strong>Objeções:</strong> responder pela <span class="ok17">matriz de objeções do bloco 6</span> — preço, equipamento, exclusividade, imóvel arrumado e as demais. Objeção nova vira linha da matriz depois de resolvida.</li>
+          <li><strong>Equipamento:</strong> o critério escrito no bloco 7 <strong>é</strong> a regra. O app de verificação é conveniência: se estiver fora do ar, o Analista aplica o critério diretamente.</li>
           <li><strong>Decisões:</strong> ✅ avançar · ⏳ stand-by, se quiser se adequar (retomar em <span class="def">[DEFINIR: dias]</span>) · ❌ descartar, card para Perda com o motivo preenchido.</li>
         </ul>
         <h3>Etapa 6 — Coleta de dados e cadastro</h3>
@@ -432,9 +440,91 @@ footer{
       </div>
     </section>
 
-    <section class="bloco" id="b6">
+    <section class="bloco" id="b6cad">
       <div class="cabeca">
         <div class="num">6</div>
+        <div class="tit">
+          <h2>Cadência de comunicação, objeções e SLA das fases</h2>
+          <p class="nota">Bloco novo — o que garante que o card anda: quantas tentativas, em quanto tempo, o que dizer e quando parar.</p>
+        </div>
+        <span class="selo feito">novo</span>
+      </div>
+      <div class="corpo" data-copiar>
+        <p><strong>Os dois relógios da prospecção.</strong> <span class="ok17">3 dias úteis para conseguir conversar</span> (cadência de contato, etapa 4) e <span class="ok17">3 dias úteis a partir do primeiro retorno para fechar a negociação</span> (etapa 5). Um começa quando o outro dá certo; nenhum card fica parado sem data.</p>
+
+        <h3>Cadência de contato — 3 dias úteis, 3 mensagens, até 4 ligações</h3>
+        <ul>
+          <li><strong>Dia 1 (segunda, início da prospecção) — card em <em>1º Contato</em>:</strong> disparo da <strong>Mensagem 1</strong> pela SIA, no mesmo template, para todos os leads da cidade. Sem resposta em <strong>1 hora</strong> → <strong>ligação, 1ª tentativa</strong>. Não atendeu → <strong>ligação, 2ª tentativa</strong> no outro turno do mesmo dia.</li>
+          <li><strong>Dia 2 — card em <em>2º Contato</em>:</strong> <strong>Mensagem 2</strong> (genérica, mesmo template para todos). Sem resposta em 1 hora → <strong>ligação, 3ª tentativa</strong>.</li>
+          <li><strong>Dia 3 — card em <em>3º Contato</em>:</strong> <strong>Mensagem 3</strong> (última tentativa, tom de encerramento). Sem resposta em 1 hora → <strong>ligação, 4ª e última tentativa</strong>.</li>
+          <li><strong>Fim do dia 3 sem retorno:</strong> card para <em>Perda</em>, motivo "falta de retorno". O lead volta a ser abordável depois de <span class="def">[DEFINIR: quarentena do lead — sugestão, 90 dias]</span>.</li>
+          <li><strong>Respondeu em qualquer ponto:</strong> a cadência para na hora, o card sai para negociação e começa o relógio dos 3 dias úteis da etapa 5.</li>
+        </ul>
+        <p><strong>Regras da cadência:</strong> a mensagem é sempre o template padrão, sem personalizar por lead — o volume é disparado pela SIA e o que muda são as variáveis. Ligação não substitui mensagem, e mensagem não substitui ligação: as duas fazem parte da mesma tentativa. Toda tentativa fica registrada no card, com data e resultado. Ligação só em horário comercial.</p>
+
+        <h3>Mensagem 1 — primeiro contato (disparo geral da cidade)</h3>
+        <p class="msg">Oi, {{nome}}! Aqui é {{analista}}, da Seazone. 👋<br>
+        A gente administra imóveis de temporada e está formando a base de fotógrafos parceiros em {{cidade}}.<br>
+        O trabalho é fotografar os imóveis por dentro para os anúncios: demanda recorrente, sem exclusividade nenhuma — você segue com seus outros clientes normalmente.<br>
+        Cheguei até você por {{origem: Instagram / Google / indicação}}; uso seu contato só para falar dessa parceria e, se você preferir não receber, é só me avisar que encerro por aqui.<br>
+        Faz sentido pra você? Posso te ligar hoje para explicar como funciona e os valores.</p>
+
+        <h3>Mensagem 2 — segundo contato (genérica)</h3>
+        <p class="msg">Oi, {{nome}}! Passando aqui de novo sobre as fotos de imóveis de temporada em {{cidade}}.<br>
+        Se quiser, te mando os valores e como funciona a agenda — dá para resolver por aqui mesmo, é rápido.<br>
+        Tem algum horário melhor para eu te ligar?</p>
+
+        <h3>Mensagem 3 — terceiro contato (última tentativa)</h3>
+        <p class="msg">Oi, {{nome}}! Esse é o meu último contato por aqui, para não ficar insistindo. 🙂<br>
+        Se em algum momento fizer sentido fotografar imóveis de temporada em {{cidade}}, é só me chamar neste número — sua vaga na nossa base continua aberta.<br>
+        Obrigado pela atenção e sucesso no seu trabalho!</p>
+        <p><strong>Variáveis do template:</strong> {{nome}}, {{cidade}}, {{analista}} e {{origem}}. A linha de origem e de opt-out da Mensagem 1 é o aviso de privacidade do bloco 10 — ela não sai do template.</p>
+
+        <h3>Matriz de objeções — negociação</h3>
+        <table class="valores" data-tabela>
+          <thead><tr><th>Objeção</th><th>O que responder</th><th>Limite</th></tr></thead>
+          <tbody>
+            <tr><td>"O valor está abaixo do que eu cobro"</td><td>O ganho não está no preço da sessão e sim no volume: é demanda recorrente na cidade, sem custo de captação de cliente para você. E não pedimos exclusividade — você mantém seus outros trabalhos.</td><td>Abre na tabela de abertura e pode subir até o teto do bloco 7. Acima do teto, só com a alçada da liderança (etapa 3).</td></tr>
+            <tr><td>"Não tenho o equipamento" (grande-angular, tripé)</td><td>Se houver interesse em adquirir, a gente espera: o card fica em stand-by e retomamos quando ele avisar. A angular não é preciosismo — é o que permite captar o ambiente inteiro por dentro, em ângulo bom, e é isso que vende a diária.</td><td>Stand-by por <span class="def">[DEFINIR: dias]</span>. Sem intenção de adquirir, descarte na etapa 4.</td></tr>
+            <tr><td>"E se o imóvel estiver bagunçado?"</td><td>Não fica. A franquia entrega o imóvel limpo e arrumado antes da sessão — o fotógrafo chega, fotografa e vai embora. Arrumação e styling não são trabalho dele.</td><td>Regra do processo, não é negociável.</td></tr>
+            <tr><td>"Vocês pedem exclusividade?"</td><td>Não. Nunca pedimos exclusividade.</td><td>—</td></tr>
+            <tr><td>"Quantas sessões vou ter por mês?"</td><td>Não garantimos volume fixo. Mostrar o tamanho real da praça: imóveis ativos hoje e os que entram em ativação. É trabalho recorrente, não é job único.</td><td>Nunca prometer número de sessões.</td></tr>
+            <tr><td>"Já trabalho com uma imobiliária / com um concorrente"</td><td>Sem problema, não há exclusividade nem impedimento. O único cuidado é o uso das fotos feitas para a Seazone.</td><td>Direitos de uso: <span class="def">[DEFINIR — bloco 7]</span></td></tr>
+            <tr><td>"Não tenho CNPJ" / "sou MEI"</td><td>MEI resolve. CNPJ é requisito para o pagamento e para o contrato.</td><td>Sem CNPJ e sem intenção de abrir, descarte na etapa 4.</td></tr>
+            <tr><td>"Quando eu recebo?"</td><td>Pagamento por PIX, no prazo do contrato.</td><td>Prazo de pagamento: <span class="def">[DEFINIR — bloco 7]</span></td></tr>
+            <tr><td>"Preciso me deslocar até a cidade vizinha"</td><td>Existe regra de deslocamento; apresentar exatamente o que está no bloco 7, sem combinar valor por fora.</td><td><span class="def">[DEFINIR: regra de deslocamento]</span></td></tr>
+            <tr><td>"A edição está inclusa nesse valor?"</td><td>Sim: o valor é da sessão entregue, já tratada em Lightroom, com a quantidade mínima de fotos combinada.</td><td>Mínimo de fotos e prazo de entrega: <span class="def">[DEFINIR — bloco 7]</span></td></tr>
+            <tr><td>"E se vocês não gostarem das fotos?"</td><td>Refação da sessão sem custo adicional quando as fotos não forem aprovadas — e o padrão esperado é mostrado no treinamento e no teste prático, antes de qualquer sessão real.</td><td>Regra fechada do bloco 7.</td></tr>
+            <tr><td>"Com quem eu falo no dia? Quem abre o imóvel?"</td><td>A franquia agenda e dá o acesso; o fotógrafo tem um contato único para o dia da sessão.</td><td>—</td></tr>
+            <tr><td>"Posso usar as fotos no meu portfólio?"</td><td>Levar para o Analista antes de prometer.</td><td><span class="def">[DEFINIR: jurídico — uso das imagens pelo fotógrafo]</span></td></tr>
+            <tr><td>"Faço vídeo e drone, cobro à parte"</td><td>O escopo deste processo é foto interna do imóvel. Anotar o interesse no card, mas não fechar extra na negociação.</td><td>Fora do escopo — <span class="def">[DEFINIR: quem trata extras]</span></td></tr>
+            <tr><td>"Ouvi falar mal" / "já trabalhei com vocês e não deu certo"</td><td>Ouvir, registrar no card com o que aconteceu e escalar para o Coordenador antes de continuar.</td><td>Não improvisar resposta.</td></tr>
+          </tbody>
+        </table>
+        <p><strong>Regra da matriz:</strong> objeção que não está nesta lista vira uma linha nova aqui depois de resolvida — é assim que a matriz para de envelhecer.</p>
+
+        <h3>SLA das fases do contato</h3>
+        <table class="valores" data-tabela>
+          <thead><tr><th>Fase</th><th>Quando</th><th>Saída</th></tr></thead>
+          <tbody>
+            <tr><td>1º Contato</td><td>Dia 1 — Mensagem 1 + 1h + até 2 ligações</td><td>Respondeu → Negociação · Não → 2º Contato</td></tr>
+            <tr><td>2º Contato</td><td>Dia 2 — Mensagem 2 + 1h + 1 ligação</td><td>Respondeu → Negociação · Não → 3º Contato</td></tr>
+            <tr><td>3º Contato</td><td>Dia 3 — Mensagem 3 + 1h + 1 ligação</td><td>Respondeu → Negociação · Não → Perda (falta de retorno)</td></tr>
+            <tr><td>Negociação</td><td>3 dias úteis do primeiro retorno</td><td>Aceite → Em homologação · Stand-by → retomar na data · Sem retorno 3 dias úteis → Perda</td></tr>
+          </tbody>
+        </table>
+        <p>Card parado além do prazo da fase é fila: quem opera move ou perde, não deixa em silêncio. É esse acordo que mantém o funil linear e o kanban andando.</p>
+        <div class="refs" data-nao-copiar><a class="ref" href="#V18">V18</a><a class="ref" href="#D10">D10</a><a class="ref" href="#V06">V06</a></div>
+      </div>
+      <div class="rodape-bloco">
+        <button class="copiar">Copiar bloco</button>
+        <span class="dica">as mensagens saem com as quebras de linha preservadas — cole direto no template da SIA</span>
+      </div>
+    </section>
+
+    <section class="bloco" id="b6">
+      <div class="cabeca">
+        <div class="num">7</div>
         <div class="tit">
           <h2>Valores, regras de negócio e equipamento</h2>
           <p class="nota">Novo bloco — tira o “entre elas” e fecha a faixa de 4 ou mais quartos.</p>
@@ -481,7 +571,7 @@ footer{
 
     <section class="bloco" id="b7">
       <div class="cabeca">
-        <div class="num">7</div>
+        <div class="num">8</div>
         <div class="tit">
           <h2>Documentos e Ferramentas</h2>
           <p class="nota">Ajustado — cada ferramenta com o papel dela, e o dono do app de equipamento.</p>
@@ -495,7 +585,7 @@ footer{
           <li><strong>Artefato de fotógrafos:</strong> base de fotógrafos que a automação lê. <span class="ok17">É a fonte da verdade da base</span> — <span class="def">[DEFINIR: com que frequência sincroniza]</span></li>
           <li><strong>Slack:</strong> canal de chamados da prospecção.</li>
           <li><strong>Blip Desk:</strong> primeiro contato por WhatsApp, template <em>primeiro_contato_fornecedor_fotografo</em>.</li>
-          <li><strong>App de verificação de equipamento:</strong> verificaequipamento.lovable.app — dono: <span class="def">[DEFINIR: nome]</span>, lista de câmeras e lentes revisada a cada <span class="def">[DEFINIR: período]</span>. Fora do ar, vale o critério escrito no bloco 6.</li>
+          <li><strong>App de verificação de equipamento:</strong> verificaequipamento.lovable.app — dono: <span class="def">[DEFINIR: nome]</span>, lista de câmeras e lentes revisada a cada <span class="def">[DEFINIR: período]</span>. Fora do ar, vale o critério escrito no bloco 7.</li>
           <li><strong>Drive — Valores e contrato:</strong> modelos de contrato e tabela vigente.</li>
           <li><strong>Formulário de cadastro do fotógrafo:</strong> link no bloco do fluxo.</li>
         </ul>
@@ -506,7 +596,7 @@ footer{
 
     <section class="bloco" id="b8">
       <div class="cabeca">
-        <div class="num">8</div>
+        <div class="num">9</div>
         <div class="tit">
           <h2>Prazos, SLA e Indicadores</h2>
           <p class="nota">Reescrito — um SLA por etapa e dois lead times, no lugar do “SLA total”.</p>
@@ -552,7 +642,7 @@ footer{
 
     <section class="bloco" id="b9">
       <div class="cabeca">
-        <div class="num">9</div>
+        <div class="num">10</div>
         <div class="tit">
           <h2>Dados pessoais e privacidade</h2>
           <p class="nota">Bloco novo — o processo coleta CPF, PIX e endereço e monta listas a partir da Receita.</p>
@@ -590,7 +680,7 @@ footer{
           <li>Descreve o equipamento de outro jeito: “APS-C lente 10–11 mm ou Full Frame lente 16–17 mm”, contra “10–24 mm ou 16 mm” da versão de cima.</li>
           <li>Não tem a etapa de validação com a liderança nem o encaminhamento para o PIPE 7 com o detalhamento atual.</li>
         </ul>
-        <p>Antes de apagar: decidir se a regra de deslocamento entra no bloco 6 e qual é a especificação de lente correta.</p>
+        <p>Antes de apagar: decidir se a regra de deslocamento entra no bloco 7 e qual é a especificação de lente correta.</p>
         <div class="refs"><a class="ref" href="#N01">N01</a><a class="ref" href="#N02">N02</a><a class="ref" href="#N03">N03</a></div>
       </div>
       <div class="rodape-bloco">
@@ -638,37 +728,37 @@ footer{
      d:"A auditoria dizia que a seção 2 estava em branco; no canvas de hoje ela está escrita, mas sem número e sem prazo. O bloco 2 passa a ter a frase de meta — falta preencher o nº de fotógrafos e a antecedência."},
     {id:"V02", t:"Quantos fotógrafos cobrem uma cidade", st:"aberto", onde:"bloco 2",
      d:"Um basta? Tem meta de redundância para férias, doença ou fim de semana? Sem esse número a meta do bloco 2 não fecha, e a automação da etapa 1 não sabe quando parar de abrir o card."},
-    {id:"V03", t:"O que o SLA total mede", st:"aplicado", onde:"bloco 8",
-     d:"O canvas atual nem declara SLA total — as 5 linhas da tabela somam 8 dias úteis e não cobrem onboarding nem contrato. O bloco 8 troca o número único por dois lead times separados; falta dizer qual deles é cobrado."},
-    {id:"V04", t:"Prazo da etapa do time de Fotógrafos", st:"aberto", onde:"bloco 8, etapa 7",
+    {id:"V03", t:"O que o SLA total mede", st:"aplicado", onde:"bloco 9",
+     d:"O canvas atual nem declara SLA total — as 5 linhas da tabela somam 8 dias úteis e não cobrem onboarding nem contrato. O bloco 9 troca o número único por dois lead times separados; falta dizer qual deles é cobrado."},
+    {id:"V04", t:"Prazo da etapa do time de Fotógrafos", st:"aberto", onde:"bloco 9, etapa 7",
      d:"Onboarding, treinamento e teste prático continuam sem prazo. Como o contrato vem depois e é de Fornecedores, sem esse número o lead time de cobertura é indeterminável. Vale acordar um prazo, mesmo que largo."},
-    {id:"V05", t:"Dias úteis ou corridos", st:"aplicado", onde:"bloco 8",
-     d:"O bloco 8 abre declarando que todos os prazos são em dias úteis. Só confirmar que é isso mesmo — o canvas atual alterna entre “1 dia útil” e “3 dias”."},
+    {id:"V05", t:"Dias úteis ou corridos", st:"aplicado", onde:"bloco 9",
+     d:"O bloco 9 abre declarando que todos os prazos são em dias úteis. Só confirmar que é isso mesmo — o canvas atual alterna entre “1 dia útil” e “3 dias”."},
     {id:"V06", t:"Reprovação no teste prático", st:"aplicado", onde:"etapa 7",
      d:"Escrito: card para Perda com motivo, cadastro inativado, cidade de volta à fila. Falta confirmar o nome da etapa de Perda e quem executa a inativação."},
     {id:"V07", t:"Contrato antes do treinamento", st:"aberto", onde:"etapa 8",
      d:"Pergunta para o jurídico: treinar e aplicar teste prático sem instrumento assinado expõe a empresa a alegação de vínculo? Convém antecipar a assinatura ou usar um termo de adesão curto antes do treinamento?"},
-    {id:"V08", t:"Base legal e guarda dos dados", st:"aberto", onde:"bloco 9",
-     d:"O bloco 9 já existe com a estrutura da resposta — base legal da prospecção, base legal do cadastro, onde os dados ficam, quem acessa e prazo de descarte. O conteúdo é do jurídico/DPO."},
-    {id:"V09", t:"Fonte da verdade dos fotógrafos", st:"aberto", onde:"etapa 6, bloco 7",
+    {id:"V08", t:"Base legal e guarda dos dados", st:"aberto", onde:"bloco 10",
+     d:"O bloco 10 já existe com a estrutura da resposta — base legal da prospecção, base legal do cadastro, onde os dados ficam, quem acessa e prazo de descarte. O conteúdo é do jurídico/DPO."},
+    {id:"V09", t:"Fonte da verdade dos fotógrafos", st:"aberto", onde:"etapa 6, bloco 8",
      d:"Artefato de fotógrafos, PIPE 7 e os funis do Pipedrive disputam o papel. Definir de qual a automação lê, qual o Analista atualiza, e com que frequência sincronizam."},
-    {id:"V10", t:"O que define uma Grande Operação", st:"aberto", onde:"bloco 6",
+    {id:"V10", t:"O que define uma Grande Operação", st:"aberto", onde:"bloco 7",
      d:"A tabela GOP não está no canvas publicado — ela vem do rascunho v2. Seja qual for, sem critério escrito o desconto de 20 a 25% fica a critério de quem conduz a conversa."},
-    {id:"V11", t:"Margem diferente entre as tabelas", st:"aberto", onde:"bloco 6",
+    {id:"V11", t:"Margem diferente entre as tabelas", st:"aberto", onde:"bloco 7",
      d:"Na Padrão a distância entre abertura e teto vai de 9,1% a 16,7%; na GOP, de 25% a 33,3% — mais espaço para ceder justamente onde o preço já é o mais baixo. Se for intencional, registrar o motivo; se não, igualar."},
-    {id:"V12", t:"As células de R$ 275 e R$ 180", st:"aplicado", onde:"bloco 6",
-     d:"Confirmado no canvas: a abertura de 3 quartos é R$ 275, degrau de +R$ 50 onde os outros sobem R$ 20 ou R$ 25, e a linha com a menor margem da tabela. A célula está marcada no bloco 6 com a sugestão de R$ 250. O R$ 180 do achado é o estúdio da abertura, e está coerente."},
-    {id:"V13", t:"Lista completa das regras de negócio", st:"aplicado", onde:"bloco 6",
-     d:"A lista fechada está escrita no bloco 6, com sete linhas — só a refação sem custo já tem conteúdo. As outras seis precisam do número: prazo de entrega, mínimo de fotos, direitos de uso, prazo de pagamento, cancelamento e deslocamento."},
+    {id:"V12", t:"As células de R$ 275 e R$ 180", st:"aplicado", onde:"bloco 7",
+     d:"Confirmado no canvas: a abertura de 3 quartos é R$ 275, degrau de +R$ 50 onde os outros sobem R$ 20 ou R$ 25, e a linha com a menor margem da tabela. A célula está marcada no bloco 7 com a sugestão de R$ 250. O R$ 180 do achado é o estúdio da abertura, e está coerente."},
+    {id:"V13", t:"Lista completa das regras de negócio", st:"aplicado", onde:"bloco 7",
+     d:"A lista fechada está escrita no bloco 7, com sete linhas — só a refação sem custo já tem conteúdo. As outras seis precisam do número: prazo de entrega, mínimo de fotos, direitos de uso, prazo de pagamento, cancelamento e deslocamento."},
     {id:"V14", t:"Quem aprova exceção de preço", st:"aplicado", onde:"etapa 3",
      d:"A validação com a liderança virou a etapa 3 do fluxo — e é lá que a alçada de exceção é aprovada. Falta dizer quem aprova e até quanto acima do teto."},
-    {id:"V15", t:"Indicadores da liderança", st:"aplicado", onde:"bloco 8",
-     d:"Cinco indicadores propostos no bloco 8, todos extraíveis do Pipedrive e do PIPE 7. Confirmar quais interessam, quem publica, com que frequência e para quem."},
-    {id:"V16", t:"Dono do verificaequipamento.lovable.app", st:"aberto", onde:"bloco 7",
-     d:"O app não aparece no canvas publicado, mas está no fluxo real. Entrou no bloco 7 com dono e periodicidade de revisão a preencher — e com a regra de que, fora do ar, vale o critério escrito."},
-    {id:"V17", t:"Prospecção ou Backlog", st:"aberto", onde:"bloco 7",
+    {id:"V15", t:"Indicadores da liderança", st:"aplicado", onde:"bloco 9",
+     d:"Cinco indicadores propostos no bloco 9, todos extraíveis do Pipedrive e do PIPE 7. Confirmar quais interessam, quem publica, com que frequência e para quem."},
+    {id:"V16", t:"Dono do verificaequipamento.lovable.app", st:"aberto", onde:"bloco 8",
+     d:"O app não aparece no canvas publicado, mas está no fluxo real. Entrou no bloco 8 com dono e periodicidade de revisão a preencher — e com a regra de que, fora do ar, vale o critério escrito."},
+    {id:"V17", t:"Prospecção ou Backlog", st:"aberto", onde:"bloco 8",
      d:"A confusão de nomes é real, mas os nomes citados na auditoria são do Pipedrive e os do canvas são do Pipefy (Caixa de entrada, Contato inicial – Validação de informações, Homologado/Cadastrado, Perdido). Antes de padronizar o texto, decidir em qual ferramenta o processo roda de verdade."},
-    {id:"V18", t:"Canal do primeiro contato e script", st:"aplicado", onde:"etapa 4, bloco 7",
+    {id:"V18", t:"Canal do primeiro contato e script", st:"aplicado", onde:"etapa 4, bloco 8",
      d:"O canvas responde: WhatsApp pelo Blip Desk, com o template primeiro_contato_fornecedor_fotografo. Fica de pé só a parte do fallback — ligação ou e-mail quando não há resposta no WhatsApp?"},
     {id:"V19", t:"Leva de leads esgotada", st:"aplicado", onde:"etapa 4",
      d:"O degrau de exceção está escrito: o card volta ao Coordenador e a decisão é entre ampliar o raio, contratar com deslocamento ou assumir a cidade como não coberta. Falta definir o tamanho da leva."},
@@ -678,7 +768,7 @@ footer{
      d:"Escrito na etapa 2, com as duas condições que reabrem antes do prazo — novo imóvel ativado ou data de ativação confirmada. Falta o número de dias."},
     {id:"V22", t:"Substituto do Analista e testemunhas", st:"aplicado", onde:"blocos 1 e 4",
      d:"Os campos estão criados nos blocos 1 e 4, inclusive os suplentes das testemunhas. Falta preencher os nomes."},
-    {id:"D01", t:"Separar o SLA total em dois", st:"aplicado", onde:"bloco 8",
+    {id:"D01", t:"Separar o SLA total em dois", st:"aplicado", onde:"bloco 9",
      d:"Feito: lead time de prospecção e lead time de cobertura da cidade, com a definição de cada um e de qual é o SLA do processo."},
     {id:"D02", t:"Etapa Em homologação antes do Ganho", st:"aplicado", onde:"etapas 6 e 7",
      d:"Feito: o cadastro manda o card para Em homologação, e só o teste prático aprovado leva para Ganho. O caminho da reprovação está escrito junto."},
@@ -686,8 +776,8 @@ footer{
      d:"A regra está escrita — a cadência tem que caber no SLA —, mas os dois números continuam em aberto. Três tentativas a cada três dias consomem 6 a 9 dias úteis: ou o SLA vira duas semanas, ou a cadência aperta."},
     {id:"D04", t:"CNPJ, câmera e lente no primeiro contato", st:"aplicado", onde:"etapa 4",
      d:"Feito: as três perguntas entraram no roteiro do primeiro contato, junto com o aviso de privacidade. Descarta cedo quem não passaria, sobretudo o lead de Instagram e Google."},
-    {id:"D05", t:"Mesmas regras no processo e no contrato", st:"aplicado", onde:"bloco 6",
-     d:"Feito no texto: o bloco 6 diz explicitamente que a lista é a mesma do contrato. Falta o passo prático — revisar o modelo do Drive contra a lista depois de preenchida."},
+    {id:"D05", t:"Mesmas regras no processo e no contrato", st:"aplicado", onde:"bloco 7",
+     d:"Feito no texto: o bloco 7 diz explicitamente que a lista é a mesma do contrato. Falta o passo prático — revisar o modelo do Drive contra a lista depois de preenchida."},
     {id:"D06", t:"Cobertura só com fotógrafo homologado", st:"aplicado", onde:"etapa 1",
      d:"Escrito como regra de cobertura, com o estado “em tratativa” para a cidade em negociação. A mudança precisa ser feita também na automação, não só no texto."},
     {id:"D07", t:"Etapa de manutenção da base", st:"aplicado", onde:"etapa 9",
@@ -695,21 +785,21 @@ footer{
     {id:"D08", t:"Degrau de exceção da prospecção", st:"aplicado", onde:"etapa 4",
      d:"Feito — ver V19."},
     {id:"D09", t:"Critério de equipamento é a regra", st:"aplicado", onde:"etapa 5, blocos 6 e 7",
-     d:"Feito: o critério mínimo está escrito no bloco 6 e o app aparece no bloco 7 como conveniência, com a instrução de aplicar o critério direto quando ele estiver fora do ar."},
-    {id:"D10", t:"Aviso de privacidade e descarte", st:"aplicado", onde:"etapa 4, bloco 9",
-     d:"O aviso entrou no roteiro do primeiro contato e o descarte virou linha do bloco 9. O prazo é do jurídico."},
+     d:"Feito: o critério mínimo está escrito no bloco 7 e o app aparece no bloco 8 como conveniência, com a instrução de aplicar o critério direto quando ele estiver fora do ar."},
+    {id:"D10", t:"Aviso de privacidade e descarte", st:"aplicado", onde:"etapa 4, bloco 10",
+     d:"O aviso entrou no roteiro do primeiro contato e o descarte virou linha do bloco 10. O prazo é do jurídico."},
     {id:"D11", t:"Regra de feriado na rodada", st:"aplicado", onde:"etapa 1",
      d:"Feito, na redação sugerida: sendo a sexta-feira feriado, a rodada ocorre no último dia útil anterior. Era o único item que não dependia de resposta nenhuma."},
     {id:"D12", t:"Nomes de etapas e faixa de 4+ quartos", st:"aplicado", onde:"blocos 6 e 7",
      d:"A faixa mais alta virou “4 ou mais quartos” na tabela. Os nomes das etapas ficaram marcados para conferência na tela — ver V17."},
     {id:"D13", t:"Substituto e suplentes na seção 4", st:"aplicado", onde:"bloco 4",
      d:"Campos criados — ver V22."},
-    {id:"D14", t:"Indicadores e onde são medidos", st:"aplicado", onde:"bloco 8",
+    {id:"D14", t:"Indicadores e onde são medidos", st:"aplicado", onde:"bloco 9",
      d:"Lista escrita, com a origem de cada número. Falta frequência, quem publica e para quem."},
     {id:"N01", t:"O canvas tem uma versão antiga colada no fim", st:"novo", onde:"apagar",
      d:"Achado hoje, no canvas publicado: abaixo de “Página atualizada por…” há uma segunda cópia dos itens 3 a 6, de uma versão anterior, que contradiz a de cima. Quem ler até o fim segue o texto errado. Apagar depois de resolver N02."},
-    {id:"N02", t:"Deslocamento de R$ 1,20 por km", st:"novo", onde:"bloco 6",
-     d:"Aparece só na versão antiga do canvas, e em lugar nenhum da versão atual — e a auditoria já apontava a falta de uma regra de deslocamento. Decidir: a regra vale? Entra na lista do bloco 6 ou morre com o trecho antigo?"},
+    {id:"N02", t:"Deslocamento de R$ 1,20 por km", st:"novo", onde:"bloco 7",
+     d:"Aparece só na versão antiga do canvas, e em lugar nenhum da versão atual — e a auditoria já apontava a falta de uma regra de deslocamento. Decidir: a regra vale? Entra na lista do bloco 7 ou morre com o trecho antigo?"},
     {id:"N03", t:"Anotação de rascunho dentro do processo", st:"novo", onde:"etapa 6",
      d:"No meio do fluxo, na etapa de encaminhamento para cadastro, está escrito “Confirmar se precisa dessa parte”. É uma anotação de rascunho publicada como se fosse processo. Resolver e apagar. A especificação de lente também diverge entre as duas versões: 10–24 mm / 16 mm em cima, 10–11 mm / 16–17 mm embaixo."}
   ];
@@ -820,7 +910,11 @@ footer{
     });
     return partes.join('\n').replace(/\n{3,}/g, '\n\n').trim();
   }
-  function limpo(el){ return el.textContent.trim().replace(/\s+/g, ' '); }
+  function limpo(el){
+    var c = el.cloneNode(true);
+    c.querySelectorAll('br').forEach(function(b){ b.parentNode.replaceChild(document.createTextNode('\n'), b); });
+    return c.textContent.trim().replace(/[ \t]+/g, ' ').replace(/ *\n */g, '\n');
+  }
   function pad(v, n){ while (v.length < n) v += ' '; return v; }
 })();
 </script>
