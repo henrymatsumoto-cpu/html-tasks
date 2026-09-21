@@ -113,6 +113,25 @@
   .caminho dt{color:var(--fg3);white-space:nowrap}
   .caminho dd{margin:0;color:var(--fg2)}
 
+  /* fluxo do processo */
+  ol.fluxo{counter-reset:f;list-style:none;margin:0 0 var(--s4);padding:0}
+  ol.fluxo li{
+    counter-increment:f;position:relative;padding:0 0 var(--s3) 52px;
+  }
+  ol.fluxo li::before{
+    content:counter(f);position:absolute;left:0;top:0;
+    width:32px;height:32px;display:grid;place-items:center;border-radius:999px;
+    background:var(--surf);border:1px solid var(--line);
+    font-size:13px;font-weight:700;color:var(--brand);
+  }
+  ol.fluxo li::after{
+    content:"";position:absolute;left:16px;top:38px;bottom:8px;width:1px;background:var(--line);
+  }
+  ol.fluxo li:last-child{padding-bottom:0}
+  ol.fluxo li:last-child::after{display:none}
+  ol.fluxo b{display:block;color:var(--fg);font-weight:700;font-size:16px;margin-bottom:2px;padding-top:5px}
+  ol.fluxo span{display:block;color:var(--fg2);font-size:15px;max-width:66ch}
+
   /* perguntas ao jurídico */
   ol.q{counter-reset:q;list-style:none;margin:0;padding:0}
   ol.q li{
@@ -284,9 +303,28 @@
       <span class="num">4</span>
       <div>
         <h2>Como o link seria gerado</h2>
-        <p>A API da Rede, sozinha, não entrega link de pagamento pronto — ela processa cartão. O link vem do desenho abaixo.</p>
+        <p>O passo a passo do processo, do pedido até o link disponível para envio.</p>
       </div>
     </div>
+
+    <ol class="fluxo">
+      <li>
+        <b>O pedido entra no Jornada de Enxoval</b>
+        <span>O pedido de enxoval é registrado no nosso sistema, como já acontece hoje. Os valores já estão lá — é essa informação que alimenta a cobrança.</span>
+      </li>
+      <li>
+        <b>Nossa rotina identifica o pedido e dispara a geração</b>
+        <span>Uma rotina automática do Jornada reconhece que aquele pedido precisa de link de pagamento e aciona a criação.</span>
+      </li>
+      <li>
+        <b>O link é criado pela integração</b>
+        <span>O sistema solicita o link de pagamento com o valor daquele pedido. A página de pagamento é do intermediário certificado — nenhum dado de cartão passa pela Seazone.</span>
+      </li>
+      <li>
+        <b>O link é anexado ao card do pedido</b>
+        <span>A URL volta e fica registrada no próprio card do Jornada de Enxoval, junto do pedido. A partir daí o link é enviado ao cliente e o pagamento é liquidado direto na conta da Matinali.</span>
+      </li>
+    </ol>
 
     <div class="caminho rec">
       <span class="badge">Desenho definido</span>
