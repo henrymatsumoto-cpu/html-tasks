@@ -171,8 +171,8 @@
         <li>A Matinali nos daria uma <strong>credencial de cobrança</strong> (um usuário e uma senha de sistema) ligada à maquininha/conta de e-commerce dela na Rede.</li>
         <li>Com ela, nosso sistema consegue <strong>criar cobranças em nome da Matinali</strong> e consultar o resultado de cada cobrança que nós mesmos criamos.</li>
         <li>Ela <strong>não</strong> dá acesso à conta bancária, ao saldo, ao extrato, aos recebíveis nem ao cadastro da Matinali. O dinheiro continua caindo direto na conta dela, e não há como redirecioná-lo.</li>
-        <li>O risco real não é "mexer na conta deles" — é <strong>cobrar alguém indevidamente</strong> (erro de sistema ou uso indevido da credencial) e, num cenário pior, <strong>cancelar vendas</strong> que não são nossas.</li>
-        <li>Há um caminho alternativo que reduz bastante o risco jurídico e técnico: <strong>não tocar em dado de cartão</strong>, usando um intermediário de pagamento que já gera o link pronto. É o que recomendamos.</li>
+        <li>O risco real não é "mexer na conta deles" — é <strong>cancelar indevidamente um pedido já pago</strong>, por erro do nosso sistema ou uso indevido da credencial, inclusive de vendas que não originamos. É o ponto que pedimos atenção especial.</li>
+        <li>Nenhum dado de cartão passa pela Seazone: a página de pagamento é do intermediário certificado. Nós apenas <strong>geramos e enviamos o link</strong> — algo que já fazemos hoje, só que manualmente.</li>
       </ol>
     </div>
   </div>
@@ -187,7 +187,8 @@
         <p>Não é login, não é senha de internet banking, não é acesso ao portal deles.</p>
       </div>
     </div>
-    <p>É uma <strong>credencial técnica</strong> composta de dois dados: o número de filiação da Matinali na Rede e um código de integração que <strong>ela própria gera</strong>, sozinha, dentro do portal da Rede — e que ela pode <strong>revogar a qualquer momento</strong>, sem depender de nós e sem afetar o resto da operação dela. É o equivalente a uma chave de cópia única, que abre uma porta só, e que o dono pode trocar quando quiser.</p>
+    <p><strong>Importante para enquadrar a discussão:</strong> a Seazone não passa a cobrar nem a receber valores. Quem cobra, recebe e emite a nota continua sendo a Matinali. O que muda é apenas que o <strong>link de pagamento passa a ser gerado e enviado automaticamente</strong> pelo nosso sistema, em vez de manualmente — enviar link de pagamento ao cliente é algo que já fazemos hoje.</p>
+    <p style="margin-top:16px">É uma <strong>credencial técnica</strong> composta de dois dados: o número de filiação da Matinali na Rede e um código de integração que <strong>ela própria gera</strong>, sozinha, dentro do portal da Rede — e que ela pode <strong>revogar a qualquer momento</strong>, sem depender de nós e sem afetar o resto da operação dela. É o equivalente a uma chave de cópia única, que abre uma porta só, e que o dono pode trocar quando quiser.</p>
   </div>
 </section>
 
@@ -253,29 +254,16 @@
     </div>
 
     <div class="risco">
-      <div class="grau medio">Médio<small>Impacto alto ·<br>probabilidade baixa</small></div>
+      <div class="grau alto">Alto<small>Impacto alto ·<br>probabilidade baixa</small></div>
       <div>
-        <h3>Cancelamento de vendas que não são nossas</h3>
-        <p>A mesma credencial permite estornar transações daquela filiação. Na prática seria necessário conhecer o número interno da transação, mas a permissão existe — e é o ponto que mais preocupa numa eventual acusação.</p>
-        <p class="mit"><b>Mitigação:</b> não implementar a função de estorno no nosso sistema. Cancelamento fica exclusivamente com a Matinali, pelo portal dela. Isso pode e deve constar do acordo por escrito.</p>
-      </div>
-    </div>
-
-    <div class="risco">
-      <div class="grau medio">Médio<small>Impacto médio ·<br>probabilidade média</small></div>
-      <div>
-        <h3>Dados de cartão passando pela Seazone (LGPD + PCI DSS)</h3>
-        <p>Se o link de pagamento for uma página <strong>nossa</strong>, o número do cartão do cliente passa pela nossa infraestrutura. Isso nos coloca dentro do escopo de <strong>PCI DSS</strong> (norma obrigatória da indústria de cartões, com auditoria e custo recorrente) e amplia bastante nossa responsabilidade como controladores/operadores de dado pessoal sob a <strong>LGPD</strong>.</p>
-        <p class="mit"><b>Mitigação:</b> adotar o Caminho B da seção 4 — a página de cartão é hospedada por um intermediário certificado e <strong>nenhum dado de cartão entra na Seazone</strong>. Este risco simplesmente deixa de existir.</p>
-      </div>
-    </div>
-
-    <div class="risco">
-      <div class="grau medio">Médio<small>Impacto médio ·<br>probabilidade média</small></div>
-      <div>
-        <h3>Confusão sobre quem é o vendedor</h3>
-        <p>O cliente faz o pedido num sistema Seazone, mas quem cobra e emite a nota é a Matinali. Se o produto atrasar, vier errado ou o cliente pedir reembolso, há dúvida legítima sobre a quem reclamar — e risco de a Seazone ser puxada para a relação de consumo como fornecedora aparente.</p>
-        <p class="mit"><b>Mitigação:</b> a página de pagamento e a comunicação precisam deixar explícito que a venda é da Matinali (com CNPJ e razão social visíveis) e que a Seazone apenas intermedia o pedido. Definição de responsabilidade por reembolso e chargeback deve estar em contrato.</p>
+        <h3>Cancelamento de pedidos já pagos — inclusive de terceiros</h3>
+        <p>Esta é a operação mais sensível de toda a integração e merece atenção específica. A mesma credencial que cria a cobrança também <strong>cancela cobranças já pagas</strong>, e o cancelamento é <strong>irreversível</strong>: não existe "desfazer estorno". Para refazer a venda seria preciso cobrar o cliente novamente, do zero.</p>
+        <p style="margin-top:12px"><strong>Por que é fácil demais:</strong> para cancelar, bastam <strong>dois dados</strong> — o número interno da transação (TID) e um valor. Não há senha, confirmação, aprovação em duas etapas ou qualquer segundo fator. É uma única ordem, executada na hora. Não é preciso informar número do pedido, CPF ou e-mail do cliente: quem tem o TID em mãos consegue cancelar.</p>
+        <p style="margin-top:12px"><strong>Dois cenários preocupam:</strong></p>
+        <p style="margin-top:6px">· <strong>Erro do nosso sistema</strong> — uma falha de programação, um pedido processado duas vezes, um ambiente de teste apontando para produção: qualquer um desses pode cancelar pagamentos legítimos já recebidos. O cliente é reembolsado sem ter pedido, a Matinali perde a venda e o valor é debitado dos recebíveis dela.</p>
+        <p style="margin-top:6px">· <strong>Transações que não são nossas</strong> — a credencial vale para toda a filiação, não só para os pedidos que originamos. Um TID de outro canal de venda da Matinali, se chegasse até nós (por um comprovante, um relatório, um print), poderia em tese ser cancelado. Não conseguimos <em>descobrir</em> esses números — não existe função de listar transações —, mas a permissão existe, e essa é a hipótese mais delicada numa eventual acusação contra a Seazone.</p>
+        <p style="margin-top:12px"><strong>Dois limites importantes, do lado positivo:</strong> não é possível estornar valor maior do que a transação original (a operadora recusa), e o estorno <strong>só devolve dinheiro ao cartão que pagou</strong> — não existe campo de conta de destino. Ou seja, o estorno não serve para desviar recursos; o dano possível é anular vendas, não apropriar-se delas.</p>
+        <p class="mit"><b>Mitigação:</b> <b>não implementar a função de cancelamento no nosso sistema.</b> Se o código não tem essa capacidade, nem erro nem uso indevido conseguem acioná-la — e isso é verificável por auditoria do código-fonte. Todo cancelamento e reembolso fica exclusivamente com a Matinali, pelo portal dela. Recomendamos que conste expressamente do acordo. Complementarmente: solicitar à Rede uma filiação dedicada a esta integração, o que restringiria o alcance apenas aos nossos próprios pedidos.</p>
       </div>
     </div>
 
@@ -314,8 +302,8 @@
     </div>
 
     <div class="caminho">
-      <h3>Caminho A — página de pagamento construída pela Seazone</h3>
-      <p>Nós hospedamos a página onde o cliente digita o cartão e falamos direto com a API da Rede usando a credencial da Matinali. Mais controle e custo por transação menor, porém é o cenário que traz a Seazone para dentro do escopo de PCI DSS e concentra em nós a responsabilidade sobre o dado de cartão.</p>
+      <h3>Caminho A — página de pagamento construída pela Seazone <span style="color:var(--fg3);font-weight:400">(descartado)</span></h3>
+      <p>Registrado apenas para contraste: foi <strong>descartado</strong> justamente porque traria dado de cartão para dentro da Seazone. Neste desenho, nós hospedaríamos a página onde o cliente digitaria o cartão e falamos direto com a API da Rede usando a credencial da Matinali. Mais controle e custo por transação menor, porém é o cenário que traz a Seazone para dentro do escopo de PCI DSS e concentra em nós a responsabilidade sobre o dado de cartão.</p>
       <dl>
         <dt>Dados de cartão na Seazone</dt><dd>Sim, trafegam pela nossa infraestrutura</dd>
         <dt>PCI DSS</dt><dd>Obrigatório — auditoria e custo recorrente</dd>
@@ -338,10 +326,6 @@
     </div>
     <ol class="q">
       <li>
-        <h3>A Seazone pode operar cobrança em nome de terceiro?</h3>
-        <p>Gerar cobrança em nome da Matinali, sem receber o valor, configura algum enquadramento regulatório para nós (intermediação de pagamento, subadquirência)? Precisamos entender se há limite para esse arranjo.</p>
-      </li>
-      <li>
         <h3>Qual instrumento formaliza a autorização?</h3>
         <p>Precisamos de um termo assinado pela Matinali autorizando expressamente: (a) a emissão de cobranças pelos pedidos originados no nosso sistema, (b) o escopo restrito — sem estorno, sem consulta de faturamento, (c) o direito dela de revogar a credencial a qualquer momento.</p>
       </li>
@@ -350,12 +334,8 @@
         <p>Se uma falha nossa gerar cobrança errada, quem indeniza o cliente e quem arca com a taxa de estorno? Sugerimos limite de responsabilidade proporcional ao valor da transação envolvida.</p>
       </li>
       <li>
-        <h3>Quem é o fornecedor perante o consumidor?</h3>
-        <p>Precisamos de texto aprovado para exibir na página de pagamento e no e-mail, deixando claro que a venda é da Matinali. Isso protege a Seazone na relação de consumo.</p>
-      </li>
-      <li>
-        <h3>Enquadramento LGPD de cada caminho</h3>
-        <p>No Caminho B tratamos apenas dados de pedido. No Caminho A tratamos dado de cartão. O Jurídico confirma que o Caminho A exige adequação formal (DPA, relatório de impacto, cláusula de segurança) antes de ser viável?</p>
+        <h3>Enquadramento LGPD</h3>
+        <p>Nenhum dado de cartão passa pela Seazone — tratamos apenas dados de pedido e o link já pronto. O Jurídico confirma que esse arranjo dispensa instrumento específico de proteção de dados com a Matinali, ou ainda assim convém uma cláusula?</p>
       </li>
       <li>
         <h3>Encerramento da parceria</h3>
