@@ -113,6 +113,13 @@
   .caminho dt{color:var(--fg3);white-space:nowrap}
   .caminho dd{margin:0;color:var(--fg2)}
 
+  .destaque{
+    margin-top:16px;padding:16px 18px;border-radius:12px;
+    background:oklch(24% .035 25);border:1px solid oklch(38% .06 25);
+  }
+  .destaque b{color:oklch(78% .13 25)}
+  .destaque p{font-size:15px;color:var(--fg2)}
+
   /* fluxo do processo */
   ol.fluxo{counter-reset:f;list-style:none;margin:0 0 var(--s4);padding:0}
   ol.fluxo li{
@@ -281,6 +288,10 @@
         <p style="margin-top:12px"><strong>Dois cenários preocupam:</strong></p>
         <p style="margin-top:6px">· <strong>Erro do nosso sistema</strong> — uma falha de programação, um pedido processado duas vezes, um ambiente de teste apontando para produção: qualquer um desses pode cancelar pagamentos legítimos já recebidos. O cliente é reembolsado sem ter pedido, a Matinali perde a venda e o valor é debitado dos recebíveis dela.</p>
         <p style="margin-top:6px">· <strong>Transações que não são nossas</strong> — a credencial vale para toda a filiação, não só para os pedidos que originamos. Um TID de outro canal de venda da Matinali, se chegasse até nós (por um comprovante, um relatório, um print), poderia em tese ser cancelado. Não conseguimos <em>descobrir</em> esses números — não existe função de listar transações —, mas a permissão existe, e essa é a hipótese mais delicada numa eventual acusação contra a Seazone.</p>
+        <div class="destaque">
+          <p><b>O estorno é automático — não há aprovação de ninguém no meio.</b></p>
+          <p style="margin-top:8px">Cancelar um pedido já pago <strong>é</strong> o estorno: a ordem é executada na hora, sem passar por análise da operadora, sem aviso à Matinali e sem qualquer confirmação. O valor é devolvido ao cartão do cliente e debitado dos recebíveis da Matinali. O crédito leva alguns dias para aparecer na fatura do cliente, mas a decisão já foi tomada e registrada no instante da chamada — <strong>não há janela para arrependimento nem para interceptar a operação</strong>.</p>
+        </div>
         <p style="margin-top:12px"><strong>Dois limites importantes, do lado positivo:</strong> não é possível estornar valor maior do que a transação original (a operadora recusa), e o estorno <strong>só devolve dinheiro ao cartão que pagou</strong> — não existe campo de conta de destino. Ou seja, o estorno não serve para desviar recursos; o dano possível é anular vendas, não apropriar-se delas.</p>
         <p class="mit"><b>Mitigação:</b> <b>não implementar a função de cancelamento no nosso sistema.</b> Se o código não tem essa capacidade, nem erro nem uso indevido conseguem acioná-la — e isso é verificável por auditoria do código-fonte. Todo cancelamento e reembolso fica exclusivamente com a Matinali, pelo portal dela. Recomendamos que conste expressamente do acordo. Complementarmente: solicitar à Rede uma filiação dedicada a esta integração, o que restringiria o alcance apenas aos nossos próprios pedidos.</p>
       </div>
