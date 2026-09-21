@@ -283,35 +283,24 @@
     <div class="sechead">
       <span class="num">4</span>
       <div>
-        <h2>Dois caminhos possíveis</h2>
-        <p>A API da Rede, sozinha, não gera link de pagamento pronto — ela processa cartão. O link precisa vir de um dos dois desenhos abaixo.</p>
+        <h2>Como o link seria gerado</h2>
+        <p>A API da Rede, sozinha, não entrega link de pagamento pronto — ela processa cartão. O link vem do desenho abaixo.</p>
       </div>
     </div>
 
     <div class="caminho rec">
-      <span class="badge">Recomendado</span>
-      <h3>Caminho B — intermediário de pagamento gera o link</h3>
+      <span class="badge">Desenho definido</span>
+      <h3>Intermediário de pagamento gera o link</h3>
       <p>Contratamos (ou a Matinali contrata) um intermediário que já oferece "link de pagamento por integração". Nosso sistema pede o link, recebe a URL pronta e envia ao cliente. A página de cartão é do intermediário, certificada, e o valor é liquidado na conta da Matinali.</p>
       <dl>
         <dt>Dados de cartão na Seazone</dt><dd>Nenhum</dd>
         <dt>PCI DSS</dt><dd>Fora do nosso escopo</dd>
-        <dt>Exposição LGPD</dt><dd>Reduzida — tratamos apenas dados de pedido</dd>
+        <dt>Dados que tratamos</dt><dd>Apenas dados do pedido</dd>
         <dt>Custo</dt><dd>Taxa do intermediário sobre cada transação</dd>
         <dt>Contratos envolvidos</dt><dd>Seazone ↔ Matinali · Matinali ↔ intermediário</dd>
       </dl>
     </div>
 
-    <div class="caminho">
-      <h3>Caminho A — página de pagamento construída pela Seazone <span style="color:var(--fg3);font-weight:400">(descartado)</span></h3>
-      <p>Registrado apenas para contraste: foi <strong>descartado</strong> justamente porque traria dado de cartão para dentro da Seazone. Neste desenho, nós hospedaríamos a página onde o cliente digitaria o cartão e falamos direto com a API da Rede usando a credencial da Matinali. Mais controle e custo por transação menor, porém é o cenário que traz a Seazone para dentro do escopo de PCI DSS e concentra em nós a responsabilidade sobre o dado de cartão.</p>
-      <dl>
-        <dt>Dados de cartão na Seazone</dt><dd>Sim, trafegam pela nossa infraestrutura</dd>
-        <dt>PCI DSS</dt><dd>Obrigatório — auditoria e custo recorrente</dd>
-        <dt>Exposição LGPD</dt><dd>Alta — dado financeiro de terceiros</dd>
-        <dt>Custo</dt><dd>Sem taxa extra por transação, mas com custo de conformidade</dd>
-        <dt>Contratos envolvidos</dt><dd>Seazone ↔ Matinali (com cessão de credencial)</dd>
-      </dl>
-    </div>
   </div>
 </section>
 
