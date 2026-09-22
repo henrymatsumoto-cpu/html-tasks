@@ -140,6 +140,11 @@ td.name{font-weight:700}
 .block .mini .neg b{color:var(--color-error-on-dark)}
 .block .mini .warn b{color:var(--color-warning-on-dark)}
 
+.chips{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:var(--space-md)}
+.chips li{background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-xl);padding:var(--space-md) var(--space-lg)}
+.chips b{display:block;font-size:19px;font-weight:700;letter-spacing:-.01em;font-variant-numeric:tabular-nums}
+.chips span{display:block;font-size:12px;font-weight:500;color:var(--color-muted-fg);margin-top:6px;letter-spacing:.04em}
+
 .plus{list-style:none;margin:var(--space-lg) 0 0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:var(--space-md)}
 .plus li{display:grid;grid-template-columns:24px 1fr;gap:var(--space-md);align-items:start}
 .plus li::before{content:"";width:12px;height:12px;border-radius:var(--radius-full);background:var(--color-success);margin-top:6px}
@@ -180,7 +185,7 @@ td.name{font-weight:700}
   .deck{height:auto}
   .slide{position:static;display:flex !important;flex-direction:column;justify-content:flex-start;height:auto;page-break-after:always;break-after:page;animation:none;padding:0 0 12mm}
   .slide::after{display:none}
-  .kpi,.block{background:#fff}
+  .kpi,.block,.chips li{background:#fff}
   :root{--color-foreground:#080E32;--color-muted-fg:#5A6080;--color-border:#D8DBE6;--color-primary-on-dark:#0055FF;--color-error-on-dark:#E7000B;--color-warning-on-dark:#C43A00}
 }
 </style>
@@ -282,36 +287,32 @@ td.name{font-weight:700}
         <tr>
           <th scope="col">Problema</th>
           <th scope="col">Detalhe</th>
-          <th scope="col" class="num">Imóvel</th>
         </tr>
       </thead>
       <tbody>
-        <tr><td class="name">Peças manchadas na entrega</td><td>21 peças: 14 lençóis solteiro, 3 lençóis Queen e 4 fronhas</td><td class="num">AZS0201</td></tr>
-        <tr><td class="name">Reposição com quantidade divergente</td><td>Das peças devolvidas, voltou só 1 dos 3 lençóis Queen e nenhuma das 4 fronhas</td><td class="num">AZS0201</td></tr>
-        <tr><td class="name">Pedido enviado com itens faltantes</td><td>Faltaram 7 fronhas no pedido</td><td class="num">VVH0402</td></tr>
-        <tr><td class="name">Costuras soltando</td><td>Reclamação recorrente sobre o acabamento dos lençóis</td><td class="num">VVH0402</td></tr>
-        <tr><td class="name">Lençóis entregues sujos</td><td>Peças chegaram sujas na franquia</td><td class="num">VVH0402</td></tr>
+        <tr><td class="name">Peças manchadas na entrega</td><td>21 peças: 14 lençóis solteiro, 3 lençóis Queen e 4 fronhas</td></tr>
+        <tr><td class="name">Reposição com quantidade divergente</td><td>Das peças devolvidas, voltou só 1 dos 3 lençóis Queen e nenhuma das 4 fronhas</td></tr>
+        <tr><td class="name">Pedido enviado com itens faltantes</td><td>Faltaram 7 fronhas no pedido</td></tr>
+        <tr><td class="name">Costuras soltando</td><td>Reclamação recorrente sobre o acabamento dos lençóis</td></tr>
+        <tr><td class="name">Lençóis entregues sujos</td><td>Peças chegaram sujas na franquia</td></tr>
       </tbody>
     </table>
     <div class="takeaway">
       <p class="detail">Leitura</p>
-      <p class="lead">Dois imóveis diferentes, o mesmo padrão: conferência de qualidade e de quantidade antes do envio.</p>
+      <p class="lead">O mesmo padrão em pedidos diferentes: conferência de qualidade e de quantidade antes do envio.</p>
     </div>
   </section>
 
-  <!-- 5 — Falta de manta: o tamanho da conta -->
+  <!-- 5 — Falta de manta: volume redirecionado -->
   <section class="slide" aria-label="Pedidos que foram para outro fornecedor por falta de manta">
     <div class="slide-head">
       <p class="eyebrow">O tamanho da conta</p>
       <h2>Pedidos que foram para outro fornecedor por falta de manta</h2>
-      <p>Com as mantas em falta desde <strong>20/08</strong>, os pedidos do Nordeste foram redirecionados. Só os dados — para dimensionar o preparo.</p>
     </div>
-    <div class="grid2">
-
-      <div class="block">
-        <p class="detail">Nordeste · ago + set/2026</p>
-        <h4>126 pedidos redirecionados</h4>
-        <table style="margin-top:12px">
+    <div class="hero-split">
+      <div class="hero-num">126<small>pedidos do Nordeste · ago + set/2026</small></div>
+      <div>
+        <table>
           <thead>
             <tr>
               <th scope="col">Mês</th>
@@ -328,41 +329,42 @@ td.name{font-weight:700}
             <tr><td>Total</td><td class="num">126</td><td class="num">31</td><td class="num">R$ 79.256</td></tr>
           </tfoot>
         </table>
-        <p style="margin-top:14px">Por estado: <strong>BA 96 pedidos</strong>, <strong>AL 19</strong>, <strong>PB 8</strong> e <strong>PE 3</strong>. Os demais seguem em aberto ou foram cancelados.</p>
+        <p style="margin-top:20px">Por estado: <strong>BA 96 pedidos</strong>, <strong>AL 19</strong>, <strong>PB 8</strong> e <strong>PE 3</strong>. Os demais seguem em aberto ou foram cancelados.</p>
       </div>
-
-      <div class="block">
-        <p class="detail">Pedidos da RM · pagos sem manta</p>
-        <h4>11 pedidos saíram incompletos</h4>
-        <p>Pedidos pagos e despachados <strong>sem a manta</strong>, porque não havia estoque — 10 deles já foram embarcados.</p>
-        <table style="margin-top:12px">
-          <thead>
-            <tr><th scope="col">Imóvel</th><th scope="col">UF</th><th scope="col" class="num">Data do pedido</th></tr>
-          </thead>
-          <tbody>
-            <tr><td class="name">QUA0501</td><td>PB</td><td class="num">16/07/2026</td></tr>
-            <tr><td class="name">DLO0050</td><td>BA</td><td class="num">27/07/2026</td></tr>
-            <tr><td class="name">BLB0107</td><td>BA</td><td class="num">05/08/2026</td></tr>
-            <tr><td class="name">ETI1513</td><td>AL</td><td class="num">05/08/2026</td></tr>
-            <tr><td class="name">VLPF0109</td><td>BA</td><td class="num">05/08/2026</td></tr>
-            <tr><td class="name">VZA0106</td><td>AL</td><td class="num">11/08/2026</td></tr>
-            <tr><td class="name">APF0232</td><td>BA</td><td class="num">12/08/2026</td></tr>
-            <tr><td class="name">DGS0508</td><td>AL</td><td class="num">14/08/2026</td></tr>
-            <tr><td class="name">BCA1004</td><td>BA</td><td class="num">17/08/2026</td></tr>
-            <tr><td class="name">NTV0212</td><td>AL</td><td class="num">17/08/2026</td></tr>
-            <tr><td class="name">VVH0402</td><td>BA</td><td class="num">17/08/2026</td></tr>
-          </tbody>
-        </table>
-      </div>
-
     </div>
     <div class="takeaway">
       <p class="detail">Linha do tempo</p>
-      <p class="lead"><strong>20/08</strong> — aviso de falta de tecido e pedido de suspensão das mantas. <strong>21/09</strong> — nova previsão: tecido chega em meados desta semana. <strong>32 dias em aberto.</strong></p>
+      <p class="lead"><strong>20/08</strong> — aviso de falta de tecido e suspensão das mantas. <strong>21/09</strong> — tecido chega em meados desta semana. <strong>32 dias em aberto.</strong></p>
     </div>
   </section>
 
-  <!-- 6 — O que vem pela frente -->
+  <!-- 6 — Pedidos pagos sem manta -->
+  <section class="slide" aria-label="Pedidos pagos sem manta">
+    <div class="slide-head">
+      <p class="eyebrow">Consequência direta</p>
+      <h2>11 pedidos saíram incompletos, sem a manta</h2>
+      <p>Pedidos já pagos e despachados <strong>sem a manta</strong> por falta de estoque — <strong>10 dos 11 já foram embarcados</strong> e seguem devendo a peça.</p>
+    </div>
+    <ul class="chips">
+      <li><b>QUA0501</b><span>PB · 16/07</span></li>
+      <li><b>DLO0050</b><span>BA · 27/07</span></li>
+      <li><b>BLB0107</b><span>BA · 05/08</span></li>
+      <li><b>ETI1513</b><span>AL · 05/08</span></li>
+      <li><b>VLPF0109</b><span>BA · 05/08</span></li>
+      <li><b>VZA0106</b><span>AL · 11/08</span></li>
+      <li><b>APF0232</b><span>BA · 12/08</span></li>
+      <li><b>DGS0508</b><span>AL · 14/08</span></li>
+      <li><b>BCA1004</b><span>BA · 17/08</span></li>
+      <li><b>NTV0212</b><span>AL · 17/08</span></li>
+      <li><b>VVH0402</b><span>BA · 17/08</span></li>
+    </ul>
+    <div class="takeaway">
+      <p class="detail">Leitura</p>
+      <p class="lead">BA e AL concentram tudo — são justamente as praças que crescem na alta temporada.</p>
+    </div>
+  </section>
+
+  <!-- 7 — O que vem pela frente -->
   <section class="slide" aria-label="O que vem pela frente">
     <div class="slide-head">
       <p class="eyebrow">O que vem pela frente</p>
@@ -402,7 +404,7 @@ td.name{font-weight:700}
     </div>
   </section>
 
-  <!-- 7 — Conclusão e próximos passos -->
+  <!-- 8 — Conclusão e próximos passos -->
   <section class="slide" aria-label="Conclusão e próximos passos">
     <div class="slide-head">
       <p class="eyebrow">Conclusão</p>
@@ -445,7 +447,7 @@ td.name{font-weight:700}
   <button class="nav-btn" id="next" type="button" aria-label="Próximo slide">→</button>
   <div class="dots" id="dots" role="tablist" aria-label="Ir para slide"></div>
   <button class="nav-btn" id="print" type="button">Exportar PDF</button>
-  <p class="counter" id="counter">1 / 7</p>
+  <p class="counter" id="counter">1 / 8</p>
 </nav>
 
 <script>
