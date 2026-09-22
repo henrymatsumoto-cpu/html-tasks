@@ -1,0 +1,606 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Matinali: Relatório Mensal</title>
+<style>
+:root{
+  /* Bluezone — tokens (tema escuro, neutros tintados no hue da marca) */
+  --color-primary:        #0055FF;
+  --color-primary-on-dark:#4D86FF;
+  --color-success:        #22C55E;
+  --color-error:          #E7000B;
+  --color-error-on-dark:  #FF5A62;
+  --color-warning:        #F54A00;
+  --color-warning-on-dark:#FF8A3D;
+
+  --color-background: #060A1C;
+  --color-surface:    #0C1230;
+  --color-surface-2:  #141B40;
+  --color-border:     #1E2749;
+  --color-border-soft:#141B38;
+  --color-foreground: #EDEFF7;
+  --color-muted-fg:   #949BB8;
+
+  --space-xs:4px; --space-sm:8px; --space-md:16px; --space-lg:24px;
+  --space-xl:32px; --space-2xl:48px; --space-3xl:64px;
+
+  --radius-sm:4px; --radius-lg:8px; --radius-xl:12px; --radius-2xl:16px; --radius-full:9999px;
+
+  --gutter: clamp(24px,6vw,112px);
+  --font: "Helvetica Neue", Helvetica, "Nimbus Sans", Arial, sans-serif;
+  --ease: cubic-bezier(.16,1,.3,1);
+}
+
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0; color:var(--color-foreground); font-family:var(--font);
+  background:linear-gradient(180deg,#080E26 0%,var(--color-background) 60%);
+  background-color:var(--color-background);
+  -webkit-font-smoothing:antialiased; overflow:hidden;
+}
+
+/* ---------- Tipografia Bluezone ---------- */
+h1{font-size:48px;font-weight:700;line-height:1.1;margin:0;letter-spacing:-.022em}
+h2{font-size:30px;font-weight:500;line-height:1.2;margin:0}
+h3{font-size:24px;font-weight:500;line-height:1.3;margin:0}
+h4{font-size:20px;font-weight:500;line-height:1.4;margin:0}
+p{font-size:16px;font-weight:400;line-height:1.6;margin:0;color:var(--color-muted-fg);max-width:68ch}
+.lead{font-size:20px;font-weight:500;line-height:1.5;color:var(--color-foreground);max-width:60ch}
+.body{font-size:14px;font-weight:500;line-height:1.5}
+.detail{font-size:12px;font-weight:500;line-height:1.4}
+strong{color:var(--color-foreground);font-weight:700}
+
+.eyebrow{
+  font-size:12px;font-weight:700;line-height:1.4;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--color-primary-on-dark);margin:0;
+  display:inline-flex;align-items:center;gap:10px;
+}
+.eyebrow::before{content:"";width:18px;height:2px;background:currentColor;border-radius:var(--radius-full)}
+.eyebrow.good{color:var(--color-success)}
+.eyebrow.bad{color:var(--color-error-on-dark)}
+
+/* ---------- Estrutura ---------- */
+.deck{position:relative;height:100vh;width:100vw}
+.slide{
+  position:absolute;inset:0;display:none;
+  padding:clamp(76px,9vw,116px) var(--gutter) clamp(72px,8vw,92px);
+  overflow:auto;animation:enter .55s var(--ease) both;
+}
+.slide.is-active{display:flex;flex-direction:column;justify-content:center}
+@keyframes enter{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+.slide > *{animation:rise .55s var(--ease) both}
+.slide > *:nth-child(2){animation-delay:.06s}
+.slide > *:nth-child(3){animation-delay:.12s}
+.slide > *:nth-child(4){animation-delay:.18s}
+@keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.slide,.slide > *{animation:none}}
+
+/* chrome do slide: faixa superior com nome do deck e número */
+.slide-top{
+  position:absolute;top:clamp(30px,4vw,54px);left:var(--gutter);right:var(--gutter);
+  display:flex;align-items:baseline;justify-content:space-between;gap:var(--space-md);
+  padding-bottom:var(--space-md);border-bottom:1px solid var(--color-border-soft);
+  animation:none;
+}
+.slide-top .deck-name{font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--color-muted-fg)}
+.slide-top .slide-no{font-size:11px;font-weight:700;letter-spacing:.2em;color:var(--color-primary-on-dark);font-variant-numeric:tabular-nums}
+
+.slide-head{margin-bottom:var(--space-xl);flex:none;max-width:56ch}
+.slide-head .eyebrow{margin-bottom:var(--space-md)}
+.slide-head h1{max-width:20ch}
+.slide-head p{margin-top:var(--space-md)}
+
+/* ---------- Capa ---------- */
+.cover{justify-content:flex-end !important;gap:var(--space-lg);padding-bottom:clamp(88px,9vw,110px)}
+.cover h1{font-size:clamp(44px,6.8vw,88px);letter-spacing:-.035em;max-width:15ch}
+.cover .rule{height:1px;background:var(--color-border);margin:var(--space-lg) 0 var(--space-sm)}
+.cover-meta{display:flex;flex-wrap:wrap;gap:clamp(24px,5vw,64px);align-items:flex-end}
+.cover-meta div{min-width:150px}
+.cover-meta .detail{color:var(--color-muted-fg);letter-spacing:.14em;text-transform:uppercase;margin-bottom:8px}
+.cover-meta .body{color:var(--color-foreground)}
+.cover-mark{
+  position:absolute;top:clamp(30px,4vw,54px);left:var(--gutter);
+  display:flex;align-items:center;gap:10px;animation:none;
+}
+.cover-mark i{width:10px;height:10px;border-radius:var(--radius-full);background:var(--color-primary);display:block}
+.cover-mark span{font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase}
+
+/* ---------- Cartões e KPIs ---------- */
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:var(--space-md)}
+.kpi{
+  background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-2xl);
+  padding:var(--space-lg) var(--space-lg) var(--space-xl);
+}
+.kpi .detail{color:var(--color-muted-fg);letter-spacing:.12em;text-transform:uppercase}
+.kpi .num{font-size:clamp(36px,4.2vw,56px);font-weight:700;line-height:1;margin:var(--space-lg) 0 var(--space-sm);letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.kpi .num u{text-decoration:none;font-size:.34em;font-weight:500;letter-spacing:0;color:var(--color-muted-fg);margin-left:4px}
+.kpi .note{font-size:13px;font-weight:400;line-height:1.5;color:var(--color-muted-fg)}
+.kpi.pos .num{color:var(--color-success)}
+.kpi.pos{border-color:rgba(34,197,94,.28)}
+.kpi.neg .num{color:var(--color-error-on-dark)}
+.kpi.neg{border-color:rgba(255,90,98,.3)}
+.kpi.warn .num{color:var(--color-warning-on-dark)}
+.kpi.plain .num{font-size:20px;font-weight:500;letter-spacing:0;margin-bottom:var(--space-sm);color:var(--color-foreground)}
+
+.hero-split{display:grid;grid-template-columns:minmax(210px,.62fr) 1.38fr;gap:clamp(32px,5vw,80px);align-items:center}
+.hero-num{font-size:clamp(66px,9.5vw,140px);font-weight:700;line-height:.84;letter-spacing:-.05em;font-variant-numeric:tabular-nums}
+.hero-num small{display:block;font-size:13px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--color-muted-fg);margin-top:var(--space-lg);max-width:20ch;line-height:1.5}
+
+/* ---------- Tabelas ---------- */
+table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+caption{text-align:left;font-size:12px;font-weight:400;color:var(--color-muted-fg);padding-bottom:var(--space-md)}
+th{
+  text-align:left;font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--color-muted-fg);padding:0 var(--space-lg) var(--space-md) 0;border-bottom:1px solid var(--color-border);
+}
+th.num,td.num{text-align:right;padding-right:0}
+th.num+th:not(.num),td.num+td:not(.num){padding-left:22px}
+td{padding:15px var(--space-lg) 15px 0;border-bottom:1px solid var(--color-border-soft);font-size:15px;font-weight:400;color:var(--color-muted-fg)}
+tbody tr:last-child td{border-bottom:none}
+tbody tr{transition:background .2s var(--ease)}
+tbody tr:hover td{color:var(--color-foreground)}
+tfoot td{border-top:1px solid var(--color-border);border-bottom:none;font-weight:700;color:var(--color-foreground);padding-top:16px}
+td.name{font-weight:700;color:var(--color-foreground)}
+
+/* barras */
+td.track{width:34%}
+.bar{display:flex;align-items:center;gap:14px}
+.bar .t{flex:1;height:8px;border-radius:var(--radius-full);background:var(--color-surface-2);overflow:hidden}
+.bar .t i{display:block;height:100%;border-radius:var(--radius-full);background:var(--color-primary)}
+.bar.hi .t i{background:var(--color-warning-on-dark)}
+.bar b{min-width:38px;text-align:right;font-weight:700;color:var(--color-foreground);font-size:15px}
+
+.badge{display:inline-block;border-radius:var(--radius-full);padding:4px 12px;font-size:12px;font-weight:700;line-height:1.4;white-space:nowrap}
+.badge.late{background:rgba(231,0,11,.16);color:var(--color-error-on-dark)}
+.badge.ok{background:rgba(34,197,94,.16);color:var(--color-success)}
+.badge.open{background:rgba(245,74,0,.16);color:var(--color-warning-on-dark)}
+
+/* ---------- Blocos ---------- */
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:var(--space-lg)}
+.block{background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-2xl);padding:var(--space-xl) var(--space-lg)}
+.block h4{margin-bottom:var(--space-md)}
+.block p{font-size:14px;max-width:none;line-height:1.55}
+.block .detail{color:var(--color-muted-fg);letter-spacing:.14em;text-transform:uppercase;margin-bottom:var(--space-sm)}
+.block ul{margin:var(--space-md) 0 0;padding:0;list-style:none;display:grid;gap:var(--space-sm)}
+.block li{font-size:14px;font-weight:400;line-height:1.55;color:var(--color-muted-fg);padding-left:22px;position:relative}
+.block li::before{content:"";position:absolute;left:0;top:8px;width:6px;height:6px;border-radius:var(--radius-full);background:var(--color-primary-on-dark)}
+.block table td{padding:11px var(--space-md) 11px 0}
+
+/* cartões de código de imóvel */
+.chips{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(148px,1fr));gap:var(--space-md)}
+.chips li{background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-xl);padding:var(--space-md) var(--space-lg)}
+.chips b{display:block;font-size:18px;font-weight:700;letter-spacing:-.01em;font-variant-numeric:tabular-nums}
+.chips span{display:block;font-size:12px;font-weight:500;color:var(--color-muted-fg);margin-top:8px;letter-spacing:.06em}
+
+.takeaway{margin-top:var(--space-xl);border-top:1px solid var(--color-border);padding-top:var(--space-lg);display:flex;gap:var(--space-lg);align-items:baseline;flex-wrap:wrap}
+.takeaway .detail{letter-spacing:.18em;text-transform:uppercase;color:var(--color-muted-fg);flex:none}
+.takeaway .lead{font-size:17px;max-width:72ch}
+.source{font-size:12px;font-weight:400;line-height:1.6;color:var(--color-muted-fg);max-width:92ch}
+
+/* ---------- Navegação ---------- */
+.nav{position:fixed;left:0;right:0;bottom:0;height:60px;display:flex;align-items:center;gap:var(--space-md);padding:0 var(--gutter);background:linear-gradient(to top,var(--color-background) 55%,transparent);z-index:20}
+.dots{display:flex;gap:6px;flex:1;align-items:center}
+.dots button{width:20px;height:4px;border:none;border-radius:var(--radius-full);padding:0;cursor:pointer;background:var(--color-border);transition:background .25s var(--ease),width .25s var(--ease)}
+.dots button:hover{background:var(--color-muted-fg)}
+.dots button[aria-current="true"]{background:var(--color-primary);width:38px}
+.dots button:focus-visible{outline:2px solid var(--color-primary-on-dark);outline-offset:3px}
+.nav-btn{height:36px;min-width:36px;padding:0 16px;border-radius:var(--radius-full);border:1px solid var(--color-border);background:transparent;color:var(--color-foreground);font-family:var(--font);font-size:13px;font-weight:700;cursor:pointer;transition:background .2s var(--ease),border-color .2s var(--ease),opacity .2s var(--ease)}
+.nav-btn:hover{background:var(--color-surface-2);border-color:var(--color-primary)}
+.nav-btn:focus-visible{outline:2px solid var(--color-primary-on-dark);outline-offset:2px}
+.nav-btn[disabled]{opacity:.3;cursor:not-allowed}
+.counter{font-size:13px;font-weight:700;color:var(--color-muted-fg);font-variant-numeric:tabular-nums;min-width:52px;text-align:right}
+
+@media (max-width:900px){
+  .hero-split{grid-template-columns:1fr;gap:var(--space-xl)}
+  h1{font-size:32px}
+  .slide-head h1{max-width:none}
+  .slide{padding:72px 20px 80px}
+  table{font-size:13px}
+  td{padding:12px 10px 12px 0;font-size:13px}
+  th{font-size:10px;padding-right:10px}
+  td.track{width:30%}
+  .takeaway{gap:var(--space-sm)}
+}
+
+@media print{
+  @page{size:A4 landscape;margin:11mm}
+  body{overflow:visible;background:#fff}
+  .nav{display:none}
+  .deck{height:auto}
+  .slide{position:static;display:flex !important;flex-direction:column;justify-content:flex-start;height:auto;page-break-after:always;break-after:page;animation:none;padding:0 0 10mm}
+  .slide > *{animation:none}
+  .slide-top,.cover-mark{position:static;padding:0 0 8px;margin-bottom:22px}
+  .kpi,.block,.chips li{background:#fff}
+  /* densidade para caber 1 slide por página */
+  h1{font-size:27px;letter-spacing:-.02em}
+  .cover h1{font-size:40px}
+  h4{font-size:15px}
+  p,.block p,.kpi .note,.chips span{font-size:11px;line-height:1.45}
+  .lead,.takeaway .lead{font-size:13px;line-height:1.45;max-width:none}
+  .eyebrow,.slide-top .deck-name,.slide-top .slide-no{font-size:9px}
+  .slide-head{margin-bottom:18px;max-width:none}
+  .slide-head p{margin-top:8px}
+  .kpis,.grid2{gap:10px}
+  .kpi{padding:12px 14px}
+  .kpi .num{font-size:30px;margin:10px 0 6px}
+  .kpi.neg .num{color:var(--color-error-on-dark)}
+.kpi.neg{border-color:rgba(255,90,98,.3)}
+.kpi.warn .num{color:var(--color-warning-on-dark)}
+.kpi.plain .num{font-size:15px}
+  .block{padding:14px}
+  .block li{font-size:11px;line-height:1.45}
+  .block ul{gap:5px;margin-top:8px}
+  .hero-split{gap:28px}
+  .hero-num{font-size:64px}
+  .hero-num small{font-size:9px;margin-top:10px}
+  table{font-size:11px}
+  caption{font-size:10px;padding-bottom:8px}
+  th{font-size:9px;padding-bottom:7px;padding-right:12px}
+  td{padding:7px 12px;font-size:11px;padding-left:0}
+  .bar .t{height:6px}
+  .bar b{font-size:11px;min-width:26px}
+  .chips{gap:8px;grid-template-columns:repeat(6,1fr)}
+  .chips li{padding:8px 10px}
+  .chips b{font-size:13px}
+  .chips span{margin-top:4px}
+  .takeaway{margin-top:16px;padding-top:10px;gap:12px}
+  .takeaway .detail{font-size:9px}
+  .source{font-size:9px;line-height:1.5}
+  .badge{font-size:10px;padding:2px 9px}
+  .slide-top,.cover-mark{margin-bottom:16px}
+  :root{
+    --color-foreground:#080E32;--color-muted-fg:#565C7C;--color-border:#D5D9E6;--color-border-soft:#E6E9F1;
+    --color-surface:#fff;--color-surface-2:#EDEFF5;--color-primary-on-dark:#0055FF;
+    --color-error-on-dark:#C1000A;--color-warning-on-dark:#C43A00;
+  }
+}
+</style>
+</head>
+<body>
+
+<main class="deck" id="deck">
+
+  <!-- 1 — Capa -->
+  <section class="slide cover" aria-label="Capa">
+    <div class="cover-mark"><i></i><span>Seazone · Fornecedores</span></div>
+    <p class="eyebrow">Relatório de fornecedor</p>
+    <h1>Matinali: Relatório Mensal</h1>
+    <p class="lead">Lojinha, despacho de enxoval e cancelamentos — agosto e setembro de 2026.</p>
+    <div class="rule"></div>
+    <div class="cover-meta">
+      <div><p class="detail">Período</p><p class="body">01/08/2026 a 21/09/2026</p></div>
+      <div><p class="detail">Fontes</p><p class="body">Lojinha Seazone, planilha de pedidos e Jornada Enxoval</p></div>
+      <div><p class="detail">Gerado em</p><p class="body">22/09/2026</p></div>
+    </div>
+  </section>
+
+  <!-- 2 — Lojinha: resumo -->
+  <section class="slide" aria-label="Lojinha: resumo do período">
+    <div class="slide-head">
+      <p class="eyebrow">Lojinha Seazone</p>
+      <h1>28 cards no período, 1 em cada 3 cancelado</h1>
+      <p>Cards da Matinali criados na Lojinha entre <strong>01/08 e 21/09/2026</strong>.</p>
+    </div>
+    <div class="kpis">
+      <div class="kpi neg">
+        <p class="detail">Cancelados</p>
+        <p class="num">10<u>35,7%</u></p>
+        <p class="note">10 dos 28 cards do período.</p>
+      </div>
+      <div class="kpi">
+        <p class="detail">Concluídos</p>
+        <p class="num">3<u>10,7%</u></p>
+        <p class="note">Só 3 cards chegaram ao fim do fluxo.</p>
+      </div>
+      <div class="kpi">
+        <p class="detail">Ativos agora</p>
+        <p class="num">15<u>cards</u></p>
+        <p class="note">9 aguardando pagamento, 6 aguardando envio.</p>
+      </div>
+      <div class="kpi neg">
+        <p class="detail">Atrasados (SLA 3 dias úteis)</p>
+        <p class="num">5<u>de 6</u></p>
+        <p class="note">Dos cards em Aguardando Envio, só 1 está no prazo.</p>
+      </div>
+    </div>
+    <div class="takeaway">
+      <p class="detail">Leitura</p>
+      <p class="lead">Volume baixo, cancelamento alto e envio fora do SLA.</p>
+    </div>
+  </section>
+
+  <!-- 3 — Lojinha: tempo por etapa -->
+  <section class="slide" aria-label="Lojinha: tempo médio por etapa">
+    <div class="slide-head">
+      <p class="eyebrow">Lojinha Seazone</p>
+      <h1>Tempo médio por etapa</h1>
+      <p>Dias úteis, cards criados no período. Barra proporcional à maior média (8 dias).</p>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th scope="col">Etapa</th>
+          <th scope="col">Média</th>
+          <th scope="col" class="num">Mediana</th>
+          <th scope="col" class="num">Cards</th>
+          <th scope="col" class="num">Máximo</th>
+        </tr>
+      </thead>
+      <tbody><tr><td class="name">Inbox (novo)</td><td class="track"><span class="bar"><span class="t"><i style="width:5%"></i></span><b>0,4d</b></span></td><td class="num">0,0d</td><td class="num">28</td><td class="num">1d</td></tr><tr><td class="name">Enviado ao Fornecedor</td><td class="track"><span class="bar"><span class="t"><i style="width:20%"></i></span><b>1,6d</b></span></td><td class="num">1,0d</td><td class="num">22</td><td class="num">6d</td></tr><tr><td class="name">Aguardando Pagamento</td><td class="track"><span class="bar"><span class="t"><i style="width:31%"></i></span><b>2,5d</b></span></td><td class="num">3,0d</td><td class="num">11</td><td class="num">8d</td></tr><tr><td class="name">Aguardando Envio</td><td class="track"><span class="bar hi"><span class="t"><i style="width:38%"></i></span><b>3,0d</b></span></td><td class="num">4,0d</td><td class="num">4</td><td class="num">4d</td></tr><tr><td class="name">Pedido Enviado</td><td class="track"><span class="bar hi"><span class="t"><i style="width:100%"></i></span><b>8,0d</b></span></td><td class="num">6,0d</td><td class="num">3</td><td class="num">18d</td></tr></tbody>
+    </table>
+    <div class="takeaway">
+      <p class="detail">Leitura</p>
+      <p class="lead">A entrada do pedido é rápida. O tempo se acumula depois do pagamento, em <strong>Aguardando Envio</strong> e <strong>Pedido Enviado</strong>, que chegou a 18 dias.</p>
+    </div>
+  </section>
+
+  <!-- 4 — Lojinha: cards parados -->
+  <section class="slide" aria-label="Lojinha: cards parados agora">
+    <div class="slide-head">
+      <p class="eyebrow bad">Pontos de atenção</p>
+      <h1>Cards parados na Lojinha hoje</h1>
+      <p>Os 15 cards ativos, do mais parado ao mais recente, em dias úteis.</p>
+    </div>
+    <div class="grid2">
+      <div class="block">
+        <p class="detail">Aguardando Envio · SLA de 3 dias úteis</p>
+        <h4>6 cards, 5 atrasados</h4>
+        <table>
+          <tbody>
+            <tr><td class="name">Desde 04/09</td><td class="track"><span class="bar hi"><span class="t"><i style="width:100%"></i></span><b>10d</b></span></td><td class="num"><span class="badge late">Atrasado</span></td></tr>
+            <tr><td class="name">Desde 10/09 · 4 cards</td><td class="track"><span class="bar hi"><span class="t"><i style="width:70%"></i></span><b>7d</b></span></td><td class="num"><span class="badge late">Atrasado</span></td></tr>
+            <tr><td class="name">Desde 17/09</td><td class="track"><span class="bar"><span class="t"><i style="width:20%"></i></span><b>2d</b></span></td><td class="num"><span class="badge ok">No prazo</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="block">
+        <p class="detail">Aguardando Pagamento · sem SLA de fornecedor</p>
+        <h4>9 cards, 4 parados há mais de 3 semanas</h4>
+        <table>
+          <tbody>
+            <tr><td class="name">Desde 18/08</td><td class="track"><span class="bar hi"><span class="t"><i style="width:100%"></i></span><b>23d</b></span></td></tr>
+            <tr><td class="name">Desde 25/08 · 2 cards</td><td class="track"><span class="bar hi"><span class="t"><i style="width:78%"></i></span><b>18d</b></span></td></tr>
+            <tr><td class="name">Desde 28/08</td><td class="track"><span class="bar hi"><span class="t"><i style="width:65%"></i></span><b>15d</b></span></td></tr>
+            <tr><td class="name">10/09 a 18/09 · 5 cards</td><td class="track"><span class="bar"><span class="t"><i style="width:30%"></i></span><b>1–7d</b></span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="takeaway">
+      <p class="detail">Leitura</p>
+      <p class="lead">No envio, o atraso é da Matinali. No pagamento, depende da franquia, mas card parado há 15–23 dias úteis precisa ser revisto.</p>
+    </div>
+  </section>
+
+  <!-- 5 — Despacho de enxoval -->
+  <section class="slide" aria-label="Tempo de despacho em agosto">
+    <div class="slide-head">
+      <p class="eyebrow">Pedidos de enxoval · agosto/2026</p>
+      <h1>Despacho médio de 6 dias úteis</h1>
+      <p>Do <strong>pagamento ao embarque</strong>, pedidos embarcados entre 01/08 e 31/08, sem fins de semana e feriados (nacionais, SC e Garopaba).</p>
+    </div>
+    <div class="hero-split">
+      <div class="hero-num">5,99<small>dias úteis em média<br>68 pedidos embarcados</small></div>
+      <div class="kpis">
+        <div class="kpi">
+          <p class="detail">Planilha de pedidos</p>
+          <p class="num">6,31<u>dias</u></p>
+          <p class="note">59 pedidos · mediana 6 · máximo 21.</p>
+        </div>
+        <div class="kpi pos">
+          <p class="detail">Jornada Enxoval</p>
+          <p class="num">3,89<u>dias</u></p>
+          <p class="note">9 pedidos · mediana 4 · máximo 7.</p>
+        </div>
+        <div class="kpi">
+          <p class="detail">Emissão de nota fiscal</p>
+          <p class="num">5,34<u>dias</u></p>
+          <p class="note">Do pagamento à NF, média dos 68 pedidos.</p>
+        </div>
+      </div>
+    </div>
+    <div class="takeaway">
+      <p class="detail">Leitura</p>
+      <p class="lead"><strong>48 dos 68 pedidos</strong> levaram 5 dias úteis ou mais. Só 14 saíram em até 3.</p>
+    </div>
+  </section>
+
+  <!-- 6 — Os que mais demoraram -->
+  <section class="slide" aria-label="Pedidos que mais demoraram para despachar">
+    <div class="slide-head">
+      <p class="eyebrow bad">Maiores tempos</p>
+      <h1>Os 9 pedidos que levaram 9 dias úteis ou mais</h1>
+      <p>Barra proporcional ao maior caso do mês (21 dias úteis). Última coluna: dias acima da média de 5,99. Logo abaixo, 6 pedidos empatados com 8 dias.</p>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th scope="col">Imóvel</th>
+          <th scope="col">UF</th>
+          <th scope="col" class="num">Pago</th>
+          <th scope="col" class="num">NF</th>
+          <th scope="col" class="num">Embarque</th>
+          <th scope="col">Tempo de despacho</th>
+          <th scope="col" class="num">Acima da média</th>
+        </tr>
+      </thead>
+      <tbody><tr><td class="name">CUN0102</td><td>RS</td><td class="num">30/07</td><td class="num">31/08</td><td class="num">31/08</td><td class="track"><span class="bar hi"><span class="t"><i style="width:100%"></i></span><b>21d</b></span></td><td class="num">+15,0d</td></tr><tr><td class="name">CUN0202</td><td>RS</td><td class="num">30/07</td><td class="num">24/08</td><td class="num">24/08</td><td class="track"><span class="bar hi"><span class="t"><i style="width:76%"></i></span><b>16d</b></span></td><td class="num">+10,0d</td></tr><tr><td class="name">MLUB0301</td><td>RS</td><td class="num">22/07</td><td class="num">11/08</td><td class="num">12/08</td><td class="track"><span class="bar hi"><span class="t"><i style="width:67%"></i></span><b>14d</b></span></td><td class="num">+8,0d</td></tr><tr><td class="name">PCA0403</td><td>SC</td><td class="num">27/07</td><td class="num">13/08</td><td class="num">13/08</td><td class="track"><span class="bar hi"><span class="t"><i style="width:57%"></i></span><b>12d</b></span></td><td class="num">+6,0d</td></tr><tr><td class="name">LLS0277</td><td>PR</td><td class="num">28/07</td><td class="num">13/08</td><td class="num">13/08</td><td class="track"><span class="bar hi"><span class="t"><i style="width:52%"></i></span><b>11d</b></span></td><td class="num">+5,0d</td></tr><tr><td class="name">CUA001</td><td>SC</td><td class="num">04/08</td><td class="num">18/08</td><td class="num">19/08</td><td class="track"><span class="bar hi"><span class="t"><i style="width:48%"></i></span><b>10d</b></span></td><td class="num">+4,0d</td></tr><tr><td class="name">BAO0040</td><td>RJ</td><td class="num">04/08</td><td class="num">17/08</td><td class="num">19/08</td><td class="track"><span class="bar hi"><span class="t"><i style="width:48%"></i></span><b>10d</b></span></td><td class="num">+4,0d</td></tr><tr><td class="name">FVS0305</td><td>RJ</td><td class="num">14/08</td><td class="num">24/08</td><td class="num">28/08</td><td class="track"><span class="bar hi"><span class="t"><i style="width:48%"></i></span><b>10d</b></span></td><td class="num">+4,0d</td></tr><tr><td class="name">SAP0257</td><td>SC</td><td class="num">10/08</td><td class="num">19/08</td><td class="num">21/08</td><td class="track"><span class="bar"><span class="t"><i style="width:43%"></i></span><b>9d</b></span></td><td class="num">+3,0d</td></tr></tbody>
+    </table>
+    <div class="takeaway">
+      <p class="detail">Contexto</p>
+      <p class="lead">Os 5 mais lentos foram pagos em julho e só embarcaram em agosto. Em todos, a NF saiu no dia ou na véspera do embarque: o pedido ficou parado <strong>antes de faturar</strong>.</p>
+    </div>
+  </section>
+
+  <!-- 7 — Planilha x Jornada -->
+  <section class="slide" aria-label="Planilha versus Jornada">
+    <div class="slide-head">
+      <p class="eyebrow good">Planilha × Jornada</p>
+      <h1>No Jornada, o despacho foi 2,4 dias úteis mais rápido</h1>
+      <p>Mesma regra nas duas fontes: data do pagamento até a data de embarque, em dias úteis.</p>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th scope="col">Fonte</th>
+          <th scope="col" class="num">Pedidos</th>
+          <th scope="col">Média de despacho</th>
+          <th scope="col" class="num">Mediana</th>
+          <th scope="col" class="num">Máximo</th>
+          <th scope="col" class="num">Média até a NF</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">Planilha de pedidos</td><td class="num">59</td><td class="track"><span class="bar hi"><span class="t"><i style="width:100%"></i></span><b>6,31d</b></span></td><td class="num">6</td><td class="num">21</td><td class="num">5,59d</td></tr>
+        <tr><td class="name">Jornada Enxoval</td><td class="num">9</td><td class="track"><span class="bar"><span class="t"><i style="width:62%"></i></span><b>3,89d</b></span></td><td class="num">4</td><td class="num">7</td><td class="num">3,67d</td></tr>
+      </tbody>
+      <tfoot>
+        <tr><td>Diferença</td><td class="num"></td><td>−2,42 dias úteis</td><td class="num">−2</td><td class="num">−14</td><td class="num">−1,93d</td></tr>
+      </tfoot>
+    </table>
+    <div class="takeaway">
+      <p class="detail">Ressalva</p>
+      <p class="lead">O Jornada começou em 21/08: são só 9 pedidos, todos do fim do mês, e a planilha carrega os atrasos de julho. Olhando só os pedidos pagos a partir de 20/08, a diferença continua: <strong>planilha 5,8 dias (5 pedidos) × Jornada 3,5 (8)</strong>.</p>
+    </div>
+  </section>
+
+  <!-- 8 — Cancelados no Jornada -->
+  <section class="slide" aria-label="Motivos de cancelamento em agosto">
+    <div class="slide-head">
+      <p class="eyebrow">Cancelamentos · Jornada Enxoval</p>
+      <h1>Top 3 motivos de cancelamento em agosto</h1>
+      <p>Pedidos da Matinali que foram para <strong>Cancelado</strong> entre 01/08 e 31/08/2026, pela data do cancelamento.</p>
+    </div>
+    <div class="hero-split">
+      <div class="hero-num">25<small>pedidos cancelados<br>no Jornada em agosto</small></div>
+      <div>
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">Motivo</th>
+              <th scope="col">Pedidos</th>
+              <th scope="col" class="num">% do total</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td class="name">1. Erro do agente automático</td><td class="track"><span class="bar hi"><span class="t"><i style="width:100%"></i></span><b>18</b></span></td><td class="num">72%</td></tr>
+            <tr><td class="name">2. Proprietário alterou o pedido</td><td class="track"><span class="bar"><span class="t"><i style="width:17%"></i></span><b>3</b></span></td><td class="num">12%</td></tr>
+            <tr><td class="name">3. Card duplicado</td><td class="track"><span class="bar"><span class="t"><i style="width:11%"></i></span><b>2</b></span></td><td class="num">8%</td></tr>
+          </tbody>
+          <tfoot><tr><td>Outros (1 teste e 1 pago pelo link antigo)</td><td>2</td><td class="num">8%</td></tr></tfoot>
+        </table>
+      </div>
+    </div>
+    <div class="takeaway">
+      <p class="detail">Leitura</p>
+      <p class="lead"><strong>20 dos 25</strong> (erro do agente + duplicados) foram cards criados errado na virada para o Jornada e limpos em 24/08. Não são desistência nem falha da Matinali. Cancelamento de verdade foram as 3 alterações de pedido pelo proprietário.</p>
+    </div>
+  </section>
+
+  <!-- 9 — Conclusão e saídas -->
+  <section class="slide" aria-label="Conclusão e saídas">
+    <div class="slide-head">
+      <p class="eyebrow">Conclusão</p>
+      <h1>O envio é o gargalo, na Lojinha e no enxoval</h1>
+    </div>
+    <div class="hero-split">
+      <div class="hero-num" style="color:var(--color-warning-on-dark)">5,99<small>dias úteis de despacho<br>agosto/2026</small></div>
+      <div>
+        <p class="lead">Nas duas frentes, o pedido para depois de pago. Na Lojinha, 5 de 6 cards passaram do SLA de envio. No enxoval, 48 de 68 pedidos levaram 5 dias úteis ou mais.</p>
+        <p style="margin-top:20px">O Jornada já mostra um despacho mais curto (<strong>3,89 dias</strong>) e mede o prazo sozinho, card a card. A amostra ainda é pequena e precisa ser acompanhada em setembro.</p>
+      </div>
+    </div>
+    <div class="block" style="margin-top:32px">
+      <p class="detail">Saídas</p>
+      <ul>
+        <li>Cobrar da Matinali os <strong>5 cards atrasados em Aguardando Envio</strong> na Lojinha (7 a 10 dias úteis parados)</li>
+        <li>Revisar os <strong>4 cards em Aguardando Pagamento há 15–23 dias úteis</strong> e confirmar quais ainda valem</li>
+        <li>Combinar uma <strong>meta de despacho</strong> pelo Jornada e acompanhar mês a mês, começando por setembro</li>
+      </ul>
+    </div>
+    <div class="takeaway">
+      <p class="source">Fontes: relatório da Lojinha Seazone (01/08 a 21/09/2026); aba Pedidos da planilha de compra de enxoval da Matinali; app Jornada Completa Enxoval (board Pedidos). Despacho = NETWORKDAYS(pagamento; embarque; feriados) − 1, a mesma fórmula da análise da RM; feriados nacionais, de SC e de Garopaba. Fora da conta: 1 linha da planilha com embarque anterior ao pagamento e 2 cards duplicados no Jornada. A coluna "Tempo de despacho" da planilha da Matinali calcula a conta invertida (valores negativos) e não foi usada.</p>
+    </div>
+  </section>
+
+</main>
+
+<nav class="nav" aria-label="Navegação dos slides">
+  <button class="nav-btn" id="prev" type="button" aria-label="Slide anterior">←</button>
+  <button class="nav-btn" id="next" type="button" aria-label="Próximo slide">→</button>
+  <div class="dots" id="dots" role="tablist" aria-label="Ir para slide"></div>
+  <button class="nav-btn" id="print" type="button">Exportar PDF</button>
+  <p class="counter" id="counter">1 / 9</p>
+</nav>
+
+<script>
+(function(){
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  const dots = document.getElementById('dots');
+  const counter = document.getElementById('counter');
+  const prev = document.getElementById('prev');
+  const next = document.getElementById('next');
+  const total = slides.length;
+  let i = 0;
+
+  // faixa superior com nome do deck e número do slide (a capa tem a sua própria marca)
+  slides.forEach((s, idx) => {
+    if (s.classList.contains('cover')) return;
+    const top = document.createElement('div');
+    top.className = 'slide-top';
+    top.innerHTML = '<span class="deck-name">Matinali · Relatório Mensal</span>' +
+                    '<span class="slide-no">' + String(idx + 1).padStart(2, '0') + ' / ' + String(total).padStart(2, '0') + '</span>';
+    s.insertBefore(top, s.firstChild);
+  });
+
+  slides.forEach((s, idx) => {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.setAttribute('role', 'tab');
+    b.setAttribute('aria-label', 'Slide ' + (idx + 1) + ': ' + (s.getAttribute('aria-label') || ''));
+    b.addEventListener('click', () => go(idx));
+    dots.appendChild(b);
+  });
+
+  function go(n){
+    i = Math.max(0, Math.min(total - 1, n));
+    slides.forEach((s, idx) => s.classList.toggle('is-active', idx === i));
+    Array.from(dots.children).forEach((d, idx) => d.setAttribute('aria-current', idx === i));
+    counter.textContent = (i + 1) + ' / ' + total;
+    prev.disabled = i === 0;
+    next.disabled = i === total - 1;
+    location.hash = i === 0 ? '' : 's' + (i + 1);
+  }
+
+  prev.addEventListener('click', () => go(i - 1));
+  next.addEventListener('click', () => go(i + 1));
+  document.getElementById('print').addEventListener('click', () => window.print());
+
+  document.addEventListener('keydown', e => {
+    if (e.target.closest('button') && (e.key === ' ' || e.key === 'Enter')) return;
+    if (e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === ' ') { e.preventDefault(); go(i + 1); }
+    else if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); go(i - 1); }
+    else if (e.key === 'Home') { e.preventDefault(); go(0); }
+    else if (e.key === 'End') { e.preventDefault(); go(total - 1); }
+    else if (e.key.toLowerCase() === 'f') { document.documentElement.requestFullscreen?.(); }
+  });
+
+  let x0 = null;
+  document.addEventListener('touchstart', e => { x0 = e.touches[0].clientX; }, {passive:true});
+  document.addEventListener('touchend', e => {
+    if (x0 === null) return;
+    const dx = e.changedTouches[0].clientX - x0;
+    if (Math.abs(dx) > 60) go(dx < 0 ? i + 1 : i - 1);
+    x0 = null;
+  }, {passive:true});
+
+  const fromHash = parseInt((location.hash.match(/^#s(\d+)$/) || [])[1], 10);
+  go(Number.isFinite(fromHash) ? fromHash - 1 : 0);
+})();
+</script>
+</body>
+</html>
