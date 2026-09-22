@@ -25,7 +25,7 @@
   --color-muted-fg:   #8E95B4;
 
   --space-xs:4px; --space-sm:8px; --space-md:16px; --space-lg:24px;
-  --space-xl:32px; --space-2xl:48px; --space-3xl:64px; --space-4xl:96px;
+  --space-xl:32px; --space-2xl:48px; --space-3xl:64px;
 
   --radius-sm:4px; --radius-lg:8px; --radius-xl:12px; --radius-2xl:16px; --radius-full:9999px;
 
@@ -37,11 +37,10 @@
 html,body{height:100%}
 body{
   margin:0; background:var(--color-background); color:var(--color-foreground);
-  font-family:var(--font); -webkit-font-smoothing:antialiased;
-  overflow:hidden;
+  font-family:var(--font); -webkit-font-smoothing:antialiased; overflow:hidden;
 }
 
-/* ---------- Tipografia Bluezone (sem utilitários) ---------- */
+/* ---------- Tipografia Bluezone ---------- */
 h1{font-size:48px;font-weight:700;line-height:1.1;margin:0}
 h2{font-size:30px;font-weight:500;line-height:1.2;margin:0}
 h3{font-size:24px;font-weight:500;line-height:1.3;margin:0}
@@ -49,7 +48,6 @@ h4{font-size:20px;font-weight:500;line-height:1.4;margin:0}
 p{font-size:16px;font-weight:400;line-height:1.6;margin:0;color:var(--color-muted-fg);max-width:68ch}
 .lead{font-size:20px;font-weight:500;line-height:1.5;color:var(--color-foreground);max-width:60ch}
 .body{font-size:14px;font-weight:500;line-height:1.5}
-.body-reg{font-size:14px;font-weight:400;line-height:1.5}
 .detail{font-size:12px;font-weight:500;line-height:1.4}
 strong{color:var(--color-foreground);font-weight:700}
 
@@ -57,29 +55,27 @@ strong{color:var(--color-foreground);font-weight:700}
   font-size:12px;font-weight:700;line-height:1.4;letter-spacing:.16em;
   text-transform:uppercase;color:var(--color-primary-on-dark);margin:0;
 }
+.eyebrow.good{color:var(--color-success)}
+.eyebrow.bad{color:var(--color-error-on-dark)}
 
-/* ---------- Estrutura do deck ---------- */
+/* ---------- Estrutura ---------- */
 .deck{position:relative;height:100vh;width:100vw}
 .slide{
-  position:absolute;inset:0;
-  display:none;
-  padding:clamp(32px,5.2vw,76px) clamp(24px,6vw,104px);
-  overflow:auto;
-  animation:enter .5s var(--ease) both;
+  position:absolute;inset:0;display:none;
+  padding:clamp(28px,4.6vw,68px) clamp(24px,6vw,104px) clamp(64px,7vw,88px);
+  overflow:auto;animation:enter .5s var(--ease) both;
 }
 .slide.is-active{display:flex;flex-direction:column;justify-content:center}
 @keyframes enter{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
 
-.slide-head{margin-bottom:var(--space-2xl);flex:none}
+.slide-head{margin-bottom:var(--space-xl);flex:none}
 .slide-head .eyebrow{margin-bottom:var(--space-md)}
-.slide-head h2{max-width:22ch}
+.slide-head h2{max-width:24ch}
 .slide-head p{margin-top:var(--space-md)}
 
-/* fio diagonal da marca, decoração intencional (canto superior direito) */
 .slide::after{
   content:"";position:absolute;top:0;right:0;width:clamp(120px,18vw,260px);height:4px;
-  background:linear-gradient(90deg,transparent,var(--color-primary));
-  opacity:.9;pointer-events:none;
+  background:linear-gradient(90deg,transparent,var(--color-primary));pointer-events:none;
 }
 
 /* ---------- Capa ---------- */
@@ -90,151 +86,102 @@ strong{color:var(--color-foreground);font-weight:700}
 .cover-meta div{min-width:160px}
 .cover-meta .detail{color:var(--color-muted-fg);letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px}
 .cover-meta .body{color:var(--color-foreground)}
-.cover-mark{
-  position:absolute;top:clamp(32px,5.2vw,76px);left:clamp(24px,6vw,104px);
-  display:flex;align-items:center;gap:10px;
-}
+.cover-mark{position:absolute;top:clamp(28px,4.6vw,68px);left:clamp(24px,6vw,104px);display:flex;align-items:center;gap:10px}
 .cover-mark i{width:10px;height:10px;border-radius:var(--radius-full);background:var(--color-primary);display:block}
 .cover-mark span{font-size:12px;font-weight:700;letter-spacing:.18em;text-transform:uppercase}
 
-/* ---------- Números / KPIs ---------- */
-.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:1px;background:var(--color-border);border:1px solid var(--color-border);border-radius:var(--radius-xl);overflow:hidden}
+/* ---------- KPIs ---------- */
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1px;background:var(--color-border);border:1px solid var(--color-border);border-radius:var(--radius-xl);overflow:hidden}
 .kpi{background:var(--color-surface);padding:var(--space-lg) var(--space-lg) var(--space-xl)}
 .kpi .detail{color:var(--color-muted-fg);letter-spacing:.1em;text-transform:uppercase}
-.kpi .num{font-size:clamp(40px,4.6vw,60px);font-weight:700;line-height:1;margin:var(--space-md) 0 var(--space-sm);letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.kpi .num{font-size:clamp(34px,4vw,54px);font-weight:700;line-height:1;margin:var(--space-md) 0 var(--space-sm);letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.kpi .num u{text-decoration:none;font-size:.4em;font-weight:500}
 .kpi .note{font-size:13px;font-weight:400;line-height:1.45;color:var(--color-muted-fg)}
-.kpi.neg .num{color:var(--color-error-on-dark)}
 .kpi.pos .num{color:var(--color-success)}
+.kpi.neg .num{color:var(--color-error-on-dark)}
 .kpi.warn .num{color:var(--color-warning-on-dark)}
 
-.hero-split{display:grid;grid-template-columns:minmax(220px,.62fr) 1.38fr;gap:var(--space-3xl);align-items:center}
-.hero-num{font-size:clamp(72px,11vw,152px);font-weight:700;line-height:.86;letter-spacing:-.045em;font-variant-numeric:tabular-nums}
-.hero-num small{display:block;font-size:14px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--color-muted-fg);margin-top:var(--space-md)}
+.hero-split{display:grid;grid-template-columns:minmax(200px,.6fr) 1.4fr;gap:var(--space-3xl);align-items:center}
+.hero-num{font-size:clamp(64px,9.5vw,136px);font-weight:700;line-height:.86;letter-spacing:-.045em;font-variant-numeric:tabular-nums}
+.hero-num small{display:block;font-size:14px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--color-muted-fg);margin-top:var(--space-md);max-width:20ch}
 
 /* ---------- Tabelas ---------- */
 table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
 caption{text-align:left;font-size:12px;font-weight:500;color:var(--color-muted-fg);padding-bottom:var(--space-sm)}
-th{
-  text-align:left;font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
-  color:var(--color-muted-fg);padding:0 var(--space-md) var(--space-sm) 0;border-bottom:1px solid var(--color-border);
-}
+th{text-align:left;font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--color-muted-fg);padding:0 var(--space-md) var(--space-sm) 0;border-bottom:1px solid var(--color-border)}
 th.num,td.num{text-align:right;padding-right:0}
-td{padding:14px var(--space-md) 14px 0;border-bottom:1px solid var(--color-border);font-size:15px;font-weight:500}
+td{padding:12px var(--space-md) 12px 0;border-bottom:1px solid var(--color-border);font-size:15px;font-weight:500}
 tbody tr:last-child td{border-bottom:none}
+tfoot td{border-top:1px solid var(--color-border);border-bottom:none;font-weight:700;padding-top:14px}
 td.name{font-weight:700}
-td .sub{display:block;font-size:12px;font-weight:400;color:var(--color-muted-fg);margin-top:3px}
 
-/* barra proporcional dentro da tabela */
 .bar{display:flex;align-items:center;gap:10px;justify-content:flex-end}
-.bar span{font-weight:700}
+.bar span{font-weight:700;min-width:28px;text-align:right}
 .bar i{display:block;height:6px;border-radius:var(--radius-full);background:var(--color-primary);opacity:.85}
 .bar.hi i{background:var(--color-warning-on-dark)}
 
-.badge{
-  display:inline-block;border-radius:var(--radius-full);padding:4px 12px;
-  font-size:12px;font-weight:700;line-height:1.4;white-space:nowrap;
-}
+.badge{display:inline-block;border-radius:var(--radius-full);padding:4px 12px;font-size:12px;font-weight:700;line-height:1.4;white-space:nowrap}
 .badge.late{background:rgba(231,0,11,.16);color:var(--color-error-on-dark)}
 .badge.ok{background:rgba(34,197,94,.14);color:var(--color-success)}
 .badge.open{background:rgba(245,74,0,.16);color:var(--color-warning-on-dark)}
 
-/* ---------- Blocos de caso ---------- */
-.case{display:grid;grid-template-columns:minmax(200px,.5fr) 1.5fr;gap:var(--space-2xl);align-items:start}
-.case-id{
-  border:1px solid var(--color-border);border-radius:var(--radius-xl);padding:var(--space-lg);
-  background:var(--color-surface);
-}
-.case-id .code{font-size:34px;font-weight:700;letter-spacing:-.01em;line-height:1.1}
-.case-id .detail{color:var(--color-muted-fg);margin-top:var(--space-sm)}
-.case-body p + p{margin-top:var(--space-md)}
+/* ---------- Grade de blocos ---------- */
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:var(--space-md)}
+.block{background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-xl);padding:var(--space-lg)}
+.block h4{margin-bottom:var(--space-sm)}
+.block p{font-size:14px;max-width:none}
+.block .detail{color:var(--color-muted-fg);letter-spacing:.1em;text-transform:uppercase;margin-bottom:var(--space-sm)}
+.block ul{margin:var(--space-sm) 0 0;padding-left:18px}
+.block li{font-size:14px;font-weight:400;line-height:1.5;color:var(--color-muted-fg);margin-bottom:4px}
+.block li strong{font-weight:700}
+.block .mini{display:flex;gap:var(--space-lg);margin:var(--space-sm) 0 var(--space-md);flex-wrap:wrap}
+.block .mini b{display:block;font-size:26px;font-weight:700;line-height:1;font-variant-numeric:tabular-nums}
+.block .mini span{display:block;font-size:11px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--color-muted-fg);margin-top:6px}
+.block .mini .neg b{color:var(--color-error-on-dark)}
+.block .mini .warn b{color:var(--color-warning-on-dark)}
 
-.items{list-style:none;margin:var(--space-lg) 0 0;padding:0;display:grid;gap:1px;background:var(--color-border);border:1px solid var(--color-border);border-radius:var(--radius-lg);overflow:hidden}
-.items li{background:var(--color-surface);padding:14px var(--space-lg);display:flex;justify-content:space-between;align-items:center;gap:var(--space-md);font-size:15px;font-weight:500}
-.items li span:last-child{font-size:13px;font-weight:700}
-.items li.miss span:last-child{color:var(--color-error-on-dark)}
-.items li.done span:last-child{color:var(--color-success)}
+.plus{list-style:none;margin:var(--space-lg) 0 0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:var(--space-md)}
+.plus li{display:grid;grid-template-columns:24px 1fr;gap:var(--space-md);align-items:start}
+.plus li::before{content:"";width:12px;height:12px;border-radius:var(--radius-full);background:var(--color-success);margin-top:6px}
+.plus h4{margin-bottom:4px}
+.plus p{font-size:14px}
 
-/* ---------- Timeline ---------- */
-.timeline{display:grid;gap:var(--space-lg);margin-top:var(--space-lg)}
-.tl{display:grid;grid-template-columns:120px 1fr;gap:var(--space-lg);align-items:start}
-.tl .when{font-size:14px;font-weight:700;color:var(--color-primary-on-dark);padding-top:2px;font-variant-numeric:tabular-nums}
-.tl .what{border-top:1px solid var(--color-border);padding-top:var(--space-md)}
-
-/* ---------- Lista de ações ---------- */
-.actions{list-style:none;margin:0;padding:0;counter-reset:a;display:grid;gap:var(--space-md)}
-.actions li{
-  counter-increment:a;display:grid;grid-template-columns:44px 1fr;gap:var(--space-lg);align-items:start;
-  background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-xl);padding:var(--space-lg)
-}
-.actions li::before{
-  content:counter(a,decimal-leading-zero);
-  font-size:20px;font-weight:700;color:var(--color-primary-on-dark);font-variant-numeric:tabular-nums;line-height:1.3
-}
-.actions h4{margin-bottom:6px}
-.actions p{font-size:14px}
-
-.takeaway{
-  margin-top:var(--space-2xl);border-top:1px solid var(--color-border);padding-top:var(--space-lg);
-  display:flex;gap:var(--space-md);align-items:baseline;flex-wrap:wrap
-}
+.takeaway{margin-top:var(--space-xl);border-top:1px solid var(--color-border);padding-top:var(--space-md);display:flex;gap:var(--space-md);align-items:baseline;flex-wrap:wrap}
 .takeaway .detail{letter-spacing:.14em;text-transform:uppercase;color:var(--color-muted-fg)}
-.takeaway .lead{font-size:18px}
-
-.source{font-size:12px;font-weight:400;line-height:1.5;color:var(--color-muted-fg);max-width:78ch}
+.takeaway .lead{font-size:17px}
+.source{font-size:12px;font-weight:400;line-height:1.5;color:var(--color-muted-fg);max-width:88ch}
 
 /* ---------- Navegação ---------- */
-.nav{
-  position:fixed;left:0;right:0;bottom:0;height:56px;
-  display:flex;align-items:center;gap:var(--space-md);
-  padding:0 clamp(24px,6vw,104px);
-  background:linear-gradient(to top,var(--color-background) 60%,transparent);
-  z-index:20;
-}
+.nav{position:fixed;left:0;right:0;bottom:0;height:56px;display:flex;align-items:center;gap:var(--space-md);padding:0 clamp(24px,6vw,104px);background:linear-gradient(to top,var(--color-background) 60%,transparent);z-index:20}
 .dots{display:flex;gap:6px;flex:1;align-items:center}
-.dots button{
-  width:22px;height:4px;border:none;border-radius:var(--radius-full);padding:0;cursor:pointer;
-  background:var(--color-border);transition:background .25s var(--ease),width .25s var(--ease);
-}
+.dots button{width:22px;height:4px;border:none;border-radius:var(--radius-full);padding:0;cursor:pointer;background:var(--color-border);transition:background .25s var(--ease),width .25s var(--ease)}
 .dots button:hover{background:var(--color-muted-fg)}
 .dots button[aria-current="true"]{background:var(--color-primary);width:40px}
 .dots button:focus-visible{outline:2px solid var(--color-primary-on-dark);outline-offset:3px}
-
-.nav-btn{
-  height:36px;min-width:36px;padding:0 16px;border-radius:var(--radius-full);
-  border:1px solid var(--color-border);background:transparent;color:var(--color-foreground);
-  font-family:var(--font);font-size:13px;font-weight:700;cursor:pointer;
-  transition:background .2s var(--ease),border-color .2s var(--ease),opacity .2s var(--ease);
-}
+.nav-btn{height:36px;min-width:36px;padding:0 16px;border-radius:var(--radius-full);border:1px solid var(--color-border);background:transparent;color:var(--color-foreground);font-family:var(--font);font-size:13px;font-weight:700;cursor:pointer;transition:background .2s var(--ease),border-color .2s var(--ease),opacity .2s var(--ease)}
 .nav-btn:hover{background:var(--color-surface-2);border-color:var(--color-primary)}
 .nav-btn:focus-visible{outline:2px solid var(--color-primary-on-dark);outline-offset:2px}
 .nav-btn[disabled]{opacity:.35;cursor:not-allowed}
-.counter{font-size:13px;font-weight:700;color:var(--color-muted-fg);font-variant-numeric:tabular-nums;min-width:56px;text-align:right}
+.counter{font-size:13px;font-weight:700;color:var(--color-muted-fg);font-variant-numeric:tabular-nums;min-width:52px;text-align:right}
 
 @media (max-width:820px){
-  .hero-split,.case{grid-template-columns:1fr;gap:var(--space-xl)}
-  .tl{grid-template-columns:78px 1fr;gap:var(--space-md)}
+  .hero-split{grid-template-columns:1fr;gap:var(--space-xl)}
   h2{font-size:24px}
-  .slide{padding:64px 20px 80px}
-  .slide-head{margin-bottom:var(--space-xl)}
+  .slide{padding:56px 20px 76px}
   table{font-size:13px}
   td{padding:10px 8px 10px 0;font-size:13px}
   th{font-size:10px;padding-right:8px}
 }
 
-/* ---------- Impressão / exportar PDF (paisagem, 1 slide por página) ---------- */
 @media print{
   @page{size:A4 landscape;margin:12mm}
-  body{overflow:visible;background:#fff;color:#080E32}
+  body{overflow:visible;background:#fff}
   .nav{display:none}
   .deck{height:auto}
-  .slide{
-    position:static;display:flex !important;flex-direction:column;justify-content:flex-start;
-    height:auto;min-height:auto;page-break-after:always;break-after:page;animation:none;padding:0 0 12mm;
-  }
+  .slide{position:static;display:flex !important;flex-direction:column;justify-content:flex-start;height:auto;page-break-after:always;break-after:page;animation:none;padding:0 0 12mm}
   .slide::after{display:none}
-  .kpi,.case-id,.items li,.actions li{background:#fff}
-  p,.kpi .note,.source{color:#3C4260}
-  :root{--color-foreground:#080E32;--color-muted-fg:#5A6080;--color-border:#D8DBE6;--color-primary-on-dark:#0055FF}
+  .kpi,.block{background:#fff}
+  :root{--color-foreground:#080E32;--color-muted-fg:#5A6080;--color-border:#D8DBE6;--color-primary-on-dark:#0055FF;--color-error-on-dark:#E7000B;--color-warning-on-dark:#C43A00}
 }
 </style>
 </head>
@@ -247,132 +194,63 @@ td .sub{display:block;font-size:12px;font-weight:400;color:var(--color-muted-fg)
     <div class="cover-mark"><i></i><span>Seazone · Fornecedores</span></div>
     <p class="eyebrow">Relatório de fornecedor</p>
     <h1>RM Enxoval: Relatório Mensal</h1>
-    <p class="lead">Dados da Lojinha Seazone cruzados com os casos reportados pelas franquias em agosto e setembro de 2026.</p>
+    <p class="lead">O que foi bem, o que precisa melhorar e o que vem pela frente — agosto e setembro de 2026.</p>
     <div class="rule"></div>
     <div class="cover-meta">
       <div><p class="detail">Período</p><p class="body">01/08/2026 a 21/09/2026</p></div>
-      <div><p class="detail">Fontes</p><p class="body">Lojinha (Supabase) + relatos do time</p></div>
+      <div><p class="detail">Fontes</p><p class="body">Planilha de pedidos, Lojinha, Jornada Enxoval e Sapron</p></div>
       <div><p class="detail">Gerado em</p><p class="body">21/09/2026</p></div>
     </div>
   </section>
 
-  <!-- 2 — Resumo geral -->
-  <section class="slide" aria-label="Resumo geral">
+  <!-- 2 — Pontos positivos -->
+  <section class="slide" aria-label="Pontos positivos">
     <div class="slide-head">
-      <p class="eyebrow">Lojinha Seazone</p>
-      <h2>Resumo geral do período</h2>
-    </div>
-    <div class="hero-split">
-      <div class="hero-num">17<small>cards criados</small></div>
-      <div class="kpis">
-        <div class="kpi neg">
-          <p class="detail">Cancelados</p>
-          <p class="num">7</p>
-          <p class="note">41,2% de tudo que entrou no período</p>
-        </div>
-        <div class="kpi pos">
-          <p class="detail">Concluídos</p>
-          <p class="num">5</p>
-          <p class="note">29,4% do período</p>
-        </div>
-        <div class="kpi warn">
-          <p class="detail">Aguardando pagamento</p>
-          <p class="num">3</p>
-          <p class="note">todos parados há mais de 9 dias úteis</p>
-        </div>
-        <div class="kpi">
-          <p class="detail">Enviado ao fornecedor</p>
-          <p class="num">2</p>
-          <p class="note">entraram hoje, dentro do prazo</p>
-        </div>
-      </div>
-    </div>
-    <div class="takeaway">
-      <p class="detail">Leitura</p>
-      <p class="lead">Mais pedidos foram cancelados do que concluídos.</p>
-    </div>
-  </section>
-
-  <!-- 3 — Tempo por etapa -->
-  <section class="slide" aria-label="Tempo médio por etapa">
-    <div class="slide-head">
-      <p class="eyebrow">Fluxo dos pedidos</p>
-      <h2>Tempo médio por etapa</h2>
-      <p>Dias úteis, considerando apenas os cards criados dentro do período.</p>
-    </div>
-    <table>
-      <caption>Barras proporcionais ao máximo observado em cada etapa.</caption>
-      <thead>
-        <tr>
-          <th scope="col">Etapa</th>
-          <th scope="col" class="num">Média</th>
-          <th scope="col" class="num">Mediana</th>
-          <th scope="col" class="num">Cards (n)</th>
-          <th scope="col" class="num">Máximo observado</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td class="name">Inbox (novo)</td>
-          <td class="num">0,2d</td><td class="num">0,0d</td><td class="num">17</td>
-          <td class="num"><span class="bar"><i style="width:14px"></i><span>1d</span></span></td>
-        </tr>
-        <tr>
-          <td class="name">Enviado ao fornecedor</td>
-          <td class="num">0,5d</td><td class="num">0,0d</td><td class="num">11</td>
-          <td class="num"><span class="bar"><i style="width:14px"></i><span>1d</span></span></td>
-        </tr>
-        <tr>
-          <td class="name">Aguardando pagamento</td>
-          <td class="num">1,9d</td><td class="num">1,0d</td><td class="num">8</td>
-          <td class="num"><span class="bar hi"><i style="width:126px"></i><span>9d</span></span></td>
-        </tr>
-        <tr>
-          <td class="name">Aguardando envio</td>
-          <td class="num">1,2d</td><td class="num">1,0d</td><td class="num">5</td>
-          <td class="num"><span class="bar"><i style="width:42px"></i><span>3d</span></span></td>
-        </tr>
-        <tr>
-          <td class="name">Pedido enviado</td>
-          <td class="num">4,0d</td><td class="num">4,0d</td><td class="num">5</td>
-          <td class="num"><span class="bar hi"><i style="width:98px"></i><span>7d</span></span></td>
-        </tr>
-      </tbody>
-    </table>
-    <div class="takeaway">
-      <p class="detail">Leitura</p>
-      <p class="lead">A média engana: o gargalo está nos casos extremos de “Aguardando pagamento” e “Pedido enviado”.</p>
-    </div>
-  </section>
-
-  <!-- 4 — Planilha de pedidos: despacho e NF -->
-  <section class="slide" aria-label="Despacho e emissão de NF">
-    <div class="slide-head">
-      <p class="eyebrow">Planilha de pedidos</p>
-      <h2>Despacho e emissão de NF — o lado que vai bem</h2>
+      <p class="eyebrow good">Pontos positivos</p>
+      <h2>O que está indo bem</h2>
       <p>Medido sobre os <strong>20 pedidos despachados no mês</strong>, pela planilha de pedidos.</p>
     </div>
-
-    <div class="kpis" style="margin-bottom:var(--space-xl)">
+    <div class="kpis">
       <div class="kpi pos">
         <p class="detail">Tempo médio de despacho</p>
-        <p class="num">3,45<span style="font-size:.4em;font-weight:500"> dias</span></p>
-        <p class="note">Muito bom — a RM despacha rápido depois do pedido confirmado.</p>
+        <p class="num">3,45<u> dias</u></p>
+        <p class="note">Muito bom — despacho rápido depois do pedido confirmado.</p>
       </div>
       <div class="kpi pos">
-        <p class="detail">Tempo médio de emissão de NF</p>
-        <p class="num">2,55<span style="font-size:.4em;font-weight:500"> dias</span></p>
+        <p class="detail">Emissão de nota fiscal</p>
+        <p class="num">2,55<u> dias</u></p>
         <p class="note">Excelente — a nota sai antes mesmo da média de despacho.</p>
       </div>
-      <div class="kpi warn">
-        <p class="detail">Acima da média</p>
-        <p class="num">7<span style="font-size:.4em;font-weight:500"> / 20</span></p>
-        <p class="note">Só esses ficaram um pouco acima; o restante veio dentro do esperado.</p>
-      </div>
     </div>
+    <ul class="plus">
+      <li>
+        <div>
+          <h4>Comunicação rápida no grupo</h4>
+          <p>Retorno ágil nas dúvidas e nos acionamentos do dia a dia.</p>
+        </div>
+      </li>
+      <li>
+        <div>
+          <h4>Planilha de pedidos impecável</h4>
+          <p>Preenchimento sem erro e sem campos faltando — o que permite acompanhar prazo e NF com confiança.</p>
+        </div>
+      </li>
+    </ul>
+    <div class="takeaway">
+      <p class="detail">Leitura</p>
+      <p class="lead">Prazo e processo não são o problema da RM.</p>
+    </div>
+  </section>
 
+  <!-- 3 — Casos acima da média -->
+  <section class="slide" aria-label="Pedidos acima da média de despacho">
+    <div class="slide-head">
+      <p class="eyebrow good">Ressalva dentro do positivo</p>
+      <h2>Só 7 de 20 pedidos ficaram um pouco acima</h2>
+      <p>Os outros 13 saíram dentro da média de 3,45 dias. Nenhum caso extremo.</p>
+    </div>
     <table>
-      <caption>Pedidos com despacho acima da média — barras proporcionais ao maior caso (9 dias).</caption>
+      <caption>Barras proporcionais ao maior caso do mês (9 dias).</caption>
       <thead>
         <tr>
           <th scope="col">Imóvel</th>
@@ -390,190 +268,170 @@ td .sub{display:block;font-size:12px;font-weight:400;color:var(--color-muted-fg)
         <tr><td class="name">NTV0212</td><td class="num"><span class="bar"><i style="width:100px"></i><span>5d</span></span></td><td class="num">+1,6d</td></tr>
       </tbody>
     </table>
-
-    <div class="takeaway">
-      <p class="detail">Leitura</p>
-      <p class="lead">Prazo não é o problema da RM: 13 dos 20 pedidos saíram dentro da média e os 7 acima ficaram só um pouco fora.</p>
-    </div>
   </section>
 
-  <!-- 5 — Cards ativos -->
-  <section class="slide" aria-label="Cards ativos agora">
+  <!-- 4 — Problemas (consolidado) -->
+  <section class="slide" aria-label="Pontos de atenção">
     <div class="slide-head">
-      <p class="eyebrow">Fila aberta · 5 cards</p>
-      <h2>Cards ativos agora</h2>
-      <p>Os 3 cards em <strong>Aguardando pagamento</strong> já têm o link de pagamento preenchido — a demora não é do fornecedor. São casos esquecidos que precisam de acompanhamento manual.</p>
+      <p class="eyebrow bad">Pontos de atenção</p>
+      <h2>Qualidade e abastecimento — tudo o que apareceu no período</h2>
     </div>
-    <table>
-      <thead>
-        <tr>
-          <th scope="col">Cliente / franquia</th>
-          <th scope="col">Etapa</th>
-          <th scope="col">Entrou na etapa</th>
-          <th scope="col" class="num">Dias úteis parado</th>
-          <th scope="col" class="num">Status</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td class="name">Eduardo José Pereira Santos</td>
-          <td>Aguardando pagamento</td><td>10/08/2026</td>
-          <td class="num">29d</td><td class="num"><span class="badge late">Atrasado</span></td>
-        </tr>
-        <tr>
-          <td class="name">Daniel de Paiva e Sales</td>
-          <td>Aguardando pagamento</td><td>24/08/2026</td>
-          <td class="num">19d</td><td class="num"><span class="badge late">Atrasado</span></td>
-        </tr>
-        <tr>
-          <td class="name">Carine Cerqueira de Carvalho</td>
-          <td>Aguardando pagamento</td><td>08/09/2026</td>
-          <td class="num">9d</td><td class="num"><span class="badge late">Atrasado</span></td>
-        </tr>
-        <tr>
-          <td class="name">Ana Márcia Pereira Buzzacchino</td>
-          <td>Enviado ao fornecedor</td><td>21/09/2026</td>
-          <td class="num">0d</td><td class="num"><span class="badge ok">No prazo</span></td>
-        </tr>
-        <tr>
-          <td class="name">Ingrid Kelly Sabino Palmeus</td>
-          <td>Enviado ao fornecedor</td><td>21/09/2026</td>
-          <td class="num">0d</td><td class="num"><span class="badge ok">No prazo</span></td>
-        </tr>
-      </tbody>
-    </table>
-  </section>
+    <div class="grid2">
 
-  <!-- 6 — Caso AZS0201 -->
-  <section class="slide" aria-label="Caso AZS0201">
-    <div class="slide-head">
-      <p class="eyebrow">Caso reportado pela franquia</p>
-      <h2>Reposição incompleta depois da troca</h2>
-    </div>
-    <div class="case">
-      <div class="case-id">
-        <p class="code">AZS0201</p>
-        <p class="detail">Franquia Emily Sena</p>
-        <p class="detail" style="margin-top:16px"><span class="badge open">Pendente com a RM</span></p>
+      <div class="block">
+        <p class="detail">Lojinha Seazone · 17 cards no período</p>
+        <h4>Taxa alta de cancelamento</h4>
+        <div class="mini">
+          <div class="neg"><b>7</b><span>cancelados (41,2%)</span></div>
+          <div><b>5</b><span>concluídos</span></div>
+          <div class="warn"><b>3</b><span>parados no pagamento</span></div>
+        </div>
+        <p>Os 3 parados já têm o link de pagamento preenchido e estão de <strong>9 a 29 dias úteis</strong> na etapa — acompanhamento nosso, não do fornecedor.</p>
       </div>
-      <div class="case-body">
-        <p>No recebimento do enxoval, a franquia identificou <strong>21 peças manchadas</strong> — 14 lençóis solteiro, 3 lençóis Queen e 4 fronhas. O caso foi sinalizado, a troca foi realizada e as peças manchadas foram devolvidas ao fornecedor. A reposição, porém, voltou com quantidade divergente.</p>
-        <ul class="items">
-          <li class="done"><span>14 lençóis solteiro</span><span>Quantidade correta</span></li>
-          <li class="miss"><span>3 lençóis Queen</span><span>Voltou só 1 — faltam 2</span></li>
-          <li class="miss"><span>4 fronhas</span><span>Nenhuma reposta</span></li>
+
+      <div class="block">
+        <p class="detail">AZS0201 · franquia Emily Sena</p>
+        <h4>Reposição incompleta</h4>
+        <p>21 peças manchadas na entrega (14 lençóis solteiro, 3 Queen e 4 fronhas). A troca foi feita e as peças devolvidas, mas a reposição voltou divergente:</p>
+        <ul>
+          <li>14 lençóis solteiro — <strong>quantidade correta</strong></li>
+          <li>3 lençóis Queen — voltou só 1, <strong>faltam 2</strong></li>
+          <li>4 fronhas — <strong>nenhuma reposta</strong></li>
         </ul>
-        <p style="margin-top:24px">Não é um novo problema de peças manchadas, e sim <strong>divergência na quantidade enviada na reposição</strong>. Seguem faltando 2 lençóis Queen e 4 fronhas.</p>
       </div>
-    </div>
-  </section>
 
-  <!-- 7 — Caso VVH0402 -->
-  <section class="slide" aria-label="Caso VVH0402">
-    <div class="slide-head">
-      <p class="eyebrow">Caso reportado pela franquia</p>
-      <h2>Qualidade dos lençóis e itens faltando</h2>
-    </div>
-    <div class="case">
-      <div class="case-id">
-        <p class="code">VVH0402</p>
-        <p class="detail">Franqueado Lucas Sena</p>
-        <p class="detail" style="margin-top:16px"><span class="badge open">Reclamação recorrente</span></p>
-      </div>
-      <div class="case-body">
-        <p>Reclamação <strong>recorrente</strong> sobre a qualidade dos lençóis da RM: costuras ruins e pedidos entregues com itens faltando.</p>
-        <ul class="items">
-          <li class="miss"><span>Lençóis chegaram sujos</span><span>Qualidade</span></li>
-          <li class="miss"><span>Costuras soltando</span><span>Qualidade</span></li>
-          <li class="miss"><span>7 fronhas</span><span>Faltaram no pedido</span></li>
+      <div class="block">
+        <p class="detail">VVH0402 · franqueado Lucas Sena</p>
+        <h4>Qualidade dos lençóis <span class="badge open">recorrente</span></h4>
+        <ul>
+          <li>Lençóis chegaram <strong>sujos</strong></li>
+          <li><strong>Costuras soltando</strong></li>
+          <li><strong>7 fronhas</strong> faltando no pedido</li>
         </ul>
-        <p style="margin-top:24px">Somado ao AZS0201, o padrão se repete em franquias diferentes: <strong>problema de controle de qualidade antes do envio</strong>, não um incidente isolado.</p>
+        <p style="margin-top:12px">Duas franquias diferentes com o mesmo padrão: controle de qualidade antes do envio.</p>
       </div>
+
+      <div class="block">
+        <p class="detail">Abastecimento · 20/08 a 21/09</p>
+        <h4>Mantas <span class="badge late">32 dias em aberto</span></h4>
+        <ul>
+          <li><strong>20/08</strong> — RM avisa que não conseguiu tecido nem produto pronto e pede suspensão dos pedidos de manta; previsão de até 15 dias.</li>
+          <li><strong>21/09</strong> — nova cobrança: tecido chega em meados desta semana, regularizando todos os pedidos.</li>
+        </ul>
+        <p style="margin-top:12px">Mais de um mês sem confirmação definitiva de regularização.</p>
+      </div>
+
     </div>
   </section>
 
-  <!-- 8 — Mantas -->
-  <section class="slide" aria-label="Desabastecimento de mantas">
+  <!-- 5 — O que a falta de manta custou -->
+  <section class="slide" aria-label="Pedidos do Nordeste que foram para a Matinali">
     <div class="slide-head">
-      <p class="eyebrow">Abastecimento</p>
-      <h2>Mantas — em aberto há mais de um mês</h2>
-    </div>
-    <div class="timeline">
-      <div class="tl">
-        <p class="when">20/08/2026</p>
-        <div class="what">
-          <h4>RM avisa que não conseguiu repor</h4>
-          <p>Sem tecido nem produto pronto para as mantas. Pedido de tecido em trânsito, previsão de até 15 dias. A RM pediu <strong>suspensão dos pedidos de manta</strong>; os demais itens seguiam em produção normal.</p>
-        </div>
-      </div>
-      <div class="tl">
-        <p class="when">21/09/2026</p>
-        <div class="what">
-          <h4>Nova cobrança, nova previsão</h4>
-          <p>Questionada de novo sobre o estoque, a RM respondeu que contatou o fornecedor de tecido e que a chegada está prevista para <strong>meados desta semana</strong>, o que regularizaria o envio de todos os pedidos.</p>
-        </div>
-      </div>
-      <div class="tl">
-        <p class="when">Hoje</p>
-        <div class="what">
-          <h4><span class="badge open">Em aberto · 32 dias</span></h4>
-          <p>Mais de um mês entre 20/08 e 21/09 sem confirmação definitiva de regularização.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 9 — Conclusão -->
-  <section class="slide" aria-label="Conclusão">
-    <div class="slide-head">
-      <p class="eyebrow">Conclusão</p>
-      <h2>Dados e relatos apontam para a mesma direção</h2>
+      <p class="eyebrow">O tamanho da conta</p>
+      <h2>Pedidos do Nordeste que foram para a Matinali</h2>
+      <p>Com as mantas em falta, os pedidos do Nordeste foram direcionados ao outro fornecedor. Só os dados — para dimensionar o preparo.</p>
     </div>
     <div class="hero-split">
-      <div class="hero-num" style="color:var(--color-error-on-dark)">41,2%<small>taxa de cancelamento · 7 de 17 cards</small></div>
+      <div class="hero-num">126<small>pedidos · 107 imóveis · ago + set/2026</small></div>
       <div>
-        <p class="lead">Em agosto e setembro houve <strong>queda na qualidade dos produtos e dos envios</strong> da RM Enxoval.</p>
-        <p style="margin-top:24px">A taxa de cancelamento é alta, e os 3 cards parados em Aguardando pagamento — de 9 a 29 dias úteis — indicam falta de acompanhamento ativo desses pedidos do nosso lado.</p>
-        <p style="margin-top:16px">O prazo, porém, não é o ponto fraco: despacho em <strong>3,45 dias</strong> e NF em <strong>2,55 dias</strong> são números bons, com só 7 de 20 pedidos um pouco acima da média.</p>
-        <p style="margin-top:16px">Do lado do fornecedor, os casos reportados (peças manchadas com reposição incompleta, costuras soltando, itens faltando e o desabastecimento de mantas há mais de um mês) reforçam um padrão de <strong>problemas de qualidade e de cumprimento de pedido</strong> — não apenas atrasos pontuais.</p>
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">Mês</th>
+              <th scope="col" class="num">Pedidos</th>
+              <th scope="col" class="num">Imóveis</th>
+              <th scope="col" class="num">Valor total</th>
+              <th scope="col" class="num">Já pago</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td class="name">Agosto/2026</td><td class="num">53</td><td class="num">48</td><td class="num">R$ 129.528</td><td class="num">R$ 46.761</td></tr>
+            <tr><td class="name">Setembro/2026</td><td class="num">73</td><td class="num">63</td><td class="num">R$ 178.917</td><td class="num">R$ 32.496</td></tr>
+          </tbody>
+          <tfoot>
+            <tr><td>Total</td><td class="num">126</td><td class="num">107</td><td class="num">R$ 308.446</td><td class="num">R$ 79.256</td></tr>
+          </tfoot>
+        </table>
+        <p style="margin-top:20px;font-size:14px">Por estado: <strong>BA 96 pedidos</strong> (R$ 240,8 mil), <strong>AL 19</strong> (R$ 46,0 mil), <strong>PB 8</strong> (R$ 17,3 mil), <strong>PE 3</strong> (R$ 4,3 mil). Do total, R$ 162,4 mil seguem em aberto e R$ 66,7 mil foram cancelados.</p>
+        <p style="margin-top:12px;font-size:14px">Aplicando a <strong>tabela de preços da RM</strong> na mesma cesta de itens, o valor fica praticamente igual: R$ 294,6 mil contra R$ 292,4 mil da Matinali (+0,8%) — alguns itens da RM são mais baratos, outros mais caros.</p>
       </div>
     </div>
   </section>
 
-  <!-- 10 — Recomendações -->
-  <section class="slide" aria-label="Próximos passos">
+  <!-- 6 — O que vem pela frente -->
+  <section class="slide" aria-label="O que vem pela frente">
     <div class="slide-head">
-      <p class="eyebrow">Próximos passos</p>
-      <h2>O que fazer a partir daqui</h2>
+      <p class="eyebrow">O que vem pela frente</p>
+      <h2>Alta temporada no Nordeste e o novo fluxo de pedidos</h2>
     </div>
-    <ol class="actions">
-      <li>
-        <div>
-          <h4>Cobrar a reposição pendente do AZS0201</h4>
-          <p>2 lençóis Queen e 4 fronhas ainda não voltaram depois da devolução.</p>
-        </div>
-      </li>
-      <li>
-        <div>
-          <h4>Acompanhar de perto o desabastecimento de mantas</h4>
-          <p>Prazo dado pela própria RM para esta semana (21 a 25/09) — cobrar confirmação.</p>
-        </div>
-      </li>
-      <li>
-        <div>
-          <h4>Investigar os 3 cards parados em Aguardando pagamento</h4>
-          <p>Confirmar se ainda são pedidos válidos ou se devem ser cancelados.</p>
-        </div>
-      </li>
-      <li>
-        <div>
-          <h4>Abrir conversa formal com a RM sobre controle de qualidade</h4>
-          <p>O padrão de reclamações (costuras, manchas, itens faltando) somado à taxa de 41,2% de cancelamento justifica tratar qualidade antes do envio.</p>
-        </div>
-      </li>
-    </ol>
+    <div class="grid2">
+
+      <div class="block">
+        <p class="detail">Comparativo · imóveis implantados no Nordeste</p>
+        <h4>A alta temporada do ano passado</h4>
+        <table style="margin-top:12px">
+          <tbody>
+            <tr><td class="name">Out/2025</td><td class="num"><span class="bar"><i style="width:98px"></i><span>40</span></span></td></tr>
+            <tr><td class="name">Nov/2025</td><td class="num"><span class="bar"><i style="width:129px"></i><span>53</span></span></td></tr>
+            <tr><td class="name">Dez/2025</td><td class="num"><span class="bar hi"><i style="width:200px"></i><span>82</span></span></td></tr>
+          </tbody>
+          <tfoot><tr><td>Out a dez/2025</td><td class="num">175 imóveis</td></tr></tfoot>
+        </table>
+        <p style="margin-top:12px">Para referência, os três últimos meses somaram 149 (jul 62, ago 52, set 35). <strong>Dezembro sozinho foi 2,3× setembro</strong> — é para esse pico que precisamos de estoque.</p>
+      </div>
+
+      <div class="block">
+        <p class="detail">Novo artefato</p>
+        <h4>Os pedidos voltam pelo Jornada Enxoval</h4>
+        <p>Quando os pedidos da RM voltarem, eles não passam mais pelo fluxo antigo: entram pelo <strong>Jornada Completa Enxoval</strong>, o app que já concentra os pedidos de enxoval da Seazone.</p>
+        <ul>
+          <li>Link de pagamento, NF, embarque e transportadora preenchidos <strong>direto no card</strong></li>
+          <li>Cada etapa fica <strong>carimbada com data e responsável</strong> — o prazo de despacho passa a ser medido sozinho</li>
+          <li>Fim do preenchimento em planilha paralela</li>
+        </ul>
+      </div>
+
+    </div>
     <div class="takeaway">
-      <p class="source">Relatório gerado a partir do export da Lojinha Seazone (Supabase), filtrado ao período de 01/08/2026 a 21/09/2026, e de relatos internos do time sobre a RM Enxoval.</p>
+      <p class="detail">Recado</p>
+      <p class="lead">O volume do Nordeste vem forte a partir de outubro — a regularização das mantas precisa estar fechada antes disso.</p>
+    </div>
+  </section>
+
+  <!-- 7 — Conclusão e próximos passos -->
+  <section class="slide" aria-label="Conclusão e próximos passos">
+    <div class="slide-head">
+      <p class="eyebrow">Conclusão</p>
+      <h2>Prazo bom, qualidade e abastecimento a resolver</h2>
+    </div>
+    <div class="hero-split">
+      <div class="hero-num" style="color:var(--color-success)">3,45<small>dias de despacho · o processo funciona</small></div>
+      <div>
+        <p class="lead">A RM entrega rápido, emite NF rápido e preenche tudo certo. O que derrubou o período foi <strong>qualidade do produto e falta de manta</strong>.</p>
+        <p style="margin-top:20px">A taxa de 41,2% de cancelamento na Lojinha, somada às peças manchadas com reposição incompleta, às costuras soltando e a um mês sem manta, forma um padrão de <strong>cumprimento de pedido</strong> — não de atraso.</p>
+      </div>
+    </div>
+    <div class="grid2" style="margin-top:32px">
+      <div class="block">
+        <h4>O que a RM resolve</h4>
+        <ul>
+          <li>Repor o pendente do <strong>AZS0201</strong>: 2 lençóis Queen e 4 fronhas</li>
+          <li>Confirmar a <strong>chegada do tecido das mantas</strong> ainda nesta semana (21–25/09)</li>
+          <li>Reforçar a <strong>conferência de qualidade antes do envio</strong> (costura, manchas, quantidade)</li>
+          <li>Preparar estoque para o pico de <strong>outubro a dezembro no Nordeste</strong></li>
+        </ul>
+      </div>
+      <div class="block">
+        <h4>O que a Seazone resolve</h4>
+        <ul>
+          <li>Investigar os <strong>3 cards parados</strong> em aguardando pagamento — validar ou cancelar</li>
+          <li>Migrar os pedidos da RM para o <strong>Jornada Enxoval</strong> quando voltarem</li>
+          <li>Acompanhamento ativo dos pedidos com link já enviado</li>
+        </ul>
+      </div>
+    </div>
+    <div class="takeaway">
+      <p class="source">Fontes: planilha de pedidos (tempo de despacho e NF), export da Lojinha Seazone, app Jornada Completa Enxoval e base Sapron (imóveis implantados por data de ativação). Período 01/08/2026 a 21/09/2026; comparativo de alta temporada em out–dez/2025.</p>
     </div>
   </section>
 
@@ -584,7 +442,7 @@ td .sub{display:block;font-size:12px;font-weight:400;color:var(--color-muted-fg)
   <button class="nav-btn" id="next" type="button" aria-label="Próximo slide">→</button>
   <div class="dots" id="dots" role="tablist" aria-label="Ir para slide"></div>
   <button class="nav-btn" id="print" type="button">Exportar PDF</button>
-  <p class="counter" id="counter">1 / 10</p>
+  <p class="counter" id="counter">1 / 7</p>
 </nav>
 
 <script>
@@ -628,7 +486,6 @@ td .sub{display:block;font-size:12px;font-weight:400;color:var(--color-muted-fg)
     else if (e.key.toLowerCase() === 'f') { document.documentElement.requestFullscreen?.(); }
   });
 
-  // swipe no mobile
   let x0 = null;
   document.addEventListener('touchstart', e => { x0 = e.touches[0].clientX; }, {passive:true});
   document.addEventListener('touchend', e => {
