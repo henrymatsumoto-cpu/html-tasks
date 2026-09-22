@@ -345,7 +345,59 @@ td .sub{display:block;font-size:12px;font-weight:400;color:var(--color-muted-fg)
     </div>
   </section>
 
-  <!-- 4 — Cards ativos -->
+  <!-- 4 — Planilha de pedidos: despacho e NF -->
+  <section class="slide" aria-label="Despacho e emissão de NF">
+    <div class="slide-head">
+      <p class="eyebrow">Planilha de pedidos</p>
+      <h2>Despacho e emissão de NF — o lado que vai bem</h2>
+      <p>Medido sobre os <strong>20 pedidos despachados no mês</strong>, pela planilha de pedidos.</p>
+    </div>
+
+    <div class="kpis" style="margin-bottom:var(--space-xl)">
+      <div class="kpi pos">
+        <p class="detail">Tempo médio de despacho</p>
+        <p class="num">3,45<span style="font-size:.4em;font-weight:500"> dias</span></p>
+        <p class="note">Muito bom — a RM despacha rápido depois do pedido confirmado.</p>
+      </div>
+      <div class="kpi pos">
+        <p class="detail">Tempo médio de emissão de NF</p>
+        <p class="num">2,55<span style="font-size:.4em;font-weight:500"> dias</span></p>
+        <p class="note">Excelente — a nota sai antes mesmo da média de despacho.</p>
+      </div>
+      <div class="kpi warn">
+        <p class="detail">Acima da média</p>
+        <p class="num">7<span style="font-size:.4em;font-weight:500"> / 20</span></p>
+        <p class="note">Só esses ficaram um pouco acima; o restante veio dentro do esperado.</p>
+      </div>
+    </div>
+
+    <table>
+      <caption>Pedidos com despacho acima da média — barras proporcionais ao maior caso (9 dias).</caption>
+      <thead>
+        <tr>
+          <th scope="col">Imóvel</th>
+          <th scope="col" class="num">Tempo de despacho</th>
+          <th scope="col" class="num">Acima da média (3,45d)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">APF0232</td><td class="num"><span class="bar hi"><i style="width:180px"></i><span>9d</span></span></td><td class="num">+5,6d</td></tr>
+        <tr><td class="name">QUA0501</td><td class="num"><span class="bar hi"><i style="width:140px"></i><span>7d</span></span></td><td class="num">+3,6d</td></tr>
+        <tr><td class="name">BLB0107</td><td class="num"><span class="bar hi"><i style="width:140px"></i><span>7d</span></span></td><td class="num">+3,6d</td></tr>
+        <tr><td class="name">VLPF0109</td><td class="num"><span class="bar hi"><i style="width:140px"></i><span>7d</span></span></td><td class="num">+3,6d</td></tr>
+        <tr><td class="name">VZA0106</td><td class="num"><span class="bar hi"><i style="width:140px"></i><span>7d</span></span></td><td class="num">+3,6d</td></tr>
+        <tr><td class="name">DGS0508</td><td class="num"><span class="bar"><i style="width:120px"></i><span>6d</span></span></td><td class="num">+2,6d</td></tr>
+        <tr><td class="name">NTV0212</td><td class="num"><span class="bar"><i style="width:100px"></i><span>5d</span></span></td><td class="num">+1,6d</td></tr>
+      </tbody>
+    </table>
+
+    <div class="takeaway">
+      <p class="detail">Leitura</p>
+      <p class="lead">Prazo não é o problema da RM: 13 dos 20 pedidos saíram dentro da média e os 7 acima ficaram só um pouco fora.</p>
+    </div>
+  </section>
+
+  <!-- 5 — Cards ativos -->
   <section class="slide" aria-label="Cards ativos agora">
     <div class="slide-head">
       <p class="eyebrow">Fila aberta · 5 cards</p>
@@ -392,7 +444,7 @@ td .sub{display:block;font-size:12px;font-weight:400;color:var(--color-muted-fg)
     </table>
   </section>
 
-  <!-- 5 — Caso AZS0201 -->
+  <!-- 6 — Caso AZS0201 -->
   <section class="slide" aria-label="Caso AZS0201">
     <div class="slide-head">
       <p class="eyebrow">Caso reportado pela franquia</p>
@@ -416,7 +468,7 @@ td .sub{display:block;font-size:12px;font-weight:400;color:var(--color-muted-fg)
     </div>
   </section>
 
-  <!-- 6 — Caso VVH0402 -->
+  <!-- 7 — Caso VVH0402 -->
   <section class="slide" aria-label="Caso VVH0402">
     <div class="slide-head">
       <p class="eyebrow">Caso reportado pela franquia</p>
@@ -440,7 +492,7 @@ td .sub{display:block;font-size:12px;font-weight:400;color:var(--color-muted-fg)
     </div>
   </section>
 
-  <!-- 7 — Mantas -->
+  <!-- 8 — Mantas -->
   <section class="slide" aria-label="Desabastecimento de mantas">
     <div class="slide-head">
       <p class="eyebrow">Abastecimento</p>
@@ -471,7 +523,7 @@ td .sub{display:block;font-size:12px;font-weight:400;color:var(--color-muted-fg)
     </div>
   </section>
 
-  <!-- 8 — Conclusão -->
+  <!-- 9 — Conclusão -->
   <section class="slide" aria-label="Conclusão">
     <div class="slide-head">
       <p class="eyebrow">Conclusão</p>
@@ -482,12 +534,13 @@ td .sub{display:block;font-size:12px;font-weight:400;color:var(--color-muted-fg)
       <div>
         <p class="lead">Em agosto e setembro houve <strong>queda na qualidade dos produtos e dos envios</strong> da RM Enxoval.</p>
         <p style="margin-top:24px">A taxa de cancelamento é alta, e os 3 cards parados em Aguardando pagamento — de 9 a 29 dias úteis — indicam falta de acompanhamento ativo desses pedidos do nosso lado.</p>
+        <p style="margin-top:16px">O prazo, porém, não é o ponto fraco: despacho em <strong>3,45 dias</strong> e NF em <strong>2,55 dias</strong> são números bons, com só 7 de 20 pedidos um pouco acima da média.</p>
         <p style="margin-top:16px">Do lado do fornecedor, os casos reportados (peças manchadas com reposição incompleta, costuras soltando, itens faltando e o desabastecimento de mantas há mais de um mês) reforçam um padrão de <strong>problemas de qualidade e de cumprimento de pedido</strong> — não apenas atrasos pontuais.</p>
       </div>
     </div>
   </section>
 
-  <!-- 9 — Recomendações -->
+  <!-- 10 — Recomendações -->
   <section class="slide" aria-label="Próximos passos">
     <div class="slide-head">
       <p class="eyebrow">Próximos passos</p>
@@ -531,7 +584,7 @@ td .sub{display:block;font-size:12px;font-weight:400;color:var(--color-muted-fg)
   <button class="nav-btn" id="next" type="button" aria-label="Próximo slide">→</button>
   <div class="dots" id="dots" role="tablist" aria-label="Ir para slide"></div>
   <button class="nav-btn" id="print" type="button">Exportar PDF</button>
-  <p class="counter" id="counter">1 / 9</p>
+  <p class="counter" id="counter">1 / 10</p>
 </nav>
 
 <script>
