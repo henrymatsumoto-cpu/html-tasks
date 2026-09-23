@@ -1,0 +1,540 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Harus: Relatório Mensal</title>
+<style>
+:root{
+  /* Bluezone — tokens (tema escuro, neutros tintados no hue da marca) */
+  --color-primary:        #0055FF;
+  --color-primary-on-dark:#4D86FF;
+  --color-success:        #22C55E;
+  --color-error:          #E7000B;
+  --color-error-on-dark:  #FF5A62;
+  --color-warning:        #F54A00;
+  --color-warning-on-dark:#FF8A3D;
+
+  --color-background: #060A1C;
+  --color-surface:    #0C1230;
+  --color-surface-2:  #141B40;
+  --color-border:     #1E2749;
+  --color-border-soft:#141B38;
+  --color-foreground: #EDEFF7;
+  --color-muted-fg:   #949BB8;
+
+  --space-xs:4px; --space-sm:8px; --space-md:16px; --space-lg:24px;
+  --space-xl:32px; --space-2xl:48px; --space-3xl:64px;
+
+  --radius-sm:4px; --radius-lg:8px; --radius-xl:12px; --radius-2xl:16px; --radius-full:9999px;
+
+  --gutter: clamp(24px,6vw,112px);
+  --font: "Helvetica Neue", Helvetica, "Nimbus Sans", Arial, sans-serif;
+  --ease: cubic-bezier(.16,1,.3,1);
+}
+
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0; color:var(--color-foreground); font-family:var(--font);
+  background:linear-gradient(180deg,#080E26 0%,var(--color-background) 60%);
+  background-color:var(--color-background);
+  -webkit-font-smoothing:antialiased; overflow:hidden;
+}
+
+/* ---------- Tipografia Bluezone ---------- */
+h1{font-size:48px;font-weight:700;line-height:1.1;margin:0;letter-spacing:-.022em}
+h2{font-size:30px;font-weight:500;line-height:1.2;margin:0}
+h3{font-size:24px;font-weight:500;line-height:1.3;margin:0}
+h4{font-size:20px;font-weight:500;line-height:1.4;margin:0}
+p{font-size:16px;font-weight:400;line-height:1.6;margin:0;color:var(--color-muted-fg);max-width:68ch}
+.lead{font-size:20px;font-weight:500;line-height:1.5;color:var(--color-foreground);max-width:60ch}
+.body{font-size:14px;font-weight:500;line-height:1.5}
+.detail{font-size:12px;font-weight:500;line-height:1.4}
+strong{color:var(--color-foreground);font-weight:700}
+
+.eyebrow{
+  font-size:12px;font-weight:700;line-height:1.4;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--color-primary-on-dark);margin:0;
+  display:inline-flex;align-items:center;gap:10px;
+}
+.eyebrow::before{content:"";width:18px;height:2px;background:currentColor;border-radius:var(--radius-full)}
+.eyebrow.good{color:var(--color-success)}
+.eyebrow.bad{color:var(--color-error-on-dark)}
+
+/* ---------- Estrutura ---------- */
+.deck{position:relative;height:100vh;width:100vw}
+.slide{
+  position:absolute;inset:0;display:none;
+  padding:clamp(76px,9vw,116px) var(--gutter) clamp(72px,8vw,92px);
+  overflow:auto;animation:enter .55s var(--ease) both;
+}
+.slide.is-active{display:flex;flex-direction:column;justify-content:center}
+@keyframes enter{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+.slide > *{animation:rise .55s var(--ease) both}
+.slide > *:nth-child(2){animation-delay:.06s}
+.slide > *:nth-child(3){animation-delay:.12s}
+.slide > *:nth-child(4){animation-delay:.18s}
+@keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.slide,.slide > *{animation:none}}
+
+/* chrome do slide: faixa superior com nome do deck e número */
+.slide-top{
+  position:absolute;top:clamp(30px,4vw,54px);left:var(--gutter);right:var(--gutter);
+  display:flex;align-items:baseline;justify-content:space-between;gap:var(--space-md);
+  padding-bottom:var(--space-md);border-bottom:1px solid var(--color-border-soft);
+  animation:none;
+}
+.slide-top .deck-name{font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--color-muted-fg)}
+.slide-top .slide-no{font-size:11px;font-weight:700;letter-spacing:.2em;color:var(--color-primary-on-dark);font-variant-numeric:tabular-nums}
+
+.slide-head{margin-bottom:var(--space-xl);flex:none;max-width:56ch}
+.slide-head .eyebrow{margin-bottom:var(--space-md)}
+.slide-head h1{max-width:20ch}
+.slide-head p{margin-top:var(--space-md)}
+
+/* ---------- Capa ---------- */
+.cover{justify-content:flex-end !important;gap:var(--space-lg);padding-bottom:clamp(88px,9vw,110px)}
+.cover h1{font-size:clamp(44px,6.8vw,88px);letter-spacing:-.035em;max-width:15ch}
+.cover .rule{height:1px;background:var(--color-border);margin:var(--space-lg) 0 var(--space-sm)}
+.cover-meta{display:flex;flex-wrap:wrap;gap:clamp(24px,5vw,64px);align-items:flex-end}
+.cover-meta div{min-width:150px}
+.cover-meta .detail{color:var(--color-muted-fg);letter-spacing:.14em;text-transform:uppercase;margin-bottom:8px}
+.cover-meta .body{color:var(--color-foreground)}
+.cover-mark{
+  position:absolute;top:clamp(30px,4vw,54px);left:var(--gutter);
+  display:flex;align-items:center;gap:10px;animation:none;
+}
+.cover-mark i{width:10px;height:10px;border-radius:var(--radius-full);background:var(--color-primary);display:block}
+.cover-mark span{font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase}
+
+/* ---------- Cartões e KPIs ---------- */
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:var(--space-md)}
+.kpi{
+  background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-2xl);
+  padding:var(--space-lg) var(--space-lg) var(--space-xl);
+}
+.kpi .detail{color:var(--color-muted-fg);letter-spacing:.12em;text-transform:uppercase}
+.kpi .num{font-size:clamp(36px,4.2vw,56px);font-weight:700;line-height:1;margin:var(--space-lg) 0 var(--space-sm);letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.kpi .num u{text-decoration:none;font-size:.34em;font-weight:500;letter-spacing:0;color:var(--color-muted-fg);margin-left:4px}
+.kpi .note{font-size:13px;font-weight:400;line-height:1.5;color:var(--color-muted-fg)}
+.kpi.pos .num{color:var(--color-success)}
+.kpi.pos{border-color:rgba(34,197,94,.28)}
+.kpi.neg .num{color:var(--color-error-on-dark)}
+.kpi.neg{border-color:rgba(255,90,98,.3)}
+.kpi.warn .num{color:var(--color-warning-on-dark)}
+.kpi.plain .num{font-size:20px;font-weight:500;letter-spacing:0;margin-bottom:var(--space-sm);color:var(--color-foreground)}
+
+.hero-split{display:grid;grid-template-columns:minmax(210px,.62fr) 1.38fr;gap:clamp(32px,5vw,80px);align-items:center}
+.hero-num{font-size:clamp(66px,9.5vw,140px);font-weight:700;line-height:.84;letter-spacing:-.05em;font-variant-numeric:tabular-nums}
+.hero-num small{display:block;font-size:13px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--color-muted-fg);margin-top:var(--space-lg);max-width:20ch;line-height:1.5}
+
+/* ---------- Tabelas ---------- */
+table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+caption{text-align:left;font-size:12px;font-weight:400;color:var(--color-muted-fg);padding-bottom:var(--space-md)}
+th{
+  text-align:left;font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--color-muted-fg);padding:0 var(--space-lg) var(--space-md) 0;border-bottom:1px solid var(--color-border);
+}
+th.num,td.num{text-align:right;padding-right:0}
+th.num+th:not(.num),td.num+td:not(.num){padding-left:22px}
+td{padding:15px var(--space-lg) 15px 0;border-bottom:1px solid var(--color-border-soft);font-size:15px;font-weight:400;color:var(--color-muted-fg)}
+tbody tr:last-child td{border-bottom:none}
+tbody tr{transition:background .2s var(--ease)}
+tbody tr:hover td{color:var(--color-foreground)}
+tfoot td{border-top:1px solid var(--color-border);border-bottom:none;font-weight:700;color:var(--color-foreground);padding-top:16px}
+td.name{font-weight:700;color:var(--color-foreground)}
+
+/* barras */
+td.track{width:34%}
+.bar{display:flex;align-items:center;gap:14px}
+.bar .t{flex:1;height:8px;border-radius:var(--radius-full);background:var(--color-surface-2);overflow:hidden}
+.bar .t i{display:block;height:100%;border-radius:var(--radius-full);background:var(--color-primary)}
+.bar.hi .t i{background:var(--color-warning-on-dark)}
+.bar b{min-width:38px;text-align:right;font-weight:700;color:var(--color-foreground);font-size:15px}
+
+.badge{display:inline-block;border-radius:var(--radius-full);padding:4px 12px;font-size:12px;font-weight:700;line-height:1.4;white-space:nowrap}
+.badge.late{background:rgba(231,0,11,.16);color:var(--color-error-on-dark)}
+.badge.ok{background:rgba(34,197,94,.16);color:var(--color-success)}
+.badge.open{background:rgba(245,74,0,.16);color:var(--color-warning-on-dark)}
+
+/* ---------- Blocos ---------- */
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:var(--space-lg)}
+.block{background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-2xl);padding:var(--space-xl) var(--space-lg)}
+.block h4{margin-bottom:var(--space-md)}
+.block p{font-size:14px;max-width:none;line-height:1.55}
+.block .detail{color:var(--color-muted-fg);letter-spacing:.14em;text-transform:uppercase;margin-bottom:var(--space-sm)}
+.block ul{margin:var(--space-md) 0 0;padding:0;list-style:none;display:grid;gap:var(--space-sm)}
+.block li{font-size:14px;font-weight:400;line-height:1.55;color:var(--color-muted-fg);padding-left:22px;position:relative}
+.block li::before{content:"";position:absolute;left:0;top:8px;width:6px;height:6px;border-radius:var(--radius-full);background:var(--color-primary-on-dark)}
+.block table td{padding:11px var(--space-md) 11px 0}
+
+/* cartões de código de imóvel */
+.chips{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(148px,1fr));gap:var(--space-md)}
+.chips li{background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-xl);padding:var(--space-md) var(--space-lg)}
+.chips b{display:block;font-size:18px;font-weight:700;letter-spacing:-.01em;font-variant-numeric:tabular-nums}
+.chips span{display:block;font-size:12px;font-weight:500;color:var(--color-muted-fg);margin-top:8px;letter-spacing:.06em}
+
+.block .chips{grid-template-columns:repeat(auto-fill,minmax(128px,1fr));gap:10px}
+.block .chips li{padding:10px 12px;color:var(--color-foreground)}
+.block .chips li::before{display:none}
+.block .chips b{font-size:15px}
+.takeaway{margin-top:var(--space-xl);border-top:1px solid var(--color-border);padding-top:var(--space-lg);display:flex;gap:var(--space-lg);align-items:baseline;flex-wrap:wrap}
+.takeaway .detail{letter-spacing:.18em;text-transform:uppercase;color:var(--color-muted-fg);flex:none}
+.takeaway .lead{font-size:17px;max-width:72ch}
+.source{font-size:12px;font-weight:400;line-height:1.6;color:var(--color-muted-fg);max-width:92ch}
+
+/* ---------- Navegação ---------- */
+.nav{position:fixed;left:0;right:0;bottom:0;height:60px;display:flex;align-items:center;gap:var(--space-md);padding:0 var(--gutter);background:linear-gradient(to top,var(--color-background) 55%,transparent);z-index:20}
+.dots{display:flex;gap:6px;flex:1;align-items:center}
+.dots button{width:20px;height:4px;border:none;border-radius:var(--radius-full);padding:0;cursor:pointer;background:var(--color-border);transition:background .25s var(--ease),width .25s var(--ease)}
+.dots button:hover{background:var(--color-muted-fg)}
+.dots button[aria-current="true"]{background:var(--color-primary);width:38px}
+.dots button:focus-visible{outline:2px solid var(--color-primary-on-dark);outline-offset:3px}
+.nav-btn{height:36px;min-width:36px;padding:0 16px;border-radius:var(--radius-full);border:1px solid var(--color-border);background:transparent;color:var(--color-foreground);font-family:var(--font);font-size:13px;font-weight:700;cursor:pointer;transition:background .2s var(--ease),border-color .2s var(--ease),opacity .2s var(--ease)}
+.nav-btn:hover{background:var(--color-surface-2);border-color:var(--color-primary)}
+.nav-btn:focus-visible{outline:2px solid var(--color-primary-on-dark);outline-offset:2px}
+.nav-btn[disabled]{opacity:.3;cursor:not-allowed}
+.counter{font-size:13px;font-weight:700;color:var(--color-muted-fg);font-variant-numeric:tabular-nums;min-width:52px;text-align:right}
+
+@media (max-width:900px){
+  .hero-split{grid-template-columns:1fr;gap:var(--space-xl)}
+  h1{font-size:32px}
+  .slide-head h1{max-width:none}
+  .slide{padding:72px 20px 80px}
+  table{font-size:13px}
+  td{padding:12px 10px 12px 0;font-size:13px}
+  th{font-size:10px;padding-right:10px}
+  td.track{width:30%}
+  .takeaway{gap:var(--space-sm)}
+}
+
+@media print{
+  @page{size:A4 landscape;margin:11mm}
+  body{overflow:visible;background:#fff}
+  .nav{display:none}
+  .deck{height:auto}
+  .slide{position:static;display:flex !important;flex-direction:column;justify-content:flex-start;height:auto;page-break-after:always;break-after:page;animation:none;padding:0 0 10mm}
+  .slide > *{animation:none}
+  .slide-top,.cover-mark{position:static;padding:0 0 8px;margin-bottom:22px}
+  .kpi,.block,.chips li{background:#fff}
+  /* densidade para caber 1 slide por página */
+  h1{font-size:27px;letter-spacing:-.02em}
+  .cover h1{font-size:40px}
+  h4{font-size:15px}
+  p,.block p,.kpi .note,.chips span{font-size:11px;line-height:1.45}
+  .lead,.takeaway .lead{font-size:13px;line-height:1.45;max-width:none}
+  .eyebrow,.slide-top .deck-name,.slide-top .slide-no{font-size:9px}
+  .slide-head{margin-bottom:18px;max-width:none}
+  .slide-head p{margin-top:8px}
+  .kpis,.grid2{gap:10px}
+  .kpi{padding:12px 14px}
+  .kpi .num{font-size:30px;margin:10px 0 6px}
+  .kpi.neg .num{color:var(--color-error-on-dark)}
+.kpi.neg{border-color:rgba(255,90,98,.3)}
+.kpi.warn .num{color:var(--color-warning-on-dark)}
+.kpi.plain .num{font-size:15px}
+  .block{padding:14px}
+  .block li{font-size:11px;line-height:1.45}
+  .block ul{gap:5px;margin-top:8px}
+  .hero-split{gap:28px}
+  .hero-num{font-size:64px}
+  .hero-num small{font-size:9px;margin-top:10px}
+  table{font-size:11px}
+  caption{font-size:10px;padding-bottom:8px}
+  th{font-size:9px;padding-bottom:7px;padding-right:12px}
+  td{padding:7px 12px;font-size:11px;padding-left:0}
+  .bar .t{height:6px}
+  .bar b{font-size:11px;min-width:26px}
+  .chips{gap:8px;grid-template-columns:repeat(6,1fr)}
+  .chips li{padding:8px 10px}
+  .chips b{font-size:13px}
+  .chips span{margin-top:4px}
+  .block .chips{grid-template-columns:repeat(4,1fr);gap:6px}
+  .block .chips li{padding:6px 8px}
+  .block .chips b{font-size:11px}
+  .block .chips span{font-size:9px}
+  .takeaway{margin-top:16px;padding-top:10px;gap:12px}
+  .takeaway .detail{font-size:9px}
+  .source{font-size:9px;line-height:1.5}
+  .badge{font-size:10px;padding:2px 9px}
+  .slide-top,.cover-mark{margin-bottom:16px}
+  :root{
+    --color-foreground:#080E32;--color-muted-fg:#565C7C;--color-border:#D5D9E6;--color-border-soft:#E6E9F1;
+    --color-surface:#fff;--color-surface-2:#EDEFF5;--color-primary-on-dark:#0055FF;
+    --color-error-on-dark:#C1000A;--color-warning-on-dark:#C43A00;
+  }
+}
+</style>
+</head>
+<body>
+
+<main class="deck" id="deck">
+
+  <!-- 1 — Capa -->
+  <section class="slide cover" aria-label="Capa">
+    <div class="cover-mark"><i></i><span>Seazone · Fornecedores</span></div>
+    <p class="eyebrow">Relatório de fornecedor</p>
+    <h1>Harus: Relatório Mensal</h1>
+    <p class="lead">Tempo para enviar o link de pagamento e tempo para despachar depois do pagamento — pedidos da Lojinha em agosto e setembro de 2026.</p>
+    <div class="rule"></div>
+    <div class="cover-meta">
+      <div><p class="detail">Período</p><p class="body">01/08 a 22/09/2026 · retrato de 22/09</p></div>
+      <div><p class="detail">Fonte</p><p class="body">Lojinha Seazone (histórico de etapas dos cards)</p></div>
+      <div><p class="detail">Gerado em</p><p class="body">22/09/2026</p></div>
+    </div>
+  </section>
+
+  <!-- 2 — Resumo -->
+  <section class="slide" aria-label="Resumo">
+    <div class="slide-head">
+      <p class="eyebrow">Lojinha · agosto e setembro/2026</p>
+      <h1>Nenhum link de pagamento desde 08/09</h1>
+      <p>Em média, a Harus leva <strong>1,6 dia útil</strong> para mandar o link e <strong>2,7 dias úteis</strong> para despachar depois do pagamento. Mas desde 08/09 não mandou nenhum link, e 20 pedidos estão parados esperando.</p>
+    </div>
+    <div class="kpis">
+      <div class="kpi">
+        <p class="detail">Link de pagamento</p>
+        <p class="num">1,59<u>dias úteis</u></p>
+        <p class="note">Média em Enviado ao Fornecedor · 39 pedidos que já saíram da etapa · mediana 1,07.</p>
+      </div>
+      <div class="kpi">
+        <p class="detail">Despacho</p>
+        <p class="num">2,71<u>dias úteis</u></p>
+        <p class="note">Média de Aguardando Envio até Pedido Enviado · 28 pedidos · mediana 1,90.</p>
+      </div>
+      <div class="kpi neg">
+        <p class="detail">Esperando link agora</p>
+        <p class="num">20<u>pedidos</u></p>
+        <p class="note">14 há mais de 3 dias úteis · R$ 10.630 em pedidos parados.</p>
+      </div>
+      <div class="kpi warn">
+        <p class="detail">Último link enviado</p>
+        <p class="num">08/09<u>20h33</u></p>
+        <p class="note">Desde então, nenhum card da Harus recebeu link de pagamento.</p>
+      </div>
+    </div>
+    <div class="takeaway">
+      <p class="detail">Regra</p>
+      <p class="source">Dias úteis contados em frações de dia, sem fins de semana e feriados (nacionais, SP e Franca/SP; no período só 07/09). Entram as passagens pela etapa que começaram a partir de 01/08. <strong>Ficam de fora</strong> os cards com a tag EVENTO e os pedidos em nome de Vinicius Satores: 22 dos 183 cards da Harus.</p>
+    </div>
+  </section>
+
+  <!-- 3 — Link de pagamento -->
+  <section class="slide" aria-label="Tempo para enviar o link de pagamento">
+    <div class="slide-head">
+      <p class="eyebrow">Etapa Enviado ao Fornecedor</p>
+      <h1>Link de pagamento em 1,6 dia útil, quando ele chega</h1>
+      <p>Tempo entre o card entrar em <strong>Enviado ao Fornecedor</strong> e a Harus colocar o link (o card vai para Aguardando Pagamento). Os 9 cards cancelados nessa etapa ficam fora da média.</p>
+    </div>
+    <div class="hero-split">
+      <div class="hero-num">1,59<small>dias úteis em média<br>39 pedidos com link</small></div>
+      <table>
+        <thead><tr><th scope="col">Faixa</th><th scope="col">Pedidos</th><th scope="col" class="num">%</th></tr></thead>
+        <tbody>
+          <tr><td class="name">Até 1 dia útil</td><td class="track"><span class="bar"><span class="t"><i style="width:100%"></i></span><b>19</b></span></td><td class="num">49%</td></tr>
+          <tr><td class="name">1 a 3 dias úteis</td><td class="track"><span class="bar"><span class="t"><i style="width:74%"></i></span><b>14</b></span></td><td class="num">36%</td></tr>
+          <tr><td class="name">3 a 5 dias úteis</td><td class="track"><span class="bar hi"><span class="t"><i style="width:21%"></i></span><b>4</b></span></td><td class="num">10%</td></tr>
+          <tr><td class="name">Mais de 5 dias úteis</td><td class="track"><span class="bar hi"><span class="t"><i style="width:11%"></i></span><b>2</b></span></td><td class="num">5%</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="takeaway">
+      <p class="detail">Atenção</p>
+      <p class="lead">A média só conta quem recebeu link. Somando os 20 que ainda esperam (contados até 22/09), ela sobe para <strong>2,56 dias úteis</strong>. Os que esperam estão parados, em média, há 4,5 dias úteis.</p>
+    </div>
+  </section>
+
+  <!-- 4 — Top 5 Enviado ao Fornecedor -->
+  <section class="slide" aria-label="Os 5 pedidos mais tempo em Enviado ao Fornecedor">
+    <div class="slide-head">
+      <p class="eyebrow bad">Casos mais críticos · link de pagamento</p>
+      <h1>Os 5 pedidos que mais esperaram o link</h1>
+      <p>Barra proporcional ao maior caso (10,9 dias úteis). Quem está "ainda parado" é contado até 22/09. Em 6º, empatado com o 5º, vem o #749 (Fernanda, Ilhéus/BA, 7,3d).</p>
+    </div>
+    <table>
+      <thead><tr><th scope="col">Pedido</th><th scope="col">Franquia</th><th scope="col">Cidade</th><th scope="col" class="num">Entrou</th><th scope="col">Dias úteis</th><th scope="col" class="num">Corridos</th><th scope="col">Situação</th></tr></thead>
+      <tbody><tr><td class="name">#602</td><td>Roberta de Freitas Costa</td><td>Salvador/BA</td><td class="num">11/08</td><td class="track"><span class="bar hi"><span class="t"><i style="width:100%"></i></span><b>10,9d</b></span></td><td class="num">15</td><td><span class="badge ok">Saiu 26/08</span></td></tr><tr><td class="name">#738</td><td>Dreicom Adolfo Neckel Wolter</td><td>Blumenau/SC</td><td class="num">10/09</td><td class="track"><span class="bar hi"><span class="t"><i style="width:78%"></i></span><b>8,5d</b></span></td><td class="num">12</td><td><span class="badge late">Ainda parado</span></td></tr><tr><td class="name">#739</td><td>Letícia Fagundes</td><td>Gramado/RS</td><td class="num">10/09</td><td class="track"><span class="bar hi"><span class="t"><i style="width:78%"></i></span><b>8,5d</b></span></td><td class="num">12</td><td><span class="badge late">Ainda parado</span></td></tr><tr><td class="name">#740</td><td>Nabiha Kasmas Denis</td><td>Florianópolis/SC</td><td class="num">10/09</td><td class="track"><span class="bar hi"><span class="t"><i style="width:76%"></i></span><b>8,3d</b></span></td><td class="num">12</td><td><span class="badge late">Ainda parado</span></td></tr><tr><td class="name">#748</td><td>Cingridi Cristina Mariano</td><td>Araucária/PR</td><td class="num">11/09</td><td class="track"><span class="bar hi"><span class="t"><i style="width:67%"></i></span><b>7,3d</b></span></td><td class="num">11</td><td><span class="badge late">Ainda parado</span></td></tr></tbody>
+    </table>
+    <div class="takeaway">
+      <p class="detail">Leitura</p>
+      <p class="lead">4 dos 5 ainda estão na etapa, todos desde <strong>10–11/09</strong>. O #602 (Roberta, Salvador) esperou 15 dias corridos pelo link em agosto.</p>
+    </div>
+  </section>
+
+  <!-- 5 — Parados sem link -->
+  <section class="slide" aria-label="Pedidos esperando link de pagamento agora">
+    <div class="slide-head">
+      <p class="eyebrow bad">Pontos de atenção</p>
+      <h1>20 pedidos esperando link hoje</h1>
+      <p>Todos entraram em Enviado ao Fornecedor a partir de 10/09, depois do último link que a Harus enviou (08/09). Em vermelho, os que passaram de 3 dias úteis. Dias úteis até 22/09.</p>
+    </div>
+    <div class="block">
+      <p class="detail">Lojinha · etapa Enviado ao Fornecedor</p>
+      <h4>14 de 20 há mais de 3 dias úteis · 11 há mais de 5</h4>
+      <ul class="chips" style="margin-top:16px"><li><b>#738</b><span>Dreicom · SC · desde 10/09 · <strong style="color:var(--color-error-on-dark)">8,5d</strong></span></li><li><b>#739</b><span>Letícia · RS · desde 10/09 · <strong style="color:var(--color-error-on-dark)">8,5d</strong></span></li><li><b>#740</b><span>Nabiha · SC · desde 10/09 · <strong style="color:var(--color-error-on-dark)">8,3d</strong></span></li><li><b>#748</b><span>Cingridi · PR · desde 11/09 · <strong style="color:var(--color-error-on-dark)">7,3d</strong></span></li><li><b>#749</b><span>Fernanda · BA · desde 11/09 · <strong style="color:var(--color-error-on-dark)">7,3d</strong></span></li><li><b>#750</b><span>Camila · SC · desde 14/09 · <strong style="color:var(--color-error-on-dark)">6,5d</strong></span></li><li><b>#756</b><span>Andrea · SC · desde 15/09 · <strong style="color:var(--color-error-on-dark)">5,4d</strong></span></li><li><b>#758</b><span>Sônia · SC · desde 15/09 · <strong style="color:var(--color-error-on-dark)">5,4d</strong></span></li><li><b>#759</b><span>Diego · SC · desde 15/09 · <strong style="color:var(--color-error-on-dark)">5,4d</strong></span></li><li><b>#762</b><span>Ricardo · ES · desde 15/09 · <strong style="color:var(--color-error-on-dark)">5,2d</strong></span></li><li><b>#763</b><span>Matias · BA · desde 15/09 · <strong style="color:var(--color-error-on-dark)">5,2d</strong></span></li><li><b>#764</b><span>Andreia · SC · desde 16/09 · <strong style="color:var(--color-error-on-dark)">4,3d</strong></span></li><li><b>#771</b><span>Mariana · SC · desde 17/09 · <strong style="color:var(--color-error-on-dark)">3,5d</strong></span></li><li><b>#776</b><span>Katia · SC · desde 17/09 · <strong style="color:var(--color-error-on-dark)">3,3d</strong></span></li><li><b>#778</b><span>Giselia · SP · desde 18/09 · <strong style="color:var(--color-muted-fg)">2,5d</strong></span></li><li><b>#781</b><span>Ana · BA · desde 21/09 · <strong style="color:var(--color-muted-fg)">1,4d</strong></span></li><li><b>#782</b><span>Filipe · BA · desde 22/09 · <strong style="color:var(--color-muted-fg)">0,5d</strong></span></li><li><b>#783</b><span>Driely · — · desde 22/09 · <strong style="color:var(--color-muted-fg)">0,4d</strong></span></li><li><b>#789</b><span>Driely · DF · desde 22/09 · <strong style="color:var(--color-muted-fg)">0,3d</strong></span></li><li><b>#792</b><span>Ana · PR · desde 22/09 · <strong style="color:var(--color-muted-fg)">0,2d</strong></span></li></ul>
+    </div>
+    <div class="takeaway">
+      <p class="detail">Leitura</p>
+      <p class="lead">Não é um pedido atrasado aqui e ali: a Harus <strong>parou de mandar link há duas semanas</strong>. Nesse tempo, 4 cards que entraram na etapa foram cancelados sem receber link.</p>
+    </div>
+  </section>
+
+  <!-- 6 — Aguardando Envio -->
+  <section class="slide" aria-label="Tempo de despacho depois do pagamento">
+    <div class="slide-head">
+      <p class="eyebrow">Etapa Aguardando Envio</p>
+      <h1>Despacho em 2,7 dias úteis, mais rápido em setembro</h1>
+      <p>Tempo entre o pagamento confirmado (card em <strong>Aguardando Envio</strong>) e a Harus marcar <strong>Pedido Enviado</strong>. Hoje não há nenhum card da Harus parado nessa etapa.</p>
+    </div>
+    <div class="hero-split">
+      <div class="hero-num">2,71<small>dias úteis em média<br>28 pedidos despachados</small></div>
+      <div class="kpis">
+        <div class="kpi neg">
+          <p class="detail">Agosto</p>
+          <p class="num">3,63<u>dias úteis</u></p>
+          <p class="note">18 pedidos · mediana 2,86 · 4 passaram de 5 dias.</p>
+        </div>
+        <div class="kpi pos">
+          <p class="detail">Setembro</p>
+          <p class="num">1,06<u>dias úteis</u></p>
+          <p class="note">10 pedidos · mediana 0,99 · máximo 2,2.</p>
+        </div>
+        <div class="kpi warn">
+          <p class="detail">Rastreio</p>
+          <p class="num">27<u>de 28</u></p>
+          <p class="note">marcados como enviados com código fictício ("000…", "11111111"). Só o #663 tem rastreio real.</p>
+        </div>
+      </div>
+    </div>
+    <div class="takeaway">
+      <p class="detail">Ressalva</p>
+      <p class="lead">O despacho melhorou, mas a data de "enviado" é a que a própria Harus marca. Sem rastreio real, <strong>não dá para confirmar que o pedido saiu nesse dia</strong>.</p>
+    </div>
+  </section>
+
+  <!-- 7 — Top 5 Aguardando Envio -->
+  <section class="slide" aria-label="Os 5 pedidos mais tempo em Aguardando Envio">
+    <div class="slide-head">
+      <p class="eyebrow bad">Casos mais críticos · despacho</p>
+      <h1>Os 5 pedidos pagos que mais demoraram para sair</h1>
+      <p>Barra proporcional ao maior caso (11,3 dias úteis). Última coluna: o código de rastreio que está no card.</p>
+    </div>
+    <table>
+      <thead><tr><th scope="col">Pedido</th><th scope="col">Franquia</th><th scope="col">Cidade</th><th scope="col" class="num">Pago</th><th scope="col">Dias úteis</th><th scope="col" class="num">Corridos</th><th scope="col">Situação</th><th scope="col">Rastreio</th></tr></thead>
+      <tbody><tr><td class="name">#595</td><td>Roberta de Almeida Turra Vieira</td><td>São Paulo/SP</td><td class="num">11/08</td><td class="track"><span class="bar hi"><span class="t"><i style="width:100%"></i></span><b>11,3d</b></span></td><td class="num">15</td><td><span class="badge ok">Saiu 26/08</span></td><td>000000000000</td></tr><tr><td class="name">#606</td><td>Vinicius Vieira dos Reis</td><td>São Paulo/SP</td><td class="num">14/08</td><td class="track"><span class="bar hi"><span class="t"><i style="width:73%"></i></span><b>8,2d</b></span></td><td class="num">12</td><td><span class="badge ok">Saiu 26/08</span></td><td>00000000</td></tr><tr><td class="name">#588</td><td>Jorge de Figueiredo Sampaio Filho</td><td>Magé/RJ</td><td class="num">17/08</td><td class="track"><span class="bar hi"><span class="t"><i style="width:70%"></i></span><b>8,0d</b></span></td><td class="num">10</td><td><span class="badge ok">Saiu 27/08</span></td><td>0000000</td></tr><tr><td class="name">#471</td><td>Sônia Maria Gervásio Sales</td><td>Florianópolis/SC</td><td class="num">04/08</td><td class="track"><span class="bar hi"><span class="t"><i style="width:51%"></i></span><b>5,7d</b></span></td><td class="num">8</td><td><span class="badge ok">Saiu 12/08</span></td><td>000</td></tr><tr><td class="name">#602</td><td>Roberta de Freitas Costa</td><td>Salvador/BA</td><td class="num">28/08</td><td class="track"><span class="bar hi"><span class="t"><i style="width:44%"></i></span><b>5,0d</b></span></td><td class="num">7</td><td><span class="badge ok">Saiu 04/09</span></td><td>000</td></tr></tbody>
+    </table>
+    <div class="takeaway">
+      <p class="detail">Contexto</p>
+      <p class="lead">Os 5 são de agosto. #595 é um dos pedidos citados pelo time. O #602 (também no slide 4) esperou 15 dias corridos pelo link e mais 7 para sair.</p>
+    </div>
+  </section>
+
+  <!-- 8 — Conclusão -->
+  <section class="slide" aria-label="Conclusão e saídas">
+    <div class="slide-head">
+      <p class="eyebrow">Conclusão</p>
+      <h1>O gargalo agora é o link de pagamento</h1>
+      <p>Quando a Harus responde, responde rápido (metade dos links sai em até 1 dia útil). O problema é que desde 08/09 ela não responde.</p>
+    </div>
+    <div class="grid2">
+      <div class="block">
+        <p class="detail">O que os dados mostram</p>
+        <ul>
+          <li>Link de pagamento: 1,59 dia útil em média (39 pedidos), mas nenhum link desde 08/09.</li>
+          <li>20 pedidos esperando link, 14 deles há mais de 3 dias úteis (R$ 10.630).</li>
+          <li>Despacho: 2,71 dias úteis em média; caiu de 3,63 em agosto para 1,06 em setembro.</li>
+          <li>27 dos 28 pedidos marcados como enviados não têm rastreio real.</li>
+        </ul>
+      </div>
+      <div class="block">
+        <p class="detail">Saídas</p>
+        <ul>
+          <li>Cobrar hoje o link dos 20 pedidos parados, começando por #738, #739, #740, #748 e #749 (desde 10–11/09).</li>
+          <li>Combinar um prazo para o link (sugestão: 2 dias úteis) e cobrar quando passar.</li>
+          <li>Exigir rastreio real ao marcar Pedido Enviado; sem código, o card volta para Aguardando Envio.</li>
+          <li>Refazer esta conta no próximo mês para ver se o link voltou a sair.</li>
+        </ul>
+      </div>
+    </div>
+    <p class="source" style="margin-top:24px">Fonte: loja-full-export da Lojinha Seazone (supplier_order_cards + card_status_history), retrato de 22/09/2026. Harus = fornecedor em Franca/SP. Excluídos: tag EVENTO e pedidos em nome de Vinicius Satores.</p>
+  </section>
+
+</main>
+
+<nav class="nav" aria-label="Navegação dos slides">
+  <button class="nav-btn" id="prev" type="button" aria-label="Slide anterior">←</button>
+  <button class="nav-btn" id="next" type="button" aria-label="Próximo slide">→</button>
+  <div class="dots" id="dots" role="tablist" aria-label="Ir para slide"></div>
+  <button class="nav-btn" id="print" type="button">Exportar PDF</button>
+  <p class="counter" id="counter">1 / 8</p>
+</nav>
+
+<script>
+(function(){
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  const dots = document.getElementById('dots');
+  const counter = document.getElementById('counter');
+  const prev = document.getElementById('prev');
+  const next = document.getElementById('next');
+  const total = slides.length;
+  let i = 0;
+
+  // faixa superior com nome do deck e número do slide (a capa tem a sua própria marca)
+  slides.forEach((s, idx) => {
+    if (s.classList.contains('cover')) return;
+    const top = document.createElement('div');
+    top.className = 'slide-top';
+    top.innerHTML = '<span class="deck-name">Harus · Relatório Mensal</span>' +
+                    '<span class="slide-no">' + String(idx + 1).padStart(2, '0') + ' / ' + String(total).padStart(2, '0') + '</span>';
+    s.insertBefore(top, s.firstChild);
+  });
+
+  slides.forEach((s, idx) => {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.setAttribute('role', 'tab');
+    b.setAttribute('aria-label', 'Slide ' + (idx + 1) + ': ' + (s.getAttribute('aria-label') || ''));
+    b.addEventListener('click', () => go(idx));
+    dots.appendChild(b);
+  });
+
+  function go(n){
+    i = Math.max(0, Math.min(total - 1, n));
+    slides.forEach((s, idx) => s.classList.toggle('is-active', idx === i));
+    Array.from(dots.children).forEach((d, idx) => d.setAttribute('aria-current', idx === i));
+    counter.textContent = (i + 1) + ' / ' + total;
+    prev.disabled = i === 0;
+    next.disabled = i === total - 1;
+    location.hash = i === 0 ? '' : 's' + (i + 1);
+  }
+
+  prev.addEventListener('click', () => go(i - 1));
+  next.addEventListener('click', () => go(i + 1));
+  document.getElementById('print').addEventListener('click', () => window.print());
+
+  document.addEventListener('keydown', e => {
+    if (e.target.closest('button') && (e.key === ' ' || e.key === 'Enter')) return;
+    if (e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === ' ') { e.preventDefault(); go(i + 1); }
+    else if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); go(i - 1); }
+    else if (e.key === 'Home') { e.preventDefault(); go(0); }
+    else if (e.key === 'End') { e.preventDefault(); go(total - 1); }
+    else if (e.key.toLowerCase() === 'f') { document.documentElement.requestFullscreen?.(); }
+  });
+
+  let x0 = null;
+  document.addEventListener('touchstart', e => { x0 = e.touches[0].clientX; }, {passive:true});
+  document.addEventListener('touchend', e => {
+    if (x0 === null) return;
+    const dx = e.changedTouches[0].clientX - x0;
+    if (Math.abs(dx) > 60) go(dx < 0 ? i + 1 : i - 1);
+    x0 = null;
+  }, {passive:true});
+
+  const fromHash = parseInt((location.hash.match(/^#s(\d+)$/) || [])[1], 10);
+  go(Number.isFinite(fromHash) ? fromHash - 1 : 0);
+})();
+</script>
+</body>
+</html>
