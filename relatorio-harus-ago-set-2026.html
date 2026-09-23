@@ -185,6 +185,17 @@ td.track{width:34%}
 .takeaway .lead{font-size:17px;max-width:72ch}
 .source{font-size:12px;font-weight:400;line-height:1.6;color:var(--color-muted-fg);max-width:92ch}
 
+
+/* alerta de atenção */
+.alert{margin-top:var(--space-lg);border:1px solid rgba(255,90,98,.45);background:rgba(231,0,11,.08);border-radius:var(--radius-2xl);padding:var(--space-md) var(--space-lg);display:flex;flex-wrap:wrap;gap:var(--space-md) var(--space-xl);align-items:center}
+.alert .detail{color:var(--color-error-on-dark);letter-spacing:.14em;text-transform:uppercase;font-weight:700;flex:none}
+.alert-list{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:var(--space-md) var(--space-xl);flex:1}
+.alert-list li{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.alert-list b{font-size:20px;font-weight:700;color:var(--color-foreground);font-variant-numeric:tabular-nums}
+.alert-list span{font-size:14px;color:var(--color-muted-fg)}
+.alert-list em{font-style:normal;font-size:14px;font-weight:700;color:var(--color-error-on-dark)}
+@media print{.alert{background:#fff;margin-top:12px;padding:10px 14px}.alert-list b{font-size:14px}.alert-list span,.alert-list em{font-size:11px}.alert .detail{font-size:9px}}
+
 /* ---------- Navegação ---------- */
 .nav{position:fixed;left:0;right:0;bottom:0;height:60px;display:flex;align-items:center;gap:var(--space-md);padding:0 var(--gutter);background:linear-gradient(to top,var(--color-background) 55%,transparent);z-index:20}
 .dots{display:flex;gap:6px;flex:1;align-items:center}
@@ -288,10 +299,10 @@ td.track{width:34%}
 
   <!-- 2 — Resumo -->
   <section class="slide" aria-label="Resumo">
-    <div class="slide-head">
+    <div class="slide-head" style="max-width:none">
       <p class="eyebrow">Lojinha · agosto e setembro/2026</p>
-      <h1>Nenhum link de pagamento desde 08/09</h1>
-      <p>Em média, a Harus leva <strong>1,6 dia útil</strong> para mandar o link e <strong>2,7 dias úteis</strong> para despachar depois do pagamento. Mas desde 08/09 não mandou nenhum link, e 20 pedidos estão parados esperando.</p>
+      <h1 style="max-width:none">Nenhum link de pagamento desde 08/09</h1>
+      <p style="max-width:80ch">Em média, a Harus leva <strong>1,6 dia útil</strong> para mandar o link e <strong>2,7 dias úteis</strong> para despachar depois do pagamento. Mas desde 08/09 não mandou nenhum link, e 20 pedidos estão parados esperando.</p>
     </div>
     <div class="kpis">
       <div class="kpi">
@@ -305,15 +316,22 @@ td.track{width:34%}
         <p class="note">Média de Aguardando Envio até Pedido Enviado · 28 pedidos · mediana 1,90.</p>
       </div>
       <div class="kpi neg">
-        <p class="detail">Esperando link agora</p>
-        <p class="num">20<u>pedidos</u></p>
-        <p class="note">14 há mais de 3 dias úteis · R$ 10.630 em pedidos parados.</p>
+        <p class="detail">Parado esperando link</p>
+        <p class="num">R$ 8.505</p>
+        <p class="note">20 pedidos · R$ 6.376 deles em 14 pedidos há mais de 3 dias úteis.</p>
       </div>
       <div class="kpi warn">
         <p class="detail">Último link enviado</p>
         <p class="num">08/09<u>20h33</u></p>
         <p class="note">Desde então, nenhum card da Harus recebeu link de pagamento.</p>
       </div>
+    </div>
+    <div class="alert" role="note">
+      <p class="detail">Atenção · os 2 mais antigos na fase</p>
+      <ul class="alert-list">
+        <li><b>#738</b><span>Dreicom · Blumenau/SC · R$ 200</span><em>desde 10/09 · 8,5 dias úteis</em></li>
+        <li><b>#739</b><span>Letícia · Gramado/RS · R$ 628</span><em>desde 10/09 · 8,5 dias úteis</em></li>
+      </ul>
     </div>
     <div class="takeaway">
       <p class="detail">Regra</p>
@@ -372,7 +390,7 @@ td.track{width:34%}
     </div>
     <div class="block">
       <p class="detail">Lojinha · etapa Enviado ao Fornecedor</p>
-      <h4>14 de 20 há mais de 3 dias úteis · 11 há mais de 5</h4>
+      <h4>R$ 8.505 parados · 14 de 20 há mais de 3 dias úteis · 11 há mais de 5</h4>
       <ul class="chips" style="margin-top:16px"><li><b>#738</b><span>Dreicom · SC · desde 10/09 · <strong style="color:var(--color-error-on-dark)">8,5d</strong></span></li><li><b>#739</b><span>Letícia · RS · desde 10/09 · <strong style="color:var(--color-error-on-dark)">8,5d</strong></span></li><li><b>#740</b><span>Nabiha · SC · desde 10/09 · <strong style="color:var(--color-error-on-dark)">8,3d</strong></span></li><li><b>#748</b><span>Cingridi · PR · desde 11/09 · <strong style="color:var(--color-error-on-dark)">7,3d</strong></span></li><li><b>#749</b><span>Fernanda · BA · desde 11/09 · <strong style="color:var(--color-error-on-dark)">7,3d</strong></span></li><li><b>#750</b><span>Camila · SC · desde 14/09 · <strong style="color:var(--color-error-on-dark)">6,5d</strong></span></li><li><b>#756</b><span>Andrea · SC · desde 15/09 · <strong style="color:var(--color-error-on-dark)">5,4d</strong></span></li><li><b>#758</b><span>Sônia · SC · desde 15/09 · <strong style="color:var(--color-error-on-dark)">5,4d</strong></span></li><li><b>#759</b><span>Diego · SC · desde 15/09 · <strong style="color:var(--color-error-on-dark)">5,4d</strong></span></li><li><b>#762</b><span>Ricardo · ES · desde 15/09 · <strong style="color:var(--color-error-on-dark)">5,2d</strong></span></li><li><b>#763</b><span>Matias · BA · desde 15/09 · <strong style="color:var(--color-error-on-dark)">5,2d</strong></span></li><li><b>#764</b><span>Andreia · SC · desde 16/09 · <strong style="color:var(--color-error-on-dark)">4,3d</strong></span></li><li><b>#771</b><span>Mariana · SC · desde 17/09 · <strong style="color:var(--color-error-on-dark)">3,5d</strong></span></li><li><b>#776</b><span>Katia · SC · desde 17/09 · <strong style="color:var(--color-error-on-dark)">3,3d</strong></span></li><li><b>#778</b><span>Giselia · SP · desde 18/09 · <strong style="color:var(--color-muted-fg)">2,5d</strong></span></li><li><b>#781</b><span>Ana · BA · desde 21/09 · <strong style="color:var(--color-muted-fg)">1,4d</strong></span></li><li><b>#782</b><span>Filipe · BA · desde 22/09 · <strong style="color:var(--color-muted-fg)">0,5d</strong></span></li><li><b>#783</b><span>Driely · — · desde 22/09 · <strong style="color:var(--color-muted-fg)">0,4d</strong></span></li><li><b>#789</b><span>Driely · DF · desde 22/09 · <strong style="color:var(--color-muted-fg)">0,3d</strong></span></li><li><b>#792</b><span>Ana · PR · desde 22/09 · <strong style="color:var(--color-muted-fg)">0,2d</strong></span></li></ul>
     </div>
     <div class="takeaway">
@@ -443,7 +461,7 @@ td.track{width:34%}
         <p class="detail">O que os dados mostram</p>
         <ul>
           <li>Link de pagamento: 1,59 dia útil em média (39 pedidos), mas nenhum link desde 08/09.</li>
-          <li>20 pedidos esperando link, 14 deles há mais de 3 dias úteis (R$ 10.630).</li>
+          <li>20 pedidos esperando link, 14 deles há mais de 3 dias úteis (R$ 8.505 em produtos da Harus).</li>
           <li>Despacho: 2,71 dias úteis em média; caiu de 3,63 em agosto para 1,06 em setembro.</li>
           <li>27 dos 28 pedidos marcados como enviados não têm rastreio real.</li>
         </ul>
