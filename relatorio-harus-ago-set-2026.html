@@ -213,6 +213,15 @@ td.track{width:34%}
 .spot.next .spot-foot em{color:var(--color-warning-on-dark)}
 @media print{.spot{background:#fff;padding:12px}.spot > b{font-size:22px}.spot p,.spot ul{font-size:11px}.spot-foot span{font-size:13px}}
 
+
+/* relatos */
+.relatos{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--space-md)}
+.relatos .block{padding:var(--space-lg)}
+.relatos .block h4{font-size:17px;margin-bottom:8px}
+.relatos .block p{font-size:13px}
+@media (max-width:900px){.relatos{grid-template-columns:1fr}}
+@media print{.relatos{gap:8px}.relatos .block{padding:10px}.relatos .block h4{font-size:13px;margin-bottom:4px}.relatos .block p{font-size:10px}}
+
 /* ---------- Navegação ---------- */
 .nav{position:fixed;left:0;right:0;bottom:0;height:60px;display:flex;align-items:center;gap:var(--space-md);padding:0 var(--gutter);background:linear-gradient(to top,var(--color-background) 55%,transparent);z-index:20}
 .dots{display:flex;gap:6px;flex:1;align-items:center}
@@ -485,7 +494,49 @@ td.track{width:34%}
     </div>
   </section>
 
-  <!-- 8 — Conclusão -->
+  <!-- 8 — Relatos do time e das franquias -->
+  <section class="slide" aria-label="Relatos do time e das franquias">
+    <div class="slide-head" style="max-width:none;margin-bottom:24px">
+      <p class="eyebrow bad">Relatos do time e das franquias</p>
+      <h1 style="max-width:none">Além dos números: os problemas do dia a dia</h1>
+      <p style="max-width:84ch">O que o time e as franquias relataram sobre a Harus em agosto e setembro. Os números da Lojinha confirmam boa parte deles.</p>
+    </div>
+    <div class="relatos">
+      <div class="block">
+        <p class="detail">Comunicação</p>
+        <h4>WhatsApp lento e pouco resolutivo</h4>
+        <p>O contato é só por WhatsApp e o retorno demora e resolve pouco. Sem rastreio real nos cards, o time depende dessa conversa para responder o franqueado.</p>
+      </div>
+      <div class="block">
+        <p class="detail">Entrega</p>
+        <h4>Atraso sem apoio com a transportadora</h4>
+        <p>A Harus não ajuda a falar com a transportadora: o time fica sem saber onde está a mercadoria e sem previsão. Citados: <strong>#595</strong> e <strong>#629</strong>, os dois com rastreio "000…".</p>
+      </div>
+      <div class="block">
+        <p class="detail">Qualidade</p>
+        <h4>Embalagem danificada</h4>
+        <p>Chegaram caixas com embalagem danificada. A Harus confirmou que vai repor as unidades. <strong>Acompanhar até a entrega.</strong></p>
+      </div>
+      <div class="block">
+        <p class="detail">Qualidade</p>
+        <h4>Produto errado na caixa</h4>
+        <p>Uma caixa que devia ter só shampoo 2 em 1 veio com metade de condicionador. A Harus confirmou a troca. <strong>Acompanhar até a entrega.</strong></p>
+      </div>
+      <div class="block">
+        <p class="detail">Eventos</p>
+        <h4>Pedidos de evento não entregues</h4>
+        <p>O evento da franquia Juliana ficou sem os pedidos <strong>#678</strong> e <strong>#680</strong>, parados em Pedido Enviado e sem rastreio. Tem também um pedido de evento pendente em Campinas (Janaína).</p>
+      </div>
+      <div class="block">
+        <p class="detail">Resumo</p>
+        <h4>Não são casos isolados</h4>
+        <p>Comunicação lenta, rastreio falso, link que não chega e erros na entrega se repetem. É uma <strong>falha de operação da Harus</strong>, e cobrar pedido por pedido não resolve.</p>
+      </div>
+    </div>
+    <p class="source" style="margin-top:20px">Os pedidos de evento (#678, #680) ficam fora das médias deste relatório pela regra de exclusão (tag EVENTO e pedidos em nome de Vinicius Satores), mas entram aqui como relato.</p>
+  </section>
+
+  <!-- 9 — Conclusão -->
   <section class="slide" aria-label="Conclusão e saídas">
     <div class="slide-head">
       <p class="eyebrow">Conclusão</p>
@@ -523,7 +574,7 @@ td.track{width:34%}
   <button class="nav-btn" id="next" type="button" aria-label="Próximo slide">→</button>
   <div class="dots" id="dots" role="tablist" aria-label="Ir para slide"></div>
   <button class="nav-btn" id="print" type="button">Exportar PDF</button>
-  <p class="counter" id="counter">1 / 8</p>
+  <p class="counter" id="counter">1 / 9</p>
 </nav>
 
 <script>
