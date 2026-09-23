@@ -222,6 +222,19 @@ td.track{width:34%}
 @media (max-width:900px){.relatos{grid-template-columns:1fr}}
 @media print{.relatos{gap:8px}.relatos .block{padding:10px}.relatos .block h4{font-size:13px;margin-bottom:4px}.relatos .block p{font-size:10px}}
 
+
+/* casos criticos */
+.casos .caso{border-color:rgba(255,90,98,.45);padding:var(--space-lg);display:flex;flex-direction:column;gap:8px}
+.casos .caso .detail{color:var(--color-error-on-dark);font-weight:700}
+.casos .caso h4{font-size:18px;margin:0}
+.casos .caso p{font-size:13px}
+.casos .caso table td{padding:6px 12px 6px 0;font-size:13px}
+.casos .caso tfoot td{padding-top:8px}
+.caso-ask{margin-top:auto;padding:10px 14px;border-radius:var(--radius-xl);background:rgba(231,0,11,.10);display:flex;flex-direction:column;gap:2px}
+.caso-ask b{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--color-error-on-dark)}
+.caso-ask span{font-size:14px;color:var(--color-foreground)}
+@media print{.casos .caso{padding:10px;background:#fff}.casos .caso h4{font-size:13px}.casos .caso p,.casos .caso table td,.caso-ask span{font-size:10px}.casos .caso table td{padding:3px 8px 3px 0}.caso-ask{background:#fff;border:1px solid #C1000A;padding:6px 10px}}
+
 /* ---------- Navegação ---------- */
 .nav{position:fixed;left:0;right:0;bottom:0;height:60px;display:flex;align-items:center;gap:var(--space-md);padding:0 var(--gutter);background:linear-gradient(to top,var(--color-background) 55%,transparent);z-index:20}
 .dots{display:flex;gap:6px;flex:1;align-items:center}
@@ -536,7 +549,48 @@ td.track{width:34%}
     <p class="source" style="margin-top:20px">Os pedidos de evento (#678, #680) ficam fora das médias deste relatório pela regra de exclusão (tag EVENTO e pedidos em nome de Vinicius Satores), mas entram aqui como relato.</p>
   </section>
 
-  <!-- 9 — Conclusão -->
+  <!-- 9 — Casos críticos para a reunião -->
+  <section class="slide" aria-label="Casos críticos para a reunião">
+    <div class="slide-head" style="max-width:none;margin-bottom:24px">
+      <p class="eyebrow bad">Crítico · para discutir na reunião</p>
+      <h1 style="max-width:none">Dois pedidos de evento que as franquias não receberam</h1>
+      <p style="max-width:88ch">Os dois são pedidos de evento. As franquias continuam sem os produtos, e nenhum dos dois tem data de envio ou rastreio.</p>
+    </div>
+    <div class="grid2 casos">
+      <div class="block caso">
+        <p class="detail">Caso 1 · Janaina — Campinas</p>
+        <h4>Pedido Harus nº 18219 · fora da Lojinha</h4>
+        <p>Pedido feito no evento, em formulário da Harus. Pago por <strong>Pix</strong>, com comprovante enviado. A franqueada pediu previsão de envio e ainda não teve resposta.</p>
+        <table>
+          <tbody>
+            <tr><td>Clorado</td><td class="num">R$ 134,42</td></tr>
+            <tr><td>Peroxi</td><td class="num">R$ 249,35</td></tr>
+            <tr><td>Grease</td><td class="num">R$ 182,11</td></tr>
+            <tr><td>Creme</td><td class="num">R$ 7,26</td></tr>
+            <tr><td>Esponja multiuso</td><td class="num">ilegível</td></tr>
+          </tbody>
+          <tfoot><tr><td>Total legível</td><td class="num">R$ 573,14 + esponja</td></tr></tfoot>
+        </table>
+        <div class="caso-ask"><b>Levar para a reunião</b><span>Data de envio e rastreio do pedido 18219.</span></div>
+      </div>
+      <div class="block caso">
+        <p class="detail">Caso 2 · Juliana — pedidos #678 e #680 (Lojinha)</p>
+        <h4>O sistema diz "enviado", mas a franquia não recebeu</h4>
+        <p>Os dois são de <strong>retirada na sede</strong> e foram movidos de <strong>Inbox direto para Pedido Enviado</strong> em 25/08, às 17h32. <strong>Não passaram pela Harus na Lojinha</strong>: não tiveram link, confirmação de pagamento nem rastreio. A NF do #678 está como "00000", e o #680 não tem NF.</p>
+        <table>
+          <tbody>
+            <tr><td>#678 · 2× Sabonete 600 un. + 1× Shampoo 2 em 1</td><td class="num">R$ 656,00</td></tr>
+            <tr><td>#680 · Clorado, Perox, Grease, Master Flower, Glass (5L)</td><td class="num">R$ 1.121,99</td></tr>
+          </tbody>
+          <tfoot><tr><td>Total</td><td class="num">R$ 1.777,99</td></tr></tfoot>
+        </table>
+        <div class="caso-ask"><b>Levar para a reunião</b><span>A Harus recebeu esse pedido? Foi separado para retirada? Tem NF real?</span></div>
+      </div>
+    </div>
+    <p class="source" style="margin-top:16px">Fontes: página da Wânia <a href="https://wanialageano-star.github.io/pedidos-harus-pendentes/" style="color:var(--color-primary-on-dark)">pedidos-harus-pendentes</a> (Slack, set/2026) e histórico dos cards da Lojinha. Total dos dois casos: cerca de <strong>R$ 2.351</strong> sem entrega confirmada.</p>
+  </section>
+
+  <!-- 10 — Conclusão -->
   <section class="slide" aria-label="Conclusão e saídas">
     <div class="slide-head">
       <p class="eyebrow">Conclusão</p>
@@ -556,6 +610,7 @@ td.track{width:34%}
       <div class="block">
         <p class="detail">Saídas</p>
         <ul>
+          <li>Na reunião: fechar data de entrega dos 2 pedidos de evento (Janaina 18219 e Juliana #678/#680).</li>
           <li>Spots primeiro: link e despacho do #771 (Rosa Sul) e #793 (Trancoso) já, e do Ingleses Spot quando entrar.</li>
           <li>Em seguida, cobrar o link dos 20 pedidos parados, começando por #738, #739 e #740 (desde 10/09).</li>
           <li>Combinar um prazo para o link (sugestão: 2 dias úteis) e cobrar quando passar.</li>
@@ -574,7 +629,7 @@ td.track{width:34%}
   <button class="nav-btn" id="next" type="button" aria-label="Próximo slide">→</button>
   <div class="dots" id="dots" role="tablist" aria-label="Ir para slide"></div>
   <button class="nav-btn" id="print" type="button">Exportar PDF</button>
-  <p class="counter" id="counter">1 / 9</p>
+  <p class="counter" id="counter">1 / 10</p>
 </nav>
 
 <script>
