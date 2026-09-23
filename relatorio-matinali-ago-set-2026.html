@@ -266,6 +266,29 @@ td.track{width:34%}
     --color-error-on-dark:#C1000A;--color-warning-on-dark:#C43A00;
   }
 }
+
+/* ---------- Ajuste à tela ---------- */
+.slide.is-active{justify-content:safe center}
+.fit{width:100%;transform-origin:top left}
+.cover .fit{display:flex;flex-direction:column;gap:var(--space-lg)}
+.slide-head h1{font-size:clamp(26px,4.6vh,48px)}
+.slide{padding-top:clamp(72px,11vh,116px);padding-bottom:clamp(68px,9vh,92px)}
+.chips-lg{grid-template-columns:repeat(auto-fill,minmax(170px,1fr))}
+.chips-lg li{padding:12px 16px}
+.chips-lg b{font-size:17px}
+.chips-lg span{font-size:13px;margin-top:6px}
+.slide-head{max-width:72ch}
+.slide-head h1{max-width:38ch}
+.slide-head{margin-bottom:clamp(14px,3vh,32px)}
+.slide-head .eyebrow{margin-bottom:clamp(8px,1.6vh,16px)}
+.slide-head p{margin-top:clamp(6px,1.4vh,16px)}
+td{padding-top:clamp(6px,1.25vh,15px);padding-bottom:clamp(6px,1.25vh,15px)}
+.takeaway{margin-top:clamp(14px,3vh,32px);padding-top:clamp(10px,2vh,24px)}
+.kpi{padding:clamp(14px,2.4vh,24px) var(--space-lg) clamp(16px,3vh,32px)}
+.kpi .num{margin:clamp(10px,2vh,24px) 0 var(--space-sm)}
+.hero-num{font-size:clamp(60px,13vh,140px)}
+@media print{ .slide-head h1{max-width:none} td{padding:7px 12px 7px 0} .takeaway{margin-top:16px;padding-top:10px} .kpi{padding:12px 14px} .kpi .num{margin:10px 0 6px} .hero-num{font-size:64px} .slide-head{margin-bottom:18px} }
+@media print{ .fit{zoom:1 !important} .slide{padding:0 0 10mm !important} .chips-lg{grid-template-columns:repeat(6,1fr);gap:8px} .chips-lg li{padding:8px 10px} .chips-lg b{font-size:13px} .chips-lg span{font-size:10px;margin-top:4px} .slide-head h1{font-size:27px} }
 </style>
 </head>
 <body>
@@ -402,28 +425,31 @@ td.track{width:34%}
     </div>
   </section>
 
-  <!-- 5 — Pagos sem envio (enxoval) -->
-  <section class="slide" aria-label="Pedidos pagos há mais de 5 dias úteis sem envio">
+  <!-- 5a — Pagos sem envio: planilha -->
+  <section class="slide" aria-label="Planilha: pedidos pagos há mais de 5 dias úteis sem envio">
     <div class="slide-head">
-      <p class="eyebrow bad">Pontos de atenção</p>
-      <h1>23 pedidos de enxoval pagos há mais de 5 dias úteis sem envio</h1>
-      <p>Dias úteis desde o pagamento até <strong>22/09/2026</strong>. No Jornada, entram todos os cards em Pagamento Confirmado. Quando o card não tem data de pagamento, conto da entrada na fase.</p>
+      <p class="eyebrow bad">Pontos de atenção · Planilha de pedidos</p>
+      <h1>7 pedidos pagos em agosto e sem envio, parados há 25,1 dias úteis em média</h1>
+      <p>Dias úteis desde o pagamento até <strong>22/09/2026</strong>. Todos passaram de 5 dias úteis, a maioria há mais de 3 semanas.</p>
     </div>
-    <div class="grid2">
-      <div class="block">
-        <p class="detail">Planilha de pedidos · pagos em agosto</p>
-        <h4>7 pedidos, todos há mais de 3 semanas</h4>
-        <ul class="chips" style="margin-top:16px"><li><b>PQA0011</b><span>BA · pago 04/08 · <strong style="color:var(--color-error-on-dark)">33d</strong></span></li><li><b>EOM0302</b><span>SC · pago 06/08 · <strong style="color:var(--color-error-on-dark)">31d</strong></span></li><li><b>MHFA0507</b><span>SC · pago 07/08 · <strong style="color:var(--color-error-on-dark)">31d</strong></span></li><li><b>CSC0303</b><span>SC · pago 20/08 · <strong style="color:var(--color-error-on-dark)">22d</strong></span></li><li><b>MAM0007</b><span>BA · pago 20/08 · <strong style="color:var(--color-error-on-dark)">22d</strong></span></li><li><b>TPA0112</b><span>SP · pago 21/08 · <strong style="color:var(--color-error-on-dark)">21d</strong></span></li><li><b>VSO0020</b><span>SP · pago 28/08 · <strong style="color:var(--color-error-on-dark)">16d</strong></span></li></ul>
-      </div>
-      <div class="block">
-        <p class="detail">Jornada Enxoval · fase Pagamento Confirmado</p>
-        <h4>16 pedidos, 6 deles há 16 dias úteis ou mais</h4>
-        <ul class="chips" style="margin-top:16px"><li><b>SDM0102</b><span>P-0035 · SC · 24/08 · <strong style="color:var(--color-error-on-dark)">20d</strong></span></li><li><b>VOD0102</b><span>P-0033 · BA · 24/08 · <strong style="color:var(--color-error-on-dark)">20d</strong></span></li><li><b>P-2007</b><span>Franquia · SC · 27/08 · <strong style="color:var(--color-error-on-dark)">17d</strong></span></li><li><b>P-2010</b><span>Decor · BA · 27/08 · <strong style="color:var(--color-error-on-dark)">17d</strong></span></li><li><b>SAQ0015</b><span>P-2009 · PB · 27/08 · <strong style="color:var(--color-error-on-dark)">17d</strong></span></li><li><b>GRL0801</b><span>AG · GO · 28/08 · <strong style="color:var(--color-error-on-dark)">16d</strong></span></li><li><b>P-2023</b><span>Franquia · 02/09 · <strong style="color:var(--color-error-on-dark)">13d</strong></span></li><li><b>GBN0306</b><span>AG · SP · 02/09 · <strong style="color:var(--color-error-on-dark)">13d</strong></span></li><li><b>KMA0202</b><span>P-2036 · SP · 04/09 · <strong style="color:var(--color-error-on-dark)">11d</strong></span></li><li><b>VPG0103</b><span>AG · BA · 04/09 · <strong style="color:var(--color-error-on-dark)">11d</strong></span></li><li><b>VDP0015</b><span>P-2024 · RJ · 08/09 · <strong style="color:var(--color-error-on-dark)">10d</strong></span></li><li><b>PTI0505</b><span>P-0036 · SC · 08/09 · <strong style="color:var(--color-error-on-dark)">10d</strong></span></li><li><b>OBO0004</b><span>P-2055 · SC · 11/09 · <strong style="color:var(--color-error-on-dark)">7d</strong></span></li><li><b>PFT0003</b><span>P-2049 · BA · 11/09 · <strong style="color:var(--color-error-on-dark)">7d</strong></span></li><li><b>PFT0001</b><span>P-2048 · BA · 11/09 · <strong style="color:var(--color-error-on-dark)">7d</strong></span></li><li><b>VFO0002</b><span>AG · BA · 11/09 · <strong style="color:var(--color-error-on-dark)">7d</strong></span></li></ul>
-      </div>
-    </div>
+    <ul class="chips chips-lg"><li><b>PQA0011</b><span>BA · pago 04/08 · <strong style="color:var(--color-error-on-dark)">33d</strong></span></li><li><b>EOM0302</b><span>SC · pago 06/08 · <strong style="color:var(--color-error-on-dark)">31d</strong></span></li><li><b>MHFA0507</b><span>SC · pago 07/08 · <strong style="color:var(--color-error-on-dark)">31d</strong></span></li><li><b>CSC0303</b><span>SC · pago 20/08 · <strong style="color:var(--color-error-on-dark)">22d</strong></span></li><li><b>MAM0007</b><span>BA · pago 20/08 · <strong style="color:var(--color-error-on-dark)">22d</strong></span></li><li><b>TPA0112</b><span>SP · pago 21/08 · <strong style="color:var(--color-error-on-dark)">21d</strong></span></li><li><b>VSO0020</b><span>SP · pago 28/08 · <strong style="color:var(--color-error-on-dark)">16d</strong></span></li></ul>
     <div class="takeaway">
       <p class="detail">Leitura</p>
       <p class="lead">PQA0011, EOM0302 e MHFA0507 estão pagos há mais de 30 dias úteis. É a primeira cobrança a fazer com a Matinali.</p>
+    </div>
+  </section>
+
+  <!-- 5b — Pagos sem envio: Jornada -->
+  <section class="slide" aria-label="Jornada: pedidos pagos há mais de 5 dias úteis sem envio">
+    <div class="slide-head">
+      <p class="eyebrow bad">Pontos de atenção · Jornada Enxoval</p>
+      <h1>16 pedidos em Pagamento Confirmado há mais de 5 dias úteis, parados há 12,7 dias em média</h1>
+      <p>Todos os cards da fase, até <strong>22/09/2026</strong>. Quando o card não tem data de pagamento, conto a partir da entrada na fase.</p>
+    </div>
+    <ul class="chips chips-lg"><li><b>SDM0102</b><span>P-0035 · SC · 24/08 · <strong style="color:var(--color-error-on-dark)">20d</strong></span></li><li><b>VOD0102</b><span>P-0033 · BA · 24/08 · <strong style="color:var(--color-error-on-dark)">20d</strong></span></li><li><b>P-2007</b><span>Franquia · SC · 27/08 · <strong style="color:var(--color-error-on-dark)">17d</strong></span></li><li><b>P-2010</b><span>Decor · BA · 27/08 · <strong style="color:var(--color-error-on-dark)">17d</strong></span></li><li><b>SAQ0015</b><span>P-2009 · PB · 27/08 · <strong style="color:var(--color-error-on-dark)">17d</strong></span></li><li><b>GRL0801</b><span>AG · GO · 28/08 · <strong style="color:var(--color-error-on-dark)">16d</strong></span></li><li><b>P-2023</b><span>Franquia · 02/09 · <strong style="color:var(--color-error-on-dark)">13d</strong></span></li><li><b>GBN0306</b><span>AG · SP · 02/09 · <strong style="color:var(--color-error-on-dark)">13d</strong></span></li><li><b>KMA0202</b><span>P-2036 · SP · 04/09 · <strong style="color:var(--color-error-on-dark)">11d</strong></span></li><li><b>VPG0103</b><span>AG · BA · 04/09 · <strong style="color:var(--color-error-on-dark)">11d</strong></span></li><li><b>VDP0015</b><span>P-2024 · RJ · 08/09 · <strong style="color:var(--color-error-on-dark)">10d</strong></span></li><li><b>PTI0505</b><span>P-0036 · SC · 08/09 · <strong style="color:var(--color-error-on-dark)">10d</strong></span></li><li><b>OBO0004</b><span>P-2055 · SC · 11/09 · <strong style="color:var(--color-error-on-dark)">7d</strong></span></li><li><b>PFT0003</b><span>P-2049 · BA · 11/09 · <strong style="color:var(--color-error-on-dark)">7d</strong></span></li><li><b>PFT0001</b><span>P-2048 · BA · 11/09 · <strong style="color:var(--color-error-on-dark)">7d</strong></span></li><li><b>VFO0002</b><span>AG · BA · 11/09 · <strong style="color:var(--color-error-on-dark)">7d</strong></span></li></ul>
+    <div class="takeaway">
+      <p class="detail">Leitura</p>
+      <p class="lead">6 dos 16 estão parados há 16 dias úteis ou mais. Três são pedidos de franquia ou da Decor, sem imóvel (P-2007, P-2010 e P-2023).</p>
     </div>
   </section>
 
@@ -431,7 +457,7 @@ td.track{width:34%}
   <section class="slide" aria-label="Lojinha: pedidos com pagamento confirmado há mais de 5 dias">
     <div class="slide-head">
       <p class="eyebrow bad">Pontos de atenção · Lojinha Seazone</p>
-      <h1>5 pedidos com pagamento confirmado há mais de 5 dias úteis</h1>
+      <h1>5 pedidos com pagamento confirmado há mais de 5 dias úteis, parados há 8,6 dias em média</h1>
       <p>Cards da Matinali na etapa <strong>Aguardando Envio</strong> (pagamento confirmado), contados até 22/09/2026. O SLA de envio é de 3 dias úteis.</p>
     </div>
     <table>
@@ -523,7 +549,7 @@ td.track{width:34%}
   <button class="nav-btn" id="next" type="button" aria-label="Próximo slide">→</button>
   <div class="dots" id="dots" role="tablist" aria-label="Ir para slide"></div>
   <button class="nav-btn" id="print" type="button">Exportar PDF</button>
-  <p class="counter" id="counter">1 / 9</p>
+  <p class="counter" id="counter">1 / 10</p>
 </nav>
 
 <script>
@@ -546,6 +572,27 @@ td.track{width:34%}
     s.insertBefore(top, s.firstChild);
   });
 
+  // conteúdo de cada slide num wrapper que encolhe (zoom) quando não cabe na altura da tela
+  slides.forEach(s => {
+    const fit = document.createElement('div');
+    fit.className = 'fit';
+    Array.from(s.children).forEach(c => {
+      if (!c.classList.contains('slide-top') && !c.classList.contains('cover-mark')) fit.appendChild(c);
+    });
+    s.appendChild(fit);
+  });
+
+  function fitSlide(s){
+    const fit = s.querySelector('.fit');
+    if (!fit) return;
+    fit.style.zoom = 1;
+    const cs = getComputedStyle(s);
+    const avail = s.clientHeight - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom);
+    const need = fit.scrollHeight;
+    if (need > avail) fit.style.zoom = Math.max(0.55, avail / need).toFixed(3);
+  }
+  window.addEventListener('resize', () => fitSlide(slides[i]));
+
   slides.forEach((s, idx) => {
     const b = document.createElement('button');
     b.type = 'button';
@@ -563,6 +610,7 @@ td.track{width:34%}
     prev.disabled = i === 0;
     next.disabled = i === total - 1;
     location.hash = i === 0 ? '' : 's' + (i + 1);
+    fitSlide(slides[i]);
   }
 
   prev.addEventListener('click', () => go(i - 1));
