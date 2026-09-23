@@ -196,6 +196,23 @@ td.track{width:34%}
 .alert-list em{font-style:normal;font-size:14px;font-weight:700;color:var(--color-error-on-dark)}
 @media print{.alert{background:#fff;margin-top:12px;padding:10px 14px}.alert-list b{font-size:14px}.alert-list span,.alert-list em{font-size:11px}.alert .detail{font-size:9px}}
 
+
+/* prioridade spot */
+.spots{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:var(--space-md)}
+.spot{background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-2xl);padding:var(--space-lg);display:flex;flex-direction:column;gap:6px}
+.spot.now{border-color:rgba(255,90,98,.45);background:linear-gradient(180deg,rgba(231,0,11,.10),var(--color-surface) 70%)}
+.spot.next{border-style:dashed}
+.spot .detail{color:var(--color-error-on-dark);letter-spacing:.14em;text-transform:uppercase;font-weight:700}
+.spot.next .detail{color:var(--color-warning-on-dark)}
+.spot > b{font-size:34px;font-weight:700;letter-spacing:-.02em;margin-top:6px;font-variant-numeric:tabular-nums}
+.spot p{font-size:13px}
+.spot ul{margin:8px 0 0;padding:0 0 0 18px;font-size:13px;color:var(--color-muted-fg);line-height:1.6}
+.spot-foot{margin-top:auto;padding-top:12px;border-top:1px solid var(--color-border-soft);display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;align-items:baseline}
+.spot-foot span{font-size:18px;font-weight:700;color:var(--color-foreground)}
+.spot-foot em{font-style:normal;font-size:12px;font-weight:700;color:var(--color-error-on-dark)}
+.spot.next .spot-foot em{color:var(--color-warning-on-dark)}
+@media print{.spot{background:#fff;padding:12px}.spot > b{font-size:22px}.spot p,.spot ul{font-size:11px}.spot-foot span{font-size:13px}}
+
 /* ---------- Navegação ---------- */
 .nav{position:fixed;left:0;right:0;bottom:0;height:60px;display:flex;align-items:center;gap:var(--space-md);padding:0 var(--gutter);background:linear-gradient(to top,var(--color-background) 55%,transparent);z-index:20}
 .dots{display:flex;gap:6px;flex:1;align-items:center}
@@ -396,6 +413,45 @@ td.track{width:34%}
     </div>
   </section>
 
+  <!-- 6 — Prioridade Spot -->
+  <section class="slide" aria-label="Prioridade para os pedidos de Spot">
+    <div class="slide-head" style="max-width:none">
+      <p class="eyebrow bad">Prioridade · Spots Seazone</p>
+      <h1 style="max-width:none">Pedidos de Spot passam na frente da fila</h1>
+      <p style="max-width:84ch">Spot é um produto estratégico da Seazone: amenities faltando no Spot afetam a operação direto. Esses pedidos precisam de link e despacho <strong>antes dos demais</strong>, inclusive dos 20 que já estão esperando.</p>
+    </div>
+    <div class="spots">
+      <div class="spot now">
+        <p class="detail">Prioridade 1 · já atrasado</p>
+        <b>#771</b>
+        <h4>Rosa Sul Spot</h4>
+        <p>Ibiraquera · Imbituba/SC · Mariana de Godoy Umpierre</p>
+        <ul><li>1× Sabonete (600 un.)</li><li>2× Shampoo 2 em 1 (250 un.)</li></ul>
+        <div class="spot-foot"><span>R$ 628</span><em>sem link desde 17/09 · 3,5 dias úteis</em></div>
+      </div>
+      <div class="spot now">
+        <p class="detail">Prioridade 1 · acabou de entrar</p>
+        <b>#793</b>
+        <h4>Trancoso Spot</h4>
+        <p>Trancoso · Porto Seguro/BA · Rene Nunes dos Santos</p>
+        <ul><li>1× Sabonete (600 un.)</li><li>1× Shampoo 2 em 1 (250 un.)</li></ul>
+        <div class="spot-foot"><span>R$ 428</span><em>criado em 22/09 · ainda no Inbox</em></div>
+      </div>
+      <div class="spot next">
+        <p class="detail">Prioridade 1 · vai entrar</p>
+        <b>Em breve</b>
+        <h4>Ingleses Spot</h4>
+        <p>Ingleses · Florianópolis/SC</p>
+        <ul><li>Pedido ainda não criado na Lojinha</li><li>Já tratar como prioridade quando chegar</li></ul>
+        <div class="spot-foot"><span>—</span><em>aguardando o pedido</em></div>
+      </div>
+    </div>
+    <div class="takeaway">
+      <p class="detail">Pedido à Harus</p>
+      <p class="lead" style="max-width:none">Link de pagamento dos Spots <strong>no mesmo dia</strong> em que o card chegar, e despacho <strong>em até 1 dia útil</strong> depois do pagamento, com rastreio real.</p>
+    </div>
+  </section>
+
   <!-- 6 — Aguardando Envio -->
   <section class="slide" aria-label="Tempo de despacho depois do pagamento">
     <div class="slide-head">
@@ -442,7 +498,7 @@ td.track{width:34%}
     </table>
     <div class="takeaway">
       <p class="detail">Contexto</p>
-      <p class="lead">Os 5 são de agosto. #595 é um dos pedidos citados pelo time. O #602 (também no slide 4) esperou 15 dias corridos pelo link e mais 7 para sair.</p>
+      <p class="lead">Os 5 são de agosto. #595 é um dos pedidos citados pelo time. O #602 (também no slide 4) esperou 17 dias corridos pelo link e mais 7 para sair.</p>
     </div>
   </section>
 
@@ -466,7 +522,8 @@ td.track{width:34%}
       <div class="block">
         <p class="detail">Saídas</p>
         <ul>
-          <li>Cobrar hoje o link dos 20 pedidos parados, começando por #738, #739 e #740 (desde 10/09).</li>
+          <li>Spots primeiro: link e despacho do #771 (Rosa Sul) e #793 (Trancoso) já, e do Ingleses Spot quando entrar.</li>
+          <li>Em seguida, cobrar o link dos 20 pedidos parados, começando por #738, #739 e #740 (desde 10/09).</li>
           <li>Combinar um prazo para o link (sugestão: 2 dias úteis) e cobrar quando passar.</li>
           <li>Exigir rastreio real ao marcar Pedido Enviado; sem código, o card volta para Aguardando Envio.</li>
           <li>Refazer esta conta no próximo mês para ver se o link voltou a sair.</li>
@@ -483,7 +540,7 @@ td.track{width:34%}
   <button class="nav-btn" id="next" type="button" aria-label="Próximo slide">→</button>
   <div class="dots" id="dots" role="tablist" aria-label="Ir para slide"></div>
   <button class="nav-btn" id="print" type="button">Exportar PDF</button>
-  <p class="counter" id="counter">1 / 8</p>
+  <p class="counter" id="counter">1 / 9</p>
 </nav>
 
 <script>
