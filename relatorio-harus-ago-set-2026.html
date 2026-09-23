@@ -215,11 +215,13 @@ td.track{width:34%}
 
 
 /* relatos */
-.relatos{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--space-md)}
+.relatos{display:grid;grid-template-columns:repeat(6,1fr);gap:var(--space-md)}
+.relatos .block{grid-column:span 2}
+.relatos .block:nth-child(n+4){grid-column:span 3}
 .relatos .block{padding:var(--space-lg)}
 .relatos .block h4{font-size:17px;margin-bottom:8px}
 .relatos .block p{font-size:13px}
-@media (max-width:900px){.relatos{grid-template-columns:1fr}}
+@media (max-width:900px){.relatos{grid-template-columns:1fr}.relatos .block,.relatos .block:nth-child(n+4){grid-column:auto}}
 @media print{.relatos{gap:8px}.relatos .block{padding:10px}.relatos .block h4{font-size:13px;margin-bottom:4px}.relatos .block p{font-size:10px}}
 
 
@@ -539,11 +541,6 @@ td.track{width:34%}
         <p class="detail">Eventos</p>
         <h4>Pedidos de evento não entregues</h4>
         <p>O evento da franquia Juliana ficou sem os pedidos <strong>#678</strong> e <strong>#680</strong>, parados em Pedido Enviado e sem rastreio. Tem também um pedido de evento pendente em Campinas (Janaína).</p>
-      </div>
-      <div class="block">
-        <p class="detail">Resumo</p>
-        <h4>Não são casos isolados</h4>
-        <p>Comunicação lenta, rastreio falso, link que não chega e erros na entrega se repetem. É uma <strong>falha de operação da Harus</strong>, e cobrar pedido por pedido não resolve.</p>
       </div>
     </div>
     <p class="source" style="margin-top:20px">Os pedidos de evento (#678, #680) ficam fora das médias deste relatório pela regra de exclusão (tag EVENTO e pedidos em nome de Vinicius Satores), mas entram aqui como relato.</p>
