@@ -230,8 +230,11 @@ td.track{width:34%}
 .casos .caso .detail{color:var(--color-error-on-dark);font-weight:700}
 .casos .caso h4{font-size:18px;margin:0}
 .casos .caso p{font-size:13px}
-.casos .caso table td{padding:6px 12px 6px 0;font-size:13px}
+.casos .caso table td{padding:4px 12px 4px 0;font-size:13px}
 .casos .caso tfoot td{padding-top:8px}
+.casos .caso tr.grp td{color:var(--color-foreground);font-weight:700;padding-top:8px}
+.casos .caso tbody tr:not(.grp) td:first-child{padding-left:12px}
+.casos .caso small{font-size:11px;color:var(--color-muted-fg)}
 .caso-ask{margin-top:auto;padding:10px 14px;border-radius:var(--radius-xl);background:rgba(231,0,11,.10);display:flex;flex-direction:column;gap:2px}
 .caso-ask b{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--color-error-on-dark)}
 .caso-ask span{font-size:14px;color:var(--color-foreground)}
@@ -551,7 +554,7 @@ td.track{width:34%}
     <div class="slide-head" style="max-width:none;margin-bottom:24px">
       <p class="eyebrow bad">Crítico · para discutir na reunião</p>
       <h1 style="max-width:none">Dois pedidos de evento que as franquias não receberam</h1>
-      <p style="max-width:88ch">Os dois são pedidos de evento. As franquias continuam sem os produtos, e nenhum dos dois tem data de envio ou rastreio.</p>
+      <p style="max-width:88ch">Nenhum dos dois tem data de envio nem rastreio.</p>
     </div>
     <div class="grid2 casos">
       <div class="block caso">
@@ -573,11 +576,18 @@ td.track{width:34%}
       <div class="block caso">
         <p class="detail">Caso 2 · Juliana — pedidos #678 e #680 (Lojinha)</p>
         <h4>O sistema diz "enviado", mas a franquia não recebeu</h4>
-        <p>Os dois são de <strong>retirada na sede</strong> e foram movidos de <strong>Inbox direto para Pedido Enviado</strong> em 25/08, às 17h32. <strong>Não passaram pela Harus na Lojinha</strong>: não tiveram link, confirmação de pagamento nem rastreio. A NF do #678 está como "00000", e o #680 não tem NF.</p>
+        <p>Retirada na sede. Foram de <strong>Inbox direto para Pedido Enviado</strong> em 25/08, às 17h32, <strong>sem passar pela Harus</strong>: não tiveram link, pagamento confirmado nem rastreio. A NF do #678 está como "00000", e o #680 não tem NF.</p>
         <table>
           <tbody>
-            <tr><td>#678 · 2× Sabonete 600 un. + 1× Shampoo 2 em 1</td><td class="num">R$ 656,00</td></tr>
-            <tr><td>#680 · Clorado, Perox, Grease, Master Flower, Glass (5L)</td><td class="num">R$ 1.121,99</td></tr>
+            <tr class="grp"><td>Pedido #678</td><td class="num">R$ 656,00</td></tr>
+            <tr><td>2× Sabonete — 600 unidades <small>(R$ 228,00 un.)</small></td><td class="num">R$ 456,00</td></tr>
+            <tr><td>1× Shampoo 2 em 1 — 250 unidades</td><td class="num">R$ 200,00</td></tr>
+            <tr class="grp"><td>Pedido #680</td><td class="num">R$ 1.121,99</td></tr>
+            <tr><td>1× Desinfetante Clorado de Alta Espuma 5L</td><td class="num">R$ 134,42</td></tr>
+            <tr><td>1× Desinfetante Perox 5L</td><td class="num">R$ 249,35</td></tr>
+            <tr><td>1× Grease 5L</td><td class="num">R$ 182,11</td></tr>
+            <tr><td>1× Master Flower 5L, Flor Bambu</td><td class="num">R$ 500,00</td></tr>
+            <tr><td>1× Glass 5L</td><td class="num">R$ 56,11</td></tr>
           </tbody>
           <tfoot><tr><td>Total</td><td class="num">R$ 1.777,99</td></tr></tfoot>
         </table>
