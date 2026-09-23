@@ -302,13 +302,13 @@ td.track{width:34%}
     <div class="slide-head" style="max-width:none">
       <p class="eyebrow">Lojinha · agosto e setembro/2026</p>
       <h1 style="max-width:none">Nenhum link de pagamento desde 08/09</h1>
-      <p style="max-width:80ch">Em média, a Harus leva <strong>1,6 dia útil</strong> para mandar o link e <strong>2,7 dias úteis</strong> para despachar depois do pagamento. Mas desde 08/09 não mandou nenhum link, e 20 pedidos estão parados esperando.</p>
+      <p style="max-width:80ch">Em média, a Harus leva <strong>2,4 dias úteis</strong> (3,2 corridos) para preencher o link e <strong>2,7 dias úteis</strong> para despachar depois do pagamento. Mas desde 08/09 não mandou nenhum link, e 20 pedidos estão parados esperando.</p>
     </div>
     <div class="kpis">
       <div class="kpi">
         <p class="detail">Link de pagamento</p>
-        <p class="num">1,59<u>dias úteis</u></p>
-        <p class="note">Média em Enviado ao Fornecedor · 39 pedidos que já saíram da etapa · mediana 1,07.</p>
+        <p class="num">2,39<u>dias úteis</u></p>
+        <p class="note">Da entrada em Enviado ao Fornecedor até o campo do link ser preenchido · 40 pedidos · mediana 1,49. Com os 20 que ainda esperam: 3,08.</p>
       </div>
       <div class="kpi">
         <p class="detail">Despacho</p>
@@ -341,26 +341,23 @@ td.track{width:34%}
 
   <!-- 3 — Link de pagamento -->
   <section class="slide" aria-label="Tempo para enviar o link de pagamento">
-    <div class="slide-head">
+    <div class="slide-head" style="max-width:none;margin-bottom:24px">
       <p class="eyebrow">Etapa Enviado ao Fornecedor</p>
-      <h1>Link de pagamento em 1,6 dia útil, quando ele chega</h1>
-      <p>Tempo entre o card entrar em <strong>Enviado ao Fornecedor</strong> e a Harus colocar o link (o card vai para Aguardando Pagamento). Os 9 cards cancelados nessa etapa ficam fora da média.</p>
+      <h1 style="max-width:none">Link de pagamento em 2,4 dias úteis, quando ele chega</h1>
+      <p style="max-width:90ch">Da entrada em <strong>Enviado ao Fornecedor</strong> até o <strong>campo do link de pagamento ser preenchido</strong> (boleto em 1 caso) · 3,2 dias corridos · mediana 1,49 dia útil.</p>
     </div>
     <div class="hero-split">
-      <div class="hero-num">1,59<small>dias úteis em média<br>39 pedidos com link</small></div>
+      <div class="hero-num" style="font-size:clamp(66px,8vw,120px)">33%<small>dos pedidos ainda sem link<br>20 de 60 · quem recebeu levou 2,39 dias úteis</small></div>
       <table>
-        <thead><tr><th scope="col">Faixa</th><th scope="col">Pedidos</th><th scope="col" class="num">%</th></tr></thead>
-        <tbody>
-          <tr><td class="name">Até 1 dia útil</td><td class="track"><span class="bar"><span class="t"><i style="width:100%"></i></span><b>19</b></span></td><td class="num">49%</td></tr>
-          <tr><td class="name">1 a 3 dias úteis</td><td class="track"><span class="bar"><span class="t"><i style="width:74%"></i></span><b>14</b></span></td><td class="num">36%</td></tr>
-          <tr><td class="name">3 a 5 dias úteis</td><td class="track"><span class="bar hi"><span class="t"><i style="width:21%"></i></span><b>4</b></span></td><td class="num">10%</td></tr>
-          <tr><td class="name">Mais de 5 dias úteis</td><td class="track"><span class="bar hi"><span class="t"><i style="width:11%"></i></span><b>2</b></span></td><td class="num">5%</td></tr>
-        </tbody>
+        <caption>60 pedidos que entraram na etapa desde 01/08 e não foram cancelados sem link</caption>
+        <thead><tr><th scope="col">Tempo até o link</th><th scope="col">Pedidos</th><th scope="col" class="num">% dos 60</th></tr></thead>
+        <tbody><tr><td class="name">Até 1 dia útil</td><td class="track"><span class="bar"><span class="t"><i style="width:75%"></i></span><b>15</b></span></td><td class="num">25%</td></tr><tr><td class="name">1 a 3 dias úteis</td><td class="track"><span class="bar"><span class="t"><i style="width:80%"></i></span><b>16</b></span></td><td class="num">27%</td></tr><tr><td class="name">3 a 5 dias úteis</td><td class="track"><span class="bar hi"><span class="t"><i style="width:25%"></i></span><b>5</b></span></td><td class="num">8%</td></tr><tr><td class="name">Mais de 5 dias úteis</td><td class="track"><span class="bar hi"><span class="t"><i style="width:20%"></i></span><b>4</b></span></td><td class="num">7%</td></tr><tr><td class="name" style="color:var(--color-error-on-dark)">Ainda sem link</td><td class="track"><span class="bar hi"><span class="t"><i style="width:100%"></i></span><b>20</b></span></td><td class="num" style="color:var(--color-error-on-dark);font-weight:700">33%</td></tr></tbody>
+        <tfoot><tr><td>Com link</td><td>40 pedidos</td><td class="num">67%</td></tr></tfoot>
       </table>
     </div>
     <div class="takeaway">
       <p class="detail">Atenção</p>
-      <p class="lead">A média só conta quem recebeu link. Somando os 20 que ainda esperam (contados até 22/09), ela sobe para <strong>2,56 dias úteis</strong>. Os que esperam estão parados, em média, há 4,5 dias úteis.</p>
+      <p class="lead" style="max-width:none">Contando os 20 que ainda esperam (até 22/09), a média sobe para <strong>3,08 dias úteis</strong>. Agosto: 2,74 · setembro: 1,18, mas nenhum link desde 08/09. Fora da conta: 8 cancelados que nunca receberam link.</p>
     </div>
   </section>
 
@@ -369,15 +366,15 @@ td.track{width:34%}
     <div class="slide-head">
       <p class="eyebrow bad">Casos mais críticos · link de pagamento</p>
       <h1>Os 5 pedidos que mais esperaram o link</h1>
-      <p>Barra proporcional ao maior caso (10,9 dias úteis). Quem está "ainda parado" é contado até 22/09. Em 6º, empatado com o 5º, vem o #749 (Fernanda, Ilhéus/BA, 7,3d).</p>
+      <p>Da entrada na etapa até o link ser preenchido. Barra proporcional ao maior caso (14,0 dias úteis). Quem está "ainda parado" é contado até 22/09.</p>
     </div>
     <table>
       <thead><tr><th scope="col">Pedido</th><th scope="col">Franquia</th><th scope="col">Cidade</th><th scope="col" class="num">Entrou</th><th scope="col">Dias úteis</th><th scope="col" class="num">Corridos</th><th scope="col">Situação</th></tr></thead>
-      <tbody><tr><td class="name">#602</td><td>Roberta de Freitas Costa</td><td>Salvador/BA</td><td class="num">11/08</td><td class="track"><span class="bar hi"><span class="t"><i style="width:100%"></i></span><b>10,9d</b></span></td><td class="num">15</td><td><span class="badge ok">Saiu 26/08</span></td></tr><tr><td class="name">#738</td><td>Dreicom Adolfo Neckel Wolter</td><td>Blumenau/SC</td><td class="num">10/09</td><td class="track"><span class="bar hi"><span class="t"><i style="width:78%"></i></span><b>8,5d</b></span></td><td class="num">12</td><td><span class="badge late">Ainda parado</span></td></tr><tr><td class="name">#739</td><td>Letícia Fagundes</td><td>Gramado/RS</td><td class="num">10/09</td><td class="track"><span class="bar hi"><span class="t"><i style="width:78%"></i></span><b>8,5d</b></span></td><td class="num">12</td><td><span class="badge late">Ainda parado</span></td></tr><tr><td class="name">#740</td><td>Nabiha Kasmas Denis</td><td>Florianópolis/SC</td><td class="num">10/09</td><td class="track"><span class="bar hi"><span class="t"><i style="width:76%"></i></span><b>8,3d</b></span></td><td class="num">12</td><td><span class="badge late">Ainda parado</span></td></tr><tr><td class="name">#748</td><td>Cingridi Cristina Mariano</td><td>Araucária/PR</td><td class="num">11/09</td><td class="track"><span class="bar hi"><span class="t"><i style="width:67%"></i></span><b>7,3d</b></span></td><td class="num">11</td><td><span class="badge late">Ainda parado</span></td></tr></tbody>
+      <tbody><tr><td class="name">#612</td><td>Jane Terezinha de Souza de Jesus</td><td>Florianópolis/SC</td><td class="num">12/08</td><td class="track"><span class="bar hi"><span class="t"><i style="width:100%"></i></span><b>14,0d</b></span></td><td class="num">20</td><td><span class="badge ok">Link 01/09</span></td></tr><tr><td class="name">#602</td><td>Roberta de Freitas Costa</td><td>Salvador/BA</td><td class="num">11/08</td><td class="track"><span class="bar hi"><span class="t"><i style="width:93%"></i></span><b>13,1d</b></span></td><td class="num">17</td><td><span class="badge ok">Link 28/08</span></td></tr><tr><td class="name">#738</td><td>Dreicom Adolfo Neckel Wolter</td><td>Blumenau/SC</td><td class="num">10/09</td><td class="track"><span class="bar hi"><span class="t"><i style="width:61%"></i></span><b>8,5d</b></span></td><td class="num">12</td><td><span class="badge late">Ainda sem link</span></td></tr><tr><td class="name">#739</td><td>Letícia Fagundes</td><td>Gramado/RS</td><td class="num">10/09</td><td class="track"><span class="bar hi"><span class="t"><i style="width:61%"></i></span><b>8,5d</b></span></td><td class="num">12</td><td><span class="badge late">Ainda sem link</span></td></tr><tr><td class="name">#740</td><td>Nabiha Kasmas Denis</td><td>Florianópolis/SC</td><td class="num">10/09</td><td class="track"><span class="bar hi"><span class="t"><i style="width:60%"></i></span><b>8,3d</b></span></td><td class="num">12</td><td><span class="badge late">Ainda sem link</span></td></tr></tbody>
     </table>
     <div class="takeaway">
       <p class="detail">Leitura</p>
-      <p class="lead">4 dos 5 ainda estão na etapa, todos desde <strong>10–11/09</strong>. O #602 (Roberta, Salvador) esperou 15 dias corridos pelo link em agosto.</p>
+      <p class="lead">#612 e #602 foram movidos para Aguardando Pagamento em agosto, mas o link só apareceu <strong>20 e 17 dias corridos</strong> depois. Os outros 3 continuam sem link desde 10/09.</p>
     </div>
   </section>
 
@@ -454,13 +451,13 @@ td.track{width:34%}
     <div class="slide-head">
       <p class="eyebrow">Conclusão</p>
       <h1>O gargalo agora é o link de pagamento</h1>
-      <p>Quando a Harus responde, responde rápido (metade dos links sai em até 1 dia útil). O problema é que desde 08/09 ela não responde.</p>
+      <p>Quando a Harus responde, metade dos links sai em até 1,5 dia útil. O problema é que desde 08/09 ela não responde.</p>
     </div>
     <div class="grid2">
       <div class="block">
         <p class="detail">O que os dados mostram</p>
         <ul>
-          <li>Link de pagamento: 1,59 dia útil em média (39 pedidos), mas nenhum link desde 08/09.</li>
+          <li>Link de pagamento: 2,39 dias úteis em média (40 pedidos; 3,08 contando os que esperam), e nenhum link desde 08/09.</li>
           <li>20 pedidos esperando link, 14 deles há mais de 3 dias úteis (R$ 8.505 em produtos da Harus).</li>
           <li>Despacho: 2,71 dias úteis em média; caiu de 3,63 em agosto para 1,06 em setembro.</li>
           <li>27 dos 28 pedidos marcados como enviados não têm rastreio real.</li>
@@ -469,7 +466,7 @@ td.track{width:34%}
       <div class="block">
         <p class="detail">Saídas</p>
         <ul>
-          <li>Cobrar hoje o link dos 20 pedidos parados, começando por #738, #739, #740, #748 e #749 (desde 10–11/09).</li>
+          <li>Cobrar hoje o link dos 20 pedidos parados, começando por #738, #739 e #740 (desde 10/09).</li>
           <li>Combinar um prazo para o link (sugestão: 2 dias úteis) e cobrar quando passar.</li>
           <li>Exigir rastreio real ao marcar Pedido Enviado; sem código, o card volta para Aguardando Envio.</li>
           <li>Refazer esta conta no próximo mês para ver se o link voltou a sair.</li>
