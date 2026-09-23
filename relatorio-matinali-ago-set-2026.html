@@ -176,6 +176,10 @@ td.track{width:34%}
 .chips b{display:block;font-size:18px;font-weight:700;letter-spacing:-.01em;font-variant-numeric:tabular-nums}
 .chips span{display:block;font-size:12px;font-weight:500;color:var(--color-muted-fg);margin-top:8px;letter-spacing:.06em}
 
+.block .chips{grid-template-columns:repeat(auto-fill,minmax(128px,1fr));gap:10px}
+.block .chips li{padding:10px 12px;color:var(--color-foreground)}
+.block .chips li::before{display:none}
+.block .chips b{font-size:15px}
 .takeaway{margin-top:var(--space-xl);border-top:1px solid var(--color-border);padding-top:var(--space-lg);display:flex;gap:var(--space-lg);align-items:baseline;flex-wrap:wrap}
 .takeaway .detail{letter-spacing:.18em;text-transform:uppercase;color:var(--color-muted-fg);flex:none}
 .takeaway .lead{font-size:17px;max-width:72ch}
@@ -247,6 +251,10 @@ td.track{width:34%}
   .chips li{padding:8px 10px}
   .chips b{font-size:13px}
   .chips span{margin-top:4px}
+  .block .chips{grid-template-columns:repeat(4,1fr);gap:6px}
+  .block .chips li{padding:6px 8px}
+  .block .chips b{font-size:11px}
+  .block .chips span{font-size:9px}
   .takeaway{margin-top:16px;padding-top:10px;gap:12px}
   .takeaway .detail{font-size:9px}
   .source{font-size:9px;line-height:1.5}
@@ -269,152 +277,54 @@ td.track{width:34%}
     <div class="cover-mark"><i></i><span>Seazone · Fornecedores</span></div>
     <p class="eyebrow">Relatório de fornecedor</p>
     <h1>Matinali: Relatório Mensal</h1>
-    <p class="lead">Lojinha, despacho de enxoval e cancelamentos — agosto e setembro de 2026.</p>
+    <p class="lead">Despacho de enxoval, pedidos pagos sem envio e cancelamentos — pedidos pagos em agosto de 2026.</p>
     <div class="rule"></div>
     <div class="cover-meta">
-      <div><p class="detail">Período</p><p class="body">01/08/2026 a 21/09/2026</p></div>
-      <div><p class="detail">Fontes</p><p class="body">Lojinha Seazone, planilha de pedidos e Jornada Enxoval</p></div>
+      <div><p class="detail">Período</p><p class="body">Pagos em 08/2026 · retrato de 22/09/2026</p></div>
+      <div><p class="detail">Fontes</p><p class="body">Planilha de pedidos, Jornada Enxoval e Lojinha Seazone</p></div>
       <div><p class="detail">Gerado em</p><p class="body">22/09/2026</p></div>
     </div>
   </section>
 
-  <!-- 2 — Lojinha: resumo -->
-  <section class="slide" aria-label="Lojinha: resumo do período">
+  <!-- 2 — Despacho -->
+  <section class="slide" aria-label="Tempo de despacho dos pedidos pagos em agosto">
     <div class="slide-head">
-      <p class="eyebrow">Lojinha Seazone</p>
-      <h1>28 cards no período, 1 em cada 3 cancelado</h1>
-      <p>Cards da Matinali criados na Lojinha entre <strong>01/08 e 21/09/2026</strong>.</p>
-    </div>
-    <div class="kpis">
-      <div class="kpi neg">
-        <p class="detail">Cancelados</p>
-        <p class="num">10<u>35,7%</u></p>
-        <p class="note">10 dos 28 cards do período.</p>
-      </div>
-      <div class="kpi">
-        <p class="detail">Concluídos</p>
-        <p class="num">3<u>10,7%</u></p>
-        <p class="note">Só 3 cards chegaram ao fim do fluxo.</p>
-      </div>
-      <div class="kpi">
-        <p class="detail">Ativos agora</p>
-        <p class="num">15<u>cards</u></p>
-        <p class="note">9 aguardando pagamento, 6 aguardando envio.</p>
-      </div>
-      <div class="kpi neg">
-        <p class="detail">Atrasados (SLA 3 dias úteis)</p>
-        <p class="num">5<u>de 6</u></p>
-        <p class="note">Dos cards em Aguardando Envio, só 1 está no prazo.</p>
-      </div>
-    </div>
-    <div class="takeaway">
-      <p class="detail">Leitura</p>
-      <p class="lead">Volume baixo, cancelamento alto e envio fora do SLA.</p>
-    </div>
-  </section>
-
-  <!-- 3 — Lojinha: tempo por etapa -->
-  <section class="slide" aria-label="Lojinha: tempo médio por etapa">
-    <div class="slide-head">
-      <p class="eyebrow">Lojinha Seazone</p>
-      <h1>Tempo médio por etapa</h1>
-      <p>Dias úteis, cards criados no período. Barra proporcional à maior média (8 dias).</p>
-    </div>
-    <table>
-      <thead>
-        <tr>
-          <th scope="col">Etapa</th>
-          <th scope="col">Média</th>
-          <th scope="col" class="num">Mediana</th>
-          <th scope="col" class="num">Cards</th>
-          <th scope="col" class="num">Máximo</th>
-        </tr>
-      </thead>
-      <tbody><tr><td class="name">Inbox (novo)</td><td class="track"><span class="bar"><span class="t"><i style="width:5%"></i></span><b>0,4d</b></span></td><td class="num">0,0d</td><td class="num">28</td><td class="num">1d</td></tr><tr><td class="name">Enviado ao Fornecedor</td><td class="track"><span class="bar"><span class="t"><i style="width:20%"></i></span><b>1,6d</b></span></td><td class="num">1,0d</td><td class="num">22</td><td class="num">6d</td></tr><tr><td class="name">Aguardando Pagamento</td><td class="track"><span class="bar"><span class="t"><i style="width:31%"></i></span><b>2,5d</b></span></td><td class="num">3,0d</td><td class="num">11</td><td class="num">8d</td></tr><tr><td class="name">Aguardando Envio</td><td class="track"><span class="bar hi"><span class="t"><i style="width:38%"></i></span><b>3,0d</b></span></td><td class="num">4,0d</td><td class="num">4</td><td class="num">4d</td></tr><tr><td class="name">Pedido Enviado</td><td class="track"><span class="bar hi"><span class="t"><i style="width:100%"></i></span><b>8,0d</b></span></td><td class="num">6,0d</td><td class="num">3</td><td class="num">18d</td></tr></tbody>
-    </table>
-    <div class="takeaway">
-      <p class="detail">Leitura</p>
-      <p class="lead">A entrada do pedido é rápida. O tempo se acumula depois do pagamento, em <strong>Aguardando Envio</strong> e <strong>Pedido Enviado</strong>, que chegou a 18 dias.</p>
-    </div>
-  </section>
-
-  <!-- 4 — Lojinha: cards parados -->
-  <section class="slide" aria-label="Lojinha: cards parados agora">
-    <div class="slide-head">
-      <p class="eyebrow bad">Pontos de atenção</p>
-      <h1>Cards parados na Lojinha hoje</h1>
-      <p>Os 15 cards ativos, do mais parado ao mais recente, em dias úteis.</p>
-    </div>
-    <div class="grid2">
-      <div class="block">
-        <p class="detail">Aguardando Envio · SLA de 3 dias úteis</p>
-        <h4>6 cards, 5 atrasados</h4>
-        <table>
-          <tbody>
-            <tr><td class="name">Desde 04/09</td><td class="track"><span class="bar hi"><span class="t"><i style="width:100%"></i></span><b>10d</b></span></td><td class="num"><span class="badge late">Atrasado</span></td></tr>
-            <tr><td class="name">Desde 10/09 · 4 cards</td><td class="track"><span class="bar hi"><span class="t"><i style="width:70%"></i></span><b>7d</b></span></td><td class="num"><span class="badge late">Atrasado</span></td></tr>
-            <tr><td class="name">Desde 17/09</td><td class="track"><span class="bar"><span class="t"><i style="width:20%"></i></span><b>2d</b></span></td><td class="num"><span class="badge ok">No prazo</span></td></tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="block">
-        <p class="detail">Aguardando Pagamento · sem SLA de fornecedor</p>
-        <h4>9 cards, 4 parados há mais de 3 semanas</h4>
-        <table>
-          <tbody>
-            <tr><td class="name">Desde 18/08</td><td class="track"><span class="bar hi"><span class="t"><i style="width:100%"></i></span><b>23d</b></span></td></tr>
-            <tr><td class="name">Desde 25/08 · 2 cards</td><td class="track"><span class="bar hi"><span class="t"><i style="width:78%"></i></span><b>18d</b></span></td></tr>
-            <tr><td class="name">Desde 28/08</td><td class="track"><span class="bar hi"><span class="t"><i style="width:65%"></i></span><b>15d</b></span></td></tr>
-            <tr><td class="name">10/09 a 18/09 · 5 cards</td><td class="track"><span class="bar"><span class="t"><i style="width:30%"></i></span><b>1–7d</b></span></td></tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-    <div class="takeaway">
-      <p class="detail">Leitura</p>
-      <p class="lead">No envio, o atraso é da Matinali. No pagamento, depende da franquia, mas card parado há 15–23 dias úteis precisa ser revisto.</p>
-    </div>
-  </section>
-
-  <!-- 5 — Despacho de enxoval -->
-  <section class="slide" aria-label="Tempo de despacho em agosto">
-    <div class="slide-head">
-      <p class="eyebrow">Pedidos de enxoval · agosto/2026</p>
-      <h1>Despacho médio de 6 dias úteis</h1>
-      <p>Do <strong>pagamento ao embarque</strong>, pedidos embarcados entre 01/08 e 31/08, sem fins de semana e feriados (nacionais, SC e Garopaba).</p>
+      <p class="eyebrow">Pedidos de enxoval · pagos em agosto/2026</p>
+      <h1>Despacho médio de 5,6 dias úteis</h1>
+      <p>Do <strong>pagamento ao embarque</strong>, sem fins de semana e feriados (nacionais, SC e Garopaba). Pedidos ainda não embarcados ficam de fora da média e aparecem no slide 5.</p>
     </div>
     <div class="hero-split">
-      <div class="hero-num">5,99<small>dias úteis em média<br>68 pedidos embarcados</small></div>
+      <div class="hero-num">5,58<small>dias úteis em média<br>91 pedidos despachados</small></div>
       <div class="kpis">
         <div class="kpi">
           <p class="detail">Planilha de pedidos</p>
-          <p class="num">6,31<u>dias</u></p>
-          <p class="note">59 pedidos · mediana 6 · máximo 21.</p>
+          <p class="num">6,02<u>dias</u></p>
+          <p class="note">65 despachados · mediana 6 · máximo 15.</p>
         </div>
         <div class="kpi pos">
           <p class="detail">Jornada Enxoval</p>
-          <p class="num">3,89<u>dias</u></p>
-          <p class="note">9 pedidos · mediana 4 · máximo 7.</p>
+          <p class="num">4,50<u>dias</u></p>
+          <p class="note">26 despachados · mediana 5 · máximo 7.</p>
         </div>
-        <div class="kpi">
-          <p class="detail">Emissão de nota fiscal</p>
-          <p class="num">5,34<u>dias</u></p>
-          <p class="note">Do pagamento à NF, média dos 68 pedidos.</p>
+        <div class="kpi neg">
+          <p class="detail">Pagos em agosto sem envio</p>
+          <p class="num">9<u>pedidos</u></p>
+          <p class="note">7 da planilha e 2 do Jornada, de 16 a 33 dias úteis parados.</p>
         </div>
       </div>
     </div>
     <div class="takeaway">
       <p class="detail">Leitura</p>
-      <p class="lead"><strong>48 dos 68 pedidos</strong> levaram 5 dias úteis ou mais. Só 14 saíram em até 3.</p>
+      <p class="lead"><strong>66 dos 91 pedidos</strong> levaram 5 dias úteis ou mais para embarcar. Só 16 saíram em até 3.</p>
     </div>
   </section>
 
-  <!-- 6 — Os que mais demoraram -->
+  <!-- 3 — Os que mais demoraram -->
   <section class="slide" aria-label="Pedidos que mais demoraram para despachar">
     <div class="slide-head">
       <p class="eyebrow bad">Maiores tempos</p>
       <h1>Os 9 pedidos que levaram 9 dias úteis ou mais</h1>
-      <p>Barra proporcional ao maior caso do mês (21 dias úteis). Última coluna: dias acima da média de 5,99. Logo abaixo, 6 pedidos empatados com 8 dias.</p>
+      <p>Barra proporcional ao maior caso (15 dias úteis). Última coluna: dias acima da média de 5,58. Todos vêm da planilha.</p>
     </div>
     <table>
       <thead>
@@ -428,47 +338,102 @@ td.track{width:34%}
           <th scope="col" class="num">Acima da média</th>
         </tr>
       </thead>
-      <tbody><tr><td class="name">CUN0102</td><td>RS</td><td class="num">30/07</td><td class="num">31/08</td><td class="num">31/08</td><td class="track"><span class="bar hi"><span class="t"><i style="width:100%"></i></span><b>21d</b></span></td><td class="num">+15,0d</td></tr><tr><td class="name">CUN0202</td><td>RS</td><td class="num">30/07</td><td class="num">24/08</td><td class="num">24/08</td><td class="track"><span class="bar hi"><span class="t"><i style="width:76%"></i></span><b>16d</b></span></td><td class="num">+10,0d</td></tr><tr><td class="name">MLUB0301</td><td>RS</td><td class="num">22/07</td><td class="num">11/08</td><td class="num">12/08</td><td class="track"><span class="bar hi"><span class="t"><i style="width:67%"></i></span><b>14d</b></span></td><td class="num">+8,0d</td></tr><tr><td class="name">PCA0403</td><td>SC</td><td class="num">27/07</td><td class="num">13/08</td><td class="num">13/08</td><td class="track"><span class="bar hi"><span class="t"><i style="width:57%"></i></span><b>12d</b></span></td><td class="num">+6,0d</td></tr><tr><td class="name">LLS0277</td><td>PR</td><td class="num">28/07</td><td class="num">13/08</td><td class="num">13/08</td><td class="track"><span class="bar hi"><span class="t"><i style="width:52%"></i></span><b>11d</b></span></td><td class="num">+5,0d</td></tr><tr><td class="name">CUA001</td><td>SC</td><td class="num">04/08</td><td class="num">18/08</td><td class="num">19/08</td><td class="track"><span class="bar hi"><span class="t"><i style="width:48%"></i></span><b>10d</b></span></td><td class="num">+4,0d</td></tr><tr><td class="name">BAO0040</td><td>RJ</td><td class="num">04/08</td><td class="num">17/08</td><td class="num">19/08</td><td class="track"><span class="bar hi"><span class="t"><i style="width:48%"></i></span><b>10d</b></span></td><td class="num">+4,0d</td></tr><tr><td class="name">FVS0305</td><td>RJ</td><td class="num">14/08</td><td class="num">24/08</td><td class="num">28/08</td><td class="track"><span class="bar hi"><span class="t"><i style="width:48%"></i></span><b>10d</b></span></td><td class="num">+4,0d</td></tr><tr><td class="name">SAP0257</td><td>SC</td><td class="num">10/08</td><td class="num">19/08</td><td class="num">21/08</td><td class="track"><span class="bar"><span class="t"><i style="width:43%"></i></span><b>9d</b></span></td><td class="num">+3,0d</td></tr></tbody>
+      <tbody><tr><td class="name">RPU0801</td><td>SC</td><td class="num">12/08</td><td class="num">02/09</td><td class="num">02/09</td><td class="track"><span class="bar hi"><span class="t"><i style="width:100%"></i></span><b>15d</b></span></td><td class="num">+9,4d</td></tr><tr><td class="name">SND0035</td><td>SC</td><td class="num">11/08</td><td class="num">01/09</td><td class="num">01/09</td><td class="track"><span class="bar hi"><span class="t"><i style="width:100%"></i></span><b>15d</b></span></td><td class="num">+9,4d</td></tr><tr><td class="name">EKU0765</td><td>SC</td><td class="num">17/08</td><td class="num">01/09</td><td class="num">01/09</td><td class="track"><span class="bar hi"><span class="t"><i style="width:73%"></i></span><b>11d</b></span></td><td class="num">+5,4d</td></tr><tr><td class="name">CUA001</td><td>SC</td><td class="num">04/08</td><td class="num">18/08</td><td class="num">19/08</td><td class="track"><span class="bar hi"><span class="t"><i style="width:67%"></i></span><b>10d</b></span></td><td class="num">+4,4d</td></tr><tr><td class="name">BAO0040</td><td>RJ</td><td class="num">04/08</td><td class="num">17/08</td><td class="num">19/08</td><td class="track"><span class="bar hi"><span class="t"><i style="width:67%"></i></span><b>10d</b></span></td><td class="num">+4,4d</td></tr><tr><td class="name">EID0401</td><td>SC</td><td class="num">19/08</td><td class="num">01/09</td><td class="num">02/09</td><td class="track"><span class="bar hi"><span class="t"><i style="width:67%"></i></span><b>10d</b></span></td><td class="num">+4,4d</td></tr><tr><td class="name">FVS0305</td><td>RJ</td><td class="num">14/08</td><td class="num">24/08</td><td class="num">28/08</td><td class="track"><span class="bar hi"><span class="t"><i style="width:67%"></i></span><b>10d</b></span></td><td class="num">+4,4d</td></tr><tr><td class="name">BHC1405</td><td>SC</td><td class="num">19/08</td><td class="num">01/09</td><td class="num">01/09</td><td class="track"><span class="bar"><span class="t"><i style="width:60%"></i></span><b>9d</b></span></td><td class="num">+3,4d</td></tr><tr><td class="name">SAP0257</td><td>SC</td><td class="num">10/08</td><td class="num">19/08</td><td class="num">21/08</td><td class="track"><span class="bar"><span class="t"><i style="width:60%"></i></span><b>9d</b></span></td><td class="num">+3,4d</td></tr></tbody>
     </table>
     <div class="takeaway">
       <p class="detail">Contexto</p>
-      <p class="lead">Os 5 mais lentos foram pagos em julho e só embarcaram em agosto. Em todos, a NF saiu no dia ou na véspera do embarque: o pedido ficou parado <strong>antes de faturar</strong>.</p>
+      <p class="lead">5 dos 9 foram pagos em meados de agosto e só embarcaram em <strong>01–02/09</strong>, com a NF emitida no mesmo dia ou na véspera: o pedido ficou parado antes de faturar.</p>
     </div>
   </section>
 
-  <!-- 7 — Planilha x Jornada -->
+  <!-- 4 — Planilha x Jornada -->
   <section class="slide" aria-label="Planilha versus Jornada">
     <div class="slide-head">
       <p class="eyebrow good">Planilha × Jornada</p>
-      <h1>No Jornada, o despacho foi 2,4 dias úteis mais rápido</h1>
-      <p>Mesma regra nas duas fontes: data do pagamento até a data de embarque, em dias úteis.</p>
+      <h1>No Jornada, o despacho foi 1,5 dia útil mais rápido</h1>
+      <p>Mesma regra nas duas fontes: data do pagamento até a data de embarque, pedidos pagos em agosto já despachados.</p>
     </div>
     <table>
       <thead>
         <tr>
           <th scope="col">Fonte</th>
-          <th scope="col" class="num">Pedidos</th>
+          <th scope="col" class="num">Despachados</th>
           <th scope="col">Média de despacho</th>
           <th scope="col" class="num">Mediana</th>
           <th scope="col" class="num">Máximo</th>
-          <th scope="col" class="num">Média até a NF</th>
+          <th scope="col" class="num">Pagos sem envio</th>
         </tr>
       </thead>
       <tbody>
-        <tr><td class="name">Planilha de pedidos</td><td class="num">59</td><td class="track"><span class="bar hi"><span class="t"><i style="width:100%"></i></span><b>6,31d</b></span></td><td class="num">6</td><td class="num">21</td><td class="num">5,59d</td></tr>
-        <tr><td class="name">Jornada Enxoval</td><td class="num">9</td><td class="track"><span class="bar"><span class="t"><i style="width:62%"></i></span><b>3,89d</b></span></td><td class="num">4</td><td class="num">7</td><td class="num">3,67d</td></tr>
+        <tr><td class="name">Planilha de pedidos</td><td class="num">65</td><td class="track"><span class="bar hi"><span class="t"><i style="width:100%"></i></span><b>6,02d</b></span></td><td class="num">6</td><td class="num">15</td><td class="num">7</td></tr>
+        <tr><td class="name">Jornada Enxoval</td><td class="num">26</td><td class="track"><span class="bar"><span class="t"><i style="width:75%"></i></span><b>4,50d</b></span></td><td class="num">5</td><td class="num">7</td><td class="num">2</td></tr>
       </tbody>
       <tfoot>
-        <tr><td>Diferença</td><td class="num"></td><td>−2,42 dias úteis</td><td class="num">−2</td><td class="num">−14</td><td class="num">−1,93d</td></tr>
+        <tr><td>Diferença</td><td class="num"></td><td>−1,52 dia útil</td><td class="num">−1</td><td class="num">−8</td><td class="num"></td></tr>
       </tfoot>
     </table>
     <div class="takeaway">
       <p class="detail">Ressalva</p>
-      <p class="lead">O Jornada começou em 21/08: são só 9 pedidos, todos do fim do mês, e a planilha carrega os atrasos de julho. Olhando só os pedidos pagos a partir de 20/08, a diferença continua: <strong>planilha 5,8 dias (5 pedidos) × Jornada 3,5 (8)</strong>.</p>
+      <p class="lead">O Jornada só começou em 21/08 e pegou pedidos do fim do mês. Comparando só os pagos a partir de 20/08, a diferença continua: <strong>planilha 5,67 dias (12 pedidos) × Jornada 4,40 (25)</strong>.</p>
     </div>
   </section>
 
-  <!-- 8 — Cancelados no Jornada -->
+  <!-- 5 — Pagos sem envio (enxoval) -->
+  <section class="slide" aria-label="Pedidos pagos há mais de 5 dias úteis sem envio">
+    <div class="slide-head">
+      <p class="eyebrow bad">Pontos de atenção</p>
+      <h1>23 pedidos de enxoval pagos há mais de 5 dias úteis sem envio</h1>
+      <p>Dias úteis desde o pagamento até <strong>22/09/2026</strong>. No Jornada, entram todos os cards em Pagamento Confirmado. Quando o card não tem data de pagamento, conto da entrada na fase.</p>
+    </div>
+    <div class="grid2">
+      <div class="block">
+        <p class="detail">Planilha de pedidos · pagos em agosto</p>
+        <h4>7 pedidos, todos há mais de 3 semanas</h4>
+        <ul class="chips" style="margin-top:16px"><li><b>PQA0011</b><span>BA · pago 04/08 · <strong style="color:var(--color-error-on-dark)">33d</strong></span></li><li><b>EOM0302</b><span>SC · pago 06/08 · <strong style="color:var(--color-error-on-dark)">31d</strong></span></li><li><b>MHFA0507</b><span>SC · pago 07/08 · <strong style="color:var(--color-error-on-dark)">31d</strong></span></li><li><b>CSC0303</b><span>SC · pago 20/08 · <strong style="color:var(--color-error-on-dark)">22d</strong></span></li><li><b>MAM0007</b><span>BA · pago 20/08 · <strong style="color:var(--color-error-on-dark)">22d</strong></span></li><li><b>TPA0112</b><span>SP · pago 21/08 · <strong style="color:var(--color-error-on-dark)">21d</strong></span></li><li><b>VSO0020</b><span>SP · pago 28/08 · <strong style="color:var(--color-error-on-dark)">16d</strong></span></li></ul>
+      </div>
+      <div class="block">
+        <p class="detail">Jornada Enxoval · fase Pagamento Confirmado</p>
+        <h4>16 pedidos, 6 deles há 16 dias úteis ou mais</h4>
+        <ul class="chips" style="margin-top:16px"><li><b>SDM0102</b><span>P-0035 · SC · 24/08 · <strong style="color:var(--color-error-on-dark)">20d</strong></span></li><li><b>VOD0102</b><span>P-0033 · BA · 24/08 · <strong style="color:var(--color-error-on-dark)">20d</strong></span></li><li><b>P-2007</b><span>Franquia · SC · 27/08 · <strong style="color:var(--color-error-on-dark)">17d</strong></span></li><li><b>P-2010</b><span>Decor · BA · 27/08 · <strong style="color:var(--color-error-on-dark)">17d</strong></span></li><li><b>SAQ0015</b><span>P-2009 · PB · 27/08 · <strong style="color:var(--color-error-on-dark)">17d</strong></span></li><li><b>GRL0801</b><span>AG · GO · 28/08 · <strong style="color:var(--color-error-on-dark)">16d</strong></span></li><li><b>P-2023</b><span>Franquia · 02/09 · <strong style="color:var(--color-error-on-dark)">13d</strong></span></li><li><b>GBN0306</b><span>AG · SP · 02/09 · <strong style="color:var(--color-error-on-dark)">13d</strong></span></li><li><b>KMA0202</b><span>P-2036 · SP · 04/09 · <strong style="color:var(--color-error-on-dark)">11d</strong></span></li><li><b>VPG0103</b><span>AG · BA · 04/09 · <strong style="color:var(--color-error-on-dark)">11d</strong></span></li><li><b>VDP0015</b><span>P-2024 · RJ · 08/09 · <strong style="color:var(--color-error-on-dark)">10d</strong></span></li><li><b>PTI0505</b><span>P-0036 · SC · 08/09 · <strong style="color:var(--color-error-on-dark)">10d</strong></span></li><li><b>OBO0004</b><span>P-2055 · SC · 11/09 · <strong style="color:var(--color-error-on-dark)">7d</strong></span></li><li><b>PFT0003</b><span>P-2049 · BA · 11/09 · <strong style="color:var(--color-error-on-dark)">7d</strong></span></li><li><b>PFT0001</b><span>P-2048 · BA · 11/09 · <strong style="color:var(--color-error-on-dark)">7d</strong></span></li><li><b>VFO0002</b><span>AG · BA · 11/09 · <strong style="color:var(--color-error-on-dark)">7d</strong></span></li></ul>
+      </div>
+    </div>
+    <div class="takeaway">
+      <p class="detail">Leitura</p>
+      <p class="lead">PQA0011, EOM0302 e MHFA0507 estão pagos há mais de 30 dias úteis. É a primeira cobrança a fazer com a Matinali.</p>
+    </div>
+  </section>
+
+  <!-- 6 — Lojinha -->
+  <section class="slide" aria-label="Lojinha: pedidos com pagamento confirmado há mais de 5 dias">
+    <div class="slide-head">
+      <p class="eyebrow bad">Pontos de atenção · Lojinha Seazone</p>
+      <h1>5 pedidos com pagamento confirmado há mais de 5 dias úteis</h1>
+      <p>Cards da Matinali na etapa <strong>Aguardando Envio</strong> (pagamento confirmado), contados até 22/09/2026. O SLA de envio é de 3 dias úteis.</p>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th scope="col">Pedido</th>
+          <th scope="col" class="num">Pagamento confirmado em</th>
+          <th scope="col">Dias úteis sem envio</th>
+          <th scope="col" class="num">Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">Pedido #708</td><td class="num">04/09/2026</td><td class="track"><span class="bar hi"><span class="t"><i style="width:100%"></i></span><b>11d</b></span></td><td class="num"><span class="badge late">Atrasado</span></td></tr>
+        <tr><td class="name">Pedido #694</td><td class="num">10/09/2026</td><td class="track"><span class="bar hi"><span class="t"><i style="width:73%"></i></span><b>8d</b></span></td><td class="num"><span class="badge late">Atrasado</span></td></tr>
+        <tr><td class="name">Pedido #702</td><td class="num">10/09/2026</td><td class="track"><span class="bar hi"><span class="t"><i style="width:73%"></i></span><b>8d</b></span></td><td class="num"><span class="badge late">Atrasado</span></td></tr>
+        <tr><td class="name">Pedido #711</td><td class="num">10/09/2026</td><td class="track"><span class="bar hi"><span class="t"><i style="width:73%"></i></span><b>8d</b></span></td><td class="num"><span class="badge late">Atrasado</span></td></tr>
+        <tr><td class="name">Pedido #725</td><td class="num">10/09/2026</td><td class="track"><span class="bar hi"><span class="t"><i style="width:73%"></i></span><b>8d</b></span></td><td class="num"><span class="badge late">Atrasado</span></td></tr>
+      </tbody>
+    </table>
+    <div class="takeaway">
+      <p class="detail">Leitura</p>
+      <p class="lead">Nenhum dos 5 tem nota fiscal lançada no card. Os outros 2 cards da etapa (#751 e #737) seguem no prazo.</p>
+    </div>
+  </section>
+
+  <!-- 7 — Cancelados no Jornada -->
   <section class="slide" aria-label="Motivos de cancelamento em agosto">
     <div class="slide-head">
       <p class="eyebrow">Cancelamentos · Jornada Enxoval</p>
@@ -501,29 +466,29 @@ td.track{width:34%}
     </div>
   </section>
 
-  <!-- 9 — Conclusão e saídas -->
+  <!-- 8 — Conclusão e saídas -->
   <section class="slide" aria-label="Conclusão e saídas">
     <div class="slide-head">
       <p class="eyebrow">Conclusão</p>
-      <h1>O envio é o gargalo, na Lojinha e no enxoval</h1>
+      <h1>O gargalo é o que já está pago e não sai</h1>
     </div>
     <div class="hero-split">
-      <div class="hero-num" style="color:var(--color-warning-on-dark)">5,99<small>dias úteis de despacho<br>agosto/2026</small></div>
+      <div class="hero-num" style="color:var(--color-warning-on-dark)">5,58<small>dias úteis de despacho<br>pagos em agosto</small></div>
       <div>
-        <p class="lead">Nas duas frentes, o pedido para depois de pago. Na Lojinha, 5 de 6 cards passaram do SLA de envio. No enxoval, 48 de 68 pedidos levaram 5 dias úteis ou mais.</p>
-        <p style="margin-top:20px">O Jornada já mostra um despacho mais curto (<strong>3,89 dias</strong>) e mede o prazo sozinho, card a card. A amostra ainda é pequena e precisa ser acompanhada em setembro.</p>
+        <p class="lead">Quando o pedido embarca, leva em média 5,6 dias úteis. O problema maior é o que fica para trás: <strong>23 pedidos de enxoval e 5 da Lojinha</strong> pagos há mais de 5 dias úteis sem envio.</p>
+        <p style="margin-top:20px">O Jornada já mostra despacho mais curto (<strong>4,50 dias</strong>) e deixa cada pedido parado visível no card.</p>
       </div>
     </div>
     <div class="block" style="margin-top:32px">
       <p class="detail">Saídas</p>
       <ul>
-        <li>Cobrar da Matinali os <strong>5 cards atrasados em Aguardando Envio</strong> na Lojinha (7 a 10 dias úteis parados)</li>
-        <li>Revisar os <strong>4 cards em Aguardando Pagamento há 15–23 dias úteis</strong> e confirmar quais ainda valem</li>
-        <li>Combinar uma <strong>meta de despacho</strong> pelo Jornada e acompanhar mês a mês, começando por setembro</li>
+        <li>Cobrar da Matinali os <strong>7 pedidos da planilha</strong> pagos em agosto e ainda sem embarque (16 a 33 dias úteis)</li>
+        <li>Cobrar os <strong>16 cards do Jornada</strong> parados em Pagamento Confirmado há mais de 5 dias úteis</li>
+        <li>Cobrar os <strong>pedidos #708, #694, #702, #711 e #725</strong> da Lojinha (8 a 11 dias úteis)</li>
       </ul>
     </div>
     <div class="takeaway">
-      <p class="source">Fontes: relatório da Lojinha Seazone (01/08 a 21/09/2026); aba Pedidos da planilha de compra de enxoval da Matinali; app Jornada Completa Enxoval (board Pedidos). Despacho = NETWORKDAYS(pagamento; embarque; feriados) − 1, a mesma fórmula da análise da RM; feriados nacionais, de SC e de Garopaba. Fora da conta: 1 linha da planilha com embarque anterior ao pagamento e 2 cards duplicados no Jornada. A coluna "Tempo de despacho" da planilha da Matinali calcula a conta invertida (valores negativos) e não foi usada.</p>
+      <p class="source">Fontes: planilha de compra de enxoval da Matinali (pedidos pagos em agosto, filtrados na aba Página2 da análise); app Jornada Completa Enxoval (board Pedidos, data de pagamento em agosto, 2 cards duplicados removidos); Lojinha Seazone (loja-full-export, etapa Aguardando Envio). Despacho = NETWORKDAYS(pagamento; embarque; feriados) − 1, a mesma fórmula da análise da RM; feriados nacionais, de SC e de Garopaba. Pedidos sem embarque são contados até 22/09/2026.</p>
     </div>
   </section>
 
@@ -534,7 +499,7 @@ td.track{width:34%}
   <button class="nav-btn" id="next" type="button" aria-label="Próximo slide">→</button>
   <div class="dots" id="dots" role="tablist" aria-label="Ir para slide"></div>
   <button class="nav-btn" id="print" type="button">Exportar PDF</button>
-  <p class="counter" id="counter">1 / 9</p>
+  <p class="counter" id="counter">1 / 8</p>
 </nav>
 
 <script>
