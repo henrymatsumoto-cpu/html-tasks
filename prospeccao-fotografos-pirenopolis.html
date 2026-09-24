@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fotógrafos em Pirenópolis</title>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Figtree:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme:dark;
+  --bg:oklch(18% .012 70);--surf:oklch(22% .014 70);--surf2:oklch(26% .016 70);
+  --line:oklch(32% .014 70);--ink:oklch(93% .01 80);--ink2:oklch(72% .015 75);--ink3:oklch(58% .014 75);
+  --won:oklch(78% .12 150);--lost:oklch(70% .13 35);--amber:oklch(80% .13 80);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 "Figtree",sans-serif;-webkit-font-smoothing:antialiased}
+main{max-width:880px;margin:0 auto;padding:56px 16px 96px}
+.eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink3);font-weight:700}
+h1{font-family:"Bricolage Grotesque",serif;font-weight:800;font-size:clamp(34px,6.5vw,56px);letter-spacing:-.03em;line-height:1;margin:14px 0 14px}
+h2{font-family:"Bricolage Grotesque",serif;font-weight:600;font-size:24px;letter-spacing:-.015em;margin:64px 0 6px}
+.lede{color:var(--ink2);font-size:18px;max-width:60ch;margin:0}
+.meta{color:var(--ink3);font-size:13.5px;margin-top:18px}
+p{max-width:66ch}
+.sub{color:var(--ink2);margin:0 0 22px}
+
+.nums{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:14px;overflow:hidden;margin-top:40px}
+.nums div{background:var(--surf);padding:22px 20px}
+.nums b{display:block;font-family:"Bricolage Grotesque",serif;font-size:44px;font-weight:800;line-height:1;letter-spacing:-.03em}
+.nums span{display:block;color:var(--ink2);font-size:13.5px;margin-top:8px;max-width:20ch}
+.nums .w b{color:var(--won)} .nums .l b{color:var(--lost)}
+
+.funnel{display:flex;flex-direction:column;gap:10px}
+.step{display:grid;grid-template-columns:190px 1fr 44px;align-items:center;gap:14px}
+.step .t{font-size:14.5px;color:var(--ink2)}
+.step .bar{height:26px;border-radius:6px;background:var(--surf2);overflow:hidden}
+.step .bar i{display:block;height:100%;background:var(--amber);border-radius:6px}
+.step .n{font-weight:700;text-align:right;font-variant-numeric:tabular-nums}
+.step.win .bar i{background:var(--won)}
+
+.reasons{border-top:1px solid var(--line)}
+.r{display:grid;grid-template-columns:34px 1fr;gap:6px 18px;padding:20px 0;border-bottom:1px solid var(--line)}
+.r .c{font-family:"Bricolage Grotesque",serif;font-size:30px;font-weight:800;line-height:1;color:var(--lost);font-variant-numeric:tabular-nums}
+.r h3{margin:0;font-size:17px;font-weight:700}
+.r h3 small{color:var(--ink3);font-weight:500;font-size:13.5px;margin-left:8px}
+.r p{grid-column:2;margin:4px 0 0;color:var(--ink2);font-size:15px}
+.r .who{grid-column:2;color:var(--ink3);font-size:13.5px;margin-top:6px}
+.meter{grid-column:2;height:6px;background:var(--surf2);border-radius:3px;overflow:hidden;margin-top:4px}
+.meter i{display:block;height:100%;background:var(--lost)}
+
+blockquote{margin:22px 0;padding:20px 22px;background:var(--surf);border-radius:12px;color:var(--ink);font-size:16.5px;line-height:1.55}
+blockquote cite{display:block;margin-top:10px;color:var(--ink3);font-style:normal;font-size:13.5px}
+
+.won{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.won div{background:var(--surf);border-radius:12px;padding:20px}
+.won h3{margin:0 0 4px;font-size:17px;color:var(--won)}
+.won p{margin:0;color:var(--ink2);font-size:14.5px}
+
+.concl{background:var(--surf);border-radius:16px;padding:28px 26px;margin-top:18px}
+.concl p{margin:0 0 14px;color:var(--ink)}
+.concl p:last-child{margin:0}
+.concl ol{margin:6px 0 0;padding-left:20px;color:var(--ink2)}
+.concl li{margin:8px 0}
+.concl li b{color:var(--ink)}
+
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:12px}
+table{border-collapse:collapse;width:100%;min-width:640px;font-size:14px}
+th{text-align:left;color:var(--ink3);font-weight:500;font-size:12px;letter-spacing:.06em;text-transform:uppercase;padding:12px 14px;background:var(--surf)}
+td{padding:12px 14px;border-top:1px solid var(--line);vertical-align:top;color:var(--ink2)}
+td:first-child{color:var(--ink);font-weight:500}
+.tag{display:inline-block;padding:2px 10px;border-radius:999px;font-size:12px;font-weight:700;white-space:nowrap}
+.tag.g{background:oklch(78% .12 150 / .16);color:var(--won)}
+.tag.p{background:oklch(70% .13 35 / .16);color:var(--lost)}
+.flag{color:var(--amber)}
+footer{margin-top:56px;color:var(--ink3);font-size:13px}
+
+@media (max-width:640px){
+  .nums{grid-template-columns:1fr 1fr}
+  .step{grid-template-columns:1fr 40px}
+  .step .t{grid-column:1/-1}
+  .won{grid-template-columns:1fr}
+}
+</style></head><body><main>
+
+<span class="eyebrow">Prospecção de Fornecedores · Fotógrafos · GO</span>
+<h1>Pirenópolis: 18 fotógrafos procurados, 2 cadastrados</h1>
+<p class="lede">A cidade é pequena e não tem centro grande por perto. Por isso quase não há fotógrafo que atenda aos nossos requisitos (equipamento para foto de interiores e aceitar a nossa tabela) e que esteja disponível.</p>
+<p class="meta">Fonte: Pipedrive, funil 60 "Prospecção Fornecedores" · cards criados em 15/09/2026, contatos feitos entre 18/09 e 24/09/2026 · anotações da Wânia nos cards · atualizado em 24/09/2026</p>
+
+<div class="nums">
+  <div><b>19</b><span>cards no funil (1 duplicado)</span></div>
+  <div><b>18</b><span>fotógrafos que recebemos contato</span></div>
+  <div class="w"><b>2</b><span>ganhos, cadastrados no Painel (11%)</span></div>
+  <div class="l"><b>16</b><span>perdidos (+1 card duplicado)</span></div>
+</div>
+
+<h2>Do contato ao cadastro</h2>
+<p class="sub">Os 18 profissionais diferentes receberam contato por WhatsApp ou ligação. Menos da metade chegou a responder.</p>
+<div class="funnel">
+  <div class="step"><span class="t">Contato enviado</span><span class="bar"><i style="width:100%"></i></span><span class="n">18</span></div>
+  <div class="step"><span class="t">Número válido na cidade</span><span class="bar"><i style="width:77.8%"></i></span><span class="n">14</span></div>
+  <div class="step"><span class="t">Respondeu de fato</span><span class="bar"><i style="width:38.9%"></i></span><span class="n">7</span></div>
+  <div class="step win"><span class="t">Ganho</span><span class="bar"><i style="width:11.1%"></i></span><span class="n">2</span></div>
+</div>
+
+<h2>Por que perdemos</h2>
+<p class="sub">17 cards perdidos, por motivo. As explicações vêm das anotações da Wânia em cada card.</p>
+<div class="reasons">
+  <div class="r"><span class="c">7</span><h3>Sem retorno<small>41%</small></h3>
+    <div class="meter"><i style="width:41%"></i></div>
+    <p>Mensagens repetidas por uns 6 dias sem resposta ("Ainda não retornou a chamada", "Mandei mensagem pela última vez"). A Foto Click chegou a atender a ligação e disse que responderia pelo WhatsApp, mas não respondeu.</p>
+    <span class="who">Studio Lotus · Lis de Alcântara · Anggella Ruiz · Adílio Fonseca · Lorrayne Gama · Pessarte · Foto Click</span></div>
+  <div class="r"><span class="c">4</span><h3>Contato inválido<small>24%</small></h3>
+    <div class="meter"><i style="width:24%"></i></div>
+    <p>Dois deram "falha no envio" (telefones da Receita Federal, antigos ou incompletos). Um "não reside em Pirenópolis": o CNPJ está na cidade, mas a pessoa mora em Brasília. O quarto tinha só telefone fixo.</p>
+    <span class="who">Diego Monteiro · Álvaro Gaspre · Luiz Kayque (Brasília) · Vinícius Fontes</span></div>
+  <div class="r"><span class="c">3</span><h3>Sem equipamento<small>18%</small></h3>
+    <div class="meter"><i style="width:18%"></i></div>
+    <p>Fotografam eventos, casamentos ou audiovisual e não têm o equipamento de foto de interiores (grande-angular e afins). <span class="flag">A Revoar foi marcada com este motivo, mas a resposta dela no card é "no momento não possuímos interesse".</span></p>
+    <span class="who">Revoar Fotografia · Honílio Morais · Lelis Home Studio</span></div>
+  <div class="r"><span class="c">2</span><h3>Valor alto<small>12%</small></h3>
+    <div class="meter"><i style="width:12%"></i></div>
+    <p>Leram a proposta e recusaram porque a nossa tabela fica bem abaixo do que eles cobram na cidade. Um deles fala em no mínimo R$ 1.150 por trabalho.</p>
+    <span class="who">Marcello Dantas · Pedro Victor (mora em Corumbá de Goiás, a ~35 km)</span></div>
+  <div class="r"><span class="c">1</span><h3>Duplicado / erro<small>6%</small></h3>
+    <div class="meter"><i style="width:6%"></i></div>
+    <p>O card do Nivaldo (MEI) era a mesma pessoa da Foto Click, que veio indicada pela franquia. Ele não entra na contagem de profissionais.</p>
+    <span class="who">Nivaldo Francisco da Trindade</span></div>
+</div>
+
+<blockquote>"Os valores são muito abaixo do que os profissionais daqui têm praticado […] a cidade ela exige outros preços. Mesmo sendo uma renda complementar. […] Talvez seja interessante para quem esteja começando."
+<cite>Marcello Dantas, fotógrafo de Pirenópolis, em resposta à proposta (card 493390)</cite></blockquote>
+
+<h2>Quem entrou</h2>
+<div class="won">
+  <div><h3>Pequi Fotografia</h3><p>Indicado pelo time da franquia, que confirmou o telefone. Fechou em 16/09, um dia depois de o card ser criado.</p></div>
+  <div><h3>Retratos do Rosário</h3><p>Veio da base da Receita (CNAE). Precisou de 3 contatos. Tem equipamento e foi cadastrado no Painel de Fotógrafos em 23/09.</p></div>
+</div>
+
+<h2>Conclusão</h2>
+<div class="concl">
+  <p><b>A prospecção foi bem feita e o problema está no tamanho da praça.</b> Pirenópolis tem cerca de 25 mil habitantes e não tem cidade grande por perto: Anápolis fica a uns 65 km, Goiânia a uns 125 km e Brasília a uns 150 km. Mesmo cruzando a base da Receita (CNAE), o Google, o Instagram e as indicações da franquia, só apareceram 18 profissionais. Poucos deles trabalham com foto de imóvel.</p>
+  <p>Os fotógrafos da cidade vivem do turismo, com casamento, elopement, ensaio e eventos culturais. Esse trabalho paga bem mais que a nossa tabela, o que explica as recusas por preço e a falta de equipamento para interiores. Os poucos profissionais que existem não têm motivo para trocar de nicho.</p>
+  <p>A base da Receita também serviu pouco: 4 números eram inválidos (formato antigo de 8 dígitos ou pessoa morando em outra cidade) e 7 contatos nunca responderam. Quem veio indicado pela franquia rendeu mais: 1 dos 4 indicados virou ganho logo no primeiro dia.</p>
+  <p><b>Próximos passos sugeridos:</b></p>
+  <ol>
+    <li><b>Colocar os 2 cadastrados para trabalhar</b> e ver se eles dão conta da demanda de imóveis da franquia antes de abrir uma nova rodada.</li>
+    <li><b>Buscar fotógrafos de Anápolis e Goiânia</b> que topem ir a Pirenópolis, com agenda agrupada de vários imóveis no mesmo dia para compensar o deslocamento.</li>
+    <li><b>Revisar a tabela para cidades turísticas pequenas.</b> As duas recusas por preço mostram que o valor atual não compete com o que se paga localmente.</li>
+    <li><b>Pedir indicação à franquia primeiro</b> nas próximas cidades pequenas e usar a base da Receita só como complemento.</li>
+  </ol>
+</div>
+
+<h2>Todos os cards</h2>
+<div class="tbl"><table>
+<thead><tr><th>Fotógrafo</th><th>Origem</th><th>Resultado</th><th>Anotação</th></tr></thead>
+<tbody>
+<tr><td>Pequi Fotografia</td><td>Indicação franquia</td><td><span class="tag g">Ganho</span></td><td>Fechado em 16/09</td></tr>
+<tr><td>Retratos do Rosário</td><td>Receita (CNAE)</td><td><span class="tag g">Ganho</span></td><td>Cadastrado no Painel · tem equipamento</td></tr>
+<tr><td>Pedro Victor Fotografia</td><td>Google</td><td><span class="tag p">Valor alto</span></td><td>"Os valores não fazem sentido para mim hoje"</td></tr>
+<tr><td>Marcello Dantas</td><td>Receita (CNAE)</td><td><span class="tag p">Valor alto</span></td><td>Cobra no mínimo R$ 1.150; valor incompatível</td></tr>
+<tr><td>Revoar Fotografia</td><td>Google / Instagram</td><td><span class="tag p">Sem equipamento</span></td><td>"No momento não possuem interesse"</td></tr>
+<tr><td>Honílio Morais</td><td>Receita / Google</td><td><span class="tag p">Sem equipamento</span></td><td>Audiovisual / eventos</td></tr>
+<tr><td>Lelis Home Studio</td><td>Indicação franquia</td><td><span class="tag p">Sem equipamento</span></td><td>Estúdio em casa</td></tr>
+<tr><td>Studio Lotus (Ana Póvoas)</td><td>Receita / Google</td><td><span class="tag p">Sem retorno</span></td><td>Não retornou a chamada</td></tr>
+<tr><td>Lis de Alcântara</td><td>Receita / Google</td><td><span class="tag p">Sem retorno</span></td><td>Não retornou a chamada</td></tr>
+<tr><td>Anggella Ruiz</td><td>Receita (CNAE)</td><td><span class="tag p">Sem retorno</span></td><td>Não retornou a chamada</td></tr>
+<tr><td>Adílio Fonseca</td><td>Receita (CNAE)</td><td><span class="tag p">Sem retorno</span></td><td>Não retornou a chamada</td></tr>
+<tr><td>Lorrayne Gama</td><td>Receita (CNAE)</td><td><span class="tag p">Sem retorno</span></td><td>2 mensagens, não respondeu mais</td></tr>
+<tr><td>Pessarte</td><td>Indicação franquia</td><td><span class="tag p">Sem retorno</span></td><td>Última mensagem em 23/09</td></tr>
+<tr><td>Foto Click</td><td>Indicação franquia</td><td><span class="tag p">Sem retorno</span></td><td>Atendeu a ligação, não voltou no WhatsApp</td></tr>
+<tr><td>Diego Monteiro</td><td>Receita (CNAE)</td><td><span class="tag p">Contato inválido</span></td><td>Falha no envio (DDD 35)</td></tr>
+<tr><td>Álvaro Gaspre</td><td>Receita / Google</td><td><span class="tag p">Contato inválido</span></td><td>Falha ao enviar</td></tr>
+<tr><td>Luiz Kayque</td><td>Receita (CNAE)</td><td><span class="tag p">Contato inválido</span></td><td>Não reside em Pirenópolis</td></tr>
+<tr><td>Vinícius Fontes</td><td>Receita (CNAE)</td><td><span class="tag p">Contato inválido</span></td><td>Só telefone fixo</td></tr>
+<tr><td>Nivaldo da Trindade</td><td>Receita (CNAE)</td><td><span class="tag p">Duplicado</span></td><td>Mesma pessoa da Foto Click</td></tr>
+</tbody></table></div>
+
+<footer>"Respondeu de fato" soma os 2 ganhos, as 2 recusas por preço e os 3 sem equipamento. Distâncias e população são aproximadas.</footer>
+</main></body></html>
