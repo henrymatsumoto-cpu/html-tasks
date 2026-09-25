@@ -154,7 +154,7 @@ ul.clean{ margin:1mm 0 3mm; padding-left:4.5mm } ul.clean li{ margin-bottom:1.3m
       <tr><td class="mono">4</td><td>Pirenópolis: cadastro errado e sem pedido de prospecção</td><td>Região meses sem fotógrafo; Fornecedores prospectou por conta própria</td><td><span class="sev alta">Alta</span></td></tr>
       <tr><td class="mono">5</td><td>Fotógrafos parados antes do contrato</td><td>Perda de fornecedor já prospectado (ex.: Imbituba, com distrato e sem substituto)</td><td><span class="sev alta">Alta</span></td></tr>
       <tr><td class="mono">6</td><td>Handover: pedidos de funcionalidade que já existem</td><td>Retrabalho de explicação; alertas que eram da Implantação não acontecem</td><td><span class="sev media">Média</span></td></tr>
-      <tr><td class="mono">7</td><td>Outros: enxoval, suporte, planilha</td><td>Custo na comissão, SLA estourado na conta de Fornecedores, loop do agente de pagamento</td><td><span class="sev media">Média</span></td></tr>
+      <tr><td class="mono">7</td><td>Outros: enxoval, suporte, planilha</td><td>R$ 592,00 de frete por erro manual (SRS1005), SLA estourado na conta de Fornecedores, loop do agente de pagamento</td><td><span class="sev media">Média</span></td></tr>
     </tbody>
   </table>
   <div class="foot"><span>Impactos da Implantação · Fornecedores</span><span>2</span></div>
@@ -393,7 +393,7 @@ ul.clean{ margin:1mm 0 3mm; padding-left:4.5mm } ul.clean li{ margin-bottom:1.3m
     <thead><tr><th>Data</th><th>Ocorrência</th><th>Impacto</th><th>Evidência</th></tr></thead>
     <tbody>
       <tr><td class="mono">17/09</td><td>Muitos pedidos de enxoval em "Aguardando pagamento", <i>"alguns há mais de 1 mês"</i> (ex.: UNR0908, ativado em 04/09). Foi pedido à Implantação que cancelasse.</td><td>Loop no agente de análise de pagamento; foi preciso criar o agente de cancelamento</td><td><a href="https://seazone-fund.slack.com/archives/C0A6YSD9H19/p1789666850241099?thread_ts=1789666850.241099">Slack</a></td></tr>
-      <tr><td class="mono">26–28/08</td><td>Pedido de enxoval endereçado à franquia errada (Luanda), depois de troca de franquia ou uso errado da calculadora</td><td>Custo absorvido na comissão; <i>"dá visibilidade que foi erro de implantação"</i></td><td><a href="https://seazone-fund.slack.com/archives/C0AM2DBTRT5/p1787751215376419?thread_ts=1787614885.818169">Slack</a> · <a href="https://seazone-fund.slack.com/archives/D067RVAFY48/p1787943959361869?thread_ts=1787939441.852889">Slack</a></td></tr>
+      <tr><td class="mono">24/08</td><td>Enxoval do SRS1005 entregue na franquia errada, a 1.100 km do imóvel. Detalhe na seção 7.1.</td><td>R$ 592,00 de frete de devolução como custo Seazone</td><td><a href="https://henrymatsumoto-cpu.github.io/html-tasks/srs1005-enxoval-franquia-errada.html">Caso</a></td></tr>
       <tr><td class="mono">08/09</td><td>A Implantação segurou suportes de Fornecedores sem mudar o fluxo: <i>"apenas marcaram sem encaminhar, então o nosso suporte estava vazio"</i></td><td>SLA estourado na conta de Fornecedores</td><td><a href="https://seazone-fund.slack.com/archives/C0AKB3UH8DV/p1788906552850789?thread_ts=1788890672.085589">Slack</a></td></tr>
       <tr><td class="mono">16/09</td><td>Grande operação sem aviso antecipado: <i>"Entrou uma que não estava mapeada. 15 em Imbituba"</i>. Em 09/07 já havia a queixa de que GOP chega <i>"tudo em cima da hora"</i>.</td><td>Prospecção de fotógrafo às pressas</td><td><a href="https://seazone-fund.slack.com/archives/C0A6YSD9H19/p1789595557275129?thread_ts=1789595557.275129">Slack</a> · <a href="https://seazone-fund.slack.com/archives/D06D9KYN823/p1783613603106729">Slack</a></td></tr>
       <tr><td class="mono">08/07</td><td>Planilha de compra de enxoval com fórmulas apagadas e dados preenchidos à mão pela Implantação</td><td>Retrabalho na conferência de compras e comissão</td><td><a href="https://seazone-fund.slack.com/archives/D0953EA2X8B/p1783521287406379">Slack</a></td></tr>
@@ -401,11 +401,32 @@ ul.clean{ margin:1mm 0 3mm; padding-left:4.5mm } ul.clean li{ margin-bottom:1.3m
       <tr><td class="mono">24/06</td><td>Franquias cobradas pelo Sults depois do alinhamento de que ele não seria mais usado</td><td>Ruído de canal com a franquia</td><td><a href="https://seazone-fund.slack.com/archives/D0AQXML4M0Q/p1782324092053669">Slack</a></td></tr>
     </tbody>
   </table>
+
   <div class="callout">
     <span class="eyebrow">Mesmo padrão fora da Implantação</span>
     Em 17/09 a Easycover encerrou o grupo com uma franquia por <i>"comunicação agressiva e debochada"</i> (<a href="https://seazone-fund.slack.com/archives/C0AKB3UH8DV/p1789665083882339?thread_ts=1789657207.348299">Slack</a>). É a mesma raiz do caso Maraú: franquia falando direto com o fornecedor, sem a Seazone intermediando.
   </div>
   <div class="foot"><span>Impactos da Implantação · Fornecedores</span><span>10</span></div>
+</section>
+
+<section class="page">
+  <div class="eyebrow">07 · Outras ocorrências (continuação)</div>
+  <h3 style="margin-top:3mm">7.1 SRS1005: enxoval entregue na franquia errada por erro manual da Implantação</h3>
+  <div class="facts">
+    <div><b>Imóvel</b>SRS1005, em Maceió/AL (franquia Naihana Loyola Andriani)</div>
+    <div><b>Entregue em</b>Ilhéus/BA (franquia Luanda Tavares Santana), a 1.100 km do imóvel</div>
+    <div><b>Causa</b>Erro humano na calculadora antiga. A analista trocou o código do imóvel, mas deixou a franquia do pedido anterior, e todo o endereço de entrega veio dessa franquia.</div>
+    <div><b>Custo</b><span style="color:var(--red)">R$ 592,00</span> de frete de devolução (R$ 520,95 + R$ 71,05 de impostos), descontado da comissão</div>
+  </div>
+  <ul class="tl">
+    <li><span class="d">24/08</span>Suporte aberto: o enxoval chegou na Luanda, mas era da Naihana.</li>
+    <li><span class="d">25/08</span>Fornecedores confere a planilha: o destino registrado era mesmo Ilhéus, então o fornecedor (RM) entregou conforme o pedido. A Implantação rebate que todas as tratativas do imóvel foram com a Naihana (chamado 20404).</li>
+    <li class="hot"><span class="d">26/08 10:39</span>A coordenação de implantação <b>valida no suporte</b> que foi erro humano. Jéssica Passos (Coordenadora CS Onboarding): <i>"Acredito que tenha sido um erro manual da analista na escolha da franquia na calculadora"</i>. <a href="https://seazone-fund.slack.com/archives/C0AM2DBTRT5/p1787751215376419?thread_ts=1787614885.818169">Slack</a></li>
+    <li><span class="d">28/08</span>Henry: <i>"dá visibilidade que foi erro de implantação"</i>. <a href="https://seazone-fund.slack.com/archives/D067RVAFY48/p1787943959361869?thread_ts=1787939441.852889">Slack</a></li>
+    <li class="hot"><span class="d">01/09</span>Cotação da devolução Ilhéus → Maceió fechada em R$ 592,00. A tentativa de aproveitar o enxoval em outro imóvel da Luanda caiu porque o enxoval desse imóvel foi cancelado.</li>
+  </ul>
+  <p class="faint">Além do frete, o caso gerou retrabalho de Fornecedores para apurar a causa, negociar com a RM e comunicar as duas franquias. A calculadora nova já não permite essa escolha manual. Caso completo: <a href="https://henrymatsumoto-cpu.github.io/html-tasks/srs1005-enxoval-franquia-errada.html">srs1005-enxoval-franquia-errada</a>.</p>
+  <div class="foot"><span>Impactos da Implantação · Fornecedores</span><span>11</span></div>
 </section>
 
 <!-- 8. RECOMENDAÇÕES -->
@@ -442,7 +463,7 @@ ul.clean{ margin:1mm 0 3mm; padding-left:4.5mm } ul.clean li{ margin-bottom:1.3m
     <li>O endpoint do artefato devolve até 1.000 de 1.013 recibos. O cruzamento Pipefy × artefato foi feito por nome normalizado.</li>
     <li>Parte das mensagens do SeaNotes e do Taskdex aparece truncada no Slack; foi citado só o trecho visível.</li>
   </ul>
-  <div class="foot"><span>Impactos da Implantação · Fornecedores</span><span>11</span></div>
+  <div class="foot"><span>Impactos da Implantação · Fornecedores</span><span>12</span></div>
 </section>
 
 </body>
