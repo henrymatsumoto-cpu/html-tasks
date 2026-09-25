@@ -1,0 +1,449 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Impactos da Implantação</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme: dark;
+  --bg: oklch(18% .012 70);
+  --surface: oklch(22% .014 70);
+  --surface-2: oklch(26% .016 70);
+  --line: oklch(34% .014 70);
+  --text: oklch(93% .01 80);
+  --muted: oklch(72% .015 80);
+  --faint: oklch(58% .015 80);
+  --accent: oklch(78% .12 165);
+  --amber: oklch(80% .13 75);
+  --red: oklch(70% .16 25);
+  --blue: oklch(76% .09 235);
+}
+@page{ size:A4; margin:0 }
+*{ box-sizing:border-box }
+html,body{ margin:0; background:var(--bg); color:var(--text); -webkit-print-color-adjust:exact; print-color-adjust:exact }
+body{ font:400 9.4pt/1.5 "IBM Plex Sans", sans-serif }
+a{ color:var(--blue); text-decoration:none; border-bottom:1px solid oklch(76% .09 235 / .35) }
+.page{ width:210mm; height:297mm; overflow:hidden; padding:15mm 16mm 15mm; position:relative; break-after:page }
+.page:last-child{ break-after:auto }
+h1,h2,h3{ font-family:"Fraunces", serif; font-weight:600; letter-spacing:-.01em; margin:0 }
+h2{ font-size:18.5pt; line-height:1.15; margin:2mm 0 4mm }
+h3{ font-size:11.5pt; margin:5mm 0 2mm; color:var(--text) }
+p{ margin:0 0 2.6mm; max-width:68ch }
+.eyebrow{ font:500 7.8pt/1 "IBM Plex Mono", monospace; letter-spacing:.14em; text-transform:uppercase; color:var(--accent) }
+.lede{ font-size:11pt; color:var(--muted); max-width:62ch }
+.mono{ font-family:"IBM Plex Mono", monospace; font-size:8.6pt }
+.muted{ color:var(--muted) } .faint{ color:var(--faint) }
+.foot{ position:absolute; left:16mm; right:16mm; bottom:7mm; display:flex; justify-content:space-between; font:400 7.5pt "IBM Plex Mono", monospace; color:var(--faint) }
+
+/* capa */
+.cover{ display:flex; flex-direction:column; justify-content:space-between; padding:26mm 20mm 20mm }
+.cover h1{ font-size:40pt; line-height:1.02; font-weight:700; margin:8mm 0 7mm; max-width:14ch }
+.cover h1 em{ font-style:normal; color:var(--amber) }
+.cover .meta{ display:grid; grid-template-columns:auto 1fr; gap:2mm 8mm; font-size:9.5pt; color:var(--muted); border-top:1px solid var(--line); padding-top:6mm }
+.cover .meta b{ color:var(--text); font-weight:500 }
+
+/* kpis */
+.kpis{ display:grid; grid-template-columns:repeat(3,1fr); gap:0; border-top:1px solid var(--line); border-bottom:1px solid var(--line); margin:6mm 0 }
+.kpi{ padding:4.5mm 4mm 4mm 0 }
+.kpi + .kpi{ padding-left:4mm; border-left:1px solid var(--line) }
+.kpi:nth-child(4){ border-left:0; padding-left:0 }
+.kpi:nth-child(n+4){ border-top:1px solid var(--line) }
+.kpi .n{ font:600 24pt/1 "Fraunces", serif; color:var(--amber) }
+.kpi .n.ok{ color:var(--accent) }
+.kpi .l{ font-size:8.6pt; color:var(--muted); margin-top:1.8mm; line-height:1.35 }
+
+/* tabelas */
+table{ width:100%; border-collapse:collapse; font-size:8.8pt; margin:2mm 0 4mm }
+th{ text-align:left; font:500 7.4pt "IBM Plex Mono", monospace; letter-spacing:.08em; text-transform:uppercase; color:var(--faint); padding:0 3mm 1.8mm 0; border-bottom:1px solid var(--line) }
+td{ padding:1.6mm 3mm 1.6mm 0; border-bottom:1px solid oklch(30% .012 70); vertical-align:top }
+td.num,th.num{ text-align:right; font-variant-numeric:tabular-nums }
+tr{ break-inside:avoid }
+
+.sev{ display:inline-block; font:500 7pt "IBM Plex Mono", monospace; letter-spacing:.08em; text-transform:uppercase; padding:.6mm 2mm; border-radius:99px; white-space:nowrap }
+.sev.alta{ background:oklch(70% .16 25 / .16); color:var(--red) }
+.sev.media{ background:oklch(80% .13 75 / .15); color:var(--amber) }
+.sev.baixa{ background:oklch(76% .09 235 / .14); color:var(--blue) }
+
+/* bloco de fato-resumo */
+.facts{ display:grid; grid-template-columns:1fr 1fr; gap:2.4mm 7mm; background:var(--surface); border-radius:3mm; padding:3.6mm 4.5mm; margin:2.5mm 0 3mm; break-inside:avoid }
+.facts div b{ display:block; font:500 7.4pt "IBM Plex Mono", monospace; letter-spacing:.1em; text-transform:uppercase; color:var(--faint); margin-bottom:.8mm }
+.facts div{ font-size:9.2pt }
+
+/* linha do tempo */
+.tl{ list-style:none; padding:0; margin:2mm 0 4mm; border-left:1px solid var(--line) }
+.tl li{ position:relative; padding:0 0 2.4mm 6mm; break-inside:avoid }
+.tl li::before{ content:""; position:absolute; left:-1.35mm; top:1.6mm; width:2.7mm; height:2.7mm; border-radius:50%; background:var(--bg); border:1.5px solid var(--accent) }
+.tl li.hot::before{ border-color:var(--red); background:var(--red) }
+.tl .d{ font:500 8pt "IBM Plex Mono", monospace; color:var(--accent); margin-right:2mm }
+.tl li.hot .d{ color:var(--red) }
+
+/* citação de evidência */
+.q{ margin:2mm 0 3mm; padding:3mm 4mm; background:var(--surface); border-radius:2mm; break-inside:avoid }
+.q p{ font-family:"Fraunces", serif; font-size:9.8pt; line-height:1.45; margin:0 0 1.5mm; max-width:none }
+.q .src{ font:400 7.6pt "IBM Plex Mono", monospace; color:var(--faint) }
+
+.callout{ border:1px solid var(--line); border-radius:3mm; padding:3.2mm 4.5mm; margin:3mm 0; break-inside:avoid }
+.callout .eyebrow{ color:var(--amber); display:block; margin-bottom:2mm }
+.callout.ok .eyebrow{ color:var(--accent) }
+ul.clean{ margin:1mm 0 3mm; padding-left:4.5mm } ul.clean li{ margin-bottom:1.3mm }
+.two{ display:grid; grid-template-columns:1fr 1fr; gap:6mm }
+.toc{ list-style:none; padding:0; margin:4mm 0; counter-reset:t }
+.toc li{ display:flex; gap:4mm; padding:2.3mm 0; border-bottom:1px solid oklch(30% .012 70); font-size:10pt }
+.toc li span:first-child{ font:500 8.5pt "IBM Plex Mono", monospace; color:var(--accent); width:7mm }
+.toc li span:last-child{ margin-left:auto; color:var(--faint); font-size:8.6pt }
+.bar{ height:2mm; background:var(--surface-2); border-radius:99px; overflow:hidden; margin-top:1mm }
+.bar i{ display:block; height:100%; background:var(--amber); border-radius:99px }
+.funnel{ margin:3mm 0; border-top:1px solid var(--line) }
+.fr{ display:grid; grid-template-columns:62mm 1fr 30mm; gap:4mm; align-items:center; padding:2.6mm 0; border-bottom:1px solid oklch(30% .012 70); font-size:9pt }
+.fb{ height:3mm; background:var(--surface-2); border-radius:99px; overflow:hidden }
+.fb i{ display:block; height:100%; background:var(--accent); border-radius:99px }
+.fn{ font:600 11pt "Fraunces", serif; text-align:right } .fn.red{ color:var(--red); font-size:9.5pt }
+@media screen{
+  html{ background:oklch(14% .01 70) }
+  body{ background:oklch(14% .01 70); padding:32px 16px }
+  .page{ margin:0 auto 32px; background:var(--bg); border-radius:6px; box-shadow:0 10px 40px oklch(0% 0 0 / .45) }
+}
+@media screen and (min-width:1100px){ body{ zoom:1.3 } }
+@media screen and (min-width:1500px){ body{ zoom:1.6 } }
+@media screen and (min-width:1900px){ body{ zoom:1.9 } }
+@media screen and (max-width:820px){ body{ zoom:.5; padding:16px 8px } }
+</style>
+</head>
+<body>
+
+<!-- CAPA -->
+<section class="page cover">
+  <div>
+    <div class="eyebrow">Fornecedores &amp; Compras · Relatório de ocorrências</div>
+    <h1>O que a Implantação está <em>deixando cair</em> no nosso setor</h1>
+    <p class="lede">Levantamento com evidência dos pontos em que o processo de Implantação gerou retrabalho, custo ou perda de fornecedor para o time de Fornecedores entre junho e setembro de 2026: lojinha e links para proprietário, agentes, fotógrafos e handover.</p>
+  </div>
+  <div class="meta">
+    <span>Data</span><b>25 de setembro de 2026</b>
+    <span>Autor</span><b>Henry Matsumoto · Fornecedores</b>
+    <span>Período</span><b>15/06/2026 a 25/09/2026</b>
+    <span>Fontes</span><b>Slack (#fornecedores-implantação, #melhorias-loja-proprietário, DMs, SeaNotes), repositório da lojinha, banco da lojinha, logs do agente no EKS, Pipefy 305686664 via Nekt, artefato de fotógrafos, auditoria do caso Maraú</b>
+  </div>
+</section>
+
+<!-- SUMÁRIO EXECUTIVO -->
+<section class="page">
+  <div class="eyebrow">Resumo executivo</div>
+  <h2>Sete frentes, um mesmo padrão: entregamos a ferramenta, a Implantação não coloca no processo</h2>
+  <p>Fornecedores construiu e ajustou ferramentas para a Implantação usar: a lojinha aberta ao proprietário, o link de itens faltantes por imóvel e o artefato de fotógrafos. Nas três, o gargalo é o mesmo. A ferramenta está pronta, mas não entrou na rotina da Implantação. Quando algo dá errado, como no caso de Maraú, Fornecedores só fica sabendo semanas depois.</p>
+
+  <div class="kpis">
+    <div class="kpi"><div class="n">27 dias</div><div class="l">entre o conflito da franquia com a fotógrafa de Maraú (26/08) e o primeiro aviso a Fornecedores (22/09)</div></div>
+    <div class="kpi"><div class="n">0</div><div class="l">pedidos concluídos por proprietário na lojinha. São 73 proprietários cadastrados, 1 comprou e os 2 pedidos foram cancelados</div></div>
+    <div class="kpi"><div class="n ok">169</div><div class="l">alterações na lojinha desde 25/08: 23 PRs revisados e 146 commits pelo Lovable</div></div>
+    <div class="kpi"><div class="n">101</div><div class="l">listas de itens faltantes criadas pelo agente até 25/09. A Implantação admite que o link não está na cadência</div></div>
+    <div class="kpi"><div class="n">153 dias</div><div class="l">parados em Treinamento no Pipefy de fotógrafos (Fase 2), antes do contrato</div></div>
+    <div class="kpi"><div class="n">10 de 10</div><div class="l">fotógrafos em aberto no artefato sem treino enviado, teste marcado ou contrato. O mais antigo está parado há 79 dias</div></div>
+  </div>
+
+  <table>
+    <thead><tr><th>#</th><th>Problema</th><th>Impacto no setor</th><th>Gravidade</th></tr></thead>
+    <tbody>
+      <tr><td class="mono">1</td><td>Link da lojinha não é enviado ao proprietário</td><td>Esforço de desenvolvimento sem retorno; compra de adequação não passa pela loja</td><td><span class="sev alta">Alta</span></td></tr>
+      <tr><td class="mono">2</td><td>Agente de itens faltantes roda sem uso</td><td>Consumo de banco e de cluster 4× ao dia sem nenhum link repassado</td><td><span class="sev media">Média</span></td></tr>
+      <tr><td class="mono">3</td><td>Caso Maraú: franquia tratando direto com a fotógrafa</td><td>Distrato da única fotógrafa da região e 2 imóveis parados sem fotos</td><td><span class="sev alta">Alta</span></td></tr>
+      <tr><td class="mono">4</td><td>Pirenópolis: cadastro errado e sem pedido de prospecção</td><td>Região meses sem fotógrafo; Fornecedores prospectou por conta própria</td><td><span class="sev alta">Alta</span></td></tr>
+      <tr><td class="mono">5</td><td>Fotógrafos parados antes do contrato</td><td>Perda de fornecedor já prospectado (ex.: Imbituba, com distrato e sem substituto)</td><td><span class="sev alta">Alta</span></td></tr>
+      <tr><td class="mono">6</td><td>Handover: pedidos de funcionalidade que já existem</td><td>Retrabalho de explicação; alertas que eram da Implantação não acontecem</td><td><span class="sev media">Média</span></td></tr>
+      <tr><td class="mono">7</td><td>Outros: enxoval, suporte, planilha</td><td>Custo na comissão, SLA estourado na conta de Fornecedores, loop do agente de pagamento</td><td><span class="sev media">Média</span></td></tr>
+    </tbody>
+  </table>
+  <div class="foot"><span>Impactos da Implantação · Fornecedores</span><span>2</span></div>
+</section>
+
+<!-- 1. LOJINHA -->
+<section class="page">
+  <div class="eyebrow">01 · Lojinha e proprietário</div>
+  <h2>Ajustamos a loja para o proprietário, mas o link não chega até ele</h2>
+
+  <h3>1.1 Quantos ajustes foram feitos</h3>
+  <p>Desde 25/08/2026 o repositório <span class="mono">seazone-tech/novalojaseazone</span> recebeu <b>245 commits</b>. Deles, <b>23 PRs</b> foram revisados pelo Alfred e <b>146 commits</b> foram feitos pelo Lovable. O restante são merges e atualizações de dependência. Boa parte existe para o proprietário conseguir comprar sozinho:</p>
+  <table>
+    <thead><tr><th>Data</th><th>PR</th><th>O que mudou para o proprietário</th></tr></thead>
+    <tbody>
+      <tr><td class="mono">08/09</td><td class="mono">#18</td><td>Catálogo público, carrinho liberado para o perfil proprietário e login sem restrição de domínio. Antes, o proprietário era jogado para a home ao clicar no carrinho.</td></tr>
+      <tr><td class="mono">08/09</td><td class="mono">#19</td><td>Catálogo aparecia vazio para visitante (permissão em fornecedores)</td></tr>
+      <tr><td class="mono">08/09</td><td class="mono">#20 · #22</td><td>Busca sem acento; item de indicação mostra "comprar no Mercado Livre"</td></tr>
+      <tr><td class="mono">09/09</td><td class="mono">#23 · #27 · #28</td><td>Cadastro só com nome, e-mail e telefone; volta para a página de origem depois do login; proposta de valor no mobile</td></tr>
+      <tr><td class="mono">09/09</td><td class="mono">#31 · #36</td><td>Rodapé com o WhatsApp de Fornecedores; Termos e Privacidade no login</td></tr>
+      <tr><td class="mono">10/09</td><td class="mono">#37 · #38</td><td>Página de Ajuda (FAQ), cancelamento pelo cliente e URLs em português</td></tr>
+      <tr><td class="mono">10/09</td><td class="mono">Lovable</td><td>Tag "Item Mínimo", carrinho visível sem login, destaques na home</td></tr>
+      <tr><td class="mono">15/09</td><td class="mono">#42</td><td>Lista compartilhável <span class="mono">/lista/:slug</span>: base do link de itens faltantes por imóvel</td></tr>
+      <tr><td class="mono">21/09</td><td class="mono">—</td><td>Itens da lista separados por ambiente, a pedido da Implantação</td></tr>
+    </tbody>
+  </table>
+
+  <h3>O resultado até aqui</h3>
+  <div class="facts">
+    <div><b>Proprietários cadastrados</b>73 perfis de proprietário na lojinha</div>
+    <div><b>Proprietários que compraram</b>1, com 2 pedidos (10/09 e 11/09), <span style="color:var(--red)">ambos cancelados</span></div>
+    <div><b>Cadastros novos em setembro</b>8, e o último em 15/09. Nenhum depois que o agente foi ligado (23/09)</div>
+    <div><b>Pedidos desde 08/09</b>74: 63 da franquia, 9 de colaboradores e 2 de proprietário</div>
+  </div>
+  <div class="foot"><span>Impactos da Implantação · Fornecedores</span><span>3</span></div>
+</section>
+<section class="page">
+  <div class="eyebrow">01 · Lojinha e proprietário (continuação)</div>
+  <h3 style="margin-top:3mm">1.2 O link não está sendo enviado</h3>
+  <ul class="tl">
+    <li><span class="d">21/09 09:52</span>Henry pergunta se a Implantação está enviando o link. Larissa: <i>"Ainda vamos colocar no processo Henry, vou ajustar isso de hoje para amanhã."</i> <a href="https://seazone-fund.slack.com/archives/C0C0B64MADU/p1789995149132559?thread_ts=1789995149.132559">Slack</a></li>
+    <li><span class="d">24/09 09:44</span>Henry mostra que os cliques registrados eram testes nossos: <i>"os valores indicados ali foi de clicks gerado por nós para testar novas listas"</i>. A pergunta foi repassada às analistas e ninguém respondeu com dado. <a href="https://seazone-fund.slack.com/archives/C0A6YSD9H19/p1790253878109389?thread_ts=1790253878.109389">Slack</a></li>
+    <li><span class="d">24/09 15:02</span>Heartbeat: <i>"os clicks diários não aumentaram, estando inclusive zerados em vários dias."</i> <a href="https://seazone-fund.slack.com/archives/C0AKB3UH8DV/p1790272944924019?thread_ts=1790262035.104269">Slack</a></li>
+    <li class="hot"><span class="d">25/09 11:40</span>Larissa: <i>"o link ainda não está na cadencia, com a mudança do pipe para o kanban, podem ter falhado o envio manual."</i> <a href="https://seazone-fund.slack.com/archives/C0A6YSD9H19/p1790346482374099?thread_ts=1790346482.374099">Slack</a></li>
+  </ul>
+
+  <h3>1.3 Nenhum ponto de melhoria vindo da Implantação</h3>
+  <p>O único pedido concreto da Implantação para a loja foi <i>"separar os itens por ambiente"</i> (Larissa, 15/09, <a href="https://seazone-fund.slack.com/archives/C0C0B64MADU/p1789492896399349?thread_ts=1789492896.399349">Slack</a>). Foi entregue em 21/09 (<a href="https://seazone-fund.slack.com/archives/C0C0B64MADU/p1789964152088709">Slack</a>). Não veio nenhum retorno sobre dúvidas do proprietário, itens que faltam na loja ou atrito na compra. A reunião "Loja Seazone" de 11/09 já registrava a necessidade de <i>"reforçar o treinamento com a área de implantação"</i>.</p>
+
+  <h3>1.4 Da ferramenta ao proprietário</h3>
+  <p class="muted">Cada etapa depende da anterior, e a cadeia quebra no envio, que é a única etapa da Implantação.</p>
+  <div class="funnel">
+    <div class="fr"><span class="fl">Listas de itens faltantes geradas pelo agente</span><span class="fb"><i style="width:100%"></i></span><span class="fn">101</span></div>
+    <div class="fr"><span class="fl">Links enviados ao proprietário pela Implantação</span><span class="fb"><i class="z" style="width:0"></i></span><span class="fn red">fora da cadência</span></div>
+    <div class="fr"><span class="fl">Proprietários cadastrados na lojinha</span><span class="fb"><i style="width:72%"></i></span><span class="fn">73</span></div>
+    <div class="fr"><span class="fl">Proprietários que fizeram pedido</span><span class="fb"><i style="width:1%"></i></span><span class="fn">1</span></div>
+    <div class="fr"><span class="fl">Pedidos de proprietário concluídos</span><span class="fb"><i style="width:0"></i></span><span class="fn red">0</span></div>
+  </div>
+  <div class="foot"><span>Impactos da Implantação · Fornecedores</span><span>4</span></div>
+</section>
+
+<!-- 2. AGENTE -->
+<section class="page">
+  <div class="eyebrow">02 · Agente de itens faltantes</div>
+  <h2>Um agente rodando quatro vezes ao dia para gerar links que ninguém envia</h2>
+  <p>O <span class="mono">agente-indicacao-itens</span> lê o kanban de implantação, pega os imóveis com item faltante em aberto na adequação e cria, para cada um, uma lista na lojinha com os itens por ambiente. O link vai para a planilha <a href="https://docs.google.com/spreadsheets/d/1_uwsHH-VlIwd37p2i4Nwg3F00rlsRfazAXwTDWKqCO8/edit">Links de Indicações</a>. Rayanne aprovou a solução em 24/09: <i>"Achei uma boa como solução rápida"</i> (<a href="https://seazone-fund.slack.com/archives/C0A6YSD9H19/p1790269629089799?thread_ts=1790269629.089799">Slack</a>).</p>
+
+  <div class="facts">
+    <div><b>No ar desde</b>23/09 às 22h, com escrita real desde 24/09 às 11:55</div>
+    <div><b>Frequência</b>4 rodadas por dia (11:55, 14:55, 18:55 e 21:55), até 20 listas por rodada</div>
+    <div><b>Listas já criadas</b>101 (81 registradas até a rodada de 25/09 às 11:55, mais 20 nessa rodada), com 3 a 23 itens cada</div>
+    <div><b>Fila</b>153 imóveis candidatos ainda sem lista</div>
+  </div>
+
+  <h3>2.1 O que cada rodada consome</h3>
+  <table>
+    <thead><tr><th>Leitura</th><th class="num">Volume por rodada</th><th class="num">Por dia (4 rodadas)</th></tr></thead>
+    <tbody>
+      <tr><td>Cards do kanban de implantação (7 etapas, via MCP)</td><td class="num">475 a 670 cards</td><td class="num">≈ 1.900 a 2.700 cards</td></tr>
+      <tr><td>Export completo da lojinha (27 tabelas, com todos os pedidos, para achar o produto)</td><td class="num">4,4 MB</td><td class="num">≈ 17,6 MB</td></tr>
+      <tr><td>Gravações na lojinha e na planilha</td><td class="num">até 20 + 20</td><td class="num">até 80 + 80</td></tr>
+      <tr><td>Pod no cluster Oregon (tempo da rodada)</td><td class="num">≈ 2 min</td><td class="num">≈ 8 min</td></tr>
+    </tbody>
+  </table>
+  <p class="faint mono">Fonte: log da rodada de 25/09/2026 às 11:55 BRT (<span>cards 475 · candidatos 153 · criadas 20 · falhas 0</span>) e snapshot do export da lojinha às 14:57 UTC.</p>
+  <p>Sozinho, o volume é pequeno. O problema é que <b>todo esse custo não tem nenhum retorno hoje</b>. Cada rodada relê o kanban inteiro e baixa a lojinha inteira para produzir links que, pela fala da própria Implantação, não entram na cadência. O agente também depende de outro agente (o de adequação), que roda antes dele, então a cadeia inteira fica ligada sem uso.</p>
+
+  <div class="callout">
+    <span class="eyebrow">Encaminhamento proposto</span>
+    <ul class="clean">
+      <li>A Implantação define <b>em que etapa e em que mensagem</b> o link vai para o proprietário, com responsável e data.</li>
+      <li>Até isso existir, <b>reduzimos o agente para 1 rodada por dia</b>, ou deixamos a rodada disparar só quando entra card novo em Adequação.</li>
+      <li>Medir semanalmente: listas abertas por proprietário, cadastros de proprietário e pedidos originados de lista.</li>
+    </ul>
+  </div>
+  <div class="foot"><span>Impactos da Implantação · Fornecedores</span><span>5</span></div>
+</section>
+
+<!-- 3. MARAÚ -->
+<section class="page">
+  <div class="eyebrow">03 · Fotografia · Maraú/BA</div>
+  <h2>Franquia agendando direto com a fotógrafa: distrato da única profissional da região</h2>
+  <div class="facts">
+    <div><b>Fotógrafa</b>Mariana Damaceno Alves Pereira, a única da região: <i>"região de difícil acesso e só temos ela como fotógrafa"</i> (07/07)</div>
+    <div><b>Imóvel</b>SBB0002 · Central, chamado 21455</div>
+    <div><b>Conflito</b>26/08, e de novo em 28/08</div>
+    <div><b>Fornecedores soube</b>22/09 às 10:43, <b style="color:var(--red)">27 dias depois</b></div>
+  </div>
+
+  <ul class="tl">
+    <li><span class="d">25/08</span>A franquia confirma o ensaio para 26/08 às 16h, com a área externa incluída.</li>
+    <li class="hot"><span class="d">26/08 16:02</span>Depois de a fotógrafa perguntar sobre a fechadura eletrônica, a franquia escreve pelo WhatsApp: <i>"vc quer fazer as coisas de qlqr jeito… Não precisa ir mais… É melhor não fazer do que fazer de má vontade"</i>. A fotógrafa já estava a caminho de mototáxi.</li>
+    <li><span class="d">26/08 16:16</span>No suporte, a franquia acusa a fotógrafa sem nenhuma prova: <i>"ela leva a filha e mãe, quando voltamos sempre tá sujo"</i>. Nunca tinha havido reclamação no chamado.</li>
+    <li class="hot"><span class="d">26/08 17:14</span>A fotógrafa pede para sair pela SIA: <i>"Eu ñ trabalho com pessoas ofensivas… Gostaria de pedir o fim do contrato"</i>. Esse pedido chegou à Implantação no mesmo dia.</li>
+    <li><span class="d">27–28/08</span>A Implantação faz a mediação e a fotógrafa aceita continuar. O reagendamento é confirmado com a franquia, mas nunca com a fotógrafa, e a franquia registra que ela <i>"não apareceu"</i>.</li>
+    <li class="hot"><span class="d">22/09 10:43</span>Primeiro aviso a Fornecedores no #fornecedores-implantação: <i>"ela informou que não deseja seguir com os atendimentos e solicitou, de fato, o distrato… temos dois imóveis da franquia aguardando fotos"</i>. <a href="https://seazone-fund.slack.com/archives/C0A6YSD9H19/p1790084740894489?thread_ts=1790084628.188799">Slack</a></li>
+    <li><span class="d">24/09 15:28</span>Distrato enviado por Fornecedores. A agência indicada pela franquia não tem os equipamentos exigidos. <a href="https://seazone-fund.slack.com/archives/D09LAH5L9PW/p1790089047309439">Slack</a></li>
+  </ul>
+
+  <div class="q">
+    <p>"Segundo a Ana, a confusão ocorreu duas vezes, tendo início no mês passado, e não tinha nos sinalizado porque estava tentando mediar a comunicação. […] Atualmente quem faz o agendamento das fotos é a própria franquia com os fotógrafos, em grupo onde a implantação apenas media. […] Nenhuma liderança do time de franquia estava ciente de que tinha sido passada essa atribuição de agendamento para as franquias."</p>
+    <div class="src">Heartbeat Henry · #liderança-franquias-ray · 24/09 14:48 · <a href="https://seazone-fund.slack.com/archives/C0AKB3UH8DV/p1790272115350579?thread_ts=1790262035.104269">link</a> · Auditoria completa com prints: <a href="https://henrymatsumoto-cpu.github.io/html-tasks/auditoria-caso-fotografa-ab536990.html">auditoria-caso-fotografa</a></div>
+  </div>
+
+  <div class="two">
+    <div class="callout"><span class="eyebrow">Causa raiz</span>A Implantação passou o agendamento para a franquia sem alinhar com a liderança. Depois, segurou por quase um mês um pedido de distrato de fornecedor exclusivo, sem acionar o dono do relacionamento.</div>
+    <div class="callout"><span class="eyebrow">Efeito que continua</span>Até hoje o distrato não aparece nas bases: a fotógrafa segue "ativa" tanto no Pipefy (Fase 7) quanto no artefato. Maraú está sem fotógrafa e há 2 imóveis parados.</div>
+  </div>
+  <div class="foot"><span>Impactos da Implantação · Fornecedores</span><span>6</span></div>
+</section>
+
+<!-- 4. PIRENÓPOLIS -->
+<section class="page">
+  <div class="eyebrow">04 · Fotografia · Pirenópolis/GO</div>
+  <h2>Pirenópolis: base mostrava cobertura que não existia, e nenhum pedido de prospecção da Implantação</h2>
+  <p>O artefato de fotógrafos herdou a base do Pipefy na migração de março de 2026 (25 cadastros em 17/03 e 16 em 19/03). Para Pirenópolis, a base apontava dois nomes, e nenhum atendia de fato:</p>
+  <table>
+    <thead><tr><th>Fotógrafo</th><th>Pipefy 305686664</th><th>Artefato</th><th>Problema</th></tr></thead>
+    <tbody>
+      <tr><td>Jean Roberto Cavalcante</td><td>Mora em <b>Brasília/DF</b>; "Região atendida 3" = Pirenópolis, GO. Card criado em 30/01/2025.</td><td>Região: só Brasília, DF</td><td>Cadastro dava cobertura a Pirenópolis com fotógrafo de outra unidade da federação. Valor igual em todas as modalidades (Ana, 16/09).</td></tr>
+      <tr><td>Patrícia Alves da Silva Santiago</td><td>Anápolis/GO, "Fase 7 · Ativo" desde 03/12/2025</td><td><span style="color:var(--red)">active: false</span>, sem motivo</td><td><i>"Sem retorno desde o início"</i> (09/06). As bases se contradizem.</td></tr>
+    </tbody>
+  </table>
+  <ul class="tl">
+    <li><span class="d">07/05</span>A liderança pergunta se há fotógrafo em Pirenópolis e a resposta são os dois cards acima. <a href="https://seazone-fund.slack.com/archives/D067RVAFY48/p1778165879927669?thread_ts=1778165280.019939">Slack</a></li>
+    <li><span class="d">14/06</span>Suporte "prospectar fotógrafo Pirenópolis" aberto <b>por Fornecedores (Henry)</b>, não pela Implantação. Encerrado em 28/06 com <i>"reabri quando iniciar de fato"</i>. <a href="https://seazone-fund.slack.com/archives/C0AM2DBTRT5/p1781489886950029?thread_ts=1781489886.950029">Slack</a></li>
+    <li class="hot"><span class="d">14/09</span>COO: <i>"Pirenópolis está há meses na base sem fotógrafo profissional"</i> e <i>"considerar não o pedido do time de implantação, e sim regiões fechadas pelo comercial"</i>. <a href="https://seazone-fund.slack.com/archives/D0BM5SD0TG8/p1789395441696779">Slack</a></li>
+    <li><span class="d">14/09 e 23/09</span>Fornecedores prospecta e cadastra 2 fotógrafos locais (Jennifer Gouveia e Yan Damaceno). <i>"Consegui um fotógrafo para Pirenópolis"</i> (23/09). <a href="https://seazone-fund.slack.com/archives/D09LAH5L9PW/p1790189007287059">Slack</a></li>
+  </ul>
+  <div class="callout">
+    <span class="eyebrow">Leitura</span>
+    A Implantação agendava Pirenópolis olhando a base herdada, sem conferir no artefato que o único nome "ativo" era de Brasília, e não abriu suporte de prospecção quando a região ficou descoberta. Esse gatilho falhou a ponto de a COO pedir que a prospecção passasse a seguir o Comercial, e não a Implantação. Um caso parecido de migração (Joseph Stephan, Cabo Frio, ativo no BD e inativo no Pipefy) foi registrado em 17/08 (<a href="https://seazone-fund.slack.com/archives/C0A6YSD9H19/p1786974483222299?thread_ts=1786974483.222299">Slack</a>).
+    <p class="faint" style="margin-top:2mm">Observação: não achei mensagem que atribua explicitamente à Implantação a execução da migração. O que está documentado é o uso da base sem conferência e a ausência de pedido de prospecção.</p>
+  </div>
+  <div class="foot"><span>Impactos da Implantação · Fornecedores</span><span>7</span></div>
+</section>
+
+<!-- 5. PARADOS -->
+<section class="page">
+  <div class="eyebrow">05 · Fotografia · Funil de contratação</div>
+  <h2>Fotógrafos prospectados parados antes do contrato</h2>
+  <p>Fornecedores prospecta e cadastra, e o time de Fotos da Implantação conduz o treinamento, o teste e o contrato. Nas duas bases, quem entra para em treinamento.</p>
+
+  <h3>5.1 Pipefy 305686664, fases de pré-contrato</h3>
+  <p class="faint">O pipe não recebe cards novos desde 13/04/2026 (o processo migrou para o artefato), mas ainda tem cards pré-contrato abertos. Dados da Nekt, sync de 25/09 às 07:00 UTC.</p>
+  <table>
+    <thead><tr><th>Fotógrafo</th><th>Cidade</th><th>Fase atual</th><th>Desde</th><th class="num">Dias parado</th></tr></thead>
+    <tbody>
+      <tr><td>Marco Aurelio Furquim Junior</td><td>Curitiba/PR</td><td>Fase 2 · Treinamento Inicial</td><td class="mono">24/04/2026</td><td class="num" style="color:var(--red)">153</td></tr>
+      <tr><td>Mateus Cecon Arsie</td><td>Curitiba/PR</td><td>Fase 2 · Treinamento Inicial</td><td class="mono">24/04/2026</td><td class="num" style="color:var(--red)">153</td></tr>
+      <tr><td>Messias José da Silva Filho</td><td>Porto Seguro/BA</td><td>Fase 3 · Teste Prático</td><td class="mono">28/04/2026</td><td class="num" style="color:var(--red)">149</td></tr>
+    </tbody>
+  </table>
+  <p>Os três só entraram no artefato hoje (25/09), cadastrados por Fornecedores: <i>"já que o time de fotógrafos não coloca, coloca esses 3 no artefato de fotógrafo"</i> (<a href="https://seazone-fund.slack.com/archives/D09LAH5L9PW/p1790343904093519">Slack</a>).</p>
+
+  <h3>5.2 Artefato de fotógrafos, pipeline de contratação</h3>
+  <table>
+    <thead><tr><th>Fotógrafo</th><th>Região</th><th>Fase</th><th>Desde</th><th class="num">Dias</th><th style="width:26mm"></th></tr></thead>
+    <tbody>
+      <tr><td>Gabriel da Silva Rodrigues</td><td>Goiânia/GO</td><td>treinamento</td><td class="mono">08/07*</td><td class="num">79</td><td><div class="bar"><i style="width:100%"></i></div></td></tr>
+      <tr><td>Mateus Rafael Raicrk</td><td>Urubici/SC</td><td>treinamento</td><td class="mono">12/08</td><td class="num">43</td><td><div class="bar"><i style="width:54%"></i></div></td></tr>
+      <tr><td>Nayra Fernanda Sevilla</td><td>Balneário Camboriú/SC</td><td>treinamento</td><td class="mono">12/08</td><td class="num">43</td><td><div class="bar"><i style="width:54%"></i></div></td></tr>
+      <tr><td>Eduardo Orlando Olliotti</td><td>Ubatuba/SP</td><td>cadastro</td><td class="mono">21/08</td><td class="num">34</td><td><div class="bar"><i style="width:43%"></i></div></td></tr>
+      <tr><td>Roxana Menacho</td><td>Cabo Frio/RJ e região</td><td>cadastro</td><td class="mono">21/08</td><td class="num">34</td><td><div class="bar"><i style="width:43%"></i></div></td></tr>
+      <tr><td>Jennifer Lúria Felix Gouveia</td><td>Pirenópolis/GO</td><td>cadastro</td><td class="mono">14/09</td><td class="num">10</td><td><div class="bar"><i style="width:13%"></i></div></td></tr>
+      <tr><td>Yan Damaceno dos Santos</td><td>Pirenópolis/GO</td><td>cadastro</td><td class="mono">23/09</td><td class="num">1</td><td><div class="bar"><i style="width:2%"></i></div></td></tr>
+      <tr><td>Messias, Marco Aurelio e Mateus Cecon</td><td>Porto Seguro/BA, Curitiba/PR</td><td>cadastro</td><td class="mono">25/09</td><td class="num">0</td><td></td></tr>
+    </tbody>
+  </table>
+  <p class="faint mono">* A fase do Gabriel foi regravada em 12/08 (treinamento → cadastro → treinamento em 2 s). A entrada original em treinamento é de 08/07. Nenhum dos 10 tem treino enviado ou confirmado, data de teste ou assinatura.</p>
+
+  <h3>5.3 Já tinha sido sinalizado, e já custou um fornecedor</h3>
+  <ul class="tl">
+    <li><span class="d">09/07</span>Vinicius: <i>"temos muitos parados na primeira fase de contratação ainda, alguns com quase 30 dias, em regiões importantes como Salvador"</i>. Sem resposta. <a href="https://seazone-fund.slack.com/archives/C0A6YSD9H19/p1783605052882059">Slack</a></li>
+    <li><span class="d">28/07</span>Henry: <i>"tem alguns fotógrafos há muito tempo parados ainda no PIPE 7… seria importante darmos vazão"</i>. <a href="https://seazone-fund.slack.com/archives/C0A6YSD9H19/p1785262648724809">Slack</a></li>
+    <li class="hot"><span class="d">14/08</span>Imbituba: distrato do fotógrafo local e nenhum substituto homologado. O substituto tinha sido cadastrado em 09/06 e <i>"ficou travado em treinamento por mais de 2 meses"</i>. <a href="https://seazone-fund.slack.com/archives/C0A6YSD9H19/p1786730549505469?thread_ts=1786730549.505469">Slack</a></li>
+  </ul>
+  <div class="foot"><span>Impactos da Implantação · Fornecedores</span><span>8</span></div>
+</section>
+
+<!-- 6. HANDOVER -->
+<section class="page">
+  <div class="eyebrow">06 · Handover e uso do artefato</div>
+  <h2>Pedidos de funcionalidade que já existem mostram que o conhecimento se perdeu nas trocas de pessoas</h2>
+  <p>Entre agosto e setembro houve saídas na Implantação: Evelly em agosto (<i>"quem colocamos no lugar da Evelly?"</i>, 19/08, <a href="https://seazone-fund.slack.com/archives/C0A6YSD9H19/p1787157233678939">Slack</a>) e coordenações de vistoria e adequação (17/09, <a href="https://seazone-fund.slack.com/archives/C0A6YSD9H19/p1789665333323239?thread_ts=1789665333.323239">Slack</a>). Desde então chegam pedidos de funcionalidades e alertas que já existem:</p>
+  <table>
+    <thead><tr><th>Data</th><th>Pedido</th><th>O que já existia</th></tr></thead>
+    <tbody>
+      <tr><td class="mono">16/09</td><td><i>"Seria bom ter no artefato de fotógrafo uma visibilidade de casos de imóveis que entram com mais de 10 unidades."</i></td><td>Processo definido: <i>"o alerta é feito pela própria Implantação"</i> (Rayanne). Mesmo assim entraram 15 imóveis em Imbituba sem mapeamento. <a href="https://seazone-fund.slack.com/archives/C0A6YSD9H19/p1789597021290449?thread_ts=1789595557.275129">Slack</a></td></tr>
+      <tr><td class="mono">17/09</td><td><i>"Uma calculadora de escolha de fotógrafo para regiões que têm vários."</i></td><td>Já existe no artefato (<a href="https://stay-sync-shine.lovable.app/agendar-imovel">agendar-imovel</a>), feito pelo Vini. Enviamos o link e um vídeo explicando. <a href="https://seazone-fund.slack.com/archives/C0A6YSD9H19/p1789684862580059?thread_ts=1789675931.893279">Slack</a></td></tr>
+      <tr><td class="mono">17/09</td><td>Fornecedores precisou perguntar se <i>"existe algum canvas do processo"</i> de agendamento de fotos</td><td>Não há processo documentado e compartilhado depois das trocas. <a href="https://seazone-fund.slack.com/archives/C0A6YSD9H19/p1789665538079439?thread_ts=1789665533.638559">Slack</a></td></tr>
+      <tr><td class="mono">25/09</td><td>Cadastro dos 3 fotógrafos do Pipefy no artefato</td><td>O time de Fotos não fez a transição e Fornecedores cadastrou.</td></tr>
+    </tbody>
+  </table>
+  <div class="callout">
+    <span class="eyebrow">Efeito</span>
+    O alerta de grandes operações, que era papel da Implantação, deixou de acontecer. Fornecedores criou em 24/09 um bot ("GOPs Para garantir Fotógrafo") que lê o kanban todo dia às 16h e avisa sozinho quando um grupo passa de 10 imóveis. Na primeira rodada avisou 6 grupos já acima do limite: TSP 19, RUT 17, ISO 16, PEO 15, JST 12 e VSO 11.
+  </div>
+
+  <h3>6.1 Bases que não conversam</h3>
+  <p>O artefato e o Pipefy divergem porque ninguém atualiza os dois na troca de status:</p>
+  <ul class="clean">
+    <li>Maurício Oliveira Lima (<i>"distrato unilateral"</i>) e Luiz Felipe Mendes Carneiro (<i>"não aceitou preço de tabela e foi dado distrato"</i>) seguem <b>Fase 7 · Ativo</b> no Pipefy.</li>
+    <li>Rodrigo D'Ávila, Juan Manuel, Igor Strina e Angelo Ouriques estão inativos no artefato, sem motivo, e ativos no Pipefy.</li>
+    <li>Erick Henrique de Araújo Nascimento está duplicado no artefato (um registro inativo com "número errado"). Há um recibo dele com data futura (08/12/2026, ETI1513).</li>
+    <li>Eduardo Olliotti estava em "Excluídos" no Pipefy desde 19/08/2025 e voltou ao cadastro do artefato em 21/08/2026.</li>
+  </ul>
+  <div class="foot"><span>Impactos da Implantação · Fornecedores</span><span>9</span></div>
+</section>
+
+<!-- 7. OUTROS -->
+<section class="page">
+  <div class="eyebrow">07 · Outras ocorrências</div>
+  <h2>Enxoval, suporte e planilhas</h2>
+  <table>
+    <thead><tr><th>Data</th><th>Ocorrência</th><th>Impacto</th><th>Evidência</th></tr></thead>
+    <tbody>
+      <tr><td class="mono">17/09</td><td>Muitos pedidos de enxoval em "Aguardando pagamento", <i>"alguns há mais de 1 mês"</i> (ex.: UNR0908, ativado em 04/09). Foi pedido à Implantação que cancelasse.</td><td>Loop no agente de análise de pagamento; foi preciso criar o agente de cancelamento</td><td><a href="https://seazone-fund.slack.com/archives/C0A6YSD9H19/p1789666850241099?thread_ts=1789666850.241099">Slack</a></td></tr>
+      <tr><td class="mono">26–28/08</td><td>Pedido de enxoval endereçado à franquia errada (Luanda), depois de troca de franquia ou uso errado da calculadora</td><td>Custo absorvido na comissão; <i>"dá visibilidade que foi erro de implantação"</i></td><td><a href="https://seazone-fund.slack.com/archives/C0AM2DBTRT5/p1787751215376419?thread_ts=1787614885.818169">Slack</a> · <a href="https://seazone-fund.slack.com/archives/D067RVAFY48/p1787943959361869?thread_ts=1787939441.852889">Slack</a></td></tr>
+      <tr><td class="mono">08/09</td><td>A Implantação segurou suportes de Fornecedores sem mudar o fluxo: <i>"apenas marcaram sem encaminhar, então o nosso suporte estava vazio"</i></td><td>SLA estourado na conta de Fornecedores</td><td><a href="https://seazone-fund.slack.com/archives/C0AKB3UH8DV/p1788906552850789?thread_ts=1788890672.085589">Slack</a></td></tr>
+      <tr><td class="mono">16/09</td><td>Grande operação sem aviso antecipado: <i>"Entrou uma que não estava mapeada. 15 em Imbituba"</i>. Em 09/07 já havia a queixa de que GOP chega <i>"tudo em cima da hora"</i>.</td><td>Prospecção de fotógrafo às pressas</td><td><a href="https://seazone-fund.slack.com/archives/C0A6YSD9H19/p1789595557275129?thread_ts=1789595557.275129">Slack</a> · <a href="https://seazone-fund.slack.com/archives/D06D9KYN823/p1783613603106729">Slack</a></td></tr>
+      <tr><td class="mono">08/07</td><td>Planilha de compra de enxoval com fórmulas apagadas e dados preenchidos à mão pela Implantação</td><td>Retrabalho na conferência de compras e comissão</td><td><a href="https://seazone-fund.slack.com/archives/D0953EA2X8B/p1783521287406379">Slack</a></td></tr>
+      <tr><td class="mono">25/06</td><td>Previsão de implantações para o estoque da Matinali cobrada por vários dias sem retorno</td><td>Planejamento de estoque do fornecedor sem dado</td><td><a href="https://seazone-fund.slack.com/archives/D099JT8UHMY/p1782393321495729">Slack</a></td></tr>
+      <tr><td class="mono">24/06</td><td>Franquias cobradas pelo Sults depois do alinhamento de que ele não seria mais usado</td><td>Ruído de canal com a franquia</td><td><a href="https://seazone-fund.slack.com/archives/D0AQXML4M0Q/p1782324092053669">Slack</a></td></tr>
+    </tbody>
+  </table>
+  <div class="callout">
+    <span class="eyebrow">Mesmo padrão fora da Implantação</span>
+    Em 17/09 a Easycover encerrou o grupo com uma franquia por <i>"comunicação agressiva e debochada"</i> (<a href="https://seazone-fund.slack.com/archives/C0AKB3UH8DV/p1789665083882339?thread_ts=1789657207.348299">Slack</a>). É a mesma raiz do caso Maraú: franquia falando direto com o fornecedor, sem a Seazone intermediando.
+  </div>
+  <div class="foot"><span>Impactos da Implantação · Fornecedores</span><span>10</span></div>
+</section>
+
+<!-- 8. RECOMENDAÇÕES -->
+<section class="page">
+  <div class="eyebrow">08 · Encaminhamentos</div>
+  <h2>O que pedimos à Implantação</h2>
+  <table>
+    <thead><tr><th>#</th><th>Ação</th><th>Responsável sugerido</th><th>Prazo sugerido</th></tr></thead>
+    <tbody>
+      <tr><td class="mono">1</td><td>Colocar o envio do link de itens faltantes ao proprietário na cadência do kanban, com etapa e mensagem-padrão definidas</td><td>Implantação (Larissa)</td><td class="mono">02/10</td></tr>
+      <tr><td class="mono">2</td><td>Até o item 1 existir, reduzir o agente de indicação para 1 rodada por dia ou disparo por card novo</td><td>Fornecedores (Henry)</td><td class="mono">imediato</td></tr>
+      <tr><td class="mono">3</td><td>Devolver o agendamento de fotos para a Seazone ou formalizar, com a liderança, quem agenda. Franquia não negocia nem dá feedback direto ao fotógrafo</td><td>Liderança Franquias + Implantação</td><td class="mono">02/10</td></tr>
+      <tr><td class="mono">4</td><td>Regra de escalonamento: pedido de distrato ou conflito com fornecedor vai a Fornecedores em até 24h</td><td>Implantação (Fotos)</td><td class="mono">imediato</td></tr>
+      <tr><td class="mono">5</td><td>SLA para o funil de contratação: cadastro → treinamento em 7 dias e treinamento → contrato em 21 dias. Zerar os 10 casos em aberto</td><td>Implantação (Fotos)</td><td class="mono">15/10</td></tr>
+      <tr><td class="mono">6</td><td>Região sem fotógrafo ativo no artefato → abrir suporte de prospecção antes de agendar</td><td>Implantação</td><td class="mono">imediato</td></tr>
+      <tr><td class="mono">7</td><td>Handover documentado: canvas do processo de agendamento, alerta de GOP e uso do artefato, repassado a cada troca de pessoa</td><td>Implantação</td><td class="mono">09/10</td></tr>
+      <tr><td class="mono">8</td><td>Artefato como fonte única de status de fotógrafo; encerrar o Pipefy 305686664 depois de reconciliar as divergências da seção 6.1</td><td>Fornecedores + Implantação</td><td class="mono">15/10</td></tr>
+      <tr><td class="mono">9</td><td>Enviar pontos de melhoria da lojinha vistos no contato com o proprietário (dúvidas, itens faltando, atrito na compra)</td><td>Implantação</td><td class="mono">quinzenal</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Como medir</h3>
+  <div class="facts">
+    <div><b>Lojinha</b>proprietários cadastrados, listas abertas e pedidos de proprietário por semana. Hoje: 73 cadastrados · 0 pedidos concluídos</div>
+    <div><b>Fotógrafos</b>dias em cadastro e em treinamento no artefato. Hoje: 10 em aberto, máximo de 79 dias</div>
+    <div><b>Visibilidade</b>tempo entre ocorrência com fornecedor e aviso a Fornecedores. Caso Maraú: 27 dias</div>
+    <div><b>Cobertura</b>regiões com imóvel e sem fotógrafo ativo no artefato, com suporte aberto (sim ou não)</div>
+  </div>
+
+  <h3>Limitações deste levantamento</h3>
+  <ul class="clean faint">
+    <li>As conversas entre franquia e fotógrafa por WhatsApp foram vistas pelas prints da auditoria, não pela fonte.</li>
+    <li>A lojinha não registra abertura de lista por visitante. A evidência de não envio é a fala da Implantação somada à ausência de cadastro e de compra de proprietário.</li>
+    <li>O endpoint do artefato devolve até 1.000 de 1.013 recibos. O cruzamento Pipefy × artefato foi feito por nome normalizado.</li>
+    <li>Parte das mensagens do SeaNotes e do Taskdex aparece truncada no Slack; foi citado só o trecho visível.</li>
+  </ul>
+  <div class="foot"><span>Impactos da Implantação · Fornecedores</span><span>11</span></div>
+</section>
+
+</body>
+</html>
