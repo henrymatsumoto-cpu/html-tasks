@@ -154,7 +154,7 @@ ul.clean{ margin:1mm 0 3mm; padding-left:4.5mm } ul.clean li{ margin-bottom:1.3m
       <tr><td class="mono">4</td><td>Pirenópolis: cadastro errado e sem pedido de prospecção</td><td>Região meses sem fotógrafo; Fornecedores prospectou por conta própria</td><td><span class="sev alta">Alta</span></td></tr>
       <tr><td class="mono">5</td><td>Fotógrafos parados antes do contrato</td><td>Perda de fornecedor já prospectado (ex.: Imbituba, com distrato e sem substituto)</td><td><span class="sev alta">Alta</span></td></tr>
       <tr><td class="mono">6</td><td>Handover: pedidos de funcionalidade que já existem</td><td>Retrabalho de explicação; alertas que eram da Implantação não acontecem</td><td><span class="sev media">Média</span></td></tr>
-      <tr><td class="mono">7</td><td>Outros: enxoval, suporte, planilha</td><td>R$ 592,00 de frete por erro manual (SRS1005), SLA estourado na conta de Fornecedores, loop do agente de pagamento</td><td><span class="sev media">Média</span></td></tr>
+      <tr><td class="mono">7</td><td>Enxoval enviado à franquia errada (SRS1005)</td><td>Erro manual da Implantação, com R$ 592,00 de frete de devolução pago pela Seazone</td><td><span class="sev media">Média</span></td></tr>
     </tbody>
   </table>
   <div class="foot"><span>Impactos da Implantação · Fornecedores</span><span>2</span></div>
@@ -385,33 +385,11 @@ ul.clean{ margin:1mm 0 3mm; padding-left:4.5mm } ul.clean li{ margin-bottom:1.3m
   <div class="foot"><span>Impactos da Implantação · Fornecedores</span><span>9</span></div>
 </section>
 
-<!-- 7. OUTROS -->
+<!-- 7. ENXOVAL -->
 <section class="page">
-  <div class="eyebrow">07 · Outras ocorrências</div>
-  <h2>Enxoval, suporte e planilhas</h2>
-  <table>
-    <thead><tr><th>Data</th><th>Ocorrência</th><th>Impacto</th><th>Evidência</th></tr></thead>
-    <tbody>
-      <tr><td class="mono">17/09</td><td>Muitos pedidos de enxoval em "Aguardando pagamento", <i>"alguns há mais de 1 mês"</i> (ex.: UNR0908, ativado em 04/09). Foi pedido à Implantação que cancelasse.</td><td>Loop no agente de análise de pagamento; foi preciso criar o agente de cancelamento</td><td><a href="https://seazone-fund.slack.com/archives/C0A6YSD9H19/p1789666850241099?thread_ts=1789666850.241099">Slack</a></td></tr>
-      <tr><td class="mono">24/08</td><td>Enxoval do SRS1005 entregue na franquia errada, a 1.100 km do imóvel. Detalhe na seção 7.1.</td><td>R$ 592,00 de frete de devolução como custo Seazone</td><td><a href="https://henrymatsumoto-cpu.github.io/html-tasks/srs1005-enxoval-franquia-errada.html">Caso</a></td></tr>
-      <tr><td class="mono">08/09</td><td>A Implantação segurou suportes de Fornecedores sem mudar o fluxo: <i>"apenas marcaram sem encaminhar, então o nosso suporte estava vazio"</i></td><td>SLA estourado na conta de Fornecedores</td><td><a href="https://seazone-fund.slack.com/archives/C0AKB3UH8DV/p1788906552850789?thread_ts=1788890672.085589">Slack</a></td></tr>
-      <tr><td class="mono">16/09</td><td>Grande operação sem aviso antecipado: <i>"Entrou uma que não estava mapeada. 15 em Imbituba"</i>. Em 09/07 já havia a queixa de que GOP chega <i>"tudo em cima da hora"</i>.</td><td>Prospecção de fotógrafo às pressas</td><td><a href="https://seazone-fund.slack.com/archives/C0A6YSD9H19/p1789595557275129?thread_ts=1789595557.275129">Slack</a> · <a href="https://seazone-fund.slack.com/archives/D06D9KYN823/p1783613603106729">Slack</a></td></tr>
-      <tr><td class="mono">08/07</td><td>Planilha de compra de enxoval com fórmulas apagadas e dados preenchidos à mão pela Implantação</td><td>Retrabalho na conferência de compras e comissão</td><td><a href="https://seazone-fund.slack.com/archives/D0953EA2X8B/p1783521287406379">Slack</a></td></tr>
-      <tr><td class="mono">25/06</td><td>Previsão de implantações para o estoque da Matinali cobrada por vários dias sem retorno</td><td>Planejamento de estoque do fornecedor sem dado</td><td><a href="https://seazone-fund.slack.com/archives/D099JT8UHMY/p1782393321495729">Slack</a></td></tr>
-      <tr><td class="mono">24/06</td><td>Franquias cobradas pelo Sults depois do alinhamento de que ele não seria mais usado</td><td>Ruído de canal com a franquia</td><td><a href="https://seazone-fund.slack.com/archives/D0AQXML4M0Q/p1782324092053669">Slack</a></td></tr>
-    </tbody>
-  </table>
-
-  <div class="callout">
-    <span class="eyebrow">Mesmo padrão fora da Implantação</span>
-    Em 17/09 a Easycover encerrou o grupo com uma franquia por <i>"comunicação agressiva e debochada"</i> (<a href="https://seazone-fund.slack.com/archives/C0AKB3UH8DV/p1789665083882339?thread_ts=1789657207.348299">Slack</a>). É a mesma raiz do caso Maraú: franquia falando direto com o fornecedor, sem a Seazone intermediando.
-  </div>
-  <div class="foot"><span>Impactos da Implantação · Fornecedores</span><span>10</span></div>
-</section>
-
-<section class="page">
-  <div class="eyebrow">07 · Outras ocorrências (continuação)</div>
-  <h3 style="margin-top:3mm">7.1 SRS1005: enxoval entregue na franquia errada por erro manual da Implantação</h3>
+  <div class="eyebrow">07 · Enxoval · SRS1005</div>
+  <h2>Erro humano da Implantação mandou o enxoval para a franquia errada, a 1.100 km do imóvel</h2>
+  <p>O pedido de enxoval do SRS1005 foi montado na calculadora antiga, em que a analista de implantação escolhe à mão o imóvel e a franquia. O endereço de entrega inteiro vem da franquia escolhida. O código do imóvel foi atualizado, mas a franquia ficou a do pedido anterior. O fornecedor (RM) despachou exatamente para o endereço que recebeu.</p>
   <div class="facts">
     <div><b>Imóvel</b>SRS1005, em Maceió/AL (franquia Naihana Loyola Andriani)</div>
     <div><b>Entregue em</b>Ilhéus/BA (franquia Luanda Tavares Santana), a 1.100 km do imóvel</div>
@@ -425,45 +403,45 @@ ul.clean{ margin:1mm 0 3mm; padding-left:4.5mm } ul.clean li{ margin-bottom:1.3m
     <li><span class="d">28/08</span>Henry: <i>"dá visibilidade que foi erro de implantação"</i>. <a href="https://seazone-fund.slack.com/archives/D067RVAFY48/p1787943959361869?thread_ts=1787939441.852889">Slack</a></li>
     <li class="hot"><span class="d">01/09</span>Cotação da devolução Ilhéus → Maceió fechada em R$ 592,00. A tentativa de aproveitar o enxoval em outro imóvel da Luanda caiu porque o enxoval desse imóvel foi cancelado.</li>
   </ul>
-  <p class="faint">Além do frete, o caso gerou retrabalho de Fornecedores para apurar a causa, negociar com a RM e comunicar as duas franquias. A calculadora nova já não permite essa escolha manual. Caso completo: <a href="https://henrymatsumoto-cpu.github.io/html-tasks/srs1005-enxoval-franquia-errada.html">srs1005-enxoval-franquia-errada</a>.</p>
-  <div class="foot"><span>Impactos da Implantação · Fornecedores</span><span>11</span></div>
+  <p>Além do frete, o caso gerou retrabalho de Fornecedores para apurar a causa, negociar com a RM e comunicar as duas franquias. A calculadora nova já não permite essa escolha manual. Caso completo: <a href="https://henrymatsumoto-cpu.github.io/html-tasks/srs1005-enxoval-franquia-errada.html">srs1005-enxoval-franquia-errada</a>.</p>
+  <div class="callout">
+    <span class="eyebrow">Mesmo padrão fora da Implantação</span>
+    Em 17/09 a Easycover encerrou o grupo com uma franquia por <i>"comunicação agressiva e debochada"</i> (<a href="https://seazone-fund.slack.com/archives/C0AKB3UH8DV/p1789665083882339?thread_ts=1789657207.348299">Slack</a>). É a mesma raiz do caso Maraú: franquia falando direto com o fornecedor, sem a Seazone intermediando.
+  </div>
+  <div class="foot"><span>Impactos da Implantação · Fornecedores</span><span>10</span></div>
 </section>
 
-<!-- 8. RECOMENDAÇÕES -->
+<!-- 8. CONCLUSÃO -->
 <section class="page">
-  <div class="eyebrow">08 · Encaminhamentos</div>
-  <h2>O que pedimos à Implantação</h2>
+  <div class="eyebrow">08 · Conclusão</div>
+  <h2>Os problemas da Implantação estão se acumulando, e o custo cai no setor de Fornecedores</h2>
+  <p>Os casos deste relatório não são isolados. Eles se repetem entre junho e setembro e seguem o mesmo padrão: a Implantação não coloca no processo as ferramentas que construímos, não dá visibilidade quando algo sai errado e não repassa o conhecimento quando as pessoas trocam. Em todos eles, quem absorve a consequência é Fornecedores.</p>
+
   <table>
-    <thead><tr><th>#</th><th>Ação</th><th>Responsável sugerido</th><th>Prazo sugerido</th></tr></thead>
+    <thead><tr><th>Onde bate em Fornecedores</th><th>O que aconteceu</th></tr></thead>
     <tbody>
-      <tr><td class="mono">1</td><td>Colocar o envio do link de itens faltantes ao proprietário na cadência do kanban, com etapa e mensagem-padrão definidas</td><td>Implantação (Larissa)</td><td class="mono">02/10</td></tr>
-      <tr><td class="mono">2</td><td>Até o item 1 existir, reduzir o agente de indicação para 1 rodada por dia ou disparo por card novo</td><td>Fornecedores (Henry)</td><td class="mono">imediato</td></tr>
-      <tr><td class="mono">3</td><td>Devolver o agendamento de fotos para a Seazone ou formalizar, com a liderança, quem agenda. Franquia não negocia nem dá feedback direto ao fotógrafo</td><td>Liderança Franquias + Implantação</td><td class="mono">02/10</td></tr>
-      <tr><td class="mono">4</td><td>Regra de escalonamento: pedido de distrato ou conflito com fornecedor vai a Fornecedores em até 24h</td><td>Implantação (Fotos)</td><td class="mono">imediato</td></tr>
-      <tr><td class="mono">5</td><td>SLA para o funil de contratação: cadastro → treinamento em 7 dias e treinamento → contrato em 21 dias. Zerar os 10 casos em aberto</td><td>Implantação (Fotos)</td><td class="mono">15/10</td></tr>
-      <tr><td class="mono">6</td><td>Região sem fotógrafo ativo no artefato → abrir suporte de prospecção antes de agendar</td><td>Implantação</td><td class="mono">imediato</td></tr>
-      <tr><td class="mono">7</td><td>Handover documentado: canvas do processo de agendamento, alerta de GOP e uso do artefato, repassado a cada troca de pessoa</td><td>Implantação</td><td class="mono">09/10</td></tr>
-      <tr><td class="mono">8</td><td>Artefato como fonte única de status de fotógrafo; encerrar o Pipefy 305686664 depois de reconciliar as divergências da seção 6.1</td><td>Fornecedores + Implantação</td><td class="mono">15/10</td></tr>
-      <tr><td class="mono">9</td><td>Enviar pontos de melhoria da lojinha vistos no contato com o proprietário (dúvidas, itens faltando, atrito na compra)</td><td>Implantação</td><td class="mono">quinzenal</td></tr>
+      <tr><td><b>Perda de fornecedor</b></td><td>Distrato da única fotógrafa de Maraú, com 2 imóveis parados. Distrato em Imbituba sem substituto, porque o fotógrafo novo ficou mais de 2 meses travado em treinamento.</td></tr>
+      <tr><td><b>Custo direto</b></td><td>R$ 592,00 de frete para devolver um enxoval entregue na franquia errada por erro manual (SRS1005).</td></tr>
+      <tr><td><b>Esforço sem retorno</b></td><td>169 alterações na lojinha para o proprietário e um agente que já gerou 101 links. Mesmo assim, a média é de 3 cliques por dia no Mercado Livre e nenhum pedido de proprietário foi concluído, porque o link não chega até ele.</td></tr>
+      <tr><td><b>Consumo desnecessário</b></td><td>Agente rodando 4 vezes ao dia, relendo o kanban e baixando a lojinha inteira, para produzir links que não são enviados.</td></tr>
+      <tr><td><b>Regiões descobertas</b></td><td>Pirenópolis meses sem fotógrafo, com cadastro errado e sem pedido de prospecção da Implantação. Fornecedores prospectou por conta própria.</td></tr>
+      <tr><td><b>Fotógrafos parados</b></td><td>10 fotógrafos em aberto no artefato sem treino, teste ou contrato. No Pipefy, 3 cards passam de 149 dias antes do contrato.</td></tr>
+      <tr><td><b>Retrabalho de explicação</b></td><td>Pedidos de funcionalidades que já existem no artefato de fotógrafos e fotógrafos que Fornecedores precisou cadastrar no lugar do time de Fotos.</td></tr>
     </tbody>
   </table>
 
-  <h3>Como medir</h3>
-  <div class="facts">
-    <div><b>Lojinha</b>proprietários cadastrados, listas abertas e pedidos de proprietário por semana. Hoje: 73 cadastrados · 0 pedidos concluídos</div>
-    <div><b>Fotógrafos</b>dias em cadastro e em treinamento no artefato. Hoje: 10 em aberto, máximo de 79 dias</div>
-    <div><b>Visibilidade</b>tempo entre ocorrência com fornecedor e aviso a Fornecedores. Caso Maraú: 27 dias</div>
-    <div><b>Cobertura</b>regiões com imóvel e sem fotógrafo ativo no artefato, com suporte aberto (sim ou não)</div>
+  <div class="callout">
+    <span class="eyebrow">Em resumo</span>
+    Estamos com muitos problemas vindos da Implantação, e eles já impactam diretamente o setor de Fornecedores: perdemos fornecedores difíceis de repor, pagamos custos que não eram nossos e investimos em ferramentas que não chegam na ponta. Enquanto a Implantação não assumir a sua parte do processo, cada novo imóvel implantado tende a repetir esses casos.
   </div>
 
   <h3>Limitações deste levantamento</h3>
   <ul class="clean faint">
     <li>As conversas entre franquia e fotógrafa por WhatsApp foram vistas pelas prints da auditoria, não pela fonte.</li>
-    <li>A lojinha não registra abertura de lista por visitante. A evidência de não envio é a fala da Implantação somada à ausência de cadastro e de compra de proprietário.</li>
+    <li>A média de cliques no Mercado Livre vem do painel da lojinha. A lojinha não registra abertura de lista por visitante.</li>
     <li>O endpoint do artefato devolve até 1.000 de 1.013 recibos. O cruzamento Pipefy × artefato foi feito por nome normalizado.</li>
-    <li>Parte das mensagens do SeaNotes e do Taskdex aparece truncada no Slack; foi citado só o trecho visível.</li>
   </ul>
-  <div class="foot"><span>Impactos da Implantação · Fornecedores</span><span>12</span></div>
+  <div class="foot"><span>Impactos da Implantação · Fornecedores</span><span>11</span></div>
 </section>
 
 </body>
