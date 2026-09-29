@@ -120,6 +120,23 @@ tfoot .back-v{ color:var(--green) }
 .saldo .calc .t{ border-top:1px solid var(--line); padding-top:6px; color:var(--amber) }
 .saldo p{ grid-column:1 / -1; margin:0; color:var(--muted); max-width:70ch }
 @media (max-width: 760px){ .saldo{ grid-template-columns:1fr; gap:var(--space-lg) } }
+.fech{ margin-top:var(--space-2xl); padding-top:var(--space-xl); border-top:1px solid var(--line) }
+.fech .eyebrow{ color:var(--amber) }
+.fech h2{ font-size:clamp(26px,3.4vw,34px); margin:var(--space-md) 0 var(--space-md); max-width:24ch; line-height:1.1 }
+.fech .strip{ margin:var(--space-lg) 0 var(--space-xl) }
+.n.bad{ color:var(--amber) }
+table.t2{ min-width:980px }
+table.t2 td{ vertical-align:top }
+table.t2 td.why{ white-space:normal; text-align:left; color:var(--muted); font-size:14px; min-width:260px; max-width:340px; line-height:1.45 }
+table.t2 th.why{ text-align:left }
+table.t2 td.d{ color:var(--muted) }
+table.t2 td .sm{ display:block; color:var(--faint); font-size:12px; margin-top:2px }
+.st{ display:inline-block; padding:2px 10px; border-radius:9999px; font-size:13px; font-weight:600 }
+.st.ok{ background:var(--green-soft); color:var(--green) }
+.st.late{ background:var(--amber-soft); color:var(--amber) }
+.st.bad{ background:oklch(70% .17 25 / .15); color:oklch(76% .15 25) }
+.fech .ideal{ margin:var(--space-lg) 0 0; color:var(--muted); font-size:14px; max-width:80ch }
+.fech .ideal b{ color:var(--text); font-weight:600 }
 footer{ margin-top:var(--space-2xl); color:var(--faint); font-size:13px }
 
 @media (max-width: 760px){
@@ -200,6 +217,127 @@ footer{ margin-top:var(--space-2xl); color:var(--faint); font-size:13px }
       <span class="t">Diferença</span><b class="t">R$ 375.075,20</b>
     </div>
     <p>São <b style="color:var(--text)">96,5%</b> do que foi pago, cerca de R$ 37,5 mil por mês.</p>
+  </section>
+
+  <section class="fech" aria-label="Problemas no fechamento">
+    <div class="eyebrow">Problema principal · fechamento mensal</div>
+    <h2>Do relatório ao boleto: quanto demora cada mês</h2>
+    <p class="lede">O ideal é receber o relatório logo no início do mês e fechar o boleto <b>até o dia 10</b>. Em 10 meses, isso só aconteceu <b>2 vezes</b>. Em mar e abr/26 o relatório chegou quase um mês depois do fim do mês.</p>
+
+    <section class="strip" aria-label="Resumo do fechamento">
+      <div><div class="n bad">2 de 10</div><div class="l">meses com boleto até o dia 10</div></div>
+      <div><div class="n pay">17 dias</div><div class="l">em média após o fim do mês até o boleto final (pior caso: 29 dias, mar/26)</div></div>
+      <div><div class="n pay">13 dias</div><div class="l">em média até chegar o 1º relatório. Em mar e abr/26 foram 27 dias.</div></div>
+    </section>
+
+    <div class="table-scroll">
+    <table class="t2">
+      <thead>
+        <tr>
+          <th>Mês</th>
+          <th>1º relatório recebido</th>
+          <th>Versões</th>
+          <th>Ajustes até o boleto</th>
+          <th>Boleto final</th>
+          <th>vs. dia 10</th>
+          <th class="why">O que travou</th>
+        </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td><b>Nov/25</b></td>
+        <td>11/12<span class="sm">11 dias após o fim do mês</span></td>
+        <td>3</td>
+        <td class="d">5 dias</td>
+        <td>16/12<span class="sm">16 dias após o fim do mês</span></td>
+        <td><span class="st late">+6 dias</span></td>
+        <td class="why">Divergência nas datas de cancelamento e IDs duplicados. O relatório foi enviado para a Raquel e só chegou ao Henry em 12/12.</td>
+      </tr>
+      <tr>
+        <td><b>Dez/25</b></td>
+        <td>08/01<span class="sm">8 dias após o fim do mês</span></td>
+        <td>3 + 3 boletos</td>
+        <td class="d">7 dias</td>
+        <td>15/01<span class="sm">15 dias após o fim do mês</span></td>
+        <td><span class="st late">+5 dias</span></td>
+        <td class="why">Dois boletos emitidos com valor errado (R$ 40.571,70 e R$ 39.531,40) e cancelados. O terceiro veio limitado a 300 imóveis.</td>
+      </tr>
+      <tr>
+        <td><b>Jan/26</b></td>
+        <td>04/02<span class="sm">4 dias após o fim do mês</span></td>
+        <td>2</td>
+        <td class="d">2 dias</td>
+        <td>06/02<span class="sm">6 dias após o fim do mês</span></td>
+        <td><span class="st ok">no prazo</span></td>
+        <td class="why">5 divergências, resolvidas em 2 dias.</td>
+      </tr>
+      <tr>
+        <td><b>Fev/26</b></td>
+        <td>17/03<span class="sm">17 dias após o fim do mês</span></td>
+        <td>5</td>
+        <td class="d">6 dias</td>
+        <td>23/03<span class="sm">23 dias após o fim do mês</span></td>
+        <td><span class="st bad">+13 dias</span></td>
+        <td class="why">Imóveis não chegaram pela API da Now (houve reunião em 11/03). Planilhas com abas sem nome e itens de março dentro de fevereiro. Fechou pela base da Seazone.</td>
+      </tr>
+      <tr>
+        <td><b>Mar/26</b></td>
+        <td>27/04<span class="sm">27 dias após o fim do mês</span></td>
+        <td>2</td>
+        <td class="d">2 dias</td>
+        <td>29/04<span class="sm">29 dias após o fim do mês</span></td>
+        <td><span class="st bad">+19 dias</span></td>
+        <td class="why">O boleto (550) chegou antes da planilha para conferência. Foi refeito com 547 depois da checagem.</td>
+      </tr>
+      <tr>
+        <td><b>Abr/26</b></td>
+        <td>27/05<span class="sm">27 dias após o fim do mês</span></td>
+        <td>1</td>
+        <td class="d">já veio com boleto</td>
+        <td>27/05<span class="sm">27 dias após o fim do mês</span></td>
+        <td><span class="st bad">+17 dias</span></td>
+        <td class="why">Sem relatório até 27/05. Em 18/05 a Now perguntou à Seazone a quantidade de imóveis. O relatório e o boleto chegaram juntos, sem conferência prévia.</td>
+      </tr>
+      <tr>
+        <td><b>Mai/26</b></td>
+        <td>05/06<span class="sm">5 dias após o fim do mês</span></td>
+        <td>3</td>
+        <td class="d">6 dias</td>
+        <td>11/06<span class="sm">11 dias após o fim do mês</span></td>
+        <td><span class="st late">+1 dia</span></td>
+        <td class="why">Três contagens diferentes (642, 553 e 639). Na 2ª versão faltavam 87 apólices, que não tinham chegado pela API.</td>
+      </tr>
+      <tr>
+        <td><b>Jun/26</b></td>
+        <td>06/07<span class="sm">6 dias após o fim do mês</span></td>
+        <td>2</td>
+        <td class="d">4 dias</td>
+        <td>10/07<span class="sm">10 dias após o fim do mês</span></td>
+        <td><span class="st ok">no prazo</span></td>
+        <td class="why">Imóveis duplicados e triplicados. 19 casos não recebidos via API. A Now só respondeu depois de cobrança.</td>
+      </tr>
+      <tr>
+        <td><b>Jul/26</b></td>
+        <td>13/08<span class="sm">13 dias após o fim do mês</span></td>
+        <td>2</td>
+        <td class="d">1 dia</td>
+        <td>14/08<span class="sm">14 dias após o fim do mês</span></td>
+        <td><span class="st late">+4 dias</span></td>
+        <td class="why">15 imóveis cobrados sem ter seguro na base da Seazone, além de 10 duplicados. Houve troca de responsável na Now (Luciana).</td>
+      </tr>
+      <tr>
+        <td><b>Ago/26</b></td>
+        <td>11/09<span class="sm">11 dias após o fim do mês</span></td>
+        <td>2</td>
+        <td class="d">10 dias</td>
+        <td>21/09<span class="sm">21 dias após o fim do mês</span></td>
+        <td><span class="st bad">+11 dias</span></td>
+        <td class="why">Imóveis com seguro que ficaram fora do fechamento. A conferência da Seazone saiu em 16/09 (5 dias) e a Now levou mais 5 dias para mandar a versão final.</td>
+      </tr>
+      </tbody>
+    </table>
+    </div>
+    <p class="ideal">Datas tiradas do histórico de e-mails com a Now Seguros. "Versões" conta as planilhas de fechamento enviadas até o aceite. "Ajustes até o boleto" vai do 1º relatório ao boleto correto.</p>
   </section>
 
   <footer>Dados extraídos em 28/09/2026 · Operação Seazone</footer>
