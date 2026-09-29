@@ -119,6 +119,16 @@ tfoot .back-v{ color:var(--green) }
 .open-claims .n{ font:700 30px/1 "Schibsted Grotesk", sans-serif; color:var(--text) }
 .open-claims p{ margin:0; color:var(--muted); max-width:64ch }
 .open-claims p b{ color:var(--text) }
+.saldo{ margin-top:var(--space-2xl); padding-top:var(--space-xl); border-top:1px solid var(--line); display:grid; grid-template-columns:auto 1fr; gap:var(--space-xl); align-items:end }
+.saldo .eyebrow{ color:var(--amber); margin-bottom:var(--space-md) }
+.saldo .n{ font:700 clamp(40px,6vw,64px)/1 "Schibsted Grotesk", sans-serif; letter-spacing:-.025em; color:var(--amber) }
+.saldo .n small{ font-size:.45em; color:var(--muted); font-weight:600; margin-left:4px }
+.saldo .calc{ display:grid; grid-template-columns:auto auto; justify-content:start; gap:6px var(--space-lg); color:var(--muted); font-size:15px }
+.saldo .calc b{ color:var(--text); font-weight:600; text-align:right }
+.saldo .calc .g{ color:var(--green) }
+.saldo .calc .t{ border-top:1px solid var(--line); padding-top:6px; color:var(--amber) }
+.saldo p{ grid-column:1 / -1; margin:0; color:var(--muted); max-width:70ch }
+@media (max-width: 760px){ .saldo{ grid-template-columns:1fr; gap:var(--space-lg) } }
 footer{ margin-top:var(--space-2xl); color:var(--faint); font-size:13px }
 
 @media (max-width: 760px){
@@ -211,6 +221,19 @@ footer{ margin-top:var(--space-2xl); color:var(--faint); font-size:13px }
         <li><b>Chamados de pagamento:</b> pipe 304134173 do suporte financeiro (cards 1344349453, 1358249897, 1375127995, 1411412808, 1430003704, 1448808039).</li>
       </ul>
     </div>
+  </section>
+
+  <section class="saldo" aria-label="Pago sem retorno">
+    <div>
+      <div class="eyebrow">Pagamos sem receber de volta · nov/25 → ago/26</div>
+      <div class="n">R$ 375.075<small>,20</small></div>
+    </div>
+    <div class="calc">
+      <span>Pago à EasyCover</span><b>R$ 388.806,06</b>
+      <span>Reembolsos de dano pagos</span><b class="g">− R$ 13.730,86</b>
+      <span class="t">Diferença</span><b class="t">R$ 375.075,20</b>
+    </div>
+    <p>São <b style="color:var(--text)">96,5%</b> do que foi pago, cerca de R$ 37,5 mil por mês. Se os 13 casos em análise (R$ 26.520,50) forem aprovados, a diferença cai para R$ 348.554,70.</p>
   </section>
 
   <footer>Dados extraídos em 28/09/2026 · Operação Seazone</footer>
