@@ -175,11 +175,11 @@ footer{ margin-top:var(--space-2xl); color:var(--faint); font-size:13px }
         <td><span class="pct hi">3,5%</span></td>
       </tr>
       <tr class="sec">
-        <td>12 meses (out/25 → set/26)</td>
+        <td>Nov/25 → Set/26</td>
         <td></td><td></td>
-        <td>sem out/25 e set/26</td>
-        <td class="back-v">R$ 20.112,90</td>
-        <td>25</td>
+        <td>set/26 ainda sem fechamento</td>
+        <td class="back-v">R$ 16.679,34</td>
+        <td>21</td>
         <td></td>
       </tr>
     </tfoot>
@@ -197,10 +197,10 @@ footer{ margin-top:var(--space-2xl); color:var(--faint); font-size:13px }
       <h3>Como ler</h3>
       <ol>
         <li><b>Quem recebe o reembolso é o proprietário.</b> O valor é repassado na wallet dele e não fica como receita da Seazone.</li>
-        <li><b>Todos os 25 reembolsos foram validados pelo time de danos</b> (Fabíola Azevedo, 28/09). O PMC0400 de out/25 (R$ 1.038,00) está pago, mas no Sapron ainda aparece como "Solicitado" e com R$ 0,00.</li>
+        <li><b>Todos os reembolsos foram validados pelo time de danos</b> (Fabíola Azevedo, 28/09).</li>
         <li><b>Jan/26 inclui 80 bilhetes que sobraram de dez/25</b> (R$ 5.138,40). Dezembro foi cobrado no limite de 300 imóveis do acordo.</li>
         <li><b>O preço por imóvel caiu de R$ 104,03 para R$ 64,23</b> com o aditivo de jan/26. Mesmo assim o custo mensal quase dobrou, porque a base passou de 267 para 830 imóveis.</li>
-        <li><b>Out/25 não foi encontrado.</b> Nessa época os boletos iam direto para contasapagar@. Ago/26 vence hoje (28/09).</li>
+        <li><b>O boleto de ago/26 vence hoje (28/09).</b> Set/26 só fecha em outubro.</li>
       </ol>
     </div>
     <div>
@@ -219,8 +219,6 @@ footer{ margin-top:var(--space-2xl); color:var(--faint); font-size:13px }
 <script>
 const brl = v => v == null ? null : 'R$ ' + v.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 const months = [
-  { m: 'Out/25', paid: null, note: 'não encontrado', back: 3433.56,
-    cases: [['EVA105', 1500], ['PMC0400', 1038], ['AVM0011', 800], ['PMC0400', 95.56]] },
   { m: 'Nov/25', qty: 267, unit: 104.03, paid: 27776.01, back: 0, cases: [] },
   { m: 'Dez/25', qty: 300, unit: 104.03, paid: 31209.00, back: 410, cases: [['UPP0614', 410]] },
   { m: 'Jan/26', qty: 519, unit: 64.23, paid: 33335.37, tag: '+80 de dez', back: 2995.72,
