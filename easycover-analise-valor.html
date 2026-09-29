@@ -107,11 +107,6 @@ tfoot .back-v{ color:var(--green) }
 .legend{ display:flex; flex-wrap:wrap; gap:var(--space-lg); margin:var(--space-lg) 0 0; color:var(--muted); font-size:14px }
 .legend i{ display:inline-block; width:10px; height:10px; border-radius:9999px; margin-right:8px; vertical-align:0 }
 
-.notes{ display:grid; grid-template-columns:1fr 1fr; gap:var(--space-xl); margin-top:var(--space-2xl); padding-top:var(--space-xl); border-top:1px solid var(--line) }
-.notes h3{ font:600 16px/1.3 "Schibsted Grotesk", sans-serif; margin:0 0 var(--space-md) }
-.notes ol, .notes ul{ margin:0; padding-left:20px; color:var(--muted) }
-.notes li{ margin-bottom:10px; max-width:60ch }
-.notes li b{ color:var(--text); font-weight:600 }
 .open-claims{
   margin-top:var(--space-xl); padding:var(--space-lg); border-radius:12px; background:var(--blue-soft);
   display:flex; gap:var(--space-lg); align-items:center; flex-wrap:wrap;
@@ -137,7 +132,6 @@ footer{ margin-top:var(--space-2xl); color:var(--faint); font-size:13px }
   .strip{ grid-template-columns:1fr }
   .strip > div, .strip > div + div{ padding:var(--space-md) 0; border-left:0 }
   .strip > div + div{ border-top:1px solid var(--line) }
-  .notes{ grid-template-columns:1fr; gap:var(--space-lg) }
 }
 @media (prefers-reduced-motion: reduce){ *{ transition:none !important } }
 </style>
@@ -202,26 +196,6 @@ footer{ margin-top:var(--space-2xl); color:var(--faint); font-size:13px }
     <p><b>Ainda em análise na EasyCover</b> (fase "cobrança solicitada"). Os mais comuns são sofá (5) e ar-condicionado (3). Se forem aprovados, a taxa de retorno passa de 10%.</p>
   </div>
 
-  <section class="notes">
-    <div>
-      <h3>Como ler</h3>
-      <ol>
-        <li><b>Quem recebe o reembolso é o proprietário.</b> O valor é repassado na wallet dele e não fica como receita da Seazone.</li>
-        <li><b>Todos os reembolsos foram validados pelo time de danos</b> (Fabíola Azevedo, 28/09).</li>
-        <li><b>Jan/26 inclui 80 bilhetes que sobraram de dez/25</b> (R$ 5.138,40). Dezembro foi cobrado no limite de 300 imóveis do acordo.</li>
-        <li><b>O preço por imóvel caiu de R$ 104,03 para R$ 64,23</b> com o aditivo de jan/26. Mesmo assim o custo mensal quase dobrou, porque a base passou de 267 para 830 imóveis.</li>
-        <li><b>O boleto de ago/26 vence hoje (28/09).</b> Set/26 só fecha em outubro.</li>
-      </ol>
-    </div>
-    <div>
-      <h3>Fontes</h3>
-      <ul>
-        <li><b>Pago:</b> boletos em PDF da pasta de fechamentos no Drive (mar–jul/26), extratos da Now (nov/25–fev/26) e o e-mail de fechamento de ago/26. Todos conferidos, e dez–fev também com recibo da iugu.</li>
-        <li><b>Reembolso:</b> Sapron (<code>guest_damage_negotiation</code>, fase <code>easy_cover_charge</code> e histórico do dano), validado pelo time de danos.</li>
-        <li><b>Chamados de pagamento:</b> pipe 304134173 do suporte financeiro (cards 1344349453, 1358249897, 1375127995, 1411412808, 1430003704, 1448808039).</li>
-      </ul>
-    </div>
-  </section>
 
   <section class="saldo" aria-label="Pago sem retorno">
     <div>
