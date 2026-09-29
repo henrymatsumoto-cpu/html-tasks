@@ -81,7 +81,6 @@ tr.m.open .chev{ transform:rotate(90deg); color:var(--text) }
 tr.m.nocase .chev{ visibility:hidden }
 .pay-v{ font-weight:600 }
 .back-v{ color:var(--green); font-weight:600 }
-.prov-v{ color:var(--amber) }
 .zero{ color:var(--faint) }
 .na{ color:var(--faint); font-style:italic }
 .pct{ display:inline-block; min-width:52px; padding:2px 10px; border-radius:9999px; font-size:13px; font-weight:600; text-align:center }
@@ -99,8 +98,6 @@ tr.d .inner > div{ overflow:hidden }
 .case{ display:inline-flex; gap:8px; align-items:baseline; padding:6px 12px; border:1px solid var(--line); border-radius:9999px; font-size:13px; white-space:nowrap }
 .case b{ font-weight:600 }
 .case span{ color:var(--green) }
-.case.p span{ color:var(--amber) }
-.case.p{ border-style:dashed }
 
 tfoot td{ padding:18px var(--space-md) 6px; text-align:right; font-weight:700; border-top:1px solid var(--line); white-space:nowrap }
 tfoot td:first-child{ text-align:left; padding-left:0 }
@@ -141,14 +138,14 @@ footer{ margin-top:var(--space-2xl); color:var(--faint); font-size:13px }
   <h1>Quanto pagamos e quanto voltou em reembolso</h1>
   <p class="lede">
     De <b>nov/25 a ago/26</b> a Seazone pagou <b>R$ 388,8 mil</b> em boletos à EasyCover (Now Seguros).
-    No mesmo período, os reembolsos de dano confirmados somaram <b class="g">R$ 9,9 mil</b>, o que dá
-    <b>2,5%</b> do valor pago. Somando os casos prováveis, o número sobe para 3,5%.
+    No mesmo período, a EasyCover pagou <b class="g">R$ 13,7 mil</b> em reembolsos de dano,
+    ou seja, <b>3,5%</b> do valor pago voltou.
   </p>
 
   <section class="strip" aria-label="Resumo">
     <div><div class="n pay">R$ 388.806<small>,06</small></div><div class="l">pago à EasyCover em 10 meses (nov/25 → ago/26)</div></div>
-    <div><div class="n back">R$ 9.872<small>,15</small></div><div class="l">em reembolsos de dano confirmados no mesmo período (13 casos)</div></div>
-    <div><div class="n ratio">2,5%</div><div class="l">do valor pago voltou como reembolso (3,5% contando os prováveis)</div></div>
+    <div><div class="n back">R$ 13.730<small>,86</small></div><div class="l">em reembolsos de dano pagos pela EasyCover no mesmo período (19 casos)</div></div>
+    <div><div class="n ratio">3,5%</div><div class="l">do valor pago voltou como reembolso de dano</div></div>
   </section>
 
   <h2>Mês a mês</h2>
@@ -162,9 +159,8 @@ footer{ margin-top:var(--space-2xl); color:var(--faint); font-size:13px }
         <th>Imóveis cobrados</th>
         <th>Valor por imóvel</th>
         <th>Pago à EasyCover</th>
-        <th class="grp-back">Reembolso confirmado</th>
+        <th class="grp-back">Reembolso pago</th>
         <th class="grp-back">Casos</th>
-        <th>Prováveis</th>
         <th>Voltou / pago</th>
       </tr>
     </thead>
@@ -174,32 +170,26 @@ footer{ margin-top:var(--space-2xl); color:var(--faint); font-size:13px }
         <td>Nov/25 → Ago/26</td>
         <td></td><td></td>
         <td>R$ 388.806,06</td>
-        <td class="back-v">R$ 9.872,15</td>
-        <td>13</td>
-        <td class="prov-v">R$ 3.858,71</td>
-        <td><span class="pct hi">2,5%</span></td>
+        <td class="back-v">R$ 13.730,86</td>
+        <td>19</td>
+        <td><span class="pct hi">3,5%</span></td>
       </tr>
       <tr class="sec">
         <td>12 meses (out/25 → set/26)</td>
         <td></td><td></td>
         <td>sem out/25 e set/26</td>
-        <td class="back-v">R$ 15.066,19</td>
-        <td>17</td>
-        <td class="prov-v">R$ 4.008,71</td>
+        <td class="back-v">R$ 20.112,90</td>
+        <td>25</td>
         <td></td>
       </tr>
     </tfoot>
   </table>
   </div>
 
-  <div class="legend">
-    <span><i style="background:var(--green)"></i>Confirmado: histórico do dano no Sapron diz "pago pelo EasyCover"</span>
-    <span><i style="background:var(--amber)"></i>Provável: passou pela fase EasyCover e fechou com valor recebido, mas sem a anotação</span>
-  </div>
 
   <div class="open-claims">
     <div class="n">13 casos · R$ 26.520,50</div>
-    <p><b>Ainda em análise na EasyCover</b> (fase "cobrança solicitada"). A maioria é ar-condicionado, sofá, TV e geladeira. Se forem aprovados, a taxa de retorno passa de 10%.</p>
+    <p><b>Ainda em análise na EasyCover</b> (fase "cobrança solicitada"). Os mais comuns são sofá (5) e ar-condicionado (3). Se forem aprovados, a taxa de retorno passa de 10%.</p>
   </div>
 
   <section class="notes">
@@ -207,7 +197,7 @@ footer{ margin-top:var(--space-2xl); color:var(--faint); font-size:13px }
       <h3>Como ler</h3>
       <ol>
         <li><b>Quem recebe o reembolso é o proprietário.</b> O valor é repassado na wallet dele e não fica como receita da Seazone.</li>
-        <li><b>O valor recebido é o total da negociação</b> (<code>amount_received</code>). Em casos que passaram antes por cobrança do hóspede ou do AirCover, pode incluir parte que não veio da EasyCover.</li>
+        <li><b>Todos os 25 reembolsos foram validados pelo time de danos</b> (Fabíola Azevedo, 28/09). O PMC0400 de out/25 (R$ 1.038,00) está pago, mas no Sapron ainda aparece como "Solicitado" e com R$ 0,00.</li>
         <li><b>Jan/26 inclui 80 bilhetes que sobraram de dez/25</b> (R$ 5.138,40). Dezembro foi cobrado no limite de 300 imóveis do acordo.</li>
         <li><b>O preço por imóvel caiu de R$ 104,03 para R$ 64,23</b> com o aditivo de jan/26. Mesmo assim o custo mensal quase dobrou, porque a base passou de 267 para 830 imóveis.</li>
         <li><b>Out/25 não foi encontrado.</b> Nessa época os boletos iam direto para contasapagar@. Ago/26 vence hoje (28/09).</li>
@@ -217,7 +207,7 @@ footer{ margin-top:var(--space-2xl); color:var(--faint); font-size:13px }
       <h3>Fontes</h3>
       <ul>
         <li><b>Pago:</b> boletos em PDF da pasta de fechamentos no Drive (mar–jul/26), extratos da Now (nov/25–fev/26) e o e-mail de fechamento de ago/26. Todos conferidos, e dez–fev também com recibo da iugu.</li>
-        <li><b>Reembolso:</b> Sapron, tabelas <code>guest_damage_negotiation</code>, histórico de fases (<code>easy_cover_charge</code>) e anotações do time de danos.</li>
+        <li><b>Reembolso:</b> Sapron (<code>guest_damage_negotiation</code>, fase <code>easy_cover_charge</code> e histórico do dano), validado pelo time de danos.</li>
         <li><b>Chamados de pagamento:</b> pipe 304134173 do suporte financeiro (cards 1344349453, 1358249897, 1375127995, 1411412808, 1430003704, 1448808039).</li>
       </ul>
     </div>
@@ -229,31 +219,30 @@ footer{ margin-top:var(--space-2xl); color:var(--faint); font-size:13px }
 <script>
 const brl = v => v == null ? null : 'R$ ' + v.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 const months = [
-  { m: 'Out/25', paid: null, note: 'não encontrado', back: 2395.56, prov: 0,
-    cases: [['AVM0011', 800], ['EVA105', 1500], ['PMC0400', 95.56]] },
-  { m: 'Nov/25', qty: 267, unit: 104.03, paid: 27776.01, back: 0, prov: 0, cases: [] },
-  { m: 'Dez/25', qty: 300, unit: 104.03, paid: 31209.00, back: 410, prov: 0,
-    cases: [['UPP0614', 410]] },
-  { m: 'Jan/26', qty: 519, unit: 64.23, paid: 33335.37, tag: '+80 de dez', back: 0, prov: 2995.72,
-    cases: [['EJO0305', 1178.72, 1], ['PMC0400', 1015, 1], ['ELU0211', 802, 1]] },
-  { m: 'Fev/26', qty: 490, unit: 64.23, paid: 31472.70, back: 0, prov: 489.99,
-    cases: [['CFE0503', 337, 1], ['IDB0701', 152.99, 1]] },
-  { m: 'Mar/26', qty: 547, unit: 64.23, paid: 35133.81, back: 0, prov: 0, cases: [] },
-  { m: 'Abr/26', qty: 607, unit: 64.23, paid: 38987.61, back: 0, prov: 0, cases: [] },
-  { m: 'Mai/26', qty: 639, unit: 64.23, paid: 41042.97, back: 3753.00, prov: 0,
+  { m: 'Out/25', paid: null, note: 'não encontrado', back: 3433.56,
+    cases: [['EVA105', 1500], ['PMC0400', 1038], ['AVM0011', 800], ['PMC0400', 95.56]] },
+  { m: 'Nov/25', qty: 267, unit: 104.03, paid: 27776.01, back: 0, cases: [] },
+  { m: 'Dez/25', qty: 300, unit: 104.03, paid: 31209.00, back: 410, cases: [['UPP0614', 410]] },
+  { m: 'Jan/26', qty: 519, unit: 64.23, paid: 33335.37, tag: '+80 de dez', back: 2995.72,
+    cases: [['EJO0305', 1178.72], ['PMC0400', 1015], ['ELU0211', 802]] },
+  { m: 'Fev/26', qty: 490, unit: 64.23, paid: 31472.70, back: 489.99,
+    cases: [['CFE0503', 337], ['IDB0701', 152.99]] },
+  { m: 'Mar/26', qty: 547, unit: 64.23, paid: 35133.81, back: 0, cases: [] },
+  { m: 'Abr/26', qty: 607, unit: 64.23, paid: 38987.61, back: 0, cases: [] },
+  { m: 'Mai/26', qty: 639, unit: 64.23, paid: 41042.97, back: 3753.00,
     cases: [['CIS0033', 1360], ['PMC0400', 1237], ['EJO0305', 795], ['PSL0002', 295], ['IFT0903', 66]] },
-  { m: 'Jun/26', qty: 727, unit: 64.23, paid: 46695.21, back: 0, prov: 0, cases: [] },
-  { m: 'Jul/26', qty: 776, unit: 64.23, paid: 49842.48, back: 1540.00, prov: 0,
+  { m: 'Jun/26', qty: 727, unit: 64.23, paid: 46695.21, back: 0, cases: [] },
+  { m: 'Jul/26', qty: 776, unit: 64.23, paid: 49842.48, back: 1540.00,
     cases: [['VPD0701', 910], ['PZIA0304', 630]] },
-  { m: 'Ago/26', qty: 830, unit: 64.23, paid: 53310.90, tag: 'vence 28/09', tagBlue: true, back: 4169.15, prov: 373,
-    cases: [['GBA1104', 2001.56], ['CRT0032', 753.20], ['ESA0304', 706.02], ['RSO0017', 516.56], ['ODI0487', 191.81], ['SKL0505', 373, 1]] },
-  { m: 'Set/26', paid: null, note: 'fechamento em out', back: 2798.48, prov: 150,
-    cases: [['CVB0110', 2798.48], ['AUG0002', 150, 1]] },
+  { m: 'Ago/26', qty: 830, unit: 64.23, paid: 53310.90, tag: 'vence 28/09', tagBlue: true, back: 4542.15,
+    cases: [['GBA1104', 2001.56], ['CRT0032', 753.20], ['ESA0304', 706.02], ['RSO0017', 516.56], ['SKL0505', 373], ['ODI0487', 191.81]] },
+  { m: 'Set/26', paid: null, note: 'fechamento em out', back: 2948.48,
+    cases: [['CVB0110', 2798.48], ['AUG0002', 150]] },
 ];
 
 const tbody = document.getElementById('rows');
 months.forEach((r, i) => {
-  const conf = r.cases.filter(c => !c[2]).length;
+  const conf = r.cases.length;
   const has = r.cases.length > 0;
   const pct = r.paid ? r.back / r.paid * 100 : null;
   const pctHtml = pct == null ? '<span class="pct none">—</span>'
@@ -267,14 +256,13 @@ months.forEach((r, i) => {
     <td class="pay-v">${r.paid ? brl(r.paid) : `<span class="na">${r.note}</span>`}</td>
     <td>${r.back ? `<span class="back-v">${brl(r.back)}</span>` : '<span class="zero">R$ 0,00</span>'}</td>
     <td>${conf || '<span class="zero">0</span>'}</td>
-    <td>${r.prov ? `<span class="prov-v">${brl(r.prov)}</span>` : '<span class="zero">—</span>'}</td>
     <td>${pctHtml}</td>`;
   tbody.appendChild(tr);
   if (!has) return;
   const d = document.createElement('tr');
   d.className = 'd';
-  d.innerHTML = `<td colspan="8"><div class="inner"><div><div class="cases">${
-    r.cases.map(c => `<span class="case${c[2] ? ' p' : ''}"><b>${c[0]}</b><span>${brl(c[1])}</span></span>`).join('')
+  d.innerHTML = `<td colspan="7"><div class="inner"><div><div class="cases">${
+    r.cases.map(c => `<span class="case"><b>${c[0]}</b><span>${brl(c[1])}</span></span>`).join('')
   }</div></div></div></td>`;
   tbody.appendChild(d);
   tr.setAttribute('tabindex', '0');
