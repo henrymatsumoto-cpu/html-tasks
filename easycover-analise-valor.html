@@ -137,6 +137,17 @@ table.t2 td .sm{ display:block; color:var(--faint); font-size:12px; margin-top:2
 .st.bad{ background:oklch(70% .17 25 / .15); color:oklch(76% .15 25) }
 .fech .ideal{ margin:var(--space-lg) 0 0; color:var(--muted); font-size:14px; max-width:80ch }
 .fech .ideal b{ color:var(--text); font-weight:600 }
+.bal{ margin-top:var(--space-2xl); padding-top:var(--space-xl); border-top:1px solid var(--line) }
+.bal h2{ font-size:clamp(26px,3.4vw,34px); margin:var(--space-md) 0 var(--space-md); max-width:26ch; line-height:1.1 }
+.bal .strip{ margin:var(--space-lg) 0 var(--space-xl) }
+.n.neg{ color:oklch(76% .15 25) } .n.pos{ color:var(--green) }
+table.t3{ min-width:900px }
+table.t3 td.pos{ color:var(--green) } table.t3 td.neg{ color:oklch(76% .15 25) }
+table.t3 td.res{ font-weight:700 }
+table.t3 th.pos{ color:var(--green) } table.t3 th.neg{ color:oklch(76% .15 25) }
+table.t3 td .sm{ display:block; color:var(--faint); font-size:12px; margin-top:2px; font-weight:400 }
+.bal .ideal{ margin:var(--space-lg) 0 0; color:var(--muted); font-size:14px; max-width:80ch }
+.bal .ideal b{ color:var(--text); font-weight:600 }
 footer{ margin-top:var(--space-2xl); color:var(--faint); font-size:13px }
 
 @media (max-width: 760px){
@@ -217,6 +228,41 @@ footer{ margin-top:var(--space-2xl); color:var(--faint); font-size:13px }
       <span class="t">Diferença</span><b class="t">R$ 375.075,20</b>
     </div>
     <p>São <b style="color:var(--text)">96,5%</b> do que foi pago, cerca de R$ 37,5 mil por mês.</p>
+  </section>
+
+  <section class="bal" aria-label="Balanço EasyCover">
+    <div class="eyebrow">Balanço · comissão + danos − custo</div>
+    <h2>A EasyCover se paga?</h2>
+    <p class="lede">Cada imóvel com EasyCover gera <b>2% do faturamento</b> em comissão para a Seazone. Somando essa comissão aos reembolsos de dano e descontando o boleto do mês, o saldo de nov/25 a ago/26 fica <b>negativo em R$ 15 mil</b>. Só jan, fev e mar/26 fecharam no azul, puxados pela alta temporada.</p>
+
+    <section class="strip" aria-label="Resumo do balanço">
+      <div><div class="n neg">− R$ 15.007,77</div><div class="l">saldo acumulado em 10 meses (nov/25 → ago/26)</div></div>
+      <div><div class="n pos">96,1%</div><div class="l">do custo coberto pela comissão (92,6%) e pelos danos (3,5%)</div></div>
+      <div><div class="n bad">3 de 10</div><div class="l">meses com saldo positivo. O custo é fixo por imóvel e a comissão varia com a temporada.</div></div>
+    </section>
+
+    <div class="table-scroll">
+    <table class="t3">
+      <thead><tr>
+        <th>Mês</th><th>Imóveis com EasyCover faturando</th><th>Faturamento desses imóveis</th>
+        <th class="pos">Comissão 2% (+)</th><th class="pos">Danos pagos (+)</th><th class="neg">Pago à EasyCover (−)</th><th>Saldo</th>
+      </tr></thead>
+      <tbody>
+        <tr><td><b>Nov/25</b></td><td>226</td><td class="d">R$ 623.828,52</td><td class="pos">R$ 12.476,57</td><td class="zero">R$ 0,00</td><td class="neg">− R$ 27.776,01</td><td class="res neg">− R$ 15.299,44</td></tr>
+        <tr><td><b>Dez/25</b></td><td>330</td><td class="d">R$ 1.287.477,82</td><td class="pos">R$ 25.749,56</td><td class="pos">R$ 410,00</td><td class="neg">− R$ 31.209,00</td><td class="res neg">− R$ 5.049,44</td></tr>
+        <tr><td><b>Jan/26</b></td><td>403</td><td class="d">R$ 3.655.683,01</td><td class="pos">R$ 73.113,66</td><td class="pos">R$ 2.995,72</td><td class="neg">− R$ 33.335,37</td><td class="res pos">+ R$ 42.774,01</td></tr>
+        <tr><td><b>Fev/26</b></td><td>455</td><td class="d">R$ 2.697.846,87</td><td class="pos">R$ 53.956,94</td><td class="pos">R$ 489,99</td><td class="neg">− R$ 31.472,70</td><td class="res pos">+ R$ 22.974,23</td></tr>
+        <tr><td><b>Mar/26</b></td><td>483</td><td class="d">R$ 1.889.415,88</td><td class="pos">R$ 37.788,32</td><td class="zero">R$ 0,00</td><td class="neg">− R$ 35.133,81</td><td class="res pos">+ R$ 2.654,51</td></tr>
+        <tr><td><b>Abr/26</b></td><td>532</td><td class="d">R$ 1.631.468,88</td><td class="pos">R$ 32.629,38</td><td class="zero">R$ 0,00</td><td class="neg">− R$ 38.987,61</td><td class="res neg">− R$ 6.358,23</td></tr>
+        <tr><td><b>Mai/26</b></td><td>568</td><td class="d">R$ 1.408.981,25</td><td class="pos">R$ 28.179,62</td><td class="pos">R$ 3.753,00</td><td class="neg">− R$ 41.042,97</td><td class="res neg">− R$ 9.110,35</td></tr>
+        <tr><td><b>Jun/26</b></td><td>573</td><td class="d">R$ 1.267.700,16</td><td class="pos">R$ 25.354,00</td><td class="zero">R$ 0,00</td><td class="neg">− R$ 46.695,21</td><td class="res neg">− R$ 21.341,21</td></tr>
+        <tr><td><b>Jul/26</b></td><td>649</td><td class="d">R$ 1.798.914,22</td><td class="pos">R$ 35.978,28</td><td class="pos">R$ 1.540,00</td><td class="neg">− R$ 49.842,48</td><td class="res neg">− R$ 12.324,20</td></tr>
+        <tr><td><b>Ago/26</b></td><td>697</td><td class="d">R$ 1.742.055,00</td><td class="pos">R$ 34.841,10</td><td class="pos">R$ 4.542,15</td><td class="neg">− R$ 53.310,90</td><td class="res neg">− R$ 13.927,65</td></tr>
+      </tbody>
+      <tfoot><tr><td>Nov/25 → Ago/26</td><td></td><td>R$ 18.003.371,61</td><td class="back-v">R$ 360.067,43</td><td class="back-v">R$ 13.730,86</td><td>− R$ 388.806,06</td><td>− R$ 15.007,77</td></tr></tfoot>
+    </table>
+    </div>
+    <p class="ideal">O faturamento é calculado <b>imóvel por imóvel</b>, contando só os dias em que o seguro estava ligado no Sapron (histórico do cadastro), pela data de competência da reserva. A comissão de 2% é uma estimativa: no Sapron ela vem embutida na comissão da Seazone, não como um lançamento separado.</p>
   </section>
 
   <section class="fech" aria-label="Problemas no fechamento">
