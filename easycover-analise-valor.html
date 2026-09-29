@@ -145,6 +145,16 @@ table.t3{ min-width:900px }
 table.t3 td.pos{ color:var(--green) } table.t3 td.neg{ color:oklch(76% .15 25) }
 table.t3 td.res{ font-weight:700 }
 table.t3 th.pos{ color:var(--green) } table.t3 th.neg{ color:oklch(76% .15 25) }
+table.t3 thead th{ white-space:nowrap }
+table.t3 thead tr.grp th{ font-size:11px; letter-spacing:.1em; padding:0 var(--space-md) 8px; border-bottom:0; text-align:center; color:var(--muted) }
+table.t3 thead tr.grp th span{ display:block }
+table.t3 thead tr.grp th.g-base{ text-align:left; padding-left:0 }
+table.t3 thead tr.grp th.g-base, table.t3 thead tr.grp th.g-pos, table.t3 thead tr.grp th.g-neg, table.t3 thead tr.grp th.g-res{ box-shadow:inset 0 -2px 0 var(--line) }
+table.t3 thead tr.grp th.g-pos{ color:var(--green); box-shadow:inset 0 -2px 0 oklch(78% .14 155 / .5) }
+table.t3 thead tr.grp th.g-neg{ color:oklch(76% .15 25); box-shadow:inset 0 -2px 0 oklch(76% .15 25 / .5) }
+table.t3 thead tr.grp th.g-res{ color:var(--text) }
+table.t3 thead tr.sub th{ padding-top:12px; font-size:12px; letter-spacing:.04em }
+table.t3 thead tr.grp th + th{ border-left:12px solid var(--bg) }
 table.t3 td .sm{ display:block; color:var(--faint); font-size:12px; margin-top:2px; font-weight:400 }
 .bal .ideal{ margin:var(--space-lg) 0 0; color:var(--muted); font-size:14px; max-width:80ch }
 .bal .ideal b{ color:var(--text); font-weight:600 }
@@ -266,10 +276,20 @@ footer{ margin-top:var(--space-2xl); color:var(--faint); font-size:13px }
 
     <div class="table-scroll">
     <table class="t3">
-      <thead><tr>
-        <th>Mês</th><th>Imóveis com EasyCover faturando</th><th>Faturamento desses imóveis</th>
-        <th class="pos">Comissão 2% (+)</th><th class="pos">Danos pagos (+)</th><th class="neg">Pago à EasyCover (−)</th><th>Saldo</th>
-      </tr></thead>
+      <thead>
+        <tr class="grp">
+          <th colspan="3" class="g-base">Imóveis com EasyCover</th>
+          <th colspan="2" class="g-pos">Entradas</th>
+          <th class="g-neg">Saída</th>
+          <th class="g-res">Resultado</th>
+        </tr>
+        <tr class="sub">
+          <th>Mês</th><th>Imóveis faturando</th><th>Faturamento</th>
+          <th class="pos">Comissão 2%</th><th class="pos">Danos pagos</th>
+          <th class="neg">Boleto EasyCover</th>
+          <th>Saldo do mês</th>
+        </tr>
+      </thead>
       <tbody>
         <tr><td><b>Nov/25</b></td><td>226</td><td class="d">R$ 623.828,52</td><td class="pos">R$ 12.476,57</td><td class="zero">R$ 0,00</td><td class="neg">− R$ 27.776,01</td><td class="res neg">− R$ 15.299,44</td></tr>
         <tr><td><b>Dez/25</b></td><td>330</td><td class="d">R$ 1.287.477,82</td><td class="pos">R$ 25.749,56</td><td class="pos">R$ 410,00</td><td class="neg">− R$ 31.209,00</td><td class="res neg">− R$ 5.049,44</td></tr>
