@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Horas de Limpeza Estimadas</title>
+<style>
+:root{
+  /* Bluezone: tokens em tema escuro, neutros tintados no azul da marca */
+  --color-primary:#0055FF;
+  --color-primary-on-dark:#4D86FF;
+  --color-success:#22C55E;
+  --color-warning-on-dark:#FF8A3D;
+  --color-background:#060A1C;
+  --color-surface:#0C1230;
+  --color-surface-2:#141B40;
+  --color-border:#1E2749;
+  --color-foreground:#EDEFF7;
+  --color-muted-fg:#949BB8;
+  --radius-lg:8px; --radius-xl:12px; --radius-full:9999px;
+  --font:"Helvetica Neue", Helvetica, "Nimbus Sans", Arial, sans-serif;
+}
+@page{size:A4 landscape;margin:0}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--color-background);color:var(--color-foreground);font-family:var(--font);
+  -webkit-print-color-adjust:exact;print-color-adjust:exact;-webkit-font-smoothing:antialiased}
+.page{width:297mm;height:210mm;padding:14mm 16mm 12mm;position:relative;overflow:hidden;
+  page-break-after:always;break-after:page;display:flex;flex-direction:column;gap:14px;
+  background:linear-gradient(180deg,#080E26 0%,var(--color-background) 55%)}
+.page:last-child{page-break-after:auto;break-after:auto}
+h1{font-size:44px;font-weight:700;line-height:1.08;margin:0;letter-spacing:-.022em}
+h2{font-size:26px;font-weight:500;line-height:1.2;margin:0;letter-spacing:-.01em}
+h3{font-size:16px;font-weight:500;line-height:1.3;margin:0}
+p{font-size:13px;font-weight:400;line-height:1.55;margin:0;color:var(--color-muted-fg);max-width:110ch}
+strong{color:var(--color-foreground);font-weight:700}
+.eyebrow{font-size:10.5px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--color-primary-on-dark);
+  margin:0;display:inline-flex;align-items:center;gap:10px}
+.eyebrow::before{content:"";width:18px;height:2px;background:currentColor;border-radius:var(--radius-full)}
+
+/* marca */
+.brand{display:flex;align-items:center;gap:10px;font-size:13px;font-weight:700;letter-spacing:.02em}
+.brand i{width:22px;height:22px;border-radius:var(--radius-full);background:var(--color-primary);position:relative;display:inline-block}
+.brand i::after{content:"";position:absolute;left:5px;right:5px;top:9px;height:4px;border-radius:var(--radius-full);background:#fff;opacity:.9}
+.brand span{color:var(--color-muted-fg);font-weight:500}
+.foot{position:absolute;left:16mm;right:16mm;bottom:7mm;display:flex;justify-content:space-between;
+  font-size:9.5px;color:var(--color-muted-fg);border-top:1px solid var(--color-border);padding-top:6px}
+
+/* capa */
+.cover{justify-content:space-between;padding-top:18mm}
+.cover .glow{position:absolute;right:-60mm;top:-50mm;width:180mm;height:180mm;border-radius:50%;
+  background:radial-gradient(circle,rgba(0,85,255,.34) 0%,rgba(0,85,255,0) 68%)}
+.cover .lead{font-size:17px;font-weight:500;line-height:1.5;color:var(--color-foreground);max-width:70ch;margin-top:12px}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.kpi{background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-xl);padding:14px 16px}
+.kpi .v{font-size:30px;font-weight:700;letter-spacing:-.02em;line-height:1.1;font-variant-numeric:tabular-nums}
+.kpi .v small{font-size:14px;font-weight:500;color:var(--color-muted-fg);margin-left:3px}
+.kpi .l{font-size:11px;font-weight:500;color:var(--color-muted-fg);margin-top:4px}
+.kpi.accent{background:var(--color-primary);border-color:var(--color-primary)}
+.kpi.accent .l,.kpi.accent .v small{color:rgba(255,255,255,.8)}
+.premissa{display:grid;grid-template-columns:repeat(6,1fr);gap:8px}
+.premissa div{border:1px solid var(--color-border);border-radius:var(--radius-lg);padding:9px 12px;background:rgba(12,18,48,.6)}
+.premissa b{display:block;font-size:18px;font-weight:700;font-variant-numeric:tabular-nums}
+.premissa span{font-size:10.5px;color:var(--color-muted-fg)}
+
+/* tabelas */
+.card{background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-xl);padding:12px 14px}
+table{width:100%;border-collapse:collapse;font-size:11.5px;font-variant-numeric:tabular-nums}
+thead th{font-size:9.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--color-muted-fg);
+  text-align:right;padding:6px 8px;border-bottom:1px solid var(--color-border);white-space:nowrap}
+thead th:first-child,tbody th{text-align:left}
+tbody th{font-weight:500;padding:5px 8px;white-space:nowrap}
+td{text-align:right;padding:5px 8px;white-space:nowrap}
+tbody tr + tr td,tbody tr + tr th{border-top:1px solid rgba(30,39,73,.6)}
+td.tot{font-weight:700;color:var(--color-foreground)}
+td.hi{color:var(--color-warning-on-dark)}
+td.lo{color:var(--color-success)}
+.m{font-size:9.5px;color:var(--color-muted-fg);margin-left:3px}
+tr.sum th,tr.sum td{border-top:1px solid var(--color-primary-on-dark)!important;font-weight:700;color:var(--color-foreground);background:rgba(0,85,255,.10)}
+.tag{display:inline-block;line-height:1.3;vertical-align:1px;font-size:8.5px;font-weight:700;letter-spacing:.04em;padding:1px 6px;margin-left:6px;
+  border-radius:var(--radius-full);background:var(--color-surface-2);color:var(--color-muted-fg);border:1px solid var(--color-border)}
+.dense table{font-size:10.5px} .dense td,.dense tbody th{padding:3.4px 8px}
+.tmes{font-size:10px} .tmes td,.tmes th{padding:4px 5px}
+
+/* gráfico */
+svg{width:100%;height:auto;display:block}
+.bar{fill:#23306A}.bar.hi{fill:var(--color-primary)}
+.bv{font-size:10px;font-weight:700;fill:var(--color-foreground);text-anchor:middle;font-family:var(--font)}
+.bl{font-size:9.5px;fill:var(--color-muted-fg);text-anchor:middle;font-family:var(--font)}
+.axis{stroke:var(--color-border);stroke-width:1}
+.row{display:grid;grid-template-columns:1.35fr 1fr;gap:14px;align-items:stretch}
+.note{font-size:10.5px;color:var(--color-muted-fg);line-height:1.5}
+.meta{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.meta .kpi .v{font-size:22px}
+ol.met{margin:0;padding-left:18px;display:grid;gap:9px;font-size:12.5px;line-height:1.55;color:var(--color-muted-fg);max-width:120ch}
+ol.met b{color:var(--color-foreground)}
+</style>
+</head>
+<body>
+
+<!-- 1. CAPA -->
+<section class="page cover">
+  <div class="glow" aria-hidden="true"></div>
+  <div class="brand"><i></i>Seazone <span>· Operação de limpeza</span></div>
+  <div>
+    <p class="eyebrow">Estimativa · out/25 a set/26</p>
+    <h1 style="margin-top:14px">Horas de limpeza<br>nos últimos 12 meses</h1>
+    <p class="lead">Quanto tempo de limpeza os checkouts do período representam, aplicando a produtividade que a Calculadora de Taxa de Limpeza usa para cada tipologia.</p>
+  </div>
+  <div class="kpis">
+    <div class="kpi accent"><div class="v">537.980<small>h</small></div><div class="l">horas estimadas em 12 meses</div></div>
+    <div class="kpi"><div class="v">163.505</div><div class="l">checkouts com limpeza</div></div>
+    <div class="kpi"><div class="v">44.832<small>h/mês</small></div><div class="l">média mensal</div></div>
+    <div class="kpi"><div class="v">255</div><div class="l">pessoas em tempo integral por mês (176 h)</div></div>
+  </div>
+  <div>
+    <p class="eyebrow" style="margin-bottom:8px">Premissa por tipologia: jornada de 8 h ÷ limpezas por dia</p>
+    <div class="premissa">
+      <div><b>2h40</b><span>Studio · 3/dia</span></div>
+      <div><b>2h40</b><span>1 quarto · 3/dia</span></div>
+      <div><b>4h00</b><span>2 quartos · 2/dia</span></div>
+      <div><b>8h00</b><span>3 quartos · 1/dia</span></div>
+      <div><b>8h00</b><span>4 quartos · 1/dia</span></div>
+      <div><b>8h00</b><span>5+ quartos · 1/dia</span></div>
+    </div>
+  </div>
+  <div class="foot"><span>Fonte: Sapron (reservas concluídas) · Calculadora de Taxa de Limpeza (CLT_POR_DIA)</span><span>Gerado em 30/09/2026</span></div>
+</section>
+
+<!-- 2. GERAL -->
+<section class="page">
+  <div class="brand"><i></i>Seazone <span>· Visão geral</span></div>
+  <div>
+    <p class="eyebrow">Geral · todas as praças</p>
+    <h2 style="margin-top:8px">Horas estimadas por mês e por tipologia</h2>
+  </div>
+  <div class="row">
+    <div class="card">
+      <h3 style="margin-bottom:6px">Horas por mês</h3>
+      <svg viewBox='0 0 680 190' role='img' aria-label='Horas estimadas de limpeza por mês'><line class='axis' x1='28' x2='680' y1='168' y2='168'/><rect class='bar' x='37.8' y='80.0' width='34.8' height='88.0' rx='3'/><text class='bv' x='55.2' y='75.0'>37,5k</text><text class='bl' x='55.2' y='184'>out/25</text><rect class='bar' x='92.1' y='69.8' width='34.8' height='98.2' rx='3'/><text class='bv' x='109.5' y='64.8'>41,8k</text><text class='bl' x='109.5' y='184'>nov/25</text><rect class='bar' x='146.4' y='60.0' width='34.8' height='108.0' rx='3'/><text class='bv' x='163.8' y='55.0'>46,0k</text><text class='bl' x='163.8' y='184'>dez/25</text><rect class='bar hi' x='200.8' y='34.1' width='34.8' height='133.9' rx='3'/><text class='bv' x='218.2' y='29.1'>57,0k</text><text class='bl' x='218.2' y='184'>jan/26</text><rect class='bar' x='255.1' y='55.6' width='34.8' height='112.4' rx='3'/><text class='bv' x='272.5' y='50.6'>47,8k</text><text class='bl' x='272.5' y='184'>fev/26</text><rect class='bar' x='309.4' y='50.9' width='34.8' height='117.1' rx='3'/><text class='bv' x='326.8' y='45.9'>49,8k</text><text class='bl' x='326.8' y='184'>mar/26</text><rect class='bar' x='363.8' y='58.1' width='34.8' height='109.9' rx='3'/><text class='bv' x='381.2' y='53.1'>46,8k</text><text class='bl' x='381.2' y='184'>abr/26</text><rect class='bar' x='418.1' y='76.2' width='34.8' height='91.8' rx='3'/><text class='bv' x='435.5' y='71.2'>39,1k</text><text class='bl' x='435.5' y='184'>mai/26</text><rect class='bar' x='472.4' y='90.3' width='34.8' height='77.7' rx='3'/><text class='bv' x='489.8' y='85.3'>33,1k</text><text class='bl' x='489.8' y='184'>jun/26</text><rect class='bar' x='526.8' y='64.7' width='34.8' height='103.3' rx='3'/><text class='bv' x='544.2' y='59.7'>44,0k</text><text class='bl' x='544.2' y='184'>jul/26</text><rect class='bar' x='581.1' y='64.1' width='34.8' height='103.9' rx='3'/><text class='bv' x='598.5' y='59.1'>44,2k</text><text class='bl' x='598.5' y='184'>ago/26</text><rect class='bar' x='635.4' y='48.0' width='34.8' height='120.0' rx='3'/><text class='bv' x='652.8' y='43.0'>51,1k</text><text class='bl' x='652.8' y='184'>set/26</text></svg>
+    </div>
+    <div class="meta" style="grid-template-columns:1fr;align-content:stretch">
+      <div class="kpi"><div class="v">jan/26 · 57.003 h</div><div class="l">mês com mais horas</div></div>
+      <div class="kpi"><div class="v">jun/26 · 33.051 h</div><div class="l">mês com menos horas</div></div>
+      <div class="kpi"><div class="v">44.832 h</div><div class="l">média mensal (255 pessoas em tempo integral)</div></div>
+    </div>
+  </div>
+  <div class="card dense">
+    <table>
+      <thead><tr><th scope="col">Mês</th><th scope="col">Checkouts</th><th scope="col">Studio</th><th scope="col">1 quarto</th><th scope="col">2 quartos</th><th scope="col">3 quartos</th><th scope="col">4 quartos</th><th scope="col">5+ quartos</th><th scope="col">Total (h)</th><th scope="col">Pessoas equiv.</th></tr></thead>
+      <tbody><tr><th scope='row'>out/25</th><td>11.494</td><td>6.125</td><td>17.349</td><td>7.548</td><td>5.640</td><td>560</td><td>232</td><td class='tot'>37.455</td><td>213</td></tr><tr><th scope='row'>nov/25</th><td>12.877</td><td>6.739</td><td>19.453</td><td>8.848</td><td>5.984</td><td>544</td><td>216</td><td class='tot'>41.784</td><td>237</td></tr><tr><th scope='row'>dez/25</th><td>14.018</td><td>6.771</td><td>20.976</td><td>10.684</td><td>6.768</td><td>568</td><td>200</td><td class='tot'>45.967</td><td>261</td></tr><tr><th scope='row'>jan/26</th><td>17.317</td><td>7.475</td><td>26.472</td><td>13.640</td><td>8.280</td><td>872</td><td>264</td><td class='tot'>57.003</td><td>324</td></tr><tr><th scope='row'>fev/26</th><td>14.518</td><td>5.773</td><td>22.765</td><td>11.248</td><td>7.104</td><td>712</td><td>216</td><td class='tot'>47.819</td><td>272</td></tr><tr><th scope='row'>mar/26</th><td>15.124</td><td>5.013</td><td>24.829</td><td>11.468</td><td>7.672</td><td>704</td><td>152</td><td class='tot'>49.839</td><td>283</td></tr><tr><th scope='row'>abr/26</th><td>13.956</td><td>3.789</td><td>22.912</td><td>11.480</td><td>7.584</td><td>776</td><td>224</td><td class='tot'>46.765</td><td>266</td></tr><tr><th scope='row'>mai/26</th><td>12.014</td><td>3.312</td><td>20.808</td><td>8.804</td><td>5.392</td><td>576</td><td>176</td><td class='tot'>39.068</td><td>222</td></tr><tr><th scope='row'>jun/26</th><td>10.220</td><td>2.472</td><td>18.123</td><td>7.520</td><td>4.376</td><td>448</td><td>112</td><td class='tot'>33.051</td><td>188</td></tr><tr><th scope='row'>jul/26</th><td>13.266</td><td>2.411</td><td>23.371</td><td>10.608</td><td>6.888</td><td>552</td><td>128</td><td class='tot'>43.957</td><td>250</td></tr><tr><th scope='row'>ago/26</th><td>13.489</td><td>1.797</td><td>24.987</td><td>10.128</td><td>6.496</td><td>624</td><td>184</td><td class='tot'>44.216</td><td>251</td></tr><tr><th scope='row'>set/26</th><td>15.212</td><td>1.333</td><td>27.952</td><td>12.068</td><td>8.624</td><td>840</td><td>240</td><td class='tot'>51.057</td><td>290</td></tr><tr class='sum'><th scope='row'>Total 12 meses</th><td>163.505</td><td>53.011</td><td>269.997</td><td>124.044</td><td>80.808</td><td>7.776</td><td>2.344</td><td class='tot'>537.980</td><td>255</td></tr></tbody>
+    </table>
+  </div>
+  <div class="foot"><span>Colunas de tipologia em horas. Pessoas equiv. = horas do mês ÷ 176 h (22 dias × 8 h).</span><span>2</span></div>
+</section>
+
+<!-- 3. FLORIANÓPOLIS (1/2) -->
+<section class="page">
+  <div class="brand"><i></i>Seazone <span>· Florianópolis</span></div>
+  <div>
+    <p class="eyebrow">Florianópolis · 28 franquias</p>
+    <h2 style="margin-top:8px">Horas por franquia: maior mês, menor mês e média</h2>
+  </div>
+  <div class="meta">
+    <div class="kpi"><div class="v">132.026 h</div><div class="l">horas da praça em 12 meses</div></div>
+    <div class="kpi"><div class="v">400 h</div><div class="l">média mensal de uma franquia</div></div>
+    <div class="kpi"><div class="v">jan/26</div><div class="l">mês de pico da praça</div></div>
+  </div>
+  <div class="card tmes">
+    <table><thead><tr><th scope="col">Praça por mês (h)</th><th scope='col'>out/25</th><th scope='col'>nov/25</th><th scope='col'>dez/25</th><th scope='col'>jan/26</th><th scope='col'>fev/26</th><th scope='col'>mar/26</th><th scope='col'>abr/26</th><th scope='col'>mai/26</th><th scope='col'>jun/26</th><th scope='col'>jul/26</th><th scope='col'>ago/26</th><th scope='col'>set/26</th></tr></thead><tbody><tr><th scope="row">Florianópolis</th><td>10.352</td><td>10.652</td><td>12.056</td><td>14.883</td><td>13.083</td><td>13.531</td><td>12.387</td><td>9.165</td><td>7.411</td><td>8.459</td><td>9.439</td><td>10.609</td></tr></tbody></table>
+  </div>
+  <div class="card dense">
+    <table><thead><tr><th scope="col">Franquia</th><th scope="col">Checkouts</th><th scope="col">Horas 12 meses</th><th scope="col">Maior mês (h)</th><th scope="col">Menor mês (h)</th><th scope="col">Média mensal (h)</th><th scope="col">Pessoas equiv.</th></tr></thead><tbody><tr><th scope='row'>Franquia 1</th><td>8.324</td><td>22.507</td><td class='hi'>2.311 <span class='m'>out/25</span></td><td class='lo'>1.504 <span class='m'>jun/26</span></td><td class='tot'>1.876</td><td>10,7</td></tr><tr><th scope='row'>Franquia 2</th><td>3.307</td><td>10.953</td><td class='hi'>1.112 <span class='m'>jan/26</span></td><td class='lo'>679 <span class='m'>out/25</span></td><td class='tot'>913</td><td>5,2</td></tr><tr><th scope='row'>Franquia 3</th><td>1.867</td><td>7.619</td><td class='hi'>1.044 <span class='m'>jan/26</span></td><td class='lo'>252 <span class='m'>jun/26</span></td><td class='tot'>635</td><td>3,6</td></tr><tr><th scope='row'>Franquia 4</th><td>2.458</td><td>7.553</td><td class='hi'>847 <span class='m'>jan/26</span></td><td class='lo'>375 <span class='m'>mai/26</span></td><td class='tot'>629</td><td>3,6</td></tr><tr><th scope='row'>Franquia 5</th><td>1.790</td><td>6.999</td><td class='hi'>937 <span class='m'>mar/26</span></td><td class='lo'>325 <span class='m'>jul/26</span></td><td class='tot'>583</td><td>3,3</td></tr><tr><th scope='row'>Franquia 6</th><td>2.191</td><td>6.331</td><td class='hi'>641 <span class='m'>jan/26</span></td><td class='lo'>383 <span class='m'>out/25</span></td><td class='tot'>528</td><td>3,0</td></tr><tr><th scope='row'>Franquia 7</th><td>2.291</td><td>6.233</td><td class='hi'>847 <span class='m'>jan/26</span></td><td class='lo'>261 <span class='m'>jun/26</span></td><td class='tot'>519</td><td>3,0</td></tr><tr><th scope='row'>Franquia 8</th><td>1.483</td><td>6.067</td><td class='hi'>763 <span class='m'>jan/26</span></td><td class='lo'>152 <span class='m'>jun/26</span></td><td class='tot'>506</td><td>2,9</td></tr><tr><th scope='row'>Franquia 9</th><td>2.230</td><td>6.041</td><td class='hi'>931 <span class='m'>jan/26</span></td><td class='lo'>235 <span class='m'>jun/26</span></td><td class='tot'>503</td><td>2,9</td></tr><tr><th scope='row'>Franquia 10</th><td>1.812</td><td>5.364</td><td class='hi'>580 <span class='m'>ago/26</span></td><td class='lo'>273 <span class='m'>out/25</span></td><td class='tot'>447</td><td>2,5</td></tr><tr><th scope='row'>Franquia 11</th><td>1.872</td><td>5.191</td><td class='hi'>548 <span class='m'>mar/26</span></td><td class='lo'>260 <span class='m'>jun/26</span></td><td class='tot'>433</td><td>2,5</td></tr><tr><th scope='row'>Franquia 12</th><td>1.498</td><td>5.119</td><td class='hi'>688 <span class='m'>jan/26</span></td><td class='lo'>183 <span class='m'>jul/26</span></td><td class='tot'>427</td><td>2,4</td></tr><tr><th scope='row'>Franquia 13</th><td>1.628</td><td>4.818</td><td class='hi'>496 <span class='m'>set/26</span></td><td class='lo'>271 <span class='m'>nov/25</span></td><td class='tot'>401</td><td>2,3</td></tr><tr><th scope='row'>Franquia 14</th><td>1.120</td><td>4.777</td><td class='hi'>783 <span class='m'>jan/26</span></td><td class='lo'>143 <span class='m'>jun/26</span></td><td class='tot'>398</td><td>2,3</td></tr></tbody></table>
+  </div>
+  <div class="foot"><span>Franquias numeradas pelo total de horas (1 = maior). Média mensal = horas ÷ meses com checkout. Continua na próxima página.</span><span>3</span></div>
+</section>
+
+<!-- 3b. FLORIANÓPOLIS (2/2) -->
+<section class="page">
+  <div class="brand"><i></i>Seazone <span>· Florianópolis</span></div>
+  <div>
+    <p class="eyebrow">Florianópolis · continuação</p>
+    <h2 style="margin-top:8px">Franquias 15 a 28 e total da praça</h2>
+  </div>
+  <div class="card dense">
+    <table><thead><tr><th scope="col">Franquia</th><th scope="col">Checkouts</th><th scope="col">Horas 12 meses</th><th scope="col">Maior mês (h)</th><th scope="col">Menor mês (h)</th><th scope="col">Média mensal (h)</th><th scope="col">Pessoas equiv.</th></tr></thead><tbody><tr><th scope='row'>Franquia 15</th><td>1.432</td><td>4.112</td><td class='hi'>513 <span class='m'>jan/26</span></td><td class='lo'>183 <span class='m'>jun/26</span></td><td class='tot'>343</td><td>1,9</td></tr><tr><th scope='row'>Franquia 16</th><td>888</td><td>3.944</td><td class='hi'>509 <span class='m'>jan/26</span></td><td class='lo'>212 <span class='m'>jul/26</span></td><td class='tot'>329</td><td>1,9</td></tr><tr><th scope='row'>Franquia 17</th><td>1.124</td><td>3.808</td><td class='hi'>428 <span class='m'>dez/25</span></td><td class='lo'>236 <span class='m'>jun/26</span></td><td class='tot'>317</td><td>1,8</td></tr><tr><th scope='row'>Franquia 18</th><td>755</td><td>3.596</td><td class='hi'>436 <span class='m'>jan/26</span></td><td class='lo'>149 <span class='m'>jul/26</span></td><td class='tot'>300</td><td>1,7</td></tr><tr><th scope='row'>Franquia 19</th><td>634</td><td>2.191</td><td class='hi'>301 <span class='m'>set/26</span></td><td class='lo'>5 <span class='m'>out/25</span></td><td class='tot'>183</td><td>1,0</td></tr><tr><th scope='row'>Franquia 20</th><td>548</td><td>2.139</td><td class='hi'>373 <span class='m'>set/26</span></td><td class='lo'>59 <span class='m'>out/25</span></td><td class='tot'>178</td><td>1,0</td></tr><tr><th scope='row'>Franquia 21</th><td>571</td><td>1.956</td><td class='hi'>255 <span class='m'>jan/26</span></td><td class='lo'>73 <span class='m'>jul/26</span></td><td class='tot'>163</td><td>0,9</td></tr><tr><th scope='row'>Franquia 22</th><td>554</td><td>1.860</td><td class='hi'>212 <span class='m'>jan/26</span></td><td class='lo'>84 <span class='m'>out/25</span></td><td class='tot'>155</td><td>0,9</td></tr><tr><th scope='row'>Franquia 23 <span class='tag'>7 meses</span></th><td>312</td><td>1.160</td><td class='hi'>300 <span class='m'>jan/26</span></td><td class='lo'>3 <span class='m'>abr/26</span></td><td class='tot'>166</td><td>0,9</td></tr><tr><th scope='row'>Franquia 24 <span class='tag'>7 meses</span></th><td>268</td><td>1.039</td><td class='hi'>207 <span class='m'>abr/26</span></td><td class='lo'>48 <span class='m'>mar/26</span></td><td class='tot'>148</td><td>0,8</td></tr><tr><th scope='row'>Franquia 25 <span class='tag'>6 meses</span></th><td>118</td><td>369</td><td class='hi'>132 <span class='m'>jan/26</span></td><td class='lo'>11 <span class='m'>out/25</span></td><td class='tot'>62</td><td>0,3</td></tr><tr><th scope='row'>Franquia 26</th><td>90</td><td>240</td><td class='hi'>40 <span class='m'>mar/26</span></td><td class='lo'>5 <span class='m'>abr/26</span></td><td class='tot'>20</td><td>0,1</td></tr><tr><th scope='row'>Franquia 27 <span class='tag'>2 meses</span></th><td>11</td><td>29</td><td class='hi'>19 <span class='m'>nov/25</span></td><td class='lo'>11 <span class='m'>out/25</span></td><td class='tot'>15</td><td>0,1</td></tr><tr><th scope='row'>Franquia 28 <span class='tag'>1 meses</span></th><td>3</td><td>12</td><td class='hi'>12 <span class='m'>set/26</span></td><td class='lo'>12 <span class='m'>set/26</span></td><td class='tot'>12</td><td>0,1</td></tr><tr class='sum'><th scope='row'>Praça inteira</th><td>41.179</td><td>132.026</td><td class='hi'>14.883 <span class='m'>jan/26</span></td><td class='lo'>7.411 <span class='m'>jun/26</span></td><td class='tot'>11.002</td><td>62,5</td></tr></tbody></table>
+  </div>
+  <div class="foot"><span>132 checkouts de hosts que não são franquia (operação própria) ficaram de fora desta tabela, mas estão no total geral.</span><span>4</span></div>
+</section>
+
+<!-- 4. SÃO PAULO -->
+<section class="page">
+  <div class="brand"><i></i>Seazone <span>· São Paulo</span></div>
+  <div>
+    <p class="eyebrow">São Paulo · 12 franquias</p>
+    <h2 style="margin-top:8px">Horas por franquia: maior mês, menor mês e média</h2>
+  </div>
+  <div class="meta">
+    <div class="kpi"><div class="v">25.565 h</div><div class="l">horas da praça em 12 meses</div></div>
+    <div class="kpi"><div class="v">219 h</div><div class="l">média mensal de uma franquia</div></div>
+    <div class="kpi"><div class="v">ago/26</div><div class="l">mês de pico da praça</div></div>
+  </div>
+  <div class="card">
+    <table>
+      <thead><tr><th scope="col">Franquia</th><th scope="col">Checkouts</th><th scope="col">Horas 12 meses</th><th scope="col">Maior mês (h)</th><th scope="col">Menor mês (h)</th><th scope="col">Média mensal (h)</th><th scope="col">Pessoas equiv.</th></tr></thead>
+      <tbody><tr><th scope='row'>Franquia 1</th><td>2.360</td><td>6.496</td><td class='hi'>867 <span class='m'>ago/26</span></td><td class='lo'>344 <span class='m'>jan/26</span></td><td class='tot'>541</td><td>3,1</td></tr><tr><th scope='row'>Franquia 2</th><td>1.497</td><td>3.992</td><td class='hi'>413 <span class='m'>mai/26</span></td><td class='lo'>248 <span class='m'>jan/26</span></td><td class='tot'>333</td><td>1,9</td></tr><tr><th scope='row'>Franquia 3</th><td>1.075</td><td>2.866</td><td class='hi'>416 <span class='m'>set/26</span></td><td class='lo'>115 <span class='m'>jan/26</span></td><td class='tot'>239</td><td>1,4</td></tr><tr><th scope='row'>Franquia 4</th><td>1.068</td><td>2.848</td><td class='hi'>341 <span class='m'>nov/25</span></td><td class='lo'>168 <span class='m'>jan/26</span></td><td class='tot'>237</td><td>1,3</td></tr><tr><th scope='row'>Franquia 5 <span class='tag'>4 meses</span></th><td>868</td><td>2.347</td><td class='hi'>820 <span class='m'>ago/26</span></td><td class='lo'>201 <span class='m'>jun/26</span></td><td class='tot'>587</td><td>3,3</td></tr><tr><th scope='row'>Franquia 6</th><td>772</td><td>2.245</td><td class='hi'>331 <span class='m'>mai/26</span></td><td class='lo'>67 <span class='m'>dez/25</span></td><td class='tot'>187</td><td>1,1</td></tr><tr><th scope='row'>Franquia 7</th><td>648</td><td>1.731</td><td class='hi'>301 <span class='m'>set/26</span></td><td class='lo'>56 <span class='m'>out/25</span></td><td class='tot'>144</td><td>0,8</td></tr><tr><th scope='row'>Franquia 8</th><td>570</td><td>1.520</td><td class='hi'>237 <span class='m'>set/26</span></td><td class='lo'>32 <span class='m'>out/25</span></td><td class='tot'>127</td><td>0,7</td></tr><tr><th scope='row'>Franquia 9</th><td>311</td><td>830</td><td class='hi'>104 <span class='m'>nov/25</span></td><td class='lo'>43 <span class='m'>jun/26</span></td><td class='tot'>69</td><td>0,4</td></tr><tr><th scope='row'>Franquia 10 <span class='tag'>5 meses</span></th><td>117</td><td>312</td><td class='hi'>83 <span class='m'>mar/26</span></td><td class='lo'>37 <span class='m'>dez/25</span></td><td class='tot'>62</td><td>0,4</td></tr><tr><th scope='row'>Franquia 11 <span class='tag'>3 meses</span></th><td>107</td><td>285</td><td class='hi'>152 <span class='m'>nov/25</span></td><td class='lo'>35 <span class='m'>dez/25</span></td><td class='tot'>95</td><td>0,5</td></tr><tr><th scope='row'>Franquia 12</th><td>35</td><td>93</td><td class='hi'>13 <span class='m'>fev/26</span></td><td class='lo'>3 <span class='m'>set/26</span></td><td class='tot'>8</td><td>0,0</td></tr><tr class='sum'><th scope='row'>Praça inteira</th><td>9.428</td><td>25.565</td><td class='hi'>3.471 <span class='m'>ago/26</span></td><td class='lo'>1.244 <span class='m'>jan/26</span></td><td class='tot'>2.130</td><td>12,1</td></tr></tbody>
+    </table>
+  </div>
+  <div class="card tmes">
+    <table><thead><tr><th scope="col">Praça por mês (h)</th><th scope='col'>out/25</th><th scope='col'>nov/25</th><th scope='col'>dez/25</th><th scope='col'>jan/26</th><th scope='col'>fev/26</th><th scope='col'>mar/26</th><th scope='col'>abr/26</th><th scope='col'>mai/26</th><th scope='col'>jun/26</th><th scope='col'>jul/26</th><th scope='col'>ago/26</th><th scope='col'>set/26</th></tr></thead><tbody><tr><th scope="row">São Paulo</th><td>1.423</td><td>1.972</td><td>1.472</td><td>1.244</td><td>1.643</td><td>1.889</td><td>1.731</td><td>2.435</td><td>2.095</td><td>2.724</td><td>3.471</td><td>3.468</td></tr></tbody></table>
+  </div>
+  <div class="foot"><span>Numeração independente da de Florianópolis (Franquia 1 de SP não é a Franquia 1 de Floripa). Considera a cidade de São Paulo, não o estado.</span><span>5</span></div>
+</section>
+
+<!-- 5. METODOLOGIA -->
+<section class="page">
+  <div class="brand"><i></i>Seazone <span>· Metodologia</span></div>
+  <div>
+    <p class="eyebrow">Como a conta foi feita</p>
+    <h2 style="margin-top:8px">Premissas e limites da estimativa</h2>
+  </div>
+  <ol class="met">
+    <li><b>Horas por limpeza vêm da Calculadora de Taxa de Limpeza.</b> Ela define quantas limpezas por dia uma funcionária CLT entrega por tipologia (3 / 3 / 2 / 1 / 1 / 1, de Studio a 5+ quartos). Dividimos uma jornada de 8 h por esse número. A calculadora não guarda tempo em minutos: as 8 h são premissa deste relatório.</li>
+    <li><b>O tempo inclui o deslocamento.</b> Como a conta parte de "limpezas por dia", o trajeto entre imóveis já está dentro das horas. Não é o tempo de faxina dentro do imóvel.</li>
+    <li><b>Um checkout é uma limpeza.</b> Contamos reservas <b>concluídas</b> do Sapron com checkout entre 01/10/2025 e 30/09/2026, sem bloqueios e sem canceladas. Nas extensões, conta só a reserva que efetivamente sai: a original com extensão de dias ou late checkout não conta, e a reserva de early check-in também não.</li>
+    <li><b>Tipologia pelo cadastro atual do imóvel.</b> Tipo "Studio" no Sapron vira Studio; os demais vão pelo número de quartos (mínimo 1, 5 ou mais agrupados). A queda de Studios ao longo do ano reflete em parte imóveis reclassificados no cadastro.</li>
+    <li><b>3, 4 e 5+ quartos custam o mesmo tempo (8 h).</b> É a régua da calculadora. Para imóveis grandes, a estimativa tende a ficar abaixo do real.</li>
+    <li><b>Franquia = host responsável pela reserva.</b> Florianópolis e São Paulo são filtradas pela cidade do endereço do imóvel. Hosts que não são franquia (operação própria) ficaram de fora das tabelas por praça, mas estão no total geral.</li>
+    <li><b>Setembro/26 vai até hoje (30/09).</b> Checkouts de hoje ainda não concluídos podem entrar depois.</li>
+    <li><b>Contraponto da própria calculadora:</b> o Sapron registra em média 2,75 limpezas por dia de 1 quarto em SC, abaixo das 3 por dia que ela usa. Com o número real, o tempo de 1 quarto subiria de 2h40 para ~2h55.</li>
+  </ol>
+  <div class="foot"><span>Seazone · Estimativa de horas de limpeza · uso interno</span><span>6</span></div>
+</section>
+
+</body>
+</html>
