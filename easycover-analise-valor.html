@@ -312,6 +312,49 @@ footer{ margin-top:var(--space-2xl); color:var(--faint); font-size:13px }
     <p class="ideal">O faturamento é calculado <b>imóvel por imóvel</b>, contando só os dias em que o seguro estava ligado no Sapron (histórico do cadastro), pela data de competência da reserva. A comissão de 2% é uma estimativa: no Sapron ela vem embutida na comissão da Seazone, não como um lançamento separado.</p>
   </section>
 
+  <section class="bal" aria-label="Imóveis cobrados sem receita">
+    <div class="eyebrow">Onde o custo vaza · jan → ago/26</div>
+    <h2>Imóveis que pagamos sem gerar comissão no mês</h2>
+    <p class="lede">O boleto cobra R$ 64,23 por imóvel da lista da Now, tenha ele reserva ou não. Cruzando cada lista mensal com o Sapron, <b>764 cobranças</b> (imóvel × mês) foram de imóveis sem reserva no mês, cerca de <b>R$ 49 mil</b>. O onboarding é a menor parte: pesa mais o imóvel que já opera e ficou parado, e o imóvel inativo ou inexistente no Sapron que continuou na lista.</p>
+
+    <section class="strip" aria-label="Resumo dos imóveis sem receita">
+      <div><div class="n neg">R$ 49.071<small>,72</small></div><div class="l">pagos por 764 imóvel-mês sem reserva (jan → ago/26)</div></div>
+      <div><div class="n bad">R$ 14.644<small>,44</small></div><div class="l">de imóveis inativos ou com código inexistente no Sapron (228), candidatos a contestação com a Now</div></div>
+      <div><div class="n pay">R$ 13.424<small>,07</small></div><div class="l">de imóveis em onboarding, ainda sem nenhuma reserva (209)</div></div>
+    </section>
+
+    <div class="table-scroll">
+    <table class="t3">
+      <thead>
+        <tr class="grp">
+          <th colspan="2" class="g-base">Lista da Now</th>
+          <th colspan="2" class="g-pos">Geraram receita</th>
+          <th colspan="4" class="g-neg">Sem reserva no mês</th>
+          <th class="g-res">Resultado</th>
+        </tr>
+        <tr class="sub">
+          <th>Mês</th><th>Cobrados</th>
+          <th class="pos">Com reserva</th><th class="pos">Estreou no mês</th>
+          <th class="neg">Onboarding</th><th class="neg">Parado</th><th class="neg">Inativo</th><th class="neg">Fora do Sapron</th>
+          <th>Custo sem receita</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><b>Jan/26</b></td><td>436</td><td class="pos">342</td><td class="pos">51</td><td class="neg">19</td><td class="neg">5</td><td class="neg">4</td><td class="neg">15</td><td class="res neg">− R$ 2.761,89</td></tr>
+        <tr><td><b>Fev/26</b></td><td>489</td><td class="pos">390</td><td class="pos">53</td><td class="neg">14</td><td class="neg">11</td><td class="neg">4</td><td class="neg">17</td><td class="res neg">− R$ 2.954,58</td></tr>
+        <tr><td><b>Mar/26</b></td><td>545</td><td class="pos">429</td><td class="pos">43</td><td class="neg">14</td><td class="neg">33</td><td class="neg">11</td><td class="neg">15</td><td class="res neg">− R$ 4.688,79</td></tr>
+        <tr><td><b>Abr/26</b></td><td>601</td><td class="pos">477</td><td class="pos">49</td><td class="neg">27</td><td class="neg">20</td><td class="neg">16</td><td class="neg">12</td><td class="res neg">− R$ 4.817,25</td></tr>
+        <tr><td><b>Mai/26</b></td><td>639</td><td class="pos">501</td><td class="pos">52</td><td class="neg">19</td><td class="neg">37</td><td class="neg">16</td><td class="neg">14</td><td class="res neg">− R$ 5.523,78</td></tr>
+        <tr><td><b>Jun/26</b></td><td>723</td><td class="pos">508</td><td class="pos">45</td><td class="neg">51</td><td class="neg">77</td><td class="neg">25</td><td class="neg">17</td><td class="res neg">− R$ 10.919,10</td></tr>
+        <tr><td><b>Jul/26</b></td><td>771</td><td class="pos">571</td><td class="pos">78</td><td class="neg">40</td><td class="neg">61</td><td class="neg">18</td><td class="neg">3</td><td class="res neg">− R$ 7.836,06</td></tr>
+        <tr><td><b>Ago/26</b></td><td>821</td><td class="pos">612</td><td class="pos">60</td><td class="neg">25</td><td class="neg">83</td><td class="neg">22</td><td class="neg">19</td><td class="res neg">− R$ 9.570,27</td></tr>
+      </tbody>
+      <tfoot><tr><td>Jan → Ago/26</td><td>5.025</td><td class="back-v">3.830</td><td class="back-v">431</td><td>209</td><td>327</td><td>116</td><td>112</td><td>− R$ 49.071,72</td></tr></tfoot>
+    </table>
+    </div>
+    <p class="ideal"><b>Como foi feito:</b> cada imóvel da planilha final de fechamento da Now foi cruzado com o Sapron pelo código. <b>Onboarding</b> = ainda sem nenhuma reserva até o fim do mês (o log de status do Sapron quase não registra a fase de onboarding, então a 1ª reserva é o marco de início da operação). <b>Estreou no mês</b> = 1ª reserva caiu no próprio mês. <b>Parado</b> = já tinha operado antes, mas não teve reserva no mês. <b>Inativo</b> = status Inactive no Sapron no fim do mês e sem reserva. Nov e dez/25 ficam de fora: as planilhas desses meses trazem só o id da proposta, sem o código do imóvel. A lista de jun tem 723 imóveis contra 727 no boleto. Antes de contestar inativos e códigos inexistentes, conferir caso a caso: imóvel recriado com o mesmo código ou código digitado diferente pela Now podem aparecer aqui sem ser cobrança indevida.</p>
+  </section>
+
   <section class="fech" aria-label="Problemas no fechamento">
     <div class="eyebrow">Problema principal · fechamento mensal</div>
     <h2>Do relatório ao boleto: quanto demora cada mês</h2>
