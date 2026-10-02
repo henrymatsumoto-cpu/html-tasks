@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Canvas da Lojinha</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,400;7..72,600;7..72,700&family=Karla:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:        oklch(0.19 0.012 195);
+  --bg-2:      oklch(0.235 0.013 195);
+  --panel:     oklch(0.255 0.014 196);
+  --panel-2:   oklch(0.295 0.015 196);
+  --line:      oklch(0.35 0.016 196);
+  --line-2:    oklch(0.44 0.018 196);
+  --ink:       oklch(0.945 0.008 190);
+  --ink-2:     oklch(0.79 0.012 192);
+  --ink-3:     oklch(0.635 0.014 194);
+  --teal:      oklch(0.80 0.115 178);
+  --teal-dim:  oklch(0.36 0.055 180);
+  --ochre:     oklch(0.815 0.135 78);
+  --ochre-dim: oklch(0.355 0.065 72);
+  --sage:      oklch(0.815 0.125 145);
+  --sage-dim:  oklch(0.345 0.060 148);
+  --clay:      oklch(0.755 0.135 32);
+  --clay-dim:  oklch(0.345 0.075 30);
+
+  --s1:4px; --s2:8px; --s3:12px; --s4:16px; --s5:24px; --s6:32px; --s7:48px; --s8:64px; --s9:96px;
+
+  --d: Literata, Georgia, serif;
+  --b: Karla, "Segoe UI", sans-serif;
+  --m: "JetBrains Mono", ui-monospace, Consolas, monospace;
+  --ease: cubic-bezier(0.22,1,0.36,1);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:110px}
+body{
+  margin:0;background:var(--bg);color:var(--ink);
+  font-family:var(--b);font-size:16px;line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,h4{margin:0;font-family:var(--d);font-weight:700;letter-spacing:-0.015em;line-height:1.18}
+p{margin:0}
+a{color:var(--teal);text-decoration-thickness:1px;text-underline-offset:3px}
+:focus-visible{outline:2px solid var(--teal);outline-offset:3px;border-radius:4px}
+
+.shell{max-width:1060px;margin:0 auto;padding-inline:var(--s5)}
+@media(max-width:640px){.shell{padding-inline:var(--s4)}}
+
+/* ---------- masthead ---------- */
+.mast{border-bottom:1px solid var(--line);background:
+  radial-gradient(120% 140% at 88% -20%, var(--teal-dim) 0%, transparent 58%),
+  var(--bg-2);}
+.mast .shell{padding-block:var(--s7) var(--s5)}
+.kicker{font-family:var(--m);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--teal);margin-bottom:var(--s4)}
+.mast h1{font-size:clamp(30px,5.4vw,50px);max-width:16ch}
+.mast .dek{margin-top:var(--s4);color:var(--ink-2);max-width:62ch;font-size:17px}
+.stamp{margin-top:var(--s5);display:flex;flex-wrap:wrap;gap:var(--s2) var(--s5);font-family:var(--m);font-size:11.5px;color:var(--ink-3);letter-spacing:.04em}
+.stamp b{color:var(--ink-2);font-weight:500}
+
+/* ---------- scoreboard ---------- */
+.score{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;margin-top:var(--s6);background:var(--line);border:1px solid var(--line)}
+.score>div{background:var(--bg-2);padding:var(--s4) var(--s4) var(--s3)}
+.score .n{font-family:var(--d);font-size:34px;font-weight:700;line-height:1;letter-spacing:-.03em}
+.score .l{font-size:13px;color:var(--ink-3);margin-top:var(--s2);line-height:1.35}
+.n.ok{color:var(--sage)} .n.mid{color:var(--ochre)} .n.no{color:var(--clay)} .n.new{color:var(--teal)}
+
+/* ---------- tabs ---------- */
+.tabs{position:sticky;top:0;z-index:40;background:color-mix(in oklab, var(--bg) 88%, transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.tabs .shell{display:flex;gap:var(--s5);align-items:stretch;overflow-x:auto}
+.tab{
+  appearance:none;background:none;border:0;border-bottom:2px solid transparent;
+  font-family:var(--b);font-size:14.5px;font-weight:600;color:var(--ink-3);
+  padding:var(--s4) 2px var(--s3);cursor:pointer;white-space:nowrap;
+  transition:color .25s var(--ease), border-color .25s var(--ease);
+}
+.tab:hover{color:var(--ink-2)}
+.tab[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--teal)}
+.tab .c{font-family:var(--m);font-size:11px;color:var(--ink-3);margin-left:6px}
+
+main{padding-block:var(--s7) var(--s9)}
+.view[hidden]{display:none}
+
+/* ---------- intro / veredicto ---------- */
+.verdict{border:1px solid var(--line);background:var(--panel);padding:var(--s5);margin-bottom:var(--s7)}
+.verdict h2{font-size:23px;margin-bottom:var(--s3)}
+.verdict p{color:var(--ink-2);max-width:72ch}
+.verdict p+p{margin-top:var(--s3)}
+.verdict .hl{color:var(--ink);font-weight:600;font-family:var(--b)}
+
+/* ---------- legend ---------- */
+.legend{display:flex;flex-wrap:wrap;gap:var(--s3);margin-bottom:var(--s6)}
+.tag{
+  font-family:var(--m);font-size:10.5px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;
+  padding:3px 9px;border:1px solid var(--line-2);color:var(--ink-2);white-space:nowrap;
+}
+.tag.novo{color:var(--teal);border-color:var(--teal);background:var(--teal-dim)}
+.tag.alt{color:var(--ochre);border-color:var(--ochre);background:var(--ochre-dim)}
+.tag.keep{color:var(--ink-3)}
+.tag.conf{color:var(--clay);border-color:var(--clay);background:var(--clay-dim)}
+.tag.ok{color:var(--sage);border-color:var(--sage);background:var(--sage-dim)}
+
+/* ---------- canvas mock ---------- */
+.sec{border:1px solid var(--line);background:var(--panel);margin-bottom:var(--s5)}
+.sec>header{display:flex;gap:var(--s3);align-items:center;flex-wrap:wrap;padding:var(--s4) var(--s5);border-bottom:1px solid var(--line);background:var(--panel-2)}
+.sec>header h3{font-size:19px;flex:1;min-width:220px}
+.sec>header .em{font-size:18px;filter:saturate(.85)}
+.body{padding:var(--s5)}
+.body>*+*{margin-top:var(--s4)}
+.body ul{margin:0;padding-left:1.15em}
+.body li{margin-bottom:var(--s2);color:var(--ink-2)}
+.body li::marker{color:var(--ink-3)}
+.body b,.body strong{color:var(--ink);font-weight:600}
+.body em{color:var(--ink-2)}
+.lbl{font-family:var(--m);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);display:block;margin-bottom:var(--s2)}
+
+.marked{background:var(--ochre-dim);box-shadow:0 0 0 2px var(--ochre-dim);color:var(--ink)}
+.added{background:var(--teal-dim);box-shadow:0 0 0 2px var(--teal-dim);color:var(--ink)}
+
+.note{border:1px solid var(--line-2);background:var(--bg);padding:var(--s4);font-size:14.5px;color:var(--ink-2)}
+.note.why{border-color:var(--teal);background:var(--teal-dim)}
+.note.ask{border-color:var(--clay);background:var(--clay-dim)}
+.note .lbl{color:inherit;opacity:.85}
+
+/* steps */
+.step{border:1px solid var(--line);background:var(--bg-2);margin-top:var(--s4)}
+.step>summary{
+  list-style:none;cursor:pointer;padding:var(--s3) var(--s4);display:flex;gap:var(--s3);align-items:baseline;
+  font-weight:600;font-size:15.5px;
+}
+.step>summary::-webkit-details-marker{display:none}
+.step>summary:hover{background:var(--panel)}
+.step .idx{font-family:var(--m);font-size:12px;color:var(--teal);font-weight:700;flex:none;width:1.4em}
+.step .sum-t{flex:1}
+.step .chev{color:var(--ink-3);font-size:12px;transition:transform .25s var(--ease)}
+.step[open] .chev{transform:rotate(90deg)}
+.step .inner{padding:0 var(--s4) var(--s4) calc(var(--s4) + 1.4em)}
+.step .inner>*+*{margin-top:var(--s3)}
+
+/* table */
+.tbl{width:100%;border-collapse:collapse;font-size:14.5px}
+.tbl th,.tbl td{text-align:left;padding:var(--s3);border:1px solid var(--line);vertical-align:top}
+.tbl th{background:var(--panel-2);font-family:var(--m);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);font-weight:500}
+.tbl td{color:var(--ink-2)}
+.tbl td:first-child{color:var(--ink);font-weight:500}
+.tbl tr:last-child td{background:var(--panel-2);color:var(--ink);font-weight:600}
+.tbl .num{font-family:var(--m);font-variant-numeric:tabular-nums}
+.tblwrap{overflow-x:auto}
+
+/* price grid */
+.prices{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:var(--s4)}
+.pcard{border:1px solid var(--line);background:var(--bg-2);padding:var(--s4)}
+.pcard h4{font-family:var(--m);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--teal);font-weight:500;margin-bottom:var(--s3)}
+.pcard dl{margin:0;display:grid;grid-template-columns:1fr auto;gap:6px var(--s3);font-size:14.5px}
+.pcard dt{color:var(--ink-2)}
+.pcard dd{margin:0;font-family:var(--m);font-variant-numeric:tabular-nums;color:var(--ink);font-weight:500}
+.pcard dd.flag{color:var(--clay)}
+
+/* copy */
+.copyrow{display:flex;gap:var(--s2);align-items:center;flex-wrap:wrap;margin-left:auto}
+.btn{
+  appearance:none;font-family:var(--b);font-size:12.5px;font-weight:600;cursor:pointer;
+  padding:6px 13px;border:1px solid var(--line-2);background:var(--bg);color:var(--ink-2);
+  transition:border-color .2s var(--ease), color .2s var(--ease), background .2s var(--ease);
+}
+.btn:hover{border-color:var(--teal);color:var(--teal)}
+.btn.on{border-color:var(--sage);color:var(--sage);background:var(--sage-dim)}
+.raw{display:none}
+.msgbox{white-space:pre-wrap;font-family:var(--m);font-size:14px;line-height:1.7;color:var(--ink);
+  background:var(--bg);border:1px solid var(--line-2);border-left:3px solid var(--teal);padding:14px 16px;margin:10px 0}
+.msgbox b{font-weight:700}
+.body h4.sub{font-family:var(--d);font-size:19px;color:var(--ink);margin:26px 0 10px;padding-top:14px;border-top:1px solid var(--line)}
+.body h4.sub .pill{font-family:var(--m);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--teal);
+  border:1px solid var(--teal-dim);border-radius:2px;padding:3px 7px;margin-left:10px;vertical-align:middle;font-weight:500}
+.obj{border-left:2px solid var(--line-2);padding:2px 0 2px 14px;margin:14px 0}
+.obj .q{font-family:var(--d);font-size:16px;color:var(--ink);margin-bottom:6px}
+.obj p{margin:0 0 6px}
+.obj .lim{font-size:14px;color:var(--ink-3)}
+.conf-inline{font-family:var(--m);font-size:12px;color:var(--ochre);border-bottom:1px dashed var(--ochre-dim);padding-bottom:1px}
+
+
+
+/* modo limpo: o que se vê é o que se cola */
+body:not(.rev) .note{display:none}
+body:not(.rev) .marked,body:not(.rev) .added{background:none;box-shadow:none;color:inherit}
+body:not(.rev) .pcard dd.flag{color:var(--ink)}
+body:not(.rev) .pcard dd.flag::after{content:""}
+body:not(.rev) .legend{display:none}
+body:not(.rev) .tag.novo,body:not(.rev) .tag.alt,body:not(.rev) .tag.conf{display:none}
+.revbar{display:flex;gap:var(--s2);align-items:center;flex-wrap:wrap;margin-bottom:var(--s6);padding-bottom:var(--s4);border-bottom:1px solid var(--line)}
+.callout{border:1px solid var(--line-2);background:var(--bg);padding:var(--s4);font-size:15px;color:var(--ink-2)}
+.callout .cl{font-family:var(--m);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);display:block;margin-bottom:6px}
+
+/* ---------- respostas ---------- */
+.filters{display:flex;gap:var(--s2);flex-wrap:wrap;align-items:center;margin-bottom:var(--s5);padding-bottom:var(--s4);border-bottom:1px solid var(--line)}
+.filters .lbl{margin:0 var(--s2) 0 0}
+.fbtn{
+  appearance:none;font-family:var(--b);font-size:12.5px;cursor:pointer;padding:5px 12px;
+  border:1px solid var(--line-2);background:transparent;color:var(--ink-2);
+  transition:all .2s var(--ease);
+}
+.fbtn:hover{border-color:var(--ink-3);color:var(--ink)}
+.fbtn[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink);font-weight:600}
+
+.grp{margin-bottom:var(--s7)}
+.grp>h3{font-size:24px;margin-bottom:var(--s2)}
+.grp>.sub{color:var(--ink-3);font-size:14.5px;margin-bottom:var(--s5);max-width:70ch}
+
+.ans{border:1px solid var(--line);background:var(--panel);margin-bottom:var(--s3)}
+.ans>summary{list-style:none;cursor:pointer;padding:var(--s4);display:grid;grid-template-columns:52px 1fr auto;gap:var(--s3);align-items:baseline}
+.ans>summary::-webkit-details-marker{display:none}
+.ans>summary:hover{background:var(--panel-2)}
+.ans .code{font-family:var(--m);font-size:12px;font-weight:700;color:var(--ink-3)}
+.ans .t{font-size:15.5px;font-weight:600;line-height:1.35}
+.ans .who{font-size:13px;color:var(--ink-3);margin-top:3px}
+.ans .inner{padding:0 var(--s4) var(--s4) calc(52px + var(--s4) + var(--s3))}
+.ans .inner>*+*{margin-top:var(--s3)}
+.ans .inner p{color:var(--ink-2);max-width:78ch}
+.ans[data-st="ok"]{border-color:color-mix(in oklab, var(--sage) 45%, var(--line))}
+.ans[data-st="mid"]{border-color:color-mix(in oklab, var(--ochre) 35%, var(--line))}
+@media(max-width:640px){
+  .ans>summary{grid-template-columns:44px 1fr;}
+  .ans>summary .tag{grid-column:2}
+  .ans .inner{padding-left:var(--s4)}
+}
+.rec{border:1px solid var(--line-2);background:var(--bg);padding:var(--s3) var(--s4);font-size:14.5px}
+.rec .lbl{color:var(--teal)}
+.rec p{color:var(--ink)!important}
+
+footer{border-top:1px solid var(--line);margin-top:var(--s9);padding-block:var(--s5) var(--s8)}
+footer p{font-size:13.5px;color:var(--ink-3);max-width:80ch}
+footer p+p{margin-top:var(--s3)}
+footer b{color:var(--ink-2);font-weight:600}
+
+@media print{
+  body{background:#fff;color:#000}
+  .tabs,.btn,.filters{display:none}
+  .view[hidden]{display:block!important}
+  details{open:true}
+}
+
+.tbl tr:last-child td{background:transparent;color:var(--ink-2);font-weight:400}
+.tbl tr:last-child td:first-child{color:var(--ink);font-weight:500}
+.body>p:has(+.tblwrap){margin-top:var(--s5)}
+body{color-scheme:dark}
+</style>
+</head>
+<body>
+
+<header class="mast">
+  <div class="shell">
+    <p class="kicker">Fornecedores · Lojinha Seazone</p>
+    <h1>Como o canvas da Lojinha deve ficar</h1>
+    <p class="dek">O "Canvas de Processo da Lojinha" reescrito no mesmo padrão do canvas de Prospecção de Fotógrafos: identificação, objetivo, escopo, papéis, fluxo etapa por etapa e o SLA de cada fase do kanban, nos dois lados (Administração e Fornecedor). Cada seção tem o botão Copiar para colar direto no Slack.</p>
+    <div class="stamp">
+      <span>Canvas atual de <b>16/07/2026</b></span>
+      <span>SLAs definidos em <b>28/09/2026</b></span>
+      <span>Fluxo conferido no histórico de <b>2.909 mudanças de fase</b></span>
+      <span>Versão proposta: <b>02/10/2026</b></span>
+    </div>
+    <div class="score">
+      <div><div class="n new">9</div><div class="l">seções no padrão novo</div></div>
+      <div><div class="n">7</div><div class="l">fases da Administração</div></div>
+      <div><div class="n">2</div><div class="l">fases do Fornecedor com prazo</div></div>
+      <div><div class="n ok">17</div><div class="l">dias úteis, no máximo, do pedido ao despacho</div></div>
+      <div><div class="n mid">4</div><div class="l">correções em relação ao canvas atual</div></div>
+    </div>
+  </div>
+</header>
+
+<main class="shell">
+
+  <div class="verdict">
+    <h2>O que muda em relação ao canvas de hoje</h2>
+    <p>O canvas de 16/07 tem a ordem das etapas trocada. Ele coloca o "encaminha para o fornecedor" <span class="hl">depois</span> do pagamento, mas no sistema o pedido vai para o fornecedor <span class="hl">antes</span>, para ele gerar o link de pagamento. O histórico dos cards confirma: <span class="hl">Caixa de Entrada → Enviado ao Fornecedor → Aguardando Pagamento → Validação de Pagamento → Aguardando Envio → Pedido Enviado → Concluído</span>.</p>
+    <p>Além da ordem, três números mudaram com os SLAs de 28/09: o pagamento passou de 5 para <span class="hl">7 dias úteis</span>, o envio passou de 3 para <span class="hl">5 dias úteis</span> e entrou a fase nova <span class="hl">Validação de Pagamento</span>, com 1 dia útil. O gatilho do "pagamento vencido" também estava errado: contava até o encaminhamento ao fornecedor, que acontece antes do pagamento.</p>
+    <p>Abaixo, o canvas inteiro. Ligue <span class="hl">Mostrar comentários da revisão</span> para ver o que mudou e por quê. Esses comentários não entram no que você copia.</p>
+  </div>
+
+  <div class="revbar">
+    <span class="lbl" style="margin:0 8px 0 0">Exibição</span>
+    <button class="fbtn" id="revtoggle" aria-pressed="false">Mostrar comentários da revisão</button>
+    <button class="fbtn" id="stepsall" aria-pressed="false">Abrir todas as etapas</button>
+    <span style="flex:1"></span>
+    <button class="btn" id="copyall">Copiar o canvas inteiro</button>
+  </div>
+
+  <div class="legend">
+    <span class="tag novo">Trecho novo</span>
+    <span class="tag alt">Trecho alterado</span>
+    <span class="tag conf">Precisa de decisão</span>
+  </div>
+
+  <!-- 1 -->
+  <article class="sec">
+    <header><span class="em">📌</span><h3>1. Identificação do Processo</h3><span class="tag novo">Seção nova</span>
+      <span class="copyrow"><button class="btn" data-copy>Copiar</button></span></header>
+    <div class="body">
+      <ul>
+        <li><b>Nome do Processo:</b> Ciclo do Pedido na Lojinha Seazone</li>
+        <li><b>Setor Responsável:</b> Fornecedores (Franquias)</li>
+        <li><b>Responsável Principal:</b> @Wania Helena Lageano Espindola @Henry Yudi</li>
+        <li><b>Onde roda:</b> Lojinha Seazone, nos painéis Admin › Pedidos (Time) e Fornecedor › Pedidos (fornecedor)</li>
+        <li><b>Versão:</b> 2, revisada em 02/10/2026</li>
+        <li><b>Próxima revisão:</b> a cada 6 meses, ou quando uma fase ou um SLA mudar</li>
+      </ul>
+      <div class="note ask"><span class="lbl">Confirmar</span>Usei os mesmos responsáveis do canvas de fotógrafos. Se a lojinha tiver outro dono, troque antes de colar.</div>
+    </div>
+  </article>
+
+  <!-- 2 -->
+  <article class="sec">
+    <header><span class="em">🎯</span><h3>2. Objetivo do Processo</h3><span class="tag novo">Seção nova</span>
+      <span class="copyrow"><button class="btn" data-copy>Copiar</button></span></header>
+    <div class="body">
+      <p>Garantir que todo pedido feito na Lojinha Seazone seja pago, enviado e entregue dentro do prazo, com a Seazone intermediando a relação entre cliente e fornecedor do começo ao fim.</p>
+      <p>Cada fase do pedido tem um dono e um prazo. Assim, nenhum pedido fica parado sem alguém saber, o cliente sabe em que pé está a compra e o fornecedor é cobrado pelo que combinou.</p>
+      <p><b>Resultados esperados:</b></p>
+      <ul>
+        <li>Nenhum pedido parado além do SLA da fase sem uma ação do Time.</li>
+        <li>Pedido pago despachado em até 5 dias úteis após a validação do pagamento.</li>
+        <li>Todo pedido concluído com nota fiscal, transportadora e código de rastreio preenchidos.</li>
+      </ul>
+    </div>
+  </article>
+
+  <!-- 3 -->
+  <article class="sec">
+    <header><span class="em">📝</span><h3>3. Escopo do Processo</h3><span class="tag alt">Alterado</span>
+      <span class="copyrow"><button class="btn" data-copy>Copiar</button></span></header>
+    <div class="body">
+      <p><b>Começa:</b> quando o cliente finaliza o pedido no checkout da lojinha.</p>
+      <p><b>Termina:</b> quando o Time marca o pedido como Concluído (entregue) ou Cancelado.</p>
+      <p><b>Quem compra:</b> franquias, proprietários e colaboradores Seazone.</p>
+      <p><b>Inclui:</b></p>
+      <ul>
+        <li>Pedidos pagos (Pix, boleto ou link de cartão) e pedidos grátis.</li>
+        <li>Pedidos com mais de um fornecedor. Cada fornecedor vira um card separado, com o próprio prazo.</li>
+        <li>Cancelamentos, pedidos pelo Time ou pelo próprio cliente.</li>
+      </ul>
+      <p><b>Não inclui:</b></p>
+      <ul>
+        <li><b>Cadastro de fornecedor</b> (prospecção, negociação, cadastro e catálogo). É pré-requisito e roda fora do ciclo de cada pedido.</li>
+        <li><b>Itens de Indicação Seazone.</b> São comprados direto no Mercado Livre e a Seazone não acompanha, não rastreia e não resolve problemas desses itens.</li>
+      </ul>
+      <div class="note why"><span class="lbl">Por quê</span>O canvas atual misturava o cadastro de fornecedor com o ciclo do pedido como se fossem um bloco só. Aqui ele vira um item de "não inclui", porque tem outro ritmo e outro dono.</div>
+    </div>
+  </article>
+
+  <!-- 4 -->
+  <article class="sec">
+    <header><span class="em">👥</span><h3>4. Responsáveis e Papéis</h3><span class="tag alt">Alterado</span>
+      <span class="copyrow"><button class="btn" data-copy>Copiar</button></span></header>
+    <div class="body">
+      <ul>
+        <li><b>Cliente (franquia, proprietário ou colaborador):</b> faz o pedido, paga, anexa o comprovante e acompanha o status em Meus Pedidos.</li>
+        <li><b>Time Lojinha (Fornecedores):</b> analisa e encaminha o pedido, valida o pagamento, acompanha os prazos, conclui e cancela. É o único canal do cliente para qualquer problema.</li>
+        <li><b>Fornecedor:</b> informa o pagamento (link, Pix ou boleto), envia o pedido e preenche nota fiscal, transportadora e código de rastreio no painel do fornecedor.</li>
+        <li class="added"><b>Sistema:</b> move o card sozinho quando o fornecedor preenche o pagamento (vai para Aguardando Pagamento) e quando preenche os dados de envio (vai para Pedido Enviado).</li>
+      </ul>
+      <div class="note why"><span class="lbl">Por quê</span>No histórico, 78 passagens para Aguardando Pagamento e 37 para Pedido Enviado foram feitas pelo fornecedor ou pelo sistema, sem o Time mexer. Quem lê o canvas precisa saber que essas duas passagens são automáticas.</div>
+    </div>
+  </article>
+
+  <!-- 5 -->
+  <article class="sec">
+    <header><span class="em">🔄</span><h3>5. Fluxo do Processo</h3><span class="tag alt">Ordem corrigida</span><span class="tag novo">+1 fase</span>
+      <span class="copyrow"><button class="btn" data-copy>Copiar</button></span></header>
+    <div class="body">
+      <p>O pedido anda em dois quadros ao mesmo tempo: o da <b>Administração</b> (Time Lojinha) e o do <b>Fornecedor</b>. A fase entre parênteses é a que o fornecedor vê no painel dele.</p>
+
+      <details class="step" open>
+        <summary><span class="idx">1</span><span class="sum-t">Caixa de Entrada</span><span class="chev">›</span></summary>
+        <div class="inner">
+          <p><b>Responsável:</b> Time Lojinha</p>
+          <p>O pedido entra aqui assim que o cliente finaliza a compra. O Time confere itens, quantidades, frete, endereço e documento (CPF ou CNPJ). Para fornecedor que vende só para CNPJ, o pedido precisa ter CNPJ.</p>
+          <p><b>Sai da etapa quando:</b> o Time encaminha para o fornecedor. Pedido grátis não tem pagamento e vai direto para Aguardando Envio.</p>
+          <p><b>SLA:</b> 1 dia útil.</p>
+        </div>
+      </details>
+
+      <details class="step">
+        <summary><span class="idx">2</span><span class="sum-t">Enviado ao Fornecedor (Fornecedor: Recebido)</span><span class="chev">›</span></summary>
+        <div class="inner">
+          <p><b>Responsável:</b> Fornecedor</p>
+          <p>O fornecedor recebe o pedido e informa a forma de pagamento: link de cartão, chave Pix ou boleto. Se o frete real for diferente do estimado, ele ajusta aqui, antes do cliente pagar.</p>
+          <p><b>Sai da etapa quando:</b> o fornecedor preenche o pagamento. O card vai sozinho para Aguardando Pagamento.</p>
+          <p><b>SLA:</b> 3 dias úteis (vale para a Administração e para o Fornecedor, na fase Recebido).</p>
+          <div class="note why"><span class="lbl">Por quê</span>No canvas atual essa etapa aparecia depois do pagamento. No sistema ela vem antes: sem o link do fornecedor, o cliente não tem como pagar.</div>
+        </div>
+      </details>
+
+      <details class="step">
+        <summary><span class="idx">3</span><span class="sum-t">Aguardando Pagamento (Fornecedor: Informação de Pagamento)</span><span class="chev">›</span></summary>
+        <div class="inner">
+          <p><b>Responsável:</b> Cliente</p>
+          <p>O cliente vê o link ou a chave em Meus Pedidos, paga e anexa o comprovante. O Time acompanha e manda lembrete: a 1ª mensagem quando o link fica disponível, outra no 4º dia e outra no 7º dia.</p>
+          <p><b>Sai da etapa quando:</b> o cliente anexa o comprovante. O card vai para Validação de Pagamento.</p>
+          <p><b>SLA:</b> 7 dias úteis.</p>
+          <p class="added"><b>Passou do prazo:</b> o card fica vermelho e o Time decide. Se o cliente avisou que vai pagar, dá mais prazo. Se não respondeu, cancela o pedido. O pedido não é cancelado sozinho.</p>
+          <div class="note why"><span class="lbl">Por quê</span>O canvas atual dizia 5 dias, e o gatilho de "pagamento vencido" contava até o encaminhamento ao fornecedor, uma etapa que acontece antes do pagamento. Agora o prazo é o da fase: 7 dias úteis em Aguardando Pagamento.</div>
+        </div>
+      </details>
+
+      <details class="step">
+        <summary><span class="idx">4</span><span class="sum-t">Validação de Pagamento</span><span class="chev">›</span></summary>
+        <div class="inner">
+          <p><b>Responsável:</b> Time Lojinha</p>
+          <p class="added">Fase nova, no ar desde 28/09/2026. O Time confere se o valor do comprovante bate com o total do pedido e se o pagamento caiu, e então confirma o pagamento no card.</p>
+          <p><b>Sai da etapa quando:</b> o Time confirma o pagamento. O card vai para Aguardando Envio, e é a partir daqui que conta o prazo de envio do fornecedor.</p>
+          <p><b>SLA:</b> 1 dia útil.</p>
+        </div>
+      </details>
+
+      <details class="step">
+        <summary><span class="idx">5</span><span class="sum-t">Aguardando Envio (Fornecedor: Informação de Envio)</span><span class="chev">›</span></summary>
+        <div class="inner">
+          <p><b>Responsável:</b> Fornecedor</p>
+          <p>O fornecedor separa e despacha o pedido, e preenche no painel a nota fiscal, a transportadora e o código de rastreio. A nota sai no CPF ou CNPJ do pedido, e o endereço de entrega precisa ser o mesmo do CNPJ da nota.</p>
+          <p><b>Sai da etapa quando:</b> os três dados de envio estão preenchidos. O card vai sozinho para Pedido Enviado.</p>
+          <p><b>SLA:</b> 5 dias úteis (vale para a Administração e para o Fornecedor, na fase Informação de Envio).</p>
+          <div class="note why"><span class="lbl">Por quê</span>O canvas atual dava 3 dias úteis. O SLA definido em 28/09 é 5. O FAQ da lojinha fala em "despacho médio de 3 dias após o pagamento", que é média e não prazo, então pode ficar.</div>
+        </div>
+      </details>
+
+      <details class="step">
+        <summary><span class="idx">6</span><span class="sum-t">Pedido Enviado</span><span class="chev">›</span></summary>
+        <div class="inner">
+          <p><b>Responsável:</b> Time Lojinha</p>
+          <p>O pedido está com a transportadora. O Time acompanha pelo rastreio e cobra o fornecedor se o rastreio parar de atualizar ou não abrir.</p>
+          <p><b>Sai da etapa quando:</b> o pedido é entregue e o Time marca Concluído.</p>
+          <p><b>SLA:</b> 15 dias úteis.</p>
+        </div>
+      </details>
+
+      <details class="step">
+        <summary><span class="idx">7</span><span class="sum-t">Concluído ou Cancelado</span><span class="chev">›</span></summary>
+        <div class="inner">
+          <p><b>Responsável:</b> Time Lojinha</p>
+          <p><b>Concluído:</b> só fecha com nota fiscal, transportadora e código de rastreio preenchidos.</p>
+          <p><b>Cancelado:</b> o Time pode cancelar em qualquer fase. O cliente também pode cancelar o próprio pedido em Meus Pedidos, inteiro ou por fornecedor. Os motivos de cancelamento são:</p>
+          <ul>
+            <li>Correção de uma falha operacional</li>
+            <li>Alteração do pedido</li>
+            <li>Solicitação do cliente</li>
+            <li class="added">Pagamento não feito dentro do SLA</li>
+          </ul>
+          <p><b>SLA:</b> sem prazo. São fases finais.</p>
+        </div>
+      </details>
+    </div>
+  </article>
+
+  <!-- 6 -->
+  <article class="sec">
+    <header><span class="em">⏳</span><h3>6. Prazos e SLA</h3><span class="tag novo">Seção nova</span>
+      <span class="copyrow"><button class="btn" data-copy>Copiar</button></span></header>
+    <div class="body">
+      <p>Todos os prazos são em <b>dias úteis</b>, sem fins de semana e sem feriados nacionais.</p>
+      <p><b>Administração (quadro do Time)</b></p>
+      <div class="tblwrap">
+      <table class="tbl">
+        <thead><tr><th>Fase</th><th>SLA</th><th>Quem age</th><th>Acumulado</th></tr></thead>
+        <tbody>
+          <tr><td>Caixa de Entrada</td><td class="num">1 dia útil</td><td>Time Lojinha</td><td class="num">dia 1</td></tr>
+          <tr><td>Enviado ao Fornecedor</td><td class="num">3 dias úteis</td><td>Fornecedor</td><td class="num">dia 4</td></tr>
+          <tr><td>Aguardando Pagamento</td><td class="num">7 dias úteis</td><td>Cliente</td><td class="num">dia 11</td></tr>
+          <tr><td>Validação de Pagamento</td><td class="num">1 dia útil</td><td>Time Lojinha</td><td class="num">dia 12</td></tr>
+          <tr><td>Aguardando Envio</td><td class="num">5 dias úteis</td><td>Fornecedor</td><td class="num">dia 17</td></tr>
+          <tr><td>Pedido Enviado</td><td class="num">15 dias úteis</td><td>Transportadora / Time</td><td class="num">dia 32</td></tr>
+          <tr><td>Concluído e Cancelado</td><td>sem prazo</td><td>—</td><td>—</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p><b>Fornecedor (painel do fornecedor)</b></p>
+      <div class="tblwrap">
+      <table class="tbl">
+        <thead><tr><th>Fase</th><th>SLA</th><th>Equivale a</th></tr></thead>
+        <tbody>
+          <tr><td>Recebido</td><td class="num">3 dias úteis</td><td>Enviado ao Fornecedor</td></tr>
+          <tr><td>Informação de Envio</td><td class="num">5 dias úteis</td><td>Aguardando Envio</td></tr>
+          <tr><td>Demais fases</td><td>sem prazo</td><td>—</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p><b>Como o prazo conta:</b></p>
+      <ul>
+        <li>O prazo recomeça sempre que o pedido muda de fase.</li>
+        <li>O card só fica vermelho depois de passar do limite. Numa fase de 1 dia, por exemplo, ele fica vermelho a partir do 2º dia útil.</li>
+        <li>O painel ordena os cards pelo maior tempo de estouro, para o Time ver primeiro os mais atrasados.</li>
+        <li>Quando o atraso é do fornecedor (Recebido ou Informação de Envio), o card mostra um indicador de SLA estourado do fornecedor.</li>
+      </ul>
+      <p class="added"><b>Pedido pago, do checkout ao despacho: até 17 dias úteis.</b> Até a entrega: até 32. Esses são os tetos, não o tempo esperado. A meta é nenhum card vermelho. Se uma fase estoura toda semana, o problema está no processo ou no próprio prazo, e ele deve ser revisto.</p>
+    </div>
+  </article>
+
+  <!-- 7 -->
+  <article class="sec">
+    <header><span class="em">📣</span><h3>7. Comunicação com o cliente</h3><span class="tag novo">Seção nova</span>
+      <span class="copyrow"><button class="btn" data-copy>Copiar</button></span></header>
+    <div class="body">
+      <p><b>Hoje:</b> lembretes de pagamento na fase Aguardando Pagamento, marcados no card:</p>
+      <ul>
+        <li>1ª mensagem: quando o link de pagamento fica disponível</li>
+        <li>Mensagem do 4º dia</li>
+        <li>Mensagem do 7º dia: último aviso antes do SLA estourar</li>
+      </ul>
+      <p><b>Próximos passos, com avisos automáticos pela SIA</b> (em conversa com o Roberto Campos):</p>
+      <ul>
+        <li>Link de pagamento disponível</li>
+        <li>Pedido vai ser cancelado se não for pago</li>
+        <li>Pedido cancelado</li>
+        <li>Pedido enviado, com o código de rastreio</li>
+      </ul>
+      <p><b>Regras de discurso:</b></p>
+      <ul>
+        <li>Não prometer prazo de entrega. Falar só do prazo de despacho.</li>
+        <li>Fornecedores são "homologados" pela Seazone.</li>
+        <li>Problema com produto: o cliente fala com o time de fornecedores e manda provas (foto, vídeo), <b>nunca direto com o fornecedor</b>. A Seazone intermedia e resolve.</li>
+      </ul>
+    </div>
+  </article>
+
+  <!-- 8 -->
+  <article class="sec">
+    <header><span class="em">📊</span><h3>8. Indicadores</h3><span class="tag novo">Seção nova</span><span class="tag conf">confirmar quais</span>
+      <span class="copyrow"><button class="btn" data-copy>Copiar</button></span></header>
+    <div class="body">
+      <div class="tblwrap">
+      <table class="tbl">
+        <thead><tr><th>Indicador</th><th>De onde sai</th><th>Frequência</th></tr></thead>
+        <tbody>
+          <tr><td>% de pedidos dentro do SLA, por fase</td><td>Painel de SLA da lojinha</td><td>Semanal</td></tr>
+          <tr><td>Cards vermelhos em aberto</td><td>Painel de SLA, ordenado por estouro</td><td>Diário</td></tr>
+          <tr><td>SLA estourado por fornecedor</td><td>Indicador de estouro do fornecedor</td><td>Mensal</td></tr>
+          <tr><td>Tempo médio do checkout ao despacho</td><td>Histórico de fases do pedido</td><td>Mensal</td></tr>
+          <tr><td>Cancelamentos por motivo</td><td>Pedidos cancelados</td><td>Mensal</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p class="added"><b>Responsável por acompanhar:</b> ______ · <b>Onde:</b> ______</p>
+      <div class="note ask"><span class="lbl">Decidir</span>A lista é um ponto de partida. Falta escolher quem acompanha e onde o número aparece (weekly de fornecedores, KPI do setor).</div>
+    </div>
+  </article>
+
+  <!-- 9 -->
+  <article class="sec">
+    <header><span class="em">⚠️</span><h3>9. Exceções e cuidados</h3><span class="tag alt">Alterado</span>
+      <span class="copyrow"><button class="btn" data-copy>Copiar</button></span></header>
+    <div class="body">
+      <ul>
+        <li><b>Pedido com vários fornecedores:</b> cada fornecedor tem o próprio card e o próprio prazo. Um fornecedor atrasado não trava os outros.</li>
+        <li><b>Pedido grátis:</b> pula Enviado ao Fornecedor, Aguardando Pagamento e Validação de Pagamento, e vai da Caixa de Entrada direto para Aguardando Envio.</li>
+        <li><b>Fornecedor que vende só para CNPJ:</b> a lojinha bloqueia o pedido com CPF. Não aceitar troca de documento depois.</li>
+        <li><b>Nota fiscal:</b> o endereço de entrega precisa ser o mesmo do CNPJ da nota, por risco fiscal.</li>
+        <li><b>Frete ajustado:</b> o fornecedor ajusta o frete antes de mandar o link. Se ajustar depois que o link foi enviado, o Time avisa o cliente do novo valor antes de ele pagar.</li>
+        <li><b>Itens de Indicação Seazone:</b> ficam fora do processo. A compra é no Mercado Livre, e a Seazone não acompanha.</li>
+      </ul>
+    </div>
+  </article>
+
+</main>
+
+<footer class="shell">
+  <p><b>Como usar.</b> Cada seção tem o botão Copiar. O texto vai com títulos, listas e tabelas para colar no canvas do Slack, e os comentários da revisão ficam de fora. Se a colagem com formatação falhar, ele cai no texto puro.</p>
+  <p><b>Fontes.</b> Canvas atual F0BHT0PG7N1 (16/07/2026), SLAs definidos em 28/09/2026 e histórico de fases da lojinha (export de 02/10/2026).</p>
+</footer>
+
+<script>
+function plain(node){
+  var out=[];
+  function walk(n){
+    if(n.nodeType===3){out.push(n.textContent.replace(/\s+/g,' '));return}
+    if(n.nodeType!==1)return;
+    var t=n.tagName;
+    if(t==='TABLE'){
+      n.querySelectorAll('tr').forEach(function(r){
+        out.push('\n'+Array.prototype.map.call(r.children,function(c){return c.textContent.trim()}).join(' | '));
+      });
+      out.push('\n');return;
+    }
+    if(t==='LI'){out.push('\n- ')}
+    if(t==='P'||t==='SUMMARY'||t==='DIV'||t==='UL'){out.push('\n')}
+    if(t==='SUMMARY'){out.push('\n');n.querySelectorAll('.sum-t').forEach(function(s){out.push(n.querySelector('.idx').textContent+'. '+s.textContent)});out.push('\n');return}
+    n.childNodes.forEach(walk);
+    if(t==='P')out.push('\n');
+  }
+  walk(node);
+  return out.join('').replace(/[ \t]+\n/g,'\n').replace(/\n /g,'\n').replace(/\n{3,}/g,'\n\n').trim();
+}
+function richHtml(node){
+  var html='';
+  function walk(n){
+    if(n.nodeType===3){html+=n.textContent.replace(/&/g,'&amp;').replace(/</g,'&lt;');return}
+    if(n.nodeType!==1)return;
+    var t=n.tagName;
+    if(t==='DETAILS'){var s=n.querySelector('.sum-t'),i=n.querySelector('.idx');html+='<h3>'+i.textContent+'. '+s.textContent+'</h3>';n.querySelector('.inner').childNodes.forEach(walk);return}
+    if(t==='TABLE'){html+='<table>';n.querySelectorAll('tr').forEach(function(r){html+='<tr>'+Array.prototype.map.call(r.children,function(c){return '<td>'+c.textContent.trim()+'</td>'}).join('')+'</tr>'});html+='</table>';return}
+    var map={P:'p',UL:'ul',LI:'li',B:'b',STRONG:'b',EM:'i'};
+    var tag=map[t];
+    if(tag)html+='<'+tag+'>';
+    n.childNodes.forEach(walk);
+    if(tag)html+='</'+tag+'>';
+  }
+  walk(node);
+  return html;
+}
+function sectionParts(sec){
+  var b=sec.querySelector('.body').cloneNode(true);
+  b.querySelectorAll('.note').forEach(function(x){x.remove()});
+  var title=sec.querySelector('header .em').textContent+' '+sec.querySelector('header h3').textContent;
+  return {txt:title+'\n'+plain(b), html:'<h2>'+title+'</h2>'+richHtml(b)};
+}
+function copy(parts,btn,okLabel,label){
+  function ok(){btn.textContent=okLabel;btn.classList.add('on');setTimeout(function(){btn.textContent=label;btn.classList.remove('on')},2000)}
+  function fb(){
+    var t=document.createElement('textarea');t.value=parts.txt;t.style.position='fixed';t.style.opacity='0';
+    document.body.appendChild(t);t.select();
+    try{document.execCommand('copy');ok()}catch(e){btn.textContent='Copie manualmente'}
+    document.body.removeChild(t);
+  }
+  try{
+    if(window.ClipboardItem&&navigator.clipboard&&navigator.clipboard.write){
+      navigator.clipboard.write([new ClipboardItem({
+        'text/html':new Blob([parts.html],{type:'text/html'}),
+        'text/plain':new Blob([parts.txt],{type:'text/plain'})
+      })]).then(ok,function(){navigator.clipboard.writeText(parts.txt).then(ok,fb)});
+    }else if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(parts.txt).then(ok,fb)}
+    else fb();
+  }catch(e){fb()}
+}
+document.querySelectorAll('[data-copy]').forEach(function(b){
+  b.addEventListener('click',function(){copy(sectionParts(b.closest('.sec')),b,'Copiado','Copiar')});
+});
+document.getElementById('copyall').addEventListener('click',function(){
+  var ps=Array.prototype.map.call(document.querySelectorAll('.sec'),sectionParts);
+  copy({txt:'Canvas de Processo da Lojinha\n\n'+ps.map(function(p){return p.txt}).join('\n\n\n'),
+        html:'<h1>Canvas de Processo da Lojinha</h1>'+ps.map(function(p){return p.html}).join('')},
+       this,'Canvas inteiro copiado','Copiar o canvas inteiro');
+});
+var rt=document.getElementById('revtoggle');
+rt.addEventListener('click',function(){
+  var on=rt.getAttribute('aria-pressed')!=='true';
+  rt.setAttribute('aria-pressed',String(on));
+  document.body.classList.toggle('rev',on);
+  rt.textContent=on?'Ocultar comentários da revisão':'Mostrar comentários da revisão';
+});
+var sa=document.getElementById('stepsall');
+sa.addEventListener('click',function(){
+  var on=sa.getAttribute('aria-pressed')!=='true';
+  sa.setAttribute('aria-pressed',String(on));
+  sa.textContent=on?'Fechar todas as etapas':'Abrir todas as etapas';
+  document.querySelectorAll('.step').forEach(function(s){s.open=on});
+});
+</script>
+</body>
+</html>
