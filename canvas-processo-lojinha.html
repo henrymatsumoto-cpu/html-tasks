@@ -268,7 +268,7 @@ body{color-scheme:dark}
       <div><div class="n">2</div><div class="l">fases do Fornecedor com prazo</div></div>
       <div><div class="n ok">17</div><div class="l">dias úteis, no máximo, do pedido ao despacho</div></div>
       <div><div class="n mid">4</div><div class="l">correções em relação ao canvas atual</div></div>
-      <div><div class="n no">6</div><div class="l">decisões em aberto (lacunas ______)</div></div>
+      <div><div class="n no">1</div><div class="l">decisão em aberto (indicadores)</div></div>
     </div>
   </div>
 </header>
@@ -306,7 +306,7 @@ body{color-scheme:dark}
         <li><b>Nome do Processo:</b> Ciclo do Pedido na Lojinha Seazone</li>
         <li><b>Setor Responsável:</b> Fornecedores (Franquias)</li>
         <li><b>Responsável Principal:</b> @Wania Helena Lageano Espindola @Henry Yudi</li>
-        <li class="added"><b>Substituto nas férias e ausências:</b> ______</li>
+        <li class="added"><b>Substituto nas férias e ausências:</b> Coordenador da área</li>
         <li><b>Onde roda:</b> Lojinha Seazone, nos painéis Admin › Pedidos (Time) e Fornecedor › Pedidos (fornecedor)</li>
         <li><b>Versão:</b> 2, revisada em 02/10/2026</li>
         <li><b>Próxima revisão:</b> a cada 6 meses, ou quando uma fase ou um SLA mudar</li>
@@ -324,12 +324,11 @@ body{color-scheme:dark}
       <p>Cada fase do pedido tem um dono e um prazo. Assim, nenhum pedido fica parado sem alguém saber, o cliente acompanha o status em Meus Pedidos e o fornecedor é cobrado quando estoura o prazo dele.</p>
       <p><b>Resultados esperados:</b></p>
       <ul>
-        <li class="added"><b>Meta:</b> ______% dos pedidos passando por cada fase dentro do SLA, medido todo mês.</li>
+        <li class="added"><b>Meta:</b> nenhum pedido passando do SLA, em nenhuma fase (100% dentro do prazo).</li>
         <li>Nenhum card vermelho sem uma ação do Time no mesmo dia útil.</li>
         <li>Pedido pago despachado em até 5 dias úteis após a validação do pagamento.</li>
         <li>Todo pedido concluído com nota fiscal, transportadora e código de rastreio preenchidos.</li>
       </ul>
-      <div class="note ask"><span class="lbl">Decidir</span>Falta o número da meta. Na revisão dos fotógrafos, a primeira crítica foi exatamente essa: objetivo sem número e sem prazo, e ninguém conseguia dizer no fim do mês se o processo tinha cumprido o que prometia. Sugestão para começar: 90%, e subir quando o painel mostrar onde estoura.</div>
       <div class="note why"><span class="lbl">Por quê</span>A versão anterior dizia "entregue dentro do prazo", mas a regra de discurso é não prometer prazo de entrega ao cliente. Os 15 dias de Pedido Enviado são prazo interno, então o objetivo fala em SLA e não em prazo de entrega. Também tirei "o cliente sabe em que pé está", porque os avisos automáticos ainda não existem. Hoje o que existe é o status em Meus Pedidos.</div>
     </div>
   </article>
@@ -398,7 +397,7 @@ body{color-scheme:dark}
           <p>O fornecedor recebe o pedido e informa a forma de pagamento: link de cartão, chave Pix ou boleto. Se o frete real for diferente do estimado, ele ajusta aqui, antes do cliente pagar.</p>
           <p><b>Sai da etapa quando:</b> o fornecedor preenche o pagamento. O card vai sozinho para Aguardando Pagamento.</p>
           <p><b>SLA:</b> 3 dias úteis (vale para a Administração e para o Fornecedor, na fase Recebido).</p>
-          <p class="added"><b>Passou do prazo:</b> o card mostra o SLA estourado do fornecedor. O Time cobra o fornecedor pelo canal ______ e registra a cobrança no card.</p>
+          <p class="added"><b>Passou do prazo:</b> o card mostra o SLA estourado do fornecedor. O Time cobra o fornecedor no grupo de WhatsApp da Seazone com o fornecedor e registra a cobrança no card.</p>
           <div class="note why"><span class="lbl">Por quê</span>No canvas atual essa etapa aparecia depois do pagamento. No sistema ela vem antes: sem o link do fornecedor, o cliente não tem como pagar.</div>
         </div>
       </details>
@@ -407,10 +406,16 @@ body{color-scheme:dark}
         <summary><span class="idx">3</span><span class="sum-t">Aguardando Pagamento (Fornecedor: Informação de Pagamento)</span><span class="chev">›</span></summary>
         <div class="inner">
           <p><b>Responsável:</b> Cliente</p>
-          <p>O cliente vê o link ou a chave em Meus Pedidos, paga e anexa o comprovante. O Time acompanha e manda lembrete: a 1ª mensagem quando o link fica disponível, outra no 4º dia e outra no 7º dia.</p>
+          <p>O cliente vê o link ou a chave em Meus Pedidos, paga e anexa o comprovante. Durante a fase, ele recebe três mensagens pela SIA:</p>
+          <ul>
+            <li><b>1ª mensagem</b>, quando o link fica disponível: enviada pelo agente.</li>
+            <li><b>Mensagem do 4º dia útil:</b> enviada pelo agente.</li>
+            <li><b>Mensagem do 7º dia útil</b>, o último aviso: enviada pelo Analista.</li>
+          </ul>
+          <p>Quem envia marca a caixa da mensagem no card: o agente marca as duas primeiras e o Analista marca a do 7º dia. Os textos estão na seção 7. As caixas são só controle de cobrança e não mudam o SLA.</p>
           <p><b>Sai da etapa quando:</b> o cliente anexa o comprovante. O card vai para Validação de Pagamento.</p>
           <p><b>SLA:</b> 7 dias úteis.</p>
-          <p class="added"><b>Passou do prazo:</b> o card fica vermelho e o Time decide. Se o cliente avisou que vai pagar, dá mais prazo, de até ______ dias úteis, com aprovação de ______ e registro no card. Se não respondeu, cancela o pedido. O pedido não é cancelado sozinho.</p>
+          <p class="added"><b>Passou do prazo:</b> depois do aviso do 7º dia, o cliente tem <b>1 dia útil</b> para pagar e anexar o comprovante. No 8º dia útil o card fica vermelho e, sem comprovante, o Analista cancela o pedido. Só o Analista pode dar mais prazo, e precisa registrar no card. Nenhum pedido é cancelado sem o Analista.</p>
           <div class="note why"><span class="lbl">Por quê</span>O canvas atual dizia 5 dias, e o gatilho de "pagamento vencido" contava até o encaminhamento ao fornecedor, uma etapa que acontece antes do pagamento. Agora o prazo é o da fase: 7 dias úteis em Aguardando Pagamento.</div>
         </div>
       </details>
@@ -433,7 +438,7 @@ body{color-scheme:dark}
           <p>O fornecedor separa e despacha o pedido, e preenche no painel a nota fiscal, a transportadora e o código de rastreio. A nota sai no CPF ou CNPJ do pedido, e o endereço de entrega precisa ser o mesmo do CNPJ da nota.</p>
           <p><b>Sai da etapa quando:</b> os três dados de envio estão preenchidos. O card vai sozinho para Pedido Enviado.</p>
           <p><b>SLA:</b> 5 dias úteis (vale para a Administração e para o Fornecedor, na fase Informação de Envio).</p>
-          <p class="added"><b>Passou do prazo:</b> o card mostra o SLA estourado do fornecedor. O Time cobra uma data de despacho e, se o pedido estiver sem estoque, combina com o cliente se espera ou cancela.</p>
+          <p class="added"><b>Passou do prazo:</b> o card mostra o SLA estourado do fornecedor. O Time cobra uma data de despacho no grupo de WhatsApp com o fornecedor e, se o pedido estiver sem estoque, combina com o cliente se espera ou cancela.</p>
           <div class="note why"><span class="lbl">Por quê</span>O canvas atual dava 3 dias úteis. O SLA definido em 28/09 é 5. O FAQ da lojinha fala em "despacho médio de 3 dias após o pagamento", que é média e não prazo, então pode ficar.</div>
         </div>
       </details>
@@ -445,7 +450,7 @@ body{color-scheme:dark}
           <p>O pedido está com a transportadora. O Time acompanha pelo rastreio e cobra o fornecedor se o rastreio parar de atualizar ou não abrir.</p>
           <p><b>Sai da etapa quando:</b> o pedido é entregue e o Time marca Concluído.</p>
           <p><b>SLA:</b> 15 dias úteis.</p>
-          <p class="added"><b>Passou do prazo:</b> o Time cobra do fornecedor a posição da transportadora e fala com o cliente. Se o pedido se perdeu, o fornecedor reenvia ou devolve o valor, nos termos do contrato.</p>
+          <p class="added"><b>Passou do prazo:</b> o Time cobra do fornecedor, no grupo de WhatsApp, a posição da transportadora e fala com o cliente. Se o pedido se perdeu, o fornecedor reenvia ou devolve o valor, nos termos do contrato.</p>
         </div>
       </details>
 
@@ -463,7 +468,6 @@ body{color-scheme:dark}
           </ul>
           <p><b>SLA:</b> sem prazo. São fases finais.</p>
           <div class="note why"><span class="lbl">Por quê</span>Na versão anterior, só o pagamento dizia o que fazer quando o prazo estoura. Nas outras fases o card ficava vermelho e ninguém sabia quem agia. Agora toda fase tem a linha "Passou do prazo", com dono e ação.</div>
-          <div class="note ask"><span class="lbl">Decidir</span>Duas lacunas: por qual canal o Time cobra o fornecedor (WhatsApp, e-mail ou comentário no card) e quem aprova mais prazo de pagamento, e até quanto.</div>
         </div>
       </details>
     </div>
@@ -517,16 +521,52 @@ body{color-scheme:dark}
     <header><span class="em">📣</span><h3>7. Comunicação com o cliente</h3><span class="tag novo">Seção nova</span>
       <span class="copyrow"><button class="btn" data-copy>Copiar</button></span></header>
     <div class="body">
-      <p><b>Hoje:</b> lembretes de pagamento na fase Aguardando Pagamento, enviados pelo Time pelo canal ______ com o texto padrão ______ e marcados no card:</p>
-      <ul>
-        <li>1ª mensagem: quando o link de pagamento fica disponível</li>
-        <li>Mensagem do 4º dia</li>
-        <li>Mensagem do 7º dia: último aviso antes do SLA estourar</li>
-      </ul>
+      <p><b>Lembretes de pagamento</b> (fase Aguardando Pagamento): todos são enviados pela <b>SIA</b>. As duas primeiras mensagens saem pelo agente, que marca a caixa no card da lojinha. A do 7º dia é enviada pelo Analista, que marca a caixa dela. Pela caixa marcada, o Time sabe o que já foi enviado.</p>
+      <p><b>1ª mensagem: link disponível</b> (agente)</p>
+      <div class="msgbox">Olá! Seu pedido nº {{1}} está disponível para pagamento.
+
+Fornecedor: {{2}}
+Itens: {{3}}
+Valor: R$ {{4}}
+
+Para pagar, acesse Meus Pedidos na Loja Seazone. 
+Caso o pagamento não for feito em até 7 dias, o pedido será cancelado automaticamente.
+
+Qualquer dúvida, estamos à disposição.</div>
+      <p><b>Mensagem do 4º dia útil</b> (agente)</p>
+      <div class="msgbox">Olá! 
+
+Passando para lembrado sobre o seu pedido {{1}}
+
+Fornecedor: {{2}}
+Itens: {{3}}
+Valor: R$ {{4}}
+
+Ele ainda não consta como pago. Caso tenha pago favor anexar o comprovante de pagamento para validação
+
+Caso o pagamento não for feito dentro de 3 dias o pedido será cancelado automaticamente.
+
+Qualquer dúvida, estamos à disposição.</div>
+      <p><b>Mensagem do 7º dia útil: último aviso</b> (Analista)</p>
+      <div class="msgbox">Olá! 
+
+Queria confirmar se realizou o pagamento do seu pedido {{1}}
+
+Fornecedor: {{2}}
+Itens: {{3}}
+Valor: R$ {{4}}
+
+Caso não pague ainda hoje e envie o comprovante, iremos cancelar seu pedido
+
+Qualquer dúvida, estamos à disposição.</div>
+      <p>Variáveis: {{1}} nº do pedido · {{2}} fornecedor · {{3}} itens · {{4}} valor do pedido daquele fornecedor.</p>
+      <div class="note ask"><span class="lbl">Confirmar</span>Três pontos nos templates, antes de colar:
+        <br>1. A 1ª e a 4ª mensagens dizem "cancelado <b>automaticamente</b>", mas no processo quem cancela é o Analista, depois do aviso do 7º dia. Ou o texto muda para "será cancelado", ou o processo passa a ter cancelamento automático.
+        <br>2. Os templates falam em "7 dias" e "3 dias", sem dizer que são úteis. Um cliente que pede numa sexta conta os dias corridos e acha que o prazo acaba antes. Sugestão: "7 dias úteis" e "3 dias úteis".
+        <br>3. Erros de digitação: "Passando para <b>lembrado</b>" (lembrar), "Caso o pagamento não <b>for</b> feito" (não seja feito) e "Caso tenha pago<b>,</b> favor anexar". Se os templates já estão aprovados no WhatsApp, a correção pede uma nova aprovação.</div>
+      <div class="note why"><span class="lbl">Por quê</span>A "{{4}}" é o valor de cada fornecedor, porque cada fornecedor tem o próprio card e o próprio link. Num pedido com 3 fornecedores, o cliente recebe 3 mensagens com 3 valores. Se o agente mandasse o total do pedido, o valor não bateria com o link.</div>
       <p><b>Próximos passos, com avisos automáticos pela SIA</b> (em conversa com o Roberto Campos):</p>
       <ul>
-        <li>Link de pagamento disponível</li>
-        <li>Pedido vai ser cancelado se não for pago</li>
         <li>Pedido cancelado</li>
         <li>Pedido enviado, com o código de rastreio</li>
       </ul>
@@ -592,6 +632,7 @@ function plain(node){
     if(n.nodeType===3){out.push(n.textContent.replace(/\s+/g,' '));return}
     if(n.nodeType!==1)return;
     var t=n.tagName;
+    if(n.classList&&n.classList.contains('msgbox')){out.push('\n'+n.textContent+'\n');return}
     if(t==='TABLE'){
       n.querySelectorAll('tr').forEach(function(r){
         out.push('\n'+Array.prototype.map.call(r.children,function(c){return c.textContent.trim()}).join(' | '));
@@ -614,6 +655,7 @@ function richHtml(node){
     if(n.nodeType!==1)return;
     var t=n.tagName;
     if(t==='DETAILS'){var s=n.querySelector('.sum-t'),i=n.querySelector('.idx');html+='<h3>'+i.textContent+'. '+s.textContent+'</h3>';n.querySelector('.inner').childNodes.forEach(walk);return}
+    if(n.classList&&n.classList.contains('msgbox')){html+='<blockquote>'+n.textContent.replace(/&/g,'&amp;').replace(/</g,'&lt;').split('\n').join('<br>')+'</blockquote>';return}
     if(t==='TABLE'){html+='<table>';n.querySelectorAll('tr').forEach(function(r){html+='<tr>'+Array.prototype.map.call(r.children,function(c){return '<td>'+c.textContent.trim()+'</td>'}).join('')+'</tr>'});html+='</table>';return}
     var map={P:'p',UL:'ul',LI:'li',B:'b',STRONG:'b',EM:'i'};
     var tag=map[t];
