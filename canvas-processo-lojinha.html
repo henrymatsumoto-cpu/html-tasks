@@ -260,6 +260,7 @@ body{color-scheme:dark}
       <span>SLAs definidos em <b>28/09/2026</b></span>
       <span>Fluxo conferido no histórico de <b>2.909 mudanças de fase</b></span>
       <span>Versão proposta: <b>02/10/2026</b></span>
+      <span>Revisada contra as <b>42 validações</b> do canvas de fotógrafos</span>
     </div>
     <div class="score">
       <div><div class="n new">9</div><div class="l">seções no padrão novo</div></div>
@@ -267,6 +268,7 @@ body{color-scheme:dark}
       <div><div class="n">2</div><div class="l">fases do Fornecedor com prazo</div></div>
       <div><div class="n ok">17</div><div class="l">dias úteis, no máximo, do pedido ao despacho</div></div>
       <div><div class="n mid">4</div><div class="l">correções em relação ao canvas atual</div></div>
+      <div><div class="n no">6</div><div class="l">decisões em aberto (lacunas ______)</div></div>
     </div>
   </div>
 </header>
@@ -277,6 +279,7 @@ body{color-scheme:dark}
     <h2>O que muda em relação ao canvas de hoje</h2>
     <p>O canvas de 16/07 tem a ordem das etapas trocada. Ele coloca o "encaminha para o fornecedor" <span class="hl">depois</span> do pagamento, mas no sistema o pedido vai para o fornecedor <span class="hl">antes</span>, para ele gerar o link de pagamento. O histórico dos cards confirma: <span class="hl">Caixa de Entrada → Enviado ao Fornecedor → Aguardando Pagamento → Validação de Pagamento → Aguardando Envio → Pedido Enviado → Concluído</span>.</p>
     <p>Além da ordem, três números mudaram com os SLAs de 28/09: o pagamento passou de 5 para <span class="hl">7 dias úteis</span>, o envio passou de 3 para <span class="hl">5 dias úteis</span> e entrou a fase nova <span class="hl">Validação de Pagamento</span>, com 1 dia útil. O gatilho do "pagamento vencido" também estava errado: contava até o encaminhamento ao fornecedor, que acontece antes do pagamento.</p>
+    <p>Também passei o texto pelas 42 validações feitas no canvas de fotógrafos. Por causa delas: o objetivo ganhou uma <span class="hl">meta com número</span>, toda fase diz <span class="hl">o que fazer quando o prazo estoura</span> e quem age, os feriados estão escritos e o que depende de decisão ficou como lacuna <span class="hl">______</span>, sem inventar regra.</p>
     <p>Abaixo, o canvas inteiro. Ligue <span class="hl">Mostrar comentários da revisão</span> para ver o que mudou e por quê. Esses comentários não entram no que você copia.</p>
   </div>
 
@@ -303,6 +306,7 @@ body{color-scheme:dark}
         <li><b>Nome do Processo:</b> Ciclo do Pedido na Lojinha Seazone</li>
         <li><b>Setor Responsável:</b> Fornecedores (Franquias)</li>
         <li><b>Responsável Principal:</b> @Wania Helena Lageano Espindola @Henry Yudi</li>
+        <li class="added"><b>Substituto nas férias e ausências:</b> ______</li>
         <li><b>Onde roda:</b> Lojinha Seazone, nos painéis Admin › Pedidos (Time) e Fornecedor › Pedidos (fornecedor)</li>
         <li><b>Versão:</b> 2, revisada em 02/10/2026</li>
         <li><b>Próxima revisão:</b> a cada 6 meses, ou quando uma fase ou um SLA mudar</li>
@@ -316,14 +320,17 @@ body{color-scheme:dark}
     <header><span class="em">🎯</span><h3>2. Objetivo do Processo</h3><span class="tag novo">Seção nova</span>
       <span class="copyrow"><button class="btn" data-copy>Copiar</button></span></header>
     <div class="body">
-      <p>Garantir que todo pedido feito na Lojinha Seazone seja pago, enviado e entregue dentro do prazo, com a Seazone intermediando a relação entre cliente e fornecedor do começo ao fim.</p>
-      <p>Cada fase do pedido tem um dono e um prazo. Assim, nenhum pedido fica parado sem alguém saber, o cliente sabe em que pé está a compra e o fornecedor é cobrado pelo que combinou.</p>
+      <p>Garantir que todo pedido feito na Lojinha Seazone passe por todas as fases dentro do SLA, do checkout à entrega, com a Seazone intermediando a relação entre cliente e fornecedor do começo ao fim.</p>
+      <p>Cada fase do pedido tem um dono e um prazo. Assim, nenhum pedido fica parado sem alguém saber, o cliente acompanha o status em Meus Pedidos e o fornecedor é cobrado quando estoura o prazo dele.</p>
       <p><b>Resultados esperados:</b></p>
       <ul>
-        <li>Nenhum pedido parado além do SLA da fase sem uma ação do Time.</li>
+        <li class="added"><b>Meta:</b> ______% dos pedidos passando por cada fase dentro do SLA, medido todo mês.</li>
+        <li>Nenhum card vermelho sem uma ação do Time no mesmo dia útil.</li>
         <li>Pedido pago despachado em até 5 dias úteis após a validação do pagamento.</li>
         <li>Todo pedido concluído com nota fiscal, transportadora e código de rastreio preenchidos.</li>
       </ul>
+      <div class="note ask"><span class="lbl">Decidir</span>Falta o número da meta. Na revisão dos fotógrafos, a primeira crítica foi exatamente essa: objetivo sem número e sem prazo, e ninguém conseguia dizer no fim do mês se o processo tinha cumprido o que prometia. Sugestão para começar: 90%, e subir quando o painel mostrar onde estoura.</div>
+      <div class="note why"><span class="lbl">Por quê</span>A versão anterior dizia "entregue dentro do prazo", mas a regra de discurso é não prometer prazo de entrega ao cliente. Os 15 dias de Pedido Enviado são prazo interno, então o objetivo fala em SLA e não em prazo de entrega. Também tirei "o cliente sabe em que pé está", porque os avisos automáticos ainda não existem. Hoje o que existe é o status em Meus Pedidos.</div>
     </div>
   </article>
 
@@ -370,7 +377,8 @@ body{color-scheme:dark}
     <header><span class="em">🔄</span><h3>5. Fluxo do Processo</h3><span class="tag alt">Ordem corrigida</span><span class="tag novo">+1 fase</span>
       <span class="copyrow"><button class="btn" data-copy>Copiar</button></span></header>
     <div class="body">
-      <p>O pedido anda em dois quadros ao mesmo tempo: o da <b>Administração</b> (Time Lojinha) e o do <b>Fornecedor</b>. A fase entre parênteses é a que o fornecedor vê no painel dele.</p>
+      <p>O pedido anda em dois quadros ao mesmo tempo: o da <b>Administração</b> (Time Lojinha) e o do <b>Fornecedor</b>. A fase entre parênteses é a que o fornecedor vê no painel dele. Os nomes estão escritos exatamente como aparecem na lojinha.</p>
+      <div class="note ask"><span class="lbl">Decidir</span>Confirmar no painel do fornecedor o nome exato da fase "Informação de Pagamento". O Lovable só citou Recebido e Informação de Envio.</div>
 
       <details class="step" open>
         <summary><span class="idx">1</span><span class="sum-t">Caixa de Entrada</span><span class="chev">›</span></summary>
@@ -379,6 +387,7 @@ body{color-scheme:dark}
           <p>O pedido entra aqui assim que o cliente finaliza a compra. O Time confere itens, quantidades, frete, endereço e documento (CPF ou CNPJ). Para fornecedor que vende só para CNPJ, o pedido precisa ter CNPJ.</p>
           <p><b>Sai da etapa quando:</b> o Time encaminha para o fornecedor. Pedido grátis não tem pagamento e vai direto para Aguardando Envio.</p>
           <p><b>SLA:</b> 1 dia útil.</p>
+          <p class="added"><b>Passou do prazo:</b> o card fica vermelho. O Time encaminha no mesmo dia ou registra no card o motivo da espera (exemplo: dúvida com o cliente).</p>
         </div>
       </details>
 
@@ -389,6 +398,7 @@ body{color-scheme:dark}
           <p>O fornecedor recebe o pedido e informa a forma de pagamento: link de cartão, chave Pix ou boleto. Se o frete real for diferente do estimado, ele ajusta aqui, antes do cliente pagar.</p>
           <p><b>Sai da etapa quando:</b> o fornecedor preenche o pagamento. O card vai sozinho para Aguardando Pagamento.</p>
           <p><b>SLA:</b> 3 dias úteis (vale para a Administração e para o Fornecedor, na fase Recebido).</p>
+          <p class="added"><b>Passou do prazo:</b> o card mostra o SLA estourado do fornecedor. O Time cobra o fornecedor pelo canal ______ e registra a cobrança no card.</p>
           <div class="note why"><span class="lbl">Por quê</span>No canvas atual essa etapa aparecia depois do pagamento. No sistema ela vem antes: sem o link do fornecedor, o cliente não tem como pagar.</div>
         </div>
       </details>
@@ -400,7 +410,7 @@ body{color-scheme:dark}
           <p>O cliente vê o link ou a chave em Meus Pedidos, paga e anexa o comprovante. O Time acompanha e manda lembrete: a 1ª mensagem quando o link fica disponível, outra no 4º dia e outra no 7º dia.</p>
           <p><b>Sai da etapa quando:</b> o cliente anexa o comprovante. O card vai para Validação de Pagamento.</p>
           <p><b>SLA:</b> 7 dias úteis.</p>
-          <p class="added"><b>Passou do prazo:</b> o card fica vermelho e o Time decide. Se o cliente avisou que vai pagar, dá mais prazo. Se não respondeu, cancela o pedido. O pedido não é cancelado sozinho.</p>
+          <p class="added"><b>Passou do prazo:</b> o card fica vermelho e o Time decide. Se o cliente avisou que vai pagar, dá mais prazo, de até ______ dias úteis, com aprovação de ______ e registro no card. Se não respondeu, cancela o pedido. O pedido não é cancelado sozinho.</p>
           <div class="note why"><span class="lbl">Por quê</span>O canvas atual dizia 5 dias, e o gatilho de "pagamento vencido" contava até o encaminhamento ao fornecedor, uma etapa que acontece antes do pagamento. Agora o prazo é o da fase: 7 dias úteis em Aguardando Pagamento.</div>
         </div>
       </details>
@@ -412,6 +422,7 @@ body{color-scheme:dark}
           <p class="added">Fase nova, no ar desde 28/09/2026. O Time confere se o valor do comprovante bate com o total do pedido e se o pagamento caiu, e então confirma o pagamento no card.</p>
           <p><b>Sai da etapa quando:</b> o Time confirma o pagamento. O card vai para Aguardando Envio, e é a partir daqui que conta o prazo de envio do fornecedor.</p>
           <p><b>SLA:</b> 1 dia útil.</p>
+          <p class="added"><b>Passou do prazo:</b> o atraso é do próprio Time. Se o pagamento não aparecer, o Time pede ao cliente um comprovante novo e registra no card.</p>
         </div>
       </details>
 
@@ -422,6 +433,7 @@ body{color-scheme:dark}
           <p>O fornecedor separa e despacha o pedido, e preenche no painel a nota fiscal, a transportadora e o código de rastreio. A nota sai no CPF ou CNPJ do pedido, e o endereço de entrega precisa ser o mesmo do CNPJ da nota.</p>
           <p><b>Sai da etapa quando:</b> os três dados de envio estão preenchidos. O card vai sozinho para Pedido Enviado.</p>
           <p><b>SLA:</b> 5 dias úteis (vale para a Administração e para o Fornecedor, na fase Informação de Envio).</p>
+          <p class="added"><b>Passou do prazo:</b> o card mostra o SLA estourado do fornecedor. O Time cobra uma data de despacho e, se o pedido estiver sem estoque, combina com o cliente se espera ou cancela.</p>
           <div class="note why"><span class="lbl">Por quê</span>O canvas atual dava 3 dias úteis. O SLA definido em 28/09 é 5. O FAQ da lojinha fala em "despacho médio de 3 dias após o pagamento", que é média e não prazo, então pode ficar.</div>
         </div>
       </details>
@@ -433,6 +445,7 @@ body{color-scheme:dark}
           <p>O pedido está com a transportadora. O Time acompanha pelo rastreio e cobra o fornecedor se o rastreio parar de atualizar ou não abrir.</p>
           <p><b>Sai da etapa quando:</b> o pedido é entregue e o Time marca Concluído.</p>
           <p><b>SLA:</b> 15 dias úteis.</p>
+          <p class="added"><b>Passou do prazo:</b> o Time cobra do fornecedor a posição da transportadora e fala com o cliente. Se o pedido se perdeu, o fornecedor reenvia ou devolve o valor, nos termos do contrato.</p>
         </div>
       </details>
 
@@ -449,6 +462,8 @@ body{color-scheme:dark}
             <li class="added">Pagamento não feito dentro do SLA</li>
           </ul>
           <p><b>SLA:</b> sem prazo. São fases finais.</p>
+          <div class="note why"><span class="lbl">Por quê</span>Na versão anterior, só o pagamento dizia o que fazer quando o prazo estoura. Nas outras fases o card ficava vermelho e ninguém sabia quem agia. Agora toda fase tem a linha "Passou do prazo", com dono e ação.</div>
+          <div class="note ask"><span class="lbl">Decidir</span>Duas lacunas: por qual canal o Time cobra o fornecedor (WhatsApp, e-mail ou comentário no card) e quem aprova mais prazo de pagamento, e até quanto.</div>
         </div>
       </details>
     </div>
@@ -459,7 +474,7 @@ body{color-scheme:dark}
     <header><span class="em">⏳</span><h3>6. Prazos e SLA</h3><span class="tag novo">Seção nova</span>
       <span class="copyrow"><button class="btn" data-copy>Copiar</button></span></header>
     <div class="body">
-      <p>Todos os prazos são em <b>dias úteis</b>, sem fins de semana e sem feriados nacionais.</p>
+      <p>Todos os prazos são em <b>dias úteis</b>, sem fins de semana e sem feriados nacionais: 1/1, Sexta-feira Santa, 21/4, 1/5, 7/9, 12/10, 2/11, 15/11, 20/11 e 25/12. Carnaval e Corpus Christi contam como dia útil.</p>
       <p><b>Administração (quadro do Time)</b></p>
       <div class="tblwrap">
       <table class="tbl">
@@ -502,7 +517,7 @@ body{color-scheme:dark}
     <header><span class="em">📣</span><h3>7. Comunicação com o cliente</h3><span class="tag novo">Seção nova</span>
       <span class="copyrow"><button class="btn" data-copy>Copiar</button></span></header>
     <div class="body">
-      <p><b>Hoje:</b> lembretes de pagamento na fase Aguardando Pagamento, marcados no card:</p>
+      <p><b>Hoje:</b> lembretes de pagamento na fase Aguardando Pagamento, enviados pelo Time pelo canal ______ com o texto padrão ______ e marcados no card:</p>
       <ul>
         <li>1ª mensagem: quando o link de pagamento fica disponível</li>
         <li>Mensagem do 4º dia</li>
@@ -556,9 +571,10 @@ body{color-scheme:dark}
         <li><b>Pedido grátis:</b> pula Enviado ao Fornecedor, Aguardando Pagamento e Validação de Pagamento, e vai da Caixa de Entrada direto para Aguardando Envio.</li>
         <li><b>Fornecedor que vende só para CNPJ:</b> a lojinha bloqueia o pedido com CPF. Não aceitar troca de documento depois.</li>
         <li><b>Nota fiscal:</b> o endereço de entrega precisa ser o mesmo do CNPJ da nota, por risco fiscal.</li>
-        <li><b>Frete ajustado:</b> o fornecedor ajusta o frete antes de mandar o link. Se ajustar depois que o link foi enviado, o Time avisa o cliente do novo valor antes de ele pagar.</li>
+        <li class="added"><b>Frete ajustado (proposta):</b> o fornecedor ajusta o frete antes de mandar o link. Se ajustar depois que o link foi enviado, o Time avisa o cliente do novo valor antes de ele pagar.</li>
         <li><b>Itens de Indicação Seazone:</b> ficam fora do processo. A compra é no Mercado Livre, e a Seazone não acompanha.</li>
       </ul>
+      <div class="note ask"><span class="lbl">Decidir</span>A regra do frete ajustado é proposta minha, não está escrita em lugar nenhum. Ela vem de um caso de 30/09: a Matinali ajustou o frete com o card já em Aguardando Pagamento, e o aviso sairia com o valor antigo. Confirme antes de colar.</div>
     </div>
   </article>
 
