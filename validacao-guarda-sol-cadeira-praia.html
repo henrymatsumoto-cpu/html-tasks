@@ -94,6 +94,17 @@
   .exp.hl{border-color:var(--warn)}
   .exp.hl .v{color:var(--warn)}
 
+  .flow{list-style:none;margin:0;padding:0;display:grid;gap:12px}
+  @media (min-width:820px){.flow{grid-template-columns:repeat(3,1fr)}}
+  .flow li{display:grid;grid-template-columns:32px 1fr;gap:12px;padding:16px;background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg)}
+  .flow .st{width:28px;height:28px;border-radius:var(--r-full);background:var(--primary-soft);color:var(--primary);font-weight:700;display:grid;place-items:center;font-size:14px}
+  .flow li:last-child .st{background:var(--warn-soft);color:var(--warn)}
+  .flow b{display:block;font-weight:600}
+  .flow .d{color:var(--muted);font-size:14px}
+  .worst{margin-top:16px;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px;padding:18px;border:1px solid var(--warn);border-radius:var(--r-lg);background:var(--warn-soft)}
+  .worst .t{font-weight:600}
+  .worst .c{font-size:13px;color:var(--muted);margin-top:2px}
+  .worst .v{font-size:28px;font-weight:700;color:var(--warn)}
   .opts{display:grid;gap:10px}
   .opt{display:grid;grid-template-columns:22px 1fr;gap:12px;align-items:start;padding:16px;border:1px solid var(--border);border-radius:var(--r-lg);background:var(--surface);cursor:pointer;transition:border-color .15s ease-out,background-color .15s ease-out}
   .opt:hover{border-color:var(--muted)}
@@ -200,7 +211,7 @@
       <div class="colhead">Pontos de risco</div>
       <ul class="list">
         <li><span class="ic">!</span><div><b>Pedido mínimo de 30 unidades</b><span class="d">3× o mínimo dos outros fornecedores. Para gerar o estoque, o primeiro pedido já é relativamente alto.</span></div></li>
-        <li><span class="ic">!</span><div><b>Se não vender, a Seazone assume o estoque</b><span class="d">O produto é comprado antes da demanda. O que sobrar fica parado e entra como custo nosso.</span></div></li>
+        <li><span class="ic">!</span><div><b>Se não vender, a Seazone compra o que sobrar</b><span class="d">As franquias pagam direto para a IZY, mas a IZY produz o lote antes de saber a demanda. O que as franquias não comprarem do lote mínimo vira estoque e custo da Seazone.</span></div></li>
         <li><span class="ic">!</span><div><b>Baixa adesão esperada das franquias</b><span class="d">Pelo histórico de vendas de itens parecidos, as franquias têm resistência a comprar esse tipo de produto. Isso dificulta a venda e aumenta a chance de sobrar estoque.</span></div></li>
         <li><span class="ic">!</span><div><b>Especificação não confirmada</b><span class="d">Tamanho e qualidade do item IZY ainda não estão claros. Um produto inferior ao esperado reduz ainda mais a adesão.</span></div></li>
       </ul>
@@ -209,38 +220,25 @@
 </section>
 
 <section>
-  <div class="sechead"><span class="n">03</span><h2>Quanto fica parado no primeiro pedido</h2><p class="mut">Pedido mínimo × preço unitário</p></div>
-  <div class="exposure num">
-    <div class="exp hl">
-      <div class="t">IZY: 30 cadeiras + 30 guarda-sóis</div>
-      <div class="v">R$ 6.408,30</div>
-      <div class="c">R$ 2.996,70 + R$ 3.411,60. Fica todo com a Seazone se não vender.</div>
-    </div>
-    <div class="exp">
-      <div class="t">IZY: só 30 cadeiras</div>
-      <div class="v">R$ 2.996,70</div>
-      <div class="c">Opção para começar menor e testar a demanda</div>
-    </div>
-    <div class="exp">
-      <div class="t">Brasil Tropical: 10 + 10</div>
-      <div class="v">R$ 3.870,00</div>
-      <div class="c">R$ 1.680,00 + R$ 2.190,00. Sem lojinha.</div>
-    </div>
-    <div class="exp">
-      <div class="t">Sun Gap: 10 + 10</div>
-      <div class="v">R$ 5.261,70</div>
-      <div class="c">R$ 2.100,00 + R$ 3.161,70. Sem lojinha.</div>
-    </div>
+  <div class="sechead"><span class="n">03</span><h2>Como funciona com a IZY</h2></div>
+  <ol class="flow">
+    <li><span class="st">1</span><div><b>A IZY produz o lote mínimo</b><span class="d">30 unidades, sob responsabilidade da Seazone.</span></div></li>
+    <li><span class="st">2</span><div><b>As franquias compram pela lojinha</b><span class="d">Cada franquia compra a quantidade que quiser e paga direto para a IZY. A Seazone não compra antes e não tem dinheiro parado.</span></div></li>
+    <li><span class="st">3</span><div><b>O que não vender, a Seazone compra</b><span class="d">É aqui que está o risco: as unidades do lote que as franquias não comprarem ficam por conta da Seazone.</span></div></li>
+  </ol>
+  <div class="worst num">
+    <div><div class="t">Pior caso: nenhuma franquia compra</div><div class="c">A Seazone compra as 30 cadeiras (R$ 2.996,70) e os 30 guarda-sóis (R$ 3.411,60)</div></div>
+    <div class="v">R$ 6.408,30</div>
   </div>
-  <p class="note"><b>A confirmar:</b> o mínimo de 30 da IZY é por item ou para o pedido todo? Se for para o pedido todo (ex.: 15 + 15), o valor parado cai para cerca de R$ 3.204.</p>
+  <p class="note"><b>A confirmar:</b> o mínimo de 30 é por item ou para o pedido todo? Se for para o pedido todo (ex.: 15 + 15), o pior caso cai para cerca de R$ 3.204. Também falta definir o prazo para considerar o lote como "não vendido".</p>
 </section>
 
 <section>
   <div class="sechead"><span class="n">04</span><h2>Decisão</h2><p class="mut">Marque a opção escolhida</p></div>
   <div class="opts">
-    <label class="opt"><input type="radio" name="dec"><div><b>Seguir com a IZY (cadeira + guarda-sol)</b><span>Subir o aditivo, fazer o pedido mínimo e colocar na lojinha. Aceita o risco de estoque.</span></div></label>
-    <label class="opt"><input type="radio" name="dec"><div><b>Seguir com a IZY após medir a demanda das franquias</b><span>Coletar a intenção de compra com as franquias primeiro e só fazer o pedido se chegar perto de 30 unidades.</span></div></label>
-    <label class="opt"><input type="radio" name="dec"><div><b>Seguir com a IZY em um item só</b><span>Começar só com a cadeira (ou só com o guarda-sol) para reduzir o estoque parado.</span></div></label>
+    <label class="opt"><input type="radio" name="dec"><div><b>Seguir com a IZY (cadeira + guarda-sol)</b><span>Subir o aditivo e colocar na lojinha. Aceita o risco de comprar o que sobrar do lote.</span></div></label>
+    <label class="opt"><input type="radio" name="dec"><div><b>Seguir com a IZY após medir a demanda das franquias</b><span>Coletar a intenção de compra com as franquias primeiro e só liberar a produção se chegar perto de 30 unidades.</span></div></label>
+    <label class="opt"><input type="radio" name="dec"><div><b>Seguir com a IZY em um item só</b><span>Começar só com a cadeira (ou só com o guarda-sol) para reduzir o pior caso pela metade.</span></div></label>
     <label class="opt"><input type="radio" name="dec"><div><b>Não seguir agora</b><span>Arquivar as cotações e retomar se aparecer demanda das franquias.</span></div></label>
   </div>
 </section>
@@ -250,7 +248,7 @@
   <ol class="questions">
     <li>Qual é o diâmetro e o material do guarda-sol e da cadeira da IZY?</li>
     <li>O mínimo de 30 unidades é por item ou para o pedido todo?</li>
-    <li>Quem assume o estoque que sobrar: Lojinha, Fornecedores ou outra área?</li>
+    <li>Qual o prazo até a Seazone ter que comprar o que sobrou, e quem fica com esse estoque?</li>
     <li>Qual seria o preço de venda na lojinha (margem sobre R$ 99,89 / R$ 113,72)?</li>
   </ol>
 </section>
