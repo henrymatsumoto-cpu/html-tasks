@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Validação — Pedidos na Lojinha</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,400;7..72,600;7..72,700&family=Archivo:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --fundo:       oklch(0.17 0.012 250);
+    --papel:       oklch(0.21 0.014 250);
+    --papel-alto:  oklch(0.25 0.016 250);
+    --tinta:       oklch(0.93 0.008 250);
+    --tinta-fraca: oklch(0.72 0.014 250);
+    --tinta-mudo:  oklch(0.58 0.014 250);
+    --linha:       oklch(0.30 0.014 250);
+    --linha-forte: oklch(0.38 0.016 250);
+    --coral:       oklch(0.74 0.14 32);
+    --coral-fundo: oklch(0.27 0.05 32);
+    --verde:       oklch(0.76 0.13 155);
+    --verde-fundo: oklch(0.26 0.045 155);
+    --ambar:       oklch(0.80 0.12 80);
+    --ambar-fundo: oklch(0.28 0.045 80);
+    --s1: 4px; --s2: 8px; --s3: 12px; --s4: 16px; --s6: 24px;
+    --s8: 32px; --s12: 48px; --s16: 64px; --s24: 96px;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body { margin: 0; background: var(--fundo); color: var(--tinta);
+         font-family: Archivo, "Segoe UI", sans-serif; font-size: 16px; line-height: 1.6; }
+  ::selection { background: var(--coral-fundo); }
+
+  .topo { background: var(--papel); border-bottom: 1px solid var(--linha);
+          padding: var(--s16) var(--s4) var(--s12); }
+  .faixa { max-width: 860px; margin: 0 auto; }
+  .kicker { font-size: .72rem; letter-spacing: .14em; text-transform: uppercase;
+            color: var(--coral); font-weight: 600; margin: 0 0 var(--s3); }
+  h1 { font-family: Literata, Georgia, serif; font-size: clamp(2rem, 5vw, 3rem);
+       line-height: 1.08; font-weight: 700; letter-spacing: -.02em; margin: 0 0 var(--s4); max-width: 22ch; }
+  .abertura { font-family: Literata, Georgia, serif; font-size: clamp(1.05rem, 2vw, 1.2rem);
+              line-height: 1.55; color: var(--tinta-fraca); max-width: 62ch; margin: 0; }
+  .meta { display: flex; flex-wrap: wrap; gap: var(--s2) var(--s6); margin: var(--s8) 0 0;
+          padding-top: var(--s4); border-top: 1px solid var(--linha); font-size: .8rem; color: var(--tinta-fraca); }
+  .meta b { color: var(--tinta); font-weight: 600; }
+
+  main { max-width: 860px; margin: 0 auto; padding: var(--s12) var(--s4) var(--s24); }
+  section { margin-bottom: var(--s12); }
+  h2 { font-family: Literata, Georgia, serif; font-size: clamp(1.35rem, 3vw, 1.8rem); line-height: 1.15;
+       font-weight: 700; letter-spacing: -.015em; margin: 0 0 var(--s4); }
+  h2 .num { display: block; font-family: Archivo, sans-serif; font-size: .72rem; letter-spacing: .14em;
+            text-transform: uppercase; color: var(--coral); font-weight: 600; margin-bottom: var(--s2); }
+  p { margin: 0 0 var(--s4); max-width: 68ch; }
+  ul { margin: 0 0 var(--s4); padding-left: var(--s6); max-width: 68ch; }
+  li { margin-bottom: var(--s2); }
+  li::marker { color: var(--tinta-mudo); }
+  strong { font-weight: 600; }
+
+  .veredito { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: var(--s4); align-items: start;
+              background: var(--verde-fundo); border: 1px solid oklch(0.42 0.07 155); border-radius: 8px;
+              padding: var(--s6); margin: 0 0 var(--s12); }
+  .veredito .selo { font-size: .7rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase;
+                    padding: .2em .6em; border-radius: 999px; background: var(--fundo); color: var(--verde); white-space: nowrap; }
+  .veredito p { margin: 0; }
+  .veredito b { color: var(--verde); }
+
+  .passos { list-style: none; padding: 0; margin: 0; border-top: 1px solid var(--linha); max-width: 100%; }
+  .passos li { display: grid; grid-template-columns: 2rem minmax(0, 1fr) auto; gap: var(--s3);
+               padding: var(--s3) 0; border-bottom: 1px solid var(--linha); margin: 0; align-items: baseline; }
+  .passos .n { color: var(--tinta-mudo); font-size: .82rem; font-variant-numeric: tabular-nums; }
+  .passos .ok { font-size: .7rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase;
+                padding: .15em .55em; border-radius: 999px; background: var(--verde-fundo); color: var(--verde); }
+
+  .aviso { font-size: .95rem; background: var(--ambar-fundo); border: 1px solid oklch(0.42 0.07 80);
+           border-radius: 8px; padding: var(--s4) var(--s6); margin: 0 0 var(--s4); }
+  .aviso b { color: var(--ambar); }
+  .aviso ul { margin: var(--s2) 0 0; }
+
+  footer { max-width: 860px; margin: 0 auto; padding: var(--s8) var(--s4) var(--s16);
+           border-top: 1px solid var(--linha); font-size: .8rem; color: var(--tinta-mudo); }
+  @media (max-width: 520px) {
+    .veredito { grid-template-columns: minmax(0, 1fr); }
+    .passos li { grid-template-columns: 1.6rem minmax(0, 1fr); }
+    .passos .ok { grid-column: 2; justify-self: start; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topo">
+  <div class="faixa">
+    <p class="kicker">Lojinha Seazone · documento de validação · 09/10/2026</p>
+    <h1>Pedidos na lojinha: nenhum bug encontrado</h1>
+    <p class="abertura">
+      Investigamos o relato de problema ao fazer pedido na lojinha. O fluxo foi investigado no
+      Lovable e simulado com uma conta de franquia. O pedido seguiu normalmente do
+      início ao fim.
+    </p>
+    <p class="meta">
+      <span><b>Task</b> pedidos na lojinha</span>
+      <span><b>Investigado por</b> Henry Yudi Matsumoto</span>
+      <span><b>Ambiente</b> Lovable · Loja Seazone</span>
+    </p>
+  </div>
+</div>
+
+<main>
+
+  <div class="veredito">
+    <span class="selo">Sem bug</span>
+    <p><b>Não foi encontrado nenhum bug no fluxo de pedidos.</b> A causa mais provável é algo do lado
+      do cliente, como instabilidade de internet ou problema no navegador.</p>
+  </div>
+
+  <section>
+    <h2><span class="num">01 · Investigação</span>O que foi verificado</h2>
+    <ol class="passos">
+      <li><span class="n">1</span><span>Investigação do fluxo de pedido no <strong>Lovable</strong>:
+        nenhum erro encontrado.</span><span class="ok">OK</span></li>
+      <li><span class="n">2</span><span>Simulação de um pedido completo com uma <strong>conta de
+        franquia</strong>.</span><span class="ok">OK</span></li>
+      <li><span class="n">3</span><span>O fluxo <strong>seguiu normalmente</strong> até o fim, sem travar
+        e sem mensagem de erro.</span><span class="ok">OK</span></li>
+    </ol>
+  </section>
+
+  <section>
+    <h2><span class="num">02 · Conclusão</span>Provável causa do lado do cliente</h2>
+    <p>Como o fluxo funcionou normalmente na simulação, o problema relatado pode ter vindo de:</p>
+    <ul>
+      <li><strong>Internet</strong> instável ou lenta no momento do pedido;</li>
+      <li><strong>Navegador</strong> desatualizado, com cache antigo ou extensão bloqueando a página.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2><span class="num">03 · Próximo passo</span>Se o problema voltar a acontecer</h2>
+    <div class="aviso">
+      <b>Para investigar de novo, precisamos de evidências de quem está com o problema:</b>
+      <ul>
+        <li>print ou gravação de tela mostrando o erro;</li>
+        <li>dia e horário aproximado da tentativa;</li>
+        <li>navegador e dispositivo usados (celular ou computador).</li>
+      </ul>
+    </div>
+    <p>Enquanto isso, a orientação para quem relatar o problema é limpar o cache ou tentar outro
+      navegador, e confirmar se a internet está estável.</p>
+  </section>
+
+</main>
+
+<footer>Seazone · Fornecedores · Lojinha Seazone</footer>
+
+</body>
+</html>
