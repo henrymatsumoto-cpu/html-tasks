@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fotógrafos em Imbituba</title>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Figtree:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme:dark;
+  --bg:oklch(18% .012 70);--surf:oklch(22% .014 70);--surf2:oklch(26% .016 70);
+  --line:oklch(32% .014 70);--ink:oklch(93% .01 80);--ink2:oklch(72% .015 75);--ink3:oklch(58% .014 75);
+  --won:oklch(78% .12 150);--lost:oklch(70% .13 35);--amber:oklch(80% .13 80);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 "Figtree",sans-serif;-webkit-font-smoothing:antialiased}
+main{max-width:880px;margin:0 auto;padding:56px 16px 96px}
+.eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink3);font-weight:700}
+h1{font-family:"Bricolage Grotesque",serif;font-weight:800;font-size:clamp(34px,6.5vw,56px);letter-spacing:-.03em;line-height:1;margin:14px 0 14px}
+h2{font-family:"Bricolage Grotesque",serif;font-weight:600;font-size:24px;letter-spacing:-.015em;margin:64px 0 6px}
+.lede{color:var(--ink2);font-size:18px;max-width:60ch;margin:0}
+.meta{color:var(--ink3);font-size:13.5px;margin-top:18px}
+p{max-width:66ch}
+.sub{color:var(--ink2);margin:0 0 22px}
+
+.nums{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:14px;overflow:hidden;margin-top:40px}
+.nums div{background:var(--surf);padding:22px 20px}
+.nums b{display:block;font-family:"Bricolage Grotesque",serif;font-size:44px;font-weight:800;line-height:1;letter-spacing:-.03em}
+.nums span{display:block;color:var(--ink2);font-size:13.5px;margin-top:8px;max-width:20ch}
+.nums .w b{color:var(--won)} .nums .l b{color:var(--lost)} .nums .a b{color:var(--amber)}
+
+.funnel{display:flex;flex-direction:column;gap:10px}
+.step{display:grid;grid-template-columns:190px 1fr 44px;align-items:center;gap:14px}
+.step .t{font-size:14.5px;color:var(--ink2)}
+.step .bar{height:26px;border-radius:6px;background:var(--surf2);overflow:hidden}
+.step .bar i{display:block;height:100%;background:var(--amber);border-radius:6px}
+.step .n{font-weight:700;text-align:right;font-variant-numeric:tabular-nums}
+.step.win .bar i{background:var(--won)}
+.step.neg .bar i{background:var(--won);opacity:.55}
+
+.reasons{border-top:1px solid var(--line)}
+.r{display:grid;grid-template-columns:34px 1fr;gap:6px 18px;padding:20px 0;border-bottom:1px solid var(--line)}
+.r .c{font-family:"Bricolage Grotesque",serif;font-size:30px;font-weight:800;line-height:1;color:var(--lost);font-variant-numeric:tabular-nums}
+.r h3{margin:0;font-size:17px;font-weight:700}
+.r h3 small{color:var(--ink3);font-weight:500;font-size:13.5px;margin-left:8px}
+.r p{grid-column:2;margin:4px 0 0;color:var(--ink2);font-size:15px}
+.r .who{grid-column:2;color:var(--ink3);font-size:13.5px;margin-top:6px}
+.meter{grid-column:2;height:6px;background:var(--surf2);border-radius:3px;overflow:hidden;margin-top:4px}
+.meter i{display:block;height:100%;background:var(--lost)}
+
+blockquote{margin:22px 0;padding:20px 22px;background:var(--surf);border-radius:12px;color:var(--ink);font-size:16.5px;line-height:1.55}
+blockquote cite{display:block;margin-top:10px;color:var(--ink3);font-style:normal;font-size:13.5px}
+
+.won{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.won div{background:var(--surf);border-radius:12px;padding:20px}
+.won h3{margin:0 0 4px;font-size:17px;color:var(--won)}
+.won p{margin:0;color:var(--ink2);font-size:14.5px}
+
+.concl{background:var(--surf);border-radius:16px;padding:28px 26px;margin-top:18px}
+.concl p{margin:0 0 14px;color:var(--ink)}
+.concl p:last-child{margin:0}
+.concl ol{margin:6px 0 14px;padding-left:20px;color:var(--ink2)}
+.concl li{margin:8px 0}
+.concl li b{color:var(--ink)}
+
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:12px}
+table{border-collapse:collapse;width:100%;min-width:640px;font-size:14px}
+th{text-align:left;color:var(--ink3);font-weight:500;font-size:12px;letter-spacing:.06em;text-transform:uppercase;padding:12px 14px;background:var(--surf)}
+td{padding:12px 14px;border-top:1px solid var(--line);vertical-align:top;color:var(--ink2)}
+td:first-child{color:var(--ink);font-weight:500}
+.tag{display:inline-block;padding:2px 10px;border-radius:999px;font-size:12px;font-weight:700;white-space:nowrap}
+.tag.g{background:oklch(78% .12 150 / .16);color:var(--won)}
+.tag.a{background:oklch(80% .13 80 / .16);color:var(--amber)}
+.tag.p{background:oklch(70% .13 35 / .16);color:var(--lost)}
+.flag{color:var(--amber)}
+footer{margin-top:56px;color:var(--ink3);font-size:13px}
+
+@media (max-width:640px){
+  .nums{grid-template-columns:1fr 1fr}
+  .step{grid-template-columns:1fr 40px}
+  .step .t{grid-column:1/-1}
+  .won{grid-template-columns:1fr}
+}
+</style></head><body><main>
+
+<span class="eyebrow">Prospecção de Fornecedores · Fotógrafos · SC</span>
+<h1>Imbituba: 26 fotógrafos procurados, nenhum cadastrado</h1>
+<p class="lede">Em Imbituba o que mais atrapalhou foi o contato. 4 em cada 10 números não funcionavam, e boa parte de quem recebeu a mensagem não respondeu. Dos que responderam, a maioria não faz foto de imóvel ou não tem o equipamento.</p>
+<p class="meta">Fonte: Pipedrive, funil 60 "Prospecção Fornecedores" · 25 cards criados em 29/09/2026 e 1 em 08/10 · contatos feitos entre 01/10 e 09/10/2026 · anotações da Wânia nos cards · atualizado em 13/10/2026</p>
+
+<div class="nums">
+  <div><b>26</b><span>cards no funil, todos de pessoas diferentes</span></div>
+  <div class="w"><b>0</b><span>ganhos, ninguém cadastrado no Painel</span></div>
+  <div class="l"><b>25</b><span>perdidos</span></div>
+  <div class="a"><b>1</b><span>ainda em negociação</span></div>
+</div>
+
+<h2>Do contato ao cadastro</h2>
+<p class="sub">Os 26 profissionais receberam contato por WhatsApp, ligação ou pela SIA. Só 9 chegaram a responder.</p>
+<div class="funnel">
+  <div class="step"><span class="t">Contato enviado</span><span class="bar"><i style="width:100%"></i></span><span class="n">26</span></div>
+  <div class="step"><span class="t">Número válido</span><span class="bar"><i style="width:61.5%"></i></span><span class="n">16</span></div>
+  <div class="step"><span class="t">Respondeu de fato</span><span class="bar"><i style="width:34.6%"></i></span><span class="n">9</span></div>
+  <div class="step neg"><span class="t">Em negociação</span><span class="bar"><i style="width:3.8%"></i></span><span class="n">1</span></div>
+  <div class="step win"><span class="t">Ganho</span><span class="bar"><i style="width:0%"></i></span><span class="n">0</span></div>
+</div>
+
+<h2>Por que perdemos</h2>
+<p class="sub">25 cards perdidos, por motivo. As explicações vêm das anotações da Wânia em cada card. Quando a anotação diz outra coisa que o motivo marcado no Pipedrive, os dois aparecem.</p>
+<div class="reasons">
+  <div class="r"><span class="c">10</span><h3>Contato inválido<small>40%</small></h3>
+    <div class="meter"><i style="width:40%"></i></div>
+    <p>Todos deram "falha no envio". Os 10 telefones vieram da base da Receita Federal: fixos, números antigos de 8 dígitos ou com DDD de outro estado (11, de São Paulo, e 51, do Rio Grande do Sul).</p>
+    <span class="who">Jaime Mengue · Mari Lopes · Michele Leal · Du Bueno · Mara Rubia Bitencourt · Lucas Schorn · A1K2 Studio · Gustavo Rosa Filmes · Martin Filmmaker · Visionarts SC</span></div>
+  <div class="r"><span class="c">8</span><h3>Sem retorno<small>32%</small></h3>
+    <div class="meter"><i style="width:32%"></i></div>
+    <p>A Wânia chamou até 4 vezes ("Chamei 4X sem retorno"). O DJ Studio chegou a responder e passou para "Em negociação", mas parou de atender as chamadas da SIA. A Rosalia veio de indicação e também parou de responder.</p>
+    <span class="who">Leo Freitas · Mariane Rodrigues · Samara Leal · Bruno Rosa Photo · Fontez Fotografia · Pâmela Stasczak · DJ Studio · Rosalia Benvegnu</span></div>
+  <div class="r"><span class="c">3</span><h3>Não faz foto de imóvel<small>12%</small></h3>
+    <div class="meter"><i style="width:12%"></i></div>
+    <p>Dois trabalham com vídeo, um deles só com imagem externa (drone). O terceiro faz fotografia social e de eventos desde 1998.</p>
+    <span class="who">Nicollas Freitas · Pedro Tami (vídeo externo) · Márcio Jorge</span></div>
+  <div class="r"><span class="c">2</span><h3>Sem equipamento<small>8%</small></h3>
+    <div class="meter"><i style="width:8%"></i></div>
+    <p>A Entremares não tem nem a câmera nem as lentes pedidas. O Matheus não tem as lentes e ainda achou o valor fora de mercado.</p>
+    <span class="who">Entremares by Lopes · Matheus Dreher Schneider</span></div>
+  <div class="r"><span class="c">1</span><h3>Valor baixo<small>4% · no Pipedrive: "Parou de Responder"</small></h3>
+    <div class="meter"><i style="width:4%"></i></div>
+    <p>Recebeu as duas tabelas de preço e não aceitou nenhuma: "disse não fazer sentido pra ele".</p>
+    <span class="who">Elton José Laurentino</span></div>
+  <div class="r"><span class="c">1</span><h3>Sem agenda<small>4% · no Pipedrive: "Sem Equipamento"</small></h3>
+    <div class="meter"><i style="width:4%"></i></div>
+    <p>Fotógrafa de casamento. Respondeu que está com pouca agenda e que o prazo de entrega das fotos teria que ser maior.</p>
+    <span class="who">Laís Latrônico</span></div>
+</div>
+
+<blockquote>"Agradeço o contato e fico à disposição, mas com esses valores não consigo."
+<cite>Matheus Dreher Schneider, fotógrafo de Imbituba, que também não tinha as lentes pedidas (card 502817)</cite></blockquote>
+
+<h2>De onde veio cada card</h2>
+<p class="sub">A base da Receita trouxe mais da metade dos cards, e também concentrou os números que não funcionavam.</p>
+<div class="tbl"><table>
+<thead><tr><th>Origem</th><th>Cards</th><th>Contato inválido</th><th>Responderam</th><th>Ganho</th></tr></thead>
+<tbody>
+<tr><td>Só a Receita (CNAE)</td><td>14</td><td>8</td><td>5</td><td>0</td></tr>
+<tr><td>Google / Instagram / Casamentos.com.br</td><td>7</td><td>2 <span class="flag">(telefone da Receita)</span></td><td>2</td><td>0</td></tr>
+<tr><td>Lista enviada pelo time</td><td>4</td><td>0</td><td>2</td><td>0</td></tr>
+<tr><td>Indicação</td><td>1</td><td>0</td><td>0</td><td>0</td></tr>
+</tbody></table></div>
+
+<h2>O que ainda está aberto</h2>
+<div class="won">
+  <div><h3 style="color:var(--amber)">Rafael Fraga de Paula</h3><p>Veio da base da Receita, nicho a confirmar. Está em "Em negociação" desde 02/10 e o card não tem nenhuma anotação. É a única chance aberta na cidade.</p></div>
+</div>
+
+<h2>Conclusão</h2>
+<div class="concl">
+  <p><b>O que mais pesou no resultado foi a qualidade do contato.</b> 10 dos 26 números (38%) deram falha no envio, e todos vinham da base da Receita. Outros 8 profissionais não responderam, mesmo depois de até 4 chamadas. Ou seja, 18 dos 26 cards foram perdidos antes de qualquer conversa.</p>
+  <p>Entre os 9 que responderam, as recusas se dividem assim:</p>
+  <ol>
+    <li><b>Não é o tipo de fotógrafo que procuramos.</b> 3 trabalham com vídeo, drone ou eventos e não fazem foto de interior. Outros 2 não têm o equipamento, e um deles não tem nem a câmera.</li>
+    <li><b>O valor pesou menos que em Pirenópolis.</b> Só 2 dos 9 reclamaram do preço: o Elton recusou as duas tabelas e o Matheus juntou o preço à falta de lente. Uma fotógrafa de casamento recusou por falta de agenda.</li>
+  </ol>
+  <p>Comparando com Pirenópolis (18 contatos e 2 ganhos), Imbituba teve mais nomes, mas fechou com nenhum. Imbituba tem por volta de 50 mil habitantes, mas pouca gente lá vive de foto de imóvel. Todos os 10 números inválidos eram telefones da base da Receita. Os 2 inválidos que vieram do Google e do Instagram também usavam o telefone da Receita, e a lista do time não teve nenhum.</p>
+  <p>O único card ainda aberto é o do Rafael Fraga, parado em "Em negociação" desde 02/10.</p>
+</div>
+
+<h2>Todos os cards</h2>
+<div class="tbl"><table>
+<thead><tr><th>Fotógrafo</th><th>Origem</th><th>Resultado</th><th>Anotação</th></tr></thead>
+<tbody>
+<tr><td>Rafael Fraga de Paula</td><td>Receita (CNAE)</td><td><span class="tag a">Em negociação</span></td><td>Desde 02/10, sem anotação</td></tr>
+<tr><td>Elton José Laurentino</td><td>Receita (CNAE)</td><td><span class="tag p">Valor baixo</span></td><td>Não aceitou nenhuma das duas tabelas</td></tr>
+<tr><td>Matheus Dreher Schneider</td><td>Receita (CNAE)</td><td><span class="tag p">Sem equipamento</span></td><td>Sem as lentes; "com esses valores não consigo"</td></tr>
+<tr><td>Entremares by Lopes</td><td>Lista do time</td><td><span class="tag p">Sem equipamento</span></td><td>Nem câmera nem lentes</td></tr>
+<tr><td>Laís Latrônico</td><td>Lista do time</td><td><span class="tag p">Sem agenda</span></td><td>Pouca agenda, prazo de entrega maior</td></tr>
+<tr><td>Nicollas Freitas Ferreira</td><td>Receita (CNAE)</td><td><span class="tag p">Não faz imóvel</span></td><td>Trabalha com vídeo</td></tr>
+<tr><td>Pedro Tami da Silveira Canto</td><td>Receita (CNAE)</td><td><span class="tag p">Não faz imóvel</span></td><td>Vídeo, só externo</td></tr>
+<tr><td>Márcio Jorge</td><td>Casamentos.com.br / Google</td><td><span class="tag p">Não faz imóvel</span></td><td>Fotografia social e eventos</td></tr>
+<tr><td>DJ Studio</td><td>Casamentos.com.br / Google</td><td><span class="tag p">Sem retorno</span></td><td>Respondeu, depois parou de atender a SIA</td></tr>
+<tr><td>Rosalia Benvegnu</td><td>Indicação</td><td><span class="tag p">Sem retorno</span></td><td>Parou de responder</td></tr>
+<tr><td>Leo Freitas</td><td>Google / Instagram</td><td><span class="tag p">Sem retorno</span></td><td>Chamado 4 vezes</td></tr>
+<tr><td>Mariane Rodrigues</td><td>Google / Instagram</td><td><span class="tag p">Sem retorno</span></td><td>Chamada 4 vezes</td></tr>
+<tr><td>Samara Leal</td><td>Receita / Google</td><td><span class="tag p">Sem retorno</span></td><td>Chamada 4 vezes</td></tr>
+<tr><td>Bruno Rosa Photo</td><td>Receita (CNAE)</td><td><span class="tag p">Sem retorno</span></td><td>Chamado 4 vezes</td></tr>
+<tr><td>Fontez Fotografia</td><td>Lista do time</td><td><span class="tag p">Sem retorno</span></td><td>Chamado 4 vezes</td></tr>
+<tr><td>Pâmela Stasczak</td><td>Lista do time</td><td><span class="tag p">Sem retorno</span></td><td>3 mensagens sem resposta</td></tr>
+<tr><td>Jaime Mengue</td><td>Receita / Google / Instagram</td><td><span class="tag p">Contato inválido</span></td><td>Falha no envio (telefone fixo)</td></tr>
+<tr><td>Mari Lopes</td><td>Receita / Google / Instagram</td><td><span class="tag p">Contato inválido</span></td><td>Falha no envio (DDD 51)</td></tr>
+<tr><td>Michele Leal Cardoso Alves</td><td>Receita (CNAE)</td><td><span class="tag p">Contato inválido</span></td><td>Falha no envio</td></tr>
+<tr><td>Du Bueno Fotografia</td><td>Receita (CNAE)</td><td><span class="tag p">Contato inválido</span></td><td>Falha no envio (DDD 11)</td></tr>
+<tr><td>Mara Rubia Bitencourt</td><td>Receita (CNAE)</td><td><span class="tag p">Contato inválido</span></td><td>Falha no envio</td></tr>
+<tr><td>Lucas Schorn Grundling</td><td>Receita (CNAE)</td><td><span class="tag p">Contato inválido</span></td><td>Falha no envio</td></tr>
+<tr><td>A1K2 Studio</td><td>Receita (CNAE)</td><td><span class="tag p">Contato inválido</span></td><td>Falha no envio (telefone fixo)</td></tr>
+<tr><td>Gustavo Rosa Filmes</td><td>Receita (CNAE)</td><td><span class="tag p">Contato inválido</span></td><td>Falha no envio</td></tr>
+<tr><td>Martin Filmmaker</td><td>Receita (CNAE)</td><td><span class="tag p">Contato inválido</span></td><td>Falha no envio</td></tr>
+<tr><td>Visionarts SC</td><td>Receita (CNAE)</td><td><span class="tag p">Contato inválido</span></td><td>Falha no envio</td></tr>
+</tbody></table></div>
+
+<footer>"Respondeu de fato" soma o card em negociação, o DJ Studio (respondeu e depois sumiu) e os 7 que deram um motivo de recusa (valor, equipamento, agenda ou não fazer imóvel). Não houve card duplicado. A população é aproximada.</footer>
+</main></body></html>
