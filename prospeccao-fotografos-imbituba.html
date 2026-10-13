@@ -72,6 +72,8 @@ td:first-child{color:var(--ink);font-weight:500}
 .tag.a{background:oklch(80% .13 80 / .16);color:var(--amber)}
 .tag.p{background:oklch(70% .13 35 / .16);color:var(--lost)}
 .flag{color:var(--amber)}
+.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.dim{color:var(--ink3)}
 footer{margin-top:56px;color:var(--ink3);font-size:13px}
 
 @media (max-width:640px){
@@ -143,6 +145,51 @@ footer{margin-top:56px;color:var(--ink3);font-size:13px}
 <tr><td>Antes do Pipedrive</td><td>1</td><td>0</td><td>1</td><td>1</td></tr>
 </tbody></table></div>
 
+<h2>Tempo em cada fase</h2>
+<p class="sub">Quantos dos 26 cards do Pipedrive passaram por cada fase do funil e quanto tempo ficaram nela. O Bernardo entrou antes do Pipedrive e não aparece aqui.</p>
+<div class="tbl"><table class="t-num">
+<thead><tr><th>Fase</th><th class="num">Cards que passaram</th><th class="num">Tempo médio</th><th class="num">Maior tempo</th></tr></thead>
+<tbody>
+<tr><td>Backlog</td><td class="num">26</td><td class="num">2,0 d</td><td class="num">2,1 d</td></tr>
+<tr><td>1º Contato</td><td class="num">26</td><td class="num">2,2 d</td><td class="num">4,9 d</td></tr>
+<tr><td>2º Contato</td><td class="num">9</td><td class="num">1,4 d</td><td class="num">2,0 d</td></tr>
+<tr><td>3º Contato</td><td class="num">5</td><td class="num">1,1 d</td><td class="num">1,2 d</td></tr>
+<tr><td>Em negociação</td><td class="num">6</td><td class="num">4,6 d</td><td class="num">11,2 d</td></tr>
+<tr><td>Perda</td><td class="num">25</td><td class="num"><span class="dim">–</span></td><td class="num"><span class="dim">–</span></td></tr>
+</tbody></table></div>
+
+<p class="sub" style="margin-top:32px">Por card, do mais demorado para o mais rápido. "Total" vai da criação do card até a perda (no card aberto, até 13/10).</p>
+<div class="tbl"><table class="t-num">
+<thead><tr><th>Fotógrafo</th><th class="num">Backlog</th><th class="num">1º Contato</th><th class="num">2º Contato</th><th class="num">3º Contato</th><th class="num">Em negociação</th><th class="num">Total</th></tr></thead>
+<tbody>
+<tr><td>Rafael Fraga de Paula <span class="tag a">aberto</span></td><td class="num">2,1 d</td><td class="num">0,8 d</td><td class="num"><span class="dim">–</span></td><td class="num"><span class="dim">–</span></td><td class="num">11,2 d</td><td class="num"><b>14,0 d</b></td></tr>
+<tr><td>Leo Freitas</td><td class="num">2,1 d</td><td class="num">3,8 d</td><td class="num">2,0 d</td><td class="num">1,1 d</td><td class="num"><span class="dim">–</span></td><td class="num"><b>9,0 d</b></td></tr>
+<tr><td>Mariane Rodrigues</td><td class="num">2,1 d</td><td class="num">3,8 d</td><td class="num">2,0 d</td><td class="num">1,1 d</td><td class="num"><span class="dim">–</span></td><td class="num"><b>9,0 d</b></td></tr>
+<tr><td>Samara Leal</td><td class="num">2,1 d</td><td class="num">3,8 d</td><td class="num">2,0 d</td><td class="num">1,1 d</td><td class="num"><span class="dim">–</span></td><td class="num"><b>9,0 d</b></td></tr>
+<tr><td>Bruno Rosa Photo</td><td class="num">2,1 d</td><td class="num">3,8 d</td><td class="num">2,0 d</td><td class="num">1,2 d</td><td class="num"><span class="dim">–</span></td><td class="num"><b>9,0 d</b></td></tr>
+<tr><td>Fontez Fotografia</td><td class="num">1,9 d</td><td class="num">3,8 d</td><td class="num">2,0 d</td><td class="num">1,1 d</td><td class="num"><span class="dim">–</span></td><td class="num"><b>8,9 d</b></td></tr>
+<tr><td>Laís Latrônico</td><td class="num">1,9 d</td><td class="num">0,9 d</td><td class="num"><span class="dim">–</span></td><td class="num"><span class="dim">–</span></td><td class="num">6,1 d</td><td class="num"><b>8,9 d</b></td></tr>
+<tr><td>Elton José Laurentino</td><td class="num">2,1 d</td><td class="num">0,8 d</td><td class="num"><span class="dim">–</span></td><td class="num"><span class="dim">–</span></td><td class="num">5,1 d</td><td class="num"><b>8,0 d</b></td></tr>
+<tr><td>DJ Studio</td><td class="num">2,1 d</td><td class="num">0,8 d</td><td class="num"><span class="dim">–</span></td><td class="num"><span class="dim">–</span></td><td class="num">4,9 d</td><td class="num"><b>7,8 d</b></td></tr>
+<tr><td>Pâmela Stasczak</td><td class="num">1,9 d</td><td class="num">3,8 d</td><td class="num">1,9 d</td><td class="num"><span class="dim">–</span></td><td class="num"><span class="dim">–</span></td><td class="num"><b>7,7 d</b></td></tr>
+<tr><td>Entremares by Lopes</td><td class="num">1,9 d</td><td class="num">4,9 d</td><td class="num"><span class="dim">–</span></td><td class="num"><span class="dim">–</span></td><td class="num">&lt; 1 h</td><td class="num"><b>6,9 d</b></td></tr>
+<tr><td>Matheus Dreher Schneider</td><td class="num">2,1 d</td><td class="num">3,8 d</td><td class="num">0,2 d</td><td class="num"><span class="dim">–</span></td><td class="num">0,1 d</td><td class="num"><b>6,1 d</b></td></tr>
+<tr><td>Mara Rubia Bitencourt</td><td class="num">2,1 d</td><td class="num">3,8 d</td><td class="num">&lt; 1 h</td><td class="num"><span class="dim">–</span></td><td class="num"><span class="dim">–</span></td><td class="num"><b>5,9 d</b></td></tr>
+<tr><td>Pedro Tami da Silveira Canto</td><td class="num">2,1 d</td><td class="num">3,8 d</td><td class="num"><span class="dim">–</span></td><td class="num"><span class="dim">–</span></td><td class="num"><span class="dim">–</span></td><td class="num"><b>5,9 d</b></td></tr>
+<tr><td>Nicollas Freitas Ferreira</td><td class="num">2,1 d</td><td class="num">3,8 d</td><td class="num"><span class="dim">–</span></td><td class="num"><span class="dim">–</span></td><td class="num"><span class="dim">–</span></td><td class="num"><b>5,9 d</b></td></tr>
+<tr><td>Lucas Schorn Grundling</td><td class="num">2,1 d</td><td class="num">3,8 d</td><td class="num">&lt; 1 h</td><td class="num"><span class="dim">–</span></td><td class="num"><span class="dim">–</span></td><td class="num"><b>5,9 d</b></td></tr>
+<tr><td>Márcio Jorge</td><td class="num">2,1 d</td><td class="num">0,8 d</td><td class="num"><span class="dim">–</span></td><td class="num"><span class="dim">–</span></td><td class="num"><span class="dim">–</span></td><td class="num"><b>2,9 d</b></td></tr>
+<tr><td>Du Bueno Fotografia</td><td class="num">2,1 d</td><td class="num">0,8 d</td><td class="num"><span class="dim">–</span></td><td class="num"><span class="dim">–</span></td><td class="num"><span class="dim">–</span></td><td class="num"><b>2,9 d</b></td></tr>
+<tr><td>Jaime Mengue</td><td class="num">2,1 d</td><td class="num">0,8 d</td><td class="num"><span class="dim">–</span></td><td class="num"><span class="dim">–</span></td><td class="num"><span class="dim">–</span></td><td class="num"><b>2,9 d</b></td></tr>
+<tr><td>Visionarts SC</td><td class="num">2,1 d</td><td class="num">0,8 d</td><td class="num"><span class="dim">–</span></td><td class="num"><span class="dim">–</span></td><td class="num"><span class="dim">–</span></td><td class="num"><b>2,9 d</b></td></tr>
+<tr><td>A1K2 Studio</td><td class="num">2,1 d</td><td class="num">0,8 d</td><td class="num"><span class="dim">–</span></td><td class="num"><span class="dim">–</span></td><td class="num"><span class="dim">–</span></td><td class="num"><b>2,9 d</b></td></tr>
+<tr><td>Michele Leal Cardoso Alves</td><td class="num">2,1 d</td><td class="num">0,8 d</td><td class="num"><span class="dim">–</span></td><td class="num"><span class="dim">–</span></td><td class="num"><span class="dim">–</span></td><td class="num"><b>2,8 d</b></td></tr>
+<tr><td>Gustavo Rosa Filmes</td><td class="num">2,1 d</td><td class="num">0,8 d</td><td class="num"><span class="dim">–</span></td><td class="num"><span class="dim">–</span></td><td class="num"><span class="dim">–</span></td><td class="num"><b>2,8 d</b></td></tr>
+<tr><td>Martin Filmmaker</td><td class="num">2,1 d</td><td class="num">0,8 d</td><td class="num"><span class="dim">–</span></td><td class="num"><span class="dim">–</span></td><td class="num"><span class="dim">–</span></td><td class="num"><b>2,8 d</b></td></tr>
+<tr><td>Mari Lopes</td><td class="num">2,1 d</td><td class="num">0,8 d</td><td class="num"><span class="dim">–</span></td><td class="num"><span class="dim">–</span></td><td class="num"><span class="dim">–</span></td><td class="num"><b>2,8 d</b></td></tr>
+<tr><td>Rosalia Benvegnu</td><td class="num">&lt; 1 h</td><td class="num">1,0 d</td><td class="num"><span class="dim">–</span></td><td class="num"><span class="dim">–</span></td><td class="num"><span class="dim">–</span></td><td class="num"><b>1,0 d</b></td></tr>
+</tbody></table></div>
+
 <h2>Quem entrou</h2>
 <div class="won">
   <div><h3>Bernardo Villanueva de C. Ramos</h3><p>Entrou na fase anterior ao Pipedrive. Foi cadastrado no Painel de Fotógrafos em 02/09/2026, está ativo e atende Imbituba, Garopaba e Laguna. Mora na Praia do Rosa e aceitou a tabela, de R$ 180 (estúdio) a R$ 300 (4 quartos ou mais).</p></div>
@@ -150,7 +197,7 @@ footer{margin-top:56px;color:var(--ink3);font-size:13px}
 
 <h2>O que ainda está aberto</h2>
 <div class="won">
-  <div><h3 style="color:var(--amber)">Rafael Fraga de Paula</h3><p>Veio da base da Receita, nicho a confirmar. Está em "Em negociação" desde 02/10 e o card não tem nenhuma anotação. É a única chance aberta na cidade.</p></div>
+  <div><h3 style="color:var(--amber)">Rafael Fraga de Paula</h3><p>Veio da base da Receita, nicho a confirmar. Está em "Em negociação" desde 02/10. A negociação parou porque a esposa dele teve um AVC, e ele ficou de retornar em 13/10. É a única chance aberta na cidade.</p></div>
 </div>
 
 <h2>Conclusão</h2>
@@ -163,7 +210,7 @@ footer{margin-top:56px;color:var(--ink3);font-size:13px}
     <li><b>Não é o tipo de fotógrafo que procuramos.</b> 3 trabalham com vídeo, drone ou eventos e não fazem foto de interior. Outros 2 não têm o equipamento, e um deles não tem nem a câmera. Uma fotógrafa de casamento recusou por falta de agenda.</li>
   </ol>
   <p>Imbituba tem por volta de 50 mil habitantes, mas pouca gente lá vive de foto de imóvel.</p>
-  <p>O único card ainda aberto é o do Rafael Fraga, parado em "Em negociação" desde 02/10.</p>
+  <p>O único card ainda aberto é o do Rafael Fraga, em "Em negociação" desde 02/10. Ele pausou a conversa porque a esposa teve um AVC e ficou de retornar em 13/10.</p>
 </div>
 
 <h2>Todos os cards</h2>
@@ -171,7 +218,7 @@ footer{margin-top:56px;color:var(--ink3);font-size:13px}
 <thead><tr><th>Fotógrafo</th><th>Origem</th><th>Resultado</th><th>Anotação</th></tr></thead>
 <tbody>
 <tr><td>Bernardo Villanueva de C. Ramos</td><td>Antes do Pipedrive</td><td><span class="tag g">Ganho</span></td><td>Cadastrado no Painel em 02/09 · Imbituba, Garopaba e Laguna</td></tr>
-<tr><td>Rafael Fraga de Paula</td><td>Receita (CNAE)</td><td><span class="tag a">Em negociação</span></td><td>Desde 02/10, sem anotação</td></tr>
+<tr><td>Rafael Fraga de Paula</td><td>Receita (CNAE)</td><td><span class="tag a">Em negociação</span></td><td>Esposa teve AVC; ficou de retornar em 13/10</td></tr>
 <tr><td>Elton José Laurentino</td><td>Receita (CNAE)</td><td><span class="tag p">Valor baixo</span></td><td>Não aceitou nenhuma das duas tabelas</td></tr>
 <tr><td>Matheus Dreher Schneider</td><td>Receita (CNAE)</td><td><span class="tag p">Sem equipamento</span></td><td>Sem as lentes; "com esses valores não consigo"</td></tr>
 <tr><td>Entremares by Lopes</td><td>Lista do time</td><td><span class="tag p">Sem equipamento</span></td><td>Nem câmera nem lentes</td></tr>
@@ -199,5 +246,5 @@ footer{margin-top:56px;color:var(--ink3);font-size:13px}
 <tr><td>Visionarts SC</td><td>Receita (CNAE)</td><td><span class="tag p">Sem retorno</span></td><td>Falha no envio</td></tr>
 </tbody></table></div>
 
-<footer>"Respondeu" soma o Bernardo, o card em negociação e os 9 que deram um motivo de recusa ou pararam de responder durante a negociação. Os 10 com falha no envio entram em "Sem retorno". Não houve card duplicado. A população é aproximada.</footer>
+<footer>"Respondeu" soma o Bernardo, o card em negociação e os 9 que deram um motivo de recusa ou pararam de responder durante a negociação. Os 10 com falha no envio entram em "Sem retorno". Os tempos são em dias corridos (contam fim de semana); quando um card voltou de fase por correção, o tempo ficou na fase para onde ele voltou. Não houve card duplicado. A população é aproximada.</footer>
 </main></body></html>
