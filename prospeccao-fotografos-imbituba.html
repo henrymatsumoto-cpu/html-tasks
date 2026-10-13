@@ -7,9 +7,9 @@
 <style>
 :root{
   color-scheme:dark;
-  --bg:oklch(18% .012 70);--surf:oklch(22% .014 70);--surf2:oklch(26% .016 70);
-  --line:oklch(32% .014 70);--ink:oklch(93% .01 80);--ink2:oklch(72% .015 75);--ink3:oklch(58% .014 75);
-  --won:oklch(78% .12 150);--lost:oklch(70% .13 35);--amber:oklch(80% .13 80);
+  --bg:#080E32;--surf:#0F1742;--surf2:#18225A;
+  --line:#232E6B;--ink:#EEF1FB;--ink2:#B4BBD9;--ink3:#8189B0;
+  --won:oklch(78% .12 150);--lost:oklch(72% .13 30);--amber:oklch(82% .13 80);--blue:#4D85FF;
 }
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 "Figtree",sans-serif;-webkit-font-smoothing:antialiased}
@@ -32,7 +32,7 @@ p{max-width:66ch}
 .step{display:grid;grid-template-columns:190px 1fr 44px;align-items:center;gap:14px}
 .step .t{font-size:14.5px;color:var(--ink2)}
 .step .bar{height:26px;border-radius:6px;background:var(--surf2);overflow:hidden}
-.step .bar i{display:block;height:100%;background:var(--amber);border-radius:6px}
+.step .bar i{display:block;height:100%;background:var(--blue);border-radius:6px}
 .step .n{font-weight:700;text-align:right;font-variant-numeric:tabular-nums}
 .step.win .bar i{background:var(--won)}
 .step.neg .bar i{background:var(--won);opacity:.55}
