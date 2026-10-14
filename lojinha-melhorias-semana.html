@@ -89,9 +89,24 @@
   .legend{display:flex;flex-wrap:wrap;gap:var(--sp-lg);color:var(--muted-fg);font-size:12.5px;margin-bottom:var(--sp-lg)}
   .legend span{display:inline-flex;align-items:center;gap:7px}
 
+  .shots{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--sp-lg)}
+  .shots figure{margin:0}
+  .shots figure.full{grid-column:1 / -1}
+  .shots img{
+    display:block;width:100%;height:auto;border-radius:var(--r-lg);
+    border:1px solid var(--border);background:#fff;
+  }
+  .shots a:hover{text-decoration:none}
+  .shots a:hover img{border-color:var(--primary)}
+  .shots figcaption{margin-top:10px;color:var(--muted-fg);font-size:13px;line-height:1.5}
+  .shots figcaption strong{color:var(--fg);font-weight:600}
+  .subhead{margin:var(--sp-2xl) 0 var(--sp-md);font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--primary)}
+  .uso{display:flex;flex-wrap:wrap;gap:var(--sp-2xl);margin-bottom:var(--sp-lg)}
+
   footer{padding:var(--sp-xl) 0 var(--sp-3xl);border-top:1px solid var(--border);color:var(--muted-fg);font-size:12px}
 
   @media (max-width:820px){
+    .shots{grid-template-columns:1fr}
     ul.ba li{grid-template-columns:1fr;gap:8px}
     .ref{justify-content:flex-start}
     header{padding-top:var(--sp-2xl)}
@@ -353,7 +368,40 @@
     </ul>
   </div>
 </section>
+<section>
+  <div class="wrap">
+    <div class="sechead"><span class="num">7</span><div><h2>Como o proprietário vê a loja</h2><p>As mesmas telas, agora pelo olhar de quem compra para o próprio imóvel.</p></div></div>
+    <div class="shots">
+      <figure class="full">
+        <a href="img/lojinha-proprietario/home.webp" target="_blank" rel="noopener"><img src="img/lojinha-proprietario/home.webp" alt="Página inicial da lojinha logada como proprietário: banner reduzido, menu lateral fixo e Produtos em Destaque com as tags Mais vendido e Enxoval Padrão" loading="lazy" width="1794" height="893"></a>
+        <figcaption><strong>Página inicial.</strong> Busca no topo, carrinho, menu lateral fixo e produto já na primeira dobra, com as tags <em>Mais vendido</em> e <em>Enxoval Padrão</em> e a faixa de preço entre fornecedores.</figcaption>
+      </figure>
+      <figure class="full">
+        <a href="img/lojinha-proprietario/categorias.webp" target="_blank" rel="noopener"><img src="img/lojinha-proprietario/categorias.webp" alt="Página de categorias vista pelo proprietário, com submenu de categorias aberto no menu lateral" loading="lazy" width="1809" height="958"></a>
+        <figcaption><strong>Categorias.</strong> O submenu mostra só as categorias liberadas para o perfil de proprietário, com cartões legíveis por cômodo.</figcaption>
+      </figure>
+      <figure>
+        <a href="img/lojinha-proprietario/carrinho.webp" target="_blank" rel="noopener"><img src="img/lojinha-proprietario/carrinho.webp" alt="Carrinho do proprietário com item da RM Enxoval, resumo e botão Continuar para confirmação" loading="lazy" width="1209" height="761"></a>
+        <figcaption><strong>Carrinho.</strong> Separado por fornecedor, com resumo e frete — o proprietário agora chega até a confirmação, em vez de voltar para a home.</figcaption>
+      </figure>
+      <figure>
+        <a href="img/lojinha-proprietario/indicacao-itens-faltantes.webp" target="_blank" rel="noopener"><img src="img/lojinha-proprietario/indicacao-itens-faltantes.webp" alt="Lista Indicação Itens Faltantes do imóvel CCT0804, com itens apontados na vistoria e botão Abrir para a loja parceira" loading="lazy" width="813" height="898"></a>
+        <figcaption><strong>Lista de itens faltantes.</strong> Gerada a partir da vistoria do imóvel: cada item apontado vem com quantidade, faixa de preço e link para comprar na loja parceira. Expira em 90 dias.</figcaption>
+      </figure>
+    </div>
 
+    <h3 class="subhead">Proprietários já usando</h3>
+    <div class="uso">
+      <div class="stat"><div class="n">76</div><div class="l">Proprietários cadastrados</div></div>
+    </div>
+    <div class="shots">
+      <figure class="full">
+        <a href="img/lojinha-proprietario/proprietarios-cadastrados.webp" target="_blank" rel="noopener"><img src="img/lojinha-proprietario/proprietarios-cadastrados.webp" alt="Painel admin, aba Proprietários (76), listando proprietários cadastrados em outubro com data de cadastro e último acesso" loading="lazy" width="1560" height="748"></a>
+        <figcaption><strong>Painel admin → Proprietários.</strong> Cadastros e acessos recentes (02 a 13/10/2026). E-mail, telefone e sobrenome borrados por privacidade.</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
 
 <footer>
   <div class="wrap">
