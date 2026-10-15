@@ -255,11 +255,11 @@ const TRAILS = [
    val:"Cidade coberta",
    opp:"A busca já roda por skill. O próximo ganho é a cadência de contato pela SIA rodar sozinha, com alerta quando o card parar.",
    p:[
-    {id:"1.1", t:"Identificar cidades sem prestador", m:"misto", ia:2, ex:"agente", who:"Analista roda a skill · Coordenador decide",
+    {id:"1.1", t:"Identificar cidades sem prestador", m:"misto", ia:2, ex:"agente", who:"Coordenador",
      o:"Saber antes da ativação quais cidades não têm lavanderia ou fotógrafo.",
      e:"Card da cidade no funil 61, com imóveis, franquias e a cidade coberta mais próxima.",
      how:["A skill cruza os imóveis ativos e em onboarding do Sapron e os polígonos com o Hub de Serviços e a base de fotógrafos.","Cidade sem cobertura vira card no funil 61 do Pipedrive."],
-     aud:"O coordenador da área valida quais cidades vão ou não ser prospectadas.",
+     aud:"O coordenador roda a skill e valida quais cidades vão ou não ser prospectadas.",
      imp:{d:"recebe", t:"Imóvel novo em onboarding numa cidade sem prestador dispara a prospecção."},
      tools:["skillcid","sapron","hub","pipe61","claude"]},
     {id:"1.2", t:"Pesquisar prestadores na cidade", m:"misto", ia:2, ex:"agente", who:"Analista",
