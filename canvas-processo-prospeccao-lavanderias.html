@@ -260,7 +260,7 @@ footer b{color:var(--ink-2);font-weight:600}
       <div><div class="n">8</div><div class="l">etapas no fluxo</div></div>
       <div><div class="n ok">3</div><div class="l">mensagens automáticas pela SIA</div></div>
       <div><div class="n">17</div><div class="l">peças na tabela de teto</div></div>
-      <div><div class="n no">4</div><div class="l">premissas a confirmar</div></div>
+      <div><div class="n no">5</div><div class="l">premissas a confirmar</div></div>
     </div>
   </div>
 </header>
@@ -268,7 +268,7 @@ footer b{color:var(--ink-2);font-weight:600}
 <nav class="tabs">
   <div class="shell">
     <button class="tab" id="t-canvas" aria-selected="true" aria-controls="v-canvas">Canvas<span class="c">9 seções</span></button>
-    <button class="tab" id="t-resp" aria-selected="false" aria-controls="v-resp">Premissas a confirmar<span class="c">6</span></button>
+    <button class="tab" id="t-resp" aria-selected="false" aria-controls="v-resp">Premissas a confirmar<span class="c">7</span></button>
   </div>
 </nav>
 
@@ -425,7 +425,7 @@ Quem é pessoa:
 - Franqueado: escolhe, contrata e paga a lavanderia da base.
 - Substituto do Analista: Coordenador de Fornecedores, nas férias e ausências.</pre>
   </article><article class="sec">
-    <header><span class="em">🔄</span><h3>5. Fluxo do Processo</h3><span class="tag novo">8 etapas</span><span class="tag conf">2 decisões</span>
+    <header><span class="em">🔄</span><h3>5. Fluxo do Processo</h3><span class="tag novo">8 etapas</span><span class="tag conf">3 decisões</span>
       <span class="copyrow"><button class="btn" data-copy>Copiar</button></span></header>
     <div class="body"><details class="step" open>
         <summary><span class="idx">1</span><span class="sum-t">Análise dos polígonos sem lavanderia</span><span class="chev">›</span></summary>
@@ -500,7 +500,19 @@ Quem é pessoa:
         <summary><span class="idx">8</span><span class="sum-t">Perda</span><span class="chev">›</span></summary>
         <div class="inner">
           <p><b>Responsável:</b> Agente (Sem Retorno) e Analista (demais motivos)</p>
-          <p><b>Motivos:</b> Sem Retorno (automático) · Autoatendimento · Cobra por peso ou cesto · Sem calandra ou ferro industrial · Acima do teto sem acordo · Sem interesse.</p></div>
+          <p>O card vai para <b>Perda</b> com um dos motivos de perda de Fornecedores do Pipedrive. Lavanderia perdida não é apagada: o card fica no funil para histórico.</p>
+          <div class="tblwrap"><table class="tbl">
+            <tr><th>Motivo no Pipedrive</th><th>Quando usar</th><th>Quem marca</th></tr>
+            <tr><td>[Fornecedores] - Sem Retorno</td><td>Não respondeu nenhuma das 3 mensagens da cadência</td><td>Agente, no dia útil seguinte à última mensagem</td></tr>
+            <tr><td>[Fornecedores] - Parou de Responder</td><td>Respondeu, entrou em Em negociação e sumiu por 3 dias úteis</td><td>Analista</td></tr>
+            <tr><td>[Fornecedores] - Autoatendimento</td><td>Lavanderia self-service</td><td>Analista, na revisão do Backlog ou na etapa 2 do roteiro</td></tr>
+            <tr><td>[Fornecedores] - Valor por Quilo</td><td>Cobra por peso e não trabalha por peça (confirmar uma vez antes)</td><td>Analista</td></tr>
+            <tr><td>[Fornecedores] - Valor por Cesto</td><td>Cobra por cesto e não trabalha por peça (confirmar uma vez antes)</td><td>Analista</td></tr>
+            <tr><td>[Fornecedores] - Sem Calandra/Ferro industrial</td><td>Não tem calandra, ferro industrial nem ferro a vapor profissional</td><td>Analista</td></tr>
+            <tr><td>[Fornecedores] - Valor Alto</td><td>Algum item ficou acima do teto e não houve acordo na negociação</td><td>Analista</td></tr>
+            <tr><td><span class="marked">[Fornecedores] - Volume mínimo alto</span></td><td>O mínimo por coleta da lavanderia inviabiliza o atendimento dos imóveis do polígono</td><td>Analista</td></tr>
+          </table></div>
+          <p><b>Motivos gerais do Pipedrive que também podem ser usados:</b> Contato Inválido (telefone não existe ou é de outra pessoa) · Duplicado/Erro (card repetido ou criado errado) · Não tem interesse (a lavanderia não quer a parceria).</p><div class="note ask"><span class="lbl">Precisa confirmar</span>O motivo Volume mínimo alto existe no Pipedrive, mas a regra de 14/10 diz que o volume mínimo é só registrado no cadastro e não é motivo de perda. Deixei o motivo só para quando o mínimo inviabiliza o atendimento. Se não for para usar, eu tiro.</div></div>
       </details></div>
     <pre class="raw">5. Fluxo do Processo
 
@@ -559,7 +571,22 @@ SLA: 1 dia útil após o aceite.
 
 8. Perda
 Responsável: Agente (Sem Retorno) e Analista (demais motivos)
-Motivos: Sem Retorno (automático) · Autoatendimento · Cobra por peso ou cesto · Sem calandra ou ferro industrial · Acima do teto sem acordo · Sem interesse.</pre>
+Descrição: O card vai para Perda com um dos motivos de perda de Fornecedores do Pipedrive. Lavanderia perdida não é apagada: o card fica no funil para histórico.
+
+Motivos de perda possíveis:
+- [Fornecedores] - Sem Retorno: não respondeu nenhuma das 3 mensagens da cadência. Marcado pelo agente no dia útil seguinte à última mensagem.
+- [Fornecedores] - Parou de Responder: respondeu, entrou em Em negociação e sumiu por 3 dias úteis. Marcado pelo Analista.
+- [Fornecedores] - Autoatendimento: lavanderia self-service. Marcado na revisão do Backlog ou na etapa 2 do roteiro.
+- [Fornecedores] - Valor por Quilo: cobra por peso e não trabalha por peça (confirmar uma vez antes).
+- [Fornecedores] - Valor por Cesto: cobra por cesto e não trabalha por peça (confirmar uma vez antes).
+- [Fornecedores] - Sem Calandra/Ferro industrial: não tem calandra, ferro industrial nem ferro a vapor profissional.
+- [Fornecedores] - Valor Alto: algum item ficou acima do teto e não houve acordo na negociação.
+- [Fornecedores] - Volume mínimo alto: o mínimo por coleta da lavanderia inviabiliza o atendimento dos imóveis do polígono.
+
+Motivos gerais do Pipedrive que também podem ser usados:
+- Contato Inválido: telefone não existe ou é de outra pessoa.
+- Duplicado/Erro: card repetido ou criado errado.
+- Não tem interesse: a lavanderia não quer a parceria.</pre>
   </article><article class="sec">
     <header><span class="em">📣</span><h3>6. Cadência de Contato e Extensão</h3><span class="tag novo">Seção nova</span>
       <span class="copyrow"><button class="btn" data-copy>Copiar</button></span></header>
@@ -777,7 +804,7 @@ Lavanderias com algum item acima do teto | Hub de Serviços × tabela de teto | 
 <section class="view" id="v-resp" hidden>
   <div class="verdict">
     <h2>O que eu deduzi e precisa de você</h2>
-    <p>A maior parte do canvas descreve o que os agentes e as skills <span class="hl">já fazem hoje</span>. Quatro pontos eu copiei do canvas de fotógrafos ou deduzi, e eles mudam meta, fluxo ou prazo. Estão marcados no canvas com <span class="hl">Mostrar comentários da revisão</span>.</p>
+    <p>A maior parte do canvas descreve o que os agentes e as skills <span class="hl">já fazem hoje</span>. Cinco pontos eu copiei do canvas de fotógrafos ou deduzi, e eles mudam meta, fluxo ou prazo. Estão marcados no canvas com <span class="hl">Mostrar comentários da revisão</span>.</p>
   </div>
   <div class="filters">
     <span class="lbl">Filtrar</span>
@@ -797,7 +824,7 @@ Lavanderias com algum item acima do teto | Hub de Serviços × tabela de teto | 
 </main>
 
 <script>
-var R = [{"g": "p", "id": "P01", "st": "no", "t": "Quantas lavanderias cobrem um polígono?", "w": "Coordenação", "v": "O canvas usa 1 lavanderia validada no Hub, que é a regra da skill de cidades sem fornecedor (polígono sem lavanderia validada vira card).", "r": "Se forem 2, como em fotógrafos, mudam a meta (seção 2), a etapa 7 (quando o card do polígono vai para Concluído) e o indicador de polígonos em aberto."}, {"g": "p", "id": "P02", "st": "no", "t": "A análise dos polígonos roda toda sexta?", "w": "Coordenação", "v": "Copiei a sexta-feira do canvas de fotógrafos. Hoje a skill de lavanderia roda quando alguém pede.", "r": "Fixar o dia deixa o SLA da seção 8 de pé. Se não houver rodada fixa, a etapa 1 vira 'sob demanda' e o lead time passa a contar só a partir da segunda-feira."}, {"g": "p", "id": "P03", "st": "no", "t": "Self-service sai antes da cadência?", "w": "Analista", "v": "A regra da pesquisa é subir tudo, inclusive self-service. O agente manda mensagem para todo card em 1º Contato.", "r": "Coloquei a saída na revisão do Backlog (etapa 4): self-service vai para Perda com o motivo Autoatendimento e não recebe mensagem."}, {"g": "p", "id": "P04", "st": "no", "t": "Negociação em 3 dias úteis?", "w": "Coordenação", "v": "Prazo copiado do canvas de fotógrafos.", "r": "Com 3 dias o lead time do polígono fica em 8 dias úteis. Lavanderia costuma demorar para mandar a tabela de preços, então talvez valha um prazo maior."}, {"g": "i", "id": "I01", "st": "ok", "t": "\"Fases do Pipefy\" = Pipedrive", "w": "Henry", "v": "A cadência e os cards de lavanderia vivem no Pipedrive (funil Prospecção Fornecedores).", "r": "O canvas fala só de Pipedrive."}, {"g": "i", "id": "I02", "st": "ok", "t": "Texto dos templates da SIA", "w": "—", "v": "Os 3 templates estão aprovados na WABA, mas o texto não está no repositório do agente.", "r": "O canvas mostra o nome do template e as variáveis. Se quiser o texto inteiro no canvas, é só colar o texto aprovado no lugar."}];
+var R = [{"g": "p", "id": "P01", "st": "no", "t": "Quantas lavanderias cobrem um polígono?", "w": "Coordenação", "v": "O canvas usa 1 lavanderia validada no Hub, que é a regra da skill de cidades sem fornecedor (polígono sem lavanderia validada vira card).", "r": "Se forem 2, como em fotógrafos, mudam a meta (seção 2), a etapa 7 (quando o card do polígono vai para Concluído) e o indicador de polígonos em aberto."}, {"g": "p", "id": "P02", "st": "no", "t": "A análise dos polígonos roda toda sexta?", "w": "Coordenação", "v": "Copiei a sexta-feira do canvas de fotógrafos. Hoje a skill de lavanderia roda quando alguém pede.", "r": "Fixar o dia deixa o SLA da seção 8 de pé. Se não houver rodada fixa, a etapa 1 vira 'sob demanda' e o lead time passa a contar só a partir da segunda-feira."}, {"g": "p", "id": "P03", "st": "no", "t": "Self-service sai antes da cadência?", "w": "Analista", "v": "A regra da pesquisa é subir tudo, inclusive self-service. O agente manda mensagem para todo card em 1º Contato.", "r": "Coloquei a saída na revisão do Backlog (etapa 4): self-service vai para Perda com o motivo Autoatendimento e não recebe mensagem."}, {"g": "p", "id": "P04", "st": "no", "t": "Negociação em 3 dias úteis?", "w": "Coordenação", "v": "Prazo copiado do canvas de fotógrafos.", "r": "Com 3 dias o lead time do polígono fica em 8 dias úteis. Lavanderia costuma demorar para mandar a tabela de preços, então talvez valha um prazo maior."}, {"g": "p", "id": "P05", "st": "no", "t": "Volume mínimo alto é motivo de perda?", "w": "Coordenação", "v": "O motivo [Fornecedores] - Volume mínimo alto existe no Pipedrive, mas a regra de 14/10 diz que o volume mínimo só é registrado no cadastro e não é perda.", "r": "Deixei o motivo na lista da etapa 8, só para quando o mínimo inviabiliza atender os imóveis do polígono. Se não for para usar, ele sai da lista."}, {"g": "i", "id": "I01", "st": "ok", "t": "\"Fases do Pipefy\" = Pipedrive", "w": "Henry", "v": "A cadência e os cards de lavanderia vivem no Pipedrive (funil Prospecção Fornecedores).", "r": "O canvas fala só de Pipedrive."}, {"g": "i", "id": "I02", "st": "ok", "t": "Texto dos templates da SIA", "w": "—", "v": "Os 3 templates estão aprovados na WABA, mas o texto não está no repositório do agente.", "r": "O canvas mostra o nome do template e as variáveis. Se quiser o texto inteiro no canvas, é só colar o texto aprovado no lugar."}];
 
 var GROUPS = [{"k": "p", "t": "Premissas a confirmar", "s": "Coisas que escrevi copiando do canvas de fotógrafos ou deduzindo do que os agentes fazem hoje."}, {"k": "i", "t": "Como interpretei o pedido", "s": "Escolhas de redação que não mudam o processo."}];
 
