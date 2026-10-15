@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Processo Prospecção de Lavanderias</title>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:dark;--bg:#080E32;--surf:#0F1742;--surf2:#18225A;--line:#232E6B;--ink:#EEF1FB;--ink2:#B4BBD9;--ink3:#8189B0;--blue:#4D85FF;--won:oklch(78% .12 150)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 "Figtree",sans-serif;-webkit-font-smoothing:antialiased}
+main{max-width:880px;margin:0 auto;padding:56px 16px 96px}
+.eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink3);font-weight:700}
+h1{font-weight:800;font-size:clamp(32px,6vw,52px);letter-spacing:-.03em;line-height:1.05;margin:14px 0}
+.lede{color:var(--ink2);font-size:18px;max-width:62ch;margin:0}
+nav{display:flex;flex-wrap:wrap;gap:8px;margin:32px 0 40px}
+nav a{color:var(--ink2);text-decoration:none;font-size:13.5px;padding:6px 14px;border:1px solid var(--line);border-radius:999px}
+nav a:hover{border-color:var(--blue);color:var(--ink)}
+.sec{background:var(--surf);border:1px solid var(--line);border-radius:14px;margin-bottom:18px;overflow:hidden;scroll-margin-top:16px}
+.sec header{display:flex;align-items:center;gap:14px;padding:16px 20px;background:var(--surf2);border-bottom:1px solid var(--line)}
+.sec .n{font-weight:800;color:var(--blue);font-variant-numeric:tabular-nums;width:1.4em}
+.sec h2{margin:0;font-size:19px;font-weight:700;flex:1}
+.btn{appearance:none;font:600 13px "Figtree",sans-serif;cursor:pointer;padding:8px 18px;border-radius:999px;border:1px solid var(--blue);background:transparent;color:var(--ink)}
+.btn:hover{background:var(--blue)}
+.btn.on{border-color:var(--won);background:oklch(78% .12 150 / .18);color:var(--won)}
+.txt{margin:0;padding:20px 22px;white-space:pre-wrap;word-wrap:break-word;font:15px/1.65 "Figtree",sans-serif;color:var(--ink2)}
+footer{margin-top:48px;color:var(--ink3);font-size:13px}
+@media (max-width:640px){.sec header{padding:14px 16px}.txt{padding:16px}}
+</style></head><body><main>
+<div class="eyebrow">Fornecedores · canvas do Slack</div>
+<h1>Processo de Prospecção de Lavanderias</h1>
+<p class="lede">Mesma estrutura do canvas de fotógrafos. Cada bloco tem um botão Copiar com o texto pronto para colar no canvas do Slack, na ordem.</p>
+<nav><a href="#s1">1. Identificação</a><a href="#s2">2. Objetivo</a><a href="#s3">3. Escopo</a><a href="#s4">4. Responsáveis</a><a href="#s5">5. Fluxo</a><a href="#s6">6. Cadência</a><a href="#s7">7. Critérios e tabela</a><a href="#s8">8. Prazos e SLA</a><a href="#s9">9. Indicadores</a></nav>
+<section class="sec" id="s1">
+  <header><span class="n">1</span><h2>Identificação</h2>
+  <button class="btn" data-t="raw1">Copiar</button></header>
+  <pre class="txt" id="raw1">1. Identificação do Processo
+- Nome do Processo: Prospecção de Lavanderias
+- Setor Responsável: Fornecedores
+- Responsável Principal: @Wania Helena Lageano Espindola @Henry Yudi
+- Versão: 1 — criada em 15/10/2026
+- Próxima revisão: a cada 6 meses, ou quando a tabela de teto mudar</pre>
+</section>
+<section class="sec" id="s2">
+  <header><span class="n">2</span><h2>Objetivo</h2>
+  <button class="btn" data-t="raw2">Copiar</button></header>
+  <pre class="txt" id="raw2">2. Objetivo do Processo
+
+Garantir que todo polígono onde a Seazone atua tenha lavanderia homologada, que lave e passe o enxoval no padrão Seazone e cobre por peça dentro da tabela de teto.
+
+A Seazone não contrata nem paga a lavanderia. O time de Fornecedores monta a base de lavanderias homologadas (tabela por peça, endereço, coleta e entrega). Quem contrata, combina a coleta e paga é o franqueado local. O preço homologado também alimenta a calculadora da taxa de limpeza.
+
+A análise é feita por polígono, não por cidade: uma cidade com mais de um polígono pode ter um polígono coberto e outro não.
+
+Meta: 100% dos polígonos com imóvel ativo, em onboarding ou com franquia ativa com pelo menos 1 lavanderia validada no Hub de Serviços.
+
+Resultados Esperados:
+- Nenhum imóvel entra em operação sem lavanderia indicada para o franqueado.
+- Antecipar a prospecção: achar o polígono sem lavanderia antes de o imóvel ativar.
+- Comunicação padronizada com as lavanderias (templates pela SIA e base de respostas da extensão).
+- Preço por peça sempre dentro do teto, com o mesmo critério em todo o Brasil.
+- Base viva e rastreável no Pipedrive e no Hub de Serviços.</pre>
+</section>
+<section class="sec" id="s3">
+  <header><span class="n">3</span><h2>Escopo</h2>
+  <button class="btn" data-t="raw3">Copiar</button></header>
+  <pre class="txt" id="raw3">3. Escopo do Processo — Detalhamento
+
+1. Inclui:
+- Análise automática dos polígonos sem lavanderia, cruzando Sapron (imóveis e franquias) com o Hub de Serviços (lavanderias validadas).
+- Abertura automática de um card por polígono no funil Fornecedores - Cidades (Pipedrive).
+- Decisão do Coordenador sobre quais polígonos prospectar.
+- Pesquisa das lavanderias do polígono e criação automática dos cards no funil Prospecção Fornecedores.
+- Cadência automática de 3 mensagens pela SIA.
+- Negociação, qualificação e conferência dos valores contra o teto.
+- Cadastro da lavanderia homologada no Hub de Serviços.
+
+2. Não inclui:
+- Contratação, agenda de coleta e pagamento da lavanderia (é do franqueado).
+- Garantia de volume para a lavanderia (a Seazone indica, não obriga).
+- Acompanhamento da qualidade do serviço depois da homologação.
+
+3. Interfaces com outros processos:
+- Automação: skill de cidades sem fornecedor, skill de prospecção, agente de cadência (Olimpo) e extensão SIA Copiloto.
+- Franquias: usam a base para contratar a lavanderia.
+- Implantação: ativações de imóveis e franquias que geram a demanda.
+- Calculadora da taxa de limpeza: lê o preço por peça do Hub.</pre>
+</section>
+<section class="sec" id="s4">
+  <header><span class="n">4</span><h2>Responsáveis</h2>
+  <button class="btn" data-t="raw4">Copiar</button></header>
+  <pre class="txt" id="raw4">4. Responsáveis e Papéis
+
+Quem é agente (automático):
+- Skill Cidades sem Fornecedor: varre Sapron e Hub e abre um card por polígono sem lavanderia no funil Fornecedores - Cidades.
+- Skill Prospecção de Lavanderia: pesquisa as lavanderias do polígono e cria os cards no funil Prospecção Fornecedores.
+- Agente de Cadência (Olimpo): dispara as 3 mensagens pela SIA, anota no card, move entre as etapas de contato e marca Perda por Sem Retorno.
+- Extensão SIA Copiloto: lê as conversas abertas na SIA e sugere a próxima resposta. Não envia nada sozinha.
+
+Quem é pessoa:
+- Coordenador de Fornecedores: analisa os polígonos que a automação abriu e decide quais prospectar.
+- Analista de Fornecedores: roda a skill de prospecção, revisa os cards, assume a conversa quando a lavanderia responde, qualifica, negocia e cadastra no Hub.
+- Franqueado: escolhe, contrata e paga a lavanderia da base.
+- Substituto do Analista: Coordenador de Fornecedores, nas férias e ausências.</pre>
+</section>
+<section class="sec" id="s5">
+  <header><span class="n">5</span><h2>Fluxo</h2>
+  <button class="btn" data-t="raw5">Copiar</button></header>
+  <pre class="txt" id="raw5">5. Fluxo do Processo
+
+1. Análise dos polígonos sem lavanderia
+Responsável: Agente (skill Cidades sem Fornecedor), rodada pelo Coordenador
+Descrição: A skill cruza os polígonos do Sapron (de atuação e de prospecção) com as lavanderias validadas no Hub de Serviços. Entra na lista o polígono que tem franquia ativa ou imóvel ativo ou em onboarding e nenhuma lavanderia validada.
+- Abre um card por polígono no funil Fornecedores - Cidades, etapa Análise.
+- Título: &quot;Cidade - Lavanderia&quot;. O código do polígono vai no campo Profissão (ex.: SP-CAR-001).
+- Cidade com 2 polígonos vira 2 cards de mesmo título, um por código.
+- A skill não duplica card que já existe para o mesmo polígono.
+SLA: toda sexta-feira.
+
+2. Decisão do Coordenador
+Responsável: Coordenador de Fornecedores
+Descrição: Avalia cada card da etapa Análise: quantidade de imóveis ativos e em onboarding, datas previstas de ativação e se o polígono vizinho já tem lavanderia que atende.
+- Polígono aprovado: move para Backlog (fila do Analista).
+- Polígono que não justifica agora: move para Cancelado, com o motivo escrito no card.
+SLA: toda sexta-feira.
+
+3. Pesquisa e criação dos cards de lavanderia
+Responsável: Analista de Fornecedores (com a skill Prospecção de Lavanderia)
+Descrição: Na segunda-feira o Analista pega os cards do Backlog, move para Prospecção e roda a skill informando a cidade e o polígono. A skill busca em três frentes:
+- Receita Federal: CNPJs com CNAE de lavanderia (9601) no município, com endereço, telefone e e-mail.
+- Google, Instagram, Facebook e guias locais: confirma que está ativa e completa o contato. Inclui as redes (5àSec, Acqua Zero, Lavô etc.).
+- Google Maps: busca &quot;lavanderia&quot; na cidade.
+Depois a skill geocodifica cada endereço e confere se está dentro do polígono.
+Todos os cards entram no funil Prospecção Fornecedores, etapa Backlog:
+- Título curto: &quot;Nome - Lavanderia&quot; (sem razão social, CNPJ ou bairro).
+- Forma de pagamento: código do polígono.
+- Profissão: tipo da lavanderia (Tradicional, Self-service, Tradicional + Industrial, A confirmar).
+- Observações: se está fora do polígono, site e redes sociais.
+- Sobe tudo o que a pesquisa achar, inclusive self-service e fora do polígono. O filtro é feito no Pipedrive.
+SLA: 1 dia útil.
+
+4. Revisão do Backlog
+Responsável: Analista de Fornecedores
+Descrição: Revisa os cards criados e move para 1º Contato quem tem telefone e é candidata (lavanderia tradicional, por peça). Self-service não entra na cadência: vai para Perda com o motivo Autoatendimento.
+SLA: mesmo dia da pesquisa.
+
+5. Cadência de contato (automática)
+Responsável: Agente de Cadência
+Descrição: 3 mensagens pela SIA, uma por dia útil. Detalhe na seção 6.
+
+6. Negociação
+Responsável: Analista de Fornecedores (com a extensão SIA Copiloto)
+Descrição: Quando a lavanderia responde, o Analista move o card para Em negociação e o agente para de mandar mensagem. A conversa segue o roteiro de qualificação da seção 7: autoatendimento, cobrança por peça, calandra ou ferro industrial, coleta e entrega, volume mínimo e, só então, os valores.
+SLA: 3 dias úteis a partir do primeiro retorno.
+
+7. Homologação e cadastro
+Responsável: Analista de Fornecedores
+Descrição: Lavanderia aprovada em todos os critérios e com todos os itens no teto ou abaixo:
+- Card vai para Ganho no funil Prospecção Fornecedores.
+- Cadastro no Hub de Serviços com a tabela por peça, CNPJ, razão social, nome fantasia, endereço, e-mail, WhatsApp, responsável, coleta e entrega e volume mínimo. Status validado.
+- Com a primeira lavanderia validada no polígono, o card do polígono no funil Fornecedores - Cidades vai para Concluído.
+SLA: 1 dia útil após o aceite.
+
+8. Perda
+Responsável: Agente (Sem Retorno) e Analista (demais motivos)
+Motivos: Sem Retorno (automático) · Autoatendimento · Cobra por peso ou cesto · Sem calandra ou ferro industrial · Acima do teto sem acordo · Sem interesse.</pre>
+</section>
+<section class="sec" id="s6">
+  <header><span class="n">6</span><h2>Cadência</h2>
+  <button class="btn" data-t="raw6">Copiar</button></header>
+  <pre class="txt" id="raw6">6. Cadência de Contato — Funil Prospecção Fornecedores
+
+Etapas do funil: Backlog → 1º Contato → 2º Contato → 3º Contato → Em negociação → Ganho / Perda
+
+O que é do agente e o que é do analista em cada etapa:
+
+Backlog
+- Agente: a skill de prospecção cria os cards aqui.
+- Analista: revisa e move para 1º Contato quem segue.
+
+1º Contato — rodada das 11h
+- Agente: envia o template lavanderia_primeiro_contato pela SIA e anota no card (&quot;1º contato enviado DD/MM HH:MM:SS&quot;).
+- Agente: no dia útil seguinte, às 11h, move para 2º Contato quem não respondeu.
+
+2º Contato — rodada das 15h
+- Agente: envia o template segundo_contato_lavanderia e anota no card.
+- Agente: no dia útil seguinte, às 15h, move para 3º Contato quem não respondeu.
+
+3º Contato — rodada das 17h
+- Agente: envia o template ultimo_contato_lavanderia e anota no card.
+- Agente: no dia útil seguinte, às 17h, marca Perda com o motivo &quot;[Fornecedores] - Sem Retorno&quot;.
+
+Em negociação
+- Analista: move o card para cá assim que a lavanderia responde, em qualquer etapa. O agente só lê 1º, 2º e 3º Contato, então para de mandar mensagem.
+- Analista: conduz a conversa na SIA com a ajuda da extensão.
+
+Ganho / Perda
+- Analista: decide e registra o motivo (exceto Sem Retorno, que é do agente).
+
+Exemplo de ciclo: seg 11h 1ª msg → ter 15h 2ª msg → qua 17h última msg → qui 17h Perda.
+
+Regras da cadência:
+- Só dias úteis, pulando feriados nacionais.
+- Cada card fica pelo menos 1 dia útil em cada etapa, para dar tempo de responder.
+- Os templates usam a variável analista e a cidade de atuação do card. O texto é o mesmo para todas as lavanderias.
+- Erro de envio: o card não é movido, o agente tenta de novo na rodada do dia seguinte e avisa no canal #fornecedores quais cards falharam. O Analista trata.
+- Erro &quot;conversa aberta na SIA&quot; quase sempre é a lavanderia respondendo: o Analista confere e move para Em negociação.
+
+Extensão SIA Copiloto (apoio na negociação)
+- Painel no Chrome, em cima da SIA, com todas as conversas abertas da Analista.
+- Identifica em que etapa do roteiro a conversa está e sugere só o próximo passo, a partir da base de conhecimento.
+- Cor por confiança: verde (resposta padrão), amarelo (precisa de dado da cidade), vermelho (valor ou negociação: só orienta, não sugere número).
+- Traz números reais do Sapron da cidade: imóveis ativos, em onboarding e check-outs dos últimos 30 dias, para responder sobre volume.
+- Aprovar envia o texto sugerido. Reprovar abre a resposta para a Analista escrever, com &quot;Enviar&quot; ou &quot;Enviar e salvar conhecimento&quot; (a resposta entra na base na hora).
+- Nada é enviado sozinho. A extensão só responde conversas já abertas; a cadência continua com o agente.
+- Se a lavanderia mandar um item acima do teto, a extensão marca o item em vermelho e não sugere número.</pre>
+</section>
+<section class="sec" id="s7">
+  <header><span class="n">7</span><h2>Critérios e tabela</h2>
+  <button class="btn" data-t="raw7">Copiar</button></header>
+  <pre class="txt" id="raw7">7. Critérios de Qualificação e Tabela de Teto
+
+Roteiro da conversa (uma pergunta por vez, nesta ordem):
+1. Abertura: apresentar a Seazone e a base de lavanderias parceiras.
+2. &quot;A lavanderia é de autoatendimento?&quot; — Sim: Perda.
+3. &quot;Vocês cobram por peça ou por peso?&quot; — Peso ou cesto: confirmar uma vez se fazem por peça; se não, Perda.
+4. &quot;Vocês têm calandra, ferro industrial ou ferro a vapor profissional?&quot; — Nenhum dos três: Perda. Ferro a vapor profissional conta como ferro industrial.
+5. Coleta, entrega e volume mínimo: &quot;Fazem coleta e entrega? Qual a taxa e em qual região?&quot; e &quot;Trabalham com volume mínimo por coleta?&quot; — não é Perda, é informação do cadastro.
+6. Valores: pedir o valor por peça da lavanderia.
+7. Conferência: comparar cada item com o teto.
+8. Cadastro no Hub.
+
+Regras dos valores:
+- Pedimos os valores da lavanderia e NÃO mandamos os nossos. O teto é interno e nunca vai para o fornecedor.
+- Nenhum item pode ficar acima do teto, nem 1 centavo. Item acima: o Analista negocia aquele item. Sem acordo em todos os itens, a lavanderia não é homologada.
+- O teto é o mesmo em todo o Brasil. O que muda por polígono é a demanda (imóveis e check-outs), que é o argumento da negociação.
+- Nunca prometer volume: o franqueado não é obrigado a usar uma lavanderia específica. A Seazone indica, e quem tem preço e serviço melhores tende a receber mais.
+
+Tabela de teto por peça (R$):
+- Fronha: 3,00
+- Toalha de rosto: 3,00
+- Toalha de piso / tapete: 3,00
+- Toalha de banho: 4,00
+- Manta queen: 15,00
+- Lençol solteiro: 5,00
+- Lençol casal: 5,00
+- Lençol queen: 5,00
+- Lençol king: 5,00
+- Edredom solteiro: 20,00
+- Edredom casal: 25,00
+- Edredom queen: 25,00
+- Edredom king: 25,00
+- Capa de edredom solteiro: 15,00
+- Capa de edredom casal: 15,00
+- Capa de edredom queen: 15,00
+- Capa de edredom king: 15,00
+
+Lista que o Analista manda pedindo os valores:
+Trabalhamos com enxoval branco de cama e banho. Pode me mandar o valor por peça de:
+• Fronha
+• Toalha de rosto
+• Toalha de piso
+• Toalha de banho
+• Manta queen
+• Lençol (solteiro, casal, queen, king)
+• Edredom (solteiro, casal, queen, king)
+• Capa de edredom (solteiro, casal, queen, king)
+Se algum item vocês não fazem, é só marcar &quot;não realizamos&quot;.</pre>
+</section>
+<section class="sec" id="s8">
+  <header><span class="n">8</span><h2>Prazos e SLA</h2>
+  <button class="btn" data-t="raw8">Copiar</button></header>
+  <pre class="txt" id="raw8">8. Prazos e SLA
+Todos os prazos são em dias úteis, contados do início da prospecção (a segunda-feira em que o Analista pega o card).
+
+Etapa | Responsável | SLA | Acumulado
+1. Análise dos polígonos | Agente | Toda sexta-feira | sexta anterior
+2. Decisão do Coordenador | Coordenador | Mesma sexta | sexta anterior
+3. Pesquisa e cards | Analista + skill | 1 dia útil | dia 1
+4. Revisão do Backlog | Analista | Mesmo dia | dia 1
+5. Cadência (3 mensagens) | Agente | 3 dias úteis | dia 4
+6. Negociação | Analista + extensão | 3 dias úteis do primeiro retorno | dia 7
+7. Homologação e cadastro no Hub | Analista | 1 dia útil após o aceite | dia 8
+
+Lead time do polígono: 8 dias úteis do início da prospecção até a primeira lavanderia validada no Hub.</pre>
+</section>
+<section class="sec" id="s9">
+  <header><span class="n">9</span><h2>Indicadores</h2>
+  <button class="btn" data-t="raw9">Copiar</button></header>
+  <pre class="txt" id="raw9">9. Indicadores
+
+Indicador | De onde sai | Frequência
+Polígonos sem lavanderia em aberto | Funil Fornecedores - Cidades (Análise, Backlog e Prospecção) | Semanal
+Tempo médio para cobrir um polígono | Pipedrive — entrada em Prospecção até Concluído | Mensal
+Taxa de resposta da cadência | Funil Prospecção Fornecedores — Em negociação ÷ cards que entraram em 1º Contato | Mensal
+Motivos de Perda | Funil Prospecção Fornecedores — motivo de perda | Mensal
+Conversão de lead em lavanderia homologada | Ganho ÷ cards que entraram em 1º Contato | Mensal
+Lavanderias com algum item acima do teto | Hub de Serviços × tabela de teto | Trimestral</pre>
+</section>
+<footer>Versão 1 · 15/10/2026 · fontes: skills cidades-sem-fornecedor e prospeccao-lavanderia, agente de cadência (Olimpo), extensão SIA Copiloto e tabela de teto da Operação.</footer>
+</main>
+<script>
+document.querySelectorAll('.btn').forEach(function(b){
+  b.addEventListener('click',function(){
+    var t=document.getElementById(b.dataset.t).innerText;
+    var ok=function(){b.textContent='Copiado';b.classList.add('on');setTimeout(function(){b.textContent='Copiar';b.classList.remove('on')},1600)};
+    if(navigator.clipboard){navigator.clipboard.writeText(t).then(ok,function(){fallback(t);ok()})}else{fallback(t);ok()}
+  });
+});
+function fallback(t){var a=document.createElement('textarea');a.value=t;document.body.appendChild(a);a.select();try{document.execCommand('copy')}catch(e){}a.remove()}
+</script>
+</body></html>
