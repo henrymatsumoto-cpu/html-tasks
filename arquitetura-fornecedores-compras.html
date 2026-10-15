@@ -144,6 +144,23 @@ a.tool:hover,a.tool:focus-visible{background:var(--bluebg);outline:none}
 .instfoot .wm>span:not(.sz-logo){display:block;color:var(--ink2);font-weight:500;letter-spacing:.08em;font-size:12px;margin-top:4px}
 .instfoot .who{font-size:13px;color:var(--ink3);text-align:right;line-height:1.6}
 .instfoot .who b{color:var(--ink);font-weight:700;font-size:14px;display:block}
+.autos{display:flex;flex-direction:column;gap:12px}
+.autos-h{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.autos-h .tn{font:700 16px/1.2 var(--sans);color:var(--violet)}
+.autos-h .to{font:400 13px/1.4 var(--serif);color:var(--ink2)}
+.agrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px}
+.agrp{display:flex;flex-direction:column;gap:8px;min-width:0}
+.agrp .lab{font:700 11px/1 var(--sans);letter-spacing:.09em;text-transform:uppercase;color:var(--violet)}
+.acard{background:var(--paper);border:1.5px solid var(--violet);border-radius:8px;padding:8px 10px;display:flex;flex-direction:column;gap:5px}
+.acard .t{font-weight:700;line-height:1.3;display:flex;gap:6px;align-items:baseline;flex-wrap:wrap}
+.acard .t .code{color:var(--violet)}
+.acard .o{font:400 12px/1.4 var(--serif);color:var(--ink2)}
+.acard .f{font-size:11.5px;color:var(--ink3)}
+.st{font:700 10px/1 var(--sans);letter-spacing:.05em;text-transform:uppercase;padding:4px 6px;border-radius:4px;white-space:nowrap}
+.st.ar{color:var(--green);background:var(--greenbg)} .st.val{color:var(--amber);background:var(--amberbg)} .st.des{color:var(--ink2);background:var(--soft)} .st.dem{color:var(--blue);background:var(--bluebg)}
+.steps{display:flex;flex-wrap:wrap;gap:4px;align-items:center;font-size:11.5px;color:var(--ink3)}
+.stepb{font:700 11px/1 var(--mono);color:var(--blue);background:var(--paper);border:1px solid var(--blue);border-radius:4px;padding:3px 5px;cursor:pointer}
+.stepb:hover,.stepb:focus-visible,.stepb[aria-expanded="true"]{outline:2px solid var(--coral);outline-offset:1px}
 @media (max-width:640px){.wrap,.hero{padding-inline:16px} .instfoot .who{text-align:left} .base{grid-template-columns:1fr}}
 @media (prefers-reduced-motion:no-preference){#pop{animation:pin .12s ease-out}}
 @keyframes pin{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
@@ -174,6 +191,11 @@ a.tool:hover,a.tool:focus-visible{background:var(--bluebg);outline:none}
       <div class="base" id="base"></div>
     </div>
   </div>
+
+  <section class="panel autos">
+    <div class="autos-h"><span class="tn">Agentes, extensões e rotinas</span><span class="to">O que roda sozinho ou é rodado pelo time em cada etapa. Clique no número da etapa para ver o processo.</span></div>
+    <div class="agrid" id="autos"></div>
+  </section>
 
   <div class="legend">
     <span><span class="mode auto">Automático</span> roda sozinho</span>
@@ -494,6 +516,35 @@ const LANES = [
   ]}
 ];
 
+/* agentes, extensões e rotinas · st: ar = no ar · val = em validação · des = em desenho · dem = sob demanda */
+const ST = {ar:"No ar", val:"Em validação", des:"Em desenho", dem:"Sob demanda"};
+const AUTOS = [
+  {lab:"Agentes e bots", items:[
+    {id:"A1", n:"Agente de análise de pagamento", st:"ar", f:"Olimpo · das 8h às 18h", o:"Lê os links de pagamento da Rede e move os cards do enxoval quando o pedido é pago.", s:["12.2","7.1"]},
+    {id:"A2", n:"Agente de cancelamento de enxoval", st:"ar", f:"Olimpo · rodada diária", o:"Cancela pedidos não pagos pela regra validada em 30/09. Nunca cancela pedido já pago.", s:["12.2"]},
+    {id:"A3", n:"Agente de indicação de itens", st:"ar", f:"Olimpo · contínuo", o:"Cria na Loja a lista de itens de cada imóvel a partir das inconformidades da Implantação.", s:["5.1"]},
+    {id:"A4", n:"Agente de cadência Pipedrive → SIA", st:"des", f:"Olimpo · 11h, 15h e 17h", o:"Dispara o contato com os fotógrafos pela SIA e alerta no Slack quando o card para.", s:["1.4"]},
+    {id:"A5", n:"Bot de grandes operações", st:"ar", f:"GitHub Actions · 16h todo dia", o:"Avisa no Slack quando entram 10 ou mais imóveis da mesma operação, para preparar fotógrafo.", s:["3.4"]},
+    {id:"A6", n:"Bot da Loja", st:"ar", f:"A cada movimentação do card", o:"Avisa o cliente quando o fornecedor coloca o link ou o boleto; o cliente tem 7 dias para pagar.", s:["5.3"]},
+    {id:"A7", n:"Espelhos automáticos", st:"ar", f:"Jornada de hora em hora · calculadora 9h e 16h", o:"Mantêm a Jornada Enxoval e o cluster da calculadora atualizados sem trabalho manual.", s:["12.2","2.3"]}
+  ]},
+  {lab:"Extensão", items:[
+    {id:"E1", n:"Copiloto da SIA", st:"val", f:"Na tela da SIA · validação nesta semana", o:"Sugere a resposta das conversas de WhatsApp com prestadores e fornecedores a partir da base de conhecimento.", s:["1.4","2.1","3.1"]}
+  ]},
+  {lab:"Skills (rodadas pelo time)", items:[
+    {id:"S1", n:"cidades-sem-fornecedor · prospeccao-lavanderia · prospeccao-fotografos", st:"dem", f:"Claude Code · por cidade", o:"Encontram as cidades sem prestador, pesquisam os candidatos e sobem os cards no Pipedrive.", s:["1.1","1.2","1.3"]},
+    {id:"S2", n:"analise-capacho-franquia", st:"dem", f:"Claude Code · a cada pedido de capacho", o:"Cruza capachos recebidos com imóveis ativos e em onboarding para dizer se a franquia precisa.", s:["5.2"]},
+    {id:"S3", n:"taxa-enxoval", st:"dem", f:"Claude Code · mensal", o:"Calcula o percentual de enxoval comprado sobre as ativações do mês.", s:["9.1","9.3"]},
+    {id:"S4", n:"analise-comissao-enxoval · relatório mensal do fornecedor", st:"dem", f:"Claude Code · mensal", o:"Somam a comissão de enxoval e geram o relatório do mês de RM, Matinali e Harus.", s:["7.1","9.2"]}
+  ]},
+  {lab:"Rotinas fixas", items:[
+    {id:"R1", n:"Fechamento mensal", st:"ar", f:"Todo começo de mês", o:"Comissão de Somar, Harus, RM, Matinali e AB Card e conferência da EasyCover.", s:["7.1","7.2","7.3","7.4","7.5"], chk:"Confirmar se o app Comissão de Fornecedores já é usado no fechamento."},
+    {id:"R2", n:"Lançamento dos KPIs do setor", st:"ar", f:"KPI System", o:"Os KPIs de Fornecedores são preenchidos no KPI System a partir das fontes (Suporte, Loja, app de fotógrafos, SIA).", s:["9.1"]},
+    {id:"R3", n:"MCPs de consulta (Enxoval e Hub)", st:"ar", f:"Sempre disponíveis", o:"Deixam outras áreas consultarem os dados de enxoval e lavanderias sem pedir para o time.", s:["12.3"]}
+  ]}
+];
+const autosOf = id => AUTOS.flatMap(g=>g.items).filter(a=>a.s.includes(id));
+
 const ARROW_DOWN = `<div class="down"><svg viewBox="0 0 10 16" aria-hidden="true"><line x1="5" y1="0" x2="5" y2="10"/><path d="M1 9 L5 16 L9 9 Z"/></svg></div>`;
 const ARROW_RIGHT = `<div class="join"><svg viewBox="0 0 36 14" preserveAspectRatio="none" aria-hidden="true"><line x1="2" y1="7" x2="27" y2="7"/><path d="M26 2 L34 7 L26 12 Z"/></svg></div>`;
 const REG = {};
@@ -528,6 +579,13 @@ document.getElementById("base").innerHTML = LANES.map(l=>`<div class="lane ${l.c
     g.p.map(p=>{REG[p.id]={kind:"p",d:p};return `<button class="chip" type="button" data-k="${p.id}" aria-expanded="false"><span class="code">${p.id}</span><span class="nm">${p.t}</span><span class="ia i${p.ia}">${IA[p.ia]}</span>${p.imp?`<span class="imp">${IMP[p.imp.d]}</span>`:""}${p.chk?`<span class="chk">Validar</span>`:""}</button>`}).join("")
   }</div></div>`).join("")}</div></div>`).join("");
 
+document.getElementById("autos").innerHTML = AUTOS.map(g=>`<div class="agrp"><span class="lab">${g.lab}</span>${
+  g.items.map(a=>`<div class="acard"><span class="t"><span class="code">${a.id}</span><span>${a.n}</span></span>
+    <span class="tags"><span class="st ${a.st}">${ST[a.st]}</span>${a.chk?`<span class="chk" title="${a.chk}">Validar</span>`:""}</span>
+    <span class="o">${a.o}${a.chk?` <i>(${a.chk})</i>`:""}</span><span class="f">${a.f}</span>
+    <span class="steps">Etapas: ${a.s.map(id=>`<button class="stepb" type="button" data-k="${id}" aria-expanded="false">${id}</button>`).join("")}</span></div>`).join("")
+}</div>`).join("");
+
 /* resumo */
 const main = TRAILS.flatMap(t=>t.mps.flatMap(m=>m.p)), all = main.concat(LANES.flatMap(l=>l.groups.flatMap(g=>g.p)));
 const cnt = (arr,f) => arr.filter(f).length;
@@ -557,6 +615,7 @@ function content(k){
     (d.aud ? sec("Auditoria",`<p>${d.aud}</p>`,"aud") : "") +
     (d.imp ? sec(d.imp.d==="recebe"?"Interface: recebemos da Implantação":"Interface: entregamos para a Implantação",`<p>${d.imp.t}</p>`,"impb") : "") +
     (d.chk ? sec("A validar",`<p>${d.chk}</p>`,"chkb") : "") +
+    (autosOf(d.id).length ? sec("Agentes e rotinas",`<ul>${autosOf(d.id).map(a=>`<li><b>${a.id}</b> ${a.n} (${ST[a.st].toLowerCase()})</li>`).join("")}</ul>`) : "") +
     sec("Ferramentas",`<div class="tools">${d.tools.map(tool).join("")}</div>`);
 }
 function place(el){
