@@ -268,7 +268,7 @@ footer b{color:var(--ink-2);font-weight:600}
 <nav class="tabs">
   <div class="shell">
     <button class="tab" id="t-canvas" aria-selected="true" aria-controls="v-canvas">Canvas<span class="c">9 seções</span></button>
-    <button class="tab" id="t-resp" aria-selected="false" aria-controls="v-resp">Premissas a confirmar<span class="c">7</span></button>
+    <button class="tab" id="t-resp" aria-selected="false" aria-controls="v-resp">Premissas a confirmar<span class="c">6</span></button>
   </div>
 </nav>
 
@@ -592,18 +592,40 @@ Motivos gerais do Pipedrive que também podem ser usados:
       <span class="copyrow"><button class="btn" data-copy>Copiar</button></span></header>
     <div class="body">
       <p>Etapas do funil <b>Prospecção Fornecedores</b>: Backlog → 1º Contato → 2º Contato → 3º Contato → Em negociação → Ganho / Perda. Abaixo, o que é do <b>agente</b> e o que é do <b>analista</b> em cada etapa.</p>
-<h4 class="sub">Backlog <span class="pill">analista</span></h4><ul><li><b>Agente:</b> a skill de prospecção cria os cards aqui.</li><li><b>Analista:</b> revisa e move para 1º Contato quem segue.</li></ul><h4 class="sub">1º Contato <span class="pill">agente · 11h</span></h4><ul><li><b>Agente:</b> envia o template e anota no card ("1º contato enviado DD/MM HH:MM:SS").</li><li><b>Agente:</b> no dia útil seguinte, às 11h, move para 2º Contato quem não respondeu.</li></ul><div class="msgbox">Template <b>lavanderia_primeiro_contato</b> (SIA)
-Variáveis: {{analista}} e {{cidade}}
-O texto é o mesmo para todas as lavanderias.</div><h4 class="sub">2º Contato <span class="pill">agente · 15h</span></h4><ul><li><b>Agente:</b> envia o template e anota no card.</li><li><b>Agente:</b> no dia útil seguinte, às 15h, move para 3º Contato quem não respondeu.</li></ul><div class="msgbox">Template <b>segundo_contato_lavanderia</b> (SIA)
-Variáveis: {{analista}} e {{cidade}}
-O texto é o mesmo para todas as lavanderias.</div><h4 class="sub">3º Contato <span class="pill">agente · 17h</span></h4><ul><li><b>Agente:</b> envia o template e anota no card.</li><li><b>Agente:</b> no dia útil seguinte, às 17h, marca Perda com o motivo <b>[Fornecedores] - Sem Retorno</b>.</li></ul><div class="msgbox">Template <b>ultimo_contato_lavanderia</b> (SIA)
-Variáveis: {{analista}} e {{cidade}}
-O texto é o mesmo para todas as lavanderias.</div><h4 class="sub">Em negociação <span class="pill">analista</span></h4><ul><li><b>Analista:</b> move o card para cá assim que a lavanderia responde, em qualquer etapa. O agente só lê 1º, 2º e 3º Contato, então para de mandar mensagem.</li><li><b>Analista:</b> conduz a conversa na SIA com a ajuda da extensão.</li></ul><h4 class="sub">Ganho / Perda <span class="pill">analista</span></h4><ul><li><b>Analista:</b> decide e registra o motivo (exceto Sem Retorno, que é do agente).</li></ul>
+<h4 class="sub">Backlog <span class="pill">analista</span></h4><ul><li><b>Agente:</b> a skill de prospecção cria os cards aqui.</li><li><b>Analista:</b> revisa e move para 1º Contato quem segue.</li></ul><h4 class="sub">1º Contato <span class="pill">agente · 11h</span></h4><ul><li><b>Agente:</b> envia o template e anota no card ("1º contato enviado DD/MM HH:MM:SS").</li><li><b>Agente:</b> no dia útil seguinte, às 11h, move para 2º Contato quem não respondeu.</li></ul><p class="lbl">Mensagem 1 · template lavanderia_primeiro_contato</p><div class="msgbox">Olá! Tudo bem?
+
+Sou {{analista}}, do time de Fornecedores da Seazone, a maior administradora de imóveis de temporada (Airbnb, Booking) do Brasil. Encontrei vocês durante minhas buscas.
+
+Estamos buscando lavanderias parceiras em {{cidade}} para lavar o enxoval de cama e banho dos nossos imóveis. É uma demanda recorrente, toda semana, com o volume crescendo.
+
+Queria entender rapidinho:
+  1. Vocês já atendem hospedagem ou aluguel por temporada?
+  2. Como funciona a cobrança: por peça ou por quilo?
+  3. Fazem coleta e entrega?
+
+Fico à disposição e aguardo seu retorno!</div><h4 class="sub">2º Contato <span class="pill">agente · 15h</span></h4><ul><li><b>Agente:</b> envia o template e anota no card.</li><li><b>Agente:</b> no dia útil seguinte, às 15h, move para 3º Contato quem não respondeu.</li></ul><p class="lbl">Mensagem 2 · template segundo_contato_lavanderia</p><div class="msgbox">Olá!
+
+Me chamo {{analista}}, do time de Fornecedores da Seazone. Mandei uma mensagem anteriormente sobre uma parceria para lavar o enxoval de cama e banho dos nossos imóveis em {{cidade}}.
+
+Seguimos buscando lavanderias parceiras na região, com demanda recorrente toda semana.
+
+Vocês teriam interesse em conversar? Se preferir, me indique a melhor pessoa para falar sobre isso.
+
+Fico à disposição e aguardo seu retorno!</div><h4 class="sub">3º Contato <span class="pill">agente · 17h</span></h4><ul><li><b>Agente:</b> envia o template e anota no card.</li><li><b>Agente:</b> no dia útil seguinte, às 17h, marca Perda com o motivo <b>[Fornecedores] - Sem Retorno</b>.</li></ul><p class="lbl">Mensagem 3 · template ultimo_contato_lavanderia</p><div class="msgbox">Olá! Tudo bem?
+
+Aqui é {{analista}} da Seazone. Tentei contato algumas vezes sobre uma parceria para serem uma lavanderia homologada nossa em {{cidade}}, mas imagino que a rotina esteja corrida.
+
+Esta é minha última mensagem por aqui, para não incomodar. Se tiverem interesse em saber mais, é só me responder que marcamos uma conversa rápida.
+
+Mas, se não fizer sentido agora, sem problemas! Quando tiverem interesse no futuro, é só chamar nesta conversa que podemos conversar.
+
+Obrigado pela atenção!</div><h4 class="sub">Em negociação <span class="pill">analista</span></h4><ul><li><b>Analista:</b> move o card para cá assim que a lavanderia responde, em qualquer etapa. O agente só lê 1º, 2º e 3º Contato, então para de mandar mensagem.</li><li><b>Analista:</b> conduz a conversa na SIA com a ajuda da extensão.</li></ul><h4 class="sub">Ganho / Perda <span class="pill">analista</span></h4><ul><li><b>Analista:</b> decide e registra o motivo (exceto Sem Retorno, que é do agente).</li></ul>
       <div class="callout"><span class="cl">Exemplo de ciclo</span>seg 11h 1ª msg → ter 15h 2ª msg → qua 17h última msg → qui 17h Perda.</div>
       <h4 class="sub">Regras da cadência</h4>
       <ul>
         <li>Só dias úteis, pulando feriados nacionais.</li>
         <li>Cada card fica pelo menos 1 dia útil em cada etapa, para dar tempo de responder.</li>
+        <li><b>Variáveis dos templates:</b> {{analista}} = nome da Analista que assina (hoje Wania) e {{cidade}} = campo Cidade de atuação do card. O nome da lavanderia não entra na mensagem.</li>
         <li><b>Erro de envio:</b> o card não é movido, o agente tenta de novo na rodada do dia seguinte e avisa no canal <b>#fornecedores</b> quais cards falharam. O Analista trata.</li>
         <li>Erro <b>"conversa aberta na SIA"</b> quase sempre é a lavanderia respondendo: o Analista confere e move para Em negociação.</li>
       </ul>
@@ -629,14 +651,53 @@ Backlog
 
 1º Contato — rodada das 11h
 - Agente: envia o template lavanderia_primeiro_contato pela SIA e anota no card (&quot;1º contato enviado DD/MM HH:MM:SS&quot;).
+
+Mensagem 1 (lavanderia_primeiro_contato):
+Olá! Tudo bem?
+
+Sou {{analista}}, do time de Fornecedores da Seazone, a maior administradora de imóveis de temporada (Airbnb, Booking) do Brasil. Encontrei vocês durante minhas buscas.
+
+Estamos buscando lavanderias parceiras em {{cidade}} para lavar o enxoval de cama e banho dos nossos imóveis. É uma demanda recorrente, toda semana, com o volume crescendo.
+
+Queria entender rapidinho:
+  1. Vocês já atendem hospedagem ou aluguel por temporada?
+  2. Como funciona a cobrança: por peça ou por quilo?
+  3. Fazem coleta e entrega?
+
+Fico à disposição e aguardo seu retorno!
+
 - Agente: no dia útil seguinte, às 11h, move para 2º Contato quem não respondeu.
 
 2º Contato — rodada das 15h
 - Agente: envia o template segundo_contato_lavanderia e anota no card.
+
+Mensagem 2 (segundo_contato_lavanderia):
+Olá!
+
+Me chamo {{analista}}, do time de Fornecedores da Seazone. Mandei uma mensagem anteriormente sobre uma parceria para lavar o enxoval de cama e banho dos nossos imóveis em {{cidade}}.
+
+Seguimos buscando lavanderias parceiras na região, com demanda recorrente toda semana.
+
+Vocês teriam interesse em conversar? Se preferir, me indique a melhor pessoa para falar sobre isso.
+
+Fico à disposição e aguardo seu retorno!
+
 - Agente: no dia útil seguinte, às 15h, move para 3º Contato quem não respondeu.
 
 3º Contato — rodada das 17h
 - Agente: envia o template ultimo_contato_lavanderia e anota no card.
+
+Mensagem 3 (ultimo_contato_lavanderia):
+Olá! Tudo bem?
+
+Aqui é {{analista}} da Seazone. Tentei contato algumas vezes sobre uma parceria para serem uma lavanderia homologada nossa em {{cidade}}, mas imagino que a rotina esteja corrida.
+
+Esta é minha última mensagem por aqui, para não incomodar. Se tiverem interesse em saber mais, é só me responder que marcamos uma conversa rápida.
+
+Mas, se não fizer sentido agora, sem problemas! Quando tiverem interesse no futuro, é só chamar nesta conversa que podemos conversar.
+
+Obrigado pela atenção!
+
 - Agente: no dia útil seguinte, às 17h, marca Perda com o motivo &quot;[Fornecedores] - Sem Retorno&quot;.
 
 Em negociação
@@ -651,7 +712,7 @@ Exemplo de ciclo: seg 11h 1ª msg → ter 15h 2ª msg → qua 17h última msg �
 Regras da cadência:
 - Só dias úteis, pulando feriados nacionais.
 - Cada card fica pelo menos 1 dia útil em cada etapa, para dar tempo de responder.
-- Os templates usam a variável analista e a cidade de atuação do card. O texto é o mesmo para todas as lavanderias.
+- Variáveis dos templates: {{analista}} = nome da Analista que assina (hoje Wania) e {{cidade}} = campo Cidade de atuação do card. O nome da lavanderia não entra na mensagem.
 - Erro de envio: o card não é movido, o agente tenta de novo na rodada do dia seguinte e avisa no canal #fornecedores quais cards falharam. O Analista trata.
 - Erro &quot;conversa aberta na SIA&quot; quase sempre é a lavanderia respondendo: o Analista confere e move para Em negociação.
 
@@ -824,7 +885,7 @@ Lavanderias com algum item acima do teto | Hub de Serviços × tabela de teto | 
 </main>
 
 <script>
-var R = [{"g": "p", "id": "P01", "st": "no", "t": "Quantas lavanderias cobrem um polígono?", "w": "Coordenação", "v": "O canvas usa 1 lavanderia validada no Hub, que é a regra da skill de cidades sem fornecedor (polígono sem lavanderia validada vira card).", "r": "Se forem 2, como em fotógrafos, mudam a meta (seção 2), a etapa 7 (quando o card do polígono vai para Concluído) e o indicador de polígonos em aberto."}, {"g": "p", "id": "P02", "st": "no", "t": "A análise dos polígonos roda toda sexta?", "w": "Coordenação", "v": "Copiei a sexta-feira do canvas de fotógrafos. Hoje a skill de lavanderia roda quando alguém pede.", "r": "Fixar o dia deixa o SLA da seção 8 de pé. Se não houver rodada fixa, a etapa 1 vira 'sob demanda' e o lead time passa a contar só a partir da segunda-feira."}, {"g": "p", "id": "P03", "st": "no", "t": "Self-service sai antes da cadência?", "w": "Analista", "v": "A regra da pesquisa é subir tudo, inclusive self-service. O agente manda mensagem para todo card em 1º Contato.", "r": "Coloquei a saída na revisão do Backlog (etapa 4): self-service vai para Perda com o motivo Autoatendimento e não recebe mensagem."}, {"g": "p", "id": "P04", "st": "no", "t": "Negociação em 3 dias úteis?", "w": "Coordenação", "v": "Prazo copiado do canvas de fotógrafos.", "r": "Com 3 dias o lead time do polígono fica em 8 dias úteis. Lavanderia costuma demorar para mandar a tabela de preços, então talvez valha um prazo maior."}, {"g": "p", "id": "P05", "st": "no", "t": "Volume mínimo alto é motivo de perda?", "w": "Coordenação", "v": "O motivo [Fornecedores] - Volume mínimo alto existe no Pipedrive, mas a regra de 14/10 diz que o volume mínimo só é registrado no cadastro e não é perda.", "r": "Deixei o motivo na lista da etapa 8, só para quando o mínimo inviabiliza atender os imóveis do polígono. Se não for para usar, ele sai da lista."}, {"g": "i", "id": "I01", "st": "ok", "t": "\"Fases do Pipefy\" = Pipedrive", "w": "Henry", "v": "A cadência e os cards de lavanderia vivem no Pipedrive (funil Prospecção Fornecedores).", "r": "O canvas fala só de Pipedrive."}, {"g": "i", "id": "I02", "st": "ok", "t": "Texto dos templates da SIA", "w": "—", "v": "Os 3 templates estão aprovados na WABA, mas o texto não está no repositório do agente.", "r": "O canvas mostra o nome do template e as variáveis. Se quiser o texto inteiro no canvas, é só colar o texto aprovado no lugar."}];
+var R = [{"g": "p", "id": "P01", "st": "no", "t": "Quantas lavanderias cobrem um polígono?", "w": "Coordenação", "v": "O canvas usa 1 lavanderia validada no Hub, que é a regra da skill de cidades sem fornecedor (polígono sem lavanderia validada vira card).", "r": "Se forem 2, como em fotógrafos, mudam a meta (seção 2), a etapa 7 (quando o card do polígono vai para Concluído) e o indicador de polígonos em aberto."}, {"g": "p", "id": "P02", "st": "no", "t": "A análise dos polígonos roda toda sexta?", "w": "Coordenação", "v": "Copiei a sexta-feira do canvas de fotógrafos. Hoje a skill de lavanderia roda quando alguém pede.", "r": "Fixar o dia deixa o SLA da seção 8 de pé. Se não houver rodada fixa, a etapa 1 vira 'sob demanda' e o lead time passa a contar só a partir da segunda-feira."}, {"g": "p", "id": "P03", "st": "no", "t": "Self-service sai antes da cadência?", "w": "Analista", "v": "A regra da pesquisa é subir tudo, inclusive self-service. O agente manda mensagem para todo card em 1º Contato.", "r": "Coloquei a saída na revisão do Backlog (etapa 4): self-service vai para Perda com o motivo Autoatendimento e não recebe mensagem."}, {"g": "p", "id": "P04", "st": "no", "t": "Negociação em 3 dias úteis?", "w": "Coordenação", "v": "Prazo copiado do canvas de fotógrafos.", "r": "Com 3 dias o lead time do polígono fica em 8 dias úteis. Lavanderia costuma demorar para mandar a tabela de preços, então talvez valha um prazo maior."}, {"g": "p", "id": "P05", "st": "no", "t": "Volume mínimo alto é motivo de perda?", "w": "Coordenação", "v": "O motivo [Fornecedores] - Volume mínimo alto existe no Pipedrive, mas a regra de 14/10 diz que o volume mínimo só é registrado no cadastro e não é perda.", "r": "Deixei o motivo na lista da etapa 8, só para quando o mínimo inviabiliza atender os imóveis do polígono. Se não for para usar, ele sai da lista."}, {"g": "i", "id": "I01", "st": "ok", "t": "\"Fases do Pipefy\" = Pipedrive", "w": "Henry", "v": "A cadência e os cards de lavanderia vivem no Pipedrive (funil Prospecção Fornecedores).", "r": "O canvas fala só de Pipedrive."}];
 
 var GROUPS = [{"k": "p", "t": "Premissas a confirmar", "s": "Coisas que escrevi copiando do canvas de fotógrafos ou deduzindo do que os agentes fazem hoje."}, {"k": "i", "t": "Como interpretei o pedido", "s": "Escolhas de redação que não mudam o processo."}];
 
