@@ -1,49 +1,335 @@
-<!doctype html>
-<html lang="pt-BR"><head><meta charset="utf-8">
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
 <meta name="robots" content="noindex, nofollow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Processo Prospecção de Lavanderias</title>
-<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<title>Canvas — Prospecção de Lavanderias</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,400;7..72,600;7..72,700&family=Karla:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
-:root{color-scheme:dark;--bg:#080E32;--surf:#0F1742;--surf2:#18225A;--line:#232E6B;--ink:#EEF1FB;--ink2:#B4BBD9;--ink3:#8189B0;--blue:#4D85FF;--won:oklch(78% .12 150)}
+:root{
+  --bg:        oklch(0.19 0.012 195);
+  --bg-2:      oklch(0.235 0.013 195);
+  --panel:     oklch(0.255 0.014 196);
+  --panel-2:   oklch(0.295 0.015 196);
+  --line:      oklch(0.35 0.016 196);
+  --line-2:    oklch(0.44 0.018 196);
+  --ink:       oklch(0.945 0.008 190);
+  --ink-2:     oklch(0.79 0.012 192);
+  --ink-3:     oklch(0.635 0.014 194);
+  --teal:      oklch(0.80 0.115 178);
+  --teal-dim:  oklch(0.36 0.055 180);
+  --ochre:     oklch(0.815 0.135 78);
+  --ochre-dim: oklch(0.355 0.065 72);
+  --sage:      oklch(0.815 0.125 145);
+  --sage-dim:  oklch(0.345 0.060 148);
+  --clay:      oklch(0.755 0.135 32);
+  --clay-dim:  oklch(0.345 0.075 30);
+
+  --s1:4px; --s2:8px; --s3:12px; --s4:16px; --s5:24px; --s6:32px; --s7:48px; --s8:64px; --s9:96px;
+
+  --d: Literata, Georgia, serif;
+  --b: Karla, "Segoe UI", sans-serif;
+  --m: "JetBrains Mono", ui-monospace, Consolas, monospace;
+  --ease: cubic-bezier(0.22,1,0.36,1);
+}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 "Figtree",sans-serif;-webkit-font-smoothing:antialiased}
-main{max-width:880px;margin:0 auto;padding:56px 16px 96px}
-.eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink3);font-weight:700}
-h1{font-weight:800;font-size:clamp(32px,6vw,52px);letter-spacing:-.03em;line-height:1.05;margin:14px 0}
-.lede{color:var(--ink2);font-size:18px;max-width:62ch;margin:0}
-nav{display:flex;flex-wrap:wrap;gap:8px;margin:32px 0 40px}
-nav a{color:var(--ink2);text-decoration:none;font-size:13.5px;padding:6px 14px;border:1px solid var(--line);border-radius:999px}
-nav a:hover{border-color:var(--blue);color:var(--ink)}
-.sec{background:var(--surf);border:1px solid var(--line);border-radius:14px;margin-bottom:18px;overflow:hidden;scroll-margin-top:16px}
-.sec header{display:flex;align-items:center;gap:14px;padding:16px 20px;background:var(--surf2);border-bottom:1px solid var(--line)}
-.sec .n{font-weight:800;color:var(--blue);font-variant-numeric:tabular-nums;width:1.4em}
-.sec h2{margin:0;font-size:19px;font-weight:700;flex:1}
-.btn{appearance:none;font:600 13px "Figtree",sans-serif;cursor:pointer;padding:8px 18px;border-radius:999px;border:1px solid var(--blue);background:transparent;color:var(--ink)}
-.btn:hover{background:var(--blue)}
-.btn.on{border-color:var(--won);background:oklch(78% .12 150 / .18);color:var(--won)}
-.txt{margin:0;padding:20px 22px;white-space:pre-wrap;word-wrap:break-word;font:15px/1.65 "Figtree",sans-serif;color:var(--ink2)}
-footer{margin-top:48px;color:var(--ink3);font-size:13px}
-@media (max-width:640px){.sec header{padding:14px 16px}.txt{padding:16px}}
-</style></head><body><main>
-<div class="eyebrow">Fornecedores · canvas do Slack</div>
-<h1>Processo de Prospecção de Lavanderias</h1>
-<p class="lede">Mesma estrutura do canvas de fotógrafos. Cada bloco tem um botão Copiar com o texto pronto para colar no canvas do Slack, na ordem.</p>
-<nav><a href="#s1">1. Identificação</a><a href="#s2">2. Objetivo</a><a href="#s3">3. Escopo</a><a href="#s4">4. Responsáveis</a><a href="#s5">5. Fluxo</a><a href="#s6">6. Cadência</a><a href="#s7">7. Critérios e tabela</a><a href="#s8">8. Prazos e SLA</a><a href="#s9">9. Indicadores</a></nav>
-<section class="sec" id="s1">
-  <header><span class="n">1</span><h2>Identificação</h2>
-  <button class="btn" data-t="raw1">Copiar</button></header>
-  <pre class="txt" id="raw1">1. Identificação do Processo
+html{scroll-behavior:smooth;scroll-padding-top:110px}
+body{
+  margin:0;background:var(--bg);color:var(--ink);
+  font-family:var(--b);font-size:16px;line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,h4{margin:0;font-family:var(--d);font-weight:700;letter-spacing:-0.015em;line-height:1.18}
+p{margin:0}
+a{color:var(--teal);text-decoration-thickness:1px;text-underline-offset:3px}
+:focus-visible{outline:2px solid var(--teal);outline-offset:3px;border-radius:4px}
+
+.shell{max-width:1060px;margin:0 auto;padding-inline:var(--s5)}
+@media(max-width:640px){.shell{padding-inline:var(--s4)}}
+
+/* ---------- masthead ---------- */
+.mast{border-bottom:1px solid var(--line);background:
+  radial-gradient(120% 140% at 88% -20%, var(--teal-dim) 0%, transparent 58%),
+  var(--bg-2);}
+.mast .shell{padding-block:var(--s7) var(--s5)}
+.kicker{font-family:var(--m);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--teal);margin-bottom:var(--s4)}
+.mast h1{font-size:clamp(30px,5.4vw,50px);max-width:16ch}
+.mast .dek{margin-top:var(--s4);color:var(--ink-2);max-width:62ch;font-size:17px}
+.stamp{margin-top:var(--s5);display:flex;flex-wrap:wrap;gap:var(--s2) var(--s5);font-family:var(--m);font-size:11.5px;color:var(--ink-3);letter-spacing:.04em}
+.stamp b{color:var(--ink-2);font-weight:500}
+
+/* ---------- scoreboard ---------- */
+.score{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;margin-top:var(--s6);background:var(--line);border:1px solid var(--line)}
+.score>div{background:var(--bg-2);padding:var(--s4) var(--s4) var(--s3)}
+.score .n{font-family:var(--d);font-size:34px;font-weight:700;line-height:1;letter-spacing:-.03em}
+.score .l{font-size:13px;color:var(--ink-3);margin-top:var(--s2);line-height:1.35}
+.n.ok{color:var(--sage)} .n.mid{color:var(--ochre)} .n.no{color:var(--clay)} .n.new{color:var(--teal)}
+
+/* ---------- tabs ---------- */
+.tabs{position:sticky;top:0;z-index:40;background:color-mix(in oklab, var(--bg) 88%, transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.tabs .shell{display:flex;gap:var(--s5);align-items:stretch;overflow-x:auto}
+.tab{
+  appearance:none;background:none;border:0;border-bottom:2px solid transparent;
+  font-family:var(--b);font-size:14.5px;font-weight:600;color:var(--ink-3);
+  padding:var(--s4) 2px var(--s3);cursor:pointer;white-space:nowrap;
+  transition:color .25s var(--ease), border-color .25s var(--ease);
+}
+.tab:hover{color:var(--ink-2)}
+.tab[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--teal)}
+.tab .c{font-family:var(--m);font-size:11px;color:var(--ink-3);margin-left:6px}
+
+main{padding-block:var(--s7) var(--s9)}
+.view[hidden]{display:none}
+
+/* ---------- intro / veredicto ---------- */
+.verdict{border:1px solid var(--line);background:var(--panel);padding:var(--s5);margin-bottom:var(--s7)}
+.verdict h2{font-size:23px;margin-bottom:var(--s3)}
+.verdict p{color:var(--ink-2);max-width:72ch}
+.verdict p+p{margin-top:var(--s3)}
+.verdict .hl{color:var(--ink);font-weight:600;font-family:var(--b)}
+
+/* ---------- legend ---------- */
+.legend{display:flex;flex-wrap:wrap;gap:var(--s3);margin-bottom:var(--s6)}
+.tag{
+  font-family:var(--m);font-size:10.5px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;
+  padding:3px 9px;border:1px solid var(--line-2);color:var(--ink-2);white-space:nowrap;
+}
+.tag.novo{color:var(--teal);border-color:var(--teal);background:var(--teal-dim)}
+.tag.alt{color:var(--ochre);border-color:var(--ochre);background:var(--ochre-dim)}
+.tag.keep{color:var(--ink-3)}
+.tag.conf{color:var(--clay);border-color:var(--clay);background:var(--clay-dim)}
+.tag.ok{color:var(--sage);border-color:var(--sage);background:var(--sage-dim)}
+
+/* ---------- canvas mock ---------- */
+.sec{border:1px solid var(--line);background:var(--panel);margin-bottom:var(--s5)}
+.sec>header{display:flex;gap:var(--s3);align-items:center;flex-wrap:wrap;padding:var(--s4) var(--s5);border-bottom:1px solid var(--line);background:var(--panel-2)}
+.sec>header h3{font-size:19px;flex:1;min-width:220px}
+.sec>header .em{font-size:18px;filter:saturate(.85)}
+.body{padding:var(--s5)}
+.body>*+*{margin-top:var(--s4)}
+.body ul{margin:0;padding-left:1.15em}
+.body li{margin-bottom:var(--s2);color:var(--ink-2)}
+.body li::marker{color:var(--ink-3)}
+.body b,.body strong{color:var(--ink);font-weight:600}
+.body em{color:var(--ink-2)}
+.lbl{font-family:var(--m);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);display:block;margin-bottom:var(--s2)}
+
+.marked{background:var(--ochre-dim);box-shadow:0 0 0 2px var(--ochre-dim);color:var(--ink)}
+.added{background:var(--teal-dim);box-shadow:0 0 0 2px var(--teal-dim);color:var(--ink)}
+
+.note{border:1px solid var(--line-2);background:var(--bg);padding:var(--s4);font-size:14.5px;color:var(--ink-2)}
+.note.why{border-color:var(--teal);background:var(--teal-dim)}
+.note.ask{border-color:var(--clay);background:var(--clay-dim)}
+.note .lbl{color:inherit;opacity:.85}
+
+/* steps */
+.step{border:1px solid var(--line);background:var(--bg-2);margin-top:var(--s4)}
+.step>summary{
+  list-style:none;cursor:pointer;padding:var(--s3) var(--s4);display:flex;gap:var(--s3);align-items:baseline;
+  font-weight:600;font-size:15.5px;
+}
+.step>summary::-webkit-details-marker{display:none}
+.step>summary:hover{background:var(--panel)}
+.step .idx{font-family:var(--m);font-size:12px;color:var(--teal);font-weight:700;flex:none;width:1.4em}
+.step .sum-t{flex:1}
+.step .chev{color:var(--ink-3);font-size:12px;transition:transform .25s var(--ease)}
+.step[open] .chev{transform:rotate(90deg)}
+.step .inner{padding:0 var(--s4) var(--s4) calc(var(--s4) + 1.4em)}
+.step .inner>*+*{margin-top:var(--s3)}
+
+/* table */
+.tbl{width:100%;border-collapse:collapse;font-size:14.5px}
+.tbl th,.tbl td{text-align:left;padding:var(--s3);border:1px solid var(--line);vertical-align:top}
+.tbl th{background:var(--panel-2);font-family:var(--m);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);font-weight:500}
+.tbl td{color:var(--ink-2)}
+.tbl td:first-child{color:var(--ink);font-weight:500}
+.tbl tr:last-child td{background:var(--panel-2);color:var(--ink);font-weight:600}
+.tbl .num{font-family:var(--m);font-variant-numeric:tabular-nums}
+.tblwrap{overflow-x:auto}
+
+/* price grid */
+.prices{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:var(--s4)}
+.pcard{border:1px solid var(--line);background:var(--bg-2);padding:var(--s4)}
+.pcard h4{font-family:var(--m);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--teal);font-weight:500;margin-bottom:var(--s3)}
+.pcard dl{margin:0;display:grid;grid-template-columns:1fr auto;gap:6px var(--s3);font-size:14.5px}
+.pcard dt{color:var(--ink-2)}
+.pcard dd{margin:0;font-family:var(--m);font-variant-numeric:tabular-nums;color:var(--ink);font-weight:500}
+.pcard dd.flag{color:var(--clay)}
+
+/* copy */
+.copyrow{display:flex;gap:var(--s2);align-items:center;flex-wrap:wrap;margin-left:auto}
+.btn{
+  appearance:none;font-family:var(--b);font-size:12.5px;font-weight:600;cursor:pointer;
+  padding:6px 13px;border:1px solid var(--line-2);background:var(--bg);color:var(--ink-2);
+  transition:border-color .2s var(--ease), color .2s var(--ease), background .2s var(--ease);
+}
+.btn:hover{border-color:var(--teal);color:var(--teal)}
+.btn.on{border-color:var(--sage);color:var(--sage);background:var(--sage-dim)}
+.raw{display:none}
+.msgbox{white-space:pre-wrap;font-family:var(--m);font-size:14px;line-height:1.7;color:var(--ink);
+  background:var(--bg);border:1px solid var(--line-2);border-left:3px solid var(--teal);padding:14px 16px;margin:10px 0}
+.msgbox b{font-weight:700}
+.body h4.sub{font-family:var(--d);font-size:19px;color:var(--ink);margin:26px 0 10px;padding-top:14px;border-top:1px solid var(--line)}
+.body h4.sub .pill{font-family:var(--m);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--teal);
+  border:1px solid var(--teal-dim);border-radius:2px;padding:3px 7px;margin-left:10px;vertical-align:middle;font-weight:500}
+.obj{border-left:2px solid var(--line-2);padding:2px 0 2px 14px;margin:14px 0}
+.obj .q{font-family:var(--d);font-size:16px;color:var(--ink);margin-bottom:6px}
+.obj p{margin:0 0 6px}
+.obj .lim{font-size:14px;color:var(--ink-3)}
+.conf-inline{font-family:var(--m);font-size:12px;color:var(--ochre);border-bottom:1px dashed var(--ochre-dim);padding-bottom:1px}
+
+
+
+/* modo limpo: o que se vê é o que se cola */
+body:not(.rev) .note{display:none}
+body:not(.rev) .marked,body:not(.rev) .added{background:none;box-shadow:none;color:inherit}
+body:not(.rev) .pcard dd.flag{color:var(--ink)}
+body:not(.rev) .pcard dd.flag::after{content:""}
+body:not(.rev) .legend{display:none}
+body:not(.rev) .tag.novo,body:not(.rev) .tag.alt,body:not(.rev) .tag.conf{display:none}
+.revbar{display:flex;gap:var(--s2);align-items:center;flex-wrap:wrap;margin-bottom:var(--s6);padding-bottom:var(--s4);border-bottom:1px solid var(--line)}
+.callout{border:1px solid var(--line-2);background:var(--bg);padding:var(--s4);font-size:15px;color:var(--ink-2)}
+.callout .cl{font-family:var(--m);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);display:block;margin-bottom:6px}
+
+/* ---------- respostas ---------- */
+.filters{display:flex;gap:var(--s2);flex-wrap:wrap;align-items:center;margin-bottom:var(--s5);padding-bottom:var(--s4);border-bottom:1px solid var(--line)}
+.filters .lbl{margin:0 var(--s2) 0 0}
+.fbtn{
+  appearance:none;font-family:var(--b);font-size:12.5px;cursor:pointer;padding:5px 12px;
+  border:1px solid var(--line-2);background:transparent;color:var(--ink-2);
+  transition:all .2s var(--ease);
+}
+.fbtn:hover{border-color:var(--ink-3);color:var(--ink)}
+.fbtn[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink);font-weight:600}
+
+.grp{margin-bottom:var(--s7)}
+.grp>h3{font-size:24px;margin-bottom:var(--s2)}
+.grp>.sub{color:var(--ink-3);font-size:14.5px;margin-bottom:var(--s5);max-width:70ch}
+
+.ans{border:1px solid var(--line);background:var(--panel);margin-bottom:var(--s3)}
+.ans>summary{list-style:none;cursor:pointer;padding:var(--s4);display:grid;grid-template-columns:52px 1fr auto;gap:var(--s3);align-items:baseline}
+.ans>summary::-webkit-details-marker{display:none}
+.ans>summary:hover{background:var(--panel-2)}
+.ans .code{font-family:var(--m);font-size:12px;font-weight:700;color:var(--ink-3)}
+.ans .t{font-size:15.5px;font-weight:600;line-height:1.35}
+.ans .who{font-size:13px;color:var(--ink-3);margin-top:3px}
+.ans .inner{padding:0 var(--s4) var(--s4) calc(52px + var(--s4) + var(--s3))}
+.ans .inner>*+*{margin-top:var(--s3)}
+.ans .inner p{color:var(--ink-2);max-width:78ch}
+.ans[data-st="ok"]{border-color:color-mix(in oklab, var(--sage) 45%, var(--line))}
+.ans[data-st="mid"]{border-color:color-mix(in oklab, var(--ochre) 35%, var(--line))}
+@media(max-width:640px){
+  .ans>summary{grid-template-columns:44px 1fr;}
+  .ans>summary .tag{grid-column:2}
+  .ans .inner{padding-left:var(--s4)}
+}
+.rec{border:1px solid var(--line-2);background:var(--bg);padding:var(--s3) var(--s4);font-size:14.5px}
+.rec .lbl{color:var(--teal)}
+.rec p{color:var(--ink)!important}
+
+footer{border-top:1px solid var(--line);margin-top:var(--s9);padding-block:var(--s5) var(--s8)}
+footer p{font-size:13.5px;color:var(--ink-3);max-width:80ch}
+footer p+p{margin-top:var(--s3)}
+footer b{color:var(--ink-2);font-weight:600}
+
+@media print{
+  body{background:#fff;color:#000}
+  .tabs,.btn,.filters{display:none}
+  .view[hidden]{display:block!important}
+  details{open:true}
+}
+</style>
+</head>
+<body>
+
+<header class="mast">
+  <div class="shell">
+    <p class="kicker">Fornecedores · Prospecção de Lavanderias</p>
+    <h1>Como o canvas deve ficar</h1>
+    <p class="dek">Canvas novo do processo de lavanderias, na mesma estrutura do de fotógrafos: da análise dos polígonos sem lavanderia até o cadastro no Hub, com o que é feito por agente e o que é feito por analista, seção por seção, pronto para colar no Slack.</p>
+    <div class="stamp">
+      <span>Versão <b>1 · 15/10/2026</b></span>
+      <span>Base: <b>skills cidades-sem-fornecedor e prospeccao-lavanderia</b></span>
+      <span><b>Agente de cadência</b> (Olimpo) + <b>extensão SIA Copiloto</b></span>
+    </div>
+    <div class="score">
+      <div><div class="n new">9</div><div class="l">seções do canvas</div></div>
+      <div><div class="n">8</div><div class="l">etapas no fluxo</div></div>
+      <div><div class="n ok">3</div><div class="l">mensagens automáticas pela SIA</div></div>
+      <div><div class="n">17</div><div class="l">peças na tabela de teto</div></div>
+      <div><div class="n no">4</div><div class="l">premissas a confirmar</div></div>
+    </div>
+  </div>
+</header>
+
+<nav class="tabs">
+  <div class="shell">
+    <button class="tab" id="t-canvas" aria-selected="true" aria-controls="v-canvas">Canvas<span class="c">9 seções</span></button>
+    <button class="tab" id="t-resp" aria-selected="false" aria-controls="v-resp">Premissas a confirmar<span class="c">6</span></button>
+  </div>
+</nav>
+
+<main class="shell">
+
+<section class="view" id="v-canvas">
+
+  <div class="verdict">
+    <h2>O processo em uma frase</h2>
+    <p>Um agente acha os <span class="hl">polígonos sem lavanderia</span>, o Coordenador escolhe quais prospectar, uma skill pesquisa e cria os cards, outro agente manda as <span class="hl">3 mensagens pela SIA</span> e o Analista assume quando a lavanderia responde, com a extensão sugerindo a resposta.</p>
+    <p>A lavanderia é aprovada quando <span class="hl">não é autoatendimento</span>, cobra <span class="hl">por peça</span>, tem <span class="hl">calandra ou ferro industrial</span> e todos os itens ficam <span class="hl">dentro do teto</span>. Cada seção tem o botão <span class="hl">Copiar</span>, que devolve o texto puro para colar direto no canvas do Slack.</p>
+  </div>
+
+  <div class="revbar">
+    <span class="lbl" style="margin:0 8px 0 0">Exibição</span>
+    <button class="fbtn" id="revtoggle" aria-pressed="false">Mostrar comentários da revisão</button>
+    <button class="fbtn" id="stepsall" aria-pressed="false">Abrir todas as etapas</button>
+    <span style="flex:1"></span>
+    <button class="btn" id="copyall">Copiar o canvas inteiro</button>
+  </div>
+
+  <div class="legend">
+    <span class="tag novo">Trecho novo</span>
+    <span class="tag alt">Premissa</span>
+    <span class="tag conf">Precisa de decisão de alguém</span>
+  </div>
+
+  <article class="sec">
+    <header><span class="em">📌</span><h3>1. Identificação do Processo</h3><span class="tag novo">Novo</span>
+      <span class="copyrow"><button class="btn" data-copy>Copiar</button></span></header>
+    <div class="body">
+      <ul>
+        <li><b>Nome do Processo:</b> Prospecção de Lavanderias</li>
+        <li><b>Setor Responsável:</b> Fornecedores</li>
+        <li><b>Responsável Principal:</b> @Wania Helena Lageano Espindola @Henry Yudi</li>
+        <li><b>Versão:</b> 1 — criada em 15/10/2026</li>
+        <li><b>Próxima revisão:</b> a cada 6 meses, ou quando a tabela de teto mudar</li>
+      </ul><div class="note why"><span class="lbl">Por quê</span>Mesmo cabeçalho do canvas de fotógrafos. A revisão fica amarrada à tabela de teto, que é o número que mais envelhece no processo.</div></div>
+    <pre class="raw">1. Identificação do Processo
 - Nome do Processo: Prospecção de Lavanderias
 - Setor Responsável: Fornecedores
 - Responsável Principal: @Wania Helena Lageano Espindola @Henry Yudi
 - Versão: 1 — criada em 15/10/2026
 - Próxima revisão: a cada 6 meses, ou quando a tabela de teto mudar</pre>
-</section>
-<section class="sec" id="s2">
-  <header><span class="n">2</span><h2>Objetivo</h2>
-  <button class="btn" data-t="raw2">Copiar</button></header>
-  <pre class="txt" id="raw2">2. Objetivo do Processo
+  </article><article class="sec">
+    <header><span class="em">🎯</span><h3>2. Objetivo do Processo</h3><span class="tag novo">Novo</span><span class="tag conf">1 decisão</span>
+      <span class="copyrow"><button class="btn" data-copy>Copiar</button></span></header>
+    <div class="body">
+      <p>Garantir que todo polígono onde a Seazone atua tenha lavanderia homologada, que lave e passe o enxoval no padrão Seazone e cobre por peça dentro da tabela de teto.</p>
+      <p>A Seazone <b>não contrata nem paga</b> a lavanderia. O time de Fornecedores monta a base de lavanderias homologadas (tabela por peça, endereço, coleta e entrega). Quem contrata, combina a coleta e paga é o <b>franqueado local</b>. O preço homologado também alimenta a calculadora da taxa de limpeza.</p>
+      <p class="added">A análise é feita <b>por polígono</b>, não por cidade: uma cidade com mais de um polígono pode ter um polígono coberto e outro não.</p>
+      <p class="added"><b>Meta:</b> 100% dos polígonos com imóvel ativo, em onboarding ou com franquia ativa com pelo menos <b>1 lavanderia validada</b> no Hub de Serviços.</p>
+      <ul>
+        <li><b>Resultados Esperados:</b></li>
+        <li>Nenhum imóvel entra em operação sem lavanderia indicada para o franqueado.</li>
+        <li>Antecipar a prospecção: achar o polígono sem lavanderia antes de o imóvel ativar.</li>
+        <li>Comunicação padronizada com as lavanderias (templates pela SIA e base de respostas da extensão).</li>
+        <li>Preço por peça sempre dentro do teto, com o mesmo critério em todo o Brasil.</li>
+        <li>Base viva e rastreável no Pipedrive e no Hub de Serviços.</li>
+      </ul><div class="note ask"><span class="lbl">Precisa confirmar</span>Usei <b>1 lavanderia validada</b> por polígono como cobertura, que é a regra da skill de cidades sem fornecedor. No canvas de fotógrafos são 2. Se for 2, muda a meta, a etapa 7 e o indicador.</div></div>
+    <pre class="raw">2. Objetivo do Processo
 
 Garantir que todo polígono onde a Seazone atua tenha lavanderia homologada, que lave e passe o enxoval no padrão Seazone e cobre por peça dentro da tabela de teto.
 
@@ -59,11 +345,34 @@ Resultados Esperados:
 - Comunicação padronizada com as lavanderias (templates pela SIA e base de respostas da extensão).
 - Preço por peça sempre dentro do teto, com o mesmo critério em todo o Brasil.
 - Base viva e rastreável no Pipedrive e no Hub de Serviços.</pre>
-</section>
-<section class="sec" id="s3">
-  <header><span class="n">3</span><h2>Escopo</h2>
-  <button class="btn" data-t="raw3">Copiar</button></header>
-  <pre class="txt" id="raw3">3. Escopo do Processo — Detalhamento
+  </article><article class="sec">
+    <header><span class="em">📑</span><h3>3. Escopo do Processo</h3><span class="tag novo">Novo</span>
+      <span class="copyrow"><button class="btn" data-copy>Copiar</button></span></header>
+    <div class="body">
+      <p class="lbl">1. Inclui</p>
+      <ul>
+        <li>Análise automática dos polígonos sem lavanderia, cruzando Sapron (imóveis e franquias) com o Hub de Serviços (lavanderias validadas).</li>
+        <li>Abertura automática de um card por polígono no funil <b>Fornecedores - Cidades</b> (Pipedrive).</li>
+        <li>Decisão do Coordenador sobre quais polígonos prospectar.</li>
+        <li>Pesquisa das lavanderias do polígono e criação automática dos cards no funil <b>Prospecção Fornecedores</b>.</li>
+        <li>Cadência automática de 3 mensagens pela SIA.</li>
+        <li>Negociação, qualificação e conferência dos valores contra o teto.</li>
+        <li>Cadastro da lavanderia homologada no Hub de Serviços.</li>
+      </ul>
+      <p class="lbl">2. Não inclui</p>
+      <ul>
+        <li>Contratação, agenda de coleta e pagamento da lavanderia (é do franqueado).</li>
+        <li>Garantia de volume para a lavanderia (a Seazone indica, não obriga).</li>
+        <li>Acompanhamento da qualidade do serviço depois da homologação.</li>
+      </ul>
+      <p class="lbl">3. Interfaces com outros processos</p>
+      <ul>
+        <li><em>Automação:</em> skill de cidades sem fornecedor, skill de prospecção, agente de cadência (Olimpo) e extensão SIA Copiloto.</li>
+        <li><em>Franquias:</em> usam a base para contratar a lavanderia.</li>
+        <li><em>Implantação:</em> ativações de imóveis e franquias que geram a demanda.</li>
+        <li><em>Calculadora da taxa de limpeza:</em> lê o preço por peça do Hub.</li>
+      </ul></div>
+    <pre class="raw">3. Escopo do Processo — Detalhamento
 
 1. Inclui:
 - Análise automática dos polígonos sem lavanderia, cruzando Sapron (imóveis e franquias) com o Hub de Serviços (lavanderias validadas).
@@ -84,11 +393,25 @@ Resultados Esperados:
 - Franquias: usam a base para contratar a lavanderia.
 - Implantação: ativações de imóveis e franquias que geram a demanda.
 - Calculadora da taxa de limpeza: lê o preço por peça do Hub.</pre>
-</section>
-<section class="sec" id="s4">
-  <header><span class="n">4</span><h2>Responsáveis</h2>
-  <button class="btn" data-t="raw4">Copiar</button></header>
-  <pre class="txt" id="raw4">4. Responsáveis e Papéis
+  </article><article class="sec">
+    <header><span class="em">👥</span><h3>4. Responsáveis e Papéis</h3><span class="tag novo">Novo</span>
+      <span class="copyrow"><button class="btn" data-copy>Copiar</button></span></header>
+    <div class="body">
+      <p class="lbl">Agentes (automático)</p>
+      <ul>
+        <li class="added"><em>Skill Cidades sem Fornecedor:</em> varre Sapron e Hub e abre um card por polígono sem lavanderia no funil Fornecedores - Cidades.</li>
+        <li class="added"><em>Skill Prospecção de Lavanderia:</em> pesquisa as lavanderias do polígono e cria os cards no funil Prospecção Fornecedores.</li>
+        <li class="added"><em>Agente de Cadência (Olimpo):</em> dispara as 3 mensagens pela SIA, anota no card, move entre as etapas de contato e marca Perda por Sem Retorno.</li>
+        <li class="added"><em>Extensão SIA Copiloto:</em> lê as conversas abertas na SIA e sugere a próxima resposta. Não envia nada sozinha.</li>
+      </ul>
+      <p class="lbl">Pessoas</p>
+      <ul>
+        <li><em>Coordenador de Fornecedores:</em> analisa os polígonos que a automação abriu e decide quais prospectar.</li>
+        <li><em>Analista de Fornecedores:</em> roda a skill de prospecção, revisa os cards, assume a conversa quando a lavanderia responde, qualifica, negocia e cadastra no Hub.</li>
+        <li><em>Franqueado:</em> escolhe, contrata e paga a lavanderia da base.</li>
+        <li><em>Substituto do Analista:</em> Coordenador de Fornecedores, nas férias e ausências.</li>
+      </ul><div class="note why"><span class="lbl">Por quê</span>A diferença para fotógrafos é que aqui boa parte do trabalho já é de agente. Separar agente de pessoa deixa claro onde o Analista precisa agir e onde só acompanha.</div></div>
+    <pre class="raw">4. Responsáveis e Papéis
 
 Quem é agente (automático):
 - Skill Cidades sem Fornecedor: varre Sapron e Hub e abre um card por polígono sem lavanderia no funil Fornecedores - Cidades.
@@ -101,11 +424,85 @@ Quem é pessoa:
 - Analista de Fornecedores: roda a skill de prospecção, revisa os cards, assume a conversa quando a lavanderia responde, qualifica, negocia e cadastra no Hub.
 - Franqueado: escolhe, contrata e paga a lavanderia da base.
 - Substituto do Analista: Coordenador de Fornecedores, nas férias e ausências.</pre>
-</section>
-<section class="sec" id="s5">
-  <header><span class="n">5</span><h2>Fluxo</h2>
-  <button class="btn" data-t="raw5">Copiar</button></header>
-  <pre class="txt" id="raw5">5. Fluxo do Processo
+  </article><article class="sec">
+    <header><span class="em">🔄</span><h3>5. Fluxo do Processo</h3><span class="tag novo">8 etapas</span><span class="tag conf">2 decisões</span>
+      <span class="copyrow"><button class="btn" data-copy>Copiar</button></span></header>
+    <div class="body"><details class="step" open>
+        <summary><span class="idx">1</span><span class="sum-t">Análise dos polígonos sem lavanderia</span><span class="chev">›</span></summary>
+        <div class="inner">
+          <p><b>Responsável:</b> Agente (skill Cidades sem Fornecedor), rodada pelo Coordenador</p>
+          <p>A skill cruza os polígonos do Sapron (de atuação e de prospecção) com as lavanderias validadas no Hub de Serviços. Entra na lista o polígono que tem <b>franquia ativa</b> ou <b>imóvel ativo ou em onboarding</b> e nenhuma lavanderia validada.</p>
+          <ul>
+            <li>Abre um card por polígono no funil <b>Fornecedores - Cidades</b>, etapa <b>Análise</b>.</li>
+            <li>Título: <b>"Cidade - Lavanderia"</b>. O código do polígono vai no campo <b>Profissão</b> (ex.: SP-CAR-001).</li>
+            <li>Cidade com 2 polígonos vira 2 cards de mesmo título, um por código.</li>
+            <li>A skill não duplica card que já existe para o mesmo polígono.</li>
+          </ul>
+          <p><b>SLA:</b> <span class="marked">toda sexta-feira.</span></p><div class="note ask"><span class="lbl">Precisa confirmar</span>A sexta-feira veio do canvas de fotógrafos. Hoje a skill de lavanderia roda quando alguém pede.</div></div>
+      </details><details class="step">
+        <summary><span class="idx">2</span><span class="sum-t">Decisão do Coordenador</span><span class="chev">›</span></summary>
+        <div class="inner">
+          <p><b>Responsável:</b> Coordenador de Fornecedores</p>
+          <p>Avalia cada card da etapa <b>Análise</b>: quantidade de imóveis ativos e em onboarding, datas previstas de ativação e se o polígono vizinho já tem lavanderia que atende.</p>
+          <ul>
+            <li><b>Polígono aprovado:</b> move para <b>Backlog</b> (fila do Analista).</li>
+            <li><b>Polígono que não justifica agora:</b> move para <b>Cancelado</b>, com o motivo escrito no card.</li>
+          </ul>
+          <p><b>SLA:</b> toda sexta-feira.</p></div>
+      </details><details class="step">
+        <summary><span class="idx">3</span><span class="sum-t">Pesquisa e criação dos cards de lavanderia</span><span class="chev">›</span></summary>
+        <div class="inner">
+          <p><b>Responsável:</b> Analista de Fornecedores (com a skill Prospecção de Lavanderia)</p>
+          <p>Na segunda-feira o Analista pega os cards do <b>Backlog</b>, move para <b>Prospecção</b> e roda a skill informando a cidade e o polígono. A skill busca em três frentes:</p>
+          <ul>
+            <li><b>Receita Federal:</b> CNPJs com CNAE de lavanderia (9601) no município, com endereço, telefone e e-mail.</li>
+            <li><b>Google, Instagram, Facebook e guias locais:</b> confirma que está ativa e completa o contato. Inclui as redes (5àSec, Acqua Zero, Lavô etc.).</li>
+            <li><b>Google Maps:</b> busca "lavanderia" na cidade.</li>
+          </ul>
+          <p>Depois a skill <b>geocodifica cada endereço e confere se está dentro do polígono</b>. Todos os cards entram no funil <b>Prospecção Fornecedores</b>, etapa <b>Backlog</b>:</p>
+          <ul>
+            <li>Título curto: <b>"Nome - Lavanderia"</b> (sem razão social, CNPJ ou bairro).</li>
+            <li><b>Forma de pagamento:</b> código do polígono.</li>
+            <li><b>Profissão:</b> tipo da lavanderia (Tradicional, Self-service, Tradicional + Industrial, A confirmar).</li>
+            <li><b>Observações:</b> se está fora do polígono, site e redes sociais.</li>
+            <li>Sobe <b>tudo</b> o que a pesquisa achar, inclusive self-service e fora do polígono. O filtro é feito no Pipedrive.</li>
+          </ul>
+          <p><b>SLA:</b> 1 dia útil.</p></div>
+      </details><details class="step">
+        <summary><span class="idx">4</span><span class="sum-t">Revisão do Backlog</span><span class="chev">›</span></summary>
+        <div class="inner">
+          <p><b>Responsável:</b> Analista de Fornecedores</p>
+          <p>Revisa os cards criados e move para <b>1º Contato</b> quem tem telefone e é candidata (lavanderia tradicional, por peça). <span class="marked">Self-service não entra na cadência: vai para Perda com o motivo Autoatendimento.</span></p>
+          <p><b>SLA:</b> mesmo dia da pesquisa.</p><div class="note ask"><span class="lbl">Precisa confirmar</span>O agente de cadência manda mensagem para todo card em 1º Contato. Self-service sobe no Pipedrive por regra, então alguém precisa tirar antes da cadência. Coloquei essa saída na revisão do Analista.</div></div>
+      </details><details class="step">
+        <summary><span class="idx">5</span><span class="sum-t">Cadência de contato (automática)</span><span class="chev">›</span></summary>
+        <div class="inner">
+          <p><b>Responsável:</b> Agente de Cadência</p>
+          <p>3 mensagens pela SIA, uma por dia útil. Detalhe na seção 6.</p></div>
+      </details><details class="step">
+        <summary><span class="idx">6</span><span class="sum-t">Negociação</span><span class="chev">›</span></summary>
+        <div class="inner">
+          <p><b>Responsável:</b> Analista de Fornecedores (com a extensão SIA Copiloto)</p>
+          <p>Quando a lavanderia responde, o Analista move o card para <b>Em negociação</b> e o agente para de mandar mensagem. A conversa segue o roteiro de qualificação da seção 7: autoatendimento, cobrança por peça, calandra ou ferro industrial, coleta e entrega, volume mínimo e, só então, os valores.</p>
+          <p><b>SLA:</b> <span class="marked">3 dias úteis a partir do primeiro retorno.</span></p></div>
+      </details><details class="step">
+        <summary><span class="idx">7</span><span class="sum-t">Homologação e cadastro</span><span class="chev">›</span></summary>
+        <div class="inner">
+          <p><b>Responsável:</b> Analista de Fornecedores</p>
+          <p>Lavanderia aprovada em todos os critérios e com <b>todos os itens no teto ou abaixo</b>:</p>
+          <ul>
+            <li>Card vai para <b>Ganho</b> no funil Prospecção Fornecedores.</li>
+            <li>Cadastro no <b>Hub de Serviços</b> com a tabela por peça, CNPJ, razão social, nome fantasia, endereço, e-mail, WhatsApp, responsável, coleta e entrega e volume mínimo. Status <b>validado</b>.</li>
+            <li>Com a primeira lavanderia validada no polígono, o card do polígono no funil Fornecedores - Cidades vai para <b>Concluído</b>.</li>
+          </ul>
+          <p><b>SLA:</b> 1 dia útil após o aceite.</p></div>
+      </details><details class="step">
+        <summary><span class="idx">8</span><span class="sum-t">Perda</span><span class="chev">›</span></summary>
+        <div class="inner">
+          <p><b>Responsável:</b> Agente (Sem Retorno) e Analista (demais motivos)</p>
+          <p><b>Motivos:</b> Sem Retorno (automático) · Autoatendimento · Cobra por peso ou cesto · Sem calandra ou ferro industrial · Acima do teto sem acordo · Sem interesse.</p></div>
+      </details></div>
+    <pre class="raw">5. Fluxo do Processo
 
 1. Análise dos polígonos sem lavanderia
 Responsável: Agente (skill Cidades sem Fornecedor), rodada pelo Coordenador
@@ -163,11 +560,37 @@ SLA: 1 dia útil após o aceite.
 8. Perda
 Responsável: Agente (Sem Retorno) e Analista (demais motivos)
 Motivos: Sem Retorno (automático) · Autoatendimento · Cobra por peso ou cesto · Sem calandra ou ferro industrial · Acima do teto sem acordo · Sem interesse.</pre>
-</section>
-<section class="sec" id="s6">
-  <header><span class="n">6</span><h2>Cadência</h2>
-  <button class="btn" data-t="raw6">Copiar</button></header>
-  <pre class="txt" id="raw6">6. Cadência de Contato — Funil Prospecção Fornecedores
+  </article><article class="sec">
+    <header><span class="em">📣</span><h3>6. Cadência de Contato e Extensão</h3><span class="tag novo">Seção nova</span>
+      <span class="copyrow"><button class="btn" data-copy>Copiar</button></span></header>
+    <div class="body">
+      <p>Etapas do funil <b>Prospecção Fornecedores</b>: Backlog → 1º Contato → 2º Contato → 3º Contato → Em negociação → Ganho / Perda. Abaixo, o que é do <b>agente</b> e o que é do <b>analista</b> em cada etapa.</p>
+<h4 class="sub">Backlog <span class="pill">analista</span></h4><ul><li><b>Agente:</b> a skill de prospecção cria os cards aqui.</li><li><b>Analista:</b> revisa e move para 1º Contato quem segue.</li></ul><h4 class="sub">1º Contato <span class="pill">agente · 11h</span></h4><ul><li><b>Agente:</b> envia o template e anota no card ("1º contato enviado DD/MM HH:MM:SS").</li><li><b>Agente:</b> no dia útil seguinte, às 11h, move para 2º Contato quem não respondeu.</li></ul><div class="msgbox">Template <b>lavanderia_primeiro_contato</b> (SIA)
+Variáveis: {{analista}} e {{cidade}}
+O texto é o mesmo para todas as lavanderias.</div><h4 class="sub">2º Contato <span class="pill">agente · 15h</span></h4><ul><li><b>Agente:</b> envia o template e anota no card.</li><li><b>Agente:</b> no dia útil seguinte, às 15h, move para 3º Contato quem não respondeu.</li></ul><div class="msgbox">Template <b>segundo_contato_lavanderia</b> (SIA)
+Variáveis: {{analista}} e {{cidade}}
+O texto é o mesmo para todas as lavanderias.</div><h4 class="sub">3º Contato <span class="pill">agente · 17h</span></h4><ul><li><b>Agente:</b> envia o template e anota no card.</li><li><b>Agente:</b> no dia útil seguinte, às 17h, marca Perda com o motivo <b>[Fornecedores] - Sem Retorno</b>.</li></ul><div class="msgbox">Template <b>ultimo_contato_lavanderia</b> (SIA)
+Variáveis: {{analista}} e {{cidade}}
+O texto é o mesmo para todas as lavanderias.</div><h4 class="sub">Em negociação <span class="pill">analista</span></h4><ul><li><b>Analista:</b> move o card para cá assim que a lavanderia responde, em qualquer etapa. O agente só lê 1º, 2º e 3º Contato, então para de mandar mensagem.</li><li><b>Analista:</b> conduz a conversa na SIA com a ajuda da extensão.</li></ul><h4 class="sub">Ganho / Perda <span class="pill">analista</span></h4><ul><li><b>Analista:</b> decide e registra o motivo (exceto Sem Retorno, que é do agente).</li></ul>
+      <div class="callout"><span class="cl">Exemplo de ciclo</span>seg 11h 1ª msg → ter 15h 2ª msg → qua 17h última msg → qui 17h Perda.</div>
+      <h4 class="sub">Regras da cadência</h4>
+      <ul>
+        <li>Só dias úteis, pulando feriados nacionais.</li>
+        <li>Cada card fica pelo menos 1 dia útil em cada etapa, para dar tempo de responder.</li>
+        <li><b>Erro de envio:</b> o card não é movido, o agente tenta de novo na rodada do dia seguinte e avisa no canal <b>#fornecedores</b> quais cards falharam. O Analista trata.</li>
+        <li>Erro <b>"conversa aberta na SIA"</b> quase sempre é a lavanderia respondendo: o Analista confere e move para Em negociação.</li>
+      </ul>
+      <h4 class="sub">Extensão SIA Copiloto <span class="pill">apoio na negociação</span></h4>
+      <ul>
+        <li>Painel no Chrome, em cima da SIA, com todas as conversas abertas da Analista.</li>
+        <li>Identifica em que etapa do roteiro a conversa está e sugere só o próximo passo, a partir da base de conhecimento.</li>
+        <li>Cor por confiança: <b>verde</b> (resposta padrão), <b>amarelo</b> (precisa de dado da cidade), <b>vermelho</b> (valor ou negociação: só orienta, não sugere número).</li>
+        <li>Traz números reais do Sapron da cidade: imóveis ativos, em onboarding e check-outs dos últimos 30 dias, para responder sobre volume.</li>
+        <li><b>Aprovar</b> envia o texto sugerido. <b>Reprovar</b> abre a resposta para a Analista escrever, com "Enviar" ou "Enviar e salvar conhecimento" (a resposta entra na base na hora).</li>
+        <li>Nada é enviado sozinho. A extensão só responde conversas já abertas; a cadência continua com o agente.</li>
+        <li>Se a lavanderia mandar um item acima do teto, a extensão marca o item em vermelho e não sugere número.</li>
+      </ul><div class="note why"><span class="lbl">Por quê</span>A cadência de lavanderia já roda no mesmo agente dos fotógrafos, com os mesmos horários e regras. Só o template muda, e ele não usa o nome da lavanderia, só a analista e a cidade.</div></div>
+    <pre class="raw">6. Cadência de Contato — Funil Prospecção Fornecedores
 
 Etapas do funil: Backlog → 1º Contato → 2º Contato → 3º Contato → Em negociação → Ganho / Perda
 
@@ -213,11 +636,43 @@ Extensão SIA Copiloto (apoio na negociação)
 - Aprovar envia o texto sugerido. Reprovar abre a resposta para a Analista escrever, com &quot;Enviar&quot; ou &quot;Enviar e salvar conhecimento&quot; (a resposta entra na base na hora).
 - Nada é enviado sozinho. A extensão só responde conversas já abertas; a cadência continua com o agente.
 - Se a lavanderia mandar um item acima do teto, a extensão marca o item em vermelho e não sugere número.</pre>
-</section>
-<section class="sec" id="s7">
-  <header><span class="n">7</span><h2>Critérios e tabela</h2>
-  <button class="btn" data-t="raw7">Copiar</button></header>
-  <pre class="txt" id="raw7">7. Critérios de Qualificação e Tabela de Teto
+  </article><article class="sec">
+    <header><span class="em">🧺</span><h3>7. Critérios de Qualificação e Tabela de Teto</h3><span class="tag novo">Seção nova</span>
+      <span class="copyrow"><button class="btn" data-copy>Copiar</button></span></header>
+    <div class="body">
+      <h4 class="sub">Roteiro da conversa <span class="pill">uma pergunta por vez</span></h4>
+      <div class="tblwrap"><table class="tbl">
+        <tr><th>Etapa</th><th>Pergunta</th><th>Se a resposta for…</th></tr>
+        <tr><td>1. Abertura</td><td>Apresentar a Seazone e a base de lavanderias parceiras</td><td>—</td></tr>
+        <tr><td>2. Autoatendimento</td><td>"A lavanderia é de autoatendimento?"</td><td>Sim → <b>Perda</b></td></tr>
+        <tr><td>3. Cobrança</td><td>"Vocês cobram por peça ou por peso?"</td><td>Peso ou cesto → confirmar uma vez se fazem por peça; se não, <b>Perda</b></td></tr>
+        <tr><td>4. Equipamento</td><td>"Vocês têm calandra, ferro industrial ou ferro a vapor profissional?"</td><td>Nenhum dos três → <b>Perda</b>. Ferro a vapor profissional conta como ferro industrial</td></tr>
+        <tr><td>5. Coleta e volume</td><td>"Fazem coleta e entrega? Qual a taxa e em qual região?" e "Trabalham com volume mínimo por coleta?"</td><td>Não é Perda, é informação do cadastro</td></tr>
+        <tr><td>6. Valores</td><td>Pedir o valor por peça da lavanderia</td><td>Mandou os valores → etapa 7</td></tr>
+        <tr><td>7. Conferência</td><td>Comparar cada item com o teto</td><td>Item acima → negociar aquele item</td></tr>
+        <tr><td>8. Cadastro</td><td>Cadastro no Hub</td><td>Fim</td></tr>
+      </table></div>
+      <h4 class="sub">Regras dos valores</h4>
+      <ul>
+        <li><b>Pedimos os valores da lavanderia e NÃO mandamos os nossos.</b> O teto é interno e nunca vai para o fornecedor.</li>
+        <li><b>Nenhum item pode ficar acima do teto, nem 1 centavo.</b> Item acima: o Analista negocia aquele item. Sem acordo em todos os itens, a lavanderia não é homologada.</li>
+        <li class="added">O teto é o mesmo em todo o Brasil. O que muda <b>por polígono</b> é a demanda (imóveis e check-outs), que é o argumento da negociação.</li>
+        <li>Nunca prometer volume: o franqueado não é obrigado a usar uma lavanderia específica. A Seazone indica, e quem tem preço e serviço melhores tende a receber mais.</li>
+      </ul>
+      <h4 class="sub">Tabela de teto por peça <span class="pill">interna · 17 peças</span></h4>
+      <div class="prices"><div class="pcard"><h4>Banho e fronha</h4><dl><dt>Fronha</dt><dd>R$ 3,00</dd><dt>Toalha de rosto</dt><dd>R$ 3,00</dd><dt>Toalha de piso / tapete</dt><dd>R$ 3,00</dd><dt>Toalha de banho</dt><dd>R$ 4,00</dd><dt>Manta queen</dt><dd>R$ 15,00</dd></dl></div><div class="pcard"><h4>Lençol</h4><dl><dt>Lençol solteiro</dt><dd>R$ 5,00</dd><dt>Lençol casal</dt><dd>R$ 5,00</dd><dt>Lençol queen</dt><dd>R$ 5,00</dd><dt>Lençol king</dt><dd>R$ 5,00</dd></dl></div><div class="pcard"><h4>Edredom</h4><dl><dt>Edredom solteiro</dt><dd>R$ 20,00</dd><dt>Edredom casal</dt><dd>R$ 25,00</dd><dt>Edredom queen</dt><dd>R$ 25,00</dd><dt>Edredom king</dt><dd>R$ 25,00</dd></dl></div><div class="pcard"><h4>Capa de edredom</h4><dl><dt>Capa de edredom solteiro</dt><dd>R$ 15,00</dd><dt>Capa de edredom casal</dt><dd>R$ 15,00</dd><dt>Capa de edredom queen</dt><dd>R$ 15,00</dd><dt>Capa de edredom king</dt><dd>R$ 15,00</dd></dl></div></div>
+      <h4 class="sub">Lista que o Analista manda pedindo os valores</h4>
+      <div class="msgbox">Trabalhamos com enxoval branco de cama e banho. Pode me mandar o valor por peça de:
+• Fronha
+• Toalha de rosto
+• Toalha de piso
+• Toalha de banho
+• Manta queen
+• Lençol (solteiro, casal, queen, king)
+• Edredom (solteiro, casal, queen, king)
+• Capa de edredom (solteiro, casal, queen, king)
+Se algum item vocês não fazem, é só marcar "não realizamos".</div><div class="note why"><span class="lbl">Por quê</span>Nas conversas antigas o teto chegou a ser mandado como "nossa tabela". Com o teto escrito aqui como interno e a regra de pedir a tabela deles, a negociação começa pelo preço da lavanderia e não pelo nosso máximo.</div></div>
+    <pre class="raw">7. Critérios de Qualificação e Tabela de Teto
 
 Roteiro da conversa (uma pergunta por vez, nesta ordem):
 1. Abertura: apresentar a Seazone e a base de lavanderias parceiras.
@@ -265,11 +720,23 @@ Trabalhamos com enxoval branco de cama e banho. Pode me mandar o valor por peça
 • Edredom (solteiro, casal, queen, king)
 • Capa de edredom (solteiro, casal, queen, king)
 Se algum item vocês não fazem, é só marcar &quot;não realizamos&quot;.</pre>
-</section>
-<section class="sec" id="s8">
-  <header><span class="n">8</span><h2>Prazos e SLA</h2>
-  <button class="btn" data-t="raw8">Copiar</button></header>
-  <pre class="txt" id="raw8">8. Prazos e SLA
+  </article><article class="sec">
+    <header><span class="em">⏱️</span><h3>8. Prazos e SLA</h3><span class="tag novo">Novo</span><span class="tag conf">1 decisão</span>
+      <span class="copyrow"><button class="btn" data-copy>Copiar</button></span></header>
+    <div class="body">
+      <p>Todos os prazos são em <b>dias úteis</b>, contados do início da prospecção (a segunda-feira em que o Analista pega o card).</p>
+      <div class="tblwrap"><table class="tbl">
+        <tr><th>Etapa</th><th>Responsável</th><th>SLA</th><th>Acumulado</th></tr>
+        <tr><td>1. Análise dos polígonos</td><td>Agente</td><td>Toda sexta-feira</td><td class="num">sexta anterior</td></tr>
+        <tr><td>2. Decisão do Coordenador</td><td>Coordenador</td><td>Mesma sexta</td><td class="num">sexta anterior</td></tr>
+        <tr><td>3. Pesquisa e cards</td><td>Analista + skill</td><td>1 dia útil</td><td class="num">dia 1</td></tr>
+        <tr><td>4. Revisão do Backlog</td><td>Analista</td><td>Mesmo dia</td><td class="num">dia 1</td></tr>
+        <tr><td>5. Cadência (3 mensagens)</td><td>Agente</td><td>3 dias úteis</td><td class="num">dia 4</td></tr>
+        <tr><td>6. Negociação</td><td>Analista + extensão</td><td>3 dias úteis do primeiro retorno</td><td class="num">dia 7</td></tr>
+        <tr><td>7. Homologação e cadastro no Hub</td><td>Analista</td><td>1 dia útil após o aceite</td><td class="num">dia 8</td></tr>
+        <tr><td>Lead time do polígono</td><td>—</td><td>Início da prospecção → 1ª lavanderia validada</td><td class="num">8 dias úteis</td></tr>
+      </table></div><div class="note ask"><span class="lbl">Precisa confirmar</span>Os 3 dias úteis de negociação vieram do canvas de fotógrafos. Com eles o lead time do polígono fica em 8 dias úteis.</div></div>
+    <pre class="raw">8. Prazos e SLA
 Todos os prazos são em dias úteis, contados do início da prospecção (a segunda-feira em que o Analista pega o card).
 
 Etapa | Responsável | SLA | Acumulado
@@ -282,11 +749,20 @@ Etapa | Responsável | SLA | Acumulado
 7. Homologação e cadastro no Hub | Analista | 1 dia útil após o aceite | dia 8
 
 Lead time do polígono: 8 dias úteis do início da prospecção até a primeira lavanderia validada no Hub.</pre>
-</section>
-<section class="sec" id="s9">
-  <header><span class="n">9</span><h2>Indicadores</h2>
-  <button class="btn" data-t="raw9">Copiar</button></header>
-  <pre class="txt" id="raw9">9. Indicadores
+  </article><article class="sec">
+    <header><span class="em">📊</span><h3>9. Indicadores</h3><span class="tag novo">Novo</span>
+      <span class="copyrow"><button class="btn" data-copy>Copiar</button></span></header>
+    <div class="body">
+      <div class="tblwrap"><table class="tbl">
+        <tr><th>Indicador</th><th>De onde sai</th><th>Frequência</th></tr>
+        <tr><td>Polígonos sem lavanderia em aberto</td><td>Funil Fornecedores - Cidades (Análise, Backlog e Prospecção)</td><td>Semanal</td></tr>
+        <tr><td>Tempo médio para cobrir um polígono</td><td>Pipedrive — entrada em Prospecção até Concluído</td><td>Mensal</td></tr>
+        <tr><td>Taxa de resposta da cadência</td><td>Funil Prospecção Fornecedores — Em negociação ÷ cards que entraram em 1º Contato</td><td>Mensal</td></tr>
+        <tr><td>Motivos de Perda</td><td>Funil Prospecção Fornecedores — motivo de perda</td><td>Mensal</td></tr>
+        <tr><td>Conversão de lead em lavanderia homologada</td><td>Ganho ÷ cards que entraram em 1º Contato</td><td>Mensal</td></tr>
+        <tr><td>Lavanderias com algum item acima do teto</td><td>Hub de Serviços × tabela de teto</td><td>Trimestral</td></tr>
+      </table></div></div>
+    <pre class="raw">9. Indicadores
 
 Indicador | De onde sai | Frequência
 Polígonos sem lavanderia em aberto | Funil Fornecedores - Cidades (Análise, Backlog e Prospecção) | Semanal
@@ -295,17 +771,135 @@ Taxa de resposta da cadência | Funil Prospecção Fornecedores — Em negociaç
 Motivos de Perda | Funil Prospecção Fornecedores — motivo de perda | Mensal
 Conversão de lead em lavanderia homologada | Ganho ÷ cards que entraram em 1º Contato | Mensal
 Lavanderias com algum item acima do teto | Hub de Serviços × tabela de teto | Trimestral</pre>
+  </article>
 </section>
-<footer>Versão 1 · 15/10/2026 · fontes: skills cidades-sem-fornecedor e prospeccao-lavanderia, agente de cadência (Olimpo), extensão SIA Copiloto e tabela de teto da Operação.</footer>
+
+<section class="view" id="v-resp" hidden>
+  <div class="verdict">
+    <h2>O que eu deduzi e precisa de você</h2>
+    <p>A maior parte do canvas descreve o que os agentes e as skills <span class="hl">já fazem hoje</span>. Quatro pontos eu copiei do canvas de fotógrafos ou deduzi, e eles mudam meta, fluxo ou prazo. Estão marcados no canvas com <span class="hl">Mostrar comentários da revisão</span>.</p>
+  </div>
+  <div class="filters">
+    <span class="lbl">Filtrar</span>
+    <button class="fbtn" data-f="all" aria-pressed="true">Tudo</button>
+    <button class="fbtn" data-f="no" aria-pressed="false">Confirmar</button>
+    <button class="fbtn" data-f="ok" aria-pressed="false">Ok</button>
+    <span style="flex:1"></span>
+    <button class="fbtn" id="expand" aria-pressed="false">Abrir todos</button>
+  </div>
+  <div id="respout"></div>
+</section>
+
+<footer>
+  <p><b>Origem.</b> Skills cidades-sem-fornecedor e prospeccao-lavanderia, agente de cadência de fornecedores (Olimpo), extensão SIA Copiloto e tabela de teto da Operação (17 peças, igual para o Brasil inteiro).</p>
+  <p><b>Como usar.</b> A aba <b>Canvas</b> tem o botão Copiar em cada seção. O texto sai pronto para colar no canvas do Slack. A aba <b>Premissas a confirmar</b> lista o que precisa de decisão antes de publicar.</p>
+</footer>
 </main>
+
 <script>
-document.querySelectorAll('.btn').forEach(function(b){
-  b.addEventListener('click',function(){
-    var t=document.getElementById(b.dataset.t).innerText;
-    var ok=function(){b.textContent='Copiado';b.classList.add('on');setTimeout(function(){b.textContent='Copiar';b.classList.remove('on')},1600)};
-    if(navigator.clipboard){navigator.clipboard.writeText(t).then(ok,function(){fallback(t);ok()})}else{fallback(t);ok()}
+var R = [{"g": "p", "id": "P01", "st": "no", "t": "Quantas lavanderias cobrem um polígono?", "w": "Coordenação", "v": "O canvas usa 1 lavanderia validada no Hub, que é a regra da skill de cidades sem fornecedor (polígono sem lavanderia validada vira card).", "r": "Se forem 2, como em fotógrafos, mudam a meta (seção 2), a etapa 7 (quando o card do polígono vai para Concluído) e o indicador de polígonos em aberto."}, {"g": "p", "id": "P02", "st": "no", "t": "A análise dos polígonos roda toda sexta?", "w": "Coordenação", "v": "Copiei a sexta-feira do canvas de fotógrafos. Hoje a skill de lavanderia roda quando alguém pede.", "r": "Fixar o dia deixa o SLA da seção 8 de pé. Se não houver rodada fixa, a etapa 1 vira 'sob demanda' e o lead time passa a contar só a partir da segunda-feira."}, {"g": "p", "id": "P03", "st": "no", "t": "Self-service sai antes da cadência?", "w": "Analista", "v": "A regra da pesquisa é subir tudo, inclusive self-service. O agente manda mensagem para todo card em 1º Contato.", "r": "Coloquei a saída na revisão do Backlog (etapa 4): self-service vai para Perda com o motivo Autoatendimento e não recebe mensagem."}, {"g": "p", "id": "P04", "st": "no", "t": "Negociação em 3 dias úteis?", "w": "Coordenação", "v": "Prazo copiado do canvas de fotógrafos.", "r": "Com 3 dias o lead time do polígono fica em 8 dias úteis. Lavanderia costuma demorar para mandar a tabela de preços, então talvez valha um prazo maior."}, {"g": "i", "id": "I01", "st": "ok", "t": "\"Fases do Pipefy\" = Pipedrive", "w": "Henry", "v": "A cadência e os cards de lavanderia vivem no Pipedrive (funil Prospecção Fornecedores).", "r": "O canvas fala só de Pipedrive."}, {"g": "i", "id": "I02", "st": "ok", "t": "Texto dos templates da SIA", "w": "—", "v": "Os 3 templates estão aprovados na WABA, mas o texto não está no repositório do agente.", "r": "O canvas mostra o nome do template e as variáveis. Se quiser o texto inteiro no canvas, é só colar o texto aprovado no lugar."}];
+
+var GROUPS = [{"k": "p", "t": "Premissas a confirmar", "s": "Coisas que escrevi copiando do canvas de fotógrafos ou deduzindo do que os agentes fazem hoje."}, {"k": "i", "t": "Como interpretei o pedido", "s": "Escolhas de redação que não mudam o processo."}];
+
+var STL = {ok:["Ok","ok"], mid:["Pela metade","alt"], no:["Confirmar","conf"]};
+
+var out = document.getElementById('respout');
+GROUPS.forEach(function(g){
+  var n = R.filter(function(x){return x.g===g.k}).length;
+  var sec = document.createElement('section');
+  sec.className = 'grp';
+  sec.innerHTML = '<h3>'+g.t+'</h3><p class="sub">'+g.s+' <b style="color:var(--ink-2)">'+n+' itens.</b></p>';
+  R.filter(function(x){return x.g===g.k}).forEach(function(x){
+    var d = document.createElement('details');
+    d.className='ans'; d.dataset.st = x.st;
+    var st = STL[x.st];
+    d.innerHTML =
+      '<summary><span class="code">'+x.id+'</span>'+
+      '<span><span class="t">'+x.t+'</span><span class="who">'+x.w+'</span></span>'+
+      '<span class="tag '+st[1]+'">'+st[0]+'</span></summary>'+
+      '<div class="inner"><p><span class="lbl">O que está no canvas</span>'+x.v+'</p>'+
+      '<div class="rec"><span class="lbl">Resposta / recomendação</span><p>'+x.r+'</p></div></div>';
+    sec.appendChild(d);
+  });
+  out.appendChild(sec);
+});
+
+/* tabs */
+var views = {'t-canvas':'v-canvas','t-resp':'v-resp'};
+Object.keys(views).forEach(function(tid){
+  document.getElementById(tid).addEventListener('click', function(){
+    Object.keys(views).forEach(function(k){
+      var sel = k===tid;
+      document.getElementById(k).setAttribute('aria-selected', String(sel));
+      document.getElementById(views[k]).hidden = !sel;
+    });
+    window.scrollTo({top:0, behavior:'smooth'});
   });
 });
-function fallback(t){var a=document.createElement('textarea');a.value=t;document.body.appendChild(a);a.select();try{document.execCommand('copy')}catch(e){}a.remove()}
+
+/* filtros */
+var cur='all';
+document.querySelectorAll('.fbtn[data-f]').forEach(function(b){
+  b.addEventListener('click', function(){
+    cur=b.dataset.f;
+    document.querySelectorAll('.fbtn[data-f]').forEach(function(o){o.setAttribute('aria-pressed', String(o===b))});
+    document.querySelectorAll('.ans').forEach(function(a){
+      a.hidden = !(cur==='all' || a.dataset.st===cur);
+    });
+    document.querySelectorAll('.grp').forEach(function(g){
+      g.hidden = g.querySelectorAll('.ans:not([hidden])').length===0;
+    });
+  });
+});
+var exp=document.getElementById('expand');
+exp.addEventListener('click', function(){
+  var on = exp.getAttribute('aria-pressed')!=='true';
+  exp.setAttribute('aria-pressed', String(on));
+  exp.textContent = on ? 'Fechar todos' : 'Abrir todos';
+  document.querySelectorAll('.ans').forEach(function(a){a.open=on});
+});
+
+/* modo revisão */
+var rt=document.getElementById('revtoggle');
+rt.addEventListener('click',function(){
+  var on=rt.getAttribute('aria-pressed')!=='true';
+  rt.setAttribute('aria-pressed',String(on));
+  document.body.classList.toggle('rev',on);
+  rt.textContent = on ? 'Ocultar comentários da revisão' : 'Mostrar comentários da revisão';
+});
+var sa=document.getElementById('stepsall');
+sa.addEventListener('click',function(){
+  var on=sa.getAttribute('aria-pressed')!=='true';
+  sa.setAttribute('aria-pressed',String(on));
+  sa.textContent = on ? 'Fechar todas as etapas' : 'Abrir todas as etapas';
+  document.querySelectorAll('.step').forEach(function(s){s.open=on});
+});
+document.getElementById('copyall').addEventListener('click',function(){
+  var b=this;
+  var txt=Array.prototype.map.call(document.querySelectorAll('.raw'),function(r){return r.textContent}).join('\n\n\n');
+  function ok(){b.textContent='Canvas inteiro copiado';b.classList.add('on');
+    setTimeout(function(){b.textContent='Copiar o canvas inteiro';b.classList.remove('on')},2200);}
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(txt).then(ok,function(){});}
+});
+
+/* copiar */
+document.querySelectorAll('[data-copy]').forEach(function(b){
+  b.addEventListener('click', function(){
+    var txt = b.closest('.sec').querySelector('.raw').textContent;
+    function ok(){ b.textContent='Copiado'; b.classList.add('on');
+      setTimeout(function(){b.textContent='Copiar'; b.classList.remove('on')},1800); }
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(txt).then(ok, fb);
+    } else fb();
+    function fb(){
+      var t=document.createElement('textarea'); t.value=txt;
+      t.style.position='fixed'; t.style.opacity='0';
+      document.body.appendChild(t); t.select();
+      try{document.execCommand('copy'); ok();}catch(e){b.textContent='Copie manualmente'}
+      document.body.removeChild(t);
+    }
+  });
+});
 </script>
-</body></html>
+</body>
+</html>
