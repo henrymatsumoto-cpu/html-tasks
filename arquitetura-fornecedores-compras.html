@@ -1,0 +1,594 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Arquitetura Fornecedores de Compras</title>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;1,7..72,400&display=swap" rel="stylesheet">
+<style>
+/* mesmo padrão da arquitetura de Qualidade (Vic): hero navy, colunas por macroprocesso, detalhes em popover */
+*,*::before,*::after{box-sizing:border-box}
+:root{
+ color-scheme:light;
+ --bg:oklch(96.5% .012 260);--paper:oklch(99.4% .003 250);
+ --ink:oklch(24% .02 255);--ink2:oklch(42% .018 255);--ink3:oklch(58% .014 255);
+ --line:oklch(89% .01 255);--soft:oklch(95% .012 260);
+ --blue:oklch(48% .21 258);--bluebg:oklch(95% .03 258);
+ --teal:oklch(47% .1 200);--tealbg:oklch(95.5% .03 200);
+ --red:oklch(52% .17 27);--redbg:oklch(95.5% .03 27);
+ --amber:oklch(55% .12 70);--amberbg:oklch(95.5% .04 80);
+ --green:oklch(50% .11 155);--greenbg:oklch(95.5% .035 155);
+ --violet:oklch(48% .16 300);--violetbg:oklch(95.5% .03 300);
+ --navy:oklch(19% .05 260);--navybg:oklch(93% .02 260);--coral:oklch(70% .17 32);
+ --hero-fg:oklch(94% .01 260);--hero-muted:oklch(72% .02 260);--hero-line:oklch(35% .04 260);
+ --sans:"Bricolage Grotesque",system-ui,sans-serif;--serif:Literata,Georgia,serif;--mono:ui-monospace,"Cascadia Mono",Consolas,monospace;
+}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font:400 14px/1.5 var(--sans)}
+.code{font-family:var(--mono);font-size:11.5px;font-variant-numeric:tabular-nums}
+
+.hero{background:var(--navy);color:var(--hero-fg);padding-block:24px 36px;padding-inline:24px}
+.hero-inner{max-width:1500px;margin:0 auto}
+.masthead{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:12px;border-bottom:1px solid var(--hero-line);margin-bottom:24px;padding-bottom:12px}
+.wordmark{font:700 14px/1 var(--sans);letter-spacing:.14em;color:var(--paper);display:flex;align-items:center;gap:12px;text-transform:uppercase;flex-wrap:wrap}
+.wordmark span:not(.sz-logo):not(.sz-house){color:var(--hero-muted);font-weight:500;letter-spacing:.12em}
+.sz-logo{display:inline-flex;align-items:center;gap:2px;font:700 30px/1 var(--sans);letter-spacing:-.04em;text-transform:none;color:currentColor}
+.sz-house{display:inline-block;width:.75em;height:.85em;flex-shrink:0}
+.sz-house svg{width:100%;height:100%;display:block}
+.mast-date{font:500 13px/1 var(--sans);color:var(--hero-muted);letter-spacing:.06em;text-transform:uppercase}
+.eyebrow{font:700 12px/1.3 var(--sans);letter-spacing:.08em;text-transform:uppercase;color:var(--coral);display:block}
+h1{font:700 clamp(28px,4vw,44px)/1.06 var(--sans);letter-spacing:-.01em;margin:10px 0 14px;color:var(--paper);text-wrap:balance;max-width:24ch}
+.lede{font:400 17px/1.55 var(--serif);max-width:70ch;color:var(--hero-fg);margin:0}
+.sub{font:700 13px/1.3 var(--sans);letter-spacing:.06em;text-transform:uppercase;color:var(--coral);margin:16px 0 0}
+
+.wrap{max-width:1500px;margin:0 auto;padding-block:24px 56px;padding-inline:24px;display:flex;flex-direction:column;gap:18px}
+.panel{background:var(--paper);border-radius:10px;padding:12px 16px;box-shadow:0 2px 12px oklch(20% .05 260 / .06),0 1px 3px oklch(20% .05 260 / .04)}
+.summary{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px 28px;font-size:13px;color:var(--ink2)}
+.summary .g{display:flex;flex-direction:column;gap:6px;min-width:0}
+.summary .gl{font:700 11px/1 var(--sans);letter-spacing:.09em;text-transform:uppercase;color:var(--ink3)}
+.summary .gv{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center}
+.summary b{font-variant-numeric:tabular-nums;color:var(--ink);font-size:15px}
+.hint{font-size:12.5px;color:var(--ink3);margin:0}
+
+.scroll{overflow-x:auto;padding-bottom:8px}
+.flow{min-width:1440px;display:flex;flex-direction:column;gap:18px}
+.trail{display:flex;flex-direction:column;gap:10px;border-radius:12px;padding:14px;background:oklch(98% .008 260);border:1px solid var(--line)}
+.trail-h{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.trail-h .tn{font:700 16px/1.2 var(--sans);color:var(--c)}
+.trail-h .tk{font:700 11px/1 var(--sans);letter-spacing:.09em;text-transform:uppercase;color:var(--paper);background:var(--c);padding:4px 7px;border-radius:4px}
+.trail-h .to{font:400 13px/1.4 var(--serif);color:var(--ink2)}
+.main{display:grid;align-items:start}
+.col{display:flex;flex-direction:column;align-items:stretch}
+.fin{--c:var(--blue);--cs:var(--bluebg)} .fin2{--c:var(--teal);--cs:var(--tealbg)} .ges{--c:var(--navy);--cs:var(--navybg)} .sup{--c:var(--ink2);--cs:var(--soft)}
+.head{background:var(--c);color:var(--paper);border-radius:10px;padding:10px 12px;display:flex;flex-direction:column;gap:4px;text-align:left;border:0;font:inherit;cursor:pointer}
+.head .v{font:700 11px/1 var(--sans);letter-spacing:.09em;text-transform:uppercase;opacity:.8}
+.head .n{font:700 15px/1.2 var(--sans)}
+.head .o{font:400 12px/1.4 var(--serif);opacity:.92}
+.head .e{font-size:11.5px;line-height:1.35;background:oklch(100% 0 0 / .14);border-radius:6px;padding:5px 7px;margin-top:2px}
+.join{height:44px;display:flex;align-items:center;justify-content:center;color:var(--ink3);font:700 18px/1 var(--sans)}
+.join svg{width:100%;height:14px;overflow:visible}
+.join line{stroke:var(--ink3);stroke-width:1.6}
+.join path{fill:var(--ink3)}
+.down{height:16px;display:flex;justify-content:center}
+.down svg{width:10px;height:16px}
+.down line{stroke:var(--c);stroke-width:1.6}
+.down path{fill:var(--c)}
+
+.box{background:var(--paper);border:1.5px solid var(--c);border-radius:8px;padding:8px 10px;display:flex;flex-direction:column;gap:5px;text-align:left;font:inherit;color:inherit;cursor:pointer;width:100%}
+.box:hover,.box:focus-visible,.box[aria-expanded="true"],.head:focus-visible,.chip:hover,.chip:focus-visible,.chip[aria-expanded="true"]{outline:2px solid var(--coral);outline-offset:2px}
+.box .t{font-weight:700;line-height:1.3;display:flex;gap:6px;align-items:baseline}
+.box .t .code{color:var(--c);flex:0 0 auto}
+.box .o{font:400 12px/1.4 var(--serif);color:var(--ink2)}
+.tags{display:flex;flex-wrap:wrap;gap:4px}
+
+.mode,.ia,.ex,.imp,.chk{font:700 10px/1 var(--sans);letter-spacing:.05em;text-transform:uppercase;padding:4px 6px;border-radius:4px;white-space:nowrap}
+.mode.auto{color:var(--green);background:var(--greenbg)}
+.mode.misto{color:var(--amber);background:var(--amberbg)}
+.mode.manual{color:var(--red);background:var(--redbg)}
+.ia{color:var(--violet);background:var(--paper);border:1px solid var(--violet)}
+.ia.i0{color:var(--ink3);border-color:var(--line)}
+.ia.i2{color:var(--paper);background:var(--violet)}
+.ex{color:var(--ink2);background:var(--soft)}
+.imp{color:var(--coral);background:var(--paper);border:1px dashed var(--coral)}
+.chk{color:var(--amber);background:var(--paper);border:1px solid var(--amber)}
+
+.value{background:var(--navy);color:var(--hero-fg);border-radius:10px;padding:12px;font-size:12.5px;display:flex;flex-direction:column;gap:6px;text-align:center}
+.value b{font:700 13px/1.2 var(--sans);color:var(--coral)}
+.value span{color:var(--hero-fg)}
+.value .meta{font-weight:700;color:var(--paper);background:oklch(100% 0 0 / .12);border-radius:6px;padding:4px}
+
+.base{display:grid;grid-template-columns:3fr 1fr;gap:14px}
+.lane{border-radius:12px;background:var(--cs);padding:12px;display:flex;flex-direction:column;gap:10px}
+.lane .lab{font:700 11px/1 var(--sans);letter-spacing:.09em;text-transform:uppercase;color:var(--c)}
+.lane .row{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.lane .grp{display:flex;flex-direction:column;gap:6px;min-width:0}
+.lane .gh{font-weight:700;font-size:13px}
+.lane .gh .code{color:var(--c);margin-right:6px}
+.lane .go{font:400 12px/1.4 var(--serif);color:var(--ink2)}
+.chips{display:flex;flex-direction:column;gap:6px}
+.chip{background:var(--paper);border:1.5px solid var(--c);border-radius:6px;padding:5px 8px;font:inherit;font-size:12.5px;text-align:left;cursor:pointer;color:inherit;display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.chip .code{color:var(--c)}
+.chip .nm{flex:1 1 120px;min-width:0}
+.new{font:700 10px/1 var(--sans);letter-spacing:.05em;text-transform:uppercase;color:var(--paper);background:var(--coral);padding:3px 5px;border-radius:4px}
+.upnote{font-size:12.5px;color:var(--ink3);text-align:center;margin:0}
+.legend{display:flex;flex-wrap:wrap;gap:8px 18px;font-size:12.5px;color:var(--ink2);align-items:center}
+.legend i{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+
+#pop{position:fixed;z-index:20;width:min(380px,calc(100vw - 32px));max-height:min(70vh,560px);overflow:auto;background:var(--paper);border:1.5px solid var(--navy);border-radius:10px;box-shadow:0 12px 32px oklch(20% .05 260 / .22);padding:14px 16px;display:flex;flex-direction:column;gap:10px}
+#pop[hidden]{display:none}
+#pop .ph{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+#pop h3{margin:0;font:700 16px/1.25 var(--sans);text-wrap:balance}
+#pop h3 .code{color:var(--blue);margin-right:6px}
+#pop .x{border:0;background:var(--soft);border-radius:6px;font:700 14px/1 var(--sans);padding:6px 8px;cursor:pointer;color:var(--ink2)}
+#pop .sec{display:flex;flex-direction:column;gap:3px}
+#pop .sl{font:700 10.5px/1 var(--sans);letter-spacing:.09em;text-transform:uppercase;color:var(--ink3)}
+#pop p{margin:0;font:400 13px/1.5 var(--serif)}
+#pop ul{margin:0;padding-left:18px;font:400 13px/1.5 var(--serif)}
+#pop .aud{background:var(--amberbg);border-radius:6px;padding:7px 9px}
+#pop .aud .sl{color:var(--amber)}
+#pop .opp{background:var(--bluebg);border-radius:6px;padding:7px 9px}
+#pop .opp .sl{color:var(--blue)}
+#pop .impb{background:oklch(96% .03 32);border-radius:6px;padding:7px 9px}
+#pop .impb .sl{color:var(--coral)}
+#pop .chkb{border:1px dashed var(--amber);border-radius:6px;padding:7px 9px}
+#pop .chkb .sl{color:var(--amber)}
+#pop .tools{display:flex;flex-wrap:wrap;gap:4px}
+.tool{font-size:11px;line-height:1.2;padding:3px 8px;border-radius:999px;background:var(--soft);border:1px solid var(--line);color:var(--ink2);text-decoration:none}
+a.tool{color:var(--blue);border-color:var(--blue);background:var(--paper)}
+a.tool:hover,a.tool:focus-visible{background:var(--bluebg);outline:none}
+
+.instfoot{margin-top:32px;padding-top:20px;border-top:2px solid var(--ink);display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:16px}
+.instfoot .wm{font:700 14px/1.4 var(--sans);letter-spacing:.14em;color:var(--blue);text-transform:uppercase}
+.instfoot .wm .sz-logo{color:var(--navy);font-size:22px}
+.instfoot .wm>span:not(.sz-logo){display:block;color:var(--ink2);font-weight:500;letter-spacing:.08em;font-size:12px;margin-top:4px}
+.instfoot .who{font-size:13px;color:var(--ink3);text-align:right;line-height:1.6}
+.instfoot .who b{color:var(--ink);font-weight:700;font-size:14px;display:block}
+@media (max-width:640px){.wrap,.hero{padding-inline:16px} .instfoot .who{text-align:left} .base{grid-template-columns:1fr}}
+@media (prefers-reduced-motion:no-preference){#pop{animation:pin .12s ease-out}}
+@keyframes pin{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+
+<section class="hero">
+ <div class="hero-inner">
+  <div class="masthead">
+   <div class="wordmark"><span class="sz-logo" role="img" aria-label="Seazone">sea<span class="sz-house"><svg viewBox="0 0 22 24" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="0" width="2.5" height="8" rx=".8" fill="#ff6b5c"/><path d="M1 11 L11 2 L21 11 L21 22 Q21 23 20 23 L2 23 Q1 23 1 22 Z" fill="#ff6b5c"/></svg></span>zone</span><span>· Franquias · Fornecedores de Compras</span></div>
+   <span class="mast-date">Rascunho v1 · 14/10/2026</span>
+  </div>
+  <span class="eyebrow">Arquitetura de processos</span>
+  <h1>Fornecedores de Compras</h1>
+  <p class="lede">Garantir que toda franquia tenha acesso a fornecedores homologados e a itens padronizados e de qualidade, sustentados por uma relação próxima com cada parceiro.</p>
+  <p class="sub">Fornecedores certos, itens no padrão e parceria que dura.</p>
+ </div>
+</section>
+
+<div class="wrap">
+  <div class="panel summary" id="summary"></div>
+  <p class="hint">Passe o mouse ou clique em qualquer processo para ver objetivo, entrega, como funciona, auditoria, interface com a Implantação e ferramentas. Clique no cabeçalho de cada coluna para ver o valor que ela entrega. São duas trilhas independentes: prestadores de serviço não têm relacionamento nem fechamento.</p>
+
+  <div class="scroll">
+    <div class="flow" id="flow">
+      <p class="upnote">▲ As faixas abaixo sustentam as duas trilhas ▲</p>
+      <div class="base" id="base"></div>
+    </div>
+  </div>
+
+  <div class="legend">
+    <span><span class="mode auto">Automático</span> roda sozinho</span>
+    <span><span class="mode misto">Misto</span> roda sozinho e passa por auditoria antes de valer</span>
+    <span><span class="mode manual">Manual</span> feito pelo time ou pelo fornecedor</span>
+  </div>
+  <div class="legend">
+    <span><span class="ia i0">Sem IA</span> regra fixa ou trabalho humano</span>
+    <span><span class="ia i1">IA assiste</span> a IA sugere ou analisa, a pessoa decide</span>
+    <span><span class="ia i2">IA executa</span> a IA decide ou gera sozinha</span>
+  </div>
+  <div class="legend">
+    <span><span class="ex">Sistema</span> automação com regra fixa</span>
+    <span><span class="ex">Agente</span> agente de IA</span>
+    <span><span class="ex">Pessoa</span> coordenador, analista ou fornecedor</span>
+  </div>
+  <div class="legend">
+    <span><span class="imp">← Implantação</span> recebemos algo da Implantação</span>
+    <span><span class="imp">→ Implantação</span> entregamos algo para a Implantação</span>
+    <span><span class="chk">Validar</span> ponto deduzido, falta confirmar</span>
+  </div>
+  <div class="legend">
+    <span><i style="background:var(--blue)"></i>Trilha 1: prestadores de serviço</span>
+    <span><i style="background:var(--teal)"></i>Trilha 2: fornecedores de venda</span>
+    <span><i style="background:var(--navy)"></i>Gestão: regras, medição e demandas</span>
+    <span><i style="background:var(--ink2)"></i>Suporte: ferramentas</span>
+  </div>
+
+  <footer class="instfoot">
+    <div class="wm"><span class="sz-logo" role="img" aria-label="Seazone">sea<span class="sz-house"><svg viewBox="0 0 22 24" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="0" width="2.5" height="8" rx=".8" fill="#ff6b5c"/><path d="M1 11 L11 2 L21 11 L21 22 Q21 23 20 23 L2 23 Q1 23 1 22 Z" fill="#ff6b5c"/></svg></span>zone</span><span>Franquias · Fornecedores de Compras</span></div>
+    <div class="who"><b>Henry Yudi Matsumoto</b>henry.matsumoto@seazone.com.br<br>Documento interno · 14/10/2026</div>
+  </footer>
+</div>
+
+<div id="pop" role="dialog" aria-modal="false" hidden></div>
+
+<script>
+const T = {
+  pipe61:{n:"Pipedrive · funil 61 Fornecedores - Cidades"},
+  pipe60:{n:"Pipedrive · funil 60 Prospecção Fornecedores"},
+  skillcid:{n:"Skill cidades-sem-fornecedor"},
+  skilllav:{n:"Skill prospeccao-lavanderia"},
+  skillfot:{n:"Skill prospeccao-fotografos"},
+  skillcap:{n:"Skill analise-capacho-franquia"},
+  receita:{n:"Base CNPJ da Receita"}, google:{n:"Google e Maps"}, insta:{n:"Instagram"},
+  sapron:{n:"Sapron"}, sia:{n:"SIA · WhatsApp"},
+  hub:{n:"Hub de Serviços"},
+  calc:{n:"Calculadora de Taxa de Limpeza"},
+  appfoto:{n:"App de fotógrafos"},
+  contrato:{n:"Contrato assinado (Clicksign)"},
+  loja:{n:"Loja Seazone"}, kanban:{n:"Loja · kanban de pedidos"}, bot:{n:"Bot de aviso ao cliente"},
+  ml:{n:"Mercado Livre"},
+  jornada:{n:"Jornada Completa Enxoval"},
+  agentes:{n:"Agentes do Olimpo"},
+  suporte:{n:"Suporte Unificado", u:"https://suporte-unificado.seazone.dev/kanban"},
+  drive:{n:"Google Drive · pasta Comissão"}, sheets:{n:"Planilha de conferência"},
+  meet:{n:"Google Meet"}, slack:{n:"Slack"}, gmail:{n:"Gmail"},
+  easy:{n:"Relatório da EasyCover"},
+  taskdex:{n:"Taskdex", u:"https://taskdex.seazone.dev"},
+  kpi:{n:"KPI System", u:"https://kpi-system.seazone.dev"},
+  canvas:{n:"Canvas do processo (Slack)"},
+  claude:{n:"Claude"}
+};
+const MODE = {auto:"Automático", misto:"Misto", manual:"Manual"};
+const IA = ["Sem IA","IA assiste","IA executa"];
+const EX = {sistema:"Sistema", agente:"Agente", pessoa:"Pessoa"};
+const IMP = {recebe:"← Implantação", envia:"→ Implantação"};
+
+/* m = modo · ia = 0/1/2 · ex = quem executa · who = responsável · o = objetivo · e = entrega · how · aud = auditoria
+   imp = interface com a Implantação {d:"recebe"|"envia", t:texto} · chk = ponto a validar */
+const TRAILS = [
+ {cls:"fin", k:"Trilha 1", n:"Prestadores de serviço",
+  o:"Fotógrafos (uso interno do time da Seazone) e lavanderias (indicação às franquias e base da taxa de limpeza).",
+  val:["Cidade coberta","Imóvel ativado com fotos no padrão","Taxa de limpeza com preço real"],
+  mps:[
+  {id:"MP1", v:"Prospectar", n:"Prospectar prestadores",
+   o:"Encontrar fotógrafos e lavanderias nas cidades onde a Seazone atua e ainda não tem cobertura.",
+   e:"Prestadores da cidade no funil de prospecção, com primeiro contato feito.",
+   val:"Cidade coberta",
+   opp:"A busca já roda por skill. O próximo ganho é a cadência de contato pela SIA rodar sozinha, com alerta quando o card parar.",
+   p:[
+    {id:"1.1", t:"Identificar cidades sem prestador", m:"misto", ia:2, ex:"agente", who:"Analista",
+     o:"Saber antes da ativação quais cidades não têm lavanderia ou fotógrafo.",
+     e:"Card da cidade no funil 61, com imóveis, franquias e a cidade coberta mais próxima.",
+     how:["A skill cruza os imóveis ativos e em onboarding do Sapron e os polígonos com o Hub de Serviços e a base de fotógrafos.","Cidade sem cobertura vira card no funil 61 do Pipedrive."],
+     aud:"A analista confere a lista antes de abrir os cards.",
+     imp:{d:"recebe", t:"Imóvel novo em onboarding numa cidade sem prestador dispara a prospecção."},
+     tools:["skillcid","sapron","hub","pipe61","claude"]},
+    {id:"1.2", t:"Pesquisar prestadores na cidade", m:"misto", ia:2, ex:"agente", who:"Analista",
+     o:"Levantar todos os candidatos da praça, sem depender de indicação.",
+     e:"Lista de lavanderias ou fotógrafos com contato.",
+     how:["Lavanderia: base CNPJ da Receita (CNAE 9601), Google e Maps.","Fotógrafo: Instagram, Google e Receita, com prioridade para quem fotografa imóvel e arquitetura."],
+     aud:"A analista revisa a lista antes de subir os cards.",
+     tools:["skilllav","skillfot","receita","google","insta","claude"]},
+    {id:"1.3", t:"Registrar no funil de prospecção", m:"auto", ia:2, ex:"agente", who:"Analista",
+     o:"Nenhum prestador encontrado ficar fora do funil.",
+     e:"Card no funil 60 \"Prospecção Fornecedores\" com título \"Nome - Lavanderia/Fotógrafos\".",
+     how:["A skill cria um card por prestador, inclusive os que ficam fora do polígono."],
+     tools:["pipe60"]},
+    {id:"1.4", t:"Fazer o primeiro contato", m:"manual", ia:0, ex:"pessoa", who:"Analista",
+     o:"Abrir a conversa com cada prestador dentro do prazo.",
+     e:"Prestador respondeu ou card movido para perda.",
+     how:["Contato pelo WhatsApp da SIA.","Fotógrafo: cadência de 3 dias úteis (mensagem, 1 hora, ligação 1ª e 2ª tentativa); card parado vira perda."],
+     chk:"Agente de cadência Pipedrive → SIA em desenho (13/10). Quando subir, esta etapa passa a ser automática.",
+     tools:["sia","pipe60"]}
+  ]},
+  {id:"MP2", v:"Homologar", n:"Homologar lavanderias",
+   o:"Indicar às franquias só lavanderias no padrão e com preço que cabe na taxa de limpeza.",
+   e:"Lavanderia homologada, cadastrada no Hub e com preço na calculadora.",
+   val:"Taxa de limpeza com preço real",
+   opp:"Acompanhar, por cidade, quantas lavanderias estão homologadas e quantas franquias usam a indicada.",
+   p:[
+    {id:"2.1", t:"Conferir os critérios", m:"manual", ia:0, ex:"pessoa", who:"Analista",
+     o:"Só homologar quem atende ao padrão Seazone.",
+     e:"Lavanderia aprovada ou descartada com motivo.",
+     how:["Preço dentro da tabela de teto da Seazone.","Tem calandra ou ferro profissional de passar.","Cobra por peça, não por peso ou cesto.","Não é autoatendimento."],
+     tools:["sia","pipe60"]},
+    {id:"2.2", t:"Cadastrar no Hub de Serviços", m:"manual", ia:0, ex:"pessoa", who:"Analista",
+     o:"Deixar a lavanderia disponível para as franquias da região.",
+     e:"Lavanderia ativa no Hub com a tabela de preço por peça.",
+     how:["Cadastro feito pela analista com o preço de cada peça."],
+     tools:["hub"]},
+    {id:"2.3", t:"Levar o preço para a taxa de limpeza", m:"auto", ia:0, ex:"sistema", who:"Sistema",
+     o:"Calcular a taxa de limpeza com o preço real da lavanderia e o enxoval do imóvel.",
+     e:"Preço da lavanderia na aba Tabela Lavanderia da calculadora.",
+     how:["A calculadora lê o preço do Hub.","Com mais de uma lavanderia na cidade, vale o maior preço."],
+     tools:["hub","calc"]}
+  ]},
+  {id:"MP3", v:"Contratar", n:"Homologar e contratar fotógrafos",
+   o:"Ter fotógrafo homologado para o time de fotografia acionar em toda cidade.",
+   e:"Fotógrafo com contrato assinado, cadastrado e treinado.",
+   val:"Imóvel ativado com fotos no padrão",
+   opp:"Mostrar por cidade quem está coberto (2 fotógrafos), parcialmente coberto ou em tratativa.",
+   p:[
+    {id:"3.1", t:"Validar preço e equipamento", m:"manual", ia:0, ex:"pessoa", who:"Analista",
+     o:"Só seguir com quem cabe na tabela e tem o equipamento pedido.",
+     e:"Fotógrafo aprovado para contrato.",
+     how:["Precisa aceitar os preços de tabela.","Precisa ter o equipamento solicitado pelo time de fotografia."],
+     tools:["sia","pipe60"]},
+    {id:"3.2", t:"Fazer o contrato", m:"manual", ia:0, ex:"pessoa", who:"Coordenador",
+     o:"Formalizar a prestação de serviço para a Seazone.",
+     e:"Contrato assinado.",
+     how:["A Seazone paga o fotógrafo por serviço."],
+     chk:"Confirmar quem conduz o contrato e a ferramenta de assinatura.",
+     tools:["contrato"]},
+    {id:"3.3", t:"Cadastrar o fotógrafo", m:"manual", ia:0, ex:"pessoa", who:"Analista",
+     o:"Deixar o fotógrafo visível para o time de fotografia.",
+     e:"Fotógrafo ativo na base.",
+     how:["Cadastro na base de fotógrafos da Seazone."],
+     chk:"Confirmar onde é o cadastro (app de fotógrafos).",
+     tools:["appfoto"]},
+    {id:"3.4", t:"Treinar e repassar ao time de fotografia", m:"manual", ia:0, ex:"pessoa", who:"Time de fotografia",
+     o:"Fotógrafo pronto para fotografar no padrão Seazone.",
+     e:"Treinamento feito; fotógrafo disponível para seleção.",
+     how:["O fotógrafo passa pelo treinamento.","A partir daqui, quem seleciona, usa e treina é o time de fotografia."],
+     imp:{d:"envia", t:"Fotógrafo disponível para as fotos dos imóveis em implantação."},
+     tools:["appfoto","meet"]}
+  ]}
+ ]},
+ {cls:"fin2", k:"Trilha 2", n:"Fornecedores de venda",
+  o:"Fornecedores que vendem para franquias e proprietários e pagam comissão, mais a EasyCover (seguro).",
+  val:["Item no padrão para franquia e proprietário","Pedido entregue no prazo","Comissão recebida"],
+  mps:[
+  {id:"MP4", v:"Homologar", n:"Homologar fornecedores de venda",
+   o:"Trazer os fornecedores que a direção pede, com contrato e dentro do padrão.",
+   e:"Fornecedor com contrato, cadastrado e treinado na Loja.",
+   val:"Item no padrão para franquia e proprietário",
+   opp:"Um checklist único de entrada (contrato, comissão, pagamento, perfis, treinamento) evita fornecedor entrar na Loja pela metade.",
+   p:[
+    {id:"4.1", t:"Receber a demanda da direção", m:"manual", ia:0, ex:"pessoa", who:"Coordenador",
+     o:"Prospectar só o que a direção definiu como necessário.",
+     e:"Demanda registrada com o tipo de fornecedor buscado.",
+     how:["A prospecção de fornecedor de venda nasce de pedido da direção."],
+     tools:["taskdex","slack"]},
+    {id:"4.2", t:"Homologar por contrato", m:"manual", ia:0, ex:"pessoa", who:"Coordenador",
+     o:"Formalizar condições e comissão antes de vender.",
+     e:"Contrato assinado.",
+     how:["A homologação acontece pelo contrato."],
+     tools:["contrato"]},
+    {id:"4.3", t:"Cadastrar o fornecedor e os produtos", m:"manual", ia:0, ex:"pessoa", who:"Coordenador",
+     o:"Colocar na Loja só quem tem item ou serviço para franquia ou proprietário.",
+     e:"Fornecedor e produtos no ar, com perfis e formas de pagamento.",
+     how:["O coordenador cadastra; o fornecedor também pode cadastrar produtos que acha interessantes.","Cada produto tem os perfis que podem vê-lo (proprietário, franquia, seazoner).","EasyCover e fornecedores internos não entram na Loja."],
+     tools:["loja"]},
+    {id:"4.4", t:"Treinar o fornecedor", m:"manual", ia:0, ex:"pessoa", who:"Coordenador",
+     o:"O fornecedor operar o kanban sozinho.",
+     e:"Treinamento feito; fornecedor com acesso só aos pedidos dele.",
+     how:["Mostramos como funciona: link ou boleto, rastreio, NF e movimentação do card."],
+     tools:["kanban","meet"]}
+  ]},
+  {id:"MP5", v:"Vender", n:"Atender os pedidos da Loja",
+   o:"Todo pedido da Loja pago, enviado e entregue.",
+   e:"Pedido entregue com NF e rastreio.",
+   val:"Pedido entregue no prazo",
+   opp:"A confirmação do comprovante e o acompanhamento da entrega são manuais. Conferir o pagamento por integração e ler o rastreio sozinho liberaria a analista.",
+   p:[
+    {id:"5.1", t:"Receber o pedido", m:"auto", ia:0, ex:"sistema", who:"Sistema",
+     o:"Cada cliente comprar só o que pode, do jeito certo.",
+     e:"Pedido no kanban ou cliente direcionado ao Mercado Livre.",
+     how:["Cada perfil (proprietário, franquia, seazoner) vê só os produtos liberados para ele.","Pedido de indicação vai para o Mercado Livre.","Pedido interno: checkout com nome, telefone, e-mail, CPF ou CNPJ (para a NF), retirada na sede ou endereço de entrega e forma de pagamento do fornecedor.","Kit Franquia: o comercial faz o pedido para as franquias."],
+     imp:{d:"recebe", t:"O agente de indicação cria listas de itens a partir das inconformidades da Implantação."},
+     tools:["loja","ml","agentes"]},
+    {id:"5.2", t:"Validar e mandar ao fornecedor", m:"manual", ia:1, ex:"pessoa", who:"Analista",
+     o:"Só seguir pedido correto e necessário.",
+     e:"Pedido validado no card do fornecedor.",
+     how:["A analista confere o pedido e manda para o fornecedor.","Capacho: antes de liberar, a análise confere se a franquia precisa (capachos recebidos x imóveis ativos e em onboarding)."],
+     tools:["kanban","skillcap","claude"]},
+    {id:"5.3", t:"Cobrar o cliente", m:"auto", ia:0, ex:"sistema", who:"Fornecedor + bot",
+     o:"O cliente receber a cobrança e pagar no prazo.",
+     e:"Link ou boleto enviado; prazo de 7 dias correndo.",
+     how:["O fornecedor coloca o link ou o boleto e move o card.","O bot avisa o cliente, que tem 7 dias para pagar."],
+     tools:["kanban","bot"]},
+    {id:"5.4", t:"Confirmar o pagamento", m:"manual", ia:0, ex:"pessoa", who:"Analista",
+     o:"Liberar o envio só com pagamento comprovado.",
+     e:"Comprovante conferido e card liberado para envio.",
+     how:["A analista confere o comprovante e move o card para o fornecedor."],
+     tools:["kanban"]},
+    {id:"5.5", t:"Enviar o pedido", m:"manual", ia:0, ex:"pessoa", who:"Fornecedor",
+     o:"O cliente receber o item com nota.",
+     e:"Rastreio e NF no card; pedido finalizado pelo fornecedor.",
+     how:["O fornecedor preenche rastreio e NF e finaliza do lado dele."],
+     tools:["kanban"]},
+    {id:"5.6", t:"Acompanhar a entrega", m:"manual", ia:0, ex:"pessoa", who:"Analista",
+     o:"Garantir que o pedido chegou.",
+     e:"Entrega confirmada.",
+     how:["A analista acompanha até a entrega.","Kit Franquia: acompanhamos e cobramos os pedidos feitos pelo comercial."],
+     tools:["kanban"]}
+  ]},
+  {id:"MP6", v:"Relacionar", n:"Relacionar com os fornecedores",
+   o:"Manter cada parceiro alinhado e antecipar problemas.",
+   e:"Reunião feita com pontos de atenção, pontos positivos e projeção.",
+   val:"Pedido entregue no prazo",
+   opp:"Gerar a pauta de cada fornecedor sozinha (pedidos atrasados, entregas com problema, vendas do mês) antes da reunião.",
+   p:[
+    {id:"6.1", t:"Definir com quem reunir", m:"manual", ia:0, ex:"pessoa", who:"Coordenador",
+     o:"Falar com quem gera comissão ou está com problema.",
+     e:"Reuniões do mês agendadas.",
+     how:["Por demanda, não necessariamente todo mês.","Hoje: EasyCover, Matinali, RM, AB Card, Somar e Harus."],
+     tools:["meet"]},
+    {id:"6.2", t:"Preparar a pauta", m:"manual", ia:1, ex:"pessoa", who:"Coordenador",
+     o:"Chegar na reunião com dados.",
+     e:"Pauta com atenção, positivos e projeção.",
+     how:["Pontos de atenção: demora nos pedidos e problemas de entrega.","Pontos positivos: pedidos enviados rápido.","Projeção para os próximos meses.","Levantamento feito com apoio do Claude."],
+     tools:["kanban","jornada","claude"]},
+    {id:"6.3", t:"Fazer a reunião e registrar", m:"manual", ia:0, ex:"pessoa", who:"Coordenador",
+     o:"Sair com combinados claros.",
+     e:"Combinados registrados.",
+     how:["Reunião com o responsável do fornecedor."],
+     chk:"Confirmar se toda reunião gera ata e se a ata passa pela validação da Ray.",
+     tools:["meet","slack"]}
+  ]},
+  {id:"MP7", v:"Fechar", n:"Fechar o mês",
+   o:"Receber a comissão certa de cada fornecedor e pagar a EasyCover pelo valor certo.",
+   e:"NF e boleto de comissão emitidos; boleto da EasyCover pago.",
+   val:"Comissão recebida",
+   opp:"Gerar a planilha de conferência de cada fornecedor sozinha no dia 1 e acompanhar o recebimento num painel.",
+   p:[
+    {id:"7.1", t:"Calcular a comissão", m:"misto", ia:1, ex:"pessoa", who:"Coordenador",
+     o:"Saber quanto cada fornecedor deve no mês.",
+     e:"Planilha de conferência por fornecedor.",
+     how:["No começo do mês, comissão calculada com base nas vendas em todos os artefatos."],
+     imp:{d:"recebe", t:"As vendas de enxoval vêm dos pedidos feitos pela Implantação na Jornada Enxoval."},
+     tools:["loja","jornada","sheets","drive","claude"]},
+    {id:"7.2", t:"Validar com o fornecedor", m:"manual", ia:0, ex:"pessoa", who:"Coordenador",
+     o:"Evitar contestação depois da cobrança.",
+     e:"Ok do responsável de cada empresa.",
+     how:["A planilha vai para o responsável de cada empresa conferir."],
+     tools:["sheets","gmail"]},
+    {id:"7.3", t:"Pedir NF e boleto ao financeiro", m:"manual", ia:0, ex:"pessoa", who:"Coordenador",
+     o:"Cobrar a comissão.",
+     e:"NF e boleto emitidos.",
+     how:["Com o ok do fornecedor, pedido ao financeiro pelo Suporte."],
+     tools:["suporte"]},
+    {id:"7.4", t:"Conferir o relatório da EasyCover", m:"manual", ia:1, ex:"pessoa", who:"Coordenador",
+     o:"Pagar só pelos imóveis realmente segurados.",
+     e:"Relatório sem divergência.",
+     how:["A EasyCover envia o relatório com os imóveis segurados.","Conferimos com a nossa base; se houver divergência, pedimos ajuste e eles corrigem."],
+     tools:["easy","sapron","claude"]},
+    {id:"7.5", t:"Pagar a EasyCover", m:"manual", ia:0, ex:"pessoa", who:"Coordenador",
+     o:"Fechar o mês da EasyCover.",
+     e:"Boleto pago.",
+     how:["Com o relatório ok, a EasyCover emite o boleto e abrimos Suporte para pagamento."],
+     tools:["suporte"]}
+  ]}
+ ]}
+];
+
+const LANES = [
+  {cls:"ges", lab:"Gestão", groups:[
+    {id:"MP8", n:"Manter o padrão", o:"Critérios, preços e contratos claros e atualizados.", p:[
+      {id:"8.1", t:"Manter as tabelas de preço dos prestadores", m:"manual", ia:0, ex:"pessoa", who:"Coordenador", o:"Teto de lavanderia e tabela de fotógrafo coerentes com a taxa de limpeza e o mercado.", e:"Tabelas atualizadas.", how:["A tabela de teto por peça é régua de homologação, não piso."], tools:["calc","hub"]},
+      {id:"8.2", t:"Manter os critérios de homologação", m:"manual", ia:0, ex:"pessoa", who:"Coordenador", o:"Todo prestador e fornecedor avaliado pela mesma régua.", e:"Critérios documentados.", how:["Critérios de lavanderia, fotógrafo e fornecedor de venda."], tools:["canvas"]},
+      {id:"8.3", t:"Manter contratos e aditivos", m:"manual", ia:0, ex:"pessoa", who:"Coordenador", o:"Condição combinada sempre no papel.", e:"Contrato ou aditivo assinado.", how:["Novos contratos e aditivos com os fornecedores (ex.: aditivo Matinali)."], tools:["contrato"]},
+      {id:"8.4", t:"Atualizar a documentação dos processos", m:"manual", ia:1, ex:"pessoa", who:"Coordenador", o:"Toda mudança de ferramenta refletida no Canvas oficial.", e:"Canvas igual ao que roda.", how:["Regra da liderança: alterou a ferramenta, atualiza o processo no Canvas."], tools:["canvas","claude"]}
+    ]},
+    {id:"MP9", n:"Medir os resultados", o:"Saber se os fornecedores entregam e onde agir.", p:[
+      {id:"9.1", t:"KPIs do setor", m:"misto", ia:0, ex:"sistema", who:"Coordenador", o:"Acompanhar prazos, volume e comissão.", e:"KPIs lançados.", how:["KPIs do setor no KPI System."], chk:"Confirmar a lista de KPIs que entra aqui.", tools:["kpi"]},
+      {id:"9.2", t:"Relatório mensal por fornecedor", m:"manual", ia:1, ex:"pessoa", who:"Coordenador", o:"Mostrar ao fornecedor e à liderança como foi o mês.", e:"Relatório em PDF.", how:["Prazos de despacho, entregas e vendas do mês, gerados com o Claude."], tools:["jornada","loja","claude"]},
+      {id:"9.3", t:"Análises sob demanda", m:"manual", ia:1, ex:"pessoa", who:"Coordenador", o:"Responder perguntas da liderança com dados.", e:"Análise entregue.", how:["Análises feitas com o Claude sobre os artefatos e o Sapron."], tools:["claude","sapron"]}
+    ]},
+    {id:"MP10", n:"Gerir demandas", o:"Toda demanda recebida tem dono, prazo e entrega.", p:[
+      {id:"10.1", t:"Registrar a demanda", m:"manual", ia:0, ex:"pessoa", who:"Coordenador", o:"Nenhum pedido ficar perdido no Slack ou na conversa.", e:"Tarefa criada com responsável e prazo.", how:["Pedidos que chegam pelo Slack ou em reunião viram tarefa no Taskdex."], tools:["taskdex","slack"]},
+      {id:"10.2", t:"Priorizar", m:"manual", ia:0, ex:"pessoa", who:"Coordenador", o:"Fazer primeiro o que mais destrava franquia e fornecedor.", e:"Fila ordenada.", how:["Priorização com a liderança."], tools:["taskdex"]},
+      {id:"10.3", t:"Executar e entregar", m:"manual", ia:1, ex:"pessoa", who:"Coordenador", o:"Entregar a demanda pronta para uso.", e:"Entrega com HTML e tarefa em Validação.", how:["Execução com apoio do Claude quando cabe."], tools:["taskdex","claude"]},
+      {id:"10.4", t:"Validar e concluir", m:"manual", ia:0, ex:"pessoa", who:"Coordenador", o:"Confirmar com quem pediu que a entrega resolve.", e:"Tarefa em Concluído.", how:["Quem pediu valida; a tarefa vai para Concluído."], tools:["taskdex"]}
+    ]},
+    {id:"MP11", n:"Eventos e patrocínios", tag:"Exceção", o:"Apoiar eventos de franquia quando houver.", p:[
+      {id:"11.1", t:"Buscar patrocinadores", m:"manual", ia:0, ex:"pessoa", who:"Coordenador", o:"Reduzir o custo do evento com parceiros.", e:"Patrocínio fechado.", how:["Só quando há evento de franquia."], tools:["gmail","slack"]},
+      {id:"11.2", t:"Orçar brindes e itens", m:"manual", ia:0, ex:"pessoa", who:"Coordenador", o:"Ter brindes e itens no prazo e no orçamento.", e:"Orçamento aprovado.", how:["Cotação com fornecedores para o evento."], tools:["gmail"]}
+    ]}
+  ]},
+  {cls:"sup", lab:"Suporte", groups:[
+    {id:"MP12", n:"Manter as ferramentas", o:"Loja, Hub, artefato de enxoval e agentes funcionando.", p:[
+      {id:"12.1", t:"Manter a Loja", m:"manual", ia:1, ex:"pessoa", who:"Coordenador", o:"Kanban, bot e visão por fornecedor no ar e corretos.", e:"Correções e melhorias publicadas.", how:["Ajustes feitos com o Claude."], tools:["loja","kanban","claude"]},
+      {id:"12.2", t:"Gerenciar o artefato de pedidos de enxoval", m:"manual", ia:1, ex:"pessoa", who:"Coordenador", o:"A Implantação conseguir pedir enxoval sem travar.", e:"Ajustes publicados na Jornada Enxoval.", how:["A compra, o cálculo por imóvel e o pedido são da Implantação; a gente gerencia e ajusta a ferramenta.","Agentes de pagamento e de cancelamento rodam no Olimpo."], imp:{d:"envia", t:"A Implantação usa a Jornada Enxoval que a gente mantém."}, tools:["jornada","agentes","claude"]},
+      {id:"12.3", t:"Manter agentes e integrações", m:"manual", ia:1, ex:"pessoa", who:"Coordenador", o:"Dados fluindo entre Pipedrive, SIA, Hub, Sapron e Loja.", e:"Integrações sem falha.", how:["Monitoramento e correção dos agentes e das skills."], tools:["agentes","pipe60","sia","hub","sapron"]}
+    ]}
+  ]}
+];
+
+const ARROW_DOWN = `<div class="down"><svg viewBox="0 0 10 16" aria-hidden="true"><line x1="5" y1="0" x2="5" y2="10"/><path d="M1 9 L5 16 L9 9 Z"/></svg></div>`;
+const ARROW_RIGHT = `<div class="join"><svg viewBox="0 0 36 14" preserveAspectRatio="none" aria-hidden="true"><line x1="2" y1="7" x2="27" y2="7"/><path d="M26 2 L34 7 L26 12 Z"/></svg></div>`;
+const REG = {};
+
+const tags = p => `<span class="tags"><span class="mode ${p.m}">${MODE[p.m]}</span><span class="ia i${p.ia}">${IA[p.ia]}</span><span class="ex">${EX[p.ex]}</span>${p.imp?`<span class="imp">${IMP[p.imp.d]}</span>`:""}${p.chk?`<span class="chk">Validar</span>`:""}</span>`;
+function box(p,tr){
+  REG[p.id] = {kind:"p", d:p, tr};
+  return `<button class="box" type="button" data-k="${p.id}" aria-expanded="false">
+    <span class="t"><span class="code">${p.id}</span><span>${p.t}</span></span>
+    <span class="o">${p.o}</span>${tags(p)}</button>`;
+}
+function col(mp,tr){
+  REG[mp.id] = {kind:"mp", d:mp, tr};
+  return `<div class="col"><button class="head" type="button" data-k="${mp.id}" aria-expanded="false">
+    <span class="v">${mp.id} · ${mp.v}</span><span class="n">${mp.n}</span><span class="o">${mp.o}</span>
+    <span class="e"><b>Entrega:</b> ${mp.e}</span></button>
+    ${mp.p.map(p=>ARROW_DOWN+box(p,tr)).join("")}</div>`;
+}
+const valueBox = v => `<div class="value"><b>Valor para a Seazone</b>${v.map((s,i)=>`<span class="${i===v.length-1?'meta':''}">${s}</span>`).join(`<span>↓</span>`)}</div>`;
+
+const flow = document.getElementById("flow");
+flow.insertAdjacentHTML("afterbegin", TRAILS.map(tr=>{
+  const cols = tr.mps.map(()=> "1fr").join(" 36px ");
+  return `<section class="trail ${tr.cls}">
+    <div class="trail-h"><span class="tk">${tr.k}</span><span class="tn">${tr.n}</span><span class="to">${tr.o}</span></div>
+    <div class="main" style="grid-template-columns:${cols} 36px 170px">${tr.mps.map(mp=>col(mp,tr)).join(ARROW_RIGHT)}${ARROW_RIGHT}${valueBox(tr.val)}</div>
+  </section>`;
+}).join(""));
+
+document.getElementById("base").innerHTML = LANES.map(l=>`<div class="lane ${l.cls}"><span class="lab">${l.lab}</span><div class="row">${
+  l.groups.map(g=>`<div class="grp"><span class="gh"><span class="code">${g.id}</span>${g.n} ${g.tag?`<span class="new">${g.tag}</span>`:''}</span><span class="go">${g.o}</span><div class="chips">${
+    g.p.map(p=>{REG[p.id]={kind:"p",d:p};return `<button class="chip" type="button" data-k="${p.id}" aria-expanded="false"><span class="code">${p.id}</span><span class="nm">${p.t}</span><span class="ia i${p.ia}">${IA[p.ia]}</span>${p.imp?`<span class="imp">${IMP[p.imp.d]}</span>`:""}${p.chk?`<span class="chk">Validar</span>`:""}</button>`}).join("")
+  }</div></div>`).join("")}</div></div>`).join("");
+
+/* resumo */
+const main = TRAILS.flatMap(t=>t.mps.flatMap(m=>m.p)), all = main.concat(LANES.flatMap(l=>l.groups.flatMap(g=>g.p)));
+const cnt = (arr,f) => arr.filter(f).length;
+document.getElementById("summary").innerHTML = `
+  <div class="g"><span class="gl">Fluxo principal</span><span class="gv"><span><b>${main.length}</b> processos em 2 trilhas</span><span><b>${all.length-main.length}</b> de gestão e suporte</span></span></div>
+  <div class="g"><span class="gl">Execução (fluxo principal)</span><span class="gv">${["auto","misto","manual"].map(k=>`<span><span class="mode ${k}">${MODE[k]}</span> <b>${cnt(main,p=>p.m===k)}</b></span>`).join("")}</span></div>
+  <div class="g"><span class="gl">Uso de IA (fluxo principal)</span><span class="gv">${[0,1,2].map(i=>`<span><span class="ia i${i}">${IA[i]}</span> <b>${cnt(main,p=>p.ia===i)}</b></span>`).join("")}</span></div>
+  <div class="g"><span class="gl">Quem executa (fluxo principal)</span><span class="gv">${Object.keys(EX).map(k=>`<span><span class="ex">${EX[k]}</span> <b>${cnt(main,p=>p.ex===k)}</b></span>`).join("")}</span></div>
+  <div class="g"><span class="gl">Interface com a Implantação</span><span class="gv">${Object.keys(IMP).map(k=>`<span><span class="imp">${IMP[k]}</span> <b>${cnt(all,p=>p.imp&&p.imp.d===k)}</b></span>`).join("")}<span><span class="chk">Validar</span> <b>${cnt(all,p=>p.chk)}</b></span></span></div>`;
+
+/* popover: abre ao passar o mouse, fixa ao clicar */
+const pop = document.getElementById("pop");
+let cur = null, pinned = false, hideT = null, showT = null;
+const tool = k => { const t=T[k]; return t.u ? `<a class="tool" href="${t.u}" target="_blank" rel="noopener">${t.n} ↗</a>` : `<span class="tool">${t.n}</span>`; };
+const sec = (l,h,c="") => `<div class="sec ${c}"><span class="sl">${l}</span>${h}</div>`;
+function content(k){
+  const r = REG[k], d = r.d;
+  const head = `<div class="ph"><h3><span class="code">${d.id}</span>${d.t||d.n}</h3><button class="x" type="button" aria-label="Fechar">×</button></div>`;
+  if(r.kind==="mp") return head +
+    sec("Objetivo",`<p>${d.o}</p>`) + sec("Entrega",`<p>${d.e}</p>`) +
+    sec("Valor para a Seazone",`<p>Contribui para: <b>${d.val}</b> (${r.tr.val.join(" → ")}).</p>`) +
+    sec("Como entregar mais valor",`<p>${d.opp}</p><p style="font-size:12px;color:var(--ink3)">Sugestão para validar com a liderança.</p>`,"opp");
+  return head + tags(d) +
+    sec("Responsável",`<p>${d.who}</p>`) +
+    sec("Objetivo",`<p>${d.o}</p>`) + sec("Entrega",`<p>${d.e}</p>`) +
+    sec("Como funciona", d.how.length>1 ? `<ul>${d.how.map(h=>`<li>${h}</li>`).join("")}</ul>` : `<p>${d.how[0]}</p>`) +
+    (d.aud ? sec("Auditoria",`<p>${d.aud}</p>`,"aud") : "") +
+    (d.imp ? sec(d.imp.d==="recebe"?"Interface: recebemos da Implantação":"Interface: entregamos para a Implantação",`<p>${d.imp.t}</p>`,"impb") : "") +
+    (d.chk ? sec("A validar",`<p>${d.chk}</p>`,"chkb") : "") +
+    sec("Ferramentas",`<div class="tools">${d.tools.map(tool).join("")}</div>`);
+}
+function place(el){
+  const b = el.getBoundingClientRect(), pw = pop.offsetWidth, ph = pop.offsetHeight, vw = innerWidth, vh = innerHeight;
+  let x, y = b.top;
+  if(b.right + 10 + pw <= vw - 12) x = b.right + 10;
+  else if(b.left - pw - 10 >= 12) x = b.left - pw - 10;
+  else { x = Math.max(12, Math.min(b.left, vw - pw - 12)); y = b.bottom + 8; }
+  if(y + ph > vh - 12) y = Math.max(12, vh - ph - 12);
+  pop.style.left = x + "px"; pop.style.top = y + "px";
+}
+function open(el, pin){
+  clearTimeout(hideT);
+  if(cur && cur !== el) cur.setAttribute("aria-expanded","false");
+  cur = el; pinned = pin; el.setAttribute("aria-expanded","true");
+  pop.innerHTML = content(el.dataset.k); pop.hidden = false; place(el);
+  pop.querySelector(".x").onclick = close;
+}
+function close(){ pop.hidden = true; pinned = false; if(cur){cur.setAttribute("aria-expanded","false"); cur=null;} }
+document.querySelectorAll("[data-k]").forEach(el=>{
+  el.addEventListener("mouseenter",()=>{ if(pinned) return; clearTimeout(showT); showT=setTimeout(()=>open(el,false),120); });
+  el.addEventListener("mouseleave",()=>{ clearTimeout(showT); if(!pinned) hideT=setTimeout(close,180); });
+  el.addEventListener("click",e=>{ e.stopPropagation(); (cur===el && pinned) ? close() : open(el,true); });
+});
+pop.addEventListener("mouseenter",()=>clearTimeout(hideT));
+pop.addEventListener("mouseleave",()=>{ if(!pinned) hideT=setTimeout(close,180); });
+pop.addEventListener("click",e=>e.stopPropagation());
+document.addEventListener("click",()=>{ if(!pop.hidden) close(); });
+document.addEventListener("keydown",e=>{ if(e.key==="Escape" && !pop.hidden){ const c=cur; close(); c&&c.focus(); } });
+addEventListener("resize",()=>{ if(cur && !pop.hidden) place(cur); });
+document.querySelector(".scroll").addEventListener("scroll",()=>{ if(cur && !pop.hidden) place(cur); });
+addEventListener("scroll",()=>{ if(cur && !pop.hidden) place(cur); }, {passive:true});
+</script>
+</body>
+</html>
