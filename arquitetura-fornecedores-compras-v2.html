@@ -168,19 +168,25 @@ a.tool:hover,a.tool:focus-visible{background:var(--bluebg);outline:none}
 .kpi.k-trn{background:var(--violetbg)} .kpi.k-trn b{color:var(--violet)}
 .kpi.k-dem{background:var(--bluebg)} .kpi.k-dem b{color:var(--blue)}
 a.kpi{text-decoration:none;border:1.5px solid transparent} a.kpi:hover,a.kpi:focus-visible{border-color:var(--ink);outline:none}
-.agroup{display:flex;flex-direction:column;gap:10px}
-.agroup-h{display:flex;align-items:baseline;gap:10px}
-.agroup-h .gn{font:700 13px/1 var(--sans);letter-spacing:.09em;text-transform:uppercase;color:var(--violet)}
-.agroup-h .gc{font-size:12.5px;color:var(--ink3)}
-.agrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,440px),1fr));gap:12px}
-.acard{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:12px 14px;display:flex;flex-direction:column;gap:8px;box-shadow:0 1px 3px oklch(20% .05 260 / .05)}
-.acard .top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
-.acard .nm{font-weight:700;font-size:14.5px;line-height:1.3}
-.acard .nm .code{color:var(--violet);margin-right:6px}
-.acard .meta{display:flex;flex-wrap:wrap;align-items:center;gap:6px;font-size:12px;color:var(--ink3)}
-.acard .tp{font:700 10px/1 var(--sans);letter-spacing:.05em;text-transform:uppercase;display:inline-flex;align-items:center;height:20px;padding:0 6px;border-radius:4px;color:var(--violet);background:var(--violetbg)}
-.acard .o{font:400 13px/1.5 var(--serif);color:var(--ink2);margin:0}
-.acard .subs{display:flex;flex-wrap:wrap;gap:6px;padding-top:8px;border-top:1px dashed var(--line);margin-top:auto}
+.tblwrap{overflow-x:auto;background:var(--paper);border-radius:10px;box-shadow:0 2px 12px oklch(20% .05 260 / .06),0 1px 3px oklch(20% .05 260 / .04)}
+table.pf{width:100%;min-width:1000px;border-collapse:collapse;font-size:13px}
+table.pf th{font:700 10.5px/1.2 var(--sans);letter-spacing:.09em;text-transform:uppercase;color:var(--ink3);text-align:left;padding:12px 14px;border-bottom:2px solid var(--ink);white-space:nowrap}
+table.pf td{padding:12px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+table.pf tbody tr:not(.grp):hover td{background:oklch(98% .008 260)}
+table.pf td.n{width:19%}
+table.pf td.n .nm{font-weight:700;line-height:1.3;display:block}
+table.pf td.n .code{color:var(--violet);margin-right:6px}
+table.pf td.n .tp{margin-top:6px}
+table.pf td.o{font:400 13px/1.5 var(--serif);color:var(--ink2);width:25%}
+table.pf td.f{font-size:12px;color:var(--ink3);width:13%}
+table.pf td.s{width:35%}
+table.pf td.st-c{width:8%;white-space:nowrap;text-align:right}
+table.pf th:last-child{text-align:right}
+table.pf tr.grp td{background:var(--violetbg);padding:9px 14px}
+table.pf tr.grp .gn{font:700 11px/1 var(--sans);letter-spacing:.09em;text-transform:uppercase;color:var(--violet)}
+table.pf tr.grp .gc{font-size:12px;color:var(--ink3);margin-left:8px}
+.tp{font:700 10px/1 var(--sans);letter-spacing:.05em;text-transform:uppercase;display:inline-flex;align-items:center;height:20px;padding:0 6px;border-radius:4px;color:var(--violet);background:var(--violetbg)}
+.subs{display:flex;flex-wrap:wrap;gap:6px}
 .subp{display:inline-flex;align-items:center;gap:6px;font:inherit;font-size:12px;color:var(--ink);background:var(--paper);border:1px solid var(--line);border-radius:999px;padding:3px 10px 3px 4px;cursor:pointer}
 .subp .code{font-size:11px;font-weight:700;color:var(--blue);background:var(--bluebg);border-radius:999px;padding:2px 6px}
 .subp:hover,.subp:focus-visible,.subp[aria-expanded="true"]{border-color:var(--blue);outline:none}
@@ -276,7 +282,7 @@ a.kpi{text-decoration:none;border:1.5px solid transparent} a.kpi:hover,a.kpi:foc
    <div class="pf-h"><div><span class="tn">Portfólio de agentes, extensões e automações</span><p class="to">Tudo o que já roda sozinho ou é rodado pelo time. Clique no subprocesso para ver o processo; o que ainda vai ser criado está no cronograma.</p></div><div class="types" id="pftypes"></div></div>
    <div class="kpis" id="pfsum"></div>
   </div>
-  <div id="pfgrid" style="display:flex;flex-direction:column;gap:20px"></div>
+  <div class="tblwrap"><table class="pf"><thead><tr><th>Agente ou automação</th><th>O que faz</th><th>Quando roda</th><th>Subprocessos</th><th>Status</th></tr></thead><tbody id="pftb"></tbody></table></div>
  </section>
 
  <footer class="instfoot">
@@ -852,14 +858,13 @@ document.getElementById("summary").innerHTML =
 /* portfólio */
 const nm = id => REG[id] ? (REG[id].d.t||REG[id].d.n) : id;
 const items = AUTOS.flatMap(g=>g.items);
-document.getElementById("pfgrid").innerHTML = AUTOS.map(g=>`<section class="agroup">
-  <div class="agroup-h"><span class="gn">${g.lab}</span><span class="gc">${g.items.length} ${g.items.length>1?"automações":"automação"}</span></div>
-  <div class="agrid">${g.items.map(a=>`<article class="acard">
-    <div class="top"><span class="nm"><span class="code">${a.id}</span>${a.n}</span><span class="st ${a.st}">${ST[a.st]}</span></div>
-    <div class="meta"><span class="tp">${a.tp}</span><span>${a.f}</span></div>
-    <p class="o">${a.o}</p>
-    <div class="subs">${a.s.map(id=>`<button class="subp" type="button" data-k="${id}" aria-expanded="false"><span class="code">${id}</span>${nm(id)}</button>`).join("")}</div>
-  </article>`).join("")}</div></section>`).join("");
+document.getElementById("pftb").innerHTML = AUTOS.map(g=>`<tr class="grp"><td colspan="5"><span class="gn">${g.lab}</span><span class="gc">${g.items.length} ${g.items.length>1?"automações":"automação"}</span></td></tr>` +
+  g.items.map(a=>`<tr>
+    <td class="n"><span class="nm"><span class="code">${a.id}</span>${a.n}</span><span class="tp">${a.tp}</span></td>
+    <td class="o">${a.o}</td>
+    <td class="f">${a.f}</td>
+    <td class="s"><div class="subs">${a.s.map(id=>`<button class="subp" type="button" data-k="${id}" aria-expanded="false"><span class="code">${id}</span>${nm(id)}</button>`).join("")}</div></td>
+    <td class="st-c"><span class="st ${a.st}">${ST[a.st]}</span></td></tr>`).join("")).join("");
 const cob = new Set(items.flatMap(a=>a.s)).size;
 const kpi = (v,l,c="") => `<div class="kpi ${c}"><b>${v}</b><span>${l}</span></div>`;
 document.getElementById("pfsum").innerHTML =
