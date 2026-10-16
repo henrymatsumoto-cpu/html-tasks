@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Cronograma de Automações</title>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;1,7..72,400&display=swap" rel="stylesheet">
+<style>
+/* mesmo sistema visual da arquitetura de Fornecedores (v2) */
+*,*::before,*::after{box-sizing:border-box}
+:root{
+ color-scheme:light;
+ --bg:oklch(96.5% .012 260);--paper:oklch(99.4% .003 250);
+ --ink:oklch(24% .02 255);--ink2:oklch(42% .018 255);--ink3:oklch(58% .014 255);
+ --line:oklch(89% .01 255);--soft:oklch(95% .012 260);
+ --blue:oklch(48% .21 258);--bluebg:oklch(95% .03 258);
+ --teal:oklch(47% .1 200);--tealbg:oklch(95.5% .03 200);
+ --rust:oklch(50% .14 42);--rustbg:oklch(95.5% .03 50);
+ --red:oklch(52% .17 27);--redbg:oklch(95.5% .03 27);
+ --amber:oklch(55% .12 70);--amberbg:oklch(95.5% .04 80);
+ --green:oklch(50% .11 155);--greenbg:oklch(95.5% .035 155);
+ --violet:oklch(48% .16 300);--violetbg:oklch(95.5% .03 300);
+ --navy:oklch(19% .05 260);--navybg:oklch(93% .02 260);--coral:oklch(70% .17 32);
+ --hero-fg:oklch(94% .01 260);--hero-muted:oklch(72% .02 260);--hero-line:oklch(35% .04 260);
+ --sans:"Bricolage Grotesque",system-ui,sans-serif;--serif:Literata,Georgia,serif;--mono:ui-monospace,"Cascadia Mono",Consolas,monospace;
+}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font:400 14px/1.5 var(--sans)}
+.code{font-family:var(--mono);font-size:11.5px;font-variant-numeric:tabular-nums}
+
+.hero{background:var(--navy);color:var(--hero-fg);padding-block:24px 36px;padding-inline:24px}
+.hero-inner{max-width:1200px;margin:0 auto}
+.masthead{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:12px;border-bottom:1px solid var(--hero-line);margin-bottom:24px;padding-bottom:12px}
+.wordmark{font:700 14px/1 var(--sans);letter-spacing:.14em;color:var(--paper);display:flex;align-items:center;gap:12px;text-transform:uppercase;flex-wrap:wrap}
+.wordmark span:not(.sz-logo):not(.sz-house){color:var(--hero-muted);font-weight:500;letter-spacing:.12em}
+.sz-logo{display:inline-flex;align-items:center;gap:2px;font:700 30px/1 var(--sans);letter-spacing:-.04em;text-transform:none;color:currentColor}
+.sz-house{display:inline-block;width:.75em;height:.85em;flex-shrink:0}
+.sz-house svg{width:100%;height:100%;display:block}
+.mast-date{font:500 13px/1 var(--sans);color:var(--hero-muted);letter-spacing:.06em;text-transform:uppercase}
+.eyebrow{font:700 12px/1.3 var(--sans);letter-spacing:.08em;text-transform:uppercase;color:var(--coral);display:block}
+h1{font:700 clamp(28px,4vw,44px)/1.06 var(--sans);letter-spacing:-.01em;margin:10px 0 14px;color:var(--paper);text-wrap:balance;max-width:24ch}
+.lede{font:400 17px/1.55 var(--serif);max-width:70ch;color:var(--hero-fg);margin:0}
+.lede a{color:var(--paper)}
+
+.wrap{max-width:1200px;margin:0 auto;padding-block:24px 56px;padding-inline:24px;display:flex;flex-direction:column;gap:20px}
+.panel{background:var(--paper);border-radius:10px;padding:14px 16px;box-shadow:0 2px 12px oklch(20% .05 260 / .06),0 1px 3px oklch(20% .05 260 / .04)}
+
+.days{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px}
+.day{border-radius:10px;padding:10px 12px;background:var(--cs);display:flex;flex-direction:column;gap:4px;text-decoration:none;color:inherit;border:1.5px solid transparent}
+.day:hover,.day:focus-visible{border-color:var(--c);outline:none}
+.day .d{font:700 11px/1 var(--sans);letter-spacing:.09em;text-transform:uppercase;color:var(--c)}
+.day .n{font:700 15px/1.2 var(--sans)}
+.day .q{font-size:12px;color:var(--ink2)}
+.f1{--c:var(--blue);--cs:var(--bluebg)} .f2{--c:var(--teal);--cs:var(--tealbg)} .f3{--c:var(--rust);--cs:var(--rustbg)} .f4{--c:var(--navy);--cs:var(--navybg)} .f5{--c:var(--ink2);--cs:var(--soft)} .f6{--c:var(--coral);--cs:oklch(96% .03 32)}
+.f6 .d{color:oklch(50% .15 32)}
+
+.summary{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px 28px;font-size:13px;color:var(--ink2)}
+.summary .g{display:flex;flex-direction:column;gap:6px}
+.summary .gl{font:700 11px/1 var(--sans);letter-spacing:.09em;text-transform:uppercase;color:var(--ink3)}
+.summary .gv{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center}
+.summary b{font-variant-numeric:tabular-nums;color:var(--ink);font-size:15px}
+
+.phase{display:flex;flex-direction:column;gap:12px;scroll-margin-top:16px}
+.ph-h{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.ph-h .tk{font:700 11px/1 var(--sans);letter-spacing:.09em;text-transform:uppercase;color:var(--paper);background:var(--c);padding:5px 8px;border-radius:4px}
+.ph-h .tn{font:700 19px/1.2 var(--sans);color:var(--ink)}
+.ph-h .dt{font:700 13px/1 var(--sans);color:var(--c)}
+.ph-o{font:400 13.5px/1.5 var(--serif);color:var(--ink2);margin:0;max-width:95ch}
+.tblwrap{overflow-x:auto}
+table{width:100%;min-width:720px;border-collapse:collapse;font-size:13px}
+th{font:700 10.5px/1.2 var(--sans);letter-spacing:.09em;text-transform:uppercase;color:var(--ink3);text-align:left;padding:8px 10px;border-bottom:2px solid var(--ink)}
+td{padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+td.p{width:30%}
+td.p .code{color:var(--c);margin-right:6px}
+td.a b{display:block;font-weight:700}
+td.a span{font:400 12.5px/1.45 var(--serif);color:var(--ink2)}
+.foot{font-size:12.5px;color:var(--ink2);display:flex;gap:6px 18px;flex-wrap:wrap}
+.foot b{color:var(--ink)}
+
+.tag{font:700 10px/1 var(--sans);letter-spacing:.05em;text-transform:uppercase;padding:4px 6px;border-radius:4px;white-space:nowrap;display:inline-block}
+.mode.auto{color:var(--green);background:var(--greenbg)}
+.mode.misto{color:var(--amber);background:var(--amberbg)}
+.mode.manual{color:var(--red);background:var(--redbg)}
+.st.novo{color:var(--paper);background:var(--coral)}
+.st.ajuste{color:var(--blue);background:var(--bluebg)}
+.st.trn{color:var(--violet);background:var(--violetbg);border:1px dashed var(--violet)}
+.tp{color:var(--ink2);background:var(--soft)}
+.legend{display:flex;flex-wrap:wrap;gap:8px 18px;font-size:12.5px;color:var(--ink2);align-items:center}
+.note{font:400 13px/1.5 var(--serif);color:var(--ink2);margin:0}
+.note b{font-family:var(--sans)}
+
+.instfoot{margin-top:24px;padding-top:20px;border-top:2px solid var(--ink);display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:16px}
+.instfoot .wm{font:700 14px/1.4 var(--sans);letter-spacing:.14em;color:var(--blue);text-transform:uppercase}
+.instfoot .wm .sz-logo{color:var(--navy);font-size:22px}
+.instfoot .wm>span:not(.sz-logo){display:block;color:var(--ink2);font-weight:500;letter-spacing:.08em;font-size:12px;margin-top:4px}
+.instfoot .who{font-size:13px;color:var(--ink3);text-align:right;line-height:1.6}
+.instfoot .who b{color:var(--ink);font-weight:700;font-size:14px;display:block}
+@media (max-width:900px){.days{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width:640px){.wrap,.hero{padding-inline:16px} .days{grid-template-columns:repeat(2,minmax(0,1fr))} .instfoot .who{text-align:left}}
+</style>
+</head>
+<body>
+
+<section class="hero">
+ <div class="hero-inner">
+  <div class="masthead">
+   <div class="wordmark"><span class="sz-logo" role="img" aria-label="Seazone">sea<span class="sz-house"><svg viewBox="0 0 22 24" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="0" width="2.5" height="8" rx=".8" fill="#ff6b5c"/><path d="M1 11 L11 2 L21 11 L21 22 Q21 23 20 23 L2 23 Q1 23 1 22 Z" fill="#ff6b5c"/></svg></span>zone</span><span>· Franquias · Fornecedores de Compras</span></div>
+   <span class="mast-date">15/10/2026</span>
+  </div>
+  <span class="eyebrow">Projeto de automação da área</span>
+  <h1>Cronograma de automações e agentes</h1>
+  <p class="lede">Uma fase por dia, na ordem da <a href="./arquitetura-fornecedores-compras-v2.html">arquitetura v2</a>: prestadores, homologados, Compras, gestão e suporte. No fim de cada dia, call de meia hora com a Ray mostrando o recorte da fase, os agentes e o status. Entrega final na sexta, 23/10.</p>
+ </div>
+</section>
+
+<div class="wrap">
+ <nav class="days" id="days" aria-label="Fases"></nav>
+ <div class="panel summary" id="summary"></div>
+ <div id="phases" style="display:flex;flex-direction:column;gap:20px"></div>
+
+ <div class="panel" style="display:flex;flex-direction:column;gap:10px">
+  <div class="legend">
+   <span><span class="tag st novo">Novo</span> automação que ainda não existe</span>
+   <span><span class="tag st ajuste">Ajuste</span> já existe, muda o jeito de rodar</span>
+   <span><span class="tag st trn">Em treinamento</span> já roda, ainda aprendendo</span>
+  </div>
+  <div class="legend">
+   <span>Hoje:</span>
+   <span><span class="tag mode auto">Automático</span></span>
+   <span><span class="tag mode misto">Misto</span></span>
+   <span><span class="tag mode manual">Manual</span></span>
+  </div>
+  <p class="note"><b>Dependência:</b> o ritmo de uma fase por dia depende de ter conta do Claude com crédito. Se faltar, a fase do dia passa para o seguinte e a sexta, 23/10, continua sendo a data final.</p>
+  <p class="note"><b>Fica para a segunda leva:</b> o que depende do fornecedor, como aditivo de contrato ou acesso ao rastreio sem captcha.</p>
+ </div>
+
+ <footer class="instfoot">
+  <div class="wm"><span class="sz-logo" role="img" aria-label="Seazone">sea<span class="sz-house"><svg viewBox="0 0 22 24" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="0" width="2.5" height="8" rx=".8" fill="#ff6b5c"/><path d="M1 11 L11 2 L21 11 L21 22 Q21 23 20 23 L2 23 Q1 23 1 22 Z" fill="#ff6b5c"/></svg></span>zone</span><span>Franquias · Fornecedores de Compras</span></div>
+  <div class="who"><b>Henry Yudi Matsumoto</b>henry.matsumoto@seazone.com.br<br>Documento interno · 15/10/2026</div>
+ </footer>
+</div>
+
+<script>
+const MODE = {auto:"Automático", misto:"Misto", manual:"Manual"};
+const ST = {novo:"Novo", ajuste:"Ajuste", trn:"Em treinamento"};
+/* r = [id do processo na arquitetura v2, processo, automação, tipo, status, modo hoje, o que faz] */
+const PHASES = [
+ {f:1, cls:"f1", dia:"Sex · 16/10", n:"Fornecedores prestadores de serviço",
+  o:"Prospecção, homologação e cadastro de fotógrafos, lavanderias e outros prestadores do Hub. Um agente só para o macroprocesso, com o contexto de cada tipo. Fecha também a task de IA no processo de captação.",
+  r:[
+   ["1.1","Identificar cidades sem prestador","Rotina semanal de cobertura","Rotina","ajuste","misto","Roda sozinha toda sexta e só pede o ok."],
+   ["1.2","Pesquisar prestadores na cidade","Skill única de prospecção","Skill","ajuste","misto","Uma só para fotógrafo, lavanderia e limpeza."],
+   ["1.3","Registrar e revisar o Backlog","Validador de cards","Agente","novo","misto","Corrige título e telefone antes da cadência."],
+   ["1.4","Fazer a cadência de contato","1º contato mais frequente","Agente","ajuste","auto","De uma para várias rodadas por dia."],
+   ["1.5","Negociar e qualificar","Copiloto respondendo sozinho","Extensão","trn","manual","A analista só entra quando ele trava."],
+   ["2.2","Cadastrar a lavanderia no Hub","Cadastro automático no Hub","Agente","novo","manual","Cadastra a partir do card Ganho."],
+   ["3.3","Cadastrar o fotógrafo","Cadastro automático do fotógrafo","Agente","novo","manual","Cadastra a partir do card Ganho."],
+   ["4.2","Prospectar outros prestadores","Régua por tipo de serviço","Skill","novo","misto","Empresas de limpeza e outros na mesma skill."]
+  ]},
+ {f:2, cls:"f2", dia:"Seg · 19/10", n:"Fornecedores homologados",
+  o:"Entrada de fornecedor e relacionamento: reuniões, prontuário, score de saúde e relatório para a diretoria.",
+  r:[
+   ["5.4","Homologar e treinar o fornecedor","Checklist de entrada","Skill","novo","manual","Contrato, comissão, pagamento, perfis e treinamento."],
+   ["6.1","Definir com quem e quando reunir","Agenda de reuniões","Rotina","novo","manual","Avisa quem passou de 2 meses sem reunião."],
+   ["6.2","Preparar a pauta","Pauta automática","Agente","ajuste","misto","Pronta depois do fechamento do mês."],
+   ["6.4","Registrar no prontuário","Prontuário automático","Agente","novo","manual","Ata e gravação na pasta do fornecedor."],
+   ["6.5","Monitorar a saúde do fornecedor","Score de saúde","Agente","novo","manual","Nota pelos dados da Loja e da Jornada."],
+   ["6.6","Reportar à gerência e à diretoria","Relatório de inconformidades","Skill","novo","manual","Histórico do fornecedor a partir do prontuário."]
+  ]},
+ {f:3, cls:"f3", dia:"Ter · 20/10", n:"Compras: Loja, fechamento e Jornada",
+  o:"A venda e o fechamento da venda. A analista passa a cuidar só do que o agente não resolve.",
+  r:[
+   ["7.1","Fazer campanhas de venda","Skill de campanha","Skill","novo","manual","Sugere produto, público e mensagem."],
+   ["7.3","Validar e mandar ao fornecedor","Validador de pedidos","Agente","novo","manual","Aprova o normal e segura o estranho."],
+   ["7.4","Cobrar o cliente","Aviso final do 7º dia","Rotina","ajuste","auto","Pague até as 18h ou o pedido é cancelado."],
+   ["7.5","Cancelar o pedido não pago","Cancelamento às 20h","Agente","novo","manual","Cancela sozinho no 7º dia sem pagamento."],
+   ["7.6","Confirmar o pagamento","Leitor de comprovante","Agente","novo","manual","O que não bate ganha a tag Pagamento inconsistente."],
+   ["7.8","Acompanhar a entrega","Cobrança de rastreio","Agente","novo","manual","Cobra o fornecedor que não informou o rastreio."],
+   ["8.1","Calcular a comissão","Fechamento no dia 1","Rotina","ajuste","misto","Planilha de conferência pronta sozinha."],
+   ["8.3","Pedir NF e boleto ao financeiro","Chamado automático no Suporte","Agente","novo","manual","Abre o chamado com o ok do fornecedor."],
+   ["9.3","Acompanhar prazos da Jornada","Alerta de atrasos","Agente","novo","manual","Avisa todo dia os pedidos de enxoval parados."]
+  ]},
+ {f:4, cls:"f4", dia:"Qua · 21/10", n:"Gestão",
+  o:"A rotina da coordenação que ainda não estava na arquitetura: KPIs, tasks, equipe e documentação.",
+  r:[
+   ["10.1","KPIs do setor","Lançamento automático de KPIs","Rotina","ajuste","misto","Lança direto das fontes no KPI System."],
+   ["10.2","Relatório mensal por fornecedor","Relatório do mês automático","Rotina","ajuste","misto","Gera o PDF de cada fornecedor."],
+   ["11.3","Atualizar a task","Resumo da call na task","Agente","novo","manual","O que foi feito vai para o Taskdex."],
+   ["12.2","1:1 e feedback","Pauta do 1:1","Skill","novo","manual","Junta entregas e pontos da semana."],
+   ["13.4","Documentação dos processos","Aviso de canvas desatualizado","Agente","novo","manual","Avisa quando a ferramenta mudou e o canvas não."]
+  ]},
+ {f:5, cls:"f5", dia:"Qui · 22/10", n:"Suporte",
+  o:"O trabalho que não aparece: a auditoria das ferramentas da Implantação e os próprios agentes. Se um agente cai, o processo dele deixa de existir.",
+  r:[
+   ["16.3","Validar e documentar automações","Portfólio automático","Rotina","novo","manual","Atualiza o portfólio a partir do que está no ar."],
+   ["17.3","Decidir a ação da auditoria","Relatório da auditoria","Agente","novo","manual","Junta os alertas da Implantação num relatório."],
+   ["17.4","Monitorar os agentes","Monitor de saúde dos agentes","Agente","novo","manual","Avisa no Slack quando um agente para."]
+  ]}
+];
+
+const all = PHASES.flatMap(p=>p.r);
+const cnt = f => all.filter(f).length;
+
+document.getElementById("days").innerHTML = PHASES.map(p=>
+  `<a class="day ${p.cls}" href="#fase-${p.f}"><span class="d">${p.dia}</span><span class="n">Fase ${p.f}</span><span class="q">${p.n} · ${p.r.length} automações</span></a>`).join("") +
+  `<div class="day f6"><span class="d">Sex · 23/10</span><span class="n">Entrega final</span><span class="q">Arquitetura e portfólio atualizados</span></div>`;
+
+document.getElementById("summary").innerHTML = `
+  <div class="g"><span class="gl">Automações no cronograma</span><span class="gv"><span><b>${all.length}</b> em 5 fases</span></span></div>
+  <div class="g"><span class="gl">Situação</span><span class="gv">${Object.keys(ST).map(k=>`<span><span class="tag st ${k}">${ST[k]}</span> <b>${cnt(r=>r[4]===k)}</b></span>`).join("")}</span></div>
+  <div class="g"><span class="gl">Tipo</span><span class="gv">${["Agente","Skill","Rotina","Extensão"].map(t=>`<span>${t} <b>${cnt(r=>r[3]===t)}</b></span>`).join("")}</span></div>
+  <div class="g"><span class="gl">Hoje, esses processos são</span><span class="gv">${Object.keys(MODE).map(k=>`<span><span class="tag mode ${k}">${MODE[k]}</span> <b>${cnt(r=>r[5]===k)}</b></span>`).join("")}</span></div>`;
+
+document.getElementById("phases").innerHTML = PHASES.map(p=>`
+ <section class="panel phase ${p.cls}" id="fase-${p.f}">
+  <div class="ph-h"><span class="tk">Fase ${p.f}</span><span class="tn">${p.n}</span><span class="dt">${p.dia}</span></div>
+  <p class="ph-o">${p.o}</p>
+  <div class="tblwrap"><table>
+   <thead><tr><th>Processo</th><th>Automação</th><th>Tipo</th><th>Hoje</th><th>Situação</th></tr></thead>
+   <tbody>${p.r.map(r=>`<tr><td class="p"><span class="code">${r[0]}</span>${r[1]}</td><td class="a"><b>${r[2]}</b><span>${r[6]}</span></td><td><span class="tag tp">${r[3]}</span></td><td><span class="tag mode ${r[5]}">${MODE[r[5]]}</span></td><td><span class="tag st ${r[4]}">${ST[r[4]]}</span></td></tr>`).join("")}</tbody>
+  </table></div>
+  <div class="foot"><span><b>Fim do dia:</b> call de 30 min com a Ray, com o recorte da fase, os agentes e o status.</span><span><b>Atualiza:</b> arquitetura e portfólio.</span></div>
+ </section>`).join("");
+</script>
+</body>
+</html>
