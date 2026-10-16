@@ -46,14 +46,30 @@ h1{font:700 clamp(28px,4vw,44px)/1.06 var(--sans);letter-spacing:-.01em;margin:1
 .wrap{max-width:1200px;margin:0 auto;padding-block:24px 56px;padding-inline:24px;display:flex;flex-direction:column;gap:20px}
 .panel{background:var(--paper);border-radius:10px;padding:14px 16px;box-shadow:0 2px 12px oklch(20% .05 260 / .06),0 1px 3px oklch(20% .05 260 / .04)}
 
+.cal{display:flex;flex-direction:column;gap:8px}
+.cal-h,.wk{display:grid;grid-template-columns:72px repeat(5,minmax(0,1fr));gap:8px}
+.cal-h span{font:700 10.5px/1 var(--sans);letter-spacing:.09em;text-transform:uppercase;color:var(--ink3);padding:0 2px}
+.wk .wl{font:700 11px/1.3 var(--sans);color:var(--ink3);padding-top:10px}
 .days{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px}
+.cell{border-radius:10px;padding:9px 10px;background:var(--paper);display:flex;flex-direction:column;gap:5px;min-height:92px;border:1px solid var(--line)}
+.cell.empty{background:transparent;border:1px dashed var(--line)}
+.cell.off{background:var(--soft);border-color:transparent}
+.cell .d{font:700 12px/1 var(--sans);color:var(--ink)}
+.cell .d small{font-weight:500;color:var(--ink3)}
+.cell .it{display:flex;flex-direction:column;gap:4px}
+.chip{display:block;font:500 11.5px/1.3 var(--sans);padding:3px 6px;border-radius:4px;background:var(--cs);color:var(--ink);border-left:3px solid var(--c);text-decoration:none}
+.chip .code{color:var(--c);margin-right:4px;font-size:10.5px}
+.chip.res{background:transparent;border:1px dashed var(--line);border-left:3px dashed var(--ink3);color:var(--ink2)}
+.chip.fim{background:var(--coral);color:var(--paper);border-left-color:var(--coral);font-weight:700}
+.chip.html{background:var(--violetbg);border-left-color:var(--violet)}
+.cell .off-t{font:400 12px/1.4 var(--serif);color:var(--ink2)}
 .day{border-radius:10px;padding:10px 12px;background:var(--cs);display:flex;flex-direction:column;gap:4px;text-decoration:none;color:inherit;border:1.5px solid transparent}
 .day:hover,.day:focus-visible{border-color:var(--c);outline:none}
 .day .d{font:700 11px/1 var(--sans);letter-spacing:.09em;text-transform:uppercase;color:var(--c)}
 .day .n{font:700 15px/1.2 var(--sans)}
 .day .q{font-size:12px;color:var(--ink2)}
-.f1{--c:var(--blue);--cs:var(--bluebg)} .f2{--c:var(--teal);--cs:var(--tealbg)} .f3{--c:var(--rust);--cs:var(--rustbg)} .f4{--c:var(--navy);--cs:var(--navybg)} .f5{--c:var(--ink2);--cs:var(--soft)} .f6{--c:var(--coral);--cs:oklch(96% .03 32)}
-.f6 .d{color:oklch(50% .15 32)}
+.f1{--c:var(--blue);--cs:var(--bluebg)} .f2{--c:var(--teal);--cs:var(--tealbg)} .f3{--c:var(--rust);--cs:var(--rustbg)} .f4{--c:var(--navy);--cs:var(--navybg)} .f5{--c:var(--ink2);--cs:var(--soft)} .f6{--c:var(--coral);--cs:oklch(96% .03 32)} .f7{--c:var(--teal);--cs:var(--tealbg)} .f8{--c:var(--ink2);--cs:var(--soft)} .f9{--c:var(--violet);--cs:var(--violetbg)}
+.f1b{--c:var(--blue);--cs:var(--bluebg)}
 
 .summary{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:16px 28px;font-size:13px;color:var(--ink2)}
 .summary .g{display:flex;flex-direction:column;gap:8px;min-width:0}
@@ -99,8 +115,8 @@ td.a span{font:400 12.5px/1.45 var(--serif);color:var(--ink2)}
 .instfoot .wm>span:not(.sz-logo){display:block;color:var(--ink2);font-weight:500;letter-spacing:.08em;font-size:12px;margin-top:4px}
 .instfoot .who{font-size:13px;color:var(--ink3);text-align:right;line-height:1.6}
 .instfoot .who b{color:var(--ink);font-weight:700;font-size:14px;display:block}
-@media (max-width:900px){.days{grid-template-columns:repeat(3,minmax(0,1fr))}}
-@media (max-width:640px){.wrap,.hero{padding-inline:16px} .days{grid-template-columns:repeat(2,minmax(0,1fr))} .instfoot .who{text-align:left}}
+@media (max-width:900px){.cal-h{display:none} .wk{grid-template-columns:repeat(2,minmax(0,1fr))} .wk .wl{grid-column:1/-1;padding-top:6px} .cell.empty{display:none}}
+@media (max-width:640px){.wrap,.hero{padding-inline:16px} .wk{grid-template-columns:minmax(0,1fr)} .instfoot .who{text-align:left}}
 </style>
 </head>
 <body>
@@ -113,12 +129,12 @@ td.a span{font:400 12.5px/1.45 var(--serif);color:var(--ink2)}
   </div>
   <span class="eyebrow">Projeto de automação da área</span>
   <h1>Cronograma de automações e agentes</h1>
-  <p class="lede">Oito fases em cinco dias, começando por Compras (Loja e Jornada, campanhas e fechamento), depois lavanderias e fotógrafos, outros prestadores, homologados, gestão e suporte. Os processos seguem a numeração da <a href="./arquitetura-fornecedores-compras-v2.html">arquitetura v2</a>. No fim de cada dia, call de meia hora com a Ray mostrando o recorte da fase, os agentes e o status. Entrega final na sexta, 23/10.</p>
+  <p class="lede">Prazo pessimista: <b>duas automações por dia</b>, com sexta de reserva para o que travar. Primeiro a Loja, que fecha hoje; depois a prospecção de lavanderias e fotógrafos, que é a task da Iara e tem prioridade; em seguida as rotinas diárias, o fechamento do mês antes do dia 1º, as campanhas antes da Black Friday, os homologados e o suporte. A Gestão fica para depois do projeto. Os processos seguem a numeração da <a href="./arquitetura-fornecedores-compras-v2.html">arquitetura v2.1</a>. Entrega final do projeto na quarta, 04/11.</p>
  </div>
 </section>
 
 <div class="wrap">
- <nav class="days" id="days" aria-label="Fases"></nav>
+ <nav class="panel cal" id="cal" aria-label="Calendário"></nav>
  <div class="panel summary" id="summary"></div>
  <div id="phases" style="display:flex;flex-direction:column;gap:20px"></div>
 
@@ -134,8 +150,10 @@ td.a span{font:400 12.5px/1.45 var(--serif);color:var(--ink2)}
    <span><span class="tag mode misto">Misto</span></span>
    <span><span class="tag mode manual">Manual</span></span>
   </div>
-  <p class="note"><b>Dependência:</b> o ritmo do cronograma depende de ter conta do Claude com crédito. Se faltar, as fases do dia passam para o seguinte e a sexta, 23/10, continua sendo a data final.</p>
-  <p class="note"><b>Fica para a segunda leva:</b> o que depende do fornecedor, como aditivo de contrato ou acesso ao rastreio sem captcha. O acompanhamento da entrega (8.7) saiu do cronograma: continua manual.</p>
+  <p class="note"><b>Por que pessimista:</b> cada agente passa por construção, teste em staging, aprovação e sync do catálogo do Olimpo, que não depende só de mim. Duas por dia é a média com essas esperas; a sexta de reserva absorve o que atrasar. Se sobrar tempo, a fase seguinte começa antes.</p>
+  <p class="note"><b>Dependências:</b> conta do Claude com crédito e sync do catálogo do Olimpo (os agentes da Loja dependem dele para ligar). Se faltar algum dos dois, a automação do dia passa para a reserva da sexta.</p>
+  <p class="note"><b>Fora deste cronograma:</b> o Copiloto da SIA (1.5) segue em treinamento e ainda não responde sozinho. O acompanhamento da entrega (8.7) continua manual. Aditivo de contrato e rastreio sem captcha dependem do fornecedor. Eventos (MP18 e MP19) só têm automação quando houver evento marcado.</p>
+  <p class="note"><b>Acompanhamento:</b> 15 minutos com a Ray para mostrar o que foi entregue. A task da prospecção ganha um HTML só dela na segunda, 19/10, para dar visibilidade à Iara.</p>
  </div>
 
  <footer class="instfoot">
@@ -147,98 +165,122 @@ td.a span{font:400 12.5px/1.45 var(--serif);color:var(--ink2)}
 <script>
 const MODE = {auto:"Automático", misto:"Misto", manual:"Manual"};
 const ST = {novo:"Novo", ajuste:"Ajuste", trn:"Em treinamento"};
-/* r = [id do processo na arquitetura v2, processo, automação, tipo, status, modo hoje, o que faz] */
+/* r = [id do processo na arquitetura v2.1, processo, automação, tipo, status, modo hoje, o que faz, dia (dd/mm)] */
 const PHASES = [
- {f:1, cls:"f1", dia:"Sex · 16/10", n:"Compras: Loja e Jornada",
-  o:"Pedidos da Loja do começo ao fim: validação, cobrança, cancelamento e conferência do pagamento. Entra junto o alerta de prazos da Jornada, que é rápido. A analista passa a cuidar só do que o agente não resolve.",
+ {f:1, cls:"f1", n:"Compras: Loja", per:"Sex · 16/10",
+  o:"Pedidos da Loja do começo ao fim. Já está em construção: o validador e o leitor de comprovante estão prontos esperando o sync do catálogo; o aviso e o cancelamento do 7º dia estão em ajuste hoje. O que não fechar hoje vai para a reserva de sexta, 23/10.",
   r:[
-   ["8.2","Validar e mandar ao fornecedor","Validador de pedidos","Agente","novo","manual","Aprova o normal e segura o estranho."],
-   ["8.3","Cobrar o cliente","Aviso final do 7º dia","Rotina","ajuste","auto","Pague até as 18h ou o pedido é cancelado."],
-   ["8.4","Cancelar o pedido não pago","Cancelamento às 20h","Agente","novo","manual","Cancela sozinho no 7º dia sem pagamento."],
-   ["8.5","Confirmar o pagamento","Leitor de comprovante","Agente","novo","manual","O que não bate ganha a tag Pagamento inconsistente."],
-   ["9.5","Acompanhar prazos da Jornada","Alerta de atrasos","Agente","novo","manual","Avisa todo dia os pedidos de enxoval parados."]
+   ["8.2","Validar e mandar ao fornecedor","Validador de pedidos","Agente","novo","manual","Aprova o normal; duplicado e capacho ganham tag e aviso no canal.","16/10"],
+   ["8.5","Confirmar o pagamento","Leitor de comprovante","Agente","novo","manual","Bateu com o valor, vai para Aguardando envio; não bateu, tag Pagamento inconsistente.","16/10"],
+   ["8.3","Cobrar o cliente","Aviso final do 7º dia","Rotina","ajuste","auto","Mensagem automática: pague até as 20h ou o pedido é cancelado.","16/10"],
+   ["8.4","Cancelar o pedido não pago","Cancelamento às 20h","Agente","novo","manual","Cancela sozinho no 7º dia sem pagamento.","16/10"]
   ]},
- {f:2, cls:"f2", dia:"Seg · 19/10", n:"Compras: campanhas",
-  o:"Da oportunidade à divulgação: o agente aponta quando vale fazer campanha e manda a campanha pronta às franquias.",
+ {f:2, cls:"f1b", n:"Prospecção de lavanderias e fotógrafos", per:"Seg a Qua · 19 a 21/10",
+  o:"Prioridade da Ray: é a task da Iara. A maior parte já existe; o trabalho é ajustar o fluxo de comunicação e criar o validador. Na segunda sai um HTML só desta task com o status para a Iara.",
   r:[
-   ["7.1","Identificar ou receber a demanda","Alerta de oportunidade de campanha","Agente","novo","manual","Avisa produto novo, parado ou data próxima."],
-   ["7.3","Divulgar às franquias","Divulgação automática da campanha","Agente","novo","manual","Envia a campanha pronta às franquias."]
+   ["1.4","Fazer a cadência de contato","1º contato mais frequente","Agente","ajuste","auto","De três para várias rodadas por dia, até o limite da janela de 24h da SIA.","19/10"],
+   ["1.3","Registrar e revisar o Backlog","Validador de cards","Agente","novo","misto","Corrige título e telefone antes da cadência.","19/10"],
+   ["1.1","Identificar cidades sem prestador","Rotina semanal de cobertura","Rotina","ajuste","misto","Roda sozinha toda sexta e só pede o ok.","20/10"],
+   ["1.2","Pesquisar prestadores na cidade","Skill única de prospecção","Skill","ajuste","misto","Uma só para fotógrafo e lavanderia.","20/10"],
+   ["2.2","Cadastrar a lavanderia no Hub","Cadastro automático no Hub","Agente","novo","manual","Cadastra a partir do card Ganho.","21/10"],
+   ["3.3","Cadastrar o fotógrafo","Cadastro automático do fotógrafo","Agente","novo","manual","Cadastra a partir do card Ganho.","21/10"]
   ]},
- {f:3, cls:"f2", dia:"Seg · 19/10", n:"Compras: fechamento do mês",
-  o:"Comissão calculada no dia 1 e o pedido de NF e boleto ao financeiro sem precisar abrir chamado na mão.",
+ {f:3, cls:"f3", n:"Rotinas diárias: Jornada e agentes", per:"Qui · 22/10",
+  o:"Com a Loja e a prospecção rodando por agente, o monitor passa a ser obrigatório: se um agente cai, o processo dele some.",
   r:[
-   ["10.1","Calcular a comissão","Fechamento no dia 1","Rotina","ajuste","misto","Planilha de conferência pronta sozinha."],
-   ["10.3","Pedir NF e boleto ao financeiro","Chamado automático no Suporte","Agente","novo","manual","Abre o chamado com o ok do fornecedor."]
+   ["9.5","Acompanhar prazos da Jornada","Alerta de atrasos","Agente","novo","manual","Avisa todo dia os pedidos de enxoval parados.","22/10"],
+   ["13.4","Monitorar os agentes","Monitor de saúde dos agentes","Agente","novo","manual","Avisa no Slack quando um agente para.","22/10"]
   ]},
- {f:4, cls:"f3", dia:"Ter · 20/10", n:"Lavanderias e fotógrafos",
-  o:"Prospecção, homologação e cadastro de lavanderias e fotógrafos. Um agente só para os dois, com o contexto de cada tipo. Fecha também a task de IA no processo de captação.",
+ {f:4, cls:"f4", n:"Outros prestadores do Hub", per:"Sex · 23/10",
+  o:"Task separada da prospecção: o Hub tem entrada e régua diferentes, então não dá para fazer junto com lavanderia e fotógrafo.",
   r:[
-   ["1.1","Identificar cidades sem prestador","Rotina semanal de cobertura","Rotina","ajuste","misto","Roda sozinha toda sexta e só pede o ok."],
-   ["1.2","Pesquisar prestadores na cidade","Skill única de prospecção","Skill","ajuste","misto","Uma só para fotógrafo e lavanderia."],
-   ["1.3","Registrar e revisar o Backlog","Validador de cards","Agente","novo","misto","Corrige título e telefone antes da cadência."],
-   ["1.4","Fazer a cadência de contato","1º contato mais frequente","Agente","ajuste","auto","De uma para várias rodadas por dia."],
-   ["1.5","Negociar e qualificar","Copiloto respondendo sozinho","Extensão","trn","manual","A analista só entra quando ele trava."],
-   ["2.2","Cadastrar a lavanderia no Hub","Cadastro automático no Hub","Agente","novo","manual","Cadastra a partir do card Ganho."],
-   ["3.3","Cadastrar o fotógrafo","Cadastro automático do fotógrafo","Agente","novo","manual","Cadastra a partir do card Ganho."]
+   ["4.2","Prospectar outros prestadores","Régua por tipo de serviço","Skill","novo","misto","Empresas de limpeza e outros, cada tipo com sua régua.","23/10"]
   ]},
- {f:5, cls:"f4", dia:"Qua · 21/10", n:"Outros prestadores de serviço",
-  o:"Empresas de limpeza e os demais prestadores do Hub, com régua própria por tipo de serviço.",
+ {f:5, cls:"f2", n:"Compras: fechamento do mês", per:"Seg · 26/10",
+  o:"Pronto antes do fechamento de outubro, no dia 1º.",
   r:[
-   ["4.2","Prospectar outros prestadores","Régua por tipo de serviço","Skill","novo","misto","Empresas de limpeza e outros, cada tipo com sua régua."]
+   ["10.1","Calcular a comissão","Fechamento no dia 1","Rotina","ajuste","misto","Planilha de conferência pronta sozinha.","26/10"],
+   ["10.3","Pedir NF e boleto ao financeiro","Chamado automático no Suporte","Agente","novo","manual","Abre o chamado com o ok do fornecedor.","26/10"]
   ]},
- {f:6, cls:"f4", dia:"Qua · 21/10", n:"Fornecedores homologados",
+ {f:6, cls:"f2", n:"Compras: campanhas", per:"Ter · 27/10",
+  o:"Pronto antes de novembro, a tempo da campanha de Black Friday.",
+  r:[
+   ["7.1","Identificar ou receber a demanda","Alerta de oportunidade de campanha","Agente","novo","manual","Avisa produto novo, parado ou data próxima.","27/10"],
+   ["7.3","Divulgar às franquias","Divulgação automática da campanha","Agente","novo","manual","Envia a campanha pronta às franquias.","27/10"]
+  ]},
+ {f:7, cls:"f7", n:"Fornecedores homologados", per:"Qua 28/10 a Ter 03/11",
   o:"Entrada de fornecedor e relacionamento: reuniões, prontuário, score de saúde e relatório para a diretoria.",
   r:[
-   ["5.5","Treinar o fornecedor","Checklist de entrada","Skill","novo","manual","Contrato, comissão, pagamento, perfis e treinamento."],
-   ["6.1","Definir data de reunião mensal com cada fornecedor","Agenda de reuniões","Rotina","novo","manual","Avisa quem está sem data no mês."],
-   ["6.2","Preparar a pauta","Pauta automática","Agente","ajuste","misto","Pronta depois do fechamento do mês."],
-   ["6.4","Registrar no prontuário","Prontuário automático","Agente","novo","manual","Ata e gravação na pasta do fornecedor."],
-   ["6.5","Monitorar a saúde do fornecedor","Score de saúde","Agente","novo","manual","Nota pelos dados da Loja e da Jornada."],
-   ["6.6","Reportar à gerência e à diretoria","Relatório de inconformidades","Skill","novo","manual","Histórico do fornecedor a partir do prontuário."]
+   ["5.5","Treinar o fornecedor","Checklist de entrada","Skill","novo","manual","Contrato, comissão, pagamento, perfis e treinamento.","28/10"],
+   ["6.1","Definir data de reunião com cada fornecedor","Agenda de reuniões","Rotina","novo","manual","Avisa quem está sem data; reunião no mínimo a cada 2 meses.","28/10"],
+   ["6.2","Preparar a pauta","Pauta automática","Agente","ajuste","misto","Pronta depois do fechamento do mês.","29/10"],
+   ["6.4","Registrar no prontuário","Prontuário automático","Agente","novo","manual","Ata e gravação na pasta do fornecedor no Drive.","29/10"],
+   ["6.5","Monitorar a saúde do fornecedor","Score de saúde","Agente","novo","manual","Nota pelos dados da Loja e da Jornada.","30/10"],
+   ["6.6","Reportar à gerência e à diretoria","Relatório de inconformidades","Skill","novo","manual","Histórico do fornecedor a partir do prontuário.","03/11"]
   ]},
- {f:7, cls:"f5", dia:"Qui · 22/10", n:"Gestão",
-  o:"A rotina da coordenação que ainda não estava na arquitetura: KPIs, tasks, equipe e documentação.",
+ {f:8, cls:"f5", n:"Suporte", per:"Ter 03 e Qua 04/11",
+  o:"Fecha o projeto: portfólio que se atualiza sozinho e relatório da auditoria da Implantação.",
   r:[
-   ["14.1","KPIs do setor","Lançamento automático de KPIs","Rotina","ajuste","misto","Lança direto das fontes no KPI System."],
-   ["14.2","Relatório mensal por fornecedor","Relatório do mês automático","Rotina","ajuste","misto","Gera o PDF de cada fornecedor."],
-   ["15.3","Atualizar a task","Resumo da call na task","Agente","novo","manual","O que foi feito vai para o Taskdex."],
-   ["16.2","1:1 e feedback","Pauta do 1:1","Skill","novo","manual","Junta entregas e pontos da semana."],
-   ["17.4","Documentação dos processos","Aviso de canvas desatualizado","Agente","novo","manual","Avisa quando a ferramenta mudou e o canvas não."]
+   ["12.3","Validar e documentar automações","Portfólio automático","Rotina","novo","manual","Atualiza o portfólio a partir do que está no ar.","03/11"],
+   ["13.3","Decidir a ação da auditoria","Relatório da auditoria","Agente","novo","manual","Junta os alertas da Implantação num relatório.","04/11"]
   ]},
- {f:8, cls:"f5", dia:"Qui · 22/10", n:"Suporte",
-  o:"O trabalho que não aparece: a auditoria das ferramentas da Implantação e os próprios agentes. Se um agente cai, o processo dele deixa de existir.",
+ {f:9, cls:"f9", n:"Gestão · depois do projeto", per:"Qui 05 a Seg 09/11",
+  o:"A Ray pediu para a coordenação ficar depois do projeto: primeiro as rotinas da área, depois a rotina de quem coordena.",
   r:[
-   ["12.3","Validar e documentar automações","Portfólio automático","Rotina","novo","manual","Atualiza o portfólio a partir do que está no ar."],
-   ["13.3","Decidir a ação da auditoria","Relatório da auditoria","Agente","novo","manual","Junta os alertas da Implantação num relatório."],
-   ["13.4","Monitorar os agentes","Monitor de saúde dos agentes","Agente","novo","manual","Avisa no Slack quando um agente para."]
+   ["14.1","KPIs do setor","Lançamento automático de KPIs","Rotina","ajuste","misto","Lança direto das fontes no KPI System.","05/11"],
+   ["14.2","Relatório mensal por fornecedor","Relatório do mês automático","Rotina","ajuste","misto","Gera o PDF de cada fornecedor.","05/11"],
+   ["15.3","Atualizar a task","Resumo da call na task","Agente","novo","manual","O que foi feito vai para o Taskdex.","06/11"],
+   ["16.2","1:1 e feedback","Pauta do 1:1","Skill","novo","manual","Junta entregas e pontos da semana.","09/11"],
+   ["17.4","Documentação dos processos","Aviso de canvas desatualizado","Agente","novo","manual","Avisa quando a ferramenta mudou e o canvas não.","09/11"]
   ]}
 ];
+/* calendário: semanas de seg a sex; extra = itens que não são automação */
+const WEEKS = [
+ {l:"12 a 16/10", d:[null,null,null,null,"16/10"]},
+ {l:"19 a 23/10", d:["19/10","20/10","21/10","22/10","23/10"]},
+ {l:"26 a 30/10", d:["26/10","27/10","28/10","29/10","30/10"]},
+ {l:"02 a 06/11", d:["02/11","03/11","04/11","05/11","06/11"]},
+ {l:"09/11", d:["09/11",null,null,null,null]}
+];
+const WD = ["Seg","Ter","Qua","Qui","Sex"];
+const OFF = {"02/11":"Finados"};
+const EXTRA = {
+ "19/10":[`<span class="chip html">HTML da task de prospecção para a Iara</span>`],
+ "23/10":[`<span class="chip res">Reserva para o que travou</span>`],
+ "30/10":[`<span class="chip res">Reserva para o que travou</span>`],
+ "04/11":[`<span class="chip fim">Entrega final do projeto</span>`],
+ "06/11":[`<span class="chip res">Reserva para o que travou</span>`]
+};
 
-const all = PHASES.flatMap(p=>p.r);
-const cnt = f => all.filter(f).length;
+const all = PHASES.flatMap(p=>p.r.map(r=>({r,p})));
+const cnt = f => all.filter(x=>f(x.r)).length;
 
-const DAYS = [...new Set(PHASES.map(p=>p.dia))].map(d=>PHASES.filter(p=>p.dia===d));
-document.getElementById("days").innerHTML = DAYS.map(ps=>
-  `<a class="day ${ps[0].cls}" href="#fase-${ps[0].f}"><span class="d">${ps[0].dia}</span><span class="n">${ps.length>1?`Fases ${ps.map(p=>p.f).join(" e ")}`:`Fase ${ps[0].f}`}</span><span class="q">${ps.map(p=>`${p.n} · ${p.r.length}`).join("<br>")}</span></a>`).join("") +
-  `<div class="day f6"><span class="d">Sex · 23/10</span><span class="n">Entrega final</span><span class="q">Arquitetura e portfólio atualizados</span></div>`;
+document.getElementById("cal").innerHTML =
+ `<div class="cal-h"><span></span>${WD.map(w=>`<span>${w}</span>`).join("")}</div>` +
+ WEEKS.map(w=>`<div class="wk"><span class="wl">${w.l}</span>${w.d.map((d,i)=>{
+   if(!d) return `<div class="cell empty" aria-hidden="true"></div>`;
+   if(OFF[d]) return `<div class="cell off"><span class="d">${WD[i]} <small>${d}</small></span><span class="off-t">${OFF[d]}, feriado</span></div>`;
+   const its = all.filter(x=>x.r[7]===d);
+   return `<div class="cell"><span class="d">${WD[i]} <small>${d}</small></span><div class="it">${its.map(x=>`<a class="chip ${x.p.cls}" href="#fase-${x.p.f}"><span class="code">${x.r[0]}</span>${x.r[2]}</a>`).join("")}${(EXTRA[d]||[]).join("")}</div></div>`;
+ }).join("")}</div>`).join("");
 
 const row = (k,v) => `<div class="r"><span class="k">${k}</span><b>${v}</b></div>`;
 const grp = (l,rows) => `<div class="g"><span class="gl">${l}</span><div class="rows">${rows}</div></div>`;
+const proj = all.filter(x=>x.p.f!==9).length;
 document.getElementById("summary").innerHTML =
-  grp("Cronograma", row("Automações", all.length) + row("Fases", PHASES.length) + row("Entrega final", "23/10")) +
-  grp("Situação", Object.keys(ST).map(k=>row(`<span class="tag st ${k}">${ST[k]}</span>`, cnt(r=>r[4]===k))).join("")) +
-  grp("Tipo", ["Agente","Skill","Rotina","Extensão"].map(t=>row(`<span class="tag tp">${t}</span>`, cnt(r=>r[3]===t))).join("")) +
+  grp("Cronograma", row("Automações no projeto", proj) + row("Depois do projeto", all.length-proj) + row("Ritmo", "2 <small>por dia</small>") + row("Entrega final", "04/11")) +
+  grp("Situação", Object.keys(ST).filter(k=>cnt(r=>r[4]===k)).map(k=>row(`<span class="tag st ${k}">${ST[k]}</span>`, cnt(r=>r[4]===k))).join("")) +
+  grp("Tipo", ["Agente","Skill","Rotina","Extensão"].filter(t=>cnt(r=>r[3]===t)).map(t=>row(`<span class="tag tp">${t}</span>`, cnt(r=>r[3]===t))).join("")) +
   grp("Como esses processos estão hoje", Object.keys(MODE).map(k=>row(`<span class="tag mode ${k}">${MODE[k]}</span>`, cnt(r=>r[5]===k))).join(""));
 
 document.getElementById("phases").innerHTML = PHASES.map(p=>`
  <section class="panel phase ${p.cls}" id="fase-${p.f}">
-  <div class="ph-h"><span class="tk">Fase ${p.f}</span><span class="tn">${p.n}</span><span class="dt">${p.dia}</span></div>
+  <div class="ph-h"><span class="tk">Fase ${p.f}</span><span class="tn">${p.n}</span><span class="dt">${p.per}</span></div>
   <p class="ph-o">${p.o}</p>
   <div class="tblwrap"><table>
-   <thead><tr><th>Processo</th><th>Automação</th><th>Tipo</th><th>Hoje</th><th>Situação</th></tr></thead>
-   <tbody>${p.r.map(r=>`<tr><td class="p"><span class="code">${r[0]}</span>${r[1]}</td><td class="a"><b>${r[2]}</b><span>${r[6]}</span></td><td><span class="tag tp">${r[3]}</span></td><td><span class="tag mode ${r[5]}">${MODE[r[5]]}</span></td><td><span class="tag st ${r[4]}">${ST[r[4]]}</span></td></tr>`).join("")}</tbody>
+   <thead><tr><th>Dia</th><th>Processo</th><th>Automação</th><th>Tipo</th><th>Hoje</th><th>Situação</th></tr></thead>
+   <tbody>${p.r.map(r=>`<tr><td class="code">${r[7]}</td><td class="p"><span class="code">${r[0]}</span>${r[1]}</td><td class="a"><b>${r[2]}</b><span>${r[6]}</span></td><td><span class="tag tp">${r[3]}</span></td><td><span class="tag mode ${r[5]}">${MODE[r[5]]}</span></td><td><span class="tag st ${r[4]}">${ST[r[4]]}</span></td></tr>`).join("")}</tbody>
   </table></div>
-  <div class="foot"><span><b>Fim do dia:</b> call de 30 min com a Ray, com o recorte da fase, os agentes e o status.</span><span><b>Atualiza:</b> arquitetura e portfólio.</span></div>
  </section>`).join("");
 </script>
 </body>
