@@ -171,34 +171,35 @@ const PHASES = [
    ["6.5","Monitorar a saúde do fornecedor","Score de saúde","Agente","novo","manual","Nota pelos dados da Loja e da Jornada."],
    ["6.6","Reportar à gerência e à diretoria","Relatório de inconformidades","Skill","novo","manual","Histórico do fornecedor a partir do prontuário."]
   ]},
- {f:3, cls:"f3", dia:"Ter · 20/10", n:"Compras: Loja, fechamento e Jornada",
-  o:"A venda e o fechamento da venda. A analista passa a cuidar só do que o agente não resolve.",
+ {f:3, cls:"f3", dia:"Ter · 20/10", n:"Compras: campanhas, Loja, Jornada e fechamento",
+  o:"Campanhas, pedidos da Loja e da Jornada e o fechamento do mês. A analista passa a cuidar só do que o agente não resolve.",
   r:[
-   ["7.1","Fazer campanhas de venda","Skill de campanha","Skill","novo","manual","Sugere produto, público e mensagem."],
-   ["7.3","Validar e mandar ao fornecedor","Validador de pedidos","Agente","novo","manual","Aprova o normal e segura o estranho."],
-   ["7.4","Cobrar o cliente","Aviso final do 7º dia","Rotina","ajuste","auto","Pague até as 18h ou o pedido é cancelado."],
-   ["7.5","Cancelar o pedido não pago","Cancelamento às 20h","Agente","novo","manual","Cancela sozinho no 7º dia sem pagamento."],
-   ["7.6","Confirmar o pagamento","Leitor de comprovante","Agente","novo","manual","O que não bate ganha a tag Pagamento inconsistente."],
-   ["7.8","Acompanhar a entrega","Cobrança de rastreio","Agente","novo","manual","Cobra o fornecedor que não informou o rastreio."],
-   ["8.1","Calcular a comissão","Fechamento no dia 1","Rotina","ajuste","misto","Planilha de conferência pronta sozinha."],
-   ["8.3","Pedir NF e boleto ao financeiro","Chamado automático no Suporte","Agente","novo","manual","Abre o chamado com o ok do fornecedor."],
+   ["7.1","Identificar ou receber a demanda","Alerta de oportunidade de campanha","Agente","novo","manual","Avisa produto novo, parado ou data próxima."],
+   ["7.3","Divulgar às franquias","Divulgação automática da campanha","Agente","novo","manual","Envia a campanha pronta às franquias."],
+   ["8.2","Validar e mandar ao fornecedor","Validador de pedidos","Agente","novo","manual","Aprova o normal e segura o estranho."],
+   ["8.3","Cobrar o cliente","Aviso final do 7º dia","Rotina","ajuste","auto","Pague até as 18h ou o pedido é cancelado."],
+   ["8.4","Cancelar o pedido não pago","Cancelamento às 20h","Agente","novo","manual","Cancela sozinho no 7º dia sem pagamento."],
+   ["8.5","Confirmar o pagamento","Leitor de comprovante","Agente","novo","manual","O que não bate ganha a tag Pagamento inconsistente."],
+   ["8.7","Acompanhar a entrega","Cobrança de rastreio","Agente","novo","manual","Cobra o fornecedor que não informou o rastreio."],
+   ["10.1","Calcular a comissão","Fechamento no dia 1","Rotina","ajuste","misto","Planilha de conferência pronta sozinha."],
+   ["10.3","Pedir NF e boleto ao financeiro","Chamado automático no Suporte","Agente","novo","manual","Abre o chamado com o ok do fornecedor."],
    ["9.5","Acompanhar prazos da Jornada","Alerta de atrasos","Agente","novo","manual","Avisa todo dia os pedidos de enxoval parados."]
   ]},
  {f:4, cls:"f4", dia:"Qua · 21/10", n:"Gestão",
   o:"A rotina da coordenação que ainda não estava na arquitetura: KPIs, tasks, equipe e documentação.",
   r:[
-   ["13.1","KPIs do setor","Lançamento automático de KPIs","Rotina","ajuste","misto","Lança direto das fontes no KPI System."],
-   ["13.2","Relatório mensal por fornecedor","Relatório do mês automático","Rotina","ajuste","misto","Gera o PDF de cada fornecedor."],
-   ["14.3","Atualizar a task","Resumo da call na task","Agente","novo","manual","O que foi feito vai para o Taskdex."],
-   ["15.2","1:1 e feedback","Pauta do 1:1","Skill","novo","manual","Junta entregas e pontos da semana."],
-   ["16.4","Documentação dos processos","Aviso de canvas desatualizado","Agente","novo","manual","Avisa quando a ferramenta mudou e o canvas não."]
+   ["14.1","KPIs do setor","Lançamento automático de KPIs","Rotina","ajuste","misto","Lança direto das fontes no KPI System."],
+   ["14.2","Relatório mensal por fornecedor","Relatório do mês automático","Rotina","ajuste","misto","Gera o PDF de cada fornecedor."],
+   ["15.3","Atualizar a task","Resumo da call na task","Agente","novo","manual","O que foi feito vai para o Taskdex."],
+   ["16.2","1:1 e feedback","Pauta do 1:1","Skill","novo","manual","Junta entregas e pontos da semana."],
+   ["17.4","Documentação dos processos","Aviso de canvas desatualizado","Agente","novo","manual","Avisa quando a ferramenta mudou e o canvas não."]
   ]},
  {f:5, cls:"f5", dia:"Qui · 22/10", n:"Suporte",
   o:"O trabalho que não aparece: a auditoria das ferramentas da Implantação e os próprios agentes. Se um agente cai, o processo dele deixa de existir.",
   r:[
-   ["11.3","Validar e documentar automações","Portfólio automático","Rotina","novo","manual","Atualiza o portfólio a partir do que está no ar."],
-   ["12.3","Decidir a ação da auditoria","Relatório da auditoria","Agente","novo","manual","Junta os alertas da Implantação num relatório."],
-   ["12.4","Monitorar os agentes","Monitor de saúde dos agentes","Agente","novo","manual","Avisa no Slack quando um agente para."]
+   ["12.3","Validar e documentar automações","Portfólio automático","Rotina","novo","manual","Atualiza o portfólio a partir do que está no ar."],
+   ["13.3","Decidir a ação da auditoria","Relatório da auditoria","Agente","novo","manual","Junta os alertas da Implantação num relatório."],
+   ["13.4","Monitorar os agentes","Monitor de saúde dos agentes","Agente","novo","manual","Avisa no Slack quando um agente para."]
   ]}
 ];
 
