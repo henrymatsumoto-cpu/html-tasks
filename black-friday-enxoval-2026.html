@@ -1,0 +1,539 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Black Friday Enxoval 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* Bluezone — tokens (tema escuro, neutros tintados no hue da marca) */
+  --color-primary:        #0055FF;
+  --color-primary-on-dark:#4D85FF;
+  --color-success:        #22C55E;
+  --color-error:          #E7000B;
+  --color-error-on-dark:  #FF5A62;
+  --color-warning:        #F54A00;
+  --color-warning-on-dark:#FF8A3D;
+
+  --color-background: #080E32;
+  --color-surface:    #0F1742;
+  --color-surface-2:  #18225A;
+  --color-border:     #232E6B;
+  --color-border-soft:#1A2458;
+  --color-foreground: #EEF1FB;
+  --color-muted-fg:   #9AA2C8;
+
+  --space-xs:4px; --space-sm:8px; --space-md:16px; --space-lg:24px;
+  --space-xl:32px; --space-2xl:48px; --space-3xl:64px;
+
+  --radius-sm:4px; --radius-lg:8px; --radius-xl:12px; --radius-2xl:16px; --radius-full:9999px;
+
+  --gutter: clamp(24px,6vw,112px);
+  --font: "Figtree", system-ui, sans-serif;
+  --ease: cubic-bezier(.16,1,.3,1);
+}
+
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0; color:var(--color-foreground); font-family:var(--font);
+  background:linear-gradient(180deg,#0B1240 0%,var(--color-background) 60%);
+  background-color:var(--color-background);
+  -webkit-font-smoothing:antialiased; overflow:hidden;
+}
+
+/* ---------- Tipografia Bluezone ---------- */
+h1{font-size:48px;font-weight:700;line-height:1.1;margin:0;letter-spacing:-.022em}
+h2{font-size:30px;font-weight:500;line-height:1.2;margin:0}
+h3{font-size:24px;font-weight:500;line-height:1.3;margin:0}
+h4{font-size:20px;font-weight:500;line-height:1.4;margin:0}
+p{font-size:16px;font-weight:400;line-height:1.6;margin:0;color:var(--color-muted-fg);max-width:68ch}
+.lead{font-size:20px;font-weight:500;line-height:1.5;color:var(--color-foreground);max-width:60ch}
+.body{font-size:14px;font-weight:500;line-height:1.5}
+.detail{font-size:12px;font-weight:500;line-height:1.4}
+strong{color:var(--color-foreground);font-weight:700}
+
+.eyebrow{
+  font-size:12px;font-weight:700;line-height:1.4;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--color-primary-on-dark);margin:0;
+  display:inline-flex;align-items:center;gap:10px;
+}
+.eyebrow::before{content:"";width:18px;height:2px;background:currentColor;border-radius:var(--radius-full)}
+.eyebrow.good{color:var(--color-success)}
+.eyebrow.bad{color:var(--color-error-on-dark)}
+
+/* ---------- Estrutura ---------- */
+.deck{position:relative;height:100vh;width:100vw}
+.slide{
+  position:absolute;inset:0;display:none;
+  padding:clamp(76px,9vw,116px) var(--gutter) clamp(72px,8vw,92px);
+  overflow:auto;animation:enter .55s var(--ease) both;
+}
+.slide.is-active{display:flex;flex-direction:column;justify-content:center}
+@keyframes enter{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+.slide > *{animation:rise .55s var(--ease) both}
+.slide > *:nth-child(2){animation-delay:.06s}
+.slide > *:nth-child(3){animation-delay:.12s}
+.slide > *:nth-child(4){animation-delay:.18s}
+@keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.slide,.slide > *{animation:none}}
+
+/* chrome do slide: faixa superior com nome do deck e número */
+.slide-top{
+  position:absolute;top:clamp(30px,4vw,54px);left:var(--gutter);right:var(--gutter);
+  display:flex;align-items:baseline;justify-content:space-between;gap:var(--space-md);
+  padding-bottom:var(--space-md);border-bottom:1px solid var(--color-border-soft);
+  animation:none;
+}
+.slide-top .deck-name{font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--color-muted-fg)}
+.slide-top .slide-no{font-size:11px;font-weight:700;letter-spacing:.2em;color:var(--color-primary-on-dark);font-variant-numeric:tabular-nums}
+
+.slide-head{margin-bottom:var(--space-xl);flex:none;max-width:56ch}
+.slide-head .eyebrow{margin-bottom:var(--space-md)}
+.slide-head h1{max-width:20ch}
+.slide-head p{margin-top:var(--space-md)}
+
+/* ---------- Capa ---------- */
+.cover{justify-content:flex-end !important;gap:var(--space-lg);padding-bottom:clamp(88px,9vw,110px)}
+.cover h1{font-size:clamp(44px,6.8vw,88px);letter-spacing:-.035em;max-width:15ch}
+.cover .rule{height:1px;background:var(--color-border);margin:var(--space-lg) 0 var(--space-sm)}
+.cover-meta{display:flex;flex-wrap:wrap;gap:clamp(24px,5vw,64px);align-items:flex-end}
+.cover-meta div{min-width:150px}
+.cover-meta .detail{color:var(--color-muted-fg);letter-spacing:.14em;text-transform:uppercase;margin-bottom:8px}
+.cover-meta .body{color:var(--color-foreground)}
+.cover-mark{
+  position:absolute;top:clamp(30px,4vw,54px);left:var(--gutter);
+  display:flex;align-items:center;gap:10px;animation:none;
+}
+.cover-mark i{width:10px;height:10px;border-radius:var(--radius-full);background:var(--color-primary);display:block}
+.cover-mark span{font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase}
+
+/* ---------- Cartões e KPIs ---------- */
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:var(--space-md)}
+.kpi{
+  background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-2xl);
+  padding:var(--space-lg) var(--space-lg) var(--space-xl);
+}
+.kpi .detail{color:var(--color-muted-fg);letter-spacing:.12em;text-transform:uppercase}
+.kpi .num{font-size:clamp(36px,4.2vw,56px);font-weight:700;line-height:1;margin:var(--space-lg) 0 var(--space-sm);letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.kpi .num u{text-decoration:none;font-size:.34em;font-weight:500;letter-spacing:0;color:var(--color-muted-fg);margin-left:4px}
+.kpi .note{font-size:13px;font-weight:400;line-height:1.5;color:var(--color-muted-fg)}
+.kpi.pos .num{color:var(--color-success)}
+.kpi.pos{border-color:rgba(34,197,94,.28)}
+.kpi.neg .num{color:var(--color-error-on-dark)}
+.kpi.neg{border-color:rgba(255,90,98,.3)}
+.kpi.warn .num{color:var(--color-warning-on-dark)}
+.kpi.plain .num{font-size:20px;font-weight:500;letter-spacing:0;margin-bottom:var(--space-sm);color:var(--color-foreground)}
+
+.hero-split{display:grid;grid-template-columns:minmax(210px,.62fr) 1.38fr;gap:clamp(32px,5vw,80px);align-items:center}
+.hero-num{font-size:clamp(66px,9.5vw,140px);font-weight:700;line-height:.84;letter-spacing:-.05em;font-variant-numeric:tabular-nums}
+.hero-num small{display:block;font-size:13px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--color-muted-fg);margin-top:var(--space-lg);max-width:20ch;line-height:1.5}
+
+/* ---------- Tabelas ---------- */
+table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+caption{text-align:left;font-size:12px;font-weight:400;color:var(--color-muted-fg);padding-bottom:var(--space-md)}
+th{
+  text-align:left;font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--color-muted-fg);padding:0 var(--space-lg) var(--space-md) 0;border-bottom:1px solid var(--color-border);
+}
+th.num,td.num{text-align:right;padding-right:0}
+th.num+th:not(.num),td.num+td:not(.num){padding-left:22px}
+td{padding:15px var(--space-lg) 15px 0;border-bottom:1px solid var(--color-border-soft);font-size:15px;font-weight:400;color:var(--color-muted-fg)}
+tbody tr:last-child td{border-bottom:none}
+tbody tr{transition:background .2s var(--ease)}
+tbody tr:hover td{color:var(--color-foreground)}
+tfoot td{border-top:1px solid var(--color-border);border-bottom:none;font-weight:700;color:var(--color-foreground);padding-top:16px}
+td.name{font-weight:700;color:var(--color-foreground)}
+
+/* barras */
+td.track{width:34%}
+.bar{display:flex;align-items:center;gap:14px}
+.bar .t{flex:1;height:8px;border-radius:var(--radius-full);background:var(--color-surface-2);overflow:hidden}
+.bar .t i{display:block;height:100%;border-radius:var(--radius-full);background:var(--color-primary)}
+.bar.hi .t i{background:var(--color-warning-on-dark)}
+.bar b{min-width:38px;text-align:right;font-weight:700;color:var(--color-foreground);font-size:15px}
+
+.badge{display:inline-block;border-radius:var(--radius-full);padding:4px 12px;font-size:12px;font-weight:700;line-height:1.4;white-space:nowrap}
+.badge.late{background:rgba(231,0,11,.16);color:var(--color-error-on-dark)}
+.badge.ok{background:rgba(34,197,94,.16);color:var(--color-success)}
+.badge.open{background:rgba(245,74,0,.16);color:var(--color-warning-on-dark)}
+
+/* ---------- Blocos ---------- */
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:var(--space-lg)}
+.block{background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-2xl);padding:var(--space-xl) var(--space-lg)}
+.block h4{margin-bottom:var(--space-md)}
+.block p{font-size:14px;max-width:none;line-height:1.55}
+.block .detail{color:var(--color-muted-fg);letter-spacing:.14em;text-transform:uppercase;margin-bottom:var(--space-sm)}
+.block ul{margin:var(--space-md) 0 0;padding:0;list-style:none;display:grid;gap:var(--space-sm)}
+.block li{font-size:14px;font-weight:400;line-height:1.55;color:var(--color-muted-fg);padding-left:22px;position:relative}
+.block li::before{content:"";position:absolute;left:0;top:8px;width:6px;height:6px;border-radius:var(--radius-full);background:var(--color-primary-on-dark)}
+.block table td{padding:11px var(--space-md) 11px 0}
+
+/* cartões de código de imóvel */
+.chips{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(148px,1fr));gap:var(--space-md)}
+.chips li{background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-xl);padding:var(--space-md) var(--space-lg)}
+.chips b{display:block;font-size:18px;font-weight:700;letter-spacing:-.01em;font-variant-numeric:tabular-nums}
+.chips span{display:block;font-size:12px;font-weight:500;color:var(--color-muted-fg);margin-top:8px;letter-spacing:.06em}
+
+.block .chips{grid-template-columns:repeat(auto-fill,minmax(128px,1fr));gap:10px}
+.block .chips li{padding:10px 12px;color:var(--color-foreground)}
+.block .chips li::before{display:none}
+.block .chips b{font-size:15px}
+.takeaway{margin-top:var(--space-xl);border-top:1px solid var(--color-border);padding-top:var(--space-lg);display:flex;gap:var(--space-lg);align-items:baseline;flex-wrap:wrap}
+.takeaway .detail{letter-spacing:.18em;text-transform:uppercase;color:var(--color-muted-fg);flex:none}
+.takeaway .lead{font-size:17px;max-width:72ch}
+.source{font-size:12px;font-weight:400;line-height:1.6;color:var(--color-muted-fg);max-width:92ch}
+
+/* ---------- Navegação ---------- */
+.nav{position:fixed;left:0;right:0;bottom:0;height:60px;display:flex;align-items:center;gap:var(--space-md);padding:0 var(--gutter);background:linear-gradient(to top,var(--color-background) 55%,transparent);z-index:20}
+.dots{display:flex;gap:6px;flex:1;align-items:center}
+.dots button{width:20px;height:4px;border:none;border-radius:var(--radius-full);padding:0;cursor:pointer;background:var(--color-border);transition:background .25s var(--ease),width .25s var(--ease)}
+.dots button:hover{background:var(--color-muted-fg)}
+.dots button[aria-current="true"]{background:var(--color-primary);width:38px}
+.dots button:focus-visible{outline:2px solid var(--color-primary-on-dark);outline-offset:3px}
+.nav-btn{height:36px;min-width:36px;padding:0 16px;border-radius:var(--radius-full);border:1px solid var(--color-border);background:transparent;color:var(--color-foreground);font-family:var(--font);font-size:13px;font-weight:700;cursor:pointer;transition:background .2s var(--ease),border-color .2s var(--ease),opacity .2s var(--ease)}
+.nav-btn:hover{background:var(--color-surface-2);border-color:var(--color-primary)}
+.nav-btn:focus-visible{outline:2px solid var(--color-primary-on-dark);outline-offset:2px}
+.nav-btn[disabled]{opacity:.3;cursor:not-allowed}
+.counter{font-size:13px;font-weight:700;color:var(--color-muted-fg);font-variant-numeric:tabular-nums;min-width:52px;text-align:right}
+
+@media (max-width:900px){
+  .hero-split{grid-template-columns:1fr;gap:var(--space-xl)}
+  h1{font-size:32px}
+  .slide-head h1{max-width:none}
+  .slide{padding:72px 20px 80px}
+  table{font-size:13px}
+  td{padding:12px 10px 12px 0;font-size:13px}
+  th{font-size:10px;padding-right:10px}
+  td.track{width:30%}
+  .takeaway{gap:var(--space-sm)}
+}
+
+@media print{
+  @page{size:A4 landscape;margin:11mm}
+  body{overflow:visible;background:#fff}
+  .nav{display:none}
+  .deck{height:auto}
+  .slide{position:static;display:flex !important;flex-direction:column;justify-content:flex-start;height:auto;page-break-after:always;break-after:page;animation:none;padding:0 0 10mm}
+  .slide > *{animation:none}
+  .slide-top,.cover-mark{position:static;padding:0 0 8px;margin-bottom:22px}
+  .kpi,.block,.chips li{background:#fff}
+  /* densidade para caber 1 slide por página */
+  h1{font-size:27px;letter-spacing:-.02em}
+  .cover h1{font-size:40px}
+  h4{font-size:15px}
+  p,.block p,.kpi .note,.chips span{font-size:11px;line-height:1.45}
+  .lead,.takeaway .lead{font-size:13px;line-height:1.45;max-width:none}
+  .eyebrow,.slide-top .deck-name,.slide-top .slide-no{font-size:9px}
+  .slide-head{margin-bottom:18px;max-width:none}
+  .slide-head p{margin-top:8px}
+  .kpis,.grid2{gap:10px}
+  .kpi{padding:12px 14px}
+  .kpi .num{font-size:30px;margin:10px 0 6px}
+  .kpi.neg .num{color:var(--color-error-on-dark)}
+.kpi.neg{border-color:rgba(255,90,98,.3)}
+.kpi.warn .num{color:var(--color-warning-on-dark)}
+.kpi.plain .num{font-size:15px}
+  .block{padding:14px}
+  .block li{font-size:11px;line-height:1.45}
+  .block ul{gap:5px;margin-top:8px}
+  .hero-split{gap:28px}
+  .hero-num{font-size:64px}
+  .hero-num small{font-size:9px;margin-top:10px}
+  table{font-size:11px}
+  caption{font-size:10px;padding-bottom:8px}
+  th{font-size:9px;padding-bottom:7px;padding-right:12px}
+  td{padding:7px 12px;font-size:11px;padding-left:0}
+  .bar .t{height:6px}
+  .bar b{font-size:11px;min-width:26px}
+  .chips{gap:8px;grid-template-columns:repeat(6,1fr)}
+  .chips li{padding:8px 10px}
+  .chips b{font-size:13px}
+  .chips span{margin-top:4px}
+  .block .chips{grid-template-columns:repeat(4,1fr);gap:6px}
+  .block .chips li{padding:6px 8px}
+  .block .chips b{font-size:11px}
+  .block .chips span{font-size:9px}
+  .takeaway{margin-top:16px;padding-top:10px;gap:12px}
+  .takeaway .detail{font-size:9px}
+  .source{font-size:9px;line-height:1.5}
+  .badge{font-size:10px;padding:2px 9px}
+  .slide-top,.cover-mark{margin-bottom:16px}
+  :root{
+    --color-foreground:#080E32;--color-muted-fg:#565C7C;--color-border:#D5D9E6;--color-border-soft:#E6E9F1;
+    --color-surface:#fff;--color-surface-2:#EDEFF5;--color-primary-on-dark:#0055FF;
+    --color-error-on-dark:#C1000A;--color-warning-on-dark:#C43A00;
+  }
+}
+
+/* ---------- Ajuste à tela ---------- */
+.slide.is-active{justify-content:safe center}
+.fit{width:100%;transform-origin:top left}
+.cover .fit{display:flex;flex-direction:column;gap:var(--space-lg)}
+.slide-head h1{font-size:clamp(26px,4.6vh,48px)}
+.slide{padding-top:clamp(72px,11vh,116px);padding-bottom:clamp(68px,9vh,92px)}
+.chips-lg{grid-template-columns:repeat(auto-fill,minmax(170px,1fr))}
+.chips-lg li{padding:12px 16px}
+.chips-lg b{font-size:17px}
+.chips-lg span{font-size:13px;margin-top:6px}
+.slide-head{max-width:72ch}
+.slide-head h1{max-width:38ch}
+.slide-head{margin-bottom:clamp(14px,3vh,32px)}
+.slide-head .eyebrow{margin-bottom:clamp(8px,1.6vh,16px)}
+.slide-head p{margin-top:clamp(6px,1.4vh,16px)}
+td{padding-top:clamp(6px,1.25vh,15px);padding-bottom:clamp(6px,1.25vh,15px)}
+.takeaway{margin-top:clamp(14px,3vh,32px);padding-top:clamp(10px,2vh,24px)}
+.kpi{padding:clamp(14px,2.4vh,24px) var(--space-lg) clamp(16px,3vh,32px)}
+.kpi .num{margin:clamp(10px,2vh,24px) 0 var(--space-sm)}
+.hero-num{font-size:clamp(60px,13vh,140px)}
+@media print{ .slide-head h1{max-width:none} td{padding:7px 12px 7px 0} .takeaway{margin-top:16px;padding-top:10px} .kpi{padding:12px 14px} .kpi .num{margin:10px 0 6px} .hero-num{font-size:64px} .slide-head{margin-bottom:18px} }
+@media print{ .fit{zoom:1 !important} .slide{padding:0 0 10mm !important} .chips-lg{grid-template-columns:repeat(6,1fr);gap:8px} .chips-lg li{padding:8px 10px} .chips-lg b{font-size:13px} .chips-lg span{font-size:10px;margin-top:4px} .slide-head h1{font-size:27px} }
+
+.price-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(380px,1fr));gap:clamp(20px,3vw,48px)}
+td.off{color:var(--color-success);font-weight:700}
+td.strike{text-decoration:line-through;text-decoration-color:rgba(154,162,200,.5)}
+.split{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--space-md)}
+.split .kpi .num{font-size:clamp(34px,4vw,52px)}
+.eq{display:flex;align-items:center;gap:clamp(10px,1.6vw,22px);flex-wrap:wrap;margin-top:var(--space-lg)}
+.eq .op{font-size:28px;font-weight:500;color:var(--color-muted-fg)}
+.tag{display:inline-block;border-radius:var(--radius-full);padding:3px 10px;font-size:11px;font-weight:700;letter-spacing:.06em;background:rgba(245,74,0,.16);color:var(--color-warning-on-dark);vertical-align:middle;margin-left:8px}
+.steps{counter-reset:s;list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:var(--space-md)}
+.steps li{counter-increment:s;background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-2xl);padding:var(--space-lg)}
+.steps li::before{content:counter(s,decimal-leading-zero);display:block;font-size:13px;font-weight:800;color:var(--color-primary-on-dark);letter-spacing:.12em;margin-bottom:var(--space-md)}
+.steps h4{font-size:17px;margin-bottom:8px}
+.steps p{font-size:14px;line-height:1.5}
+@media (max-width:900px){.split{grid-template-columns:1fr}.price-grid{grid-template-columns:1fr}}
+@media print{.steps li{background:#fff;padding:12px}.steps p{font-size:11px}.steps h4{font-size:13px}.price-grid{gap:18px}}
+
+:root{color-scheme:dark}
+</style>
+</head>
+<body>
+
+<main class="deck" id="deck">
+
+  <!-- 1 — Capa -->
+  <section class="slide cover" aria-label="Capa">
+    <div class="cover-mark"><i></i><span>Seazone · Fornecedores</span></div>
+    <p class="eyebrow">Proposta aos fornecedores de enxoval</p>
+    <h1>Black Friday Enxoval 2026</h1>
+    <p class="lead">Em novembro a Seazone baixa a comissão de 5% para 3%. O fornecedor reduz o preço na mesma ação, e o desconto inteiro vai para o proprietário que comprar o enxoval no mês.</p>
+    <div class="rule"></div>
+    <div class="cover-meta">
+      <div><p class="detail">Período</p><p class="body">Vendas fechadas de 01/11 a 30/11/2026</p></div>
+      <div><p class="detail">Base</p><p class="body">Ação de 2025 com a Matinali</p></div>
+      <div><p class="detail">Gerado em</p><p class="body">16/10/2026</p></div>
+    </div>
+  </section>
+
+  <!-- 2 — Como foi 2025 -->
+  <section class="slide" aria-label="Como funcionou a ação de 2025">
+    <div class="slide-head">
+      <p class="eyebrow">O que fizemos em 2025 · Matinali</p>
+      <h1>5% de desconto, dividido entre Seazone e Matinali</h1>
+      <p>De <strong>10/11 a 30/11/2025</strong>, os itens da Matinali saíram 5% abaixo da tabela de contrato. O objetivo era destravar imóveis parados por enxoval e acelerar a implantação.</p>
+    </div>
+    <div class="split">
+      <div class="kpi"><p class="detail">Seazone cedeu</p><p class="num">2<u>p.p.</u></p><p class="note">A comissão das vendas no período caiu de 5% para 3%.</p></div>
+      <div class="kpi"><p class="detail">Matinali cedeu</p><p class="num">3<u>%</u></p><p class="note">Redução no preço dos produtos durante o período.</p></div>
+      <div class="kpi pos"><p class="detail">Proprietário recebeu</p><p class="num">5<u>% off</u></p><p class="note">No link de pagamento. No PIX somava com os 7% que já existiam, total de 12%.</p></div>
+    </div>
+    <div class="takeaway">
+      <p class="detail">Leitura</p>
+      <p class="lead">O desconto que o proprietário via era a soma do que <strong>cada lado abriu mão</strong>. Ninguém bancou a ação sozinho.</p>
+    </div>
+  </section>
+
+  <!-- 3 — Resultado 2025 -->
+  <section class="slide" aria-label="Comissão e vendas de novembro de 2025">
+    <div class="slide-head">
+      <p class="eyebrow">Resultado · comissão Matinali out–dez/2025</p>
+      <h1>Novembro rendeu R$ 11.253,97 de comissão mesmo com a taxa menor</h1>
+      <p>Valores das NFs de comissão que a Seazone emitiu para a Matinali. A venda de outubro e dezembro sai da comissão de 5%. Novembro misturou dias a 5% (01 a 09/11) e dias a 3% (10 a 30/11).</p>
+    </div>
+    <table>
+      <thead><tr><th scope="col">Mês das vendas</th><th scope="col" class="num">Comissão (NF)</th><th scope="col" class="num">Taxa</th><th scope="col" class="num">Venda implícita</th><th scope="col">Volume</th></tr></thead>
+      <tbody>
+        <tr><td class="name">Outubro/2025</td><td class="num">R$ 12.071,41</td><td class="num">5%</td><td class="num">R$ 241,4 mil</td><td class="track"><div class="bar"><div class="t"><i style="width:77%"></i></div><b>77</b></div></td></tr>
+        <tr><td class="name">Novembro/2025 <span class="tag">ESTIMADO</span></td><td class="num">R$ 11.253,97</td><td class="num">5% → 3%</td><td class="num">≈ R$ 312,6 mil</td><td class="track"><div class="bar hi"><div class="t"><i style="width:100%"></i></div><b>100</b></div></td></tr>
+        <tr><td class="name">Dezembro/2025</td><td class="num">R$ 9.632,68</td><td class="num">5%</td><td class="num">R$ 192,7 mil</td><td class="track"><div class="bar"><div class="t"><i style="width:62%"></i></div><b>62</b></div></td></tr>
+      </tbody>
+    </table>
+    <div class="takeaway">
+      <p class="detail">Leitura</p>
+      <p class="lead">Com ~70% das vendas no período da promoção (21 dos 30 dias), novembro vendeu <strong>≈ R$ 313 mil, uns 30% acima de outubro</strong>. A faixa possível vai de R$ 225 mil (tudo a 5%) a R$ 375 mil (tudo a 3%).</p>
+    </div>
+    <p class="source" style="margin-top:14px">Fontes: solicitações ao financeiro no #suporte-financeiro (NFs de 12/11/2025, 12/12/2025 e 13/01/2026) e comprovante Pix da Matinali de 15/12/2025 (R$ 11.085,16 líquido, após 1,5% de IR retido). O detalhe por pedido de novembro/2025 não foi encontrado no Drive, então o volume é uma estimativa.</p>
+  </section>
+
+  <!-- 4 — Preços 2025 -->
+  <section class="slide" aria-label="Tabela de preços da Black Friday 2025">
+    <div class="slide-head">
+      <p class="eyebrow">Preços praticados · Black Friday 2025</p>
+      <h1>Tabela Matinali: contrato × promoção</h1>
+      <p>Valor unitário em R$. Todos os itens com 5% abaixo da tabela de contrato, antes do desconto de PIX.</p>
+    </div>
+    <div class="price-grid">
+      <table><caption>Lençóis, fronhas e duvets</caption><thead><tr><th scope="col">Produto</th><th scope="col">Medida</th><th scope="col" class="num">Contrato</th><th scope="col" class="num">Black Friday</th></tr></thead><tbody><tr><td class="name">Lençol Solteiro</td><td>1,60 × 2,50 m</td><td class="num strike">42,75</td><td class="num off">40,61</td></tr><tr><td class="name">Lençol Casal</td><td>1,80 × 2,50 m</td><td class="num strike">47,78</td><td class="num off">45,39</td></tr><tr><td class="name">Lençol Casal</td><td>2,20 × 2,50 m</td><td class="num strike">57,83</td><td class="num off">54,94</td></tr><tr><td class="name">Lençol Queen</td><td>2,50 × 2,80 m</td><td class="num strike">72,92</td><td class="num off">69,27</td></tr><tr><td class="name">Lençol King (c/ emenda)</td><td>2,80 × 2,80 m</td><td class="num strike">86,78</td><td class="num off">82,44</td></tr><tr><td class="name">Lençol Super King (c/ emenda)</td><td>3,00 × 3,00 m</td><td class="num strike">99,36</td><td class="num off">94,39</td></tr><tr><td class="name">Fronha sem aba</td><td>0,50 × 0,70 m</td><td class="num strike">11,39</td><td class="num off">10,82</td></tr><tr><td class="name">Fronha 2 abas</td><td>0,50 × 0,70 m</td><td class="num strike">13,68</td><td class="num off">13,00</td></tr><tr><td class="name">Fronha 3 abas</td><td>0,50 × 0,70 m</td><td class="num strike">14,93</td><td class="num off">14,18</td></tr><tr><td class="name">Fronha 4 abas</td><td>0,50 × 0,70 m</td><td class="num strike">16,79</td><td class="num off">15,95</td></tr><tr><td class="name">Duvet Solteiro</td><td>1,80 × 2,40 m</td><td class="num strike">113,60</td><td class="num off">107,92</td></tr><tr><td class="name">Duvet Casal</td><td>2,20 × 2,40 m</td><td class="num strike">138,17</td><td class="num off">131,26</td></tr></tbody></table>
+      <table><caption>Duvets, edredons, cobertores e banho</caption><thead><tr><th scope="col">Produto</th><th scope="col">Medida</th><th scope="col" class="num">Contrato</th><th scope="col" class="num">Black Friday</th></tr></thead><tbody><tr><td class="name">Duvet Queen</td><td>2,40 × 2,60 m</td><td class="num strike">162,73</td><td class="num off">154,59</td></tr><tr><td class="name">Duvet King</td><td>2,60 × 2,80 m</td><td class="num strike">193,43</td><td class="num off">183,76</td></tr><tr><td class="name">Edredom Solteiro</td><td>1,80 × 2,40 m</td><td class="num strike">187,09</td><td class="num off">177,74</td></tr><tr><td class="name">Edredom Casal</td><td>2,20 × 2,40 m</td><td class="num strike">214,42</td><td class="num off">203,70</td></tr><tr><td class="name">Edredom Queen</td><td>2,40 × 2,60 m</td><td class="num strike">261,35</td><td class="num off">248,28</td></tr><tr><td class="name">Edredom King</td><td>2,60 × 2,80 m</td><td class="num strike">299,93</td><td class="num off">284,93</td></tr><tr><td class="name">Cobertor Queen 200 g/m²</td><td>2,20 × 2,40 m</td><td class="num strike">90,11</td><td class="num off">85,60</td></tr><tr><td class="name">Cobertor Queen 300 g/m²</td><td>2,20 × 2,40 m</td><td class="num strike">155,50</td><td class="num off">147,73</td></tr><tr><td class="name">Toalha de Banho</td><td>0,70 × 1,40 m</td><td class="num strike">42,91</td><td class="num off">40,76</td></tr><tr><td class="name">Toalha de Rosto</td><td>0,45 × 0,80 m</td><td class="num strike">18,51</td><td class="num off">17,58</td></tr><tr><td class="name">Piso Atoalhado</td><td>0,46 × 0,80 m</td><td class="num strike">23,24</td><td class="num off">22,08</td></tr><tr><td class="name">Tapete Chenille</td><td>0,40 × 0,60 m</td><td class="num strike">27,58</td><td class="num off">26,20</td></tr></tbody></table>
+    </div>
+    <p class="source" style="margin-top:14px">Fonte: planilha “produtos”, pasta Matinali › Promoções › Black Friday 2025 (Drive, 06/11/2025).</p>
+  </section>
+
+  <!-- 5 — Proposta 2026 -->
+  <section class="slide" aria-label="Proposta para novembro de 2026">
+    <div class="slide-head">
+      <p class="eyebrow good">Proposta 2026</p>
+      <h1>Novembro inteiro com comissão Seazone de 3%</h1>
+      <p>Mesma lógica de 2025, agora valendo para <strong>todas as vendas fechadas de 01/11 a 30/11/2026</strong>, e aberta aos fornecedores de enxoval da Seazone.</p>
+    </div>
+    <div class="split">
+      <div class="kpi"><p class="detail">Seazone</p><p class="num">5% → 3%</p><p class="note">Abre mão de 2 p.p. da comissão em toda venda fechada em novembro.</p></div>
+      <div class="kpi"><p class="detail">Fornecedor</p><p class="num">−3<u>% sugerido</u></p><p class="note">Reduz o preço na tabela de contrato. Em 2025 a Matinali entrou com 3%.</p></div>
+      <div class="kpi pos"><p class="detail">Proprietário</p><p class="num">5<u>% off</u></p><p class="note">Desconto no link de pagamento, somado ao desconto de PIX que já existe.</p></div>
+    </div>
+    <div class="takeaway">
+      <p class="detail">Por quê</p>
+      <p class="lead">Novembro antecede a alta temporada. Um empurrão no preço <strong>destrava imóveis parados por enxoval</strong> e coloca mais unidades no ar antes de dezembro.</p>
+    </div>
+  </section>
+
+  <!-- 6 — Simulação -->
+  <section class="slide" aria-label="Simulação por volume de vendas">
+    <div class="slide-head">
+      <p class="eyebrow">Simulação · quem cede quanto</p>
+      <h1>A cada R$ 100 mil vendidos, o proprietário economiza R$ 5 mil</h1>
+      <p>Cenários de venda do mês, considerando os 3% do fornecedor sugeridos. Valores em R$.</p>
+    </div>
+    <table>
+      <thead><tr><th scope="col">Venda em novembro</th><th scope="col" class="num">Seazone cede (2%)</th><th scope="col" class="num">Fornecedor cede (3%)</th><th scope="col" class="num">Proprietário economiza</th><th scope="col" class="num">Comissão Seazone (3%)</th></tr></thead>
+      <tbody>
+        <tr><td class="name">R$ 200 mil</td><td class="num">4.000</td><td class="num">6.000</td><td class="num off">10.000</td><td class="num">6.000</td></tr>
+        <tr><td class="name">R$ 300 mil</td><td class="num">6.000</td><td class="num">9.000</td><td class="num off">15.000</td><td class="num">9.000</td></tr>
+        <tr><td class="name">R$ 400 mil</td><td class="num">8.000</td><td class="num">12.000</td><td class="num off">20.000</td><td class="num">12.000</td></tr>
+      </tbody>
+    </table>
+    <div class="takeaway">
+      <p class="detail">Ponto de equilíbrio</p>
+      <p class="lead">Para a Seazone manter a mesma comissão de um mês normal, novembro precisa vender <strong>1,67× o volume de costume</strong>. Em 2025 o volume subiu (~30%) e a comissão ficou em 93% da de outubro. Para o fornecedor, o ganho vem do volume extra.</p>
+    </div>
+  </section>
+
+  <!-- 7 — Próximos passos -->
+  <section class="slide" aria-label="Próximos passos">
+    <div class="slide-head">
+      <p class="eyebrow">Próximos passos</p>
+      <h1>O que precisamos combinar até o fim de outubro</h1>
+    </div>
+    <ol class="steps">
+      <li><h4>Percentual do fornecedor</h4><p>Confirmar quanto cada fornecedor reduz no preço. A sugestão é 3%, igual a 2025.</p></li>
+      <li><h4>Regra de “venda fechada”</h4><p>Definir o marco que conta para novembro: pedido criado ou pagamento confirmado até 30/11.</p></li>
+      <li><h4>Tabela promocional</h4><p>Fornecedor envia os preços de novembro. A Seazone atualiza o Jornada Enxoval e a lojinha a partir de 01/11.</p></li>
+      <li><h4>Comunicação</h4><p>Comunicado às franquias e à implantação, com foco nos imóveis travados por enxoval.</p></li>
+      <li><h4>Fechamento</h4><p>Comissão de novembro calculada a 3% e conferida no fechamento de dezembro, junto com o volume da ação.</p></li>
+    </ol>
+  </section>
+
+</main>
+
+<nav class="nav" aria-label="Navegação dos slides">
+  <button class="nav-btn" id="prev" type="button" aria-label="Slide anterior">←</button>
+  <button class="nav-btn" id="next" type="button" aria-label="Próximo slide">→</button>
+  <div class="dots" id="dots" role="tablist" aria-label="Ir para slide"></div>
+  <button class="nav-btn" id="print" type="button">Exportar PDF</button>
+  <p class="counter" id="counter">1 / 7</p>
+</nav>
+
+<script>
+(function(){
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  const dots = document.getElementById('dots');
+  const counter = document.getElementById('counter');
+  const prev = document.getElementById('prev');
+  const next = document.getElementById('next');
+  const total = slides.length;
+  let i = 0;
+
+  // faixa superior com nome do deck e número do slide (a capa tem a sua própria marca)
+  slides.forEach((s, idx) => {
+    if (s.classList.contains('cover')) return;
+    const top = document.createElement('div');
+    top.className = 'slide-top';
+    top.innerHTML = '<span class="deck-name">Black Friday Enxoval · Proposta</span>' +
+                    '<span class="slide-no">' + String(idx + 1).padStart(2, '0') + ' / ' + String(total).padStart(2, '0') + '</span>';
+    s.insertBefore(top, s.firstChild);
+  });
+
+  // conteúdo de cada slide num wrapper que encolhe (zoom) quando não cabe na altura da tela
+  slides.forEach(s => {
+    const fit = document.createElement('div');
+    fit.className = 'fit';
+    Array.from(s.children).forEach(c => {
+      if (!c.classList.contains('slide-top') && !c.classList.contains('cover-mark')) fit.appendChild(c);
+    });
+    s.appendChild(fit);
+  });
+
+  function fitSlide(s){
+    const fit = s.querySelector('.fit');
+    if (!fit) return;
+    fit.style.zoom = 1;
+    const cs = getComputedStyle(s);
+    const avail = s.clientHeight - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom);
+    const need = fit.scrollHeight;
+    if (need > avail) fit.style.zoom = Math.max(0.55, avail / need).toFixed(3);
+  }
+  window.addEventListener('resize', () => fitSlide(slides[i]));
+
+  slides.forEach((s, idx) => {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.setAttribute('role', 'tab');
+    b.setAttribute('aria-label', 'Slide ' + (idx + 1) + ': ' + (s.getAttribute('aria-label') || ''));
+    b.addEventListener('click', () => go(idx));
+    dots.appendChild(b);
+  });
+
+  function go(n){
+    i = Math.max(0, Math.min(total - 1, n));
+    slides.forEach((s, idx) => s.classList.toggle('is-active', idx === i));
+    Array.from(dots.children).forEach((d, idx) => d.setAttribute('aria-current', idx === i));
+    counter.textContent = (i + 1) + ' / ' + total;
+    prev.disabled = i === 0;
+    next.disabled = i === total - 1;
+    location.hash = i === 0 ? '' : 's' + (i + 1);
+    fitSlide(slides[i]);
+  }
+
+  prev.addEventListener('click', () => go(i - 1));
+  next.addEventListener('click', () => go(i + 1));
+  document.getElementById('print').addEventListener('click', () => window.print());
+
+  document.addEventListener('keydown', e => {
+    if (e.target.closest('button') && (e.key === ' ' || e.key === 'Enter')) return;
+    if (e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === ' ') { e.preventDefault(); go(i + 1); }
+    else if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); go(i - 1); }
+    else if (e.key === 'Home') { e.preventDefault(); go(0); }
+    else if (e.key === 'End') { e.preventDefault(); go(total - 1); }
+    else if (e.key.toLowerCase() === 'f') { document.documentElement.requestFullscreen?.(); }
+  });
+
+  let x0 = null;
+  document.addEventListener('touchstart', e => { x0 = e.touches[0].clientX; }, {passive:true});
+  document.addEventListener('touchend', e => {
+    if (x0 === null) return;
+    const dx = e.changedTouches[0].clientX - x0;
+    if (Math.abs(dx) > 60) go(dx < 0 ? i + 1 : i - 1);
+    x0 = null;
+  }, {passive:true});
+
+  const fromHash = parseInt((location.hash.match(/^#s(\d+)$/) || [])[1], 10);
+  go(Number.isFinite(fromHash) ? fromHash - 1 : 0);
+})();
+</script>
+</body>
+</html>
