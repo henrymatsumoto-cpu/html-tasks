@@ -55,11 +55,14 @@ h1{font:700 clamp(28px,4vw,44px)/1.06 var(--sans);letter-spacing:-.01em;margin:1
 .f1{--c:var(--blue);--cs:var(--bluebg)} .f2{--c:var(--teal);--cs:var(--tealbg)} .f3{--c:var(--rust);--cs:var(--rustbg)} .f4{--c:var(--navy);--cs:var(--navybg)} .f5{--c:var(--ink2);--cs:var(--soft)} .f6{--c:var(--coral);--cs:oklch(96% .03 32)}
 .f6 .d{color:oklch(50% .15 32)}
 
-.summary{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px 28px;font-size:13px;color:var(--ink2)}
-.summary .g{display:flex;flex-direction:column;gap:6px}
-.summary .gl{font:700 11px/1 var(--sans);letter-spacing:.09em;text-transform:uppercase;color:var(--ink3)}
-.summary .gv{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center}
-.summary b{font-variant-numeric:tabular-nums;color:var(--ink);font-size:15px}
+.summary{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:16px 28px;font-size:13px;color:var(--ink2)}
+.summary .g{display:flex;flex-direction:column;gap:8px;min-width:0}
+.summary .gl{font:700 11px/1 var(--sans);letter-spacing:.09em;text-transform:uppercase;color:var(--ink3);padding-bottom:7px;border-bottom:1px solid var(--line)}
+.summary .rows{display:flex;flex-direction:column;gap:6px}
+.summary .r{display:flex;justify-content:space-between;align-items:center;gap:10px;min-height:22px}
+.summary .r .k{display:flex;align-items:center;gap:6px;min-width:0}
+.summary .r b{font-variant-numeric:tabular-nums;color:var(--ink);font-size:15px}
+.summary .r b small{font-weight:500;color:var(--ink3);font-size:12px}
 
 .phase{display:flex;flex-direction:column;gap:12px;scroll-margin-top:16px}
 .ph-h{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
@@ -78,7 +81,7 @@ td.a span{font:400 12.5px/1.45 var(--serif);color:var(--ink2)}
 .foot{font-size:12.5px;color:var(--ink2);display:flex;gap:6px 18px;flex-wrap:wrap}
 .foot b{color:var(--ink)}
 
-.tag{font:700 10px/1 var(--sans);letter-spacing:.05em;text-transform:uppercase;padding:4px 6px;border-radius:4px;white-space:nowrap;display:inline-block}
+.tag{font:700 10px/1 var(--sans);letter-spacing:.05em;text-transform:uppercase;display:inline-flex;align-items:center;height:20px;padding:0 6px;border:1px solid transparent;border-radius:4px;white-space:nowrap}
 .mode.auto{color:var(--green);background:var(--greenbg)}
 .mode.misto{color:var(--amber);background:var(--amberbg)}
 .mode.manual{color:var(--red);background:var(--redbg)}
@@ -206,11 +209,13 @@ document.getElementById("days").innerHTML = PHASES.map(p=>
   `<a class="day ${p.cls}" href="#fase-${p.f}"><span class="d">${p.dia}</span><span class="n">Fase ${p.f}</span><span class="q">${p.n} · ${p.r.length} automações</span></a>`).join("") +
   `<div class="day f6"><span class="d">Sex · 23/10</span><span class="n">Entrega final</span><span class="q">Arquitetura e portfólio atualizados</span></div>`;
 
-document.getElementById("summary").innerHTML = `
-  <div class="g"><span class="gl">Automações no cronograma</span><span class="gv"><span><b>${all.length}</b> em 5 fases</span></span></div>
-  <div class="g"><span class="gl">Situação</span><span class="gv">${Object.keys(ST).map(k=>`<span><span class="tag st ${k}">${ST[k]}</span> <b>${cnt(r=>r[4]===k)}</b></span>`).join("")}</span></div>
-  <div class="g"><span class="gl">Tipo</span><span class="gv">${["Agente","Skill","Rotina","Extensão"].map(t=>`<span>${t} <b>${cnt(r=>r[3]===t)}</b></span>`).join("")}</span></div>
-  <div class="g"><span class="gl">Hoje, esses processos são</span><span class="gv">${Object.keys(MODE).map(k=>`<span><span class="tag mode ${k}">${MODE[k]}</span> <b>${cnt(r=>r[5]===k)}</b></span>`).join("")}</span></div>`;
+const row = (k,v) => `<div class="r"><span class="k">${k}</span><b>${v}</b></div>`;
+const grp = (l,rows) => `<div class="g"><span class="gl">${l}</span><div class="rows">${rows}</div></div>`;
+document.getElementById("summary").innerHTML =
+  grp("Cronograma", row("Automações", all.length) + row("Fases", PHASES.length) + row("Entrega final", "23/10")) +
+  grp("Situação", Object.keys(ST).map(k=>row(`<span class="tag st ${k}">${ST[k]}</span>`, cnt(r=>r[4]===k))).join("")) +
+  grp("Tipo", ["Agente","Skill","Rotina","Extensão"].map(t=>row(`<span class="tag tp">${t}</span>`, cnt(r=>r[3]===t))).join("")) +
+  grp("Como esses processos estão hoje", Object.keys(MODE).map(k=>row(`<span class="tag mode ${k}">${MODE[k]}</span>`, cnt(r=>r[5]===k))).join(""));
 
 document.getElementById("phases").innerHTML = PHASES.map(p=>`
  <section class="panel phase ${p.cls}" id="fase-${p.f}">

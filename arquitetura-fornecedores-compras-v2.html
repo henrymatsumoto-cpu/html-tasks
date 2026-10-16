@@ -50,11 +50,14 @@ h1{font:700 clamp(28px,4vw,44px)/1.06 var(--sans);letter-spacing:-.01em;margin:1
 
 .wrap{max-width:1500px;margin:0 auto;padding-block:24px 56px;padding-inline:24px;display:flex;flex-direction:column;gap:18px}
 .panel{background:var(--paper);border-radius:10px;padding:12px 16px;box-shadow:0 2px 12px oklch(20% .05 260 / .06),0 1px 3px oklch(20% .05 260 / .04)}
-.summary{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px 28px;font-size:13px;color:var(--ink2)}
-.summary .g{display:flex;flex-direction:column;gap:6px;min-width:0}
-.summary .gl{font:700 11px/1 var(--sans);letter-spacing:.09em;text-transform:uppercase;color:var(--ink3)}
-.summary .gv{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center}
-.summary b{font-variant-numeric:tabular-nums;color:var(--ink);font-size:15px}
+.summary{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:16px 28px;font-size:13px;color:var(--ink2)}
+.summary .g{display:flex;flex-direction:column;gap:8px;min-width:0}
+.summary .gl{font:700 11px/1 var(--sans);letter-spacing:.09em;text-transform:uppercase;color:var(--ink3);padding-bottom:7px;border-bottom:1px solid var(--line)}
+.summary .rows{display:flex;flex-direction:column;gap:6px}
+.summary .r{display:flex;justify-content:space-between;align-items:center;gap:10px;min-height:22px}
+.summary .r .k{display:flex;align-items:center;gap:6px;min-width:0}
+.summary .r b{font-variant-numeric:tabular-nums;color:var(--ink);font-size:15px}
+.summary .r b small{font-weight:500;color:var(--ink3);font-size:12px}
 .hint{font-size:12.5px;color:var(--ink3);margin:0}
 
 .changes{display:flex;flex-direction:column;gap:8px}
@@ -101,7 +104,7 @@ h1{font:700 clamp(28px,4vw,44px)/1.06 var(--sans);letter-spacing:-.01em;margin:1
 .box .o{font:400 12px/1.4 var(--serif);color:var(--ink2)}
 .tags{display:flex;flex-wrap:wrap;gap:4px}
 
-.mode,.ia,.ex,.imp,.chk,.trn,.fase,.new{font:700 10px/1 var(--sans);letter-spacing:.05em;text-transform:uppercase;padding:4px 6px;border-radius:4px;white-space:nowrap}
+.mode,.ia,.ex,.imp,.chk,.trn,.fase,.new,.st{font:700 10px/1 var(--sans);letter-spacing:.05em;text-transform:uppercase;display:inline-flex;align-items:center;height:20px;padding:0 6px;border:1px solid transparent;border-radius:4px;white-space:nowrap}
 .mode.auto{color:var(--green);background:var(--greenbg)}
 .mode.misto{color:var(--amber);background:var(--amberbg)}
 .mode.manual{color:var(--red);background:var(--redbg)}
@@ -122,7 +125,9 @@ h1{font:700 clamp(28px,4vw,44px)/1.06 var(--sans);letter-spacing:-.01em;margin:1
 
 .legend{display:flex;flex-wrap:wrap;gap:8px 18px;font-size:12.5px;color:var(--ink2);align-items:center}
 .legend i{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:6px;vertical-align:-1px}
-.canv{display:flex;flex-wrap:wrap;gap:6px}
+.canv{display:flex;flex-direction:column;align-items:flex-start;gap:6px}
+.canv .tool{white-space:nowrap;font-size:12px;padding:4px 10px}
+#pfsum{grid-template-columns:repeat(auto-fit,minmax(220px,300px));margin-top:8px}
 
 #pop{position:fixed;z-index:20;width:min(380px,calc(100vw - 32px));max-height:min(70vh,560px);overflow:auto;background:var(--paper);border:1.5px solid var(--navy);border-radius:10px;box-shadow:0 12px 32px oklch(20% .05 260 / .22);padding:14px 16px;display:flex;flex-direction:column;gap:10px}
 #pop[hidden]{display:none}
@@ -150,9 +155,9 @@ a.tool{color:var(--blue);border-color:var(--blue);background:var(--paper)}
 a.tool:hover,a.tool:focus-visible{background:var(--bluebg);outline:none}
 
 /* aba portfólio */
-.pf-h{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.pf-h{display:flex;flex-direction:column;gap:4px}
 .pf-h .tn{font:700 18px/1.2 var(--sans);color:var(--violet)}
-.pf-h .to{font:400 13px/1.45 var(--serif);color:var(--ink2);flex:1 1 400px}
+.pf-h .to{font:400 13px/1.5 var(--serif);color:var(--ink2);max-width:90ch}
 .tblwrap{overflow-x:auto}
 table.pf{width:100%;min-width:980px;border-collapse:collapse;font-size:13px}
 table.pf th{font:700 10.5px/1.2 var(--sans);letter-spacing:.09em;text-transform:uppercase;color:var(--ink3);text-align:left;padding:10px 10px;border-bottom:2px solid var(--ink)}
@@ -164,7 +169,6 @@ table.pf td.f{font-size:12px;color:var(--ink3);white-space:nowrap}
 table.pf tr.grp td{background:var(--violetbg);font:700 11px/1 var(--sans);letter-spacing:.09em;text-transform:uppercase;color:var(--violet);padding:8px 10px}
 .sp{display:flex;flex-direction:column;gap:4px}
 .sp span{display:flex;gap:6px;align-items:baseline}
-.st{font:700 10px/1 var(--sans);letter-spacing:.05em;text-transform:uppercase;padding:4px 6px;border-radius:4px;white-space:nowrap}
 .st.ar{color:var(--green);background:var(--greenbg)} .st.val{color:var(--amber);background:var(--amberbg)} .st.trn{color:var(--violet);background:var(--violetbg)} .st.dem{color:var(--blue);background:var(--bluebg)}
 .stepb{font:700 11px/1 var(--mono);color:var(--blue);background:var(--paper);border:1px solid var(--blue);border-radius:4px;padding:3px 5px;cursor:pointer;flex:0 0 auto}
 .stepb[aria-expanded="true"]{outline:2px solid var(--coral);outline-offset:1px}
@@ -802,13 +806,16 @@ const fin = BLOCKS[0].trails.flatMap(t=>t.mps.flatMap(m=>m.p));
 const all = trails.flatMap(t=>t.mps.flatMap(m=>m.p));
 const cnt = (arr,f) => arr.filter(f).length;
 const tool = k => { const t=T[k]; return t.u ? `<a class="tool" href="${t.u}" target="_blank" rel="noopener">${t.n} ↗</a>` : `<span class="tool">${t.n}</span>`; };
-document.getElementById("summary").innerHTML = `
-  <div class="g"><span class="gl">Arquitetura</span><span class="gv"><span><b>${fin.length}</b> finalísticos em 3 trilhas</span><span><b>${all.length-fin.length}</b> de gestão e suporte</span><span><b>${cnt(all,p=>p.nw)}</b> novos</span></span></div>
-  <div class="g"><span class="gl">Execução (finalísticos)</span><span class="gv">${["auto","misto","manual"].map(k=>`<span><span class="mode ${k}">${MODE[k]}</span> <b>${cnt(fin,p=>p.m===k)}</b></span>`).join("")}</span></div>
-  <div class="g"><span class="gl">Uso de IA (finalísticos)</span><span class="gv">${[0,1,2].map(i=>`<span><span class="ia i${i}">${IA[i]}</span> <b>${cnt(fin,p=>p.ia===i)}</b></span>`).join("")}<span><span class="trn">Em treinamento</span> <b>${cnt(fin,p=>p.trn)}</b></span></span></div>
-  <div class="g"><span class="gl">Automações planejadas</span><span class="gv">${[1,2,3,4,5].map(f=>`<span><span class="fase">Fase ${f}</span> <b>${cnt(all,p=>p.plan&&p.plan.f===f)}</b></span>`).join("")}</span></div>
-  <div class="g"><span class="gl">Interface com a Implantação</span><span class="gv">${Object.keys(IMP).map(k=>`<span><span class="imp">${IMP[k]}</span> <b>${cnt(all,p=>p.imp&&p.imp.d===k)}</b></span>`).join("")}<span><span class="chk">Validar</span> <b>${cnt(all,p=>p.chk)}</b></span></span></div>
-  <div class="g"><span class="gl">Canvas oficiais</span><span class="canv">${tool("canvasfot")}${tool("canvaslav")}</span></div>`;
+const row = (k,v) => `<div class="r"><span class="k">${k}</span><b>${v}</b></div>`;
+const grp = (l,rows) => `<div class="g"><span class="gl">${l}</span><div class="rows">${rows}</div></div>`;
+const FN = {1:"Prestadores",2:"Homologados",3:"Compras",4:"Gestão",5:"Suporte"};
+document.getElementById("summary").innerHTML =
+  grp("Arquitetura", row("Finalísticos · 3 trilhas", fin.length) + row("Suporte e gestão · 2 trilhas", all.length-fin.length) + row("Novos nesta versão", cnt(all,p=>p.nw))) +
+  grp("Execução · finalísticos", ["auto","misto","manual"].map(k=>row(`<span class="mode ${k}">${MODE[k]}</span>`, cnt(fin,p=>p.m===k))).join("")) +
+  grp("Uso de IA · finalísticos", [0,1,2].map(i=>row(`<span class="ia i${i}">${IA[i]}</span>`, cnt(fin,p=>p.ia===i))).join("") + row(`<span class="trn">IA em treinamento</span>`, cnt(fin,p=>p.trn))) +
+  grp("Automações planejadas", [1,2,3,4,5].map(f=>row(`<span class="fase">Fase ${f}</span>${FN[f]}`, cnt(all,p=>p.plan&&p.plan.f===f))).join("")) +
+  grp("Interface e pendências", Object.keys(IMP).map(k=>row(`<span class="imp">${IMP[k]}</span>${k==="recebe"?"recebemos":"entregamos"}`, cnt(all,p=>p.imp&&p.imp.d===k))).join("") + row(`<span class="chk">Validar</span>`, cnt(all,p=>p.chk))) +
+  grp("Canvas oficiais", ["canvasfot","canvaslav"].map(k=>`<a class="tool" href="${T[k].u}" target="_blank" rel="noopener">${T[k].n.replace("Canvas · ","")} ↗</a>`).join("").replace(/^/,`<div class="canv">`)+`</div>`);
 
 /* portfólio */
 const nm = id => REG[id] ? (REG[id].d.t||REG[id].d.n) : id;
@@ -816,10 +823,10 @@ document.getElementById("pftb").innerHTML = AUTOS.map(g=>`<tr class="grp"><td co
   <td><div class="sp">${a.s.map(id=>`<span><button class="stepb" type="button" data-k="${id}" aria-expanded="false">${id}</button>${nm(id)}</span>`).join("")}</div></td>
   <td class="n"><span class="code">${a.id}</span>${a.n}</td><td>${a.tp}</td><td class="o">${a.o}</td><td class="f">${a.f}</td><td><span class="st ${a.st}">${ST[a.st]}</span></td></tr>`).join("")).join("");
 const items = AUTOS.flatMap(g=>g.items);
-document.getElementById("pfsum").innerHTML = `
-  <div class="g"><span class="gl">Automações em uso</span><span class="gv"><span><b>${items.length}</b> no portfólio</span>${Object.keys(ST).map(k=>`<span><span class="st ${k}">${ST[k]}</span> <b>${cnt(items,a=>a.st===k)}</b></span>`).join("")}</span></div>
-  <div class="g"><span class="gl">Por tipo</span><span class="gv">${[...new Set(items.map(a=>a.tp))].map(tp=>`<span>${tp} <b>${cnt(items,a=>a.tp===tp)}</b></span>`).join("")}</span></div>
-  <div class="g"><span class="gl">Subprocessos cobertos</span><span class="gv"><span><b>${new Set(items.flatMap(a=>a.s)).size}</b> de ${all.length}</span></span></div>`;
+document.getElementById("pfsum").innerHTML =
+  grp("Em uso", row("Automações no portfólio", items.length) + Object.keys(ST).filter(k=>cnt(items,a=>a.st===k)).map(k=>row(`<span class="st ${k}">${ST[k]}</span>`, cnt(items,a=>a.st===k))).join("")) +
+  grp("Por tipo", [...new Set(items.map(a=>a.tp))].map(tp=>row(tp, cnt(items,a=>a.tp===tp))).join("")) +
+  grp("Cobertura", row("Subprocessos com automação", `${new Set(items.flatMap(a=>a.s)).size} <small>de ${all.length}</small>`) + row("Planejadas no cronograma", cnt(all,p=>p.plan)));
 
 /* abas */
 const tabs = [...document.querySelectorAll(".tab")];
