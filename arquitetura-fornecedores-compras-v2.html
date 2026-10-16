@@ -211,7 +211,7 @@ table.pf tr.grp td{background:var(--violetbg);font:700 11px/1 var(--sans);letter
     <li><b>Relacionamento ganhou três processos:</b> prontuário do fornecedor (atas e gravações no Drive), score de saúde do fornecedor e relatório para gerência e diretoria.</li>
     <li><b>Prestadores:</b> cadência de contato no ar desde 14/10, negociação com o Copiloto da SIA em treinamento, outros prestadores do Hub (ex.: empresas de limpeza) e links dos canvas de fotógrafos e lavanderias.</li>
     <li><b>Cobrança da Loja só automática</b> (fornecedor, Loja e SIA), <b>cancelamento automático às 20h</b> no 7º dia e agente para validar o comprovante com tag de pagamento inconsistente.</li>
-    <li><b>Gestão e Suporte em tamanho cheio</b>, como parte da arquitetura. Gestão ganhou a gestão da equipe e das tasks; Suporte ganhou o processo de desenvolvimento de automações e a auditoria das ferramentas da Implantação.</li>
+    <li><b>Suporte (Trilha 4) e Gestão (Trilha 5) em tamanho cheio</b>, como parte da arquitetura. Gestão ganhou a gestão da equipe e das tasks; Suporte ganhou o processo de desenvolvimento de automações e a auditoria das ferramentas da Implantação.</li>
     <li><b>Portfólio em aba separada</b>, em tabela: subprocesso, agente e o que ele faz. A tag <span class="fase">Fase N</span> liga cada processo ao cronograma de automações.</li>
    </ul>
   </details>
@@ -246,11 +246,11 @@ table.pf tr.grp td{background:var(--violetbg);font:700 11px/1 var(--sans);letter
    <span><span class="fase">Fase N</span> automação planejada no cronograma</span>
   </div>
   <div class="legend">
-   <span><i style="background:var(--blue)"></i>Fornecedores prestadores de serviço</span>
-   <span><i style="background:var(--teal)"></i>Fornecedores homologados</span>
-   <span><i style="background:var(--rust)"></i>Compras</span>
-   <span><i style="background:var(--navy)"></i>Gestão</span>
-   <span><i style="background:var(--ink2)"></i>Suporte</span>
+   <span><i style="background:var(--blue)"></i>Trilha 1: Prestadores de serviço</span>
+   <span><i style="background:var(--teal)"></i>Trilha 2: Homologados</span>
+   <span><i style="background:var(--rust)"></i>Trilha 3: Compras</span>
+   <span><i style="background:var(--ink2)"></i>Trilha 4: Suporte</span>
+   <span><i style="background:var(--navy)"></i>Trilha 5: Gestão</span>
   </div>
  </section>
 
@@ -652,82 +652,82 @@ const BLOCKS = [
   ]}
  ]}
  ]},
- {n:"Processos de gestão", o:"O trabalho da coordenação. Não aparecem para o cliente, mas sem eles a área não tem meta, prioridade nem padrão.", trails:[
- {cls:"ges", k:"Gestão", n:"Coordenação de Fornecedores", seq:false,
-  o:"KPIs, demandas e tasks, equipe, padrão e eventos.",
-  mps:[
-  {id:"MP10", v:"Medir", n:"Medir os resultados",
-   o:"Saber se os fornecedores entregam e onde agir.", e:"KPIs lançados e relatórios do mês.",
-   opp:"KPIs lançados sozinhos das fontes, sem planilha.",
-   p:[
-    {id:"10.1", t:"KPIs do setor", m:"misto", ia:0, ex:"sistema", who:"Coordenador", o:"Acompanhar prazos, volume e comissão.", e:"KPIs lançados.", how:["KPIs do setor no KPI System, a partir do Suporte, da Loja, do app de fotógrafos e da SIA."], chk:"Confirmar a lista de KPIs e as metas.", plan:{f:4, t:"Lançamento automático dos KPIs."}, tools:["kpi"]},
-    {id:"10.2", t:"Relatório mensal por fornecedor", m:"misto", ia:2, ex:"agente", who:"Coordenador", o:"Mostrar ao fornecedor e à liderança como foi o mês.", e:"Relatório em PDF.", how:["Prazos de despacho, entregas e vendas do mês, gerados com o Claude."], plan:{f:4, t:"Relatório do mês gerado sozinho."}, tools:["jornada","loja","claude"]},
-    {id:"10.3", t:"Análises sob demanda", m:"manual", ia:1, ex:"pessoa", who:"Coordenador", o:"Responder a liderança com dados.", e:"Análise entregue.", how:["Análises com o Claude sobre os artefatos e o Sapron."], tools:["claude","sapron"]}
-  ]},
-  {id:"MP11", v:"Demandas", n:"Gerir demandas e tasks",
-   o:"Toda demanda tem dono, prazo e entrega.", e:"Tasks atualizadas no Taskdex.",
-   opp:"A task se atualiza sozinha depois de cada call e de cada entrega.",
-   p:[
-    {id:"11.1", t:"Registrar a demanda", m:"manual", ia:0, ex:"pessoa", who:"Coordenador", o:"Nenhum pedido perdido no Slack ou em reunião.", e:"Task com responsável e prazo.", how:["Pedidos do Slack ou de reunião viram task no Taskdex."], tools:["taskdex","slack"]},
-    {id:"11.2", t:"Priorizar", m:"manual", ia:0, ex:"pessoa", who:"Coordenador", o:"Fazer primeiro o que mais destrava.", e:"Fila ordenada.", how:["Priorização com a liderança; uma entrega pode fechar várias tasks de uma vez."], tools:["taskdex"]},
-    {id:"11.3", t:"Atualizar a task", m:"manual", ia:1, ex:"pessoa", who:"Coordenador", nw:true, o:"A liderança ver o andamento sem perguntar.", e:"Task com o que foi feito e o próximo passo.", how:["Depois de cada call e de cada entrega, a task recebe o que foi feito de automação."], plan:{f:4, t:"Resumo da call vira atualização da task."}, tools:["taskdex","meet","claude"]},
-    {id:"11.4", t:"Entregar e validar", m:"manual", ia:0, ex:"pessoa", who:"Coordenador", o:"Confirmar com quem pediu que resolve.", e:"Task em Validação; quem pediu conclui.", how:["Entrega com HTML e a task vai para Validação."], tools:["taskdex"]}
-  ]},
-  {id:"MP12", v:"Equipe", n:"Gerir a equipe", nw:true,
-   o:"Analista focada no estratégico e no que o agente não faz.", e:"Rotina clara e alinhamentos feitos.",
-   opp:"A analista vira operadora dos agentes: quanto menos tarefa repetida, mais tempo para o que é estratégico.",
-   p:[
-    {id:"12.1", t:"Definir a rotina da analista", m:"manual", ia:0, ex:"pessoa", who:"Coordenador", nw:true, o:"Cada etapa com horário e dono, sem travar nos agentes.", e:"Rotina do dia documentada.", how:["A rotina se ajusta conforme os agentes assumem as etapas."], tools:["canvas"]},
-    {id:"12.2", t:"1:1 e feedback", m:"manual", ia:0, ex:"pessoa", who:"Coordenador", nw:true, o:"Acompanhar o desenvolvimento da analista.", e:"1:1 feito com combinados.", how:["Conversa periódica com a analista."], chk:"Processo novo (15/10). Confirmar a frequência.", plan:{f:4, t:"Pauta do 1:1 montada sozinha."}, tools:["meet"]},
-    {id:"12.3", t:"Alinhar com a liderança", m:"manual", ia:0, ex:"pessoa", who:"Coordenador", nw:true, o:"A liderança opinar a tempo.", e:"Call feita e próximos passos definidos.", how:["Durante o projeto de automação: call de meia hora no fim do dia com a entrega da fase."], tools:["meet","taskdex"]}
-  ]},
-  {id:"MP13", v:"Padrão", n:"Manter o padrão",
-   o:"Critérios, preços, contratos e documentação claros e atualizados.", e:"Régua única e canvas iguais ao que roda.",
-   opp:"Um agente que avisa quando a ferramenta mudou e o canvas não.",
-   p:[
-    {id:"13.1", t:"Tabelas de preço dos prestadores", m:"manual", ia:0, ex:"pessoa", who:"Coordenador", o:"Teto de lavanderia e tabela de fotógrafo coerentes com a taxa e o mercado.", e:"Tabelas atualizadas.", how:["A tabela de teto por peça é régua de homologação, não piso."], tools:["calc","hub"]},
-    {id:"13.2", t:"Critérios de homologação", m:"manual", ia:0, ex:"pessoa", who:"Coordenador", o:"Todo prestador e fornecedor avaliado pela mesma régua.", e:"Critérios documentados.", how:["Critérios de lavanderia, fotógrafo, outros prestadores e fornecedor homologado."], tools:["canvasfot","canvaslav"]},
-    {id:"13.3", t:"Contratos e aditivos", m:"manual", ia:0, ex:"pessoa", who:"Coordenador", o:"Condição combinada sempre no papel.", e:"Contrato ou aditivo assinado.", how:["Novos contratos e aditivos com os fornecedores."], tools:["contrato"]},
-    {id:"13.4", t:"Documentação dos processos", m:"manual", ia:1, ex:"pessoa", who:"Coordenador", o:"Toda mudança de ferramenta refletida no canvas oficial.", e:"Canvas igual ao que roda.", how:["Regra da liderança: alterou a ferramenta, atualiza o processo no canvas."], plan:{f:4, t:"Aviso de canvas desatualizado."}, tools:["canvasfot","canvaslav","claude"]}
-  ]},
-  {id:"MP14", v:"Exceção", n:"Eventos e patrocínios",
-   o:"Apoiar eventos de franquia quando houver.", e:"Patrocínio e brindes no prazo.",
-   opp:"Usar o score do MP6 para escolher quem chamar como patrocinador e palestrante.",
-   p:[
-    {id:"14.1", t:"Buscar patrocinadores", m:"manual", ia:0, ex:"pessoa", who:"Coordenador", o:"Reduzir o custo do evento com parceiros.", e:"Patrocínio fechado.", how:["Só quando há evento de franquia; prioridade para os fornecedores de melhor score."], tools:["gmail","slack"]},
-    {id:"14.2", t:"Orçar brindes e itens", m:"manual", ia:0, ex:"pessoa", who:"Coordenador", o:"Brindes no prazo e no orçamento.", e:"Orçamento aprovado.", how:["Cotação com fornecedores para o evento."], tools:["gmail"]}
-  ]}
- ]}
- ]},
  {n:"Processos de suporte", o:"Mantêm a área funcionando: as ferramentas, as automações e as auditorias. Processo feito só por agente também existe e precisa estar documentado: se o agente quebra, o processo deixa de acontecer.", trails:[
- {cls:"sup", k:"Suporte", n:"Ferramentas, automações e auditorias", seq:false,
+ {cls:"sup", k:"Trilha 4", n:"Ferramentas, automações e auditorias", seq:false,
   o:"O trabalho que mantém a área de pé, incluindo o que roda sem ninguém ver.",
   mps:[
-  {id:"MP15", v:"Ferramentas", n:"Manter as ferramentas",
+  {id:"MP10", v:"Ferramentas", n:"Manter as ferramentas",
    o:"Loja, Hub, Jornada e consultas funcionando.", e:"Correções e melhorias publicadas.",
    opp:"Juntar as melhorias pedidas numa entrega só, que fecha várias tasks.",
    p:[
-    {id:"15.1", t:"Manter a Loja", m:"manual", ia:1, ex:"pessoa", who:"Coordenador", o:"Kanban, mensagens e visão por fornecedor corretos.", e:"Ajustes publicados.", how:["Ajustes feitos com o Claude."], tools:["loja","kanban","claude"]},
-    {id:"15.2", t:"Manter o Hub de Serviços", m:"manual", ia:1, ex:"pessoa", who:"Coordenador", o:"Franquias acharem prestadores no Hub.", e:"Melhorias do Hub publicadas.", how:["Melhorias do Hub (task em paralelo), aproveitando a homologação de empresas de limpeza."], tools:["hub","claude"]},
-    {id:"15.3", t:"Manter a Jornada Enxoval", m:"manual", ia:1, ex:"pessoa", who:"Coordenador", o:"A Implantação pedir enxoval sem travar.", e:"Ajustes publicados.", how:["A gente gerencia e ajusta a ferramenta que a Implantação usa."], imp:{d:"envia", t:"A Implantação usa a Jornada Enxoval que a gente mantém."}, tools:["jornada","claude"]},
-    {id:"15.4", t:"Manter as consultas (MCPs)", m:"auto", ia:0, ex:"sistema", who:"Sistema", o:"Outras áreas consultarem enxoval e lavanderias sozinhas.", e:"MCPs no ar.", how:["MCPs de consulta do Enxoval e do Hub."], tools:["jornada","hub"]}
+    {id:"10.1", t:"Manter a Loja", m:"manual", ia:1, ex:"pessoa", who:"Coordenador", o:"Kanban, mensagens e visão por fornecedor corretos.", e:"Ajustes publicados.", how:["Ajustes feitos com o Claude."], tools:["loja","kanban","claude"]},
+    {id:"10.2", t:"Manter o Hub de Serviços", m:"manual", ia:1, ex:"pessoa", who:"Coordenador", o:"Franquias acharem prestadores no Hub.", e:"Melhorias do Hub publicadas.", how:["Melhorias do Hub (task em paralelo), aproveitando a homologação de empresas de limpeza."], tools:["hub","claude"]},
+    {id:"10.3", t:"Manter a Jornada Enxoval", m:"manual", ia:1, ex:"pessoa", who:"Coordenador", o:"A Implantação pedir enxoval sem travar.", e:"Ajustes publicados.", how:["A gente gerencia e ajusta a ferramenta que a Implantação usa."], imp:{d:"envia", t:"A Implantação usa a Jornada Enxoval que a gente mantém."}, tools:["jornada","claude"]},
+    {id:"10.4", t:"Manter as consultas (MCPs)", m:"auto", ia:0, ex:"sistema", who:"Sistema", o:"Outras áreas consultarem enxoval e lavanderias sozinhas.", e:"MCPs no ar.", how:["MCPs de consulta do Enxoval e do Hub."], tools:["jornada","hub"]}
   ]},
-  {id:"MP16", v:"Automação", n:"Desenvolver automações", nw:true,
+  {id:"MP11", v:"Automação", n:"Desenvolver automações", nw:true,
    o:"Transformar processo manual em agente, skill ou extensão.", e:"Automação no ar, documentada no canvas e no portfólio.",
    opp:"É o processo das tasks: é ele que mantém a área inteira atualizada.",
    p:[
-    {id:"16.1", t:"Escolher o processo a automatizar", m:"manual", ia:0, ex:"pessoa", who:"Coordenador", nw:true, o:"Atacar primeiro o que mais tira tempo da analista.", e:"Task da automação priorizada.", how:["Sai da arquitetura: processo manual vira candidato.","Segue o cronograma de automações por fase."], tools:["taskdex"]},
-    {id:"16.2", t:"Construir e testar", m:"manual", ia:1, ex:"pessoa", who:"Coordenador", nw:true, o:"Automação funcionando sem quebrar o que roda.", e:"Automação testada em staging.", how:["Construção com o Claude; teste em staging antes de produção; testar até quebrar para achar o limite."], tools:["claude","github","olimpo"]},
-    {id:"16.3", t:"Validar e documentar", m:"manual", ia:1, ex:"pessoa", who:"Coordenador", nw:true, o:"A área saber que a automação existe e o que ela faz.", e:"Canvas, arquitetura e portfólio atualizados.", how:["Validação com a área e com a liderança, depois atualização do canvas e do portfólio."], plan:{f:5, t:"Portfólio atualizado sozinho a partir do que está no ar."}, tools:["canvas","taskdex"]}
+    {id:"11.1", t:"Escolher o processo a automatizar", m:"manual", ia:0, ex:"pessoa", who:"Coordenador", nw:true, o:"Atacar primeiro o que mais tira tempo da analista.", e:"Task da automação priorizada.", how:["Sai da arquitetura: processo manual vira candidato.","Segue o cronograma de automações por fase."], tools:["taskdex"]},
+    {id:"11.2", t:"Construir e testar", m:"manual", ia:1, ex:"pessoa", who:"Coordenador", nw:true, o:"Automação funcionando sem quebrar o que roda.", e:"Automação testada em staging.", how:["Construção com o Claude; teste em staging antes de produção; testar até quebrar para achar o limite."], tools:["claude","github","olimpo"]},
+    {id:"11.3", t:"Validar e documentar", m:"manual", ia:1, ex:"pessoa", who:"Coordenador", nw:true, o:"A área saber que a automação existe e o que ela faz.", e:"Canvas, arquitetura e portfólio atualizados.", how:["Validação com a área e com a liderança, depois atualização do canvas e do portfólio."], plan:{f:5, t:"Portfólio atualizado sozinho a partir do que está no ar."}, tools:["canvas","taskdex"]}
   ]},
-  {id:"MP17", v:"Auditoria", n:"Auditar as ferramentas da Implantação", nw:true,
+  {id:"MP12", v:"Auditoria", n:"Auditar as ferramentas da Implantação", nw:true,
    o:"Pegar o erro de uso das ferramentas que batem em Fornecedores.", e:"Alerta tratado: relatório feito ou responsável acionado.",
    opp:"Um monitor que avisa quando um dos agentes para; hoje, se ele cai, ninguém percebe.",
    p:[
-    {id:"17.1", t:"Rodar as checagens", m:"auto", ia:2, ex:"agente", who:"Agentes", nw:true, o:"Conferir o uso das ferramentas sem ninguém olhar card por card.", e:"Checagens feitas.", how:["Agentes de pagamento e de cancelamento da Jornada, agente de indicação de itens e bot de grandes operações."], chk:"Confirmar quais agentes entram neste processo (na reunião: 3 dos 5).", tools:["olimpo","jornada","loja"]},
-    {id:"17.2", t:"Avisar no canal", m:"auto", ia:0, ex:"sistema", who:"Agentes", nw:true, o:"O problema chegar a quem decide.", e:"Mensagem no Slack.", how:["Os agentes postam o resultado no canal."], tools:["slack"]},
-    {id:"17.3", t:"Decidir a ação", m:"manual", ia:0, ex:"pessoa", who:"Coordenador", nw:true, o:"Resolver o que o agente achou.", e:"Relatório feito ou responsável acionado.", how:["Com base na mensagem, o coordenador faz um relatório ou aciona alguém da Implantação."], plan:{f:5, t:"Relatório da auditoria montado sozinho a partir dos alertas."}, imp:{d:"envia", t:"Alerta ou relatório para a Implantação corrigir o uso da ferramenta."}, tools:["slack"]},
-    {id:"17.4", t:"Monitorar os agentes", m:"manual", ia:0, ex:"pessoa", who:"Coordenador", nw:true, o:"Saber na hora quando um agente para.", e:"Agente fora do ar avisado.", how:["Hoje é olhando a ferramenta quando algo parece estranho."], plan:{f:5, t:"Monitor de saúde dos agentes."}, tools:["olimpo","slack"]}
+    {id:"12.1", t:"Rodar as checagens", m:"auto", ia:2, ex:"agente", who:"Agentes", nw:true, o:"Conferir o uso das ferramentas sem ninguém olhar card por card.", e:"Checagens feitas.", how:["Agentes de pagamento e de cancelamento da Jornada, agente de indicação de itens e bot de grandes operações."], chk:"Confirmar quais agentes entram neste processo (na reunião: 3 dos 5).", tools:["olimpo","jornada","loja"]},
+    {id:"12.2", t:"Avisar no canal", m:"auto", ia:0, ex:"sistema", who:"Agentes", nw:true, o:"O problema chegar a quem decide.", e:"Mensagem no Slack.", how:["Os agentes postam o resultado no canal."], tools:["slack"]},
+    {id:"12.3", t:"Decidir a ação", m:"manual", ia:0, ex:"pessoa", who:"Coordenador", nw:true, o:"Resolver o que o agente achou.", e:"Relatório feito ou responsável acionado.", how:["Com base na mensagem, o coordenador faz um relatório ou aciona alguém da Implantação."], plan:{f:5, t:"Relatório da auditoria montado sozinho a partir dos alertas."}, imp:{d:"envia", t:"Alerta ou relatório para a Implantação corrigir o uso da ferramenta."}, tools:["slack"]},
+    {id:"12.4", t:"Monitorar os agentes", m:"manual", ia:0, ex:"pessoa", who:"Coordenador", nw:true, o:"Saber na hora quando um agente para.", e:"Agente fora do ar avisado.", how:["Hoje é olhando a ferramenta quando algo parece estranho."], plan:{f:5, t:"Monitor de saúde dos agentes."}, tools:["olimpo","slack"]}
+  ]}
+ ]}
+ ]},
+ {n:"Processos de gestão", o:"O trabalho da coordenação. Não aparecem para o cliente, mas sem eles a área não tem meta, prioridade nem padrão.", trails:[
+ {cls:"ges", k:"Trilha 5", n:"Coordenação de Fornecedores", seq:false,
+  o:"KPIs, demandas e tasks, equipe, padrão e eventos.",
+  mps:[
+  {id:"MP13", v:"Medir", n:"Medir os resultados",
+   o:"Saber se os fornecedores entregam e onde agir.", e:"KPIs lançados e relatórios do mês.",
+   opp:"KPIs lançados sozinhos das fontes, sem planilha.",
+   p:[
+    {id:"13.1", t:"KPIs do setor", m:"misto", ia:0, ex:"sistema", who:"Coordenador", o:"Acompanhar prazos, volume e comissão.", e:"KPIs lançados.", how:["KPIs do setor no KPI System, a partir do Suporte, da Loja, do app de fotógrafos e da SIA."], chk:"Confirmar a lista de KPIs e as metas.", plan:{f:4, t:"Lançamento automático dos KPIs."}, tools:["kpi"]},
+    {id:"13.2", t:"Relatório mensal por fornecedor", m:"misto", ia:2, ex:"agente", who:"Coordenador", o:"Mostrar ao fornecedor e à liderança como foi o mês.", e:"Relatório em PDF.", how:["Prazos de despacho, entregas e vendas do mês, gerados com o Claude."], plan:{f:4, t:"Relatório do mês gerado sozinho."}, tools:["jornada","loja","claude"]},
+    {id:"13.3", t:"Análises sob demanda", m:"manual", ia:1, ex:"pessoa", who:"Coordenador", o:"Responder a liderança com dados.", e:"Análise entregue.", how:["Análises com o Claude sobre os artefatos e o Sapron."], tools:["claude","sapron"]}
+  ]},
+  {id:"MP14", v:"Demandas", n:"Gerir demandas e tasks",
+   o:"Toda demanda tem dono, prazo e entrega.", e:"Tasks atualizadas no Taskdex.",
+   opp:"A task se atualiza sozinha depois de cada call e de cada entrega.",
+   p:[
+    {id:"14.1", t:"Registrar a demanda", m:"manual", ia:0, ex:"pessoa", who:"Coordenador", o:"Nenhum pedido perdido no Slack ou em reunião.", e:"Task com responsável e prazo.", how:["Pedidos do Slack ou de reunião viram task no Taskdex."], tools:["taskdex","slack"]},
+    {id:"14.2", t:"Priorizar", m:"manual", ia:0, ex:"pessoa", who:"Coordenador", o:"Fazer primeiro o que mais destrava.", e:"Fila ordenada.", how:["Priorização com a liderança; uma entrega pode fechar várias tasks de uma vez."], tools:["taskdex"]},
+    {id:"14.3", t:"Atualizar a task", m:"manual", ia:1, ex:"pessoa", who:"Coordenador", nw:true, o:"A liderança ver o andamento sem perguntar.", e:"Task com o que foi feito e o próximo passo.", how:["Depois de cada call e de cada entrega, a task recebe o que foi feito de automação."], plan:{f:4, t:"Resumo da call vira atualização da task."}, tools:["taskdex","meet","claude"]},
+    {id:"14.4", t:"Entregar e validar", m:"manual", ia:0, ex:"pessoa", who:"Coordenador", o:"Confirmar com quem pediu que resolve.", e:"Task em Validação; quem pediu conclui.", how:["Entrega com HTML e a task vai para Validação."], tools:["taskdex"]}
+  ]},
+  {id:"MP15", v:"Equipe", n:"Gerir a equipe", nw:true,
+   o:"Analista focada no estratégico e no que o agente não faz.", e:"Rotina clara e alinhamentos feitos.",
+   opp:"A analista vira operadora dos agentes: quanto menos tarefa repetida, mais tempo para o que é estratégico.",
+   p:[
+    {id:"15.1", t:"Definir a rotina da analista", m:"manual", ia:0, ex:"pessoa", who:"Coordenador", nw:true, o:"Cada etapa com horário e dono, sem travar nos agentes.", e:"Rotina do dia documentada.", how:["A rotina se ajusta conforme os agentes assumem as etapas."], tools:["canvas"]},
+    {id:"15.2", t:"1:1 e feedback", m:"manual", ia:0, ex:"pessoa", who:"Coordenador", nw:true, o:"Acompanhar o desenvolvimento da analista.", e:"1:1 feito com combinados.", how:["Conversa periódica com a analista."], chk:"Processo novo (15/10). Confirmar a frequência.", plan:{f:4, t:"Pauta do 1:1 montada sozinha."}, tools:["meet"]},
+    {id:"15.3", t:"Alinhar com a liderança", m:"manual", ia:0, ex:"pessoa", who:"Coordenador", nw:true, o:"A liderança opinar a tempo.", e:"Call feita e próximos passos definidos.", how:["Durante o projeto de automação: call de meia hora no fim do dia com a entrega da fase."], tools:["meet","taskdex"]}
+  ]},
+  {id:"MP16", v:"Padrão", n:"Manter o padrão",
+   o:"Critérios, preços, contratos e documentação claros e atualizados.", e:"Régua única e canvas iguais ao que roda.",
+   opp:"Um agente que avisa quando a ferramenta mudou e o canvas não.",
+   p:[
+    {id:"16.1", t:"Tabelas de preço dos prestadores", m:"manual", ia:0, ex:"pessoa", who:"Coordenador", o:"Teto de lavanderia e tabela de fotógrafo coerentes com a taxa e o mercado.", e:"Tabelas atualizadas.", how:["A tabela de teto por peça é régua de homologação, não piso."], tools:["calc","hub"]},
+    {id:"16.2", t:"Critérios de homologação", m:"manual", ia:0, ex:"pessoa", who:"Coordenador", o:"Todo prestador e fornecedor avaliado pela mesma régua.", e:"Critérios documentados.", how:["Critérios de lavanderia, fotógrafo, outros prestadores e fornecedor homologado."], tools:["canvasfot","canvaslav"]},
+    {id:"16.3", t:"Contratos e aditivos", m:"manual", ia:0, ex:"pessoa", who:"Coordenador", o:"Condição combinada sempre no papel.", e:"Contrato ou aditivo assinado.", how:["Novos contratos e aditivos com os fornecedores."], tools:["contrato"]},
+    {id:"16.4", t:"Documentação dos processos", m:"manual", ia:1, ex:"pessoa", who:"Coordenador", o:"Toda mudança de ferramenta refletida no canvas oficial.", e:"Canvas igual ao que roda.", how:["Regra da liderança: alterou a ferramenta, atualiza o processo no canvas."], plan:{f:4, t:"Aviso de canvas desatualizado."}, tools:["canvasfot","canvaslav","claude"]}
+  ]},
+  {id:"MP17", v:"Exceção", n:"Eventos e patrocínios",
+   o:"Apoiar eventos de franquia quando houver.", e:"Patrocínio e brindes no prazo.",
+   opp:"Usar o score do MP6 para escolher quem chamar como patrocinador e palestrante.",
+   p:[
+    {id:"17.1", t:"Buscar patrocinadores", m:"manual", ia:0, ex:"pessoa", who:"Coordenador", o:"Reduzir o custo do evento com parceiros.", e:"Patrocínio fechado.", how:["Só quando há evento de franquia; prioridade para os fornecedores de melhor score."], tools:["gmail","slack"]},
+    {id:"17.2", t:"Orçar brindes e itens", m:"manual", ia:0, ex:"pessoa", who:"Coordenador", o:"Brindes no prazo e no orçamento.", e:"Orçamento aprovado.", how:["Cotação com fornecedores para o evento."], tools:["gmail"]}
   ]}
  ]}
  ]}
@@ -740,11 +740,11 @@ const AUTOS = [
     {id:"A1", n:"Agente de cadência Pipedrive → SIA", tp:"Agente", st:"ar", f:"Olimpo · dias úteis · 11h, 15h e 17h", o:"Manda o 1º, o 2º e o 3º contato pela SIA, anota no card e move o card sozinho. No ar desde 14/10.", s:["1.4"]},
     {id:"A2", n:"Auditor de falhas da cadência", tp:"Agente", st:"ar", f:"Olimpo · a cada rodada", o:"Separa na etapa de falhas o card que não pôde receber mensagem, com o motivo: conversa aberta, janela de 24h, cidade não identificada.", s:["1.4"]},
     {id:"A3", n:"Mensagens de cobrança da Loja", tp:"Bot", st:"ar", f:"Duas vezes ao dia · almoço e fim do dia", o:"Avisa pela SIA no dia 0, no 4º e no 7º dia que o link ou o boleto está esperando pagamento.", s:["7.4"]},
-    {id:"A4", n:"Agente de indicação de itens", tp:"Agente", st:"ar", f:"Olimpo · contínuo", o:"Cria na Loja a lista de itens de cada imóvel a partir das inconformidades da Implantação.", s:["7.2","17.1"]},
-    {id:"A5", n:"Agente de análise de pagamento", tp:"Agente", st:"ar", f:"Olimpo · das 8h às 18h", o:"Lê os links de pagamento da Rede: move o card para Pagamento confirmado quando algum link foi pago e para Link expirado quando todos venceram.", s:["9.2","9.3","17.1"]},
-    {id:"A6", n:"Agente de cancelamento de enxoval", tp:"Agente", st:"ar", f:"Olimpo · rodada diária", o:"Cancela pedido de enxoval não pago pela regra validada; nunca cancela pedido pago.", s:["9.4","17.1"]},
-    {id:"A7", n:"Bot de grandes operações", tp:"Bot", st:"ar", f:"GitHub Actions · 16h todo dia", o:"Avisa no Slack quando entram 10 ou mais imóveis da mesma operação, para preparar fotógrafo.", s:["3.4","17.1"]},
-    {id:"A8", n:"Espelhos automáticos", tp:"Rotina", st:"ar", f:"Jornada de hora em hora · calculadora 9h e 16h", o:"Mantêm a Jornada Enxoval e a calculadora atualizadas sem trabalho manual.", s:["2.3","15.3"]}
+    {id:"A4", n:"Agente de indicação de itens", tp:"Agente", st:"ar", f:"Olimpo · contínuo", o:"Cria na Loja a lista de itens de cada imóvel a partir das inconformidades da Implantação.", s:["7.2","12.1"]},
+    {id:"A5", n:"Agente de análise de pagamento", tp:"Agente", st:"ar", f:"Olimpo · das 8h às 18h", o:"Lê os links de pagamento da Rede: move o card para Pagamento confirmado quando algum link foi pago e para Link expirado quando todos venceram.", s:["9.2","9.3","12.1"]},
+    {id:"A6", n:"Agente de cancelamento de enxoval", tp:"Agente", st:"ar", f:"Olimpo · rodada diária", o:"Cancela pedido de enxoval não pago pela regra validada; nunca cancela pedido pago.", s:["9.4","12.1"]},
+    {id:"A7", n:"Bot de grandes operações", tp:"Bot", st:"ar", f:"GitHub Actions · 16h todo dia", o:"Avisa no Slack quando entram 10 ou mais imóveis da mesma operação, para preparar fotógrafo.", s:["3.4","12.1"]},
+    {id:"A8", n:"Espelhos automáticos", tp:"Rotina", st:"ar", f:"Jornada de hora em hora · calculadora 9h e 16h", o:"Mantêm a Jornada Enxoval e a calculadora atualizadas sem trabalho manual.", s:["2.3","10.3"]}
   ]},
   {lab:"Extensão", items:[
     {id:"E1", n:"Copiloto da SIA", tp:"Extensão", st:"trn", f:"Na tela da SIA", o:"Sugere a resposta das conversas com prestadores a partir dos critérios de cada tipo. Meta: responder sozinho.", s:["1.5","2.1","3.1","4.2"]}
@@ -754,14 +754,14 @@ const AUTOS = [
     {id:"S2", n:"prospeccao-lavanderia · prospeccao-fotografos", tp:"Skill", st:"dem", f:"Claude Code · por cidade", o:"Pesquisa os candidatos na Receita, no Google, no Maps e no Instagram e sobe os cards no funil 60.", s:["1.2","1.3"]},
     {id:"S3", n:"analise-capacho-franquia", tp:"Skill", st:"dem", f:"Claude Code · a cada pedido de capacho", o:"Cruza capachos recebidos com imóveis ativos e em onboarding e diz se a franquia precisa.", s:["7.3"]},
     {id:"S4", n:"Pauta do fornecedor", tp:"Skill", st:"dem", f:"Claude Code · antes de cada reunião", o:"Junta o mês do fornecedor e monta a pauta em formato de apresentação.", s:["6.2"]},
-    {id:"S5", n:"analise-comissao-enxoval · relatório mensal", tp:"Skill", st:"dem", f:"Claude Code · mensal", o:"Soma a comissão de todos os artefatos, aponta divergências e gera o relatório do mês.", s:["8.1","10.2"]},
+    {id:"S5", n:"analise-comissao-enxoval · relatório mensal", tp:"Skill", st:"dem", f:"Claude Code · mensal", o:"Soma a comissão de todos os artefatos, aponta divergências e gera o relatório do mês.", s:["8.1","13.2"]},
     {id:"S6", n:"Conferência da EasyCover", tp:"Skill", st:"dem", f:"Claude Code · mensal", o:"Bate o relatório da EasyCover com a nossa base e traz as divergências.", s:["8.4"]},
-    {id:"S7", n:"taxa-enxoval", tp:"Skill", st:"dem", f:"Claude Code · mensal", o:"Calcula o percentual de enxoval comprado sobre as ativações do mês.", s:["10.1","10.3"]}
+    {id:"S7", n:"taxa-enxoval", tp:"Skill", st:"dem", f:"Claude Code · mensal", o:"Calcula o percentual de enxoval comprado sobre as ativações do mês.", s:["13.1","13.3"]}
   ]},
   {lab:"Rotinas fixas", items:[
     {id:"R1", n:"Fechamento mensal", tp:"Rotina", st:"ar", f:"Todo começo de mês", o:"Comissão de Somar, Harus, RM, Matinali e AB Card e conferência da EasyCover.", s:["8.1","8.2","8.3","8.4","8.5"]},
-    {id:"R2", n:"Lançamento dos KPIs do setor", tp:"Rotina", st:"ar", f:"KPI System", o:"Os KPIs de Fornecedores entram no KPI System a partir das fontes.", s:["10.1"]},
-    {id:"R3", n:"MCPs de consulta (Enxoval e Hub)", tp:"Rotina", st:"ar", f:"Sempre disponíveis", o:"Outras áreas consultam enxoval e lavanderias sem pedir para o time.", s:["15.4"]}
+    {id:"R2", n:"Lançamento dos KPIs do setor", tp:"Rotina", st:"ar", f:"KPI System", o:"Os KPIs de Fornecedores entram no KPI System a partir das fontes.", s:["13.1"]},
+    {id:"R3", n:"MCPs de consulta (Enxoval e Hub)", tp:"Rotina", st:"ar", f:"Sempre disponíveis", o:"Outras áreas consultam enxoval e lavanderias sem pedir para o time.", s:["10.4"]}
   ]}
 ];
 const autosOf = id => AUTOS.flatMap(g=>g.items).filter(a=>a.s.includes(id));
