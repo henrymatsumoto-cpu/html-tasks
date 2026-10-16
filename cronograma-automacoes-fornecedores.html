@@ -109,11 +109,11 @@ td.a span{font:400 12.5px/1.45 var(--serif);color:var(--ink2)}
  <div class="hero-inner">
   <div class="masthead">
    <div class="wordmark"><span class="sz-logo" role="img" aria-label="Seazone">sea<span class="sz-house"><svg viewBox="0 0 22 24" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="0" width="2.5" height="8" rx=".8" fill="#ff6b5c"/><path d="M1 11 L11 2 L21 11 L21 22 Q21 23 20 23 L2 23 Q1 23 1 22 Z" fill="#ff6b5c"/></svg></span>zone</span><span>· Franquias · Fornecedores de Compras</span></div>
-   <span class="mast-date">15/10/2026</span>
+   <span class="mast-date">16/10/2026</span>
   </div>
   <span class="eyebrow">Projeto de automação da área</span>
   <h1>Cronograma de automações e agentes</h1>
-  <p class="lede">Uma fase por dia, na ordem da <a href="./arquitetura-fornecedores-compras-v2.html">arquitetura v2</a>: prestadores, homologados, Compras, gestão e suporte. No fim de cada dia, call de meia hora com a Ray mostrando o recorte da fase, os agentes e o status. Entrega final na sexta, 23/10.</p>
+  <p class="lede">Oito fases em cinco dias, começando por Compras (Loja e Jornada, campanhas e fechamento), depois lavanderias e fotógrafos, outros prestadores, homologados, gestão e suporte. Os processos seguem a numeração da <a href="./arquitetura-fornecedores-compras-v2.html">arquitetura v2</a>. No fim de cada dia, call de meia hora com a Ray mostrando o recorte da fase, os agentes e o status. Entrega final na sexta, 23/10.</p>
  </div>
 </section>
 
@@ -134,13 +134,13 @@ td.a span{font:400 12.5px/1.45 var(--serif);color:var(--ink2)}
    <span><span class="tag mode misto">Misto</span></span>
    <span><span class="tag mode manual">Manual</span></span>
   </div>
-  <p class="note"><b>Dependência:</b> o ritmo de uma fase por dia depende de ter conta do Claude com crédito. Se faltar, a fase do dia passa para o seguinte e a sexta, 23/10, continua sendo a data final.</p>
-  <p class="note"><b>Fica para a segunda leva:</b> o que depende do fornecedor, como aditivo de contrato ou acesso ao rastreio sem captcha.</p>
+  <p class="note"><b>Dependência:</b> o ritmo do cronograma depende de ter conta do Claude com crédito. Se faltar, as fases do dia passam para o seguinte e a sexta, 23/10, continua sendo a data final.</p>
+  <p class="note"><b>Fica para a segunda leva:</b> o que depende do fornecedor, como aditivo de contrato ou acesso ao rastreio sem captcha. O acompanhamento da entrega (8.7) saiu do cronograma: continua manual.</p>
  </div>
 
  <footer class="instfoot">
   <div class="wm"><span class="sz-logo" role="img" aria-label="Seazone">sea<span class="sz-house"><svg viewBox="0 0 22 24" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="0" width="2.5" height="8" rx=".8" fill="#ff6b5c"/><path d="M1 11 L11 2 L21 11 L21 22 Q21 23 20 23 L2 23 Q1 23 1 22 Z" fill="#ff6b5c"/></svg></span>zone</span><span>Franquias · Fornecedores de Compras</span></div>
-  <div class="who"><b>Henry Yudi Matsumoto</b>henry.matsumoto@seazone.com.br<br>Documento interno · 15/10/2026</div>
+  <div class="who"><b>Henry Yudi Matsumoto</b>henry.matsumoto@seazone.com.br<br>Documento interno · 16/10/2026</div>
  </footer>
 </div>
 
@@ -149,19 +149,44 @@ const MODE = {auto:"Automático", misto:"Misto", manual:"Manual"};
 const ST = {novo:"Novo", ajuste:"Ajuste", trn:"Em treinamento"};
 /* r = [id do processo na arquitetura v2, processo, automação, tipo, status, modo hoje, o que faz] */
 const PHASES = [
- {f:1, cls:"f1", dia:"Sex · 16/10", n:"Fornecedores prestadores de serviço",
-  o:"Prospecção, homologação e cadastro de fotógrafos, lavanderias e outros prestadores do Hub. Um agente só para o macroprocesso, com o contexto de cada tipo. Fecha também a task de IA no processo de captação.",
+ {f:1, cls:"f1", dia:"Sex · 16/10", n:"Compras: Loja e Jornada",
+  o:"Pedidos da Loja do começo ao fim: validação, cobrança, cancelamento e conferência do pagamento. Entra junto o alerta de prazos da Jornada, que é rápido. A analista passa a cuidar só do que o agente não resolve.",
+  r:[
+   ["8.2","Validar e mandar ao fornecedor","Validador de pedidos","Agente","novo","manual","Aprova o normal e segura o estranho."],
+   ["8.3","Cobrar o cliente","Aviso final do 7º dia","Rotina","ajuste","auto","Pague até as 18h ou o pedido é cancelado."],
+   ["8.4","Cancelar o pedido não pago","Cancelamento às 20h","Agente","novo","manual","Cancela sozinho no 7º dia sem pagamento."],
+   ["8.5","Confirmar o pagamento","Leitor de comprovante","Agente","novo","manual","O que não bate ganha a tag Pagamento inconsistente."],
+   ["9.5","Acompanhar prazos da Jornada","Alerta de atrasos","Agente","novo","manual","Avisa todo dia os pedidos de enxoval parados."]
+  ]},
+ {f:2, cls:"f2", dia:"Seg · 19/10", n:"Compras: campanhas",
+  o:"Da oportunidade à divulgação: o agente aponta quando vale fazer campanha e manda a campanha pronta às franquias.",
+  r:[
+   ["7.1","Identificar ou receber a demanda","Alerta de oportunidade de campanha","Agente","novo","manual","Avisa produto novo, parado ou data próxima."],
+   ["7.3","Divulgar às franquias","Divulgação automática da campanha","Agente","novo","manual","Envia a campanha pronta às franquias."]
+  ]},
+ {f:3, cls:"f2", dia:"Seg · 19/10", n:"Compras: fechamento do mês",
+  o:"Comissão calculada no dia 1 e o pedido de NF e boleto ao financeiro sem precisar abrir chamado na mão.",
+  r:[
+   ["10.1","Calcular a comissão","Fechamento no dia 1","Rotina","ajuste","misto","Planilha de conferência pronta sozinha."],
+   ["10.3","Pedir NF e boleto ao financeiro","Chamado automático no Suporte","Agente","novo","manual","Abre o chamado com o ok do fornecedor."]
+  ]},
+ {f:4, cls:"f3", dia:"Ter · 20/10", n:"Lavanderias e fotógrafos",
+  o:"Prospecção, homologação e cadastro de lavanderias e fotógrafos. Um agente só para os dois, com o contexto de cada tipo. Fecha também a task de IA no processo de captação.",
   r:[
    ["1.1","Identificar cidades sem prestador","Rotina semanal de cobertura","Rotina","ajuste","misto","Roda sozinha toda sexta e só pede o ok."],
-   ["1.2","Pesquisar prestadores na cidade","Skill única de prospecção","Skill","ajuste","misto","Uma só para fotógrafo, lavanderia e limpeza."],
+   ["1.2","Pesquisar prestadores na cidade","Skill única de prospecção","Skill","ajuste","misto","Uma só para fotógrafo e lavanderia."],
    ["1.3","Registrar e revisar o Backlog","Validador de cards","Agente","novo","misto","Corrige título e telefone antes da cadência."],
    ["1.4","Fazer a cadência de contato","1º contato mais frequente","Agente","ajuste","auto","De uma para várias rodadas por dia."],
    ["1.5","Negociar e qualificar","Copiloto respondendo sozinho","Extensão","trn","manual","A analista só entra quando ele trava."],
    ["2.2","Cadastrar a lavanderia no Hub","Cadastro automático no Hub","Agente","novo","manual","Cadastra a partir do card Ganho."],
-   ["3.3","Cadastrar o fotógrafo","Cadastro automático do fotógrafo","Agente","novo","manual","Cadastra a partir do card Ganho."],
-   ["4.2","Prospectar outros prestadores","Régua por tipo de serviço","Skill","novo","misto","Empresas de limpeza e outros na mesma skill."]
+   ["3.3","Cadastrar o fotógrafo","Cadastro automático do fotógrafo","Agente","novo","manual","Cadastra a partir do card Ganho."]
   ]},
- {f:2, cls:"f2", dia:"Seg · 19/10", n:"Fornecedores homologados",
+ {f:5, cls:"f4", dia:"Qua · 21/10", n:"Outros prestadores de serviço",
+  o:"Empresas de limpeza e os demais prestadores do Hub, com régua própria por tipo de serviço.",
+  r:[
+   ["4.2","Prospectar outros prestadores","Régua por tipo de serviço","Skill","novo","misto","Empresas de limpeza e outros, cada tipo com sua régua."]
+  ]},
+ {f:6, cls:"f4", dia:"Qua · 21/10", n:"Fornecedores homologados",
   o:"Entrada de fornecedor e relacionamento: reuniões, prontuário, score de saúde e relatório para a diretoria.",
   r:[
    ["5.5","Treinar o fornecedor","Checklist de entrada","Skill","novo","manual","Contrato, comissão, pagamento, perfis e treinamento."],
@@ -171,21 +196,7 @@ const PHASES = [
    ["6.5","Monitorar a saúde do fornecedor","Score de saúde","Agente","novo","manual","Nota pelos dados da Loja e da Jornada."],
    ["6.6","Reportar à gerência e à diretoria","Relatório de inconformidades","Skill","novo","manual","Histórico do fornecedor a partir do prontuário."]
   ]},
- {f:3, cls:"f3", dia:"Ter · 20/10", n:"Compras: campanhas, Loja, Jornada e fechamento",
-  o:"Campanhas, pedidos da Loja e da Jornada e o fechamento do mês. A analista passa a cuidar só do que o agente não resolve.",
-  r:[
-   ["7.1","Identificar ou receber a demanda","Alerta de oportunidade de campanha","Agente","novo","manual","Avisa produto novo, parado ou data próxima."],
-   ["7.3","Divulgar às franquias","Divulgação automática da campanha","Agente","novo","manual","Envia a campanha pronta às franquias."],
-   ["8.2","Validar e mandar ao fornecedor","Validador de pedidos","Agente","novo","manual","Aprova o normal e segura o estranho."],
-   ["8.3","Cobrar o cliente","Aviso final do 7º dia","Rotina","ajuste","auto","Pague até as 18h ou o pedido é cancelado."],
-   ["8.4","Cancelar o pedido não pago","Cancelamento às 20h","Agente","novo","manual","Cancela sozinho no 7º dia sem pagamento."],
-   ["8.5","Confirmar o pagamento","Leitor de comprovante","Agente","novo","manual","O que não bate ganha a tag Pagamento inconsistente."],
-   ["8.7","Acompanhar a entrega","Cobrança de rastreio","Agente","novo","manual","Cobra o fornecedor que não informou o rastreio."],
-   ["10.1","Calcular a comissão","Fechamento no dia 1","Rotina","ajuste","misto","Planilha de conferência pronta sozinha."],
-   ["10.3","Pedir NF e boleto ao financeiro","Chamado automático no Suporte","Agente","novo","manual","Abre o chamado com o ok do fornecedor."],
-   ["9.5","Acompanhar prazos da Jornada","Alerta de atrasos","Agente","novo","manual","Avisa todo dia os pedidos de enxoval parados."]
-  ]},
- {f:4, cls:"f4", dia:"Qua · 21/10", n:"Gestão",
+ {f:7, cls:"f5", dia:"Qui · 22/10", n:"Gestão",
   o:"A rotina da coordenação que ainda não estava na arquitetura: KPIs, tasks, equipe e documentação.",
   r:[
    ["14.1","KPIs do setor","Lançamento automático de KPIs","Rotina","ajuste","misto","Lança direto das fontes no KPI System."],
@@ -194,7 +205,7 @@ const PHASES = [
    ["16.2","1:1 e feedback","Pauta do 1:1","Skill","novo","manual","Junta entregas e pontos da semana."],
    ["17.4","Documentação dos processos","Aviso de canvas desatualizado","Agente","novo","manual","Avisa quando a ferramenta mudou e o canvas não."]
   ]},
- {f:5, cls:"f5", dia:"Qui · 22/10", n:"Suporte",
+ {f:8, cls:"f5", dia:"Qui · 22/10", n:"Suporte",
   o:"O trabalho que não aparece: a auditoria das ferramentas da Implantação e os próprios agentes. Se um agente cai, o processo dele deixa de existir.",
   r:[
    ["12.3","Validar e documentar automações","Portfólio automático","Rotina","novo","manual","Atualiza o portfólio a partir do que está no ar."],
@@ -206,8 +217,9 @@ const PHASES = [
 const all = PHASES.flatMap(p=>p.r);
 const cnt = f => all.filter(f).length;
 
-document.getElementById("days").innerHTML = PHASES.map(p=>
-  `<a class="day ${p.cls}" href="#fase-${p.f}"><span class="d">${p.dia}</span><span class="n">Fase ${p.f}</span><span class="q">${p.n} · ${p.r.length} automações</span></a>`).join("") +
+const DAYS = [...new Set(PHASES.map(p=>p.dia))].map(d=>PHASES.filter(p=>p.dia===d));
+document.getElementById("days").innerHTML = DAYS.map(ps=>
+  `<a class="day ${ps[0].cls}" href="#fase-${ps[0].f}"><span class="d">${ps[0].dia}</span><span class="n">${ps.length>1?`Fases ${ps.map(p=>p.f).join(" e ")}`:`Fase ${ps[0].f}`}</span><span class="q">${ps.map(p=>`${p.n} · ${p.r.length}`).join("<br>")}</span></a>`).join("") +
   `<div class="day f6"><span class="d">Sex · 23/10</span><span class="n">Entrega final</span><span class="q">Arquitetura e portfólio atualizados</span></div>`;
 
 const row = (k,v) => `<div class="r"><span class="k">${k}</span><b>${v}</b></div>`;
