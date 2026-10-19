@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lavanderias em Vila Velha</title>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme:dark;
+  --bg:#080E32;--surf:#0F1742;--surf2:#18225A;
+  --line:#232E6B;--ink:#EEF1FB;--ink2:#B4BBD9;--ink3:#8189B0;
+  --won:oklch(78% .12 150);--lost:oklch(72% .13 30);--amber:oklch(82% .13 80);--blue:#4D85FF;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 "Figtree",sans-serif;-webkit-font-smoothing:antialiased}
+main{max-width:880px;margin:0 auto;padding:56px 16px 96px}
+.eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink3);font-weight:700}
+h1{font-family:"Figtree",sans-serif;font-weight:800;font-size:clamp(34px,6.5vw,56px);letter-spacing:-.03em;line-height:1;margin:14px 0 14px}
+h2{font-family:"Figtree",sans-serif;font-weight:600;font-size:24px;letter-spacing:-.015em;margin:64px 0 6px}
+.lede{color:var(--ink2);font-size:18px;max-width:60ch;margin:0}
+.meta{color:var(--ink3);font-size:13.5px;margin-top:18px}
+p{max-width:66ch}
+.sub{color:var(--ink2);margin:0 0 22px}
+
+.nums{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:14px;overflow:hidden;margin-top:40px}
+.nums div{background:var(--surf);padding:22px 20px}
+.nums b{display:block;font-family:"Figtree",sans-serif;font-size:44px;font-weight:800;line-height:1;letter-spacing:-.03em}
+.nums span{display:block;color:var(--ink2);font-size:13.5px;margin-top:8px;max-width:20ch}
+.nums .w b{color:var(--won)} .nums .l b{color:var(--lost)} .nums .a b{color:var(--amber)}
+
+.funnel{display:flex;flex-direction:column;gap:10px}
+.step{display:grid;grid-template-columns:190px 1fr 44px;align-items:center;gap:14px}
+.step .t{font-size:14.5px;color:var(--ink2)}
+.step .bar{height:26px;border-radius:6px;background:var(--surf2);overflow:hidden}
+.step .bar i{display:block;height:100%;background:var(--blue);border-radius:6px}
+.step .n{font-weight:700;text-align:right;font-variant-numeric:tabular-nums}
+.step.win .bar i{background:var(--won)}
+.step.neg .bar i{background:var(--won);opacity:.55}
+
+.reasons{border-top:1px solid var(--line)}
+.r{display:grid;grid-template-columns:34px 1fr;gap:6px 18px;padding:20px 0;border-bottom:1px solid var(--line)}
+.r .c{font-family:"Figtree",sans-serif;font-size:30px;font-weight:800;line-height:1;color:var(--lost);font-variant-numeric:tabular-nums}
+.r h3{margin:0;font-size:17px;font-weight:700}
+.r h3 small{color:var(--ink3);font-weight:500;font-size:13.5px;margin-left:8px}
+.r p{grid-column:2;margin:4px 0 0;color:var(--ink2);font-size:15px}
+.r .who{grid-column:2;color:var(--ink3);font-size:13.5px;margin-top:6px}
+.meter{grid-column:2;height:6px;background:var(--surf2);border-radius:3px;overflow:hidden;margin-top:4px}
+.meter i{display:block;height:100%;background:var(--lost)}
+
+blockquote{margin:22px 0;padding:20px 22px;background:var(--surf);border-radius:12px;color:var(--ink);font-size:16.5px;line-height:1.55}
+blockquote cite{display:block;margin-top:10px;color:var(--ink3);font-style:normal;font-size:13.5px}
+
+.won{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.won div{background:var(--surf);border-radius:12px;padding:20px}
+.won h3{margin:0 0 4px;font-size:17px;color:var(--won)}
+.won p{margin:0;color:var(--ink2);font-size:14.5px}
+
+.concl{background:var(--surf);border-radius:16px;padding:28px 26px;margin-top:18px}
+.concl p{margin:0 0 14px;color:var(--ink)}
+.concl p:last-child{margin:0}
+.concl ol{margin:6px 0 14px;padding-left:20px;color:var(--ink2)}
+.concl li{margin:8px 0}
+.concl li b{color:var(--ink)}
+
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:12px}
+table{border-collapse:collapse;width:100%;min-width:640px;font-size:14px}
+th{text-align:left;color:var(--ink3);font-weight:500;font-size:12px;letter-spacing:.06em;text-transform:uppercase;padding:12px 14px;background:var(--surf)}
+td{padding:12px 14px;border-top:1px solid var(--line);vertical-align:top;color:var(--ink2)}
+td:first-child{color:var(--ink);font-weight:500}
+.tag{display:inline-block;padding:2px 10px;border-radius:999px;font-size:12px;font-weight:700;white-space:nowrap}
+.tag.g{background:oklch(78% .12 150 / .16);color:var(--won)}
+.tag.a{background:oklch(80% .13 80 / .16);color:var(--amber)}
+.tag.p{background:oklch(70% .13 35 / .16);color:var(--lost)}
+.flag{color:var(--amber)}
+.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.dim{color:var(--ink3)}
+footer{margin-top:56px;color:var(--ink3);font-size:13px}
+
+@media (max-width:640px){
+  .nums{grid-template-columns:1fr 1fr}
+  .step{grid-template-columns:1fr 40px}
+  .step .t{grid-column:1/-1}
+  .won{grid-template-columns:1fr}
+}
+
+.tl{border-left:2px solid var(--line);margin:8px 0 0 6px;padding-left:22px}
+.tl div{position:relative;padding:0 0 22px}
+.tl div:before{content:"";position:absolute;left:-29px;top:7px;width:12px;height:12px;border-radius:50%;background:var(--blue)}
+.tl div.g:before{background:var(--won)} .tl div.p:before{background:var(--lost)}
+.tl b{display:block;font-size:13px;color:var(--ink3);font-weight:600;letter-spacing:.04em;text-transform:uppercase}
+.tl p{margin:2px 0 0;color:var(--ink2);font-size:15px}
+.tl p strong{color:var(--ink)}
+.badge{display:inline-block;margin-top:22px;padding:6px 14px;border-radius:999px;background:oklch(78% .12 150 / .14);color:var(--won);font-size:13px;font-weight:700}
+</style></head><body><main>
+<span class="eyebrow">Prospecção de Fornecedores · Lavanderias · ES</span>
+<h1>Prospecção Lavanderias Vila Velha</h1>
+<p class="lede">Primeira cidade em que a prospecção começou com o contato inicial feito pelo agente. O agente mandou mensagem pela SIA para 38 telefones de lavanderias, e 16 responderam. Em três dias úteis todos os cards tinham um resultado: 1 lavanderia cadastrada no Hub e 40 perdidas. A maior parte de quem respondeu foi perdida por ser autoatendimento ou por não passar roupa.</p>
+<p class="meta">Fonte: Pipedrive, funil 60 "Prospecção Fornecedores", com o histórico de fases e as anotações de cada card · 40 cards criados em 13/10/2026 a partir da base da Receita (CNAE 9601) e 1 em 14/10 por contato direto · mensagens enviadas pelo agente de cadência entre 14/10 e 16/10 · negociação feita pela Wânia · card de teste do agente fora da conta · atualizado em 18/10/2026</p>
+<span class="badge">Primeira cidade com 1º, 2º e último contato enviados pelo agente</span>
+
+<div class="nums">
+  <div><b>41</b><span>lavanderias no funil (38 telefones diferentes)</span></div>
+  <div class="a"><b>16</b><span>responderam às mensagens do agente</span></div>
+  <div class="w"><b>1</b><span>ganho, cadastrada no Hub em 14/10</span></div>
+  <div class="l"><b>40</b><span>perdidas, 20 delas encerradas pelo agente</span></div>
+</div>
+
+<h2>Como o agente trabalhou</h2>
+<p class="sub">O agente manda as mensagens e move os cards sozinho. Quem responde, a Wânia passa para "Em negociação" e o agente não mexe mais no card. Horários de Brasília.</p>
+<div class="tl">
+  <div><b>13/10 · segunda</b><p>40 lavanderias da base da Receita viram card no Backlog.</p></div>
+  <div><b>14/10 · 14h05</b><p>O agente envia o <strong>1º contato</strong> para 37 cards. Em 3 o envio falhou porque o telefone já tinha uma conversa aberta na SIA: eram cards com o mesmo telefone de outro card.</p></div>
+  <div class="g"><b>14/10 · tarde</b><p><strong>9 responderam ao 1º contato.</strong> A B.E. Nascimento foi cadastrada no Hub às 16h27, cerca de 2h20 depois da mensagem.</p></div>
+  <div><b>15/10 · 11h e 15h</b><p>O agente move para o 2º contato os 27 cards que não responderam e envia o <strong>2º contato</strong> às 15h. Mais 6 lavanderias respondem entre 15 e 16/10.</p></div>
+  <div><b>16/10 · 15h e 17h</b><p>Os 21 cards que continuavam sem resposta vão para o 3º contato e recebem o <strong>último contato</strong> às 17h. Só 1 respondeu depois disso.</p></div>
+  <div class="p"><b>16/10 · noite</b><p>O agente marca os <strong>20 cards sem retorno como Perdidos</strong> ("Sem Retorno") e move todos para a etapa de Perda.</p></div>
+  <div class="p"><b>18/10</b><p>Os 3 últimos cards abertos foram encerrados à mão como "Sem Retorno". Vila Velha fica sem card em aberto.</p></div>
+</div>
+
+<h2>Do contato ao cadastro</h2>
+<p class="sub">Contado por telefone, porque 3 cards repetiam o telefone de outro card. Todos os 38 telefones receberam pelo menos uma mensagem do agente.</p>
+<div class="funnel">
+  <div class="step"><span class="t">Recebeu mensagem</span><span class="bar"><i style="width:100%"></i></span><span class="n">38</span></div>
+  <div class="step"><span class="t">Respondeu</span><span class="bar"><i style="width:42.1%"></i></span><span class="n">16</span></div>
+  <div class="step neg"><span class="t">Foi para negociação</span><span class="bar"><i style="width:34.2%"></i></span><span class="n">13</span></div>
+  <div class="step win"><span class="t">Ganho</span><span class="bar"><i style="width:2.6%"></i></span><span class="n">1</span></div>
+</div>
+
+<p class="sub" style="margin-top:32px">Qual mensagem trouxe a resposta:</p>
+<div class="tbl"><table style="min-width:0">
+<thead><tr><th>Mensagem do agente</th><th class="num">Enviada para</th><th class="num">Responderam depois dela</th></tr></thead>
+<tbody>
+<tr><td>1º contato · 14 e 15/10</td><td class="num">38</td><td class="num">9</td></tr>
+<tr><td>2º contato · 15 e 16/10</td><td class="num">28</td><td class="num">6</td></tr>
+<tr><td>Último contato · 16/10</td><td class="num">21</td><td class="num">1</td></tr>
+</tbody></table></div>
+
+<h2>Por que perdemos</h2>
+<p class="sub">40 cards perdidos, por motivo. As explicações vêm das anotações da Wânia em cada card. Quando a anotação diz outra coisa que o motivo marcado no Pipedrive, os dois aparecem.</p>
+<div class="reasons">
+  <div class="r"><span class="c">24</span><h3>Sem retorno<small>60%</small></h3>
+    <div class="meter"><i style="width:60%"></i></div>
+    <p>20 receberam as três mensagens, não responderam e foram encerradas pelo agente. Outras 3 foram encerradas à mão em 18/10: a Rede Max Clean, cujo envio falhou três vezes porque o telefone era o mesmo da Coronel e Polini; o Alexsandro Walace; e a QualiClean. O Alexandre Pagiola chegou a responder, mas parou na negociação.</p>
+    <span class="who">20 pelo agente · Rede Max Clean · Alexsandro Walace · QualiClean · Alexandre Pagiola</span></div>
+  <div class="r"><span class="c">11</span><h3>Autoatendimento ou não passa roupa<small>27,5%</small></h3>
+    <div class="meter"><i style="width:27.5%"></i></div>
+    <p>É o principal motivo entre quem respondeu. 7 são lavanderias de autoatendimento. Outras 4 foram marcadas como "Valor por Quilo" ou "Valor por Cesto", mas pelas anotações também só lavam e secam: "Não passa, é autoatendimento" (Acqua Express), "Não passam, apenas lavam e secam" (+qlavei). A João Carlos ainda nem está funcionando.</p>
+    <span class="who">Autoatendimento: Lave Flash · Lavateria Praia da Costa · Bubble Box Itapuã · Lavo Itapuã · D F Souza · João Carlos · Lave Express — Quilo/cesto: Acqua Express · Brilhante · Lavup · +qlavei Express</span></div>
+  <div class="r"><span class="c">2</span><h3>Contato inválido<small>5%</small></h3>
+    <div class="meter"><i style="width:5%"></i></div>
+    <p>Cards repetidos: a Laex entrou duas vezes, e a Coronel e Polini tinha o mesmo telefone de outro card.</p>
+    <span class="who">Laex (duplicado) · Coronel e Polini</span></div>
+  <div class="r"><span class="c">1</span><h3>Valor alto<small>2,5%</small></h3>
+    <div class="meter"><i style="width:2.5%"></i></div>
+    <p>A Neide passou a tabela por peça e não aceitou baixar. Os valores ficaram acima do teto em todas as peças que temos de referência.</p>
+    <span class="who">Neide Aparecida</span></div>
+  <div class="r"><span class="c">1</span><h3>Parou de responder<small>2,5%</small></h3>
+    <div class="meter"><i style="width:2.5%"></i></div>
+    <p>Respondeu ao contato, entrou em negociação e parou de responder.</p>
+    <span class="who">Laex</span></div>
+  <div class="r"><span class="c">1</span><h3>Motivo a corrigir<small>2,5% · no Pipedrive: "Não Trabalha com fotos de imóveis"</small></h3>
+    <div class="meter"><i style="width:2.5%"></i></div>
+    <p>Perdida 4 minutos depois do 1º contato, com um motivo que é de fotógrafo e sem anotação. Vale corrigir o motivo no card.</p>
+    <span class="who">P O Torres</span></div>
+</div>
+
+<blockquote>"Fronha R$ 5,00 · Lençol R$ 9,00 · Edredom casal R$ 35,00 — Não aceitou negociar para baixar o preço."
+<cite>Anotação da Wânia no card da Neide Aparecida (513893). O teto da Seazone é R$ 3 na fronha, R$ 5 no lençol e R$ 25 no edredom de casal.</cite></blockquote>
+
+<h2>Quem entrou</h2>
+<div class="won">
+  <div><h3>B.E. Nascimento Serviços de Lavanderia</h3><p>Fica em Itapuã. Respondeu ao 1º contato do agente e foi cadastrada no Hub no mesmo dia, 14/10, com os valores da tabela Seazone. É a primeira lavanderia ganha a partir de um contato feito pelo agente.</p></div>
+  <div><h3 style="color:var(--amber)">Para acompanhar: QualiClean</h3><p>É autoatendimento e foi encerrada como "Sem Retorno", mas vai abrir uma unidade dentro do Praia da Costa Living Suites, administrado pela Seazone, e já atende anfitriões de Airbnb. Cobra R$ 19,99 por cesto. Ficou pendente o preço por peça e se faz passadoria.</p></div>
+</div>
+
+<h2>Conclusão</h2>
+<div class="concl">
+  <p><b>O agente fez a cadência inteira sozinho.</b> Os 38 telefones receberam mensagem em 3 dias úteis (14 a 16/10), e o agente encerrou 20 cards sem retorno sem ninguém precisar mexer neles. A Wânia só entrou nas conversas de quem respondeu.</p>
+  <p><b>Responderam 16 de 38 telefones (42%), e mais da metade respondeu logo ao 1º contato.</b> O 2º contato trouxe mais 6 respostas e o último só 1.</p>
+  <p><b>O gargalo é a base, não o contato.</b> Dos 15 que responderam e foram perdidos, 11 são de autoatendimento ou não passam roupa. A base da Receita (CNAE 9601) não diz o tipo da lavanderia: 32 dos 41 cards ainda estão com o tipo "A confirmar". Para as próximas cidades:</p>
+  <ol>
+    <li><b>Separar o autoatendimento antes da cadência.</b> Revisar o Backlog pelo nome, Google e Instagram, e mandar para Perda quem é self-service antes do 1º contato.</li>
+    <li><b>Tirar os telefones repetidos antes de disparar.</b> Os 3 cards com telefone repetido deram erro no envio.</li>
+    <li><b>Corrigir o motivo do P O Torres.</b> O motivo marcado é de fotógrafo.</li>
+  </ol>
+  <p>Vila Velha fica com 1 lavanderia cadastrada no Hub e nenhum card em aberto.</p>
+</div>
+
+<h2>Todos os cards</h2>
+<p class="sub">"Até onde foi" é a última mensagem do agente que o card recebeu.</p>
+<div class="tbl"><table>
+<thead><tr><th>Lavanderia</th><th>Bairro</th><th>Até onde foi</th><th>Resultado</th><th>Anotação</th></tr></thead>
+<tbody>
+<tr><td>B e Nascimento Em Geral</td><td>Itapua</td><td>1º</td><td><span class="tag g">Ganho</span></td><td>Cadastrada no Hub com a tabela Seazone</td></tr>
+<tr><td>Neide Aparecida</td><td>Centro de Vila Velha</td><td>1º</td><td><span class="tag p">Valor alto</span></td><td>Fronha R$ 5, lençol R$ 9, edredom casal R$ 35; não baixou</td></tr>
+<tr><td>Acqua Express</td><td>Praia da Costa</td><td>1º</td><td><span class="tag p">Cobra por quilo</span></td><td>Não passa, é autoatendimento</td></tr>
+<tr><td>Brilhante</td><td>Itapua</td><td>2º</td><td><span class="tag p">Cobra por quilo</span></td><td></td></tr>
+<tr><td>+qlavei Express</td><td>Itapuã</td><td>1º</td><td><span class="tag p">Cobra por cesto</span></td><td>Não passa, só lava e seca</td></tr>
+<tr><td>Lavup</td><td>Praia da Costa</td><td>2º</td><td><span class="tag p">Cobra por cesto</span></td><td>Não passa e cobra por cesto</td></tr>
+<tr><td>Bubble Box Itapua</td><td>Itapua</td><td>1º</td><td><span class="tag p">Autoatendimento</span></td><td></td></tr>
+<tr><td>D F Souza</td><td>Itapua</td><td>2º</td><td><span class="tag p">Autoatendimento</span></td><td></td></tr>
+<tr><td>Joao Carlos</td><td>Praia da Costa</td><td>2º</td><td><span class="tag p">Autoatendimento</span></td><td>Ainda não está funcionando</td></tr>
+<tr><td>Lavateria Praia da Costa</td><td>Praia da Costa</td><td>2º</td><td><span class="tag p">Autoatendimento</span></td><td></td></tr>
+<tr><td>Lave Express</td><td>Praia da Costa</td><td>Último</td><td><span class="tag p">Autoatendimento</span></td><td>Respondeu depois do último contato</td></tr>
+<tr><td>Lave Flash</td><td>Praia da Costa</td><td>2º</td><td><span class="tag p">Autoatendimento</span></td><td></td></tr>
+<tr><td>Lavo Itapua</td><td>Itapuã</td><td>1º</td><td><span class="tag p">Autoatendimento</span></td><td></td></tr>
+<tr><td>Laex</td><td>Itapuã</td><td><span class="flag">envio falhou</span></td><td><span class="tag p">Parou de responder</span></td><td>Respondeu e parou na negociação</td></tr>
+<tr><td>P O Torres</td><td>Divino Espírito Santo</td><td>1º</td><td><span class="tag a">Motivo errado</span></td><td>Perdida 4 min após o contato; motivo marcado é de fotógrafo</td></tr>
+<tr><td>Coronel e Polini S S</td><td>Praia de Itaparica</td><td><span class="flag">envio falhou</span></td><td><span class="tag p">Contato inválido</span></td><td>Mesmo telefone da Rede Max Clean; conversa já aberta na SIA</td></tr>
+<tr><td>Laex</td><td>Praia da Costa</td><td>1º</td><td><span class="tag p">Contato inválido</span></td><td>Duplicado da Laex</td></tr>
+<tr><td>60 Minutos</td><td>Itapuã</td><td>Último</td><td><span class="tag p">Sem retorno</span></td><td></td></tr>
+<tr><td>A S Mota</td><td>Praia da Costa</td><td>Último</td><td><span class="tag p">Sem retorno</span></td><td></td></tr>
+<tr><td>Alexandre Pagiola</td><td>Gloria</td><td>1º</td><td><span class="tag p">Sem retorno</span></td><td>Respondeu e parou na negociação</td></tr>
+<tr><td>Alexsandro Walace</td><td>Gloria</td><td>1º</td><td><span class="tag p">Sem retorno</span></td><td>Recebeu o 1º contato duas vezes</td></tr>
+<tr><td>Anderson Rosalen</td><td>Itapua</td><td>Último</td><td><span class="tag p">Sem retorno</span></td><td></td></tr>
+<tr><td>Coronel e Polini S S</td><td>Praia da Costa</td><td>Último</td><td><span class="tag p">Sem retorno</span></td><td></td></tr>
+<tr><td>Da Vila</td><td>Praia da Costa</td><td>Último</td><td><span class="tag p">Sem retorno</span></td><td></td></tr>
+<tr><td>Eliete Francisco</td><td>Itapua</td><td>Último</td><td><span class="tag p">Sem retorno</span></td><td></td></tr>
+<tr><td>Erica Souza</td><td>Gloria</td><td>Último</td><td><span class="tag p">Sem retorno</span></td><td></td></tr>
+<tr><td>Flow Lav</td><td>Praia de Itaparica</td><td>Último</td><td><span class="tag p">Sem retorno</span></td><td></td></tr>
+<tr><td>J I e</td><td>Praia da Costa</td><td>Último</td><td><span class="tag p">Sem retorno</span></td><td></td></tr>
+<tr><td>J I e</td><td>Praia da Costa</td><td>Último</td><td><span class="tag p">Sem retorno</span></td><td></td></tr>
+<tr><td>Leonice Amaral</td><td>Praia da Costa</td><td>Último</td><td><span class="tag p">Sem retorno</span></td><td></td></tr>
+<tr><td>Leva &amp; Lava</td><td>Praia da Costa</td><td>Último</td><td><span class="tag p">Sem retorno</span></td><td></td></tr>
+<tr><td>Lidia Goncalves</td><td>Praia da Costa</td><td>Último</td><td><span class="tag p">Sem retorno</span></td><td></td></tr>
+<tr><td>Maria Antonia</td><td>Gloria</td><td>Último</td><td><span class="tag p">Sem retorno</span></td><td></td></tr>
+<tr><td>Perim</td><td>Centro</td><td>Último</td><td><span class="tag p">Sem retorno</span></td><td></td></tr>
+<tr><td>QualiClean</td><td>Itapuã</td><td>2º</td><td><span class="tag p">Sem retorno</span></td><td>Autoatendimento; vai abrir unidade no Praia da Costa Living Suites</td></tr>
+<tr><td>Rede Max Clean</td><td>Praia de Itapoa</td><td><span class="flag">envio falhou</span></td><td><span class="tag p">Sem retorno</span></td><td>Envio falhou 3x (conversa já aberta na SIA)</td></tr>
+<tr><td>Refrisma</td><td>Itapua</td><td>Último</td><td><span class="tag p">Sem retorno</span></td><td></td></tr>
+<tr><td>Roupa Limpa</td><td>Centro de Vila Velha</td><td>Último</td><td><span class="tag p">Sem retorno</span></td><td></td></tr>
+<tr><td>Sonia Maria</td><td>Centro</td><td>Último</td><td><span class="tag p">Sem retorno</span></td><td></td></tr>
+<tr><td>Sonia Regina</td><td>Soteco</td><td>Último</td><td><span class="tag p">Sem retorno</span></td><td></td></tr>
+<tr><td>Yah</td><td>Praia da Costa</td><td>Último</td><td><span class="tag p">Sem retorno</span></td><td></td></tr>
+</tbody></table></div>
+
+<footer>"Respondeu" conta quem foi para "Em negociação" ou foi perdido pela Wânia com um motivo da conversa. A Laex entrou duas vezes e é contada uma vez. Coronel e Polini (2 cards) e Rede Max Clean usam o mesmo telefone, que é contado uma vez. O card "Henry teste - Lavanderia", usado para testar o agente, ficou fora da conta. Os valores de teto são os da tabela de lavanderia da Seazone.</footer>
+
+</main></body></html>
