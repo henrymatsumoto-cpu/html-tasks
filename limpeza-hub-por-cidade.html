@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Limpeza no Hub por Cidade</title>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme:dark;
+  --bg:#080E32;--surf:#0F1742;--surf2:#18225A;
+  --line:#232E6B;--ink:#EEF1FB;--ink2:#B4BBD9;--ink3:#8189B0;
+  --amber:oklch(82% .13 80);--blue:#4D85FF;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 "Figtree",sans-serif;-webkit-font-smoothing:antialiased}
+main{max-width:880px;margin:0 auto;padding:56px 16px 96px}
+.eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink3);font-weight:700}
+h1{font-weight:800;font-size:clamp(34px,6.5vw,56px);letter-spacing:-.03em;line-height:1;margin:14px 0 14px}
+h2{font-weight:600;font-size:24px;letter-spacing:-.015em;margin:64px 0 6px}
+.lede{color:var(--ink2);font-size:18px;max-width:60ch;margin:0}
+.meta{color:var(--ink3);font-size:13.5px;margin-top:18px}
+.sub{color:var(--ink2);margin:0 0 26px;max-width:66ch}
+
+.nums{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:14px;overflow:hidden;margin-top:40px}
+.nums div{background:var(--surf);padding:22px 20px}
+.nums b{display:block;font-size:44px;font-weight:800;line-height:1;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.nums span{display:block;color:var(--ink2);font-size:13.5px;margin-top:8px}
+
+.uf{border-top:1px solid var(--line);padding:22px 0 18px}
+.uf:last-child{border-bottom:1px solid var(--line)}
+.uf header{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:12px}
+.uf h3{margin:0;font-size:17px;font-weight:700}
+.uf h3 small{color:var(--ink3);font-weight:500;font-size:13.5px;margin-left:8px}
+.uf header b{font-size:22px;font-weight:800;font-variant-numeric:tabular-nums}
+.row{display:grid;grid-template-columns:200px 1fr 32px;align-items:center;gap:14px;padding:3px 0}
+.row .t{font-size:14.5px;color:var(--ink2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.row .bar{height:18px;border-radius:5px;background:var(--surf2);overflow:hidden}
+.row .bar i{display:block;height:100%;background:var(--blue);border-radius:5px}
+.row .n{font-weight:700;text-align:right;font-variant-numeric:tabular-nums}
+.row.warn .t{color:var(--amber)}
+.row.warn .bar i{background:var(--amber)}
+
+.note{margin-top:40px;padding:18px 20px;background:var(--surf);border-radius:12px;color:var(--ink2);font-size:14.5px}
+.note b{color:var(--ink)}
+.note ul{margin:8px 0 0;padding-left:18px}
+
+@media (max-width:560px){
+  .nums div{padding:16px 14px}
+  .nums b{font-size:32px}
+  .row{grid-template-columns:130px 1fr 28px;gap:10px}
+}
+</style>
+</head>
+<body>
+<main>
+  <div class="eyebrow">Hub de Serviços · Categoria Limpeza</div>
+  <h1>Prestadores de Limpeza por Cidade</h1>
+  <p class="lede">37 prestadores validados, espalhados em 29 cidades de 9 estados. São Paulo/SP lidera com 4; a maioria das cidades tem só 1.</p>
+  <div class="meta">Fonte: tabela <code>hub_prestadores</code> do Hub, status validado · extraído em 18/10/2026</div>
+
+  <div class="nums">
+    <div><b>37</b><span>prestadores validados</span></div>
+    <div><b>29</b><span>cidades atendidas</span></div>
+    <div><b>9</b><span>estados</span></div>
+  </div>
+
+  <h2>Por cidade</h2>
+  <p class="sub">Agrupado por estado, do estado com mais prestadores para o com menos. Barra em escala de 0 a 4 (o maior valor de uma cidade).</p>
+
+  <div id="lista"></div>
+
+  <div class="note">
+    <b>O que fica de fora e cuidados</b>
+    <ul>
+      <li>Conta só os <b>validados</b>. Há mais 3 cadastros de Limpeza reprovados, não incluídos.</li>
+      <li>A categoria <b>Diarista</b> é separada no Hub (2 validados) e não entra aqui.</li>
+      <li>Um cadastro tem a cidade preenchida como <b>"Santa Catarina"</b> (nome do estado), em destaque amarelo: precisa ser corrigido.</li>
+      <li>Águas Claras/DF aparece separada de Brasília porque foi cadastrada assim.</li>
+    </ul>
+  </div>
+</main>
+<script>
+const dados = {
+  "Santa Catarina":[["Florianópolis",2],["Anitápolis",1],["Balneário Camboriú",1],["Blumenau",1],["Bombinhas",1],["Itapema",1],["Joinville",1],["Penha",1],["Piçarras",1],["São José",1],["Santa Catarina (cidade errada)",1]],
+  "São Paulo":[["São Paulo",4],["Campos do Jordão",1],["Ubatuba",1]],
+  "Bahia":[["Ilhéus",2],["Salvador",2],["Itacaré",1]],
+  "Rio Grande do Sul":[["Gramado",2],["Alvorada",1]],
+  "Goiás":[["Anápolis",1],["Caldas Novas",1],["Goiânia",1]],
+  "Alagoas":[["Maceió",2]],
+  "Distrito Federal":[["Águas Claras",1],["Brasília",1]],
+  "Minas Gerais":[["Governador Valadares",1],["Poços de Caldas",1]],
+  "Rio de Janeiro":[["Armação dos Búzios",1],["Cabo Frio",1]]
+};
+const max = 4;
+const soma = l => l.reduce((a,[,n])=>a+n,0);
+document.getElementById("lista").innerHTML = Object.entries(dados)
+  .sort((a,b)=>soma(b[1])-soma(a[1]))
+  .map(([uf,cidades])=>`<section class="uf">
+    <header><h3>${uf}<small>${cidades.length} ${cidades.length>1?"cidades":"cidade"}</small></h3><b>${soma(cidades)}</b></header>
+    ${cidades.map(([c,n])=>`<div class="row${c.includes("errada")?" warn":""}"><span class="t" title="${c}">${c}</span><span class="bar"><i style="width:${n/max*100}%"></i></span><span class="n">${n}</span></div>`).join("")}
+  </section>`).join("");
+</script>
+</body></html>
