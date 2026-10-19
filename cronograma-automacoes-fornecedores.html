@@ -101,6 +101,11 @@ tr.done td.a b{text-decoration:line-through}
 .chip.done{opacity:.45;text-decoration:line-through}
 .ph-h .pg{margin-left:auto;font:700 12px/1 var(--sans);color:var(--ink3);font-variant-numeric:tabular-nums}
 .ph-h .pg.all{color:var(--green)}
+td.a textarea{display:block;width:100%;margin-top:6px;padding:5px 7px;border:1px dashed var(--line);border-radius:6px;background:transparent;color:var(--ink);font:400 12.5px/1.45 var(--sans);resize:none;overflow:hidden;min-height:28px}
+td.a textarea:focus{outline:none;border:1px solid var(--amber);background:var(--paper)}
+td.a textarea.has{border:1px solid transparent;border-left:3px solid var(--amber);background:var(--amberbg);border-radius:4px}
+tr.done td.a textarea{text-decoration:none}
+.chip.cm::after{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--amber);margin-left:5px;vertical-align:middle}
 .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 .foot{font-size:12.5px;color:var(--ink2);display:flex;gap:6px 18px;flex-wrap:wrap}
 .foot b{color:var(--ink)}
@@ -287,11 +292,27 @@ document.getElementById("phases").innerHTML = PHASES.map(p=>`
   <p class="ph-o">${p.o}</p>
   <div class="tblwrap"><table>
    <thead><tr><th><span class="sr-only">Feito</span></th><th>Dia</th><th>Processo</th><th>Automação</th><th>Tipo</th><th>Hoje</th><th>Situação</th></tr></thead>
-   <tbody>${p.r.map(r=>`<tr data-id="${r[0]}"><td class="ck"><input type="checkbox" data-id="${r[0]}" aria-label="Feito: ${r[2]}"></td><td class="code">${r[7]}</td><td class="p"><span class="code">${r[0]}</span>${r[1]}</td><td class="a"><b>${r[2]}</b><span>${r[6]}</span></td><td><span class="tag tp">${r[3]}</span></td><td><span class="tag mode ${r[5]}">${MODE[r[5]]}</span></td><td><span class="tag st ${r[4]}">${ST[r[4]]}</span></td></tr>`).join("")}</tbody>
+   <tbody>${p.r.map(r=>`<tr data-id="${r[0]}"><td class="ck"><input type="checkbox" data-id="${r[0]}" aria-label="Feito: ${r[2]}"></td><td class="code">${r[7]}</td><td class="p"><span class="code">${r[0]}</span>${r[1]}</td><td class="a"><b>${r[2]}</b><span>${r[6]}</span><textarea rows="1" data-cm="${r[0]}" placeholder="Comentário (ex.: travado pela tec)" aria-label="Comentário: ${r[2]}"></textarea></td><td><span class="tag tp">${r[3]}</span></td><td><span class="tag mode ${r[5]}">${MODE[r[5]]}</span></td><td><span class="tag st ${r[4]}">${ST[r[4]]}</span></td></tr>`).join("")}</tbody>
   </table></div>
  </section>`).join("");
 
-/* checks de "feito": ficam salvos só neste navegador */
+/* checks de "feito" e comentários: ficam salvos só neste navegador */
+const KEY_CM = "crono-automacoes-comentario";
+let cms; try { cms = JSON.parse(localStorage.getItem(KEY_CM) || "{}"); } catch { cms = {}; }
+const fit = t => { t.style.height = "auto"; t.style.height = t.scrollHeight + 2 + "px"; };
+function paintCm(){
+ document.querySelectorAll(".chip[data-id]").forEach(el=>el.classList.toggle("cm", !!cms[el.dataset.id]));
+ document.querySelectorAll("textarea[data-cm]").forEach(t=>t.classList.toggle("has", !!cms[t.dataset.cm]));
+}
+document.querySelectorAll("textarea[data-cm]").forEach(t=>{ t.value = cms[t.dataset.cm] || ""; fit(t); });
+document.getElementById("phases").addEventListener("input", e=>{
+ const id = e.target.dataset.cm; if(!id) return;
+ const v = e.target.value.trim(); v ? cms[id] = e.target.value : delete cms[id];
+ try { localStorage.setItem(KEY_CM, JSON.stringify(cms)); } catch {}
+ fit(e.target); paintCm();
+});
+paintCm();
+
 const KEY = "crono-automacoes-feito";
 let done; try { done = new Set(JSON.parse(localStorage.getItem(KEY) || "[]")); } catch { done = new Set(); }
 function paint(){
