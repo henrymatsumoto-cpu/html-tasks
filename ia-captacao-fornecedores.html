@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IA na Captação de Fornecedores</title>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme:dark;
+  --bg:#080E32;--surf:#0F1742;--surf2:#18225A;
+  --line:#232E6B;--ink:#EEF1FB;--ink2:#B4BBD9;--ink3:#8189B0;
+  --won:oklch(78% .12 150);--lost:oklch(72% .13 30);--amber:oklch(82% .13 80);--blue:#4D85FF;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 "Figtree",sans-serif;-webkit-font-smoothing:antialiased}
+main{max-width:900px;margin:0 auto;padding:56px 16px 96px}
+a{color:var(--blue)}
+.eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink3);font-weight:700}
+h1{font-weight:800;font-size:clamp(34px,6.5vw,56px);letter-spacing:-.03em;line-height:1.02;margin:14px 0 14px}
+h2{font-weight:600;font-size:24px;letter-spacing:-.015em;margin:64px 0 6px}
+h2 .k{color:var(--ink3);font-weight:500;font-size:15px;margin-left:8px}
+.lede{color:var(--ink2);font-size:18px;max-width:62ch;margin:0}
+.meta{color:var(--ink3);font-size:13.5px;margin-top:18px}
+p{max-width:66ch}
+.sub{color:var(--ink2);margin:0 0 22px}
+
+.nums{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:14px;overflow:hidden;margin-top:40px}
+.nums div{background:var(--surf);padding:22px 20px}
+.nums b{display:block;font-size:44px;font-weight:800;line-height:1;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.nums span{display:block;color:var(--ink2);font-size:13.5px;margin-top:8px;max-width:22ch}
+.nums .w b{color:var(--won)} .nums .a b{color:var(--amber)}
+
+/* fluxo */
+.flow{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:8px}
+.flow div{background:var(--surf);border-radius:12px;padding:16px 14px;position:relative}
+.flow div b{display:block;font-size:12px;color:var(--ink3);letter-spacing:.06em;text-transform:uppercase;font-weight:700}
+.flow div h3{margin:6px 0 4px;font-size:16px;font-weight:700;line-height:1.25}
+.flow div p{margin:0;color:var(--ink2);font-size:13.5px;line-height:1.45}
+.flow .st{display:inline-block;margin-top:10px}
+.flow .man{background:transparent;border:1px dashed var(--line)}
+
+.tag{display:inline-block;padding:2px 10px;border-radius:999px;font-size:12px;font-weight:700;white-space:nowrap}
+.tag.g{background:oklch(78% .12 150 / .16);color:var(--won)}
+.tag.a{background:oklch(80% .13 80 / .16);color:var(--amber)}
+.tag.b{background:rgba(77,133,255,.16);color:var(--blue)}
+.tag.n{background:var(--surf2);color:var(--ink2)}
+
+/* lista de entregas */
+.list{border-top:1px solid var(--line)}
+.it{display:grid;grid-template-columns:96px 1fr auto;gap:4px 18px;padding:18px 0;border-bottom:1px solid var(--line);align-items:baseline}
+.it .d{color:var(--ink3);font-size:13.5px;font-variant-numeric:tabular-nums}
+.it h3{margin:0;font-size:17px;font-weight:700}
+.it p{grid-column:2/4;margin:2px 0 0;color:var(--ink2);font-size:15px}
+.it .tag{justify-self:end}
+
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:12px}
+table{border-collapse:collapse;width:100%;min-width:680px;font-size:14px}
+th{text-align:left;color:var(--ink3);font-weight:500;font-size:12px;letter-spacing:.06em;text-transform:uppercase;padding:12px 14px;background:var(--surf)}
+th.num{text-align:right}
+td{padding:12px 14px;border-top:1px solid var(--line);vertical-align:top;color:var(--ink2)}
+td:first-child{color:var(--ink);font-weight:500}
+.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+tfoot td{color:var(--ink);font-weight:700;background:var(--surf)}
+.note{color:var(--ink3);font-size:13.5px;margin-top:12px}
+
+/* case */
+.case{background:var(--surf);border-radius:16px;padding:28px 26px;margin-top:8px}
+.case .row{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin:6px 0 22px}
+.case .row b{display:block;font-size:34px;font-weight:800;letter-spacing:-.02em;line-height:1;font-variant-numeric:tabular-nums}
+.case .row span{display:block;color:var(--ink2);font-size:13.5px;margin-top:6px}
+.case .row .w b{color:var(--won)} .case .row .a b{color:var(--amber)}
+.case p{margin:0 0 12px;color:var(--ink2)} .case p strong{color:var(--ink)}
+.vs{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:18px 0}
+.vs div{border:1px solid var(--line);border-radius:12px;padding:16px}
+.vs b{display:block;font-size:28px;font-weight:800;line-height:1}
+.vs .g b{color:var(--won)}
+.vs span{color:var(--ink2);font-size:14px}
+
+/* FUP */
+.fup{background:var(--surf);border:1px solid var(--line);border-radius:16px;overflow:hidden;margin-top:8px}
+.fup header{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:14px 18px;border-bottom:1px solid var(--line)}
+.fup header span{color:var(--ink3);font-size:13.5px}
+.fup button{font:inherit;font-size:14px;font-weight:700;color:#fff;background:#0055FF;border:0;border-radius:999px;padding:8px 18px;cursor:pointer}
+.fup button:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+.fup pre{margin:0;padding:20px 20px 22px;white-space:pre-wrap;font:15px/1.6 "Figtree",sans-serif;color:var(--ink)}
+footer{margin-top:56px;color:var(--ink3);font-size:13px}
+
+@media (max-width:760px){
+  .flow{grid-template-columns:1fr 1fr}
+  .case .row{grid-template-columns:1fr 1fr}
+}
+@media (max-width:640px){
+  .nums{grid-template-columns:1fr 1fr}
+  .it{grid-template-columns:1fr auto}
+  .it .d{grid-column:1/-1}
+  .it p{grid-column:1/-1}
+  .vs{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body><main>
+<span class="eyebrow">Fornecedores · Prospecção de lavanderias, fotógrafos e outros</span>
+<h1>IA na Captação de Fornecedores</h1>
+<p class="lede">Hoje a IA já faz quatro das cinco etapas da captação: acha a cidade que precisa de fornecedor, pesquisa quem existe lá, cria o card no Pipedrive e manda as três mensagens pela SIA até o card ter resultado. Em três dias úteis o agente falou sozinho com 162 fornecedores. A negociação ainda é feita pela Wânia, e é onde entra a extensão que está em treinamento.</p>
+<p class="meta">Fonte: Pipedrive, funil 60 "Prospecção Fornecedores" (cards e anotações do agente), funil 61 "Fornecedores - Cidades", repositórios das skills e agentes · mensagens do agente entre 14/10 e 16/10/2026 · card de teste do agente fora da conta · atualizado em 18/10/2026</p>
+
+<div class="nums">
+  <div><b>162</b><span>fornecedores contatados só pelo agente</span></div>
+  <div><b>275</b><span>mensagens enviadas pelo agente pela SIA</span></div>
+  <div class="a"><b>36</b><span>responderam às mensagens do agente</span></div>
+  <div class="w"><b>4</b><span>fornecedores ganhos vindos da cadência do agente</span></div>
+</div>
+
+<h2>Como a captação funciona agora</h2>
+<p class="sub">Da cidade sem fornecedor até o cadastro no Hub. O que está em verde já roda com IA; a negociação ainda é feita por pessoa, com a extensão em treinamento ao lado.</p>
+<div class="flow">
+  <div><b>1 · Onde falta</b><h3>Cidades sem fornecedor</h3><p>Cruza Sapron × Hub e abre um card por cidade/polígono no funil 61.</p><span class="tag g st">Com IA</span></div>
+  <div><b>2 · Quem existe</b><h3>Pesquisa por cidade</h3><p>Receita (CNAE), Google, Maps e Instagram, com dedupe e conferência do polígono.</p><span class="tag g st">Com IA</span></div>
+  <div><b>3 · Card</b><h3>Card no Pipedrive</h3><p>Cada fornecedor achado vira card no Backlog do funil 60, com todos os campos.</p><span class="tag g st">Com IA</span></div>
+  <div><b>4 · Contato</b><h3>Cadência pela SIA</h3><p>1º, 2º e último contato, move as etapas e encerra quem não responde.</p><span class="tag g st">Com IA</span></div>
+  <div class="man"><b>5 · Negociação</b><h3>Wânia negocia</h3><p>Quem responde vai para "Em negociação". A extensão sugere a resposta.</p><span class="tag a st">IA em treinamento</span></div>
+</div>
+
+<h2>O que já fizemos <span class="k">no ar</span></h2>
+<p class="sub">Agentes e skills que já estão em uso.</p>
+<div class="list">
+  <div class="it"><span class="d">10/09</span><h3>Skill de prospecção de lavanderias</h3><span class="tag g">No ar</span>
+    <p>Recebe a cidade, acha o polígono no Sapron, pesquisa na Receita (CNAE 9601), Google e Maps, confere se cada endereço fica dentro do polígono e cria os cards no Pipedrive. Entregue para a Wânia.</p></div>
+  <div class="it"><span class="d">14/09</span><h3>Skill de prospecção de fotógrafos</h3><span class="tag g">No ar</span>
+    <p>Pesquisa Instagram, Google e Receita, prioriza quem fotografa interior de imóvel, tira quem já tem card no funil e sobe em lotes de até 30. Entregue para a Wânia.</p></div>
+  <div class="it"><span class="d">14/09</span><h3>Skill de cidades sem fornecedor</h3><span class="tag g">No ar</span>
+    <p>Mostra quais cidades e polígonos com imóvel ativo ainda não têm lavanderia ou fotógrafo e abre o card da cidade no funil 61. A primeira rodada abriu 17 cards.</p></div>
+  <div class="it"><span class="d">14/10</span><h3>Agente de cadência Pipedrive → SIA</h3><span class="tag g">No ar</span>
+    <p>Roda no Olimpo em dias úteis. Manda o 1º, o 2º e o último contato por template da SIA, anota cada envio no card, move as etapas e marca como Perda "Sem Retorno" quem não respondeu às três. Erros de envio vão para o #Fornecedores.</p></div>
+  <div class="it"><span class="d">13–18/10</span><h3>Relatórios por cidade</h3><span class="tag g">No ar</span>
+    <p>Depois de cada cidade, a IA lê o funil e as anotações e monta o relatório de resultado e motivos de perda: Imbituba, Pirenópolis, Trancoso/Porto Seguro e Vila Velha.</p></div>
+  <div class="it"><span class="d">16/09–15/10</span><h3>Processos documentados</h3><span class="tag g">Pronto</span>
+    <p>Canvas do processo de prospecção de fotógrafos (v2) e de lavanderias (v1), com cadência, objeções e SLA por fase. Processo feito por agente também fica escrito.</p></div>
+</div>
+
+<h2>Em andamento</h2>
+<p class="sub">O que está sendo treinado ou ajustado agora.</p>
+<div class="list">
+  <div class="it"><span class="d">desde 14/10</span><h3>Extensão Copiloto da SIA</h3><span class="tag a">Em treinamento</span>
+    <p>Painel dentro da SIA que lê a conversa aberta e sugere a resposta da negociação, seguindo as etapas (lavanderia: autoatendimento → por peça → ferro industrial → coleta → valores × teto; fotógrafo: equipamento → CNPJ → tabela). Usa números reais do Sapron da cidade. Ainda não envia nada sozinha: a analista aprova, corrige ou responde, e pode salvar a resposta na base. Cada resposta salva ensina a extensão.</p></div>
+  <div class="it"><span class="d">18/10</span><h3>Cadência de hora em hora</h3><span class="tag b">Desenho fechado</span>
+    <p>Hoje cada etapa roda em um horário fixo. O novo desenho roda de hora em hora, das 8h às 17h: o card criado de manhã recebe o 1º contato no mesmo dia, e cada etapa espera 24h antes de seguir.</p></div>
+  <div class="it"><span class="d">16/10</span><h3>Poços de Caldas e Campos do Jordão na cadência</h3><span class="tag b">Rodando</span>
+    <p>42 lavanderias de Poços de Caldas e 29 fotógrafos de Campos do Jordão receberam o 1º contato em 16/10. O 2º contato sai nesta semana.</p></div>
+  <div class="it"><span class="d">23/10</span><h3>Outros prestadores</h3><span class="tag n">Próximo</span>
+    <p>Levar o mesmo fluxo para os outros prestadores do Hub de Serviços, em task separada.</p></div>
+</div>
+
+<h2>Volume feito só com o agente</h2>
+<p class="sub">Cards que receberam pelo menos uma mensagem do agente, de 14/10 a 16/10. "Responderam" conta quem foi para negociação, ganhou ou foi perdido por um motivo que só aparece quando há conversa.</p>
+<div class="tbl"><table>
+<thead><tr><th>Cidade</th><th>Categoria</th><th class="num">Cards</th><th class="num">Mensagens</th><th class="num">Responderam</th><th class="num">Ganhos</th><th>Situação</th></tr></thead>
+<tbody>
+<tr><td>Vila Velha/ES</td><td>Lavanderias</td><td class="num">39</td><td class="num">90</td><td class="num">17</td><td class="num">2</td><td><span class="tag g">Concluída</span></td></tr>
+<tr><td>Vila Velha/ES</td><td>Fotógrafos</td><td class="num">30</td><td class="num">77</td><td class="num">6</td><td class="num">0</td><td><span class="tag b">22 no último contato, 5 em negociação</span></td></tr>
+<tr><td>Porto Seguro/BA</td><td>Fotógrafos</td><td class="num">21</td><td class="num">36</td><td class="num">8</td><td class="num">1</td><td><span class="tag g">Concluída</span></td></tr>
+<tr><td>Poços de Caldas/MG</td><td>Lavanderias</td><td class="num">42</td><td class="num">42</td><td class="num">2</td><td class="num">0</td><td><span class="tag b">1º contato em 16/10</span></td></tr>
+<tr><td>Campos do Jordão/SP</td><td>Fotógrafos</td><td class="num">29</td><td class="num">29</td><td class="num">3</td><td class="num">1</td><td><span class="tag b">1º contato em 16/10</span></td></tr>
+<tr><td>Porto Seguro/BA</td><td>Lavanderias</td><td class="num">1</td><td class="num">1</td><td class="num">0</td><td class="num">0</td><td><span class="tag n">Contato inválido</span></td></tr>
+</tbody>
+<tfoot><tr><td>Total</td><td></td><td class="num">162</td><td class="num">275</td><td class="num">36</td><td class="num">4</td><td></td></tr></tfoot>
+</table></div>
+<p class="note">Em Porto Seguro o 1º contato foi feito à mão, antes do agente; ele mandou o 2º e o último. Outros 12 envios falharam porque o telefone já tinha conversa aberta na SIA (quase sempre card repetido) e não entram nas 275.</p>
+
+<h2>Case: lavanderias de Vila Velha</h2>
+<p class="sub">Primeira cidade feita do começo ao fim com o agente mandando as mensagens.</p>
+<div class="case">
+  <div class="row">
+    <div><b>39</b><span>telefones contatados pelo agente</span></div>
+    <div class="a"><b>17</b><span>responderam (44%)</span></div>
+    <div class="w"><b>2h22</b><span>do 1º contato ao 1º ganho</span></div>
+    <div><b>3d 4h</b><span>da criação dos cards à cidade fechada</span></div>
+  </div>
+  <p>Os cards foram criados em 13/10 a partir da base da Receita. No dia 14/10, às 14h05, o agente mandou o 1º contato para todos. <strong>9 lavanderias responderam na mesma tarde</strong> e a B.E. Nascimento estava cadastrada no Hub às 16h27. No dia seguinte o agente mandou o 2º contato e mais 7 responderam, entre elas a Lavanderia Inova, ganha em 15/10. Em 16/10 saiu o último contato e o agente encerrou sozinho os 20 que não responderam.</p>
+  <p>A Wânia só entrou nas conversas de quem respondeu: a mediana da negociação foi de 1h07. O principal motivo de perda entre quem respondeu foi ser autoatendimento ou não passar roupa (11 lavanderias).</p>
+  <div class="vs">
+    <div class="g"><b>3,2 dias</b><span>maior tempo de um card de Vila Velha, com o agente fazendo os contatos</span></div>
+    <div><b>5,6 dias</b><span>tempo médio por card em Imbituba, com os contatos feitos à mão (até 9 dias)</span></div>
+  </div>
+  <p class="note" style="margin:0">Imbituba foi prospecção de fotógrafos, então a comparação vale só como referência. Relatório completo: <a href="https://henrymatsumoto-cpu.github.io/html-tasks/prospeccao-lavanderias-vila-velha.html">Prospecção Lavanderias Vila Velha</a>.</p>
+</div>
+
+<h2>FUP</h2>
+<p class="sub">Texto pronto para colar na task do Taskdex.</p>
+<div class="fup">
+  <header><span>FUP · 18/10/2026</span><button type="button" id="cp">Copiar FUP</button></header>
+<pre id="fup">FUP 18/10 — IA no processo de captação de fotógrafos, lavanderias e outros
+
+O que já está no ar
+• Skill de cidades sem fornecedor (14/09): mostra cidades/polígonos sem lavanderia ou fotógrafo e abre o card da cidade no funil 61.
+• Skill de prospecção de lavanderias (10/09): Receita CNAE 9601 + Google + Maps, confere o polígono e cria os cards no Pipedrive.
+• Skill de prospecção de fotógrafos (14/09): Instagram + Google + Receita, prioriza foto de interior, dedupe e lotes de até 30.
+• Agente de cadência Pipedrive → SIA (no ar desde 14/10, Olimpo): manda 1º, 2º e último contato, move as etapas e encerra como "Sem Retorno" quem não responde. Erros vão para o #Fornecedores.
+• Relatório por cidade feito pela IA (Imbituba, Pirenópolis, Trancoso/Porto Seguro, Vila Velha) e canvas dos processos de fotógrafos e lavanderias.
+
+Volume só com o agente (14 a 16/10)
+• 162 fornecedores contatados, 275 mensagens, 36 responderam, 4 ganhos.
+• Cidades: Vila Velha (39 lavanderias + 30 fotógrafos), Porto Seguro (21 fotógrafos), Poços de Caldas (42 lavanderias), Campos do Jordão (29 fotógrafos).
+
+Case Vila Velha (lavanderias)
+• 39 contatadas pelo agente, 17 responderam (44%), 2 ganhas.
+• 9 responderam na mesma tarde do 1º contato; 1º ganho 2h22 depois da mensagem.
+• Cidade fechada em 3 dias e 4 horas; nenhum card passou de 3,2 dias (em Imbituba, com contato manual, a média foi 5,6 dias).
+
+Em andamento
+• Extensão Copiloto da SIA em treinamento: sugere a resposta da negociação pela base de conhecimento e números do Sapron; ainda não envia sozinha, a analista aprova ou corrige e salva na base.
+• Cadência de hora em hora (8h às 17h): desenho fechado em 18/10, falta implementar.
+• Poços de Caldas e Campos do Jordão na cadência (2º contato nesta semana).
+• Próximo: outros prestadores do Hub (23/10, task separada).
+
+Detalhes: https://henrymatsumoto-cpu.github.io/html-tasks/ia-captacao-fornecedores.html</pre>
+</div>
+
+<footer>Fornecedores · Seazone · gerado em 18/10/2026</footer>
+</main>
+<script>
+document.getElementById('cp').addEventListener('click',function(){
+  var b=this,t=document.getElementById('fup').innerText;
+  function ok(){b.textContent='Copiado';setTimeout(function(){b.textContent='Copiar FUP'},1800)}
+  if(navigator.clipboard){navigator.clipboard.writeText(t).then(ok,function(){fb()})}else fb();
+  function fb(){var a=document.createElement('textarea');a.value=t;document.body.appendChild(a);a.select();try{document.execCommand('copy');ok()}catch(e){}a.remove()}
+});
+</script>
+</body></html>
