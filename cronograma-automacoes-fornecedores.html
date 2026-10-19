@@ -94,6 +94,14 @@ td.p{width:30%}
 td.p .code{color:var(--c);margin-right:6px}
 td.a b{display:block;font-weight:700}
 td.a span{font:400 12.5px/1.45 var(--serif);color:var(--ink2)}
+td.ck{width:34px;padding-right:0}
+.ck input{width:18px;height:18px;margin:1px 0 0;accent-color:var(--green);cursor:pointer}
+tr.done td:not(.ck){opacity:.5}
+tr.done td.a b{text-decoration:line-through}
+.chip.done{opacity:.45;text-decoration:line-through}
+.ph-h .pg{margin-left:auto;font:700 12px/1 var(--sans);color:var(--ink3);font-variant-numeric:tabular-nums}
+.ph-h .pg.all{color:var(--green)}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 .foot{font-size:12.5px;color:var(--ink2);display:flex;gap:6px 18px;flex-wrap:wrap}
 .foot b{color:var(--ink)}
 
@@ -261,27 +269,47 @@ document.getElementById("cal").innerHTML =
    if(!d) return `<div class="cell empty" aria-hidden="true"></div>`;
    if(OFF[d]) return `<div class="cell off"><span class="d">${WD[i]} <small>${d}</small></span><span class="off-t">${OFF[d]}, feriado</span></div>`;
    const its = all.filter(x=>x.r[7]===d);
-   return `<div class="cell"><span class="d">${WD[i]} <small>${d}</small></span><div class="it">${its.map(x=>`<a class="chip ${x.p.cls}" href="#fase-${x.p.f}"><span class="code">${x.r[0]}</span>${x.r[2]}</a>`).join("")}${(EXTRA[d]||[]).join("")}</div></div>`;
+   return `<div class="cell"><span class="d">${WD[i]} <small>${d}</small></span><div class="it">${its.map(x=>`<a class="chip ${x.p.cls}" href="#fase-${x.p.f}" data-id="${x.r[0]}"><span class="code">${x.r[0]}</span>${x.r[2]}</a>`).join("")}${(EXTRA[d]||[]).join("")}</div></div>`;
  }).join("")}</div>`).join("");
 
 const row = (k,v) => `<div class="r"><span class="k">${k}</span><b>${v}</b></div>`;
 const grp = (l,rows) => `<div class="g"><span class="gl">${l}</span><div class="rows">${rows}</div></div>`;
 const proj = all.filter(x=>x.p.f!==9).length;
 document.getElementById("summary").innerHTML =
-  grp("Cronograma", row("Automações no projeto", proj) + row("Depois do projeto", all.length-proj) + row("Ritmo", "2 <small>por dia</small>") + row("Entrega final", "04/11")) +
+  grp("Cronograma", row("Automações no projeto", proj) + row("Feitas", `<span id="feitas"></span>`) + row("Depois do projeto", all.length-proj) + row("Ritmo", "2 <small>por dia</small>") + row("Entrega final", "04/11")) +
   grp("Situação", Object.keys(ST).filter(k=>cnt(r=>r[4]===k)).map(k=>row(`<span class="tag st ${k}">${ST[k]}</span>`, cnt(r=>r[4]===k))).join("")) +
   grp("Tipo", ["Agente","Skill","Rotina","Extensão"].filter(t=>cnt(r=>r[3]===t)).map(t=>row(`<span class="tag tp">${t}</span>`, cnt(r=>r[3]===t))).join("")) +
   grp("Como esses processos estão hoje", Object.keys(MODE).map(k=>row(`<span class="tag mode ${k}">${MODE[k]}</span>`, cnt(r=>r[5]===k))).join(""));
 
 document.getElementById("phases").innerHTML = PHASES.map(p=>`
  <section class="panel phase ${p.cls}" id="fase-${p.f}">
-  <div class="ph-h"><span class="tk">Fase ${p.f}</span><span class="tn">${p.n}</span><span class="dt">${p.per}</span></div>
+  <div class="ph-h"><span class="tk">Fase ${p.f}</span><span class="tn">${p.n}</span><span class="dt">${p.per}</span><span class="pg" data-f="${p.f}"></span></div>
   <p class="ph-o">${p.o}</p>
   <div class="tblwrap"><table>
-   <thead><tr><th>Dia</th><th>Processo</th><th>Automação</th><th>Tipo</th><th>Hoje</th><th>Situação</th></tr></thead>
-   <tbody>${p.r.map(r=>`<tr><td class="code">${r[7]}</td><td class="p"><span class="code">${r[0]}</span>${r[1]}</td><td class="a"><b>${r[2]}</b><span>${r[6]}</span></td><td><span class="tag tp">${r[3]}</span></td><td><span class="tag mode ${r[5]}">${MODE[r[5]]}</span></td><td><span class="tag st ${r[4]}">${ST[r[4]]}</span></td></tr>`).join("")}</tbody>
+   <thead><tr><th><span class="sr-only">Feito</span></th><th>Dia</th><th>Processo</th><th>Automação</th><th>Tipo</th><th>Hoje</th><th>Situação</th></tr></thead>
+   <tbody>${p.r.map(r=>`<tr data-id="${r[0]}"><td class="ck"><input type="checkbox" data-id="${r[0]}" aria-label="Feito: ${r[2]}"></td><td class="code">${r[7]}</td><td class="p"><span class="code">${r[0]}</span>${r[1]}</td><td class="a"><b>${r[2]}</b><span>${r[6]}</span></td><td><span class="tag tp">${r[3]}</span></td><td><span class="tag mode ${r[5]}">${MODE[r[5]]}</span></td><td><span class="tag st ${r[4]}">${ST[r[4]]}</span></td></tr>`).join("")}</tbody>
   </table></div>
  </section>`).join("");
+
+/* checks de "feito": ficam salvos só neste navegador */
+const KEY = "crono-automacoes-feito";
+let done; try { done = new Set(JSON.parse(localStorage.getItem(KEY) || "[]")); } catch { done = new Set(); }
+function paint(){
+ document.querySelectorAll("tr[data-id], .chip[data-id]").forEach(el=>el.classList.toggle("done", done.has(el.dataset.id)));
+ document.querySelectorAll("input[data-id]").forEach(i=>i.checked = done.has(i.dataset.id));
+ PHASES.forEach(p=>{
+  const n = p.r.filter(r=>done.has(r[0])).length, el = document.querySelector(`.pg[data-f="${p.f}"]`);
+  el.textContent = `${n}/${p.r.length} feitas`; el.classList.toggle("all", n===p.r.length);
+ });
+ document.getElementById("feitas").textContent = `${all.filter(x=>x.p.f!==9 && done.has(x.r[0])).length}/${proj}`;
+}
+document.getElementById("phases").addEventListener("change", e=>{
+ const id = e.target.dataset.id; if(!id) return;
+ e.target.checked ? done.add(id) : done.delete(id);
+ try { localStorage.setItem(KEY, JSON.stringify([...done])); } catch {}
+ paint();
+});
+paint();
 </script>
 </body>
 </html>
