@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fotógrafos em Porto Seguro</title>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme:dark;
+  --bg:#080E32;--surf:#0F1742;--surf2:#18225A;
+  --line:#232E6B;--ink:#EEF1FB;--ink2:#B4BBD9;--ink3:#8189B0;
+  --won:oklch(78% .12 150);--lost:oklch(72% .13 30);--amber:oklch(82% .13 80);--blue:#4D85FF;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 "Figtree",sans-serif;-webkit-font-smoothing:antialiased}
+main{max-width:880px;margin:0 auto;padding:56px 16px 96px}
+.eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink3);font-weight:700}
+h1{font-family:"Figtree",sans-serif;font-weight:800;font-size:clamp(34px,6.5vw,56px);letter-spacing:-.03em;line-height:1;margin:14px 0 14px}
+h2{font-family:"Figtree",sans-serif;font-weight:600;font-size:24px;letter-spacing:-.015em;margin:64px 0 6px}
+.lede{color:var(--ink2);font-size:18px;max-width:60ch;margin:0}
+.meta{color:var(--ink3);font-size:13.5px;margin-top:18px}
+p{max-width:66ch}
+.sub{color:var(--ink2);margin:0 0 22px}
+
+.nums{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:14px;overflow:hidden;margin-top:40px}
+.nums div{background:var(--surf);padding:22px 20px}
+.nums b{display:block;font-family:"Figtree",sans-serif;font-size:44px;font-weight:800;line-height:1;letter-spacing:-.03em}
+.nums span{display:block;color:var(--ink2);font-size:13.5px;margin-top:8px;max-width:20ch}
+.nums .w b{color:var(--won)} .nums .l b{color:var(--lost)} .nums .a b{color:var(--amber)}
+
+.funnel{display:flex;flex-direction:column;gap:10px}
+.step{display:grid;grid-template-columns:190px 1fr 44px;align-items:center;gap:14px}
+.step .t{font-size:14.5px;color:var(--ink2)}
+.step .bar{height:26px;border-radius:6px;background:var(--surf2);overflow:hidden}
+.step .bar i{display:block;height:100%;background:var(--blue);border-radius:6px}
+.step .n{font-weight:700;text-align:right;font-variant-numeric:tabular-nums}
+.step.win .bar i{background:var(--won)}
+.step.neg .bar i{background:var(--won);opacity:.55}
+
+.reasons{border-top:1px solid var(--line)}
+.r{display:grid;grid-template-columns:34px 1fr;gap:6px 18px;padding:20px 0;border-bottom:1px solid var(--line)}
+.r .c{font-family:"Figtree",sans-serif;font-size:30px;font-weight:800;line-height:1;color:var(--lost);font-variant-numeric:tabular-nums}
+.r h3{margin:0;font-size:17px;font-weight:700}
+.r h3 small{color:var(--ink3);font-weight:500;font-size:13.5px;margin-left:8px}
+.r p{grid-column:2;margin:4px 0 0;color:var(--ink2);font-size:15px}
+.r .who{grid-column:2;color:var(--ink3);font-size:13.5px;margin-top:6px}
+.meter{grid-column:2;height:6px;background:var(--surf2);border-radius:3px;overflow:hidden;margin-top:4px}
+.meter i{display:block;height:100%;background:var(--lost)}
+
+blockquote{margin:22px 0;padding:20px 22px;background:var(--surf);border-radius:12px;color:var(--ink);font-size:16.5px;line-height:1.55}
+blockquote cite{display:block;margin-top:10px;color:var(--ink3);font-style:normal;font-size:13.5px}
+
+.won{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.won div{background:var(--surf);border-radius:12px;padding:20px}
+.won h3{margin:0 0 4px;font-size:17px;color:var(--won)}
+.won p{margin:0;color:var(--ink2);font-size:14.5px}
+
+.concl{background:var(--surf);border-radius:16px;padding:28px 26px;margin-top:18px}
+.concl p{margin:0 0 14px;color:var(--ink)}
+.concl p:last-child{margin:0}
+.concl ol{margin:6px 0 14px;padding-left:20px;color:var(--ink2)}
+.concl li{margin:8px 0}
+.concl li b{color:var(--ink)}
+
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:12px}
+table{border-collapse:collapse;width:100%;min-width:640px;font-size:14px}
+th{text-align:left;color:var(--ink3);font-weight:500;font-size:12px;letter-spacing:.06em;text-transform:uppercase;padding:12px 14px;background:var(--surf)}
+td{padding:12px 14px;border-top:1px solid var(--line);vertical-align:top;color:var(--ink2)}
+td:first-child{color:var(--ink);font-weight:500}
+.tag{display:inline-block;padding:2px 10px;border-radius:999px;font-size:12px;font-weight:700;white-space:nowrap}
+.tag.g{background:oklch(78% .12 150 / .16);color:var(--won)}
+.tag.a{background:oklch(80% .13 80 / .16);color:var(--amber)}
+.tag.p{background:oklch(70% .13 35 / .16);color:var(--lost)}
+.flag{color:var(--amber)}
+.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.dim{color:var(--ink3)}
+footer{margin-top:56px;color:var(--ink3);font-size:13px}
+
+@media (max-width:640px){
+  .nums{grid-template-columns:1fr 1fr}
+  .step{grid-template-columns:1fr 40px}
+  .step .t{grid-column:1/-1}
+  .won{grid-template-columns:1fr}
+}
+</style></head><body><main>
+
+<span class="eyebrow">Prospecção de Fornecedores · Fotógrafos · BA</span>
+<h1>Prospecção Fotógrafos Porto Seguro</h1>
+<p class="lede">31 fotógrafos procurados e 2 cadastrados: o Duran's Films e a Camilla Vitor. Não sobrou nenhum em aberto. Metade não respondeu à cadência de contatos. Fora isso, o que mais derrubou a prospecção foi número que não recebe mensagem, seguido de fotógrafos que não fazem imóvel.</p>
+<p class="meta">Fonte: Pipedrive, funil 60 "Prospecção Fornecedores" · rodada de Porto Seguro: 42 cards criados em 13/10/2026, que são 31 fotógrafos novos (os outros 11 repetem fotógrafos de Trancoso) · contatos entre 13/10 e 16/10 · motivos de perda e anotações de cada card · atualizado em 19/10/2026</p>
+
+<div class="nums">
+  <div><b>31</b><span>fotógrafos procurados</span></div>
+  <div class="w"><b>2</b><span>ganhos, cadastrados em 14/10 e 16/10</span></div>
+  <div class="l"><b>29</b><span>perdidos</span></div>
+  <div class="a"><b>0</b><span>em aberto</span></div>
+</div>
+
+<h2>Do contato ao cadastro</h2>
+<p class="sub">Todos os 31 receberam mensagem por WhatsApp, e quem não respondeu recebeu até 3 contatos automáticos entre 13 e 16/10. Em 5 números o envio falhou. Responderam 15 fotógrafos (48%), acima de Trancoso (33%).</p>
+<div class="funnel">
+  <div class="step"><span class="t">Contato enviado</span><span class="bar"><i style="width:100%"></i></span><span class="n">31</span></div>
+  <div class="step"><span class="t">Mensagem chegou</span><span class="bar"><i style="width:83.9%"></i></span><span class="n">26</span></div>
+  <div class="step"><span class="t">Respondeu</span><span class="bar"><i style="width:48.4%"></i></span><span class="n">15</span></div>
+  <div class="step win"><span class="t">Ganho</span><span class="bar"><i style="width:6.5%"></i></span><span class="n">2</span></div>
+</div>
+
+<h2>Por que perdemos</h2>
+<p class="sub">Os 29 perdidos, por motivo marcado no Pipedrive, com a explicação tirada das anotações de cada card.</p>
+<div class="reasons">
+  <div class="r"><span class="c">15</span><h3>Sem retorno<small>52%</small></h3>
+    <div class="meter"><i style="width:52%"></i></div>
+    <p>11 nunca responderam aos 3 contatos da cadência. Os outros 4 chegaram a conversar e depois sumiram. A Valiense viu a proposta e parou de responder. O Andresson, a Ellem e o Tiago Simer chegaram a ir para "Em negociação". Entre os que não responderam, 5 são produtoras de vídeo e drone que vieram pelo CNAE.</p>
+    <span class="who">Joabe Costa · Fabio Conte · CK Studio · WX Foto · Sunan Produtora · Ivan Produções · Ernandes Alcântara · Raimundo Borges · Rafael Lemos · Kennedy Damasceno · Matheus Lapa · Valiense Filmes · Andresson Santana · Ellem Cardoso · Tiago Simer</span></div>
+  <div class="r"><span class="c">5</span><h3>Contato inválido<small>17%</small></h3>
+    <div class="meter"><i style="width:17%"></i></div>
+    <p>O envio falhou: o número da Receita não tem WhatsApp. Em dois deles o DDD é de outro estado (33 e 38), sinal de cadastro desatualizado. Duas são produtoras de vídeo, e a Loja 7 parece ser loja ou impressão de fotos.</p>
+    <span class="who">Benaya Films · Recx Produtora · Zero Produções · Toca Fotografia · Loja 7 de Fotografia</span></div>
+  <div class="r"><span class="c">4</span><h3>Não faz foto de imóvel<small>14%</small></h3>
+    <div class="meter"><i style="width:14%"></i></div>
+    <p>Fazem casamento, eventos e turismo. O Honey Photo atende o Club Med com exclusividade.</p>
+    <span class="who">Honey Photo · Alessandro Braga · Laruty Brandão · Gutemberg Pinto</span></div>
+  <div class="r"><span class="c">2</span><h3>Valor<small>7%</small></h3>
+    <div class="meter"><i style="width:7%"></i></div>
+    <p>Os dois chegaram à negociação e acharam os valores baixos. Somando a Valiense, que viu a proposta e sumiu, 3 fotógrafos pararam ao ver o preço.</p>
+    <span class="who">Roberto Brusaca · Tiago Saldanha</span></div>
+  <div class="r"><span class="c">2</span><h3>Parou de responder<small>7%</small></h3>
+    <div class="meter"><i style="width:7%"></i></div>
+    <p>O Felixx Filmes disse que, no momento, não tem interesse em parceria. O Leo Barreto mora em Caraíva e volta em dezembro.</p>
+    <span class="who">Felixx Filmes · Leo Barreto</span></div>
+  <div class="r"><span class="c">1</span><h3>Sem equipamento<small>3% · anotação: sem disponibilidade</small></h3>
+    <div class="meter"><i style="width:3%"></i></div>
+    <p>O Karlito respondeu "no momento não estou podendo". Ele é fotógrafo aéreo.</p>
+    <span class="who">Karlito Antunes</span></div>
+</div>
+
+<blockquote>"Achou nossos valores muito baixos e não quis prosseguir."
+<cite>Anotação do card de Roberto Brusaca (Photobrusa), 15/10/2026 (card 513677)</cite></blockquote>
+
+<h2>De onde veio cada fotógrafo</h2>
+<p class="sub">A base da Receita (CNAE) trouxe quase todos os nomes e os 2 cadastros. Ela também trouxe muita produtora de vídeo e números desatualizados.</p>
+<div class="tbl"><table>
+<thead><tr><th>Origem</th><th class="num">Fotógrafos</th><th class="num">Contato inválido</th><th class="num">Nunca respondeu</th><th class="num">Responderam</th><th class="num">Ganho</th></tr></thead>
+<tbody>
+<tr><td>Receita (CNAE)</td><td class="num">26</td><td class="num">4</td><td class="num">9</td><td class="num">13</td><td class="num">2</td></tr>
+<tr><td>Google + Receita</td><td class="num">5</td><td class="num">1</td><td class="num">2</td><td class="num">2</td><td class="num">0</td></tr>
+</tbody></table></div>
+
+<h2>Quem entrou</h2>
+<div class="won">
+  <div><h3>Duran's Films (Daniel Duran)</h3><p>Produtora de vídeo que veio pela Receita. Respondeu no mesmo dia (13/10), foi para negociação e foi cadastrada em 14/10. Entrou pela tabela maior, com deslocamento para Arraial e Trancoso.</p></div>
+  <div><h3>Camilla Vitor Fotografia</h3><p>Mirante de Caraíva, veio pela Receita. Só respondeu depois do último contato da cadência e foi cadastrada em 16/10. Tem o equipamento, mas não a lente certa. Quem decide se ela fica é o time de fotos.</p></div>
+</div>
+
+<h2>Como melhorar a próxima rodada</h2>
+<div class="concl">
+  <p><b>A cadência automática fez a diferença na resposta:</b> 15 de 31 responderam, e a Camilla só respondeu no último contato. <b>Fora o sem retorno, o que mais custou foi número inválido (5), seguido de nicho errado (4) e preço (2 + 1).</b></p>
+  <ol>
+    <li><b>Validar o WhatsApp antes de criar o card.</b> Números da Receita com DDD de outro estado quase sempre falham. Vale procurar o Instagram ou o site antes de mandar.</li>
+    <li><b>Separar produtora de vídeo e drone na pesquisa.</b> O CNAE trouxe 10 produtoras de vídeo. Só a Duran's fechou. As outras não responderam ou tinham número inválido.</li>
+    <li><b>Ter a tabela maior com deslocamento pronta.</b> Foi assim que a Duran's fechou. Os três que pararam ao ver o preço podem ser retomados com essa condição.</li>
+    <li><b>Seguir quem chegou a negociar e sumiu:</b> Andresson, Ellem, Tiago Simer e Valiense. E o Leo Barreto, que volta em dezembro.</li>
+  </ol>
+  <p>O card da cidade, "Porto Seguro - Fotografo" (507486, funil 61), segue aberto.</p>
+</div>
+
+<h2>Todos os fotógrafos</h2>
+<div class="tbl"><table>
+<thead><tr><th>Fotógrafo</th><th>Origem</th><th>Resultado</th><th>Anotação</th></tr></thead>
+<tbody>
+<tr><td>Duran's Films (Daniel Duran)</td><td>Receita (CNAE)</td><td><span class="tag g">Ganho</span></td><td>Cadastrado com a tabela maior e deslocamento para Arraial e Trancoso</td></tr>
+<tr><td>Camilla Vitor Fotografia</td><td>Receita (CNAE)</td><td><span class="tag g">Ganho</span></td><td>Tem o equipamento, mas não a lente certa; o time de fotos decide</td></tr>
+<tr><td>Roberto Brusaca (Photobrusa)</td><td>Receita (CNAE)</td><td><span class="tag p">Valor</span></td><td>"Achou nossos valores muito baixos e não quis prosseguir"</td></tr>
+<tr><td>Tiago Saldanha Fotografia</td><td>Receita (CNAE)</td><td><span class="tag p">Valor</span></td><td>Chegou à negociação e recusou pelo valor</td></tr>
+<tr><td>Honey Photo (Danilo Dacol)</td><td>Google / Receita</td><td><span class="tag p">Não faz imóvel</span></td><td>Exclusivo do Club Med Trancoso</td></tr>
+<tr><td>Alessandro Braga</td><td>Google / Receita</td><td><span class="tag p">Não faz imóvel</span></td><td>Casamento, shows e eventos</td></tr>
+<tr><td>Laruty Brandão Fotografias</td><td>Receita (CNAE)</td><td><span class="tag p">Não faz imóvel</span></td><td>Respondeu no 1º contato</td></tr>
+<tr><td>Gutemberg Pinto (Fotos Gutemberg)</td><td>Receita (CNAE)</td><td><span class="tag p">Não faz imóvel</span></td><td>Respondeu no 2º contato</td></tr>
+<tr><td>Karlito Antunes</td><td>Receita (CNAE)</td><td><span class="tag p">Sem equipamento</span></td><td>"No momento não estou podendo"; faz foto aérea</td></tr>
+<tr><td>Felixx Filmes (Oseias Costa)</td><td>Receita (CNAE)</td><td><span class="tag p">Parou de responder</span></td><td>"No momento não tem interesse em firmar parceria"; vídeo e drone</td></tr>
+<tr><td>Leo Barreto Photo</td><td>Receita (CNAE)</td><td><span class="tag a">Parou de responder</span></td><td>Mora em Caraíva, volta em dezembro</td></tr>
+<tr><td>Valiense Filmes (Pollyanna)</td><td>Receita (CNAE)</td><td><span class="tag p">Sem retorno</span></td><td>Viu a proposta e parou de responder; produtora de vídeo</td></tr>
+<tr><td>Andresson Santana (Gallego Fotos Book)</td><td>Receita (CNAE)</td><td><span class="tag p">Sem retorno</span></td><td>Chegou a Em negociação em 16/10; perdido em 19/10</td></tr>
+<tr><td>Ellem Cardoso Fotógrafa</td><td>Receita (CNAE)</td><td><span class="tag p">Sem retorno</span></td><td>Chegou a Em negociação em 14/10 e sumiu</td></tr>
+<tr><td>Tiago Simer (Arraial)</td><td>Receita (CNAE)</td><td><span class="tag p">Sem retorno</span></td><td>Chegou a Em negociação; telefone com DDD 38</td></tr>
+<tr><td>Raimundo Borges (Image Porto Seguro)</td><td>Receita (CNAE)</td><td><span class="tag p">Sem retorno</span></td><td>2 contatos sem resposta</td></tr>
+<tr><td>Joabe Costa</td><td>Google / Receita</td><td><span class="tag p">Sem retorno</span></td><td>Cadência automática, 3 contatos</td></tr>
+<tr><td>Fabio Conte</td><td>Google / Receita</td><td><span class="tag p">Sem retorno</span></td><td>Cadência automática, 3 contatos; tinha 2º telefone</td></tr>
+<tr><td>CK Studio (Click Taipe)</td><td>Receita (CNAE)</td><td><span class="tag p">Sem retorno</span></td><td>Cadência automática, 3 contatos</td></tr>
+<tr><td>WX Foto</td><td>Receita (CNAE)</td><td><span class="tag p">Sem retorno</span></td><td>Cadência automática, 3 contatos; mesmo e-mail da Loja 7</td></tr>
+<tr><td>Sunan Produtora</td><td>Receita (CNAE)</td><td><span class="tag p">Sem retorno</span></td><td>Cadência automática, 3 contatos</td></tr>
+<tr><td>Ivan Produções</td><td>Receita (CNAE)</td><td><span class="tag p">Sem retorno</span></td><td>Cadência automática, 3 contatos; produtora de vídeo</td></tr>
+<tr><td>Ernandes Alcântara</td><td>Receita (CNAE)</td><td><span class="tag p">Sem retorno</span></td><td>Cadência automática, 3 contatos</td></tr>
+<tr><td>Rafael Lemos (Rarofilms)</td><td>Receita (CNAE)</td><td><span class="tag p">Sem retorno</span></td><td>Cadência automática, 3 contatos; vídeo e drone</td></tr>
+<tr><td>Kennedy Damasceno (Yanna Awake Films)</td><td>Receita (CNAE)</td><td><span class="tag p">Sem retorno</span></td><td>Cadência automática, 3 contatos; vídeo e drone</td></tr>
+<tr><td>Matheus Lapa (drone)</td><td>Receita (CNAE)</td><td><span class="tag p">Sem retorno</span></td><td>Cadência automática, 3 contatos; vídeo e drone</td></tr>
+<tr><td>Benaya Films (Daniel McGrath)</td><td>Google / Receita</td><td><span class="tag p">Contato inválido</span></td><td>Falha no envio; produtora de vídeo</td></tr>
+<tr><td>Recx Produtora (Gustavo Anderson)</td><td>Receita (CNAE)</td><td><span class="tag p">Contato inválido</span></td><td>Falha no envio; produtora audiovisual</td></tr>
+<tr><td>Zero Produções</td><td>Receita (CNAE)</td><td><span class="tag p">Contato inválido</span></td><td>Falha no envio</td></tr>
+<tr><td>Toca Fotografia</td><td>Receita (CNAE)</td><td><span class="tag p">Contato inválido</span></td><td>Falha no envio; telefone com DDD 33</td></tr>
+<tr><td>Loja 7 de Fotografia</td><td>Receita (CNAE)</td><td><span class="tag p">Contato inválido</span></td><td>Falha no envio; pode ser loja ou impressão</td></tr>
+</tbody></table></div>
+
+<h2>Cards duplicados</h2>
+<p class="sub">Na rodada de 13/10, 11 cards foram criados para fotógrafos que já tinham card de Trancoso. Eles não entram nas contas acima. Quase todos foram excluídos em 13/10 e depois voltaram como perdidos. O 513655 é o mesmo fornecedor que foi ganho em Trancoso.</p>
+<div class="tbl"><table>
+<thead><tr><th>Fotógrafo</th><th class="num">Card duplicado</th><th class="num">Card original</th></tr></thead>
+<tbody>
+<tr><td>Nando Fischer</td><td class="num">513647</td><td class="num">506228</td></tr>
+<tr><td>Lucas Santana</td><td class="num">513649</td><td class="num">502860</td></tr>
+<tr><td>Matheus Thauz</td><td class="num">513650</td><td class="num">506233</td></tr>
+<tr><td>Fotonabahia</td><td class="num">513655</td><td class="num">506231 (Ganho)</td></tr>
+<tr><td>Marcus Cambraia</td><td class="num">513656</td><td class="num">506226</td></tr>
+<tr><td>Sotter Fotografia</td><td class="num">513657</td><td class="num">506229</td></tr>
+<tr><td>Gustavo Cruz</td><td class="num">513659</td><td class="num">506230</td></tr>
+<tr><td>Huana Moia</td><td class="num">513660</td><td class="num">506232</td></tr>
+<tr><td>Karib Ribeiro</td><td class="num">513664</td><td class="num">506227</td></tr>
+<tr><td>Sam Martinelli</td><td class="num">513668</td><td class="num">502863</td></tr>
+<tr><td>Laudin Fotografia</td><td class="num">513676</td><td class="num">502859</td></tr>
+</tbody></table></div>
+
+<footer>"Respondeu" soma os ganhos, os que deram um motivo de recusa e os que conversaram antes de sumir. Cada fotógrafo foi contado uma vez. 6 fotógrafos desta rodada (Honey Photo, Joabe Costa, Benaya Films, Alessandro Braga, Fabio Conte e Leo Barreto) também atendem Trancoso e aparecem no relatório de Trancoso. Relatório de Trancoso: prospeccao-fotografos-trancoso.html.</footer>
+</main></body></html>
