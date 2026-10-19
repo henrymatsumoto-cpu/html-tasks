@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fotógrafos em Trancoso</title>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme:dark;
+  --bg:#080E32;--surf:#0F1742;--surf2:#18225A;
+  --line:#232E6B;--ink:#EEF1FB;--ink2:#B4BBD9;--ink3:#8189B0;
+  --won:oklch(78% .12 150);--lost:oklch(72% .13 30);--amber:oklch(82% .13 80);--blue:#4D85FF;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 "Figtree",sans-serif;-webkit-font-smoothing:antialiased}
+main{max-width:880px;margin:0 auto;padding:56px 16px 96px}
+.eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink3);font-weight:700}
+h1{font-family:"Figtree",sans-serif;font-weight:800;font-size:clamp(34px,6.5vw,56px);letter-spacing:-.03em;line-height:1;margin:14px 0 14px}
+h2{font-family:"Figtree",sans-serif;font-weight:600;font-size:24px;letter-spacing:-.015em;margin:64px 0 6px}
+.lede{color:var(--ink2);font-size:18px;max-width:60ch;margin:0}
+.meta{color:var(--ink3);font-size:13.5px;margin-top:18px}
+p{max-width:66ch}
+.sub{color:var(--ink2);margin:0 0 22px}
+
+.nums{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:14px;overflow:hidden;margin-top:40px}
+.nums div{background:var(--surf);padding:22px 20px}
+.nums b{display:block;font-family:"Figtree",sans-serif;font-size:44px;font-weight:800;line-height:1;letter-spacing:-.03em}
+.nums span{display:block;color:var(--ink2);font-size:13.5px;margin-top:8px;max-width:20ch}
+.nums .w b{color:var(--won)} .nums .l b{color:var(--lost)} .nums .a b{color:var(--amber)}
+
+.funnel{display:flex;flex-direction:column;gap:10px}
+.step{display:grid;grid-template-columns:190px 1fr 44px;align-items:center;gap:14px}
+.step .t{font-size:14.5px;color:var(--ink2)}
+.step .bar{height:26px;border-radius:6px;background:var(--surf2);overflow:hidden}
+.step .bar i{display:block;height:100%;background:var(--blue);border-radius:6px}
+.step .n{font-weight:700;text-align:right;font-variant-numeric:tabular-nums}
+.step.win .bar i{background:var(--won)}
+.step.neg .bar i{background:var(--won);opacity:.55}
+
+.reasons{border-top:1px solid var(--line)}
+.r{display:grid;grid-template-columns:34px 1fr;gap:6px 18px;padding:20px 0;border-bottom:1px solid var(--line)}
+.r .c{font-family:"Figtree",sans-serif;font-size:30px;font-weight:800;line-height:1;color:var(--lost);font-variant-numeric:tabular-nums}
+.r h3{margin:0;font-size:17px;font-weight:700}
+.r h3 small{color:var(--ink3);font-weight:500;font-size:13.5px;margin-left:8px}
+.r p{grid-column:2;margin:4px 0 0;color:var(--ink2);font-size:15px}
+.r .who{grid-column:2;color:var(--ink3);font-size:13.5px;margin-top:6px}
+.meter{grid-column:2;height:6px;background:var(--surf2);border-radius:3px;overflow:hidden;margin-top:4px}
+.meter i{display:block;height:100%;background:var(--lost)}
+
+blockquote{margin:22px 0;padding:20px 22px;background:var(--surf);border-radius:12px;color:var(--ink);font-size:16.5px;line-height:1.55}
+blockquote cite{display:block;margin-top:10px;color:var(--ink3);font-style:normal;font-size:13.5px}
+
+.won{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.won div{background:var(--surf);border-radius:12px;padding:20px}
+.won h3{margin:0 0 4px;font-size:17px;color:var(--won)}
+.won p{margin:0;color:var(--ink2);font-size:14.5px}
+
+.concl{background:var(--surf);border-radius:16px;padding:28px 26px;margin-top:18px}
+.concl p{margin:0 0 14px;color:var(--ink)}
+.concl p:last-child{margin:0}
+.concl ol{margin:6px 0 14px;padding-left:20px;color:var(--ink2)}
+.concl li{margin:8px 0}
+.concl li b{color:var(--ink)}
+
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:12px}
+table{border-collapse:collapse;width:100%;min-width:640px;font-size:14px}
+th{text-align:left;color:var(--ink3);font-weight:500;font-size:12px;letter-spacing:.06em;text-transform:uppercase;padding:12px 14px;background:var(--surf)}
+td{padding:12px 14px;border-top:1px solid var(--line);vertical-align:top;color:var(--ink2)}
+td:first-child{color:var(--ink);font-weight:500}
+.tag{display:inline-block;padding:2px 10px;border-radius:999px;font-size:12px;font-weight:700;white-space:nowrap}
+.tag.g{background:oklch(78% .12 150 / .16);color:var(--won)}
+.tag.a{background:oklch(80% .13 80 / .16);color:var(--amber)}
+.tag.p{background:oklch(70% .13 35 / .16);color:var(--lost)}
+.flag{color:var(--amber)}
+.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.dim{color:var(--ink3)}
+footer{margin-top:56px;color:var(--ink3);font-size:13px}
+
+@media (max-width:640px){
+  .nums{grid-template-columns:1fr 1fr}
+  .step{grid-template-columns:1fr 40px}
+  .step .t{grid-column:1/-1}
+  .won{grid-template-columns:1fr}
+}
+</style></head><body><main>
+
+<span class="eyebrow">Prospecção de Fornecedores · Fotógrafos · BA</span>
+<h1>Prospecção Fotógrafos Trancoso</h1>
+<p class="lede">30 fotógrafos procurados e 1 cadastrado, o Foto na Bahia. Não sobrou nenhum em aberto em Trancoso. A maior parte não respondeu. Fora isso, o que mais derrubou a prospecção foi número que não recebe mensagem, seguido de fotógrafos que não fazem imóvel.</p>
+<p class="meta">Fonte: Pipedrive, funil 60 "Prospecção Fornecedores" · 40 cards criados entre 29/09 e 13/10/2026, que são 30 fotógrafos diferentes · contatos entre 29/09 e 16/10 · motivos de perda e anotações de cada card · atualizado em 19/10/2026</p>
+
+<div class="nums">
+  <div><b>30</b><span>fotógrafos procurados</span></div>
+  <div class="w"><b>1</b><span>ganho, cadastrado no Painel em 13/10</span></div>
+  <div class="l"><b>29</b><span>perdidos</span></div>
+  <div class="a"><b>0</b><span>em aberto</span></div>
+</div>
+
+<h2>Do contato ao cadastro</h2>
+<p class="sub">Todos os 30 receberam mensagem por WhatsApp. 8 números falharam, ou seja, a mensagem nem chegou. Só 10 fotógrafos responderam.</p>
+<div class="funnel">
+  <div class="step"><span class="t">Contato enviado</span><span class="bar"><i style="width:100%"></i></span><span class="n">30</span></div>
+  <div class="step"><span class="t">Mensagem chegou</span><span class="bar"><i style="width:73.3%"></i></span><span class="n">22</span></div>
+  <div class="step"><span class="t">Respondeu</span><span class="bar"><i style="width:33.3%"></i></span><span class="n">10</span></div>
+  <div class="step win"><span class="t">Ganho</span><span class="bar"><i style="width:3.3%"></i></span><span class="n">1</span></div>
+</div>
+
+<h2>Por que perdemos</h2>
+<p class="sub">Os 29 perdidos, por motivo marcado no Pipedrive, com a explicação tirada das anotações de cada card.</p>
+<div class="reasons">
+  <div class="r"><span class="c">12</span><h3>Sem retorno<small>41%</small></h3>
+    <div class="meter"><i style="width:41%"></i></div>
+    <p>A mensagem chegou e o fotógrafo não respondeu. Foram 4 tentativas por WhatsApp ("Chamei 4X sem retorno"). Os 2 da segunda rodada passaram pela cadência automática de 3 contatos. Entre eles estão 2 dos 3 únicos fotógrafos com portfólio de imóvel ou arquitetura: o Marcus Cambraia e o Nando Fischer.</p>
+    <span class="who">Vitor Photography · Felipe Bitencourth · Lucas Santana · Vitor de Almeida · Marcus Cambraia · Nando Fischer · Gustavo Cruz · Matheus Thauz · Marcos Lemos · Claudia Oliveira · Joabe Costa · Fabio Conte</span></div>
+  <div class="r"><span class="c">8</span><h3>Contato inválido<small>28%</small></h3>
+    <div class="meter"><i style="width:28%"></i></div>
+    <p>O envio falhou: o número não tem WhatsApp. 6 dos 8 vieram de "Lista enviada pelo time" ou de "Indicação", sem rede social nem site para buscar outro contato. O Karib também faz arquitetura e se perdeu aqui.</p>
+    <span class="who">DL Photos · Sam Martinelli · Karib Ribeiro · Thay Ferdassyl · Jociária Félix · Rubens Fotografias · Isaac Fotógrafo · Benaya Films</span></div>
+  <div class="r"><span class="c">5</span><h3>Não faz foto de imóvel<small>17%</small></h3>
+    <div class="meter"><i style="width:17%"></i></div>
+    <p>Trancoso é destino de casamento, e a maioria dos fotógrafos da região faz casamento, ensaio e eventos. Dos 30 procurados, só 3 mostravam imóvel ou arquitetura no portfólio. O Honey Photo atende o Club Med com exclusividade. O Laudin recusou, mas indicou um amigo que fotografa imóvel.</p>
+    <span class="who">Laudin Fotografia · Sotter Fotografia · Ivana Fernandes · Honey Photo · Alessandro Braga</span></div>
+  <div class="r"><span class="c">2</span><h3>Valor<small>7%</small></h3>
+    <div class="meter"><i style="width:7%"></i></div>
+    <p>Os dois que entraram na negociação de preço recusaram. O Vinicius achou o valor baixo para o equipamento exigido. A Huana pediu R$ 200 de deslocamento e no mínimo 5 imóveis por vez.</p>
+    <span class="who">Vinicius Misawo · Huana Moia</span></div>
+  <div class="r"><span class="c">2</span><h3>Parou de responder<small>7%</small></h3>
+    <div class="meter"><i style="width:7%"></i></div>
+    <p>O Juliano chegou à negociação e sumiu. O Leo Barreto mora em Caraíva, está no Sul para um projeto e volta em dezembro.</p>
+    <span class="who">Juliano Monteiro · Leo Barreto</span></div>
+</div>
+
+<blockquote>"Vou declinar da proposta, muito baixo os valores pro trabalho e equipamento exigido."
+<cite>Vinicius Misawo, fotógrafo de Trancoso, ao recusar a proposta (card 505272)</cite></blockquote>
+
+<h2>De onde veio cada fotógrafo</h2>
+<p class="sub">Lista do time e indicação trouxeram mais da metade dos nomes. Foi delas que saiu a maior parte dos números inválidos.</p>
+<div class="tbl"><table>
+<thead><tr><th>Origem</th><th class="num">Fotógrafos</th><th class="num">Contato inválido</th><th class="num">Sem retorno</th><th class="num">Responderam</th><th class="num">Ganho</th></tr></thead>
+<tbody>
+<tr><td>Indicação</td><td class="num">9</td><td class="num">4</td><td class="num">2</td><td class="num">3</td><td class="num">0</td></tr>
+<tr><td>Google / site próprio</td><td class="num">8</td><td class="num">1</td><td class="num">4</td><td class="num">3</td><td class="num">1</td></tr>
+<tr><td>Lista enviada pelo time</td><td class="num">7</td><td class="num">2</td><td class="num">4</td><td class="num">1</td><td class="num">0</td></tr>
+<tr><td>Google + Receita (2ª rodada)</td><td class="num">5</td><td class="num">1</td><td class="num">2</td><td class="num">2</td><td class="num">0</td></tr>
+<tr><td>Só a Receita (CNAE)</td><td class="num">1</td><td class="num">0</td><td class="num">0</td><td class="num">1</td><td class="num">0</td></tr>
+</tbody></table></div>
+
+<h2>Quem entrou</h2>
+<div class="won">
+  <div><h3>Foto na Bahia (Fernando Arturo Olaechea)</h3><p>Encontrado no Google e pelo site próprio. Faz família, casal, casamento e eventos, e atende Arraial, Porto Seguro, Trancoso e Caraíva. Respondeu no 1º contato, foi para negociação no mesmo dia (02/10) e foi cadastrado no Painel de Fotógrafos em 13/10.</p></div>
+</div>
+
+<h2>Como melhorar a próxima rodada</h2>
+<div class="concl">
+  <p><b>Fora o sem retorno, o que mais custou foi número inválido.</b> Foram 8 de 30, mais que o nicho errado (5) e o preço (2).</p>
+  <ol>
+    <li><b>Validar o WhatsApp antes de criar o card.</b> Quando falhar, tentar o 2º telefone, o Instagram ou o site antes de marcar como perdido. Sotter, Claudia e Fabio já tinham um segundo número anotado nas Observações.</li>
+    <li><b>Filtrar o nicho na pesquisa.</b> A região é dominada por fotógrafos de casamento. Priorizar quem mostra imóvel, arquitetura ou interiores no portfólio. Só 3 dos 30 mostravam, e nenhum deles fechou.</li>
+    <li><b>Rever o preço para destino turístico.</b> Os dois fotógrafos do nicho certo que negociaram esbarraram no valor e no deslocamento.</li>
+    <li><b>Seguir as pontas soltas:</b> o amigo indicado pelo Laudin, que fotografa imóvel; o Leo Barreto, que volta em dezembro; e o Nando Fischer, especialista em interiores, por outro canal.</li>
+  </ol>
+  <p>Na região, ainda há um card aberto em Porto Seguro: o Andresson Santana (Gallego Fotos Book), em "Em negociação".</p>
+</div>
+
+<h2>Todos os fotógrafos</h2>
+<div class="tbl"><table>
+<thead><tr><th>Fotógrafo</th><th>Origem</th><th>Resultado</th><th>Anotação</th></tr></thead>
+<tbody>
+<tr><td>Foto na Bahia (Fernando Olaechea)</td><td>Google / site</td><td><span class="tag g">Ganho</span></td><td>Cadastrado no Painel de Fotógrafos em 13/10</td></tr>
+<tr><td>Vinicius Misawo Fotografia</td><td>Indicação</td><td><span class="tag p">Valor</span></td><td>"Muito baixo os valores pro trabalho e equipamento exigido"</td></tr>
+<tr><td>Huana Moia</td><td>Google / site</td><td><span class="tag p">Valor</span></td><td>Pediu R$ 200 de deslocamento e mínimo de 5 imóveis; achou os valores baixos</td></tr>
+<tr><td>Laudin Fotografia</td><td>Lista do time</td><td><span class="tag p">Não faz imóvel</span></td><td>Indicou um amigo que fotografa imóvel</td></tr>
+<tr><td>Sotter Fotografia</td><td>Google / indicação</td><td><span class="tag p">Não faz imóvel</span></td><td>Fotografia de casamento</td></tr>
+<tr><td>Ivana Fernandes Fotografia</td><td>Indicação</td><td><span class="tag p">Não faz imóvel</span></td><td>Perdida no mesmo dia do 1º contato</td></tr>
+<tr><td>Honey Photo (Danilo Dacol)</td><td>Google / Receita</td><td><span class="tag p">Não faz imóvel</span></td><td>Exclusivo do Club Med Trancoso</td></tr>
+<tr><td>Alessandro Braga</td><td>Google / Receita</td><td><span class="tag p">Não faz imóvel</span></td><td>Casamento, shows e eventos; respondeu depois do último contato</td></tr>
+<tr><td>Juliano Monteiro Fotografias</td><td>Indicação</td><td><span class="tag p">Parou de responder</span></td><td>Chegou a Em negociação e sumiu</td></tr>
+<tr><td>Leo Barreto Photo</td><td>Receita (CNAE)</td><td><span class="tag a">Parou de responder</span></td><td>Mora em Caraíva, volta em dezembro</td></tr>
+<tr><td>DL Photos Trancoso</td><td>Lista do time</td><td><span class="tag p">Contato inválido</span></td><td>Falha no envio</td></tr>
+<tr><td>Sam Martinelli Ltda</td><td>Lista do time</td><td><span class="tag p">Contato inválido</span></td><td>Falha no envio</td></tr>
+<tr><td>Karib Ribeiro</td><td>Google / site</td><td><span class="tag p">Contato inválido</span></td><td>Falha no envio; faz arquitetura</td></tr>
+<tr><td>Thay Ferdassyl</td><td>Indicação</td><td><span class="tag p">Contato inválido</span></td><td>Falha no envio</td></tr>
+<tr><td>Jociária Félix</td><td>Indicação</td><td><span class="tag p">Contato inválido</span></td><td>Sem anotação; casamento e filme</td></tr>
+<tr><td>Rubens Fotografias</td><td>Indicação</td><td><span class="tag p">Contato inválido</span></td><td>Sem anotação</td></tr>
+<tr><td>Isaac Fotógrafo</td><td>Indicação</td><td><span class="tag p">Contato inválido</span></td><td>Falha no envio</td></tr>
+<tr><td>Benaya Films (Daniel McGrath)</td><td>Google / Receita</td><td><span class="tag p">Contato inválido</span></td><td>Falha no envio; produtora de vídeo</td></tr>
+<tr><td>Vitor Photography</td><td>Lista do time</td><td><span class="tag p">Sem retorno</span></td><td>Chamado 4 vezes</td></tr>
+<tr><td>Felipe Bitencourth Fotografia</td><td>Lista do time</td><td><span class="tag p">Sem retorno</span></td><td>Chamado 4 vezes</td></tr>
+<tr><td>Lucas Santana</td><td>Lista do time</td><td><span class="tag p">Sem retorno</span></td><td>Chamado 4 vezes</td></tr>
+<tr><td>Vitor de Almeida Fernandes</td><td>Lista do time</td><td><span class="tag p">Sem retorno</span></td><td>Chamado 4 vezes</td></tr>
+<tr><td>Marcus Cambraia</td><td>Google / site</td><td><span class="tag p">Sem retorno</span></td><td>Chamado 4 vezes; faz imóvel e arquitetura</td></tr>
+<tr><td>Nando Fischer</td><td>Google / site</td><td><span class="tag p">Sem retorno</span></td><td>Chamado 4 vezes; faz interiores; DDD 41</td></tr>
+<tr><td>Gustavo Cruz</td><td>Google / site</td><td><span class="tag p">Sem retorno</span></td><td>Chamado 4 vezes</td></tr>
+<tr><td>Matheus Thauz</td><td>Google / site</td><td><span class="tag p">Sem retorno</span></td><td>Chamado 4 vezes</td></tr>
+<tr><td>Marcos Lemos</td><td>Indicação</td><td><span class="tag p">Sem retorno</span></td><td>Chamado 4 vezes</td></tr>
+<tr><td>Claudia Oliveira Fotografia</td><td>Indicação</td><td><span class="tag p">Sem retorno</span></td><td>Chamada 4 vezes; tinha 2º telefone</td></tr>
+<tr><td>Joabe Costa</td><td>Google / Receita</td><td><span class="tag p">Sem retorno</span></td><td>Cadência automática, 3 contatos</td></tr>
+<tr><td>Fabio Conte</td><td>Google / Receita</td><td><span class="tag p">Sem retorno</span></td><td>Cadência automática, 3 contatos; tinha 2º telefone</td></tr>
+</tbody></table></div>
+
+<h2>Cards duplicados</h2>
+<p class="sub">Na segunda rodada (13/10), 10 fotógrafos já procurados na primeira ganharam um card novo. Eles não entram nas contas acima. Eles foram excluídos em 13/10 e depois voltaram como perdidos. O 513655 é o mesmo fornecedor que foi ganho.</p>
+<div class="tbl"><table>
+<thead><tr><th>Fotógrafo</th><th class="num">Card duplicado</th><th class="num">Card original</th></tr></thead>
+<tbody>
+<tr><td>Nando Fischer</td><td class="num">513647</td><td class="num">506228</td></tr>
+<tr><td>Lucas Santana</td><td class="num">513649</td><td class="num">502860</td></tr>
+<tr><td>Matheus Thauz</td><td class="num">513650</td><td class="num">506233</td></tr>
+<tr><td>Fotonabahia</td><td class="num">513655</td><td class="num">506231 (Ganho)</td></tr>
+<tr><td>Marcus Cambraia</td><td class="num">513656</td><td class="num">506226</td></tr>
+<tr><td>Sotter Fotografia</td><td class="num">513657</td><td class="num">506229</td></tr>
+<tr><td>Gustavo Cruz</td><td class="num">513659</td><td class="num">506230</td></tr>
+<tr><td>Huana Moia</td><td class="num">513660</td><td class="num">506232</td></tr>
+<tr><td>Karib Ribeiro</td><td class="num">513664</td><td class="num">506227</td></tr>
+<tr><td>Sam Martinelli</td><td class="num">513668</td><td class="num">502863</td></tr>
+</tbody></table></div>
+
+<footer>"Respondeu" soma o ganho e os 9 que deram um motivo de recusa ou conversaram antes de parar de responder. Cada fotógrafo foi contado uma vez, pelo card original. "Trancoso" inclui quem tem Trancoso na cidade de atuação, no endereço ou nas Observações do card. O card da cidade, "Trancoso - Fotografo GOPs SPOT" (493199, funil 61), segue aberto.</footer>
+</main></body></html>
