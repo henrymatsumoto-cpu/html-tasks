@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Reunião Flylift</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    color-scheme: dark;
+    --bg:#080E32; --surf:#0F1742; --surf2:#18225A; --line:#232E6B;
+    --ink:#EEF1FB; --ink2:#B4BBD9; --ink3:#8189B0;
+    --blue:#4D85FF; --blue-soft:#14245E;
+    --ok:oklch(78% .12 150); --ok-soft:oklch(30% .05 150);
+    --bad:oklch(72% .13 30); --bad-soft:oklch(30% .06 30);
+    --warn:oklch(82% .13 80); --warn-soft:oklch(31% .05 80);
+    --r:10px; --r-full:9999px;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:"Figtree",sans-serif;font-size:15.5px;line-height:1.6}
+  .wrap{max-width:1040px;margin:0 auto;padding:0 16px}
+  @media (min-width:720px){.wrap{padding:0 32px}}
+  h1{font-size:clamp(32px,5.5vw,48px);line-height:1.08;margin:0;font-weight:800;letter-spacing:-.015em}
+  h2{font-size:22px;margin:0;font-weight:700}
+  h3{font-size:16px;margin:0;font-weight:700}
+  p{margin:0}
+  .mut{color:var(--ink2)}
+  .num{font-variant-numeric:tabular-nums}
+  b{font-weight:700}
+
+  header{padding:48px 0 32px;border-bottom:1px solid var(--line)}
+  .eyebrow{display:inline-block;background:var(--blue-soft);color:var(--blue);border-radius:var(--r-full);padding:5px 14px;font-size:12px;font-weight:700;letter-spacing:.05em;text-transform:uppercase}
+  header h1{margin-top:20px}
+  header .lead{margin-top:12px;font-size:18px;color:var(--ink2);max-width:66ch}
+  .meta{margin-top:20px;display:flex;flex-wrap:wrap;gap:8px 20px;font-size:13px;color:var(--ink3)}
+  .meta span b{color:var(--ink2);font-weight:600}
+
+  .verdict{display:grid;grid-template-columns:1fr;gap:24px;padding:32px 0;border-bottom:1px solid var(--line)}
+  @media (min-width:820px){.verdict{grid-template-columns:1.15fr 1fr}}
+  .rec-label{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--ok);font-weight:700}
+  .rec-name{font-size:28px;font-weight:800;margin-top:6px;line-height:1.2}
+  .rec-why{margin-top:10px;color:var(--ink2);max-width:54ch}
+  .kpis{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;align-self:start}
+  .kpi{background:var(--surf);padding:16px}
+  .kpi .v{font-size:26px;font-weight:800}
+  .kpi .l{font-size:12.5px;color:var(--ink2);margin-top:2px}
+
+  section{padding:40px 0;border-bottom:1px solid var(--line)}
+  .sechead{display:flex;align-items:baseline;gap:12px;margin-bottom:8px}
+  .sechead .n{color:var(--blue);font-weight:700;font-size:14px}
+  .secsub{color:var(--ink2);margin-bottom:22px;max-width:72ch}
+
+  .alert{display:grid;grid-template-columns:1fr;gap:16px;padding:22px;border:1px solid var(--warn);border-radius:var(--r);background:var(--warn-soft)}
+  @media (min-width:820px){.alert{grid-template-columns:1fr 1fr}}
+  .alert .tt{font-size:12px;letter-spacing:.06em;text-transform:uppercase;font-weight:700;color:var(--warn)}
+  .alert h3{font-size:18px;margin-top:6px}
+  .alert p{margin-top:6px;color:var(--ink)}
+
+  .compare{display:grid;grid-template-columns:1fr;gap:16px}
+  @media (min-width:820px){.compare{grid-template-columns:1fr 1fr}}
+  .box{background:var(--surf);border:1px solid var(--line);border-radius:var(--r);padding:20px}
+  .box.yes{border-color:var(--ok)}
+  .box.no{border-color:var(--line)}
+  .box .tt{font-size:12px;letter-spacing:.06em;text-transform:uppercase;font-weight:700}
+  .box.yes .tt{color:var(--ok)}
+  .box.no .tt{color:var(--ink3)}
+  .box h3{margin-top:6px;font-size:18px}
+  .box ul{margin:12px 0 0;padding-left:18px;color:var(--ink2)}
+  .box li{padding:3px 0}
+
+  .list{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+  .list li{padding:14px 0;border-bottom:1px solid var(--line);display:grid;grid-template-columns:28px 1fr;gap:8px}
+  .list .ic{font-weight:800;color:var(--blue)}
+  .list b{display:block}
+  .list .d{color:var(--ink2);font-size:14.5px}
+  .list .ic.ok{color:var(--ok)}
+  .list .ic.warn{color:var(--warn)}
+
+  .cols{display:grid;grid-template-columns:1fr;gap:32px}
+  @media (min-width:820px){.cols{grid-template-columns:1fr 1fr}}
+  .colhead{font-size:13px;letter-spacing:.06em;text-transform:uppercase;font-weight:700;margin-bottom:10px;color:var(--ink2)}
+
+  .tbl-scroll{overflow-x:auto;border:1px solid var(--line);border-radius:var(--r)}
+  table{width:100%;border-collapse:collapse;min-width:680px}
+  th,td{padding:12px 14px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+  th{font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:var(--ink3);font-weight:600;background:var(--surf)}
+  td.r,th.r{text-align:right}
+  tbody tr:last-child td{border-bottom:0}
+  td small{display:block;color:var(--ink3);font-size:12.5px}
+  .low{color:var(--ok);font-weight:700}
+  .note{margin-top:12px;font-size:13px;color:var(--ink3);max-width:80ch}
+  .note b{color:var(--warn);font-weight:600}
+
+  .steps{list-style:none;margin:0;padding:0;display:grid;gap:12px}
+  @media (min-width:820px){.steps.three{grid-template-columns:repeat(3,1fr)}}
+  .steps li{display:grid;grid-template-columns:32px 1fr;gap:12px;padding:16px;background:var(--surf);border:1px solid var(--line);border-radius:var(--r)}
+  .steps .st{width:28px;height:28px;border-radius:var(--r-full);background:var(--blue-soft);color:var(--blue);font-weight:700;display:grid;place-items:center;font-size:14px}
+  .steps li.first .st{background:var(--warn-soft);color:var(--warn)}
+  .steps b{display:block}
+  .steps .d{color:var(--ink2);font-size:14.5px}
+
+  .chat{background:var(--surf);border:1px solid var(--line);border-radius:var(--r);padding:20px;display:grid;gap:10px}
+  .msg{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:baseline;padding:10px 12px;border-radius:8px;background:var(--surf2)}
+  .msg .who{font-size:12px;font-weight:700;color:var(--ink3);text-transform:uppercase;letter-spacing:.04em;min-width:70px}
+  .msg .t{font-size:14.5px}
+  .msg .gap{font-size:13px;font-weight:700;color:var(--ok);white-space:nowrap}
+  @media (max-width:520px){.msg{grid-template-columns:1fr}.msg .gap{white-space:normal}}
+
+  .pay{display:grid;grid-template-columns:1fr;gap:16px}
+  @media (min-width:720px){.pay{grid-template-columns:1fr 1fr}}
+  .pay .box .v{font-size:22px;font-weight:800;margin-top:6px}
+  .pay .box p{color:var(--ink2);margin-top:6px;font-size:14.5px}
+
+  .questions{margin:0;padding-left:20px}
+  .questions li{padding:6px 0}
+  .contact{margin-top:20px;padding:18px 20px;border:1px solid var(--line);border-radius:var(--r);background:var(--surf);display:flex;flex-wrap:wrap;gap:8px 32px}
+  .contact div span{display:block;font-size:12px;color:var(--ink3);text-transform:uppercase;letter-spacing:.05em}
+  a{color:var(--blue)}
+  footer{padding:32px 0 48px;font-size:13px;color:var(--ink3)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <span class="eyebrow">Validação · Viagens corporativas</span>
+  <h1>Reunião Flylift</h1>
+  <p class="lead">Apresentação da Flylift, agência de viagens corporativas que emite passagens com milhas compradas direto das companhias aéreas. Este documento resume o que foi apresentado, como funciona, e o que precisa ser checado antes de levar para o time responsável por viagens.</p>
+  <div class="meta">
+    <span><b>Data</b> 09/10/2026 · 10h</span>
+    <span><b>Duração</b> 52 min</span>
+    <span><b>Seazone</b> Henry Yudi Matsumoto</span>
+    <span><b>Flylift</b> Matheus Neves (comercial)</span>
+  </div>
+</header>
+
+<div class="verdict">
+  <div>
+    <div class="rec-label">Leitura da reunião</div>
+    <div class="rec-name">Vale testar para viagens a trabalho, não como benefício ao funcionário</div>
+    <p class="rec-why">É uma ferramenta de <b>gestão interna</b>: a Seazone compra as passagens e hospedagens das viagens a trabalho (consultores regionais, idas para Florianópolis). Não tem contrato, mensalidade nem compra mínima. O único bloqueio possível é o contrato recente com a <b>Onfly</b>: é preciso confirmar se ele tem exclusividade.</p>
+  </div>
+  <div class="kpis">
+    <div class="kpi"><div class="v num">~22–29%</div><div class="l">Desconto no aéreo nas 3 cotações feitas ao vivo</div></div>
+    <div class="kpi"><div class="v num">~10%</div><div class="l">Desconto médio em hotel (segundo eles)</div></div>
+    <div class="kpi"><div class="v num">R$ 0</div><div class="l">Mensalidade, taxa ou fee</div></div>
+    <div class="kpi"><div class="v num">≤ 3 min</div><div class="l">Tempo de resposta do suporte no WhatsApp</div></div>
+  </div>
+</div>
+
+<section>
+  <div class="alert">
+    <div>
+      <div class="tt">Ponto de atenção 1</div>
+      <h3>Verificar se o contrato com a Onfly é exclusivo</h3>
+      <p>A Seazone fechou há pouco uma parceria com a Onfly, concorrente direta da Flylift (as duas são de Belo Horizonte). Antes de qualquer teste, é preciso ler o contrato da Onfly e ver se ele tem cláusula de exclusividade para viagens corporativas. Do lado da Flylift não existe exclusividade.</p>
+    </div>
+    <div>
+      <div class="tt">Ponto de atenção 2</div>
+      <h3>É para a empresa, não para o funcionário</h3>
+      <p>A Onfly entrou como benefício para o funcionário viajar por conta própria. A Flylift seria outra coisa: gestão das viagens <b>pagas pela Seazone</b>. Para pessoa física a Flylift tem outro canal (outro atendente), mas isso não faz parte desta proposta.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="sechead"><span class="n">01</span><h2>O que é a Flylift</h2></div>
+  <p class="secsub">Agência de viagens corporativas com plataforma própria. O diferencial é usar milhas aéreas no ambiente corporativo, de forma controlada.</p>
+  <ul class="list">
+    <li><span class="ic">→</span><div><b>Acordo com Azul, Gol e Latam</b><span class="d">Todo mês compram lotes de 100 a 500 milhões de milhas direto das companhias e usam essas milhas para emitir as passagens dos clientes.</span></div></li>
+    <li><span class="ic">→</span><div><b>Cerca de 280 empresas atendidas</b><span class="d">Segundo eles, os clientes economizaram R$ 3,3 milhões em passagens em 2025, e a projeção é passar do dobro em 2026.</span></div></li>
+    <li><span class="ic">→</span><div><b>Voo, hotel, carro e ônibus na mesma tela</b><span class="d">Cotação e compra dentro da plataforma, sem ir para o site da companhia ou do hotel.</span></div></li>
+  </ul>
+</section>
+
+<section>
+  <div class="sechead"><span class="n">02</span><h2>Como funciona: modelo "tipo ClickBus"</h2></div>
+  <p class="secsub">Não há contrato de parceria. A empresa entra na plataforma, cota e compra quando o preço compensar, do mesmo jeito que se compra uma passagem no ClickBus. A margem da Flylift já está dentro do preço mostrado (o exemplo que ele deu foi o do supermercado: não se paga para entrar, só pelo que se leva).</p>
+  <div class="compare">
+    <div class="box yes">
+      <div class="tt">O que existe</div>
+      <h3>Acesso liberado + teste livre</h3>
+      <ul>
+        <li>Usuários ilimitados (viajantes, gestores, aprovadores)</li>
+        <li>Limite <b>pré-aprovado de R$ 20 mil/mês</b> no faturado, calculado por eles a partir de dados públicos da Seazone</li>
+        <li>O único pedido deles: cotar de verdade sempre que surgir uma viagem e comparar com o fornecedor atual</li>
+      </ul>
+    </div>
+    <div class="box no">
+      <div class="tt">O que não existe</div>
+      <h3>Nenhuma amarra</h3>
+      <ul>
+        <li>Sem contrato de parceria e sem cláusula de exclusividade</li>
+        <li>Sem mensalidade, taxa, fee ou du</li>
+        <li>Sem número mínimo de cotações ou compras</li>
+        <li>Contrato só entra se a Seazone pedir <b>mais de R$ 20 mil/mês</b> de limite: aí pedem DRE e balanço dos 2 últimos exercícios e um termo simples dizendo que a empresa paga o que comprar</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="sechead"><span class="n">03</span><h2>Por que sai mais barato</h2></div>
+  <p class="secsub">A passagem é emitida com milhas que a Flylift comprou em grande volume, por um valor baixo. A contrapartida é que o viajante <b>não ganha milhas</b> nessa viagem.</p>
+  <div class="cols">
+    <div>
+      <div class="colhead">De onde vem o desconto</div>
+      <ul class="list">
+        <li><span class="ic">1</span><div><b>Milha comprada no atacado</b><span class="d">Lotes de centenas de milhões de milhas saem bem mais baratos por milha.</span></div></li>
+        <li><span class="ic">2</span><div><b>Teto de milhas em voo nacional</b><span class="d">Segundo o Matheus, uma regra da agência reguladora limita quantas milhas a companhia pode cobrar por trecho nacional (exemplo citado: Latam até 120 mil). Em dinheiro não há teto, então a mesma passagem fica mais barata em milhas. <i>É afirmação do vendedor e não foi verificada.</i></span></div></li>
+        <li><span class="ic">3</span><div><b>Hotel por outro caminho</b><span class="d">Hotel não usa milha: vem da TBO, fornecedor global com cerca de 280 mil hotéis. Por isso o desconto é menor, em torno de 10%.</span></div></li>
+      </ul>
+    </div>
+    <div>
+      <div class="colhead">O que muda para quem viaja</div>
+      <ul class="list">
+        <li><span class="ic warn">!</span><div><b>O viajante não acumula milhas</b><span class="d">Passagem emitida com milha não gera milha nova. Isso é regra da companhia aérea. A Flylift não usa as milhas do funcionário.</span></div></li>
+        <li><span class="ic ok">✓</span><div><b>Os pontos de categoria continuam</b><span class="d">Status do programa (Diamante, Platinum, Black etc.) segue contando normalmente.</span></div></li>
+        <li><span class="ic ok">✓</span><div><b>Para a empresa, isso é até melhor</b><span class="d">Hoje, numa viagem paga pela Seazone, as milhas ficam com o funcionário e a empresa não aproveita nada. Pela Flylift, esse valor volta para a empresa em forma de desconto.</span></div></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="sechead"><span class="n">04</span><h2>Simulações feitas na reunião</h2></div>
+  <p class="secsub">Cotações feitas ao vivo na plataforma. O valor mostrado já inclui ida, volta e taxas de embarque, e é o mesmo no Pix, boleto ou cartão.</p>
+  <div class="tbl-scroll">
+    <table>
+      <thead>
+        <tr><th>Trecho</th><th>Datas</th><th class="r">Na companhia</th><th class="r">Na Flylift</th><th class="r">Economia</th></tr>
+      </thead>
+      <tbody class="num">
+        <tr><td><b>Maringá → Florianópolis</b><small>Latam · ida e volta</small></td><td>26/11 → 29/11</td><td class="r">R$ 1.384</td><td class="r low">R$ 1.083</td><td class="r">R$ 301 <small>~22%</small></td></tr>
+        <tr><td><b>Salvador → Florianópolis</b><small>Latam · ida e volta</small></td><td>26/11 → 29/11</td><td class="r">R$ 1.557</td><td class="r low">R$ 1.104</td><td class="r">R$ 453 <small>~29%</small></td></tr>
+        <tr><td><b>Salvador → Florianópolis</b><small>Gol · em cima da hora (4 dias antes)</small></td><td>13/10 → 16/10</td><td class="r">R$ 3.645</td><td class="r low">R$ 2.721</td><td class="r">R$ 924 <small>~25%</small></td></tr>
+        <tr><td><b>Hotel em Jurerê (Florianópolis)</b><small>2 hóspedes · 1 diária · 12 opções</small></td><td>29/11 → 30/11</td><td class="r">—</td><td class="r">a partir de R$ 180</td><td class="r"><small>~10% em média</small></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="note">O Matheus falou em "cerca de 30%" de desconto. Os percentuais acima foram recalculados a partir dos valores mostrados na tela. Ele também disse que em 9 de cada 10 cotações o desconto fica nessa faixa, que às vezes chega a 40–60% e que em 1 de cada 10 o preço empata ou fica um pouco acima da companhia. <b>Detalhe:</b> nas buscas de hotel em Jurerê apareceu um imóvel da própria Seazone, porque a TBO pega os anúncios das OTAs.</p>
+</section>
+
+<section>
+  <div class="sechead"><span class="n">05</span><h2>Suporte: grupos de WhatsApp</h2></div>
+  <p class="secsub">Cada empresa cliente ganha um grupo de WhatsApp próprio, com <b>pelo menos 5 pessoas da Flylift</b> dentro, disponíveis todo dia e em qualquer horário (segundo eles).</p>
+  <div class="cols">
+    <div>
+      <div class="colhead">O que resolvem no grupo</div>
+      <ul class="list">
+        <li><span class="ic">→</span><div><b>Cancelamento, remarcação e alteração de voo</b></div></li>
+        <li><span class="ic">→</span><div><b>Marcação de assento e bagagem</b></div></li>
+        <li><span class="ic">→</span><div><b>Cotação e emissão "offline"</b><span class="d">Basta mandar o nome do viajante, que já está cadastrado, e eles emitem sem ninguém precisar entrar na plataforma (útil quando a pessoa só tem o celular na mão).</span></div></li>
+      </ul>
+    </div>
+    <div>
+      <div class="colhead">Tempo de resposta mostrado</div>
+      <div class="chat">
+        <div class="msg"><span class="who">Cliente</span><span class="t">Mensagem às 07:17</span><span class="gap">resposta 07:20 · 3 min</span></div>
+        <div class="msg"><span class="who">Cliente</span><span class="t">Pedido de cotação às 08:36</span><span class="gap">resposta 08:36 · mesmo minuto</span></div>
+        <div class="msg"><span class="who">Cliente</span><span class="t">Pedido de emissão às 08:53</span><span class="gap">resposta 08:54 · 1 min</span></div>
+      </div>
+      <p class="note">Prometem retorno em até <b>3 minutos</b>, sem exceção. Os exemplos são de grupos de clientes reais, como uma empresa de Maringá.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="sechead"><span class="n">06</span><h2>O que a plataforma oferece para a gestão</h2></div>
+  <div class="cols">
+    <ul class="list">
+      <li><span class="ic">→</span><div><b>Dashboard</b><span class="d">Gasto e economia por modal e por período (7, 90 dias, ano).</span></div></li>
+      <li><span class="ic">→</span><div><b>Pedidos e vouchers</b><span class="d">Histórico de tudo que foi comprado, de qualquer modal.</span></div></li>
+      <li><span class="ic">→</span><div><b>Cadastro de viajantes</b><span class="d">Os dados ficam salvos e agilizam as próximas emissões.</span></div></li>
+      <li><span class="ic">→</span><div><b>Centro de custo, setor e equipe</b><span class="d">Para saber no fim do mês qual área gastou mais.</span></div></li>
+    </ul>
+    <ul class="list">
+      <li><span class="ic">→</span><div><b>Solicitação e alçadas de aprovação</b><span class="d">O colaborador pede e o gestor aprova ou recusa. Dá para exigir aprovação extra quando o pedido sai da política.</span></div></li>
+      <li><span class="ic">→</span><div><b>Política de viagem</b><span class="d">Antecedência mínima, teto de valor, centro de custo obrigatório.</span></div></li>
+      <li><span class="ic">→</span><div><b>Financeiro</b><span class="d">Faturas, extratos, reembolsos e bagagem adicional, tudo conferível.</span></div></li>
+    </ul>
+  </div>
+  <div class="pay" style="margin-top:24px">
+    <div class="box"><div class="tt mut">Pagamento 1</div><div class="v">Cartão corporativo</div><p>Como a Seazone faz hoje. O preço é o mesmo do Pix e do boleto.</p></div>
+    <div class="box"><div class="tt mut">Pagamento 2</div><div class="v">Faturado, 2 faturas/mês</div><p>Compras do dia 1 ao 15 são pagas no dia 25. Do dia 16 ao 30, pagas no dia 10 do mês seguinte.</p></div>
+  </div>
+  <p class="note">Segundo eles, a economia média mensal é de <b>23%</b>, mas só aparece de verdade em empresas que gastam mais de R$ 20 mil/mês com viagem. Quem cota pouco pega menos "voos de oportunidade".</p>
+</section>
+
+<section>
+  <div class="sechead"><span class="n">07</span><h2>Próximos passos</h2></div>
+  <ol class="steps three">
+    <li class="first"><span class="st">1</span><div><b>Checar o contrato da Onfly</b><span class="d">Ver se tem exclusividade. Se tiver, a conversa para aqui.</span></div></li>
+    <li><span class="st">2</span><div><b>Levar para quem cuida de viagens</b><span class="d">Gestão / suprimentos decide se faz sentido testar.</span></div></li>
+    <li><span class="st">3</span><div><b>Conversa com a Flylift</b><span class="d">O Matheus quer falar com quem tem os números: gasto mensal, viagens por mês e destinos mais comuns.</span></div></li>
+    <li><span class="st">4</span><div><b>Liberar acesso e criar o grupo</b><span class="d">Configuração da conta, cadastro de usuários e criação do grupo de suporte no WhatsApp.</span></div></li>
+    <li><span class="st">5</span><div><b>Testar em paralelo</b><span class="d">A cada viagem, cotar na Flylift e no fornecedor atual e comparar.</span></div></li>
+    <li><span class="st">6</span><div><b>Decidir</b><span class="d">Se compensar, segue usando. Se não, para sem custo nenhum.</span></div></li>
+  </ol>
+  <p class="note">Avisei ao Matheus que o retorno pode demorar, por causa do período de avaliação interna (lideranças focadas na AVD).</p>
+
+  <div class="cols" style="margin-top:28px">
+    <div>
+      <div class="colhead">Perguntas em aberto</div>
+      <ol class="questions">
+        <li>O contrato com a Onfly tem cláusula de exclusividade?</li>
+        <li>Quem é o dono das viagens corporativas na Seazone hoje?</li>
+        <li>O gasto mensal com viagens passa de R$ 20 mil? Se passar, vale pedir mais limite (com DRE e balanço).</li>
+        <li>Perder as milhas do funcionário nas viagens a trabalho é aceitável para a empresa?</li>
+      </ol>
+    </div>
+    <div>
+      <div class="colhead">Contato Flylift</div>
+      <div class="contact">
+        <div><span>Nome</span>Matheus Neves</div>
+        <div><span>WhatsApp</span>(31) 9781-0640</div>
+        <div><span>E-mail</span>matheusneves@flylift.com.br</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  Fonte: gravação e transcrição do Meet "Seazone &lt;&gt; Flylift", de 09/10/2026. Números de economia e prazos de suporte são afirmações da Flylift e não foram verificados pela Seazone.
+</footer>
+
+</div>
+</body>
+</html>
