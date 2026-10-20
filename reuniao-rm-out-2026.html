@@ -1,0 +1,569 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RM Enxoval: Reunião Mensal</title>
+<style>
+:root{
+  /* Bluezone — tokens (tema escuro, neutros tintados no hue da marca) */
+  --color-primary:        #0055FF;
+  --color-primary-on-dark:#4D86FF;
+  --color-success:        #22C55E;
+  --color-error:          #E7000B;
+  --color-error-on-dark:  #FF5A62;
+  --color-warning:        #F54A00;
+  --color-warning-on-dark:#FF8A3D;
+
+  --color-background: #060A1C;
+  --color-surface:    #0C1230;
+  --color-surface-2:  #141B40;
+  --color-border:     #1E2749;
+  --color-border-soft:#141B38;
+  --color-foreground: #EDEFF7;
+  --color-muted-fg:   #949BB8;
+
+  --space-xs:4px; --space-sm:8px; --space-md:16px; --space-lg:24px;
+  --space-xl:32px; --space-2xl:48px; --space-3xl:64px;
+
+  --radius-sm:4px; --radius-lg:8px; --radius-xl:12px; --radius-2xl:16px; --radius-full:9999px;
+
+  --gutter: clamp(24px,6vw,112px);
+  --font: "Helvetica Neue", Helvetica, "Nimbus Sans", Arial, sans-serif;
+  --ease: cubic-bezier(.16,1,.3,1);
+}
+
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0; color:var(--color-foreground); font-family:var(--font);
+  background:linear-gradient(180deg,#080E26 0%,var(--color-background) 60%);
+  background-color:var(--color-background);
+  -webkit-font-smoothing:antialiased; overflow:hidden;
+}
+
+/* ---------- Tipografia Bluezone ---------- */
+h1{font-size:48px;font-weight:700;line-height:1.1;margin:0;letter-spacing:-.022em}
+h2{font-size:30px;font-weight:500;line-height:1.2;margin:0}
+h3{font-size:24px;font-weight:500;line-height:1.3;margin:0}
+h4{font-size:20px;font-weight:500;line-height:1.4;margin:0}
+p{font-size:16px;font-weight:400;line-height:1.6;margin:0;color:var(--color-muted-fg);max-width:68ch}
+.lead{font-size:20px;font-weight:500;line-height:1.5;color:var(--color-foreground);max-width:60ch}
+.body{font-size:14px;font-weight:500;line-height:1.5}
+.detail{font-size:12px;font-weight:500;line-height:1.4}
+strong{color:var(--color-foreground);font-weight:700}
+
+.eyebrow{
+  font-size:12px;font-weight:700;line-height:1.4;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--color-primary-on-dark);margin:0;
+  display:inline-flex;align-items:center;gap:10px;
+}
+.eyebrow::before{content:"";width:18px;height:2px;background:currentColor;border-radius:var(--radius-full)}
+.eyebrow.good{color:var(--color-success)}
+.eyebrow.bad{color:var(--color-error-on-dark)}
+
+/* ---------- Estrutura ---------- */
+.deck{position:relative;height:100vh;width:100vw}
+.slide{
+  position:absolute;inset:0;display:none;
+  padding:clamp(76px,9vw,116px) var(--gutter) clamp(72px,8vw,92px);
+  overflow:auto;animation:enter .55s var(--ease) both;
+}
+.slide.is-active{display:flex;flex-direction:column;justify-content:center}
+@keyframes enter{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+.slide > *{animation:rise .55s var(--ease) both}
+.slide > *:nth-child(2){animation-delay:.06s}
+.slide > *:nth-child(3){animation-delay:.12s}
+.slide > *:nth-child(4){animation-delay:.18s}
+@keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.slide,.slide > *{animation:none}}
+
+/* chrome do slide: faixa superior com nome do deck e número */
+.slide-top{
+  position:absolute;top:clamp(30px,4vw,54px);left:var(--gutter);right:var(--gutter);
+  display:flex;align-items:baseline;justify-content:space-between;gap:var(--space-md);
+  padding-bottom:var(--space-md);border-bottom:1px solid var(--color-border-soft);
+  animation:none;
+}
+.slide-top .deck-name{font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--color-muted-fg)}
+.slide-top .slide-no{font-size:11px;font-weight:700;letter-spacing:.2em;color:var(--color-primary-on-dark);font-variant-numeric:tabular-nums}
+
+.slide-head{margin-bottom:var(--space-xl);flex:none;max-width:56ch}
+.slide-head .eyebrow{margin-bottom:var(--space-md)}
+.slide-head h1{max-width:20ch}
+.slide-head p{margin-top:var(--space-md)}
+
+/* ---------- Capa ---------- */
+.cover{justify-content:flex-end !important;gap:var(--space-lg);padding-bottom:clamp(88px,9vw,110px)}
+.cover h1{font-size:clamp(44px,6.8vw,88px);letter-spacing:-.035em;max-width:15ch}
+.cover .rule{height:1px;background:var(--color-border);margin:var(--space-lg) 0 var(--space-sm)}
+.cover-meta{display:flex;flex-wrap:wrap;gap:clamp(24px,5vw,64px);align-items:flex-end}
+.cover-meta div{min-width:150px}
+.cover-meta .detail{color:var(--color-muted-fg);letter-spacing:.14em;text-transform:uppercase;margin-bottom:8px}
+.cover-meta .body{color:var(--color-foreground)}
+.cover-mark{
+  position:absolute;top:clamp(30px,4vw,54px);left:var(--gutter);
+  display:flex;align-items:center;gap:10px;animation:none;
+}
+.cover-mark i{width:10px;height:10px;border-radius:var(--radius-full);background:var(--color-primary);display:block}
+.cover-mark span{font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase}
+
+/* ---------- Cartões e KPIs ---------- */
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:var(--space-md)}
+.kpi{
+  background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-2xl);
+  padding:var(--space-lg) var(--space-lg) var(--space-xl);
+}
+.kpi .detail{color:var(--color-muted-fg);letter-spacing:.12em;text-transform:uppercase}
+.kpi .num{font-size:clamp(36px,4.2vw,56px);font-weight:700;line-height:1;margin:var(--space-lg) 0 var(--space-sm);letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.kpi .num u{text-decoration:none;font-size:.34em;font-weight:500;letter-spacing:0;color:var(--color-muted-fg);margin-left:4px}
+.kpi .note{font-size:13px;font-weight:400;line-height:1.5;color:var(--color-muted-fg)}
+.kpi.pos .num{color:var(--color-success)}
+.kpi.pos{border-color:rgba(34,197,94,.28)}
+.kpi.neg .num{color:var(--color-error-on-dark)}
+.kpi.neg{border-color:rgba(255,90,98,.3)}
+.kpi.warn .num{color:var(--color-warning-on-dark)}
+.kpi.plain .num{font-size:20px;font-weight:500;letter-spacing:0;margin-bottom:var(--space-sm);color:var(--color-foreground)}
+
+.hero-split{display:grid;grid-template-columns:minmax(210px,.62fr) 1.38fr;gap:clamp(32px,5vw,80px);align-items:center}
+.hero-num{font-size:clamp(66px,9.5vw,140px);font-weight:700;line-height:.84;letter-spacing:-.05em;font-variant-numeric:tabular-nums}
+.hero-num small{display:block;font-size:13px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--color-muted-fg);margin-top:var(--space-lg);max-width:20ch;line-height:1.5}
+
+/* ---------- Tabelas ---------- */
+table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+caption{text-align:left;font-size:12px;font-weight:400;color:var(--color-muted-fg);padding-bottom:var(--space-md)}
+th{
+  text-align:left;font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--color-muted-fg);padding:0 var(--space-lg) var(--space-md) 0;border-bottom:1px solid var(--color-border);
+}
+th.num,td.num{text-align:right;padding-right:0}
+th.num+th:not(.num),td.num+td:not(.num){padding-left:22px}
+td{padding:15px var(--space-lg) 15px 0;border-bottom:1px solid var(--color-border-soft);font-size:15px;font-weight:400;color:var(--color-muted-fg)}
+tbody tr:last-child td{border-bottom:none}
+tbody tr{transition:background .2s var(--ease)}
+tbody tr:hover td{color:var(--color-foreground)}
+tfoot td{border-top:1px solid var(--color-border);border-bottom:none;font-weight:700;color:var(--color-foreground);padding-top:16px}
+td.name{font-weight:700;color:var(--color-foreground)}
+
+/* barras */
+td.track{width:34%}
+.bar{display:flex;align-items:center;gap:14px}
+.bar .t{flex:1;height:8px;border-radius:var(--radius-full);background:var(--color-surface-2);overflow:hidden}
+.bar .t i{display:block;height:100%;border-radius:var(--radius-full);background:var(--color-primary)}
+.bar.hi .t i{background:var(--color-warning-on-dark)}
+.bar b{min-width:38px;text-align:right;font-weight:700;color:var(--color-foreground);font-size:15px}
+
+.badge{display:inline-block;border-radius:var(--radius-full);padding:4px 12px;font-size:12px;font-weight:700;line-height:1.4;white-space:nowrap}
+.badge.late{background:rgba(231,0,11,.16);color:var(--color-error-on-dark)}
+.badge.ok{background:rgba(34,197,94,.16);color:var(--color-success)}
+.badge.open{background:rgba(245,74,0,.16);color:var(--color-warning-on-dark)}
+
+/* ---------- Blocos ---------- */
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:var(--space-lg)}
+.block{background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-2xl);padding:var(--space-xl) var(--space-lg)}
+.block h4{margin-bottom:var(--space-md)}
+.block p{font-size:14px;max-width:none;line-height:1.55}
+.block .detail{color:var(--color-muted-fg);letter-spacing:.14em;text-transform:uppercase;margin-bottom:var(--space-sm)}
+.block ul{margin:var(--space-md) 0 0;padding:0;list-style:none;display:grid;gap:var(--space-sm)}
+.block li{font-size:14px;font-weight:400;line-height:1.55;color:var(--color-muted-fg);padding-left:22px;position:relative}
+.block li::before{content:"";position:absolute;left:0;top:8px;width:6px;height:6px;border-radius:var(--radius-full);background:var(--color-primary-on-dark)}
+.block table td{padding:11px var(--space-md) 11px 0}
+
+/* cartões de código de imóvel */
+.chips{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(148px,1fr));gap:var(--space-md)}
+.chips li{background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-xl);padding:var(--space-md) var(--space-lg)}
+.chips b{display:block;font-size:18px;font-weight:700;letter-spacing:-.01em;font-variant-numeric:tabular-nums}
+.chips span{display:block;font-size:12px;font-weight:500;color:var(--color-muted-fg);margin-top:8px;letter-spacing:.06em}
+
+.block .chips{grid-template-columns:repeat(auto-fill,minmax(128px,1fr));gap:10px}
+.block .chips li{padding:10px 12px;color:var(--color-foreground)}
+.block .chips li::before{display:none}
+.block .chips b{font-size:15px}
+.takeaway{margin-top:var(--space-xl);border-top:1px solid var(--color-border);padding-top:var(--space-lg);display:flex;gap:var(--space-lg);align-items:baseline;flex-wrap:wrap}
+.takeaway .detail{letter-spacing:.18em;text-transform:uppercase;color:var(--color-muted-fg);flex:none}
+.takeaway .lead{font-size:17px;max-width:72ch}
+.source{font-size:12px;font-weight:400;line-height:1.6;color:var(--color-muted-fg);max-width:92ch}
+
+/* ---------- Navegação ---------- */
+.nav{position:fixed;left:0;right:0;bottom:0;height:60px;display:flex;align-items:center;gap:var(--space-md);padding:0 var(--gutter);background:linear-gradient(to top,var(--color-background) 55%,transparent);z-index:20}
+.dots{display:flex;gap:6px;flex:1;align-items:center}
+.dots button{width:20px;height:4px;border:none;border-radius:var(--radius-full);padding:0;cursor:pointer;background:var(--color-border);transition:background .25s var(--ease),width .25s var(--ease)}
+.dots button:hover{background:var(--color-muted-fg)}
+.dots button[aria-current="true"]{background:var(--color-primary);width:38px}
+.dots button:focus-visible{outline:2px solid var(--color-primary-on-dark);outline-offset:3px}
+.nav-btn{height:36px;min-width:36px;padding:0 16px;border-radius:var(--radius-full);border:1px solid var(--color-border);background:transparent;color:var(--color-foreground);font-family:var(--font);font-size:13px;font-weight:700;cursor:pointer;transition:background .2s var(--ease),border-color .2s var(--ease),opacity .2s var(--ease)}
+.nav-btn:hover{background:var(--color-surface-2);border-color:var(--color-primary)}
+.nav-btn:focus-visible{outline:2px solid var(--color-primary-on-dark);outline-offset:2px}
+.nav-btn[disabled]{opacity:.3;cursor:not-allowed}
+.counter{font-size:13px;font-weight:700;color:var(--color-muted-fg);font-variant-numeric:tabular-nums;min-width:52px;text-align:right}
+
+@media (max-width:900px){
+  .hero-split{grid-template-columns:1fr;gap:var(--space-xl)}
+  h1{font-size:32px}
+  .slide-head h1{max-width:none}
+  .slide{padding:72px 20px 80px}
+  table{font-size:13px}
+  td{padding:12px 10px 12px 0;font-size:13px}
+  th{font-size:10px;padding-right:10px}
+  td.track{width:30%}
+  .takeaway{gap:var(--space-sm)}
+}
+
+@media print{
+  @page{size:A4 landscape;margin:11mm}
+  body{overflow:visible;background:#fff}
+  .nav{display:none}
+  .deck{height:auto}
+  .slide{position:static;display:flex !important;flex-direction:column;justify-content:flex-start;height:auto;page-break-after:always;break-after:page;animation:none;padding:0 0 10mm}
+  .slide > *{animation:none}
+  .slide-top,.cover-mark{position:static;padding:0 0 8px;margin-bottom:22px}
+  .kpi,.block,.chips li{background:#fff}
+  /* densidade para caber 1 slide por página */
+  h1{font-size:27px;letter-spacing:-.02em}
+  .cover h1{font-size:40px}
+  h4{font-size:15px}
+  p,.block p,.kpi .note,.chips span{font-size:11px;line-height:1.45}
+  .lead,.takeaway .lead{font-size:13px;line-height:1.45;max-width:none}
+  .eyebrow,.slide-top .deck-name,.slide-top .slide-no{font-size:9px}
+  .slide-head{margin-bottom:18px;max-width:none}
+  .slide-head p{margin-top:8px}
+  .kpis,.grid2{gap:10px}
+  .kpi{padding:12px 14px}
+  .kpi .num{font-size:30px;margin:10px 0 6px}
+  .kpi.neg .num{color:var(--color-error-on-dark)}
+.kpi.neg{border-color:rgba(255,90,98,.3)}
+.kpi.warn .num{color:var(--color-warning-on-dark)}
+.kpi.plain .num{font-size:15px}
+  .block{padding:14px}
+  .block li{font-size:11px;line-height:1.45}
+  .block ul{gap:5px;margin-top:8px}
+  .hero-split{gap:28px}
+  .hero-num{font-size:64px}
+  .hero-num small{font-size:9px;margin-top:10px}
+  table{font-size:11px}
+  caption{font-size:10px;padding-bottom:8px}
+  th{font-size:9px;padding-bottom:7px;padding-right:12px}
+  td{padding:7px 12px;font-size:11px;padding-left:0}
+  .bar .t{height:6px}
+  .bar b{font-size:11px;min-width:26px}
+  .chips{gap:8px;grid-template-columns:repeat(6,1fr)}
+  .chips li{padding:8px 10px}
+  .chips b{font-size:13px}
+  .chips span{margin-top:4px}
+  .block .chips{grid-template-columns:repeat(4,1fr);gap:6px}
+  .block .chips li{padding:6px 8px}
+  .block .chips b{font-size:11px}
+  .block .chips span{font-size:9px}
+  .takeaway{margin-top:16px;padding-top:10px;gap:12px}
+  .takeaway .detail{font-size:9px}
+  .source{font-size:9px;line-height:1.5}
+  .badge{font-size:10px;padding:2px 9px}
+  .slide-top,.cover-mark{margin-bottom:16px}
+  :root{
+    --color-foreground:#080E32;--color-muted-fg:#565C7C;--color-border:#D5D9E6;--color-border-soft:#E6E9F1;
+    --color-surface:#fff;--color-surface-2:#EDEFF5;--color-primary-on-dark:#0055FF;
+    --color-error-on-dark:#C1000A;--color-warning-on-dark:#C43A00;
+  }
+}
+
+/* ---------- Ajuste à tela ---------- */
+.slide.is-active{justify-content:safe center}
+.fit{width:100%;transform-origin:top left}
+.cover .fit{display:flex;flex-direction:column;gap:var(--space-lg)}
+.slide-head h1{font-size:clamp(26px,4.6vh,48px)}
+.slide{padding-top:clamp(72px,11vh,116px);padding-bottom:clamp(68px,9vh,92px)}
+.chips-lg{grid-template-columns:repeat(auto-fill,minmax(170px,1fr))}
+.chips-lg li{padding:12px 16px}
+.chips-lg b{font-size:17px}
+.chips-lg span{font-size:13px;margin-top:6px}
+.slide-head{max-width:72ch}
+.slide-head h1{max-width:38ch}
+.slide-head{margin-bottom:clamp(14px,3vh,32px)}
+.slide-head .eyebrow{margin-bottom:clamp(8px,1.6vh,16px)}
+.slide-head p{margin-top:clamp(6px,1.4vh,16px)}
+td{padding-top:clamp(6px,1.25vh,15px);padding-bottom:clamp(6px,1.25vh,15px)}
+.takeaway{margin-top:clamp(14px,3vh,32px);padding-top:clamp(10px,2vh,24px)}
+.kpi{padding:clamp(14px,2.4vh,24px) var(--space-lg) clamp(16px,3vh,32px)}
+.kpi .num{margin:clamp(10px,2vh,24px) 0 var(--space-sm)}
+.hero-num{font-size:clamp(60px,13vh,140px)}
+@media print{ .slide-head h1{max-width:none} td{padding:7px 12px 7px 0} .takeaway{margin-top:16px;padding-top:10px} .kpi{padding:12px 14px} .kpi .num{margin:10px 0 6px} .hero-num{font-size:64px} .slide-head{margin-bottom:18px} }
+@media print{ .fit{zoom:1 !important} .slide{padding:0 0 10mm !important} .chips-lg{grid-template-columns:repeat(6,1fr);gap:8px} .chips-lg li{padding:8px 10px} .chips-lg b{font-size:13px} .chips-lg span{font-size:10px;margin-top:4px} .slide-head h1{font-size:27px} }
+</style>
+
+<style>
+.split{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-xl)}
+.mini td{padding-top:clamp(4px,.8vh,9px);padding-bottom:clamp(4px,.8vh,9px);font-size:14px}
+.tag{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--color-muted-fg);border:1px solid var(--color-border);border-radius:var(--radius-full);padding:2px 10px;margin-right:6px}
+.disc li{font-size:15px}
+.disc li b{color:var(--color-foreground)}
+a{color:var(--color-primary-on-dark)}
+.eq{display:flex;flex-wrap:wrap;gap:var(--space-md);align-items:stretch}
+.eq .kpi{flex:1;min-width:200px}
+@media (max-width:900px){.split{grid-template-columns:1fr}}
+.split{align-items:start}
+@media print{.prices .split{grid-template-columns:1fr 1fr}.prices .mini td{font-size:9px;padding:2px 8px 2px 0}.prices .slide-head{margin-bottom:8px}.prices th{padding-bottom:4px}.mini td{font-size:10px;padding:3px 10px 3px 0}.disc li{font-size:11px}.split{gap:14px}.tag{font-size:8px}}
+</style>
+</head>
+<body>
+
+<main class="deck" id="deck">
+<section class="slide cover" aria-label="Capa">
+<div class="cover-mark"><i></i><span>Seazone · Fornecedores</span></div>
+<p class="eyebrow">Reunião mensal de fornecedor</p>
+<h1>RM Enxoval: Reunião Mensal de Outubro</h1>
+<p class="lead">Vendas de agosto a outubro, itens mais vendidos, pedidos e links no Jornada, despacho desde a volta dos pedidos, temas a discutir, projeção de ativações e a proposta de Black Friday para novembro.</p>
+<div class="rule"></div>
+<div class="cover-meta">
+<div><p class="detail">Período</p><p class="body">Vendas ago–out/2026 (parcial) · pedidos desde 28/09 · retrato de 20/10/2026</p></div>
+<div><p class="detail">Fontes</p><p class="body">Planilha de pedidos, Jornada Enxoval, Lojinha Seazone e Slack</p></div>
+<div><p class="detail">Gerado em</p><p class="body">20/10/2026</p></div>
+</div></section>
+<section class="slide" aria-label="Pauta da reunião">
+<div class="slide-head"><p class="eyebrow">Pauta</p><h1>O que vamos tratar hoje</h1></div>
+<table><tbody><tr><td class="num" style="width:48px"><strong style="color:var(--color-primary-on-dark)">01</strong></td><td class="name">Vendas de agosto a outubro e os 5 itens mais vendidos</td><td class="num">slide 03–04</td></tr><tr><td class="num" style="width:48px"><strong style="color:var(--color-primary-on-dark)">02</strong></td><td class="name">Pedidos gerados, links colocados e tempo até o link</td><td class="num">slide 05–06</td></tr><tr><td class="num" style="width:48px"><strong style="color:var(--color-primary-on-dark)">03</strong></td><td class="name">Despacho: tempo médio e os pedidos que mais demoraram</td><td class="num">slide 07–08</td></tr><tr><td class="num" style="width:48px"><strong style="color:var(--color-primary-on-dark)">04</strong></td><td class="name">Cancelamentos e motivos</td><td class="num">slide 09</td></tr><tr><td class="num" style="width:48px"><strong style="color:var(--color-primary-on-dark)">05</strong></td><td class="name">O que melhorou</td><td class="num">slide 10</td></tr><tr><td class="num" style="width:48px"><strong style="color:var(--color-primary-on-dark)">06</strong></td><td class="name">O que precisa de atenção e temas a discutir</td><td class="num">slide 11–12</td></tr><tr><td class="num" style="width:48px"><strong style="color:var(--color-primary-on-dark)">07</strong></td><td class="name">Projeção de ativações para novembro e dezembro</td><td class="num">slide 13</td></tr><tr><td class="num" style="width:48px"><strong style="color:var(--color-primary-on-dark)">08</strong></td><td class="name">Black Friday: proposta e tabela de preços</td><td class="num">slide 14–15</td></tr><tr><td class="num" style="width:48px"><strong style="color:var(--color-primary-on-dark)">09</strong></td><td class="name">Encaminhamentos</td><td class="num">slide 16</td></tr></tbody></table>
+</section>
+<section class="slide" aria-label="Vendas de agosto a outubro">
+<div class="slide-head"><p class="eyebrow">Vendas RM · agosto a outubro/2026 (parcial)</p>
+<h1>R$ 63,2 mil vendidos de agosto a 20/10</h1>
+<p>Venda <strong>faturada</strong> no mês (NF emitida). Outubro ainda não fechou, então entra o valor dos pedidos pagos até 20/10*.</p></div>
+<table class="mini"><thead><tr><th scope="col">Mês</th><th scope="col" class="num">Venda faturada</th><th scope="col">Volume</th></tr></thead>
+<tbody><tr><td class="name">Agosto</td><td class="num"><strong>R$ 36.056,80</strong></td><td class="track"><span class="bar"><span class="t"><i style="width:100%"></i></span><b></b></span></td></tr><tr><td class="name">Setembro</td><td class="num"><strong>R$ 891,60</strong></td><td class="track"><span class="bar"><span class="t"><i style="width:2%"></i></span><b></b></span></td></tr><tr><td class="name">Outubro (até 20/10)</td><td class="num"><strong>R$ 26.266,30</strong>*</td><td class="track"><span class="bar"><span class="t"><i style="width:73%"></i></span><b></b></span></td></tr></tbody>
+<tfoot><tr><td>Total</td><td class="num">R$ 63.214,70</td><td></td></tr></tfoot></table>
+<div class="takeaway"><p class="detail">Contexto</p><p class="lead">Os pedidos novos ficaram <strong>pausados de 18/08 a 28/09</strong>, enquanto a RM repunha o estoque de mantas. Setembro reflete essa pausa. Desde 28/09 os pedidos voltaram, já pelo Jornada Enxoval.</p></div>
+</section>
+<section class="slide" aria-label="Top 5 itens mais vendidos">
+<div class="slide-head"><p class="eyebrow">Itens · agosto a outubro/2026 (parcial)</p>
+<h1>5 itens somam 68% das peças vendidas</h1>
+<p>Quantidade de peças nos pedidos pagos de 01/08 a 20/10/2026 (planilha + Jornada + Lojinha). Total no período: <strong>1.878 peças</strong>.</p></div>
+<table><thead><tr><th scope="col" class="num">#</th><th scope="col">Item</th><th scope="col">Volume</th><th scope="col" class="num">Peças</th><th scope="col" class="num">% das peças</th></tr></thead><tbody><tr><td class="num">1º</td><td class="name">Fronha</td><td class="track"><span class="bar"><span class="t"><i style="width:100%"></i></span><b></b></span></td><td class="num"><strong>506</strong></td><td class="num">26,9%</td></tr><tr><td class="num">2º</td><td class="name">Toalha de banho</td><td class="track"><span class="bar"><span class="t"><i style="width:66%"></i></span><b></b></span></td><td class="num"><strong>332</strong></td><td class="num">17,7%</td></tr><tr><td class="num">3º</td><td class="name">Manta queen</td><td class="track"><span class="bar"><span class="t"><i style="width:36%"></i></span><b></b></span></td><td class="num"><strong>183</strong></td><td class="num">9,7%</td></tr><tr><td class="num">4º</td><td class="name">Tapete</td><td class="track"><span class="bar"><span class="t"><i style="width:26%"></i></span><b></b></span></td><td class="num"><strong>134</strong></td><td class="num">7,1%</td></tr><tr><td class="num">5º</td><td class="name">Toalha de rosto</td><td class="track"><span class="bar"><span class="t"><i style="width:25%"></i></span><b></b></span></td><td class="num"><strong>129</strong></td><td class="num">6,9%</td></tr></tbody>
+<tfoot><tr><td></td><td>Top 5</td><td></td><td class="num">1.284</td><td class="num">68,4%</td></tr></tfoot></table>
+<div class="takeaway"><p class="detail">Para a Black Friday</p><p class="lead">São os itens que mais pesam no estoque, com a <strong>manta</strong> em 3º lugar. Vale a RM confirmar o estoque destes 5 antes de 01/11.</p></div>
+</section>
+<section class="slide" aria-label="Pedidos gerados e links de pagamento">
+<div class="slide-head"><p class="eyebrow">Pedidos e links · desde 28/09/2026</p><h1>62 pedidos gerados, 48 links colocados em 11,1 h úteis em média</h1>
+<p>Pedidos da RM criados no Jornada desde a volta (28/09). Cada pedido tem 2 links (PIX e crédito), mas conto <strong>1 por pedido</strong>: o tempo vai da criação do pedido até a RM colocar os links e mover para Aguardando pagamento, <strong>sem contar fins de semana e feriados</strong>.</p></div>
+<div class="eq">
+<div class="kpi"><p class="detail">Pedidos gerados</p><p class="num">62<u>pedidos</u></p><p class="note">Jornada. Mais 9 pedidos na Lojinha.</p></div>
+<div class="kpi"><p class="detail">Links colocados</p><p class="num">48<u>pedidos</u></p><p class="note">14 sem link: cancelados antes ou ainda em aberto.</p></div>
+<div class="kpi pos"><p class="detail">Tempo até o link</p><p class="num">11,1<u>h úteis</u></p><p class="note">Mediana de 4,6 h. Lojinha: 7 links, média de 13,4 h úteis.</p></div>
+</div>
+<table class="mini" style="margin-top:24px"><thead><tr><th scope="col">Tempo para colocar o link (Jornada)</th><th scope="col">Volume</th><th scope="col" class="num">Pedidos</th><th scope="col" class="num">%</th></tr></thead><tbody>
+<tr><td class="name">Até 24 h úteis</td><td class="track"><span class="bar"><span class="t"><i style="width:92%"></i></span><b></b></span></td><td class="num">44</td><td class="num">92%</td></tr>
+<tr><td class="name">De 24 a 48 h úteis</td><td class="track"><span class="bar"><span class="t"><i style="width:8%"></i></span><b></b></span></td><td class="num">4</td><td class="num">8%</td></tr>
+<tr><td class="name">Mais de 48 h úteis</td><td class="track"><span class="bar hi"><span class="t"><i style="width:0%"></i></span><b></b></span></td><td class="num">0</td><td class="num">0%</td></tr></tbody></table>
+<div class="takeaway"><p class="detail">Leitura</p><p class="lead"><strong>92%</strong> dos links saem em até 1 dia útil e <strong>nenhum passou de 2 dias úteis</strong>.</p></div>
+</section>
+<section class="slide" aria-label="Pedidos que mais demoraram para ter link">
+<div class="slide-head"><p class="eyebrow bad">Links · os mais demorados desde 28/09</p><h1>Os 10 pedidos que mais demoraram para receber o link</h1>
+<p>Da criação do pedido no Jornada até a RM colocar os links, em <strong>dias úteis</strong> (sem fins de semana e feriados). Em laranja, acima de 1 dia útil.</p></div>
+<table class="mini"><thead><tr><th scope="col">Imóvel</th><th scope="col">Pedido</th><th scope="col" class="num">Criado</th><th scope="col" class="num">Link</th><th scope="col">Dias úteis até o link</th><th scope="col">Situação hoje</th></tr></thead><tbody><tr><td class="name">VCO0001</td><td>P-50035</td><td class="num">07/10</td><td class="num">09/10</td><td class="track"><span class="bar hi"><span class="t"><i style="width:100%"></i></span><b>2,0d</b></span></td><td>Aguard. pagamento</td></tr><tr><td class="name">CAO0106</td><td>P-50066</td><td class="num">14/10</td><td class="num">16/10</td><td class="track"><span class="bar hi"><span class="t"><i style="width:84%"></i></span><b>1,7d</b></span></td><td>Aguard. pagamento</td></tr><tr><td class="name">ETI0723</td><td>P-50042</td><td class="num">08/10</td><td class="num">09/10</td><td class="track"><span class="bar hi"><span class="t"><i style="width:55%"></i></span><b>1,1d</b></span></td><td>Aguard. pagamento</td></tr><tr><td class="name">MIL0011</td><td>P-50044</td><td class="num">08/10</td><td class="num">09/10</td><td class="track"><span class="bar hi"><span class="t"><i style="width:54%"></i></span><b>1,1d</b></span></td><td>Pago</td></tr><tr><td class="name">VEM0301</td><td>AG-RVEM0301</td><td class="num">01/10</td><td class="num">02/10</td><td class="track"><span class="bar"><span class="t"><i style="width:50%"></i></span><b>1,0d</b></span></td><td>Cancelado</td></tr><tr><td class="name">NRI0094</td><td>AG-RNRI0094</td><td class="num">13/10</td><td class="num">14/10</td><td class="track"><span class="bar"><span class="t"><i style="width:50%"></i></span><b>1,0d</b></span></td><td>Aguard. pagamento</td></tr><tr><td class="name">SCA0001</td><td>P-50049</td><td class="num">08/10</td><td class="num">09/10</td><td class="track"><span class="bar"><span class="t"><i style="width:47%"></i></span><b>0,9d</b></span></td><td>Enviado</td></tr><tr><td class="name">NSU0006</td><td>AG-RNSU0006</td><td class="num">13/10</td><td class="num">14/10</td><td class="track"><span class="bar"><span class="t"><i style="width:42%"></i></span><b>0,8d</b></span></td><td>Aguard. pagamento</td></tr><tr><td class="name">ETI0723</td><td>AG-RETI0723</td><td class="num">01/10</td><td class="num">02/10</td><td class="track"><span class="bar"><span class="t"><i style="width:40%"></i></span><b>0,8d</b></span></td><td>Cancelado</td></tr><tr><td class="name">DVB0030</td><td>AG-RDVB0030</td><td class="num">01/10</td><td class="num">02/10</td><td class="track"><span class="bar"><span class="t"><i style="width:40%"></i></span><b>0,8d</b></span></td><td>Cancelado</td></tr></tbody></table>
+<div class="takeaway"><p class="detail">Leitura</p><p class="lead">O maior caso foi o <strong>VCO0001</strong> (2,0 dia útil). Os demais ficaram em torno de 1 dia útil.</p></div>
+</section>
+<section class="slide" aria-label="Despacho">
+<div class="slide-head"><p class="eyebrow good">Despacho · antes e depois da pausa</p><h1>Despacho caiu de 3,1 para 2,0 dias úteis</h1>
+<p>Do <strong>pagamento ao embarque</strong>, em dias úteis (feriados nacionais, BA e Feira de Santana). Agosto = pedidos pagos em agosto; volta = pedidos pagos de 28/09 a 20/10. Todos os pedidos pagos na volta já embarcaram, menos 1 pago há 2 dias.</p></div>
+<div class="hero-split">
+<div class="hero-num" style="color:var(--color-success)">2,00<small>dias úteis em média<br>11 pedidos despachados</small></div>
+<table class="mini"><thead><tr><th scope="col">Local</th><th scope="col" class="num">Agosto · pedidos</th><th scope="col" class="num">Agosto · média</th><th scope="col" class="num">Volta · pedidos</th><th scope="col" class="num">Volta · média</th><th scope="col" class="num">Variação</th></tr></thead><tbody>
+<tr><td class="name">Jornada Enxoval</td><td class="num">0</td><td class="num">—</td><td class="num"><strong>7</strong></td><td class="num"><strong>2,57d</strong></td><td class="num">—</td></tr><tr><td class="name">Lojinha Seazone</td><td class="num">5</td><td class="num">1,80d</td><td class="num"><strong>4</strong></td><td class="num"><strong>1,00d</strong></td><td class="num"><span style="color:var(--color-success)">−0,80d</span></td></tr><tr><td class="name">Planilha de pedidos</td><td class="num">20</td><td class="num">3,45d</td><td class="num"><strong>0</strong></td><td class="num"><strong>—</strong></td><td class="num">—</td></tr></tbody>
+<tfoot><tr><td>Total</td><td class="num">25</td><td class="num">3,12d</td><td class="num">11</td><td class="num">2,00d</td><td class="num" style="color:var(--color-success)">−1,12d</td></tr></tfoot></table>
+</div>
+<div class="takeaway"><p class="detail">Leitura</p><p class="lead"><strong>8 dos 11</strong> pedidos da volta saíram em até 2 dias úteis. Desde 28/09 nenhum pedido novo entra pela planilha.</p></div>
+</section>
+<section class="slide" aria-label="Maiores tempos de despacho">
+<div class="slide-head"><p class="eyebrow bad">Maiores tempos · pagos desde 28/09</p><h1>Os pedidos que mais demoraram para embarcar</h1>
+<p>Barra proporcional ao maior caso (5 dias úteis). Em laranja, acima de 3 dias úteis.</p></div>
+<table class="mini"><thead><tr><th scope="col">Imóvel / cliente</th><th scope="col">Pedido</th><th scope="col">Fonte</th><th scope="col" class="num">Pago</th><th scope="col" class="num">Embarque</th><th scope="col">Tempo de despacho</th></tr></thead><tbody><tr><td class="name">LIV0606</td><td>P-50022</td><td><span class="tag">Jornada</span></td><td class="num">29/09</td><td class="num">06/10</td><td class="track"><span class="bar hi"><span class="t"><i style="width:100%"></i></span><b>5d</b></span></td></tr><tr><td class="name">SCA0001</td><td>P-50049</td><td><span class="tag">Jornada</span></td><td class="num">12/10</td><td class="num">19/10</td><td class="track"><span class="bar hi"><span class="t"><i style="width:80%"></i></span><b>4d</b></span></td></tr><tr><td class="name">VCM005</td><td>P-50020</td><td><span class="tag">Jornada</span></td><td class="num">01/10</td><td class="num">06/10</td><td class="track"><span class="bar"><span class="t"><i style="width:60%"></i></span><b>3d</b></span></td></tr><tr><td class="name">AJE0002</td><td>AG-RAJE0002</td><td><span class="tag">Jornada</span></td><td class="num">15/10</td><td class="num">19/10</td><td class="track"><span class="bar"><span class="t"><i style="width:40%"></i></span><b>2d</b></span></td></tr><tr><td class="name">PER0017</td><td>AG-RPER0017</td><td><span class="tag">Jornada</span></td><td class="num">15/10</td><td class="num">19/10</td><td class="track"><span class="bar"><span class="t"><i style="width:40%"></i></span><b>2d</b></span></td></tr><tr><td class="name">Roberta de Freitas Costa</td><td>#835</td><td><span class="tag">Lojinha</span></td><td class="num">14/10</td><td class="num">16/10</td><td class="track"><span class="bar"><span class="t"><i style="width:40%"></i></span><b>2d</b></span></td></tr><tr><td class="name">VEM0301</td><td>P-50029</td><td><span class="tag">Jornada</span></td><td class="num">14/10</td><td class="num">15/10</td><td class="track"><span class="bar"><span class="t"><i style="width:20%"></i></span><b>1d</b></span></td></tr><tr><td class="name">BIO0065</td><td>AG-RBIO0065</td><td><span class="tag">Jornada</span></td><td class="num">14/10</td><td class="num">15/10</td><td class="track"><span class="bar"><span class="t"><i style="width:20%"></i></span><b>1d</b></span></td></tr><tr><td class="name">Emily Sena</td><td>#892</td><td><span class="tag">Lojinha</span></td><td class="num">13/10</td><td class="num">14/10</td><td class="track"><span class="bar"><span class="t"><i style="width:20%"></i></span><b>1d</b></span></td></tr><tr><td class="name">André Rodrigues dos Santos</td><td>#886</td><td><span class="tag">Lojinha</span></td><td class="num">13/10</td><td class="num">14/10</td><td class="track"><span class="bar"><span class="t"><i style="width:20%"></i></span><b>1d</b></span></td></tr></tbody></table>
+<div class="takeaway"><p class="detail">Contexto</p><p class="lead">O maior caso foi o <strong>LIV0606</strong>, pago em 29/09 (logo na volta) e embarcado em 06/10.</p></div>
+</section>
+<section class="slide" aria-label="Cancelamentos">
+<div class="slide-head"><p class="eyebrow">Cancelamentos · Jornada Enxoval</p><h1>26 pedidos cancelados desde 28/09, nenhum por falha da RM</h1>
+<p>Pedidos da RM que foram para Cancelado entre 28/09 e 20/10/2026, pela data do cancelamento.</p></div>
+<table><thead><tr><th scope="col">Motivo</th><th scope="col" class="num">Pedidos</th><th scope="col">Volume</th><th scope="col" class="num">%</th></tr></thead><tbody><tr><td class="name">1. Imóvel já tinha enxoval</td><td class="num">16</td><td class="track"><span class="bar"><span class="t"><i style="width:100%"></i></span><b></b></span></td><td class="num">62%</td></tr><tr><td class="name">2. Alteração do pedido (itens, camas, toalhas)</td><td class="num">9</td><td class="track"><span class="bar"><span class="t"><i style="width:56%"></i></span><b></b></span></td><td class="num">35%</td></tr><tr><td class="name">3. Erro do agente de adequação</td><td class="num">1</td><td class="track"><span class="bar"><span class="t"><i style="width:6%"></i></span><b></b></span></td><td class="num">4%</td></tr></tbody></table>
+<div class="takeaway"><p class="detail">Leitura</p><p class="lead"><strong>16</strong> foram a limpeza automática de pedidos de imóveis que já tinham enxoval. Os ajustes de itens geram um pedido novo no lugar do cancelado. Na Lojinha, 7 pedidos da RM foram cancelados no período (#907, #865, #845, #785, #660, #592, #475).</p></div>
+</section>
+<section class="slide" aria-label="Pontos positivos">
+<div class="slide-head"><p class="eyebrow good">Pontos positivos</p><h1>O que melhorou desde a última reunião</h1></div>
+<div class="grid2">
+<div class="block"><p class="detail">Despacho e links</p><ul>
+<li>Despacho caiu de <strong>3,12 para 2,00 dias úteis</strong> depois da volta</li>
+<li>Lojinha com despacho médio de <strong>1,0 dia útil</strong></li>
+<li>Links em <strong>11,1 h úteis</strong> em média, nenhum acima de 2 dias úteis</li>
+<li>Só 1 pedido pago aguardando envio hoje (MIL0011, pago há 2 dias úteis)</li></ul></div>
+<div class="block"><p class="detail">Operação e parceria</p><ul>
+<li>Estoque de mantas reposto e pedidos liberados de novo em <strong>28/09</strong></li>
+<li>Entrada no <strong>Jornada Enxoval</strong> sem atrito: 62 pedidos em 3 semanas</li>
+<li>A RM começou a reenviar as mantas dos pedidos que saíram sem manta em agosto</li>
+<li>Aviso rápido do bloqueio da franqueada na SEFAZ e alternativa de NF no CPF</li></ul></div>
+</div></section>
+<section class="slide" aria-label="Problemas e pontos de atenção">
+<div class="slide-head"><p class="eyebrow bad">Pontos de atenção</p><h1>O que ainda precisa de atenção</h1></div>
+<div class="grid2">
+<div class="block"><p class="detail">Estoque de manta</p><ul>
+<li><strong>10 pedidos</strong> pagos em agosto saíram sem manta (ex.: QUA0501, BLB0107, VZA0106, NTV0212)</li>
+<li>Pausa de 18/08 a 28/09 sem pedidos novos por falta de manta</li>
+<li>Manta é o 3º item mais vendido: precisa de estoque de segurança para novembro e dezembro</li></ul></div>
+<div class="block"><p class="detail">Pedidos e pagamentos</p><ul>
+<li><strong>26 pedidos</strong> em Aguardando pagamento hoje (R$ 63,7 mil)</li>
+<li>Link de pagamento com erro relatado em 20/10, em verificação com o banco</li>
+<li>Link que não chegou ao proprietário ou com validade em dúvida (CCT0804, BNS0105)</li></ul></div>
+</div></section>
+<section class="slide" aria-label="Temas a discutir">
+<div class="slide-head"><p class="eyebrow">Temas a discutir</p><h1>Temas a discutir</h1></div>
+<table><thead><tr><th scope="col">Tema</th><th scope="col">O que aconteceu</th></tr></thead><tbody><tr><td class="name">Estoque de manta</td><td>Pedidos de agosto saíram sem manta e os pedidos novos ficaram pausados até 28/09. Como garantir estoque para a alta temporada?</td></tr><tr><td class="name">Enxoval entregue no endereço errado</td><td>SRS1005: enxoval que era para Maceió foi entregue em Ilhéus; a franqueada de Maceió ainda não recebeu (05/10).</td></tr><tr><td class="name">NF bloqueada na SEFAZ</td><td>Franqueada Roberta de Freitas Costa bloqueada: NF não sai no CNPJ dela; RM vai emitir no CPF (15/10).</td></tr><tr><td class="name">Erro no link de pagamento</td><td>Proprietário não conseguiu pagar pelo link; RM levou ao financeiro para verificar com o banco (20/10).</td></tr></tbody></table>
+</section>
+<section class="slide" aria-label="Projeção de ativações">
+<div class="slide-head"><p class="eyebrow">Projeção · ativações N e NE</p><h1>Expectativa: ~128 ativações em novembro e ~144 em dezembro</h1>
+<p>O enxoval é comprado depois da vistoria, então a ativação prevista mostra a demanda que vem. Outubro de 2026 sai da fila atual do kanban de implantação; novembro e dezembro seguem a mesma variação que tiveram em 2025 sobre outubro, mais o Trancoso Spot.</p></div>
+<div class="split">
+<table class="mini"><thead><tr><th scope="col">Ativações na região</th><th scope="col" class="num">Out</th><th scope="col" class="num">Nov</th><th scope="col" class="num">Dez</th></tr></thead>
+<tbody><tr><td class="name">2025 · ativações reais</td><td class="num">40</td><td class="num">53</td><td class="num">82</td></tr>
+<tr><td class="name">2025 · variação sobre outubro</td><td class="num">—</td><td class="num">+32%</td><td class="num">+105%</td></tr>
+<tr><td class="name">2026 · só a fila atual do kanban</td><td class="num">~70</td><td class="num">~34</td><td class="num">~41</td></tr>
+<tr><td class="name">2026 · variação de 2025</td><td class="num">~70</td><td class="num">~93</td><td class="num">~144</td></tr>
+<tr><td class="name">+ Trancoso Spot (35 apartamentos)</td><td class="num">—</td><td class="num">+35</td><td class="num">—</td></tr></tbody>
+<tfoot><tr><td>2026 · expectativa</td><td class="num">~70</td><td class="num">~128</td><td class="num">~144</td></tr></tfoot></table>
+<div class="block"><p class="detail">Como ler</p><ul>
+<li><strong>Outubro/2026 (~70)</strong>: 44 já ativados até 20/10 + os imóveis do kanban que devem ativar até 31/10 pelo tempo médio de cada etapa</li>
+<li><strong>Dezembro</strong> é o pico antes da temporada: em 2025 subiu +105% sobre outubro</li>
+<li><strong>Trancoso Spot</strong> (Porto Seguro/BA, 35 apartamentos): início da operação previsto para o fim de outubro, entra em novembro</li>
+<li>A linha "só a fila atual" é o piso: considera só o que já está no kanban e a entrada de imóveis novos no ritmo atual</li></ul></div>
+</div>
+<div class="takeaway"><p class="detail">Histórico 2026</p><p class="lead">Ativações na região: jul 62 · ago 52 · set 59 · out 44 até 20/10, acima de 2025 no mesmo período (jul 31 · ago 30 · set 30).</p></div>
+</section>
+<section class="slide" aria-label="Black Friday: proposta">
+<div class="slide-head"><p class="eyebrow">Black Friday · novembro/2026</p><h1>Proposta: 5% de desconto para o proprietário em todo novembro</h1>
+<p>Cada lado cede uma parte e o proprietário recebe o desconto no preço do pedido.</p></div>
+<div class="eq">
+<div class="kpi"><p class="detail">RM Enxoval</p><p class="num">−3%<u>no preço</u></p><p class="note">Reduz 3% do valor dos itens durante a promoção.</p></div>
+<div class="kpi"><p class="detail">Seazone</p><p class="num">3%<u>de comissão</u></p><p class="note">Comissão cai de 5% para 3% nas vendas pagas em novembro.</p></div>
+<div class="kpi pos"><p class="detail">Proprietário</p><p class="num">−5%<u>no pedido</u></p><p class="note">Desconto final aplicado na tabela do Jornada e da Lojinha.</p></div>
+</div>
+<div class="grid2" style="margin-top:24px">
+<div class="block"><p class="detail">Período e regra</p><ul>
+<li>Preço novo no Jornada Enxoval e na Lojinha em <strong>01/11</strong></li>
+<li>Vale para o pedido <strong>pago até 30/11</strong></li>
+<li>Pedido parado é reemitido com o preço da Black Friday</li></ul></div>
+<div class="block"><p class="detail">Potencial: pedidos RM parados hoje</p><ul>
+<li>Implantação: <strong>26 pedidos</strong> em Aguardando pagamento · R$ 63,7 mil</li>
+<li>Recompra: <strong>4 imóveis</strong> no board · R$ 12,9 mil em orçamento</li>
+<li>Venda faturada: R$ 36,1 mil em agosto, antes da pausa</li></ul></div>
+</div></section>
+<section class="slide prices" aria-label="Black Friday: tabela de preços">
+<div class="slide-head"><p class="eyebrow">Black Friday · tabela de preços RM</p><h1>Preço atual × Black Friday (−5%)</h1>
+<p>Preço por peça cadastrado hoje no Jornada Enxoval. Preço da promoção = atual × 0,95, arredondado em centavos.</p></div>
+<div class="split"><table class="mini"><thead><tr><th scope="col">Item</th><th scope="col" class="num">Atual</th><th scope="col" class="num">Black Friday</th></tr></thead><tbody><tr><td class="name">Fronha</td><td class="num">R$ 11,90</td><td class="num"><strong style="color:var(--color-success)">R$ 11,30</strong></td></tr><tr><td class="name">Lençol solteiro</td><td class="num">R$ 48,90</td><td class="num"><strong style="color:var(--color-success)">R$ 46,45</strong></td></tr><tr><td class="name">Lençol casal</td><td class="num">R$ 56,90</td><td class="num"><strong style="color:var(--color-success)">R$ 54,05</strong></td></tr><tr><td class="name">Lençol queen</td><td class="num">R$ 79,90</td><td class="num"><strong style="color:var(--color-success)">R$ 75,91</strong></td></tr><tr><td class="name">Lençol king</td><td class="num">R$ 89,90</td><td class="num"><strong style="color:var(--color-success)">R$ 85,41</strong></td></tr><tr><td class="name">Virol sem elástico solteiro</td><td class="num">R$ 48,90</td><td class="num"><strong style="color:var(--color-success)">R$ 46,45</strong></td></tr><tr><td class="name">Virol sem elástico casal</td><td class="num">R$ 56,90</td><td class="num"><strong style="color:var(--color-success)">R$ 54,05</strong></td></tr><tr><td class="name">Virol sem elástico queen</td><td class="num">R$ 79,90</td><td class="num"><strong style="color:var(--color-success)">R$ 75,91</strong></td></tr><tr><td class="name">Virol sem elástico king</td><td class="num">R$ 89,90</td><td class="num"><strong style="color:var(--color-success)">R$ 85,41</strong></td></tr></tbody></table><table class="mini"><thead><tr><th scope="col">Item</th><th scope="col" class="num">Atual</th><th scope="col" class="num">Black Friday</th></tr></thead><tbody><tr><td class="name">Toalha de banho</td><td class="num">R$ 46,90</td><td class="num"><strong style="color:var(--color-success)">R$ 44,55</strong></td></tr><tr><td class="name">Toalha de rosto</td><td class="num">R$ 19,90</td><td class="num"><strong style="color:var(--color-success)">R$ 18,90</strong></td></tr><tr><td class="name">Tapete</td><td class="num">R$ 23,90</td><td class="num"><strong style="color:var(--color-success)">R$ 22,70</strong></td></tr><tr><td class="name">Manta queen</td><td class="num">R$ 93,90</td><td class="num"><strong style="color:var(--color-success)">R$ 89,20</strong></td></tr><tr><td class="name">Capa edredom solteiro</td><td class="num">R$ 99,90</td><td class="num"><strong style="color:var(--color-success)">R$ 94,91</strong></td></tr><tr><td class="name">Capa edredom casal</td><td class="num">R$ 119,90</td><td class="num"><strong style="color:var(--color-success)">R$ 113,91</strong></td></tr><tr><td class="name">Capa edredom queen</td><td class="num">R$ 149,90</td><td class="num"><strong style="color:var(--color-success)">R$ 142,41</strong></td></tr><tr><td class="name">Capa edredom king</td><td class="num">R$ 169,90</td><td class="num"><strong style="color:var(--color-success)">R$ 161,41</strong></td></tr><tr><td class="name">Travesseiro grosso</td><td class="num">R$ 54,90</td><td class="num"><strong style="color:var(--color-success)">R$ 52,15</strong></td></tr></tbody></table></div>
+</section>
+<section class="slide" aria-label="Encaminhamentos">
+<div class="slide-head"><p class="eyebrow">Conclusão</p><h1>A volta foi rápida; o foco agora é estoque e Black Friday</h1></div>
+<div class="hero-split">
+<div class="hero-num" style="color:var(--color-success)">2,00<small>dias úteis de despacho<br>desde 28/09</small></div>
+<div><p class="lead">Desde a volta, despacho e links estão rápidos e quase nada fica parado. O ponto de risco é o <strong>estoque de manta</strong> para a alta de novembro e dezembro.</p></div>
+</div>
+<div class="block" style="margin-top:28px"><p class="detail">Encaminhamentos</p><ul>
+<li>RM: plano de estoque de manta e dos 5 itens mais vendidos para novembro e dezembro</li>
+<li>RM: resolver a entrega do SRS1005 para a franqueada de Maceió</li>
+<li>RM: retorno do banco sobre o erro no link de pagamento</li>
+<li>Black Friday: aceite dos 3% até 23/10, preços novos em 01/11 e reemissão dos links parados</li></ul></div>
+<div class="takeaway"><p class="source">Fontes: planilha de compra de enxoval da RM (pedidos com status Pagamento Confirmado ou Pago sem manta, pela data do pagamento); app Jornada Completa Enxoval (board Pedidos, fornecedor RM Enxoval); Lojinha Seazone (loja-full-export, cards da RM). Venda faturada de agosto e setembro = vendas com NF emitida no mês; outubro = pedidos pagos até 20/10. Despacho = NETWORKDAYS(pagamento; embarque; feriados) − 1; tempo de link em horas úteis. Projeção: Sapron (ativações por estado) e kanban de implantação. Preços: cadastro de valores do Jornada em 20/10/2026.</p></div>
+</section>
+</main>
+
+<nav class="nav" aria-label="Navegação dos slides">
+  <button class="nav-btn" id="prev" type="button" aria-label="Slide anterior">←</button>
+  <button class="nav-btn" id="next" type="button" aria-label="Próximo slide">→</button>
+  <div class="dots" id="dots" role="tablist" aria-label="Ir para slide"></div>
+  <button class="nav-btn" id="print" type="button">Exportar PDF</button>
+  <p class="counter" id="counter">1 / 16</p>
+</nav>
+
+<script>
+(function(){
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  const dots = document.getElementById('dots');
+  const counter = document.getElementById('counter');
+  const prev = document.getElementById('prev');
+  const next = document.getElementById('next');
+  const total = slides.length;
+  let i = 0;
+
+  // faixa superior com nome do deck e número do slide (a capa tem a sua própria marca)
+  slides.forEach((s, idx) => {
+    if (s.classList.contains('cover')) return;
+    const top = document.createElement('div');
+    top.className = 'slide-top';
+    top.innerHTML = '<span class="deck-name">RM Enxoval · Reunião Mensal · Out/2026</span>' +
+                    '<span class="slide-no">' + String(idx + 1).padStart(2, '0') + ' / ' + String(total).padStart(2, '0') + '</span>';
+    s.insertBefore(top, s.firstChild);
+  });
+
+  // conteúdo de cada slide num wrapper que encolhe (zoom) quando não cabe na altura da tela
+  slides.forEach(s => {
+    const fit = document.createElement('div');
+    fit.className = 'fit';
+    Array.from(s.children).forEach(c => {
+      if (!c.classList.contains('slide-top') && !c.classList.contains('cover-mark')) fit.appendChild(c);
+    });
+    s.appendChild(fit);
+  });
+
+  function fitSlide(s){
+    const fit = s.querySelector('.fit');
+    if (!fit) return;
+    fit.style.zoom = 1;
+    const cs = getComputedStyle(s);
+    const avail = s.clientHeight - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom);
+    const need = fit.scrollHeight;
+    if (need > avail) fit.style.zoom = Math.max(0.55, avail / need).toFixed(3);
+  }
+  window.addEventListener('resize', () => fitSlide(slides[i]));
+
+  slides.forEach((s, idx) => {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.setAttribute('role', 'tab');
+    b.setAttribute('aria-label', 'Slide ' + (idx + 1) + ': ' + (s.getAttribute('aria-label') || ''));
+    b.addEventListener('click', () => go(idx));
+    dots.appendChild(b);
+  });
+
+  function go(n){
+    i = Math.max(0, Math.min(total - 1, n));
+    slides.forEach((s, idx) => s.classList.toggle('is-active', idx === i));
+    Array.from(dots.children).forEach((d, idx) => d.setAttribute('aria-current', idx === i));
+    counter.textContent = (i + 1) + ' / ' + total;
+    prev.disabled = i === 0;
+    next.disabled = i === total - 1;
+    location.hash = i === 0 ? '' : 's' + (i + 1);
+    fitSlide(slides[i]);
+  }
+
+  prev.addEventListener('click', () => go(i - 1));
+  next.addEventListener('click', () => go(i + 1));
+  document.getElementById('print').addEventListener('click', () => window.print());
+
+  document.addEventListener('keydown', e => {
+    if (e.target.closest('button') && (e.key === ' ' || e.key === 'Enter')) return;
+    if (e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === ' ') { e.preventDefault(); go(i + 1); }
+    else if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); go(i - 1); }
+    else if (e.key === 'Home') { e.preventDefault(); go(0); }
+    else if (e.key === 'End') { e.preventDefault(); go(total - 1); }
+    else if (e.key.toLowerCase() === 'f') { document.documentElement.requestFullscreen?.(); }
+  });
+
+  let x0 = null;
+  document.addEventListener('touchstart', e => { x0 = e.touches[0].clientX; }, {passive:true});
+  document.addEventListener('touchend', e => {
+    if (x0 === null) return;
+    const dx = e.changedTouches[0].clientX - x0;
+    if (Math.abs(dx) > 60) go(dx < 0 ? i + 1 : i - 1);
+    x0 = null;
+  }, {passive:true});
+
+  const fromHash = parseInt((location.hash.match(/^#s(\d+)$/) || [])[1], 10);
+  go(Number.isFinite(fromHash) ? fromHash - 1 : 0);
+})();
+</script>
+</body>
+</html>
