@@ -137,8 +137,8 @@
     <h2><span class="num">01 · Ajustes da validação</span>Os 5 pontos e onde cada um foi resolvido</h2>
     <ol class="passos">
       <li><span class="n">1</span><span><strong>Recompra no escopo e na conta.</strong> 250 imóveis parados na recompra, com o valor da Matinali e da RM separado. A recompra entra na conta da comissão recuperada e tem uma mensagem própria no comunicado. <span class="quando">Seções 02, 03 e 06</span></span><span class="st ok">Resolvido</span></li>
-      <li><span class="n">2</span><span><strong>Confirmação da Matinali e da RM antes de tudo.</strong> A ação depende do aceite dos 3% e da reemissão dos links com o preço da BF. O print vai para a Ray antes de qualquer mudança de preço. Se um dos dois não aceitar, a ação não acontece. <span class="quando">Seção 07, passo 1</span></span><span class="st">Aguardando fornecedor</span></li>
-      <li><span class="n">3</span><span><strong>Regra dos pedidos parados.</strong> Eles entram na BF: o link é reemitido com o desconto e o pedido segue o fluxo normal. <span class="quando">Seção 04</span></span><span class="st ok">Resolvido</span></li>
+      <li><span class="n">2</span><span><strong>Confirmação da Matinali e da RM antes de tudo.</strong> A ação depende do aceite dos 3%. O print vai para a Ray antes de qualquer mudança de preço. Se um dos dois não aceitar, a ação não acontece. <span class="quando">Seção 07, passo 1</span></span><span class="st">Aguardando fornecedor</span></li>
+      <li><span class="n">3</span><span><strong>Regra dos pedidos parados.</strong> Não há reemissão em massa, para não sobrecarregar o fornecedor. Se o proprietário resistir a pagar e quiser o desconto, o pedido é cancelado e reaberto com o preço da BF. <span class="quando">Seção 04</span></span><span class="st ok">Resolvido</span></li>
       <li><span class="n">4</span><span><strong>"Cerca de 30% em 2025" saiu da conta.</strong> Não existe o volume por pedido de novembro de 2025, então o número era estimativa. A BF de 2025 aparece só como precedente positivo e não entra no cálculo de retorno. <span class="quando">Seção 02</span></span><span class="st ok">Resolvido</span></li>
       <li><span class="n">5</span><span><strong>Canibalização registrada, com medição combinada.</strong> Comparação de novembro de 2026 com a média de junho a agosto e com novembro de 2025, separando pedido parado de pedido novo. <span class="quando">Seção 05</span></span><span class="st ok">Resolvido</span></li>
     </ol>
@@ -191,17 +191,17 @@
   </section>
 
   <section>
-    <h2><span class="num">04 · Regra dos pedidos parados</span>Pedido parado entra na BF</h2>
+    <h2><span class="num">04 · Regra dos pedidos parados</span>Pedido parado só é refeito quando precisa</h2>
     <div class="regra">
-      <p><strong>O pedido parado é reemitido com o desconto da BF e segue o fluxo normal.</strong></p>
+      <p><strong>Não há reemissão em massa dos pedidos em aberto, para não sobrecarregar o fornecedor.</strong></p>
       <ul>
-        <li><strong>Implantação:</strong> em 01/11, os pedidos em Aguardando link, Aguardando pagamento e Link expirado recebem link novo com o preço da BF. Depois seguem para Pagamento confirmado e Enviado, sem mudança no processo.</li>
-        <li><strong>Recompra:</strong> o pedido gerado na validação ou na pendência durante novembro já sai com o preço da BF.</li>
-        <li><strong>Prazo:</strong> vale a BF quem tiver o pagamento confirmado até 30/11. Link da BF não pago até lá expira, e o pedido é reemitido no preço cheio a partir de 01/12.</li>
+        <li><strong>Pedido em aberto (implantação):</strong> se o proprietário resistir a pagar e quiser o desconto, o pedido é cancelado e reaberto com o preço da BF. O pedido novo segue o fluxo normal: Aguardando pagamento, Pagamento confirmado e Enviado. Quem não pedir paga o pedido como está.</li>
+        <li><strong>Recompra:</strong> o pedido gerado na validação ou na pendência durante novembro já nasce com o preço da BF, sem retrabalho.</li>
+        <li><strong>Prazo:</strong> vale a BF quem tiver o pagamento confirmado até 30/11. A partir de 01/12, pedido novo volta ao preço cheio.</li>
         <li><strong>Pedido já pago antes de 01/11</strong> não tem desconto retroativo.</li>
       </ul>
     </div>
-    <p class="nota">A reemissão dos links é feita pela Matinali e pela RM, por isso faz parte do pedido de confirmação aos dois.</p>
+    <p class="nota">O argumento comercial continua o mesmo. O que muda é que o fornecedor só refaz o pedido quando o desconto for o que trava o pagamento.</p>
   </section>
 
   <section>
@@ -222,7 +222,7 @@
       <div class="msg">
         <span class="tag">Implantação</span>
         <h3>Paga agora para entrar no ar antes da alta</h3>
-        <p>Em novembro o enxoval da Matinali e da RM sai com 5% de desconto para quem confirmar o pagamento até 30/11. Os pedidos que estão aguardando pagamento recebem link novo, já com o desconto.</p>
+        <p>Em novembro o enxoval da Matinali e da RM sai com 5% de desconto para quem confirmar o pagamento até 30/11. Se o seu pedido já está aberto e o desconto fizer diferença, fale com o time de implantação para refazer o pedido com o preço da BF.</p>
         <p>Pagar agora coloca o imóvel no ar antes da alta temporada de dezembro a fevereiro.</p>
       </div>
       <div class="msg">
@@ -238,11 +238,11 @@
   <section>
     <h2><span class="num">07 · Cronograma</span>Do aceite dos fornecedores à medição</h2>
     <ol class="passos">
-      <li><span class="n">1</span><span><strong>Matinali e RM confirmam os 3% e a reemissão dos links</strong>, e o print vai para a Ray. Sem os dois, a ação não acontece. <span class="quando">até 23/10</span></span><span class="st coral">Pendente</span></li>
+      <li><span class="n">1</span><span><strong>Matinali e RM confirmam os 3%</strong> e o refazimento dos pedidos sob demanda, e o print vai para a Ray. Sem os dois, a ação não acontece. <span class="quando">até 23/10</span></span><span class="st coral">Pendente</span></li>
       <li><span class="n">2</span><span><strong>Avisar a Raquel Magnaguagno e os responsáveis da recompra.</strong> <span class="quando">até 23/10</span></span><span class="st">Pendente</span></li>
       <li><span class="n">3</span><span><strong>Disparar o comunicado</strong> para franquias, implantação e comercial, com as duas mensagens. <span class="quando">após o passo 1, antes de 01/11</span></span><span class="st">Pendente</span></li>
-      <li><span class="n">4</span><span><strong>Subir os preços da BF</strong> no Jornada Enxoval e na lojinha e reemitir os links dos pedidos parados. <span class="quando">01/11</span></span><span class="st">Pendente</span></li>
-      <li><span class="n">5</span><span><strong>Voltar à tabela normal</strong> e reemitir no preço cheio o link da BF que não foi pago. <span class="quando">01/12</span></span><span class="st">Pendente</span></li>
+      <li><span class="n">4</span><span><strong>Subir os preços da BF</strong> no Jornada Enxoval e na lojinha. Pedido em aberto só é refeito sob demanda. <span class="quando">01/11</span></span><span class="st">Pendente</span></li>
+      <li><span class="n">5</span><span><strong>Voltar à tabela normal</strong>. <span class="quando">01/12</span></span><span class="st">Pendente</span></li>
       <li><span class="n">6</span><span><strong>Medir o resultado</strong> (seção 05) e mandar para a Ray. <span class="quando">até 10/12</span></span><span class="st">Pendente</span></li>
     </ol>
   </section>
