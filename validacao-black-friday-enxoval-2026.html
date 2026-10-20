@@ -94,19 +94,34 @@
     .passos .st { grid-column:2; justify-self:start; }
     td, th { padding-left:var(--s3); padding-right:var(--s3); }
   }
+
+  .selo.ok { background:var(--verde-bg); color:var(--verde); }
+  .passos .st.ok { background:var(--verde-bg); color:var(--verde); }
+  .passos .st.coral { background:var(--coral-bg); color:var(--coral); }
+  .passos .quando { display:block; font-size:.82rem; color:var(--ink3); margin-top:var(--s1); }
+  .regra { background:var(--surf); border:1px solid var(--line); border-left:3px solid var(--blue); border-radius:12px; padding:var(--s4) var(--s6); margin:0 0 var(--s4); }
+  .regra p:last-child, .regra ul:last-child { margin-bottom:0; }
+  .msg { background:var(--surf); border:1px solid var(--line); border-radius:12px; padding:var(--s6); }
+  .msg .tag { font-size:.72rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--blue); }
+  .msg h3 { margin:var(--s2) 0 var(--s3); }
+  .msg p { font-size:.95rem; color:var(--ink2); margin-bottom:var(--s3); }
+  .msg p:last-child { margin-bottom:0; }
+  tr.sub td { color:var(--ink3); font-size:.86rem; }
+  tr.sub td:first-child { color:var(--ink2); font-weight:500; padding-left:var(--s8); }
 </style>
 </head>
 <body>
 
 <div class="topo">
   <div class="faixa">
-    <p class="kicker">Fornecedores · proposta para validação da gerência · 16/10/2026</p>
+    <p class="kicker">Fornecedores · versão final para arquivo · 20/10/2026</p>
     <h1>Black Friday Enxoval 2026</h1>
-    <p class="abertura">Em novembro a Seazone reduz a comissão de enxoval, a Matinali e a RM reduzem 3% no preço, e o desconto inteiro vai para o proprietário. São duas condições para a gerência escolher: comissão de 3% ou de 2%.</p>
+    <p class="abertura">Em novembro a comissão da Seazone no enxoval cai de 5% para 3%, a Matinali e a RM baixam o preço em 3%, e o proprietário paga 5% a menos. A ação vale para pedidos novos e para os que estão parados hoje, tanto de implantação quanto de recompra.</p>
     <p class="meta">
-      <span><b>Período</b> vendas fechadas de 01/11 a 30/11/2026</span>
+      <span><b>Período</b> pagamentos confirmados de 01/11 a 30/11/2026</span>
       <span><b>Fornecedores</b> Matinali e RM Enxoval</span>
       <span><b>Responsável</b> Henry Yudi Matsumoto</span>
+      <span><b>Validação</b> Ray, aprovado com ajustes</span>
     </p>
   </div>
 </div>
@@ -114,101 +129,143 @@
 <main>
 
   <div class="veredito">
-    <span class="selo">Para decidir</span>
-    <p><strong>Condição A:</strong> a Seazone recebe 3% e o proprietário paga 5% a menos. <strong>Condição B:</strong> a Seazone recebe 2% e o proprietário paga 6% a menos. Nas duas, cada fornecedor entra com 3%.</p>
+    <span class="selo ok">Condição A</span>
+    <p><strong>A Seazone fica com 3%, cada fornecedor cede 3% e o proprietário paga 5% a menos.</strong> A condição B (Seazone com 2%, proprietário com 6% a menos) foi descartada. Para empatar com a comissão de hoje, a A precisa de 67% a mais de venda e a B de 150% a mais. A diferença para o proprietário é de 1 p.p., cerca de R$ 30 por pedido.</p>
   </div>
 
   <section>
-    <h2><span class="num">01 · Por que fazer</span>Destravar implantação e dar argumento ao comercial</h2>
+    <h2><span class="num">01 · Ajustes da validação</span>Os 5 pontos e onde cada um foi resolvido</h2>
+    <ol class="passos">
+      <li><span class="n">1</span><span><strong>Recompra no escopo e na conta.</strong> 250 imóveis parados na recompra, com o valor da Matinali e da RM separado. A recompra entra na conta da comissão recuperada e tem uma mensagem própria no comunicado. <span class="quando">Seções 02, 03 e 06</span></span><span class="st ok">Resolvido</span></li>
+      <li><span class="n">2</span><span><strong>Confirmação da Matinali e da RM antes de tudo.</strong> A ação depende do aceite dos 3% e da reemissão dos links com o preço da BF. O print vai para a Ray antes de qualquer mudança de preço. Se um dos dois não aceitar, a ação não acontece. <span class="quando">Seção 07, passo 1</span></span><span class="st">Aguardando fornecedor</span></li>
+      <li><span class="n">3</span><span><strong>Regra dos pedidos parados.</strong> Eles entram na BF: o link é reemitido com o desconto e o pedido segue o fluxo normal. <span class="quando">Seção 04</span></span><span class="st ok">Resolvido</span></li>
+      <li><span class="n">4</span><span><strong>"Cerca de 30% em 2025" saiu da conta.</strong> Não existe o volume por pedido de novembro de 2025, então o número era estimativa. A BF de 2025 aparece só como precedente positivo e não entra no cálculo de retorno. <span class="quando">Seção 02</span></span><span class="st ok">Resolvido</span></li>
+      <li><span class="n">5</span><span><strong>Canibalização registrada, com medição combinada.</strong> Comparação de novembro de 2026 com a média de junho a agosto e com novembro de 2025, separando pedido parado de pedido novo. <span class="quando">Seção 05</span></span><span class="st ok">Resolvido</span></li>
+    </ol>
+  </section>
+
+  <section>
+    <h2><span class="num">02 · Por que fazer</span>R$ 985 mil em enxoval esperando o proprietário pagar</h2>
     <div class="nums">
-      <div><b>142</b><span>imóveis em implantação com o pedido de enxoval esperando o proprietário pagar</span></div>
-      <div><b>R$ 331 mil</b><span>em enxoval parado nesses pedidos (Matinali R$ 266 mil, RM R$ 65 mil)</span></div>
-      <div><b>88</b><span>desses pedidos estão parados há mais de 15 dias, e 37 há mais de 30</span></div>
+      <div><b>142</b><span>pedidos de implantação aguardando pagamento: R$ 327,0 mil. 87 estão parados há mais de 15 dias e 51 há mais de 30.</span></div>
+      <div><b>250</b><span>imóveis com recompra parada: R$ 658,3 mil. 110 ainda em negociação e 140 com pendência, sendo que 85 já passaram do prazo.</span></div>
+      <div><b>R$ 29,6 mil</b><span>de comissão a 3% se tudo isso for pago em novembro. A Seazone abre mão de R$ 4,7 mil num mês normal.</span></div>
     </div>
+    <div class="tab"><table>
+      <thead><tr><th>Parado no Jornada Enxoval em 20/10</th><th class="r">Imóveis</th><th class="r">Matinali</th><th class="r">RM</th><th class="r">Total</th></tr></thead>
+      <tbody>
+        <tr><td>Implantação: aguardando pagamento</td><td class="r">142</td><td class="r">R$ 266,0 mil<br><small class="mut">116 pedidos</small></td><td class="r">R$ 61,0 mil<br><small class="mut">26 pedidos</small></td><td class="r a">R$ 327,0 mil</td></tr>
+        <tr><td>Recompra: caixa de entrada e contato</td><td class="r">110</td><td class="r">R$ 296,7 mil<br><small class="mut">106 imóveis</small></td><td class="r">R$ 12,4 mil<br><small class="mut">4 imóveis</small></td><td class="r a">R$ 309,2 mil</td></tr>
+        <tr><td>Recompra: imóvel com pendência</td><td class="r">140</td><td class="r">R$ 349,2 mil<br><small class="mut">140 imóveis</small></td><td class="r">—</td><td class="r a">R$ 349,2 mil</td></tr>
+      </tbody>
+      <tfoot><tr><td>Total</td><td class="r">392</td><td class="r">R$ 911,9 mil</td><td class="r">R$ 73,4 mil</td><td class="r">R$ 985,3 mil</td></tr></tfoot>
+    </table></div>
+    <p class="nota">Valores em itens, sem frete. Na recompra com pendência conta só o valor das mudas que faltam comprar. O imóvel CFR0209 tem card nos dois boards e foi contado uma vez só, na implantação, porque o pedido já foi gerado.</p>
     <ul>
-      <li><strong>Destrava imóveis em implantação.</strong> O enxoval é uma das últimas travas para o imóvel entrar no ar. Um desconto com prazo para acabar dá ao proprietário um motivo para pagar agora, antes da alta temporada de dezembro a fevereiro.</li>
-      <li><strong>Acelera o comercial.</strong> Em novembro o time pode fechar contrato com "enxoval com até 6% de desconto". Isso reduz a objeção ao custo de entrada de quem ainda está decidindo.</li>
-      <li><strong>Já funcionou em 2025.</strong> De 10/11 a 30/11/2025, a Seazone cedeu 2% e a Matinali 3%. A comissão de novembro foi de R$ 11.253,97, quase a mesma de outubro (R$ 12.071,41), mesmo com a taxa menor. Pela estimativa, o volume vendido subiu cerca de 30%.</li>
-      <li><strong>O fornecedor também ganha.</strong> Abre mão de 3% no preço em troca do volume extra do mês, e o custo da ação fica dividido.</li>
+      <li><strong>Destrava a implantação.</strong> O enxoval é uma das últimas travas para o imóvel entrar no ar. Um desconto com prazo para acabar dá ao proprietário um motivo para pagar agora, antes da alta temporada de dezembro a fevereiro.</li>
+      <li><strong>Destrava a recompra.</strong> A maior parte da recompra parada é de proprietário que adiou a compra. O desconto com prazo é o argumento para renovar as peças agora.</li>
+      <li><strong>Acelera o comercial.</strong> Em novembro o time pode fechar contrato com "enxoval com 5% de desconto", o que reduz a objeção ao custo de entrada.</li>
+      <li><strong>Precedente positivo em 2025.</strong> De 10/11 a 30/11/2025 a Seazone cedeu 2 p.p. e a Matinali 3%, e o resultado foi positivo. Não existe o volume por pedido daquele mês, por isso 2025 não entra no cálculo de retorno.</li>
     </ul>
   </section>
 
   <section>
-    <h2><span class="num">02 · As duas condições</span>Quanto cada lado cede</h2>
-    <div class="cond">
-      <div class="card">
-        <span class="tag">Condição A</span>
-        <h3>Seazone recebe 3%</h3>
-        <dl>
-          <dt>Comissão Seazone</dt><dd>5% → 3%</dd>
-          <dt>Seazone cede</dt><dd>2 p.p.</dd>
-          <dt>Matinali e RM cedem</dt><dd>3%</dd>
-          <hr>
-          <dt>Desconto ao proprietário</dt><dd class="g">5%</dd>
-        </dl>
-      </div>
-      <div class="card">
-        <span class="tag">Condição B</span>
-        <h3>Seazone recebe 2%</h3>
-        <dl>
-          <dt>Comissão Seazone</dt><dd>5% → 2%</dd>
-          <dt>Seazone cede</dt><dd>3 p.p.</dd>
-          <dt>Matinali e RM cedem</dt><dd>3%</dd>
-          <hr>
-          <dt>Desconto ao proprietário</dt><dd class="g">6%</dd>
-        </dl>
-      </div>
-    </div>
-  </section>
-
-  <section>
     <h2><span class="num">03 · Impacto financeiro</span>O que muda para a Seazone e para o proprietário</h2>
-    <p class="mut">Base: um mês normal de 2026 (média de junho a agosto, planilhas de pedido + Jornada Enxoval). Matinali vende R$ 186,7 mil, RM R$ 47,5 mil, total de <strong>R$ 234,2 mil</strong> em itens, sem frete.</p>
+    <p class="mut">Base de um mês normal: média de junho a agosto de 2026 (planilhas de pedido e Jornada Enxoval). Matinali vende R$ 186,7 mil e RM R$ 47,5 mil, total de <strong>R$ 234,2 mil</strong> em itens, sem frete.</p>
     <div class="tab"><table>
-      <thead><tr><th>Com o volume de um mês normal</th><th class="r">Hoje (5%)</th><th class="r">Condição A (3%)</th><th class="r">Condição B (2%)</th></tr></thead>
+      <thead><tr><th>Condição A</th><th class="r">Hoje (5%)</th><th class="r">BF (3%)</th></tr></thead>
       <tbody>
-        <tr><td>Comissão Seazone no mês</td><td class="r">R$ 11.712</td><td class="r a">R$ 7.027</td><td class="r a">R$ 4.685</td></tr>
-        <tr><td>Comissão que a Seazone deixa de receber</td><td class="r">—</td><td class="r neg">−R$ 4.685</td><td class="r neg">−R$ 7.027</td></tr>
-        <tr><td>Economia total dos proprietários</td><td class="r">—</td><td class="r b">R$ 11.712</td><td class="r b">R$ 14.054</td></tr>
-        <tr><td>Economia por pedido Matinali (ticket médio R$ 2.720)</td><td class="r">—</td><td class="r b">R$ 136</td><td class="r b">R$ 163</td></tr>
-        <tr><td>Economia por pedido RM (ticket médio R$ 2.095)</td><td class="r">—</td><td class="r b">R$ 105</td><td class="r b">R$ 126</td></tr>
-        <tr><td>Venda necessária para empatar com a comissão de hoje</td><td class="r">—</td><td class="r a">R$ 390 mil (+67%)</td><td class="r a">R$ 586 mil (+150%)</td></tr>
-        <tr><td>Comissão se os 142 pedidos parados forem pagos em novembro</td><td class="r">—</td><td class="r a">+R$ 9.934</td><td class="r a">+R$ 6.623</td></tr>
+        <tr><td>Comissão Seazone num mês normal</td><td class="r">R$ 11.712</td><td class="r a">R$ 7.027</td></tr>
+        <tr><td>Comissão que a Seazone deixa de receber</td><td class="r">—</td><td class="r neg">−R$ 4.685</td></tr>
+        <tr><td>Economia total dos proprietários</td><td class="r">—</td><td class="r b">R$ 11.712</td></tr>
+        <tr><td>Economia por pedido Matinali (ticket médio R$ 2.720)</td><td class="r">—</td><td class="r b">R$ 136</td></tr>
+        <tr><td>Economia por pedido RM (ticket médio R$ 2.095)</td><td class="r">—</td><td class="r b">R$ 105</td></tr>
+        <tr><td>Venda necessária para empatar com a comissão de hoje</td><td class="r">—</td><td class="r a">R$ 390 mil (+67%)</td></tr>
+        <tr><td>Comissão se os parados forem pagos em novembro</td><td class="r">—</td><td class="r b">+R$ 29.559</td></tr>
+        <tr class="sub"><td>Implantação (142 pedidos)</td><td class="r">—</td><td class="r">+R$ 9.809</td></tr>
+        <tr class="sub"><td>Recompra Matinali (246 imóveis)</td><td class="r">—</td><td class="r">+R$ 19.377</td></tr>
+        <tr class="sub"><td>Recompra RM (4 imóveis)</td><td class="r">—</td><td class="r">+R$ 372</td></tr>
       </tbody>
     </table></div>
-    <p class="nota">Leitura: na condição A, os pedidos parados que forem pagos em novembro já cobrem a comissão que a Seazone deixa de receber sobre o volume normal. Na condição B, o desconto chama mais atenção, mas para empatar o mês precisa vender 2,5 vezes o normal.</p>
+    <p class="nota">Leitura: se só 16% do valor parado for pago em novembro (cerca de R$ 156 mil dos R$ 985 mil), a comissão recuperada já cobre os R$ 4.685 que a Seazone deixa de receber sobre o volume normal. Só a implantação, se paga inteira, cobre duas vezes. A comissão é calculada a 3% sobre o valor do pedido antes do desconto, como na versão validada.</p>
   </section>
 
   <section>
-    <h2><span class="num">04 · Tabela Matinali</span>Preço por item nas duas condições</h2>
-    <p class="mut">Valor unitário em R$, tabela atual do Jornada Enxoval. A: 3% do fornecedor + 2 p.p. da Seazone. B: 3% do fornecedor + 3 p.p. da Seazone. O virol (sem elástico) tem o mesmo preço do lençol do mesmo tamanho.</p>
-    <div class="tab"><table><thead><tr><th>Item</th><th class="r">Preço atual</th><th class="r">Condição A<br><small>−5%</small></th><th class="r">Condição B<br><small>−6%</small></th></tr></thead><tbody><tr><td>Lençol / virol solteiro</td><td class="r">42,75</td><td class="r a">40,61</td><td class="r b">40,18</td></tr><tr><td>Lençol / virol casal</td><td class="r">57,83</td><td class="r a">54,94</td><td class="r b">54,36</td></tr><tr><td>Lençol / virol queen</td><td class="r">72,92</td><td class="r a">69,27</td><td class="r b">68,54</td></tr><tr><td>Lençol / virol king</td><td class="r">86,78</td><td class="r a">82,44</td><td class="r b">81,57</td></tr><tr><td>Fronha</td><td class="r">11,39</td><td class="r a">10,82</td><td class="r b">10,71</td></tr><tr><td>Capa de edredom (duvet) solteiro</td><td class="r">113,60</td><td class="r a">107,92</td><td class="r b">106,78</td></tr><tr><td>Capa de edredom (duvet) casal</td><td class="r">138,17</td><td class="r a">131,26</td><td class="r b">129,88</td></tr><tr><td>Capa de edredom (duvet) queen</td><td class="r">162,73</td><td class="r a">154,59</td><td class="r b">152,97</td></tr><tr><td>Capa de edredom (duvet) king</td><td class="r">193,43</td><td class="r a">183,76</td><td class="r b">181,82</td></tr><tr><td>Edredom solteiro</td><td class="r">187,09</td><td class="r a">177,74</td><td class="r b">175,86</td></tr><tr><td>Edredom casal</td><td class="r">214,42</td><td class="r a">203,70</td><td class="r b">201,55</td></tr><tr><td>Edredom queen</td><td class="r">261,35</td><td class="r a">248,28</td><td class="r b">245,67</td></tr><tr><td>Edredom king</td><td class="r">299,93</td><td class="r a">284,93</td><td class="r b">281,93</td></tr><tr><td>Manta queen</td><td class="r">90,11</td><td class="r a">85,60</td><td class="r b">84,70</td></tr><tr><td>Manta queen inverno (300 g/m²)</td><td class="r">155,50</td><td class="r a">147,72</td><td class="r b">146,17</td></tr><tr><td>Toalha de banho</td><td class="r">49,84</td><td class="r a">47,35</td><td class="r b">46,85</td></tr><tr><td>Toalha de rosto</td><td class="r">21,76</td><td class="r a">20,67</td><td class="r b">20,45</td></tr><tr><td>Tapete</td><td class="r">27,58</td><td class="r a">26,20</td><td class="r b">25,93</td></tr><tr><td>Toalha de maquiagem</td><td class="r">25,35</td><td class="r a">24,08</td><td class="r b">23,83</td></tr><tr><td>Pano de cozinha</td><td class="r">18,97</td><td class="r a">18,02</td><td class="r b">17,83</td></tr><tr><td>Travesseiro grosso</td><td class="r">51,90</td><td class="r a">49,30</td><td class="r b">48,79</td></tr><tr><td>Travesseiro 600 g</td><td class="r">38,50</td><td class="r a">36,58</td><td class="r b">36,19</td></tr><tr><td>Travesseiro 850 g</td><td class="r">49,65</td><td class="r a">47,17</td><td class="r b">46,67</td></tr><tr><td>Capa de almofada Seazone</td><td class="r">17,40</td><td class="r a">16,53</td><td class="r b">16,36</td></tr><tr><td>Enchimento de almofada</td><td class="r">21,00</td><td class="r a">19,95</td><td class="r b">19,74</td></tr></tbody></table></div>
+    <h2><span class="num">04 · Regra dos pedidos parados</span>Pedido parado entra na BF</h2>
+    <div class="regra">
+      <p><strong>O pedido parado é reemitido com o desconto da BF e segue o fluxo normal.</strong></p>
+      <ul>
+        <li><strong>Implantação:</strong> em 01/11, os pedidos em Aguardando link, Aguardando pagamento e Link expirado recebem link novo com o preço da BF. Depois seguem para Pagamento confirmado e Enviado, sem mudança no processo.</li>
+        <li><strong>Recompra:</strong> o pedido gerado na validação ou na pendência durante novembro já sai com o preço da BF.</li>
+        <li><strong>Prazo:</strong> vale a BF quem tiver o pagamento confirmado até 30/11. Link da BF não pago até lá expira, e o pedido é reemitido no preço cheio a partir de 01/12.</li>
+        <li><strong>Pedido já pago antes de 01/11</strong> não tem desconto retroativo.</li>
+      </ul>
+    </div>
+    <p class="nota">A reemissão dos links é feita pela Matinali e pela RM, por isso faz parte do pedido de confirmação aos dois.</p>
   </section>
 
   <section>
-    <h2><span class="num">05 · Tabela RM Enxoval</span>Preço por item nas duas condições</h2>
-    <p class="mut">Mesma regra. A RM atende o Norte e o Nordeste e não tem edredom, manta de inverno nem os itens personalizados.</p>
-    <div class="tab"><table><thead><tr><th>Item</th><th class="r">Preço atual</th><th class="r">Condição A<br><small>−5%</small></th><th class="r">Condição B<br><small>−6%</small></th></tr></thead><tbody><tr><td>Lençol / virol solteiro</td><td class="r">48,90</td><td class="r a">46,46</td><td class="r b">45,97</td></tr><tr><td>Lençol / virol casal</td><td class="r">56,90</td><td class="r a">54,06</td><td class="r b">53,49</td></tr><tr><td>Lençol / virol queen</td><td class="r">79,90</td><td class="r a">75,90</td><td class="r b">75,11</td></tr><tr><td>Lençol / virol king</td><td class="r">89,90</td><td class="r a">85,40</td><td class="r b">84,51</td></tr><tr><td>Fronha</td><td class="r">11,90</td><td class="r a">11,30</td><td class="r b">11,19</td></tr><tr><td>Capa de edredom (duvet) solteiro</td><td class="r">99,90</td><td class="r a">94,90</td><td class="r b">93,91</td></tr><tr><td>Capa de edredom (duvet) casal</td><td class="r">119,90</td><td class="r a">113,90</td><td class="r b">112,71</td></tr><tr><td>Capa de edredom (duvet) queen</td><td class="r">149,90</td><td class="r a">142,40</td><td class="r b">140,91</td></tr><tr><td>Capa de edredom (duvet) king</td><td class="r">169,90</td><td class="r a">161,40</td><td class="r b">159,71</td></tr><tr><td>Manta queen</td><td class="r">93,90</td><td class="r a">89,20</td><td class="r b">88,27</td></tr><tr><td>Toalha de banho</td><td class="r">46,90</td><td class="r a">44,56</td><td class="r b">44,09</td></tr><tr><td>Toalha de rosto</td><td class="r">19,90</td><td class="r a">18,90</td><td class="r b">18,71</td></tr><tr><td>Tapete</td><td class="r">23,90</td><td class="r a">22,70</td><td class="r b">22,47</td></tr><tr><td>Travesseiro grosso</td><td class="r">54,90</td><td class="r a">52,16</td><td class="r b">51,61</td></tr></tbody></table></div>
+    <h2><span class="num">05 · Canibalização</span>Risco registrado e medição combinada</h2>
+    <p>Parte do que for vendido em novembro seria vendido mesmo sem a BF. Nessa parte, os 2 p.p. são comissão cedida sem retorno. Num mês de volume normal, isso dá até R$ 4.685. O risco é aceito porque os pedidos parados cobrem esse valor com folga (seção 03). Não foi feito estudo novo.</p>
+    <h3>Medição até 10/12/2026</h3>
+    <ul>
+      <li><strong>Volume pago em novembro de 2026</strong>, separado em pedido parado (criado antes de 01/11) e pedido novo, e em implantação e recompra. É o que separa a comissão recuperada da venda nova e da venda que viria de qualquer jeito.</li>
+      <li><strong>Novembro de 2026 contra a média de junho a agosto de 2026</strong> (R$ 234,2 mil por mês).</li>
+      <li><strong>Novembro de 2026 contra novembro de 2025.</strong> Como não existe volume por pedido de 2025, a comparação é feita pela NF de comissão (nov/25: R$ 11.253,97) e por isso é aproximada.</li>
+      <li>O resultado vai para a Ray e serve para calibrar a próxima ação.</li>
+    </ul>
   </section>
 
   <section>
-    <h2><span class="num">06 · Próximos passos</span>O que precisa estar fechado até 31/10</h2>
+    <h2><span class="num">06 · Comunicado</span>Uma mensagem para cada público</h2>
+    <div class="cond">
+      <div class="msg">
+        <span class="tag">Implantação</span>
+        <h3>Paga agora para entrar no ar antes da alta</h3>
+        <p>Em novembro o enxoval da Matinali e da RM sai com 5% de desconto para quem confirmar o pagamento até 30/11. Os pedidos que estão aguardando pagamento recebem link novo, já com o desconto.</p>
+        <p>Pagar agora coloca o imóvel no ar antes da alta temporada de dezembro a fevereiro.</p>
+      </div>
+      <div class="msg">
+        <span class="tag">Recompra</span>
+        <h3>Paga agora para renovar as peças com desconto</h3>
+        <p>A recompra de enxoval sai com 5% de desconto em novembro, para pagamento confirmado até 30/11.</p>
+        <p>Vale para quem está com a recompra pendente ou adiada. É o melhor momento para renovar as peças antes da alta temporada.</p>
+      </div>
+    </div>
+    <p class="nota">Público do disparo: franquias, time de implantação e comercial. Antes do disparo, a Raquel Magnaguagno, que é dona do processo de recompra (o antigo Pipe 12), e os responsáveis dos cards (Raquel Szabo, Yasmim Marques, Julyana Cardoso e Augusto Carraro) são avisados. O Vinicius saiu de Fornecedores em 28/08. Dos 250 cards de recompra, 108 estão sem responsável.</p>
+  </section>
+
+  <section>
+    <h2><span class="num">07 · Cronograma</span>Do aceite dos fornecedores à medição</h2>
     <ol class="passos">
-      <li><span class="n">1</span><span><strong>Gerência escolhe a condição</strong>: A (3%) ou B (2%).</span><span class="st">Pendente</span></li>
-      <li><span class="n">2</span><span>Confirmar com a <strong>Matinali e a RM</strong> a redução de 3% no preço. A Matinali já sinalizou que topa repetir a ação de 2025.</span><span class="st">Pendente</span></li>
-      <li><span class="n">3</span><span>Definir o que é <strong>"venda fechada em novembro"</strong>: sugestão de pagamento confirmado até 30/11.</span><span class="st">Pendente</span></li>
-      <li><span class="n">4</span><span>Atualizar os preços no <strong>Jornada Enxoval</strong> e na lojinha em 01/11, e voltar à tabela normal em 01/12.</span><span class="st">Pendente</span></li>
-      <li><span class="n">5</span><span><strong>Comunicar</strong> franquias, implantação e comercial, com foco nos 142 pedidos parados.</span><span class="st">Pendente</span></li>
+      <li><span class="n">1</span><span><strong>Matinali e RM confirmam os 3% e a reemissão dos links</strong>, e o print vai para a Ray. Sem os dois, a ação não acontece. <span class="quando">até 23/10</span></span><span class="st coral">Pendente</span></li>
+      <li><span class="n">2</span><span><strong>Avisar a Raquel Magnaguagno e os responsáveis da recompra.</strong> <span class="quando">até 23/10</span></span><span class="st">Pendente</span></li>
+      <li><span class="n">3</span><span><strong>Disparar o comunicado</strong> para franquias, implantação e comercial, com as duas mensagens. <span class="quando">após o passo 1, antes de 01/11</span></span><span class="st">Pendente</span></li>
+      <li><span class="n">4</span><span><strong>Subir os preços da BF</strong> no Jornada Enxoval e na lojinha e reemitir os links dos pedidos parados. <span class="quando">01/11</span></span><span class="st">Pendente</span></li>
+      <li><span class="n">5</span><span><strong>Voltar à tabela normal</strong> e reemitir no preço cheio o link da BF que não foi pago. <span class="quando">01/12</span></span><span class="st">Pendente</span></li>
+      <li><span class="n">6</span><span><strong>Medir o resultado</strong> (seção 05) e mandar para a Ray. <span class="quando">até 10/12</span></span><span class="st">Pendente</span></li>
     </ol>
   </section>
 
+  <section>
+    <h2><span class="num">08 · Tabela Matinali</span>Preço por item na BF</h2>
+    <p class="mut">Valor unitário em R$, tabela atual do Jornada Enxoval. Desconto de 5%: 3% do fornecedor e 2 p.p. da Seazone. O virol (sem elástico) tem o mesmo preço do lençol do mesmo tamanho.</p>
+    <div class="tab"><table><thead><tr><th>Item</th><th class="r">Preço atual</th><th class="r">BF<br><small>−5%</small></th></tr></thead><tbody><tr><td>Lençol / virol solteiro</td><td class="r">42,75</td><td class="r a">40,61</td></tr><tr><td>Lençol / virol casal</td><td class="r">57,83</td><td class="r a">54,94</td></tr><tr><td>Lençol / virol queen</td><td class="r">72,92</td><td class="r a">69,27</td></tr><tr><td>Lençol / virol king</td><td class="r">86,78</td><td class="r a">82,44</td></tr><tr><td>Fronha</td><td class="r">11,39</td><td class="r a">10,82</td></tr><tr><td>Capa de edredom (duvet) solteiro</td><td class="r">113,60</td><td class="r a">107,92</td></tr><tr><td>Capa de edredom (duvet) casal</td><td class="r">138,17</td><td class="r a">131,26</td></tr><tr><td>Capa de edredom (duvet) queen</td><td class="r">162,73</td><td class="r a">154,59</td></tr><tr><td>Capa de edredom (duvet) king</td><td class="r">193,43</td><td class="r a">183,76</td></tr><tr><td>Edredom solteiro</td><td class="r">187,09</td><td class="r a">177,74</td></tr><tr><td>Edredom casal</td><td class="r">214,42</td><td class="r a">203,70</td></tr><tr><td>Edredom queen</td><td class="r">261,35</td><td class="r a">248,28</td></tr><tr><td>Edredom king</td><td class="r">299,93</td><td class="r a">284,93</td></tr><tr><td>Manta queen</td><td class="r">90,11</td><td class="r a">85,60</td></tr><tr><td>Manta queen inverno (300 g/m²)</td><td class="r">155,50</td><td class="r a">147,72</td></tr><tr><td>Toalha de banho</td><td class="r">49,84</td><td class="r a">47,35</td></tr><tr><td>Toalha de rosto</td><td class="r">21,76</td><td class="r a">20,67</td></tr><tr><td>Tapete</td><td class="r">27,58</td><td class="r a">26,20</td></tr><tr><td>Toalha de maquiagem</td><td class="r">25,35</td><td class="r a">24,08</td></tr><tr><td>Pano de cozinha</td><td class="r">18,97</td><td class="r a">18,02</td></tr><tr><td>Travesseiro grosso</td><td class="r">51,90</td><td class="r a">49,30</td></tr><tr><td>Travesseiro 600 g</td><td class="r">38,50</td><td class="r a">36,58</td></tr><tr><td>Travesseiro 850 g</td><td class="r">49,65</td><td class="r a">47,17</td></tr><tr><td>Capa de almofada Seazone</td><td class="r">17,40</td><td class="r a">16,53</td></tr><tr><td>Enchimento de almofada</td><td class="r">21,00</td><td class="r a">19,95</td></tr></tbody></table></div>
+  </section>
+
+  <section>
+    <h2><span class="num">09 · Tabela RM Enxoval</span>Preço por item na BF</h2>
+    <p class="mut">Mesma regra. A RM atende o Norte e o Nordeste e não tem edredom, manta de inverno nem os itens personalizados.</p>
+    <div class="tab"><table><thead><tr><th>Item</th><th class="r">Preço atual</th><th class="r">BF<br><small>−5%</small></th></tr></thead><tbody><tr><td>Lençol / virol solteiro</td><td class="r">48,90</td><td class="r a">46,46</td></tr><tr><td>Lençol / virol casal</td><td class="r">56,90</td><td class="r a">54,06</td></tr><tr><td>Lençol / virol queen</td><td class="r">79,90</td><td class="r a">75,90</td></tr><tr><td>Lençol / virol king</td><td class="r">89,90</td><td class="r a">85,40</td></tr><tr><td>Fronha</td><td class="r">11,90</td><td class="r a">11,30</td></tr><tr><td>Capa de edredom (duvet) solteiro</td><td class="r">99,90</td><td class="r a">94,90</td></tr><tr><td>Capa de edredom (duvet) casal</td><td class="r">119,90</td><td class="r a">113,90</td></tr><tr><td>Capa de edredom (duvet) queen</td><td class="r">149,90</td><td class="r a">142,40</td></tr><tr><td>Capa de edredom (duvet) king</td><td class="r">169,90</td><td class="r a">161,40</td></tr><tr><td>Manta queen</td><td class="r">93,90</td><td class="r a">89,20</td></tr><tr><td>Toalha de banho</td><td class="r">46,90</td><td class="r a">44,56</td></tr><tr><td>Toalha de rosto</td><td class="r">19,90</td><td class="r a">18,90</td></tr><tr><td>Tapete</td><td class="r">23,90</td><td class="r a">22,70</td></tr><tr><td>Travesseiro grosso</td><td class="r">54,90</td><td class="r a">52,16</td></tr></tbody></table></div>
+  </section>
+
   <div class="aviso">
-    <b>Sobre os números:</b> o volume do "mês normal" é a média de junho a agosto de 2026. O volume de novembro de 2025 é estimado, porque o detalhe por pedido daquele mês não está no Drive. Os 142 pedidos parados são a fila "Aguardando pagamento" do Jornada Enxoval em 16/10/2026.
+    <b>Sobre os números:</b> o volume do mês normal é a média de junho a agosto de 2026. O que está parado vem dos boards de Pedidos e de Recompra do Jornada Enxoval em 20/10/2026, por isso os números mudaram em relação à versão de 16/10 (eram R$ 331 mil em implantação). Novembro de 2025 não tem volume por pedido no Drive e ficou fora da conta.
   </div>
 
 </main>
 
-<footer>Fontes: Jornada Enxoval (preços em Configuração e fila de pedidos, 16/10/2026) · Planilhas de Compra Matinali 2026 e RM · NFs de comissão Matinali de out a dez/2025 (#suporte-financeiro) · Ação Black Friday 2025 (Slack, 06/11/2025).</footer>
+<footer>Fontes: Jornada Enxoval (preços em Configuração, boards de Pedidos e Recompra, 20/10/2026) · Planilhas de Compra Matinali 2026 e RM · NFs de comissão Matinali de out a dez/2025 (#suporte-financeiro) · Ação Black Friday 2025 (Slack, 06/11/2025) · Validação da Ray (20/10/2026).</footer>
 
 </body>
 </html>
