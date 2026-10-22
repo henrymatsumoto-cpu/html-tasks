@@ -105,6 +105,8 @@
   td.r,th.r{text-align:right}
   tbody tr:last-child td{border-bottom:0}
   .note{margin-top:12px;font-size:14px;color:var(--ink3)}
+  .note b{color:var(--ok)}
+  .com{color:var(--ok);font-weight:700}
 
   .todo{list-style:none;margin:0;padding:0;display:grid;gap:10px}
   .todo li{display:grid;grid-template-columns:26px 1fr;gap:12px;padding:16px;border:1px solid var(--line);border-radius:var(--r);background:var(--surf)}
@@ -143,6 +145,7 @@
           <li><span>Visível para</span><span>Todos</span></li>
           <li><span>Frete</span><span>Variável</span></li>
           <li><span>Cotação IZY (05/10)</span><span class="num">R$ 99,89</span></li>
+          <li><span>Comissão Seazone</span><span class="num com">R$ 6,11 por unidade</span></li>
         </ul>
       </div>
     </article>
@@ -157,6 +160,7 @@
           <li><span>Visível para</span><span>Todos</span></li>
           <li><span>Frete</span><span>Variável</span></li>
           <li><span>Cotação IZY (05/10)</span><span class="num">R$ 113,72</span></li>
+          <li><span>Comissão Seazone</span><span class="num com">R$ 6,28 por unidade</span></li>
         </ul>
       </div>
     </article>
@@ -211,14 +215,14 @@
   </div>
   <div class="tbl" style="margin-top:20px">
     <table>
-      <thead><tr><th>Item</th><th class="r">Cotação IZY</th><th class="r">Preço na lojinha</th><th class="r">Diferença</th><th class="r">Lote mínimo (validação)</th></tr></thead>
+      <thead><tr><th>Item</th><th class="r">Cotação IZY</th><th class="r">Preço na lojinha</th><th class="r">Comissão Seazone</th><th class="r">Comissão no lote mínimo</th></tr></thead>
       <tbody>
-        <tr><td>Cadeira de Praia</td><td class="r num">R$ 99,89</td><td class="r num">R$ 106,00</td><td class="r num">+ R$ 6,11 (6,1%)</td><td class="r num">30 un. · R$ 3.180,00</td></tr>
-        <tr><td>Guarda-sol 1,40 × 1,60 m</td><td class="r num">R$ 113,72</td><td class="r num">R$ 120,00</td><td class="r num">+ R$ 6,28 (5,5%)</td><td class="r num">30 un. · R$ 3.600,00</td></tr>
+        <tr><td>Cadeira de Praia</td><td class="r num">R$ 99,89</td><td class="r num">R$ 106,00</td><td class="r num com">R$ 6,11 (6,1%)</td><td class="r num">30 un. · R$ 183,30</td></tr>
+        <tr><td>Guarda-sol 1,40 × 1,60 m</td><td class="r num">R$ 113,72</td><td class="r num">R$ 120,00</td><td class="r num com">R$ 6,28 (5,5%)</td><td class="r num">30 un. · R$ 188,40</td></tr>
       </tbody>
     </table>
   </div>
-  <p class="note">Lote mínimo valorizado pelo preço da lojinha. Segue em aberto da validação: o mínimo de 30 é por item ou para o pedido todo?</p>
+  <p class="note">A comissão é a diferença entre a cotação da IZY e o preço da lojinha: a franquia paga o preço da lojinha e a Seazone recebe a diferença. Se as 30 cadeiras e os 30 guarda-sóis saírem, são <b>R$ 371,70</b> de comissão. Segue em aberto da validação: o mínimo de 30 é por item ou para o pedido todo?</p>
 </section>
 
 <section>
