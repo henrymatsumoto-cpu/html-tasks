@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Guarda-sol e Cadeira na Lojinha</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    color-scheme: dark;
+    --bg:#080E32; --surf:#0F1742; --surf2:#18225A; --line:#232E6B;
+    --ink:#EEF1FB; --ink2:#B4BBD9; --ink3:#8189B0; --blue:#4D85FF;
+    --blue-soft:#14245F;
+    --ok:oklch(78% .12 150); --ok-soft:oklch(30% .06 150);
+    --warn:oklch(82% .13 80); --warn-soft:oklch(31% .06 80);
+    --r:12px; --r-full:9999px;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 "Figtree",sans-serif}
+  .wrap{max-width:1040px;margin:0 auto;padding:0 16px}
+  @media (min-width:720px){.wrap{padding:0 32px}}
+  h1{font-size:clamp(32px,5.4vw,50px);line-height:1.05;margin:18px 0 0;font-weight:800;letter-spacing:-.02em}
+  h2{font-size:22px;margin:0;font-weight:700;letter-spacing:-.01em}
+  p{margin:0}
+  .num{font-variant-numeric:tabular-nums}
+  a{color:var(--blue)}
+
+  header{padding:56px 0 36px;border-bottom:1px solid var(--line)}
+  .eyebrow{display:inline-block;background:var(--blue-soft);color:var(--blue);border-radius:var(--r-full);padding:5px 14px;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+  .lead{margin-top:14px;font-size:19px;color:var(--ink2);max-width:62ch}
+  .status{margin-top:24px;display:flex;flex-wrap:wrap;gap:10px}
+  .pill{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);background:var(--surf);border-radius:var(--r-full);padding:6px 14px;font-size:14px;color:var(--ink2)}
+  .pill i{width:8px;height:8px;border-radius:50%;background:var(--ok);display:inline-block}
+  .pill.w i{background:var(--warn)}
+
+  section{padding:44px 0;border-bottom:1px solid var(--line)}
+  .sechead{display:flex;align-items:baseline;flex-wrap:wrap;gap:12px;margin-bottom:22px}
+  .sechead .n{color:var(--blue);font-weight:800;font-size:14px}
+  .sechead .aside{margin-left:auto;font-size:13px;color:var(--ink3)}
+
+  /* produtos */
+  .prods{display:grid;grid-template-columns:1fr;gap:20px}
+  @media (min-width:760px){.prods{grid-template-columns:1fr 1fr}}
+  .prod{background:var(--surf);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+  .prod img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover}
+  .prod .body{padding:20px}
+  .prod .name{font-size:21px;font-weight:700}
+  .prod .spec{font-size:14px;color:var(--ink3);margin-top:2px}
+  .price{display:flex;align-items:baseline;gap:10px;margin-top:14px}
+  .price .v{font-size:32px;font-weight:800;letter-spacing:-.01em}
+  .price .l{font-size:13px;color:var(--ink3)}
+  .facts{margin:16px 0 0;padding:0;list-style:none;border-top:1px solid var(--line)}
+  .facts li{display:flex;justify-content:space-between;gap:12px;padding:9px 0;border-bottom:1px solid var(--line);font-size:14px}
+  .facts li:last-child{border-bottom:0}
+  .facts span:first-child{color:var(--ink3)}
+  .facts span:last-child{text-align:right}
+
+  /* linha do tempo */
+  .tl{list-style:none;margin:0;padding:0;position:relative}
+  .tl li{display:grid;grid-template-columns:96px 24px 1fr;gap:12px;padding-bottom:24px;position:relative}
+  .tl li:last-child{padding-bottom:0}
+  .tl .d{font-weight:700;font-size:14px;color:var(--ink2);padding-top:1px}
+  .tl .dot{position:relative;display:flex;justify-content:center}
+  .tl .dot::before{content:"";width:12px;height:12px;border-radius:50%;background:var(--blue);margin-top:5px;position:relative;z-index:1}
+  .tl .dot::after{content:"";position:absolute;top:18px;bottom:-24px;width:2px;background:var(--line)}
+  .tl li:last-child .dot::after{display:none}
+  .tl li.next .dot::before{background:var(--bg);border:2px solid var(--warn)}
+  .tl li.done .dot::before{background:var(--ok)}
+  .tl b{display:block;font-weight:700}
+  .tl .t{color:var(--ink2);font-size:15px}
+  @media (max-width:520px){.tl li{grid-template-columns:70px 20px 1fr;gap:8px}}
+
+  /* comunicado */
+  .msg{display:grid;grid-template-columns:1fr;gap:24px}
+  @media (min-width:820px){.msg{grid-template-columns:1.25fr 1fr}}
+  .bubble{background:var(--surf);border:1px solid var(--line);border-radius:var(--r);padding:22px}
+  .bubble .who{font-size:13px;color:var(--ink3);margin-bottom:14px}
+  .bubble p{margin-top:12px;color:var(--ink)}
+  .bubble p:first-of-type{margin-top:0}
+  .bubble .hd{font-weight:800}
+  .bubble .time{text-align:right;font-size:12px;color:var(--ink3);margin-top:10px}
+  .keys{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+  .keys li{padding:14px 0;border-bottom:1px solid var(--line)}
+  .keys b{display:block;font-weight:700}
+  .keys span{color:var(--ink2);font-size:15px}
+
+  /* antes x agora */
+  .cmp{display:grid;grid-template-columns:1fr;gap:16px}
+  @media (min-width:760px){.cmp{grid-template-columns:1fr 1fr}}
+  .card{border:1px solid var(--line);border-radius:var(--r);padding:20px;background:var(--surf)}
+  .card .k{font-size:12px;letter-spacing:.06em;text-transform:uppercase;font-weight:800;color:var(--ink3)}
+  .card .v{font-size:28px;font-weight:800;margin-top:6px}
+  .card p{color:var(--ink2);margin-top:8px;font-size:15px}
+  .card.now{border-color:var(--ok);background:var(--ok-soft)}
+  .card.now .k,.card.now .v{color:var(--ok)}
+
+  .tbl{overflow-x:auto;border:1px solid var(--line);border-radius:var(--r)}
+  table{width:100%;border-collapse:collapse;min-width:560px}
+  th,td{padding:12px 14px;text-align:left;border-bottom:1px solid var(--line)}
+  th{font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:var(--ink3);font-weight:700;background:var(--surf)}
+  td.r,th.r{text-align:right}
+  tbody tr:last-child td{border-bottom:0}
+  .note{margin-top:12px;font-size:14px;color:var(--ink3)}
+
+  .todo{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+  .todo li{display:grid;grid-template-columns:26px 1fr;gap:12px;padding:16px;border:1px solid var(--line);border-radius:var(--r);background:var(--surf)}
+  .todo .ic{width:22px;height:22px;border-radius:50%;border:2px solid var(--warn);margin-top:2px}
+  .todo b{display:block;font-weight:700}
+  .todo span{color:var(--ink2);font-size:15px}
+
+  footer{padding:32px 0 56px;font-size:13px;color:var(--ink3)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <span class="eyebrow">Lojinha Seazone · Produtos Personalizados</span>
+  <h1>Guarda-sol e Cadeira de Praia</h1>
+  <p class="lead">Os dois itens com a marca Seazone já estão na lojinha em pré-compra, e o comunicado foi enviado às franquias em 22/10. A produção só sai se o volume mínimo for atingido até 30/10.</p>
+  <div class="status">
+    <span class="pill"><i></i>Na lojinha desde 21/10</span>
+    <span class="pill"><i></i>Comunicado enviado em 22/10</span>
+    <span class="pill w"><i></i>Pré-compra até 30/10</span>
+  </div>
+</header>
+
+<section>
+  <div class="sechead"><span class="n">01</span><h2>O que entrou na lojinha</h2><span class="aside">Fornecedor: IZY Brindes (Curitiba/PR)</span></div>
+  <div class="prods">
+    <article class="prod">
+      <img src="img/guarda-sol/cadeira.jpg" alt="Cadeira de praia azul-marinho com a logo Seazone na areia">
+      <div class="body">
+        <div class="name">Cadeira de Praia</div>
+        <div class="spec">Cadeira de praia personalizada Seazone</div>
+        <div class="price"><span class="v num">R$ 106,00</span><span class="l">preço na lojinha</span></div>
+        <ul class="facts">
+          <li><span>Categoria</span><span>Produtos Personalizados</span></li>
+          <li><span>Visível para</span><span>Todos</span></li>
+          <li><span>Frete</span><span>Variável</span></li>
+          <li><span>Cotação IZY (05/10)</span><span class="num">R$ 99,89</span></li>
+        </ul>
+      </div>
+    </article>
+    <article class="prod">
+      <img style="object-position:center 0" src="img/guarda-sol/guarda-sol.jpg" alt="Guarda-sol azul-marinho com a logo Seazone e bolsa de transporte na praia">
+      <div class="body">
+        <div class="name">Guarda-sol</div>
+        <div class="spec">Poliéster 170T · ø 1,40 × 1,60 m · com bolsa (1,00 m × 12 cm)</div>
+        <div class="price"><span class="v num">R$ 120,00</span><span class="l">preço na lojinha</span></div>
+        <ul class="facts">
+          <li><span>Categoria</span><span>Produtos Personalizados</span></li>
+          <li><span>Visível para</span><span>Todos</span></li>
+          <li><span>Frete</span><span>Variável</span></li>
+          <li><span>Cotação IZY (05/10)</span><span class="num">R$ 113,72</span></li>
+        </ul>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section>
+  <div class="sechead"><span class="n">02</span><h2>Como chegamos aqui</h2></div>
+  <ol class="tl">
+    <li class="done"><span class="d">05/10</span><span class="dot"></span><div><b>Validação das cotações</b><span class="t">4 fornecedores cotados. A IZY Brindes foi a indicada: já é homologada (só precisa de aditivo), é a única que encaixa na lojinha e tem o menor preço nos dois itens. O risco apontado era o pedido mínimo de 30 unidades e a Seazone ficar com o que não vendesse.</span></div></li>
+    <li class="done"><span class="d">21/10</span><span class="dot"></span><div><b>Produtos cadastrados na lojinha</b><span class="t">Guarda-sol e Cadeira de Praia em Produtos Personalizados, fornecedor IZY, visíveis para todos.</span></div></li>
+    <li class="done"><span class="d">22/10</span><span class="dot"></span><div><b>Comunicado enviado às franquias</b><span class="t">Postado na comunidade de franquias às 10:38, no formato de pré-compra com volume mínimo.</span></div></li>
+    <li class="next"><span class="d">30/10</span><span class="dot"></span><div><b>Fim da pré-compra</b><span class="t">Atingiu o mínimo: o pagamento é liberado e a IZY produz. Não atingiu: os pedidos são cancelados.</span></div></li>
+  </ol>
+</section>
+
+<section>
+  <div class="sechead"><span class="n">03</span><h2>O comunicado</h2><span class="aside">Comunidade de franquias · 22/10 · 10:38</span></div>
+  <div class="msg">
+    <div class="bubble">
+      <div class="who">Enviado pela Larissa Descovi (admin da comunidade)</div>
+      <p class="hd">🏖️ LOJINHA SEAZONE | Pré-compra Novidade chegando!</p>
+      <p>Teremos cadeiras de praia e guarda-sóis personalizados Seazone para melhorar a experiência dos hóspedes e gerar renda extra para sua franquia por meio do aluguel desses itens.</p>
+      <p>🗓️ Pedidos até 30/10!<br>⚠️ Atenção: A produção depende de atingir o volume mínimo de pedidos. O pagamento só será liberado após a confirmação desse volume. Se a quantidade mínima não for atingida até 30/10, os pedidos serão cancelados.</p>
+      <p>🛍️ Como pedir: acesse a Lojinha &gt; Produtos Personalizados e escolha seu item. Contamos com vocês para tirar essa novidade do papel!</p>
+      <p>Dúvidas? Chame o time de Fornecedores: +55 48 93618-2853<br><a href="https://lojaitens.seazone.com.br/inicio">https://lojaitens.seazone.com.br/inicio</a> 💙</p>
+      <div class="time">10:38</div>
+    </div>
+    <ul class="keys">
+      <li><b>Argumento de venda</b><span>Melhora a experiência do hóspede e vira renda extra para a franquia com o aluguel dos itens.</span></li>
+      <li><b>Prazo</b><span>Pedidos até 30/10.</span></li>
+      <li><b>Volume mínimo</b><span>A produção só acontece se o mínimo for atingido. O pagamento só é liberado depois dessa confirmação.</span></li>
+      <li><b>Se não atingir</b><span>Os pedidos são cancelados. Ninguém paga e nada é produzido.</span></li>
+      <li><b>Onde pedir</b><span>Lojinha › Produtos Personalizados.</span></li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <div class="sechead"><span class="n">04</span><h2>O que mudou no risco</h2></div>
+  <div class="cmp">
+    <div class="card">
+      <div class="k">Na validação (05/10)</div>
+      <div class="v num">até R$ 6.408,30</div>
+      <p>A IZY produziria o lote mínimo antes de saber a demanda. O que as franquias não comprassem ficaria por conta da Seazone (30 cadeiras + 30 guarda-sóis no pior caso).</p>
+    </div>
+    <div class="card now">
+      <div class="k">Com a pré-compra</div>
+      <div class="v">R$ 0 de estoque</div>
+      <p>Primeiro as franquias pedem, depois a IZY produz. Se o mínimo não for atingido até 30/10, tudo é cancelado antes de qualquer pagamento ou produção. A Seazone não compra sobra.</p>
+    </div>
+  </div>
+  <div class="tbl" style="margin-top:20px">
+    <table>
+      <thead><tr><th>Item</th><th class="r">Cotação IZY</th><th class="r">Preço na lojinha</th><th class="r">Diferença</th><th class="r">Lote mínimo (validação)</th></tr></thead>
+      <tbody>
+        <tr><td>Cadeira de Praia</td><td class="r num">R$ 99,89</td><td class="r num">R$ 106,00</td><td class="r num">+ R$ 6,11 (6,1%)</td><td class="r num">30 un. · R$ 3.180,00</td></tr>
+        <tr><td>Guarda-sol 1,40 × 1,60 m</td><td class="r num">R$ 113,72</td><td class="r num">R$ 120,00</td><td class="r num">+ R$ 6,28 (5,5%)</td><td class="r num">30 un. · R$ 3.600,00</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="note">Lote mínimo valorizado pelo preço da lojinha. Segue em aberto da validação: o mínimo de 30 é por item ou para o pedido todo?</p>
+</section>
+
+<section>
+  <div class="sechead"><span class="n">05</span><h2>Próximos passos</h2><span class="aside">Pedidos na lojinha em 22/10, 11h30: 0</span></div>
+  <ul class="todo">
+    <li><span class="ic"></span><div><b>Acompanhar os pedidos até 30/10</b><span>Ainda não entrou nenhum pedido dos dois itens. Vale um lembrete às franquias na reta final se o volume estiver longe do mínimo.</span></div></li>
+    <li><span class="ic"></span><div><b>Confirmar com a IZY como conta o mínimo</b><span>30 de cada item ou 30 no total (ex.: 15 + 15). Isso decide se a pré-compra fecha ou não.</span></div></li>
+    <li><span class="ic"></span><div><b>Fechar a decisão em 31/10</b><span>Atingiu: liberar o pagamento, subir o aditivo da IZY e disparar a produção. Não atingiu: cancelar os pedidos e avisar as franquias.</span></div></li>
+  </ul>
+</section>
+
+<footer>Time de Fornecedores · Seazone · 22 de outubro de 2026 · Fontes: lojinha (cadastro dos produtos e pedidos), validação de 05/10 e print do comunicado.</footer>
+
+</div>
+</body>
+</html>
