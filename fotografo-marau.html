@@ -38,8 +38,8 @@ section{display:flex;flex-direction:column;gap:16px;min-width:0}
 .reason{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:20px;display:flex;flex-direction:column;gap:8px;min-width:0}
 .reason p{color:var(--muted);font-size:.95rem}
 .tablewrap{overflow-x:auto;background:var(--surface);border:1px solid var(--line);border-radius:10px}
-table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums;font-size:.95rem;min-width:620px}
-th,td{padding:12px 16px;text-align:right;border-bottom:1px solid var(--line);white-space:nowrap}
+table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums;font-size:.9rem;min-width:540px}
+th,td{padding:10px 12px;text-align:right;border-bottom:1px solid var(--line);white-space:nowrap}
 th:first-child,td:first-child{text-align:left}
 thead th{font-size:.75rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:700}
 tbody tr:last-child td{border-bottom:0}
@@ -91,10 +91,10 @@ footer{font-size:.8rem;color:var(--muted)}
 
 <section>
   <h2>Valores por sessão</h2>
-  <p class="note">Comparativo entre o que pagávamos à fotógrafa anterior e a proposta do Pedro, por tipo de imóvel.</p>
+  <p class="note">Comparativo entre o que pagávamos à fotógrafa anterior (Anterior), a Tabela Seazone (Tabela) e a proposta do Pedro, por tipo de imóvel.</p>
   <div class="tablewrap">
     <table>
-      <thead><tr><th>Imóvel</th><th>Fotógrafa anterior</th><th>Tabela Seazone</th><th>Proposta Pedro</th><th>Pedro vs. anterior</th><th>Pedro vs. tabela</th></tr></thead>
+      <thead><tr><th>Imóvel</th><th>Anterior</th><th>Tabela</th><th>Pedro</th><th>vs. anterior</th><th>vs. tabela</th></tr></thead>
       <tbody>
         <tr><td>Studio</td><td>R$ 300</td><td>R$ 200</td><td class="prop">R$ 250</td><td class="neg">−R$ 50 (−17%)</td><td class="pos">+R$ 50</td></tr>
         <tr><td>1 quarto</td><td>R$ 300</td><td>R$ 225</td><td class="prop">R$ 275</td><td class="neg">−R$ 25 (−8%)</td><td class="pos">+R$ 50</td></tr>
