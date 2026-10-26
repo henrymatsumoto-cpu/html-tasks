@@ -1,28 +1,28 @@
 <!doctype html>
 <html lang="pt-BR">
 <head>
-<meta name="robots" content="noindex, nofollow">
 <meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Geo Cluster — Fotógrafos e Lavanderias</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Figtree:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --ink: oklch(24% 0.02 250);
-    --ink-2: oklch(45% 0.015 250);
-    --paper: oklch(97.5% 0.006 250);
-    --surface: oklch(99% 0.004 250);
-    --line: oklch(88% 0.012 250);
-    --brand: oklch(56% 0.16 250);
-    --brand-soft: oklch(94% 0.035 250);
-    --photo: oklch(58% 0.14 300);
-    --photo-soft: oklch(95% 0.03 300);
-    --laundry: oklch(58% 0.11 190);
-    --laundry-soft: oklch(95% 0.032 190);
-    --warn: oklch(60% 0.13 60);
-    --warn-soft: oklch(95% 0.04 75);
+  :root{color-scheme:dark;
+    --ink:#EEF1FB;
+    --ink-2:#B4BBD9;
+    --paper:#080E32;
+    --surface:#0F1742;
+    --line:#232E6B;
+    --brand:#4D85FF;
+    --brand-soft:#1A2B6B;
+    --photo:oklch(76% .13 300);
+    --photo-soft:oklch(30% .07 300);
+    --laundry:oklch(78% .1 195);
+    --laundry-soft:oklch(30% .05 195);
+    --warn:oklch(82% .12 75);
+    --warn-soft:oklch(31% .06 80);
     --space-xs:4px; --space-sm:8px; --space-md:16px; --space-lg:24px;
     --space-xl:40px; --space-2xl:64px; --space-3xl:96px;
   }
@@ -90,7 +90,7 @@
   .pill{
     display:inline-block; font-size:12px; font-weight:700; letter-spacing:.06em;
     text-transform:uppercase; padding:4px 10px; border-radius:999px;
-    background:var(--warn-soft); color:oklch(42% 0.11 60);
+    background:var(--warn-soft); color:oklch(82% .12 75);
   }
 
   /* ---- timeline ---- */
@@ -140,9 +140,9 @@
     margin-top:var(--space-lg); padding:var(--space-lg);
     background:var(--brand-soft); border-radius:16px;
   }
-  .note h3{color:oklch(38% 0.1 250)}
-  .note p{margin:0; color:oklch(35% 0.05 250)}
-  .note ul{margin:var(--space-sm) 0 0; padding-left:1.2em; color:oklch(35% 0.05 250)}
+  .note h3{color:#4D85FF}
+  .note p{margin:0; color:#B4BBD9}
+  .note ul{margin:var(--space-sm) 0 0; padding-left:1.2em; color:#B4BBD9}
 
   /* ---- table ---- */
   .tblwrap{overflow-x:auto; margin-top:var(--space-lg)}
@@ -158,6 +158,8 @@
     header{padding-top:var(--space-xl)}
   }
 </style>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style id="sz-tema">body,body *{font-family:"Figtree",system-ui,"Segoe UI",sans-serif!important}code,pre,kbd,samp,code *,pre *{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace!important}</style>
 </head>
 <body>
 
@@ -274,7 +276,7 @@
   <div class="wrap">
     <h2><span class="num">05</span>Pontos abertos</h2>
     <p class="muted">Não foram discutidos na conversa e ficam para o momento da implementação:</p>
-    <div class="note" style="background:oklch(96.5% 0.008 250)">
+    <div class="note" style="background:#18225A">
       <ul>
         <li>De onde vêm os dados de fotógrafos e lavanderias (cadastro próprio no Geo Cluster ou integração com o que já existe).</li>
         <li>Se um prestador pode estar em mais de um polígono e como isso aparece.</li>

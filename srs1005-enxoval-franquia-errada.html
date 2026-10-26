@@ -9,16 +9,16 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Public+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --ink: oklch(0.24 0.02 250);
-    --ink-2: oklch(0.46 0.018 250);
-    --ink-3: oklch(0.62 0.015 250);
-    --paper: oklch(0.985 0.004 250);
-    --paper-2: oklch(0.955 0.006 250);
-    --line: oklch(0.89 0.008 250);
-    --brand: oklch(0.52 0.15 245);
-    --alert: oklch(0.55 0.16 30);
-    --ok: oklch(0.52 0.11 155);
+  :root{color-scheme:dark;
+    --ink:#EEF1FB;
+    --ink-2:#B4BBD9;
+    --ink-3:#8189B0;
+    --paper:#080E32;
+    --paper-2:#18225A;
+    --line:#232E6B;
+    --brand:#4D85FF;
+    --alert:oklch(74% .15 28);
+    --ok:oklch(78% .12 155);
     --space-1:4px; --space-2:8px; --space-3:12px; --space-4:16px;
     --space-6:24px; --space-8:32px; --space-12:48px; --space-16:64px; --space-24:96px;
   }
@@ -85,9 +85,9 @@
   ul.plain{margin:0 0 var(--space-4); padding-left:1.1em; max-width:70ch}
   ul.plain li{margin-bottom:var(--space-2)}
 
-  .call{margin-top:var(--space-12); padding:var(--space-8); background:var(--ink); color:var(--paper); border-radius:2px}
+  .call{margin-top:var(--space-12); padding:var(--space-8); background:var(--paper-2); color:var(--ink); border-radius:2px}
   .call h2{color:var(--paper)}
-  .call p{color:oklch(0.86 0.01 250)}
+  .call p{color:#2E3A80}
   .call a{color:var(--paper)}
 
   footer{margin-top:var(--space-12); padding-top:var(--space-6); border-top:1px solid var(--line); font-size:.85rem; color:var(--ink-3)}
@@ -98,12 +98,12 @@
   figcaption{font-size:.85rem; color:var(--ink-3); margin-top:var(--space-3); max-width:70ch}
   figcaption b{color:var(--ink-2); font-weight:600}
 
-  .sheet{border:1px solid var(--line); background:#fff; overflow-x:auto}
+  .sheet{border:1px solid var(--line); background:#0F1742; overflow-x:auto}
   .sheet-bar{display:flex; align-items:center; gap:var(--space-3); padding:var(--space-3) var(--space-4);
              border-bottom:1px solid var(--line); background:var(--paper-2); font-size:.82rem; color:var(--ink-2)}
   .sheet-bar .file{font-weight:600; color:var(--ink)}
   .sheet-bar .tab{margin-left:auto; font-size:.74rem; letter-spacing:.08em; text-transform:uppercase; font-weight:700;
-                  padding:3px 10px; border:1px solid var(--line); background:#fff; color:var(--ink-2)}
+                  padding:3px 10px; border:1px solid var(--line); background:#0F1742; color:var(--ink-2)}
   .sheet table{border-collapse:collapse; width:100%; min-width:660px; max-width:none; margin:0; font-size:.92rem}
   .sheet th, .sheet td{border-bottom:1px solid var(--line); border-right:1px solid var(--line);
                        padding:7px 12px; text-align:left; font-weight:400; color:var(--ink);
@@ -119,8 +119,8 @@
   .sheet .chev{color:var(--ink-3); float:right; padding-left:var(--space-3); font-size:.7rem}
 
   .sheet tr.manual .lab, .sheet tr.manual .val{font-weight:600}
-  .sheet tr.ok .val{background:color-mix(in oklch, var(--ok) 12%, #fff); box-shadow:inset 0 0 0 1.5px var(--ok)}
-  .sheet tr.bad .val{background:color-mix(in oklch, var(--alert) 12%, #fff); box-shadow:inset 0 0 0 1.5px var(--alert)}
+  .sheet tr.ok .val{background:color-mix(in oklch, var(--ok) 12%, #0F1742); box-shadow:inset 0 0 0 1.5px var(--ok)}
+  .sheet tr.bad .val{background:color-mix(in oklch, var(--alert) 12%, #0F1742); box-shadow:inset 0 0 0 1.5px var(--alert)}
   .sheet tr.derivada .val{color:var(--ink-2)}
   .sheet tr.derivada .val em{font-style:normal; color:var(--alert); font-weight:600}
   .n-ok{color:var(--ok); font-weight:600}
@@ -129,16 +129,16 @@
   .legenda{display:flex; flex-wrap:wrap; gap:var(--space-3) var(--space-6); margin-top:var(--space-4); font-size:.82rem; color:var(--ink-2)}
   .legenda span{display:flex; align-items:center; gap:var(--space-2)}
   .legenda i{width:12px; height:12px; display:inline-block; border:1.5px solid var(--line)}
-  .legenda i.ok{border-color:var(--ok); background:color-mix(in oklch, var(--ok) 12%, #fff)}
-  .legenda i.bad{border-color:var(--alert); background:color-mix(in oklch, var(--alert) 12%, #fff)}
+  .legenda i.ok{border-color:var(--ok); background:color-mix(in oklch, var(--ok) 12%, #0F1742)}
+  .legenda i.bad{border-color:var(--alert); background:color-mix(in oklch, var(--alert) 12%, #0F1742)}
   .legenda i.der{border-color:var(--line); background:var(--paper-2)}
 
-  .thread{border:1px solid var(--line); background:#fff}
+  .thread{border:1px solid var(--line); background:#0F1742}
   .msg{display:grid; grid-template-columns:44px 1fr; gap:var(--space-4); padding:var(--space-4) var(--space-6)}
   .msg + .msg{border-top:1px solid var(--line)}
   .msg.destaque{background:color-mix(in oklch, var(--brand) 5%, #fff)}
   .msg .av{width:44px; height:44px; object-fit:cover; border-radius:6px; display:block}
-  .msg .mono{width:44px; height:44px; border-radius:6px; background:var(--ink); color:var(--paper);
+  .msg .mono{width:44px; height:44px; border-radius:6px; background:var(--paper-2); color:var(--ink);
              display:grid; place-items:center; font-family:"Bricolage Grotesque",serif; font-weight:700; font-size:.95rem}
   .msg .quem{display:flex; flex-wrap:wrap; align-items:baseline; gap:var(--space-2) var(--space-3); margin-bottom:4px}
   .msg .quem b{font-size:.98rem}
@@ -157,6 +157,8 @@
     ol.tl li{grid-template-columns:1fr; gap:var(--space-1)}
   }
 </style>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style id="sz-tema">body,body *{font-family:"Figtree",system-ui,"Segoe UI",sans-serif!important}code,pre,kbd,samp,code *,pre *{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace!important}</style>
 </head>
 <body>
 <div class="wrap">

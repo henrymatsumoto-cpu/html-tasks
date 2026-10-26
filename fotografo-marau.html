@@ -2,19 +2,18 @@
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Fotógrafo em Maraú</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700&family=Manrope:wght@400;500;600;700&display=swap">
 <style>
 /* Layout: memo de decisão em coluna única, com comparativo de preços como peça central */
-:root{
-  --bg:#f5f7fa; --surface:#ffffff; --fg:#14213a; --muted:#5b6679; --line:#dde3ec;
-  --accent:#0b4fd6; --accent-soft:#e6eefc; --good:#127a4b; --good-soft:#e1f4ea; --warn:#9a5b00; --warn-soft:#fdf0d8;
+:root{color-scheme:dark;
+  --bg:#080E32; --surface:#0F1742; --fg:#EEF1FB; --muted:#B4BBD9; --line:#232E6B;
+  --accent:#4D85FF; --accent-soft:#1A2B6B; --good:oklch(78% .12 155); --good-soft:oklch(29% .05 155); --warn:oklch(82% .12 75); --warn-soft:oklch(31% .06 80);
   --display:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif; --body:"Manrope","Segoe UI",system-ui,sans-serif;
 }
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
-  --bg:#0d1424; --surface:#141d33; --fg:#e8edf7; --muted:#9aa6bd; --line:#26324d;
-  --accent:#6b9bff; --accent-soft:#1a2a50; --good:#4cc791; --good-soft:#123326; --warn:#f0b24f; --warn-soft:#3a2b0d; color-scheme:dark}}
+
 :root[data-theme="dark"]{
   --bg:#0d1424; --surface:#141d33; --fg:#e8edf7; --muted:#9aa6bd; --line:#26324d;
   --accent:#6b9bff; --accent-soft:#1a2a50; --good:#4cc791; --good-soft:#123326; --warn:#f0b24f; --warn-soft:#3a2b0d; color-scheme:dark}
@@ -59,12 +58,14 @@ ul{margin:0;padding-left:1.1em;display:flex;flex-direction:column;gap:6px}
 .gear span{background:var(--accent-soft);color:var(--accent);font-size:.85rem;font-weight:600;padding:6px 12px;border-radius:999px}
 .ask{background:var(--accent);color:#fff;border-radius:12px;padding:28px;display:flex;flex-direction:column;gap:10px}
 :root[data-theme="dark"] .ask{color:#0d1424}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .ask{color:#0d1424}}
+
 .ask h2{color:inherit}
 .ask p{max-width:62ch}
 blockquote{margin:0;border-left:3px solid var(--accent);padding:4px 0 4px 16px;color:var(--muted);font-size:.95rem;max-width:65ch}
 footer{font-size:.8rem;color:var(--muted)}
 </style>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style id="sz-tema">body,body *{font-family:"Figtree",system-ui,"Segoe UI",sans-serif!important}code,pre,kbd,samp,code *,pre *{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace!important}</style>
 </head>
 <body>
 <main>

@@ -2,20 +2,21 @@
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
 <title>Link de Compra para Adequação</title>
 <style>
   :root{
     color-scheme:dark;
-    --bg:#0B0D14;
-    --surface:#12151F;
-    --surface-2:#181C29;
-    --fg:#EDEFF5;
-    --muted-fg:#8A90A6;
-    --border:#242938;
-    --primary:#4D8BFF;
-    --primary-dim:#1B2540;
+    --bg:#080E32;
+    --surface:#0F1742;
+    --surface-2:#18225A;
+    --fg:#EEF1FB;
+    --muted-fg:#8189B0;
+    --border:#232E6B;
+    --primary:#4D85FF;
+    --primary-dim:#1A2B6B;
     --ok:#3DDC91;
     --ok-dim:#123224;
     --warn:#FFB020;
@@ -92,12 +93,17 @@
     .step:first-child{border-top:0}
     .shot{grid-template-columns:1fr}
   }
+  @page{margin:0}
   @media print{
+    html{background:var(--bg)}
     body{-webkit-print-color-adjust:exact;print-color-adjust:exact}
-    section{break-inside:avoid-page}
+    section{break-inside:auto}
+    h2,h3{break-after:avoid-page}
     header{padding-top:var(--sp-xl)}
   }
 </style>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style id="sz-tema">body,body *{font-family:"Figtree",system-ui,"Segoe UI",sans-serif!important}code,pre,kbd,samp,code *,pre *{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace!important}</style>
 </head>
 <body>
 

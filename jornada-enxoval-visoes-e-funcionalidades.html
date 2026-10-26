@@ -1,22 +1,22 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta name="robots" content="noindex, nofollow">
 <meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Jornada Completa Enxoval — visões e funcionalidades</title>
 <style>
-  :root{
+  :root{color-scheme:dark;
     --navy:#00143D;
-    --primary:#0055FF;
-    --primary-hover:#0044CC;
-    --primary-light:#E8F0FE;
+    --primary:#4D85FF;
+    --primary-hover:#3A6FE8;
+    --primary-light:#1A2B6B;
     --coral:#FC6058;
-    --fg:#080E32;
-    --bg:#FFFFFF;
-    --muted:#F3F3F5;
-    --muted-fg:#6B6E84;
-    --border:#E6E7EA;
+    --fg:#EEF1FB;
+    --bg:#080E32;
+    --muted:#18225A;
+    --muted-fg:#8189B0;
+    --border:#232E6B;
     --success:#22C55E;
     --warning:#F54A00;
 
@@ -69,7 +69,7 @@
   figure{margin:0}
   .mock{border:1px solid var(--border);border-radius:var(--r-xl);overflow:hidden;background:var(--muted)}
   .mock svg{display:block;width:100%;height:auto}
-  figcaption{padding:10px 14px;background:#fff;border-top:1px solid var(--border);color:var(--muted-fg)}
+  figcaption{padding:10px 14px;background:#0F1742;border-top:1px solid var(--border);color:var(--muted-fg)}
 
   /* listas de funcionalidade */
   .feats{list-style:none;padding:0;margin:var(--sp-xl) 0 0}
@@ -79,7 +79,7 @@
   }
   .feats li:last-child{border-bottom:1px solid var(--border)}
   .feats b{font-size:15px;font-weight:700}
-  .feats p{font-size:14px;font-weight:400;color:#3C4260}
+  .feats p{font-size:14px;font-weight:400;color:#B4BBD9}
   @media (max-width:700px){.feats li{grid-template-columns:1fr;gap:4px}}
 
   /* visões */
@@ -88,9 +88,9 @@
   .perfil.adm{background:var(--navy);color:#fff}
   .perfil.adm p{color:#B9C4DC}
   .perfil h4{margin-bottom:8px}
-  .perfil p{font-size:14px;font-weight:400;color:#3C4260;margin-top:6px}
+  .perfil p{font-size:14px;font-weight:400;color:#B4BBD9;margin-top:6px}
   .chip{
-    display:inline-block;background:#fff;border:1px solid var(--border);
+    display:inline-block;background:#0F1742;border:1px solid var(--border);
     border-radius:var(--r-full);padding:3px 10px;font-size:12px;font-weight:700;
     margin:0 6px 6px 0;
   }
@@ -112,7 +112,7 @@
   .fluxo{display:flex;flex-wrap:wrap;gap:8px;margin-top:var(--sp-lg);align-items:center}
   .fase{
     border:1px solid var(--border);border-radius:var(--r-full);
-    padding:7px 14px;font-size:13px;font-weight:700;background:#fff;
+    padding:7px 14px;font-size:13px;font-weight:700;background:#0F1742;
   }
   .fase.fim{background:var(--primary);border-color:var(--primary);color:#fff}
   .fase.cancel{background:var(--muted);color:var(--muted-fg);border-style:dashed}
@@ -142,7 +142,7 @@
     background:rgba(255,255,255,.16);
   }
   .tlist li.done .mark{background:var(--success);color:#04250F}
-  .tlist li.next .mark{background:#fff;color:var(--coral)}
+  .tlist li.next .mark{background:#0F1742;color:var(--coral)}
   .tlist small{display:block;font-size:12px;font-weight:400;color:#B9C4DC;margin-top:2px}
   .tlist li.next small{color:rgba(255,255,255,.85)}
 
@@ -150,11 +150,13 @@
     display:flex;gap:14px;align-items:flex-start;margin-top:var(--sp-2xl);
     padding:var(--sp-lg);border-radius:var(--r-xl);background:var(--muted);
   }
-  .nota p{font-size:14px;font-weight:400;color:#3C4260}
+  .nota p{font-size:14px;font-weight:400;color:#B4BBD9}
   .nota b{font-weight:700;color:var(--fg)}
 
   footer{padding:var(--sp-xl) 0 var(--sp-2xl);color:var(--muted-fg)}
 </style>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style id="sz-tema">body,body *{font-family:"Figtree",system-ui,"Segoe UI",sans-serif!important}code,pre,kbd,samp,code *,pre *{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace!important}</style>
 </head>
 <body>
 
