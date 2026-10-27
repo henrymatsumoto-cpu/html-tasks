@@ -212,7 +212,7 @@ table.pf tr.grp .gc{font-size:12px;color:var(--ink3);margin-left:8px}
  <div class="hero-inner">
   <div class="masthead">
    <div class="wordmark"><span class="sz-logo" role="img" aria-label="Seazone">sea<span class="sz-house"><svg viewBox="0 0 22 24" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="0" width="2.5" height="8" rx=".8" fill="#ff6b5c"/><path d="M1 11 L11 2 L21 11 L21 22 Q21 23 20 23 L2 23 Q1 23 1 22 Z" fill="#ff6b5c"/></svg></span>zone</span><span>· Franquias · Fornecedores de Compras</span></div>
-   <span class="mast-date">Rascunho v2.1 · 16/10/2026</span>
+   <span class="mast-date">v3 · 26/10/2026</span>
   </div>
   <span class="eyebrow">Arquitetura de processos</span>
   <h1>Fornecedores de Compras</h1>
@@ -228,8 +228,9 @@ table.pf tr.grp .gc{font-size:12px;color:var(--ink3);margin-left:8px}
 <div class="wrap">
  <section id="p-arq" role="tabpanel" aria-labelledby="t-arq" style="display:flex;flex-direction:column;gap:18px">
   <details class="panel changes">
-   <summary>O que mudou <span>reuniões com a Ray em 15 e 16/10/2026</span></summary>
+   <summary>O que mudou <span>reuniões com a Ray em 15 e 16/10 e validação em 26/10/2026</span></summary>
    <ul>
+    <li><b>26/10 · v3, ajustes da validação:</b> legenda do status no portfólio; o A3 virou <b>lembrete de pagamento</b>, sem cobrança automática; e a Trilha 4 ganhou a interface com ADM e Fin (David), para não ter dupla classificação.</li>
     <li><b>16/10 · Eventos quebrado em dois macroprocessos:</b> <b>patrocínio</b> (MP18: buscar, contrato e monitoramento do pagamento) e <b>estrutura do evento</b> (MP19: escopo com a diretoria, prestadores do evento, brindes e validação de qualidade). Reunião, aditivo e cobrança saíram de "buscar patrocinadores".</li>
     <li><b>16/10 · Fases da tag <span class="fase">Fase N</span> refeitas</b> pelo cronograma novo: 2 automações por dia, prospecção primeiro e Gestão depois do projeto. O Copiloto (1.5) segue em treinamento, fora do cronograma.</li>
     <li><b>Três trilhas finalísticas:</b> fornecedores prestadores de serviço, fornecedores homologados e Compras. A Loja e o fechamento saíram de "fornecedores de venda" e foram para Compras.</li>
@@ -283,7 +284,7 @@ table.pf tr.grp .gc{font-size:12px;color:var(--ink3);margin-left:8px}
 
  <section id="p-pf" role="tabpanel" aria-labelledby="t-pf" hidden style="flex-direction:column;gap:18px">
   <div class="panel pfhead">
-   <div class="pf-h"><div><span class="tn">Portfólio de agentes, extensões e automações</span><p class="to">Tudo o que já roda sozinho ou é rodado pelo time. Clique no subprocesso para ver o processo; o que ainda vai ser criado está no cronograma.</p></div><div class="types" id="pftypes"></div></div>
+   <div class="pf-h"><div><span class="tn">Portfólio de agentes, extensões e automações</span><p class="to">Tudo o que já roda sozinho ou é rodado pelo time. Clique no subprocesso para ver o processo; o que ainda vai ser criado está no cronograma.</p><p class="to"><b>Status:</b> no ar = rodando em produção · em treinamento = a IA já responde, ainda aprendendo com o time · em validação = pronto, esperando o ok da área · sob demanda = o time roda quando precisa.</p></div><div class="types" id="pftypes"></div></div>
    <div class="kpis" id="pfsum"></div>
   </div>
   <div class="tblwrap"><table class="pf"><thead><tr><th>Agente ou automação</th><th>O que faz</th><th>Quando roda</th><th>Subprocessos</th><th>Status</th></tr></thead><tbody id="pftb"></tbody></table></div>
@@ -291,7 +292,7 @@ table.pf tr.grp .gc{font-size:12px;color:var(--ink3);margin-left:8px}
 
  <footer class="instfoot">
   <div class="wm"><span class="sz-logo" role="img" aria-label="Seazone">sea<span class="sz-house"><svg viewBox="0 0 22 24" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="0" width="2.5" height="8" rx=".8" fill="#ff6b5c"/><path d="M1 11 L11 2 L21 11 L21 22 Q21 23 20 23 L2 23 Q1 23 1 22 Z" fill="#ff6b5c"/></svg></span>zone</span><span>Franquias · Fornecedores de Compras</span></div>
-  <div class="who"><b>Henry Yudi Matsumoto</b>henry.matsumoto@seazone.com.br<br>Documento interno · 16/10/2026</div>
+  <div class="who"><b>Henry Yudi Matsumoto</b>henry.matsumoto@seazone.com.br<br>Documento interno · 26/10/2026</div>
  </footer>
 </div>
 
@@ -698,7 +699,7 @@ const BLOCKS = [
  ]},
  {n:"Processos de suporte", o:"Mantêm a área funcionando: as ferramentas, as automações e as auditorias. Processo feito só por agente também existe e precisa estar documentado: se o agente quebra, o processo deixa de acontecer.", trails:[
  {cls:"sup", k:"Trilha 4", n:"Ferramentas, automações e auditorias", seq:false,
-  o:"O trabalho que mantém a área de pé, incluindo o que roda sem ninguém ver.",
+  o:"O trabalho que mantém a área de pé, incluindo o que roda sem ninguém ver. <b>Interface com ADM e Fin (David, Backoffice):</b> a Trilha 4 cobre só as ferramentas e automações de Fornecedores e Compras; a manutenção geral do stack (sistemas e integrações) fica no MP14 da arquitetura de ADM e Fin.",
   mps:[
   {id:"MP11", v:"Ferramentas", n:"Manter as ferramentas",
    o:"Loja, Hub, Jornada e consultas funcionando.", e:"Correções e melhorias publicadas.",
@@ -793,7 +794,7 @@ const AUTOS = [
   {lab:"Agentes e bots", items:[
     {id:"A1", n:"Agente de cadência Pipedrive → SIA", tp:"Agente", st:"ar", f:"Olimpo · dias úteis · 11h, 15h e 17h", o:"Manda o 1º, o 2º e o 3º contato pela SIA, anota no card e move o card sozinho. No ar desde 14/10.", s:["1.4"]},
     {id:"A2", n:"Auditor de falhas da cadência", tp:"Agente", st:"ar", f:"Olimpo · a cada rodada", o:"Separa na etapa de falhas o card que não pôde receber mensagem, com o motivo: conversa aberta, janela de 24h, cidade não identificada.", s:["1.4"]},
-    {id:"A3", n:"Mensagens de cobrança da Loja", tp:"Bot", st:"ar", f:"Duas vezes ao dia · almoço e fim do dia", o:"Avisa pela SIA no dia 0, no 4º e no 7º dia que o link ou o boleto está esperando pagamento.", s:["8.3"]},
+    {id:"A3", n:"Lembretes de pagamento da Loja", tp:"Bot", st:"ar", f:"Duas vezes ao dia · almoço e fim do dia", o:"Lembrete, <b>sem cobrança automática</b>: nada é debitado do franqueado, ele paga pelo link ou boleto do fornecedor. Avisa pela SIA no dia 0, no 4º e no 7º dia que o pagamento está esperando. Sem pagamento até o 7º dia, o agente de cancelamento da Loja (8.4) cancela o pedido às 20h (regra validada).", s:["8.3"]},
     {id:"A4", n:"Agente de indicação de itens", tp:"Agente", st:"ar", f:"Olimpo · contínuo", o:"Cria na Loja a lista de itens de cada imóvel a partir das inconformidades da Implantação.", s:["8.1","13.1"]},
     {id:"A5", n:"Agente de análise de pagamento", tp:"Agente", st:"ar", f:"Olimpo · das 8h às 18h", o:"Lê os links de pagamento da Rede: move o card para Pagamento confirmado quando algum link foi pago e para Link expirado quando todos venceram.", s:["9.2","9.3","13.1"]},
     {id:"A6", n:"Agente de cancelamento de enxoval", tp:"Agente", st:"ar", f:"Olimpo · rodada diária", o:"Cancela pedido de enxoval não pago pela regra validada; nunca cancela pedido pago.", s:["9.4","13.1"]},
