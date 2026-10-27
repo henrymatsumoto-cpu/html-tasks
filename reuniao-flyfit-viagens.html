@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
-<title>Reunião Flylift</title>
+<title>Reunião Flyfit</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -80,6 +80,9 @@
   .list .ic.ok{color:var(--ok)}
   .list .ic.warn{color:var(--warn)}
 
+  .decision{display:grid;grid-template-columns:1fr;gap:16px;margin-top:20px}
+  @media (min-width:820px){.decision{grid-template-columns:1fr 1fr}}
+  .pill{display:inline-block;white-space:nowrap;padding:2px 10px;border-radius:var(--r-full);font-size:12.5px;font-weight:600;background:var(--warn-soft);color:var(--warn)}
   .cols{display:grid;grid-template-columns:1fr;gap:32px}
   @media (min-width:820px){.cols{grid-template-columns:1fr 1fr}}
   .colhead{font-size:13px;letter-spacing:.06em;text-transform:uppercase;font-weight:700;margin-bottom:10px;color:var(--ink2)}
@@ -128,13 +131,13 @@
 
 <header>
   <span class="eyebrow">Validação · Viagens corporativas</span>
-  <h1>Reunião Flylift</h1>
-  <p class="lead">Apresentação da Flylift, agência de viagens corporativas que emite passagens com milhas compradas direto das companhias aéreas. Este documento resume o que foi apresentado, como funciona, e o que precisa ser checado antes de levar para o time responsável por viagens.</p>
+  <h1>Reunião Flyfit</h1>
+  <p class="lead">Apresentação da Flyfit, agência de viagens corporativas que emite passagens com milhas compradas direto das companhias aéreas. Este documento resume o que foi apresentado, como funciona, e o que precisa ser checado antes de levar para o time responsável por viagens.</p>
   <div class="meta">
     <span><b>Data</b> 09/10/2026 · 10h</span>
     <span><b>Duração</b> 52 min</span>
     <span><b>Seazone</b> Henry Yudi Matsumoto</span>
-    <span><b>Flylift</b> Matheus Neves (comercial)</span>
+    <span><b>Flyfit</b> Matheus Neves (comercial)</span>
   </div>
 </header>
 
@@ -157,18 +160,44 @@
     <div>
       <div class="tt">Ponto de atenção 1</div>
       <h3>Verificar se o contrato com a Onfly é exclusivo</h3>
-      <p>A Seazone fechou há pouco uma parceria com a Onfly, concorrente direta da Flylift (as duas são de Belo Horizonte). Antes de qualquer teste, é preciso ler o contrato da Onfly e ver se ele tem cláusula de exclusividade para viagens corporativas. Do lado da Flylift não existe exclusividade.</p>
+      <p>A Seazone fechou há pouco uma parceria com a Onfly, concorrente direta da Flyfit (as duas são de Belo Horizonte). Antes de qualquer teste, é preciso ler o contrato da Onfly e ver se ele tem cláusula de exclusividade para viagens corporativas. Do lado da Flyfit não existe exclusividade.</p>
     </div>
     <div>
       <div class="tt">Ponto de atenção 2</div>
       <h3>É para a empresa, não para o funcionário</h3>
-      <p>A Onfly entrou como benefício para o funcionário viajar por conta própria. A Flylift seria outra coisa: gestão das viagens <b>pagas pela Seazone</b>. Para pessoa física a Flylift tem outro canal (outro atendente), mas isso não faz parte desta proposta.</p>
+      <p>A Onfly entrou como benefício para o funcionário viajar por conta própria. A Flyfit seria outra coisa: gestão das viagens <b>pagas pela Seazone</b>. Para pessoa física a Flyfit tem outro canal (outro atendente), mas isso não faz parte desta proposta.</p>
     </div>
   </div>
 </section>
 
 <section>
-  <div class="sechead"><span class="n">01</span><h2>O que é a Flylift</h2></div>
+  <div class="sechead"><span class="n">00</span><h2>Donos e prazos</h2></div>
+  <p class="secsub">Definido em 26/10/2026. A exclusividade da Onfly decide se a Flyfit avança: se o contrato tiver exclusividade, a conversa para aqui. Se não tiver, a Flyfit vai para financeiro/suprimentos.</p>
+  <div class="tbl-scroll">
+    <table>
+      <thead><tr><th>O quê</th><th>Dono</th><th>Prazo</th><th>Status</th></tr></thead>
+      <tbody>
+        <tr><td>Perguntar ao financeiro se o contrato com a Onfly tem exclusividade</td><td>Henry Yudi Matsumoto</td><td>27/10/2026</td><td><span class="pill">Pendente</span></td></tr>
+        <tr><td>Handoff da Flyfit para financeiro/suprimentos (só se não houver exclusividade)</td><td>Jhonatan (financeiro/suprimentos)</td><td>27/10/2026</td><td><span class="pill">Depende do 1º</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="decision">
+    <div class="box no">
+      <div class="tt">Esclarecimento 1</div>
+      <h3>"Não tem contrato" é bom</h3>
+      <p style="margin-top:6px;color:var(--ink2)">É o modelo pay-per-use: sem fee, sem compra mínima e sem exclusividade, e a Seazone pode parar a qualquer momento sem custo. Como não existe compromisso, não há risco jurídico a proteger. Contrato só entra se a Seazone pedir mais de R$ 20 mil/mês de limite, e aí é um termo simples (paga o que comprar) com DRE e balanço.</p>
+    </div>
+    <div class="box no">
+      <div class="tt">Esclarecimento 2</div>
+      <h3>Milhas: quem deixa de ganhar é o funcionário, não a Seazone</h3>
+      <p style="margin-top:6px;color:var(--ink2)">A Flyfit cobre só as viagens a trabalho pagas pela Seazone. Nessas viagens, hoje as milhas já ficam com o funcionário e a empresa não aproveita nada. Pela Flyfit esse valor volta como desconto (~22–29% nas cotações). O status/categoria do funcionário continua contando. A Onfly segue como benefício para o funcionário viajar por conta própria, então a Seazone não perde nada que tem hoje. Não envolve franqueados.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="sechead"><span class="n">01</span><h2>O que é a Flyfit</h2></div>
   <p class="secsub">Agência de viagens corporativas com plataforma própria. O diferencial é usar milhas aéreas no ambiente corporativo, de forma controlada.</p>
   <ul class="list">
     <li><span class="ic">→</span><div><b>Acordo com Azul, Gol e Latam</b><span class="d">Todo mês compram lotes de 100 a 500 milhões de milhas direto das companhias e usam essas milhas para emitir as passagens dos clientes.</span></div></li>
@@ -179,7 +208,7 @@
 
 <section>
   <div class="sechead"><span class="n">02</span><h2>Como funciona: modelo "tipo ClickBus"</h2></div>
-  <p class="secsub">Não há contrato de parceria. A empresa entra na plataforma, cota e compra quando o preço compensar, do mesmo jeito que se compra uma passagem no ClickBus. A margem da Flylift já está dentro do preço mostrado (o exemplo que ele deu foi o do supermercado: não se paga para entrar, só pelo que se leva).</p>
+  <p class="secsub">Não há contrato de parceria. A empresa entra na plataforma, cota e compra quando o preço compensar, do mesmo jeito que se compra uma passagem no ClickBus. A margem da Flyfit já está dentro do preço mostrado (o exemplo que ele deu foi o do supermercado: não se paga para entrar, só pelo que se leva).</p>
   <div class="compare">
     <div class="box yes">
       <div class="tt">O que existe</div>
@@ -205,7 +234,7 @@
 
 <section>
   <div class="sechead"><span class="n">03</span><h2>Por que sai mais barato</h2></div>
-  <p class="secsub">A passagem é emitida com milhas que a Flylift comprou em grande volume, por um valor baixo. A contrapartida é que o viajante <b>não ganha milhas</b> nessa viagem.</p>
+  <p class="secsub">A passagem é emitida com milhas que a Flyfit comprou em grande volume, por um valor baixo. A contrapartida é que o viajante <b>não ganha milhas</b> nessa viagem.</p>
   <div class="cols">
     <div>
       <div class="colhead">De onde vem o desconto</div>
@@ -218,9 +247,9 @@
     <div>
       <div class="colhead">O que muda para quem viaja</div>
       <ul class="list">
-        <li><span class="ic warn">!</span><div><b>O viajante não acumula milhas</b><span class="d">Passagem emitida com milha não gera milha nova. Isso é regra da companhia aérea. A Flylift não usa as milhas do funcionário.</span></div></li>
+        <li><span class="ic warn">!</span><div><b>O viajante não acumula milhas</b><span class="d">Passagem emitida com milha não gera milha nova. Isso é regra da companhia aérea. A Flyfit não usa as milhas do funcionário.</span></div></li>
         <li><span class="ic ok">✓</span><div><b>Os pontos de categoria continuam</b><span class="d">Status do programa (Diamante, Platinum, Black etc.) segue contando normalmente.</span></div></li>
-        <li><span class="ic ok">✓</span><div><b>Para a empresa, isso é até melhor</b><span class="d">Hoje, numa viagem paga pela Seazone, as milhas ficam com o funcionário e a empresa não aproveita nada. Pela Flylift, esse valor volta para a empresa em forma de desconto.</span></div></li>
+        <li><span class="ic ok">✓</span><div><b>Para a empresa, isso é até melhor</b><span class="d">Hoje, numa viagem paga pela Seazone, as milhas ficam com o funcionário e a empresa não aproveita nada. Pela Flyfit, esse valor volta para a empresa em forma de desconto.</span></div></li>
       </ul>
     </div>
   </div>
@@ -232,7 +261,7 @@
   <div class="tbl-scroll">
     <table>
       <thead>
-        <tr><th>Trecho</th><th>Datas</th><th class="r">Na companhia</th><th class="r">Na Flylift</th><th class="r">Economia</th></tr>
+        <tr><th>Trecho</th><th>Datas</th><th class="r">Na companhia</th><th class="r">Na Flyfit</th><th class="r">Economia</th></tr>
       </thead>
       <tbody class="num">
         <tr><td><b>Maringá → Florianópolis</b><small>Latam · ida e volta</small></td><td>26/11 → 29/11</td><td class="r">R$ 1.384</td><td class="r low">R$ 1.083</td><td class="r">R$ 301 <small>~22%</small></td></tr>
@@ -247,7 +276,7 @@
 
 <section>
   <div class="sechead"><span class="n">05</span><h2>Suporte: grupos de WhatsApp</h2></div>
-  <p class="secsub">Cada empresa cliente ganha um grupo de WhatsApp próprio, com <b>pelo menos 5 pessoas da Flylift</b> dentro, disponíveis todo dia e em qualquer horário (segundo eles).</p>
+  <p class="secsub">Cada empresa cliente ganha um grupo de WhatsApp próprio, com <b>pelo menos 5 pessoas da Flyfit</b> dentro, disponíveis todo dia e em qualquer horário (segundo eles).</p>
   <div class="cols">
     <div>
       <div class="colhead">O que resolvem no grupo</div>
@@ -296,9 +325,9 @@
   <ol class="steps three">
     <li class="first"><span class="st">1</span><div><b>Checar o contrato da Onfly</b><span class="d">Ver se tem exclusividade. Se tiver, a conversa para aqui.</span></div></li>
     <li><span class="st">2</span><div><b>Levar para quem cuida de viagens</b><span class="d">Gestão / suprimentos decide se faz sentido testar.</span></div></li>
-    <li><span class="st">3</span><div><b>Conversa com a Flylift</b><span class="d">O Matheus quer falar com quem tem os números: gasto mensal, viagens por mês e destinos mais comuns.</span></div></li>
+    <li><span class="st">3</span><div><b>Conversa com a Flyfit</b><span class="d">O Matheus quer falar com quem tem os números: gasto mensal, viagens por mês e destinos mais comuns.</span></div></li>
     <li><span class="st">4</span><div><b>Liberar acesso e criar o grupo</b><span class="d">Configuração da conta, cadastro de usuários e criação do grupo de suporte no WhatsApp.</span></div></li>
-    <li><span class="st">5</span><div><b>Testar em paralelo</b><span class="d">A cada viagem, cotar na Flylift e no fornecedor atual e comparar.</span></div></li>
+    <li><span class="st">5</span><div><b>Testar em paralelo</b><span class="d">A cada viagem, cotar na Flyfit e no fornecedor atual e comparar.</span></div></li>
     <li><span class="st">6</span><div><b>Decidir</b><span class="d">Se compensar, segue usando. Se não, para sem custo nenhum.</span></div></li>
   </ol>
   <p class="note">Avisei ao Matheus que o retorno pode demorar, por causa do período de avaliação interna (lideranças focadas na AVD).</p>
@@ -307,14 +336,14 @@
     <div>
       <div class="colhead">Perguntas em aberto</div>
       <ol class="questions">
-        <li>O contrato com a Onfly tem cláusula de exclusividade?</li>
+        <li>O contrato com a Onfly tem cláusula de exclusividade? <span class="pill">Henry pergunta ao financeiro até 27/10</span></li>
         <li>Quem é o dono das viagens corporativas na Seazone hoje?</li>
         <li>O gasto mensal com viagens passa de R$ 20 mil? Se passar, vale pedir mais limite (com DRE e balanço).</li>
         <li>Perder as milhas do funcionário nas viagens a trabalho é aceitável para a empresa?</li>
       </ol>
     </div>
     <div>
-      <div class="colhead">Contato Flylift</div>
+      <div class="colhead">Contato Flyfit</div>
       <div class="contact">
         <div><span>Nome</span>Matheus Neves</div>
         <div><span>WhatsApp</span>(31) 9781-0640</div>
@@ -325,7 +354,7 @@
 </section>
 
 <footer>
-  Fonte: gravação e transcrição do Meet "Seazone &lt;&gt; Flylift", de 09/10/2026. Números de economia e prazos de suporte são afirmações da Flylift e não foram verificados pela Seazone.
+  Fonte: gravação e transcrição do Meet "Seazone &lt;&gt; Flyfit", de 09/10/2026. Números de economia e prazos de suporte são afirmações da Flyfit e não foram verificados pela Seazone.
 </footer>
 
 </div>
