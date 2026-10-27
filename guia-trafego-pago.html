@@ -1,0 +1,793 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Tráfego Pago, do Zero</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Figtree:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #080E32;
+    --bg-2: #0E1645;
+    --bg-3: #152060;
+    --line: #26326F;
+    --ink: #EEF0FA;
+    --ink-2: #B4BAD8;
+    --ink-3: #8088B3;
+    --sun: #FFB547;
+    --sun-soft: rgba(255, 181, 71, .12);
+    --coral: #FF7A59;
+    --mint: #6FE3B0;
+    --mint-soft: rgba(111, 227, 176, .10);
+    --rose: #FF8FA3;
+    --rose-soft: rgba(255, 143, 163, .10);
+    --radius: 14px;
+    --serif: "Bricolage Grotesque", Georgia, serif;
+    --sans: "Figtree", system-ui, sans-serif;
+    --mono: "JetBrains Mono", ui-monospace, monospace;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; scroll-padding-top: 24px; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font: 17px/1.65 var(--sans);
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: var(--sun); text-underline-offset: 3px; }
+  ::selection { background: var(--sun); color: var(--bg); }
+
+  /* ---------- layout ---------- */
+  .shell { display: grid; grid-template-columns: 240px minmax(0, 1fr); gap: 56px; max-width: 1180px; margin: 0 auto; padding: 0 32px; }
+  nav.toc { position: sticky; top: 0; align-self: start; height: 100vh; padding: 40px 0; overflow-y: auto; }
+  nav.toc .brand { font: 600 13px/1 var(--sans); letter-spacing: .08em; text-transform: uppercase; color: var(--sun); margin-bottom: 28px; }
+  nav.toc ol { list-style: none; margin: 0; padding: 0; counter-reset: t; }
+  nav.toc li { counter-increment: t; }
+  nav.toc a {
+    display: flex; gap: 12px; padding: 7px 0; color: var(--ink-3); text-decoration: none; font-size: 14.5px;
+    transition: color .2s ease;
+  }
+  nav.toc a::before { content: counter(t, decimal-leading-zero); font: 12px/1.9 var(--sans); color: var(--ink-3); transition: color .2s ease; }
+  nav.toc a:hover, nav.toc a.on { color: var(--ink); }
+  nav.toc a.on::before { color: var(--sun); }
+  main { padding: 40px 0 120px; min-width: 0; }
+
+  /* ---------- hero ---------- */
+  .hero { padding: 48px 0 56px; border-bottom: 1px solid var(--line); margin-bottom: 24px; }
+  .eyebrow { font: 600 12.5px/1 var(--sans); letter-spacing: .1em; text-transform: uppercase; color: var(--sun); }
+  h1 {
+    font: 800 clamp(44px, 7vw, 84px)/0.98 var(--serif); letter-spacing: -0.02em;
+    margin: 18px 0 24px; max-width: 12ch;
+  }
+  h1 em { font-style: normal; font-weight: 400; color: var(--sun); }
+  .lede { font-size: 20px; color: var(--ink-2); max-width: 60ch; margin: 0; }
+  .hero-meta { display: flex; flex-wrap: wrap; gap: 10px 28px; margin-top: 32px; font: 13px var(--sans); color: var(--ink-3); }
+  .hero-meta b { color: var(--ink); font-weight: 600; }
+
+  /* ---------- sections ---------- */
+  section { padding: 64px 0 8px; }
+  .sec-num { font: 600 13px/1 var(--sans); color: var(--sun); letter-spacing: .06em; }
+  h2 { font: 600 clamp(30px, 4vw, 42px)/1.1 var(--serif); letter-spacing: -0.01em; margin: 10px 0 18px; }
+  h3 { font: 600 21px/1.3 var(--serif); margin: 36px 0 10px; }
+  p { margin: 0 0 16px; max-width: 70ch; }
+  .muted { color: var(--ink-2); }
+  strong { color: var(--ink); font-weight: 600; }
+  ul.clean { padding-left: 20px; margin: 0 0 16px; max-width: 70ch; }
+  ul.clean li { margin-bottom: 6px; }
+  ul.clean li::marker { color: var(--sun); }
+
+  /* analogia */
+  .analogy {
+    background: var(--bg-2); border: 1px solid var(--line); border-radius: var(--radius);
+    padding: 24px 28px; margin: 24px 0; display: grid; grid-template-columns: auto 1fr; gap: 20px; align-items: start;
+  }
+  .analogy .tag { font: 600 11.5px/1 var(--sans); text-transform: uppercase; letter-spacing: .1em; color: var(--bg); background: var(--sun); padding: 6px 9px; border-radius: 999px; white-space: nowrap; }
+  .analogy p { margin: 0; color: var(--ink-2); }
+
+  /* comparativo orgânico x pago */
+  .versus { display: grid; grid-template-columns: 1fr 1fr; border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; margin: 24px 0; }
+  .versus > div { padding: 22px 24px; }
+  .versus > div + div { border-left: 1px solid var(--line); background: var(--bg-2); }
+  .versus h4 { margin: 0 0 10px; font: 600 15px var(--sans); letter-spacing: .03em; }
+  .versus .org h4 { color: var(--mint); }
+  .versus .pago h4 { color: var(--sun); }
+  .versus ul { margin: 0; padding-left: 18px; color: var(--ink-2); font-size: 15.5px; }
+
+  /* leilão */
+  .auction { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; margin: 24px 0; }
+  .auction > div { background: var(--bg); padding: 20px; }
+  .auction .k { font: 600 12px var(--sans); color: var(--sun); text-transform: uppercase; letter-spacing: .08em; }
+  .auction .v { font: 600 19px/1.3 var(--serif); margin: 8px 0 6px; }
+  .auction p { font-size: 14.5px; color: var(--ink-2); margin: 0; }
+  .formula { font: 15px var(--mono); background: var(--bg-2); border: 1px dashed var(--line); border-radius: 10px; padding: 14px 18px; color: var(--ink); display: inline-block; margin: 4px 0 16px; }
+
+  /* plataformas */
+  .platforms { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 16px; margin: 24px 0; }
+  .plat { border: 1px solid var(--line); border-radius: var(--radius); padding: 20px 22px; background: var(--bg-2); }
+  .plat .name { font: 600 19px var(--serif); }
+  .plat .intent { font: 12px var(--sans); color: var(--sun); margin: 4px 0 10px; letter-spacing: .03em; }
+  .plat p { font-size: 15px; color: var(--ink-2); margin: 0; }
+
+  /* funil */
+  .funnel-wrap { display: grid; grid-template-columns: minmax(0, 340px) 1fr; gap: 36px; align-items: center; margin: 28px 0; }
+  .funnel-wrap svg { width: 100%; height: auto; display: block; }
+  .stage { padding: 14px 0; border-bottom: 1px solid var(--line); }
+  .stage:last-child { border-bottom: 0; }
+  .stage .t { font: 600 16px var(--serif); }
+  .stage .t span { font: 12px var(--sans); color: var(--ink-3); margin-left: 8px; }
+  .stage p { font-size: 15px; color: var(--ink-2); margin: 4px 0 0; }
+
+  /* glossário */
+  .gloss { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 0; border-top: 1px solid var(--line); margin: 24px 0; }
+  .term { padding: 18px 20px 18px 0; border-bottom: 1px solid var(--line); }
+  .term .s { font: 600 17px var(--mono); color: var(--sun); }
+  .term .full { font-size: 13px; color: var(--ink-3); margin-left: 6px; }
+  .term p { font-size: 15px; color: var(--ink-2); margin: 6px 0 0; }
+  .term code { font: 13px var(--mono); color: var(--ink); background: var(--bg-3); padding: 2px 6px; border-radius: 5px; }
+
+  /* calculadora */
+  .calc { border: 1px solid var(--line); border-radius: 18px; background: var(--bg-2); padding: 28px; margin: 28px 0; }
+  .calc-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 16px 20px; }
+  .calc label { display: block; font-size: 13.5px; color: var(--ink-2); margin-bottom: 6px; }
+  .calc input {
+    width: 100%; background: var(--bg); color: var(--ink); border: 1px solid var(--ink-3); border-radius: 10px;
+    font: 16px var(--sans); padding: 11px 12px; transition: border-color .2s ease;
+  }
+  .calc input:focus-visible { outline: 2px solid var(--sun); outline-offset: 2px; border-color: var(--sun); }
+  .calc .hint { font-size: 12px; color: var(--ink-3); margin-top: 4px; }
+  .chain { display: flex; flex-wrap: wrap; align-items: stretch; gap: 0; margin-top: 28px; border-top: 1px solid var(--line); padding-top: 24px; }
+  .chain .step { flex: 1 1 110px; min-width: 110px; padding: 4px 14px 12px 0; }
+  .chain .step .lbl { font: 11.5px var(--sans); color: var(--ink-3); text-transform: uppercase; letter-spacing: .06em; }
+  .chain .step .num { font: 600 24px/1.2 var(--serif); margin-top: 4px; font-variant-numeric: tabular-nums; }
+  .chain .step .sub { font: 12px var(--sans); color: var(--ink-3); }
+  .verdict { margin-top: 18px; padding: 16px 20px; border-radius: 12px; font-size: 15.5px; }
+  .verdict.good { background: var(--mint-soft); color: var(--mint); }
+  .verdict.bad { background: var(--rose-soft); color: var(--rose); }
+  .verdict strong { color: inherit; }
+
+  /* passo a passo */
+  .steps { counter-reset: s; margin: 24px 0; }
+  .stp { display: grid; grid-template-columns: 56px 1fr; gap: 18px; padding: 22px 0; border-bottom: 1px solid var(--line); }
+  .stp:last-child { border-bottom: 0; }
+  .stp::before { counter-increment: s; content: counter(s); font: 800 40px/1 var(--serif); color: var(--sun); }
+  .stp h4 { font: 600 19px var(--serif); margin: 2px 0 6px; }
+  .stp p { margin: 0; color: var(--ink-2); font-size: 15.5px; }
+
+  /* exemplo */
+  .example { background: var(--bg-2); border-radius: var(--radius); padding: 24px 28px; margin: 24px 0; border: 1px solid var(--line); }
+  .example .eyebrow { margin-bottom: 10px; display: block; }
+  .example p { color: var(--ink-2); font-size: 15.5px; }
+
+  /* dicas e erros */
+  .dos { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 24px 0; }
+  .dos > div { border-radius: var(--radius); padding: 22px 24px; }
+  .dos .yes { background: var(--mint-soft); }
+  .dos .no { background: var(--rose-soft); }
+  .dos h4 { margin: 0 0 12px; font: 600 15px var(--sans); }
+  .dos .yes h4 { color: var(--mint); }
+  .dos .no h4 { color: var(--rose); }
+  .dos ul { margin: 0; padding-left: 18px; font-size: 15px; color: var(--ink-2); }
+  .dos li { margin-bottom: 8px; }
+
+  /* vídeos */
+  .videos { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 18px; margin: 22px 0 8px; }
+  .vid {
+    display: block; text-decoration: none; color: var(--ink); border-radius: var(--radius); overflow: hidden;
+    background: var(--bg-2); border: 1px solid var(--line); transition: transform .25s cubic-bezier(.2,.7,.2,1), border-color .25s ease;
+  }
+  .vid:hover { transform: translateY(-3px); border-color: var(--sun); }
+  .vid:focus-visible { outline: 2px solid var(--sun); outline-offset: 3px; }
+  .vid .thumb { position: relative; aspect-ratio: 16/9; background: var(--bg-3) center/cover no-repeat; }
+  .vid .thumb::after {
+    content: ""; position: absolute; left: 50%; top: 50%; width: 52px; height: 52px; margin: -26px 0 0 -26px; border-radius: 50%;
+    background: rgba(8,14,50,.78) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M9 7l9 5-9 5z' fill='%23FFB547'/%3E%3C/svg%3E") center/26px no-repeat;
+  }
+  .vid .meta { padding: 14px 16px 16px; }
+  .vid .why { font: 11.5px var(--sans); color: var(--sun); text-transform: uppercase; letter-spacing: .06em; }
+  .vid .ttl { font-size: 15px; font-weight: 500; line-height: 1.4; margin-top: 6px; }
+  .vid.playlist .thumb { background: linear-gradient(135deg, var(--bg-3), var(--bg-2)); display: grid; place-items: center; }
+  .vid.playlist .thumb::after { display: none; }
+  .vid.playlist .thumb span { font: 600 13px var(--sans); color: var(--sun); letter-spacing: .08em; text-transform: uppercase; }
+  .vid { cursor: pointer; }
+  .vid.playing { transform: none; border-color: var(--sun); cursor: default; }
+  .vid.playing .thumb::after { display: none; }
+  .vid .thumb iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  .vid .yt { display: inline-block; margin-top: 8px; font-size: 12.5px; color: var(--ink-3); }
+  .watch-label { font: 600 12.5px var(--sans); color: var(--ink-3); text-transform: uppercase; letter-spacing: .08em; margin-top: 32px; }
+
+  /* checklist */
+  .check { list-style: none; padding: 0; margin: 20px 0; max-width: 70ch; }
+  .check li { border-bottom: 1px solid var(--line); }
+  .check label { display: flex; gap: 14px; align-items: flex-start; padding: 13px 0; cursor: pointer; color: var(--ink-2); }
+  .check input { appearance: none; flex: none; width: 20px; height: 20px; margin-top: 3px; border: 1.5px solid var(--ink-3); border-radius: 6px; cursor: pointer; transition: all .2s ease; }
+  .check input:checked { background: var(--sun) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M5 12l5 5 9-10' stroke='%23080E32' stroke-width='3' fill='none'/%3E%3C/svg%3E") center/14px no-repeat; border-color: var(--sun); }
+  .check input:focus-visible { outline: 2px solid var(--sun); outline-offset: 3px; }
+  .check input:checked + span { color: var(--ink-3); text-decoration: line-through; }
+  .progress { font: 13px var(--sans); color: var(--ink-3); }
+  .progress b { color: var(--sun); }
+
+  code { font: 13px var(--mono); color: var(--ink); background: var(--bg-3); padding: 2px 6px; border-radius: 5px; overflow-wrap: anywhere; word-break: break-word; }
+  .formula { max-width: 100%; overflow-wrap: anywhere; }
+  .formula--block { display: block; line-height: 1.9; }
+  .rhythm { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; margin: 24px 0; }
+  .rhythm > div { background: var(--bg-2); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px 24px; }
+  .rhythm h4 { margin: 0 0 12px; font: 600 15px var(--sans); color: var(--sun); }
+  .rhythm ul { margin: 0; padding-left: 18px; font-size: 15px; color: var(--ink-2); }
+  .rhythm li { margin-bottom: 8px; }
+  .sources { margin-top: 20px; }
+  footer { margin-top: 80px; padding-top: 24px; border-top: 1px solid var(--line); font-size: 13.5px; color: var(--ink-3); }
+
+  /* ---------- responsivo ---------- */
+  @media (max-width: 960px) {
+    .shell { grid-template-columns: minmax(0, 1fr); gap: 0; padding: 0 16px; }
+    nav.toc { min-width: 0; }
+    nav.toc { position: sticky; top: 0; height: auto; padding: 10px 16px; background: var(--bg); z-index: 10; border-bottom: 1px solid var(--line); margin: 0 -16px; }
+    nav.toc .brand { display: none; }
+    nav.toc ol { display: flex; gap: 18px; overflow-x: auto; scrollbar-width: none; }
+    nav.toc a { white-space: nowrap; padding: 4px 0; }
+    html { scroll-padding-top: 64px; }
+    .funnel-wrap { grid-template-columns: 1fr; }
+    .funnel-wrap svg { max-width: 320px; margin: 0 auto; }
+  }
+  @media (max-width: 640px) {
+    body { font-size: 16px; }
+    .versus, .dos { grid-template-columns: 1fr; }
+    .versus > div + div { border-left: 0; border-top: 1px solid var(--line); }
+    .auction { grid-template-columns: 1fr; }
+    .analogy { grid-template-columns: 1fr; }
+    .analogy .tag { justify-self: start; }
+    .calc { padding: 20px; }
+    .stp { grid-template-columns: 40px 1fr; gap: 12px; }
+    .stp::before { font-size: 30px; }
+  }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; scroll-behavior: auto !important; } }
+</style>
+</head>
+<body>
+<div class="shell">
+
+<nav class="toc" aria-label="Sumário">
+  <div class="brand">Guia · Tráfego pago</div>
+  <ol>
+    <li><a href="#o-que-e">O que é</a></li>
+    <li><a href="#como-funciona">Como funciona o leilão</a></li>
+    <li><a href="#plataformas">Onde anunciar</a></li>
+    <li><a href="#funil">Funil e públicos</a></li>
+    <li><a href="#metricas">As métricas</a></li>
+    <li><a href="#calculadora">Calculadora</a></li>
+    <li><a href="#medir">Como medir e analisar</a></li>
+    <li><a href="#aplicar">Aplicando no negócio</a></li>
+    <li><a href="#dicas">Dicas e erros comuns</a></li>
+    <li><a href="#checklist">Checklist da 1ª campanha</a></li>
+    <li><a href="#estudar">Trilha de estudo</a></li>
+  </ol>
+</nav>
+
+<main>
+
+<header class="hero">
+  <div class="eyebrow">Guia didático · do zero ao primeiro anúncio</div>
+  <h1>Tráfego pago, <em>sem mistério</em></h1>
+  <p class="lede">O que é, como as plataformas decidem quem vê seu anúncio, quais números importam, como medir e analisar resultados e como montar uma primeira campanha que dá para medir. Cada tema tem vídeos do YouTube para aprofundar.</p>
+  <div class="hero-meta">
+    <span><b>11</b> capítulos</span>
+    <span><b>~35 min</b> de leitura</span>
+    <span><b>16</b> vídeos indicados</span>
+    <span>calculadora interativa</span>
+  </div>
+</header>
+
+<!-- 01 -->
+<section id="o-que-e">
+  <div class="sec-num">01</div>
+  <h2>O que é tráfego pago</h2>
+  <p><strong>Tráfego</strong> é o fluxo de pessoas que chega até você: no site, no WhatsApp, no Instagram, na loja. <strong>Tráfego pago</strong> é quando você paga uma plataforma (Google, Meta, TikTok, LinkedIn…) para colocar sua mensagem na frente de um público escolhido, em vez de esperar que ele te encontre sozinho.</p>
+
+  <div class="analogy">
+    <span class="tag">Analogia</span>
+    <p>O orgânico é abrir uma loja numa rua tranquila e esperar o boca a boca crescer. O pago é alugar um outdoor na avenida principal, só que um outdoor que <strong>escolhe quem vê</strong>, cobra por resultado e mostra no fim do dia quantas pessoas olharam, entraram e compraram.</p>
+  </div>
+
+  <div class="versus">
+    <div class="org">
+      <h4>Orgânico</h4>
+      <ul>
+        <li>Não paga por clique, paga em tempo e conteúdo</li>
+        <li>Resultado lento, mas acumula (SEO, reputação)</li>
+        <li>Pouco controle sobre quem vê</li>
+        <li>Para de crescer se você parar de produzir</li>
+      </ul>
+    </div>
+    <div class="pago">
+      <h4>Pago</h4>
+      <ul>
+        <li>Paga por impressão, clique ou resultado</li>
+        <li>Resultado em horas ou dias</li>
+        <li>Controle fino de público, região e horário</li>
+        <li>Desligou a verba, o tráfego para na hora</li>
+      </ul>
+    </div>
+  </div>
+  <p class="muted">Os dois não competem. O pago acelera o que já funciona e serve para <strong>testar rápido</strong> uma oferta. O orgânico dá credibilidade para quem chega pelo anúncio e vai olhar seu perfil antes de comprar.</p>
+
+  <div class="watch-label">Para assistir</div>
+  <div class="videos">
+    <a class="vid" href="https://www.youtube.com/watch?v=-xDEYvULc7c" target="_blank" rel="noopener">
+      <div class="thumb" style="background-image:url('https://i.ytimg.com/vi/-xDEYvULc7c/hqdefault.jpg')"></div>
+      <div class="meta"><div class="why">Comece por aqui</div><div class="ttl">Como funciona o tráfego pago no marketing digital (resumo prático)</div></div>
+    </a>
+    <a class="vid" href="https://www.youtube.com/watch?v=cRSuqQNue3o" target="_blank" rel="noopener">
+      <div class="thumb" style="background-image:url('https://i.ytimg.com/vi/cRSuqQNue3o/hqdefault.jpg')"></div>
+      <div class="meta"><div class="why">Visão geral atualizada</div><div class="ttl">Como fazer tráfego pago do zero para iniciantes</div></div>
+    </a>
+  </div>
+</section>
+
+<!-- 02 -->
+<section id="como-funciona">
+  <div class="sec-num">02</div>
+  <h2>Como funciona por dentro: o leilão</h2>
+  <p>Toda vez que alguém abre o Instagram ou pesquisa no Google, acontece um <strong>leilão em milissegundos</strong> entre todos os anunciantes que querem aparecer para aquela pessoa. Mas não ganha quem paga mais: ganha quem entrega mais valor para a plataforma, que quer manter o usuário feliz.</p>
+
+  <div class="auction">
+    <div><div class="k">Lance</div><div class="v">Quanto você topa pagar</div><p>Na prática você define o orçamento e o objetivo; o algoritmo calcula o lance por você.</p></div>
+    <div><div class="k">Qualidade</div><div class="v">O quanto o anúncio é bom</div><p>Taxa de clique esperada, relevância da mensagem, experiência na página de destino.</p></div>
+    <div><div class="k">Resultado</div><div class="v">Chance de a ação acontecer</div><p>A probabilidade estimada de aquela pessoa clicar, mandar mensagem ou comprar.</p></div>
+  </div>
+  <div class="formula">valor total (Meta) = lance × chance estimada de ação + qualidade do anúncio</div>
+  <p>Consequência prática: <strong>um anúncio bom paga menos</strong> pelo mesmo resultado. Melhorar o criativo e a página costuma baratear mais do que aumentar a verba.</p>
+
+  <h3>O algoritmo aprende com você</h3>
+  <p>Quando você diz "quero mensagens no WhatsApp" ou "quero compras", a plataforma procura pessoas parecidas com as que já fizeram isso. Por isso existe a <strong>fase de aprendizado</strong>: a Meta só sai dela quando o conjunto de anúncios junta <strong>cerca de 50 conversões em 7 dias</strong>. Até lá o custo oscila. Só <strong>edições significativas</strong> reiniciam a fase: mudar orçamento, lance, público, evento de otimização, incluir criativo novo ou pausar por muitos dias.</p>
+</section>
+
+<!-- 03 -->
+<section id="plataformas">
+  <div class="sec-num">03</div>
+  <h2>Onde anunciar</h2>
+  <p>A pergunta-chave é: <strong>o seu cliente está procurando ou está distraído?</strong> Isso separa os dois grandes tipos de mídia.</p>
+
+  <div class="platforms">
+    <div class="plat"><div class="name">Google Ads (Pesquisa)</div><div class="intent">demanda existente · pessoa procurando</div><p>Aparece quando alguém digita "lavanderia em Florianópolis". Intenção alta, clique mais caro. Ótimo para serviço local e produto que as pessoas já buscam.</p></div>
+    <div class="plat"><div class="name">Meta Ads (Instagram e Facebook)</div><div class="intent">gera demanda · pessoa rolando o feed</div><p>Você interrompe a pessoa com algo interessante. Segmentação por interesse, região e comportamento. Bom para produto visual, lançamento e captação de leads.</p></div>
+    <div class="plat"><div class="name">YouTube Ads</div><div class="intent">atenção em vídeo · topo de funil</div><p>Vídeos antes ou durante outros vídeos. Bom para explicar um produto e construir lembrança de marca. Gerenciado dentro do Google Ads.</p></div>
+    <div class="plat"><div class="name">TikTok Ads</div><div class="intent">descoberta · público mais jovem</div><p>Criativo nativo, com cara de conteúdo e não de propaganda. CPM costuma ser competitivo; exige produção de vídeo constante.</p></div>
+    <div class="plat"><div class="name">LinkedIn Ads</div><div class="intent">B2B · cargo e empresa</div><p>Segmenta por cargo, setor e tamanho de empresa. Caro, mas certeiro para vender para empresas ou recrutar.</p></div>
+  </div>
+  <p class="muted">Para começar, escolha <strong>uma</strong> plataforma: Google se o cliente já procura o que você vende, Meta se você precisa mostrar algo que ele ainda não sabe que quer.</p>
+
+  <div class="watch-label">Para assistir · Meta Ads</div>
+  <div class="videos">
+    <a class="vid" href="https://www.youtube.com/watch?v=-j0Nqgew0GE" target="_blank" rel="noopener">
+      <div class="thumb" style="background-image:url('https://i.ytimg.com/vi/-j0Nqgew0GE/hqdefault.jpg')"></div>
+      <div class="meta"><div class="why">Tour pelo gerenciador</div><div class="ttl">Como usar o Gerenciador de Anúncios da Meta, passo a passo para iniciantes</div></div>
+    </a>
+    <a class="vid" href="https://www.youtube.com/watch?v=_qxagX3hLpg" target="_blank" rel="noopener">
+      <div class="thumb" style="background-image:url('https://i.ytimg.com/vi/_qxagX3hLpg/hqdefault.jpg')"></div>
+      <div class="meta"><div class="why">Fundamentos</div><div class="ttl">Comece do zero com Meta Ads</div></div>
+    </a>
+  </div>
+  <div class="watch-label">Para assistir · Google Ads</div>
+  <div class="videos">
+    <a class="vid" href="https://www.youtube.com/watch?v=5shzsRQX73k" target="_blank" rel="noopener">
+      <div class="thumb" style="background-image:url('https://i.ytimg.com/vi/5shzsRQX73k/hqdefault.jpg')"></div>
+      <div class="meta"><div class="why">Primeira campanha de pesquisa</div><div class="ttl">Tutorial de Google Ads 2026: como fazer anúncios para iniciantes</div></div>
+    </a>
+    <a class="vid playlist" href="https://www.youtube.com/playlist?list=PLTq7hUzSLXekMnog0cVqWwHVlgkV9f3yI" target="_blank" rel="noopener">
+      <div class="thumb"><span>▤ Playlist · 5 aulas</span></div>
+      <div class="meta"><div class="why">Curso gratuito</div><div class="ttl">Google Ads: sua 1ª campanha de pesquisa</div></div>
+    </a>
+  </div>
+</section>
+
+<!-- 04 -->
+<section id="funil">
+  <div class="sec-num">04</div>
+  <h2>Funil e públicos: quem você está chamando</h2>
+  <p>Ninguém compra de um desconhecido no primeiro contato. O funil organiza a jornada em etapas, e <strong>cada etapa pede uma mensagem e um objetivo de campanha diferentes</strong>.</p>
+
+  <div class="funnel-wrap">
+    <svg viewBox="0 0 320 300" role="img" aria-label="Funil com três etapas: topo, meio e fundo">
+      <path d="M10 10 H310 L262 96 H58 Z" fill="#152060" stroke="#26326F"/>
+      <path d="M62 104 H258 L218 190 H102 Z" fill="#1E2C7A" stroke="#26326F"/>
+      <path d="M106 198 H214 L184 284 H136 Z" fill="#FFB547"/>
+      <text x="160" y="50" text-anchor="middle" fill="#EEF0FA" font-family="Bricolage Grotesque, sans-serif" font-size="19" font-weight="600">Topo</text>
+      <text x="160" y="72" text-anchor="middle" fill="#B4BAD8" font-family="Figtree, sans-serif" font-size="11">descoberta</text>
+      <text x="160" y="144" text-anchor="middle" fill="#EEF0FA" font-family="Bricolage Grotesque, sans-serif" font-size="19" font-weight="600">Meio</text>
+      <text x="160" y="166" text-anchor="middle" fill="#B4BAD8" font-family="Figtree, sans-serif" font-size="11">consideração</text>
+      <text x="160" y="240" text-anchor="middle" fill="#080E32" font-family="Bricolage Grotesque, sans-serif" font-size="19" font-weight="800">Fundo</text>
+      <text x="160" y="260" text-anchor="middle" fill="#080E32" font-family="Figtree, sans-serif" font-size="11">decisão</text>
+    </svg>
+    <div>
+      <div class="stage"><div class="t">Topo <span>público frio</span></div><p>Não te conhece. Objetivo: alcance, visualização de vídeo. Conteúdo que ensina ou entretém, sem empurrar venda.</p></div>
+      <div class="stage"><div class="t">Meio <span>público morno</span></div><p>Já interagiu, viu vídeo, visitou o site. Objetivo: tráfego, leads. Mostre prova social, comparativos, casos.</p></div>
+      <div class="stage"><div class="t">Fundo <span>público quente</span></div><p>Quase decidido. Objetivo: conversão, mensagem, compra. Oferta clara, urgência real, CTA direto.</p></div>
+    </div>
+  </div>
+
+  <h3>Os três tipos de público</h3>
+  <ul class="clean">
+    <li><strong>Interesses / segmentação aberta:</strong> você descreve quem quer atingir (idade, região, interesses) ou deixa o algoritmo achar sozinho. Hoje a segmentação aberta funciona bem quando o pixel já tem dados.</li>
+    <li><strong>Público personalizado:</strong> quem já teve contato com você: visitou o site, engajou no Instagram, está na sua lista de clientes. É a base do <strong>remarketing</strong>.</li>
+    <li><strong>Lookalike (semelhante):</strong> a plataforma acha pessoas parecidas com seus melhores clientes.</li>
+  </ul>
+
+  <h3>Pixel: o "olho" no seu site</h3>
+  <p>O <strong>pixel</strong> (Meta) ou a <strong>tag</strong> (Google) é um código instalado no site que avisa a plataforma quando alguém visita uma página, adiciona ao carrinho ou compra. Sem ele, a plataforma otimiza no escuro e você não consegue fazer remarketing nem medir venda.</p>
+
+  <div class="watch-label">Para assistir</div>
+  <div class="videos">
+    <a class="vid" href="https://www.youtube.com/watch?v=zQ_ZiwCNsqs" target="_blank" rel="noopener">
+      <div class="thumb" style="background-image:url('https://i.ytimg.com/vi/zQ_ZiwCNsqs/hqdefault.jpg')"></div>
+      <div class="meta"><div class="why">Funil na prática</div><div class="ttl">Funil de tráfego pago: guia completo para iniciantes</div></div>
+    </a>
+    <a class="vid" href="https://www.youtube.com/watch?v=HOsqVSZd9TE" target="_blank" rel="noopener">
+      <div class="thumb" style="background-image:url('https://i.ytimg.com/vi/HOsqVSZd9TE/hqdefault.jpg')"></div>
+      <div class="meta"><div class="why">Remarketing</div><div class="ttl">Criar público de remarketing com o pixel do Facebook Ads</div></div>
+    </a>
+  </div>
+</section>
+
+<!-- 05 -->
+<section id="metricas">
+  <div class="sec-num">05</div>
+  <h2>As métricas, uma de cada vez</h2>
+  <p>As siglas assustam, mas todas respondem a uma pergunta simples. Leia de cima para baixo: é exatamente a ordem em que a pessoa passa pelo anúncio.</p>
+
+  <div class="gloss">
+    <div class="term"><span class="s">Impressões</span><p>Quantas vezes o anúncio apareceu na tela. Uma pessoa pode gerar várias.</p></div>
+    <div class="term"><span class="s">Alcance</span><p>Quantas <em>pessoas diferentes</em> viram. Impressões ÷ alcance = <strong>frequência</strong>.</p></div>
+    <div class="term"><span class="s">CPM</span><span class="full">custo por mil</span><p>Quanto custa aparecer mil vezes. <code>gasto ÷ impressões × 1000</code></p></div>
+    <div class="term"><span class="s">CTR</span><span class="full">taxa de clique</span><p>De quem viu, quantos clicaram. Mede se o criativo chama atenção. <code>cliques ÷ impressões</code></p></div>
+    <div class="term"><span class="s">CPC</span><span class="full">custo por clique</span><p>Quanto custou cada clique. <code>gasto ÷ cliques</code></p></div>
+    <div class="term"><span class="s">Taxa de conversão</span><p>De quem clicou, quantos fizeram a ação (lead, compra). Mede a página e a oferta.</p></div>
+    <div class="term"><span class="s">CPL</span><span class="full">custo por lead</span><p>Quanto custou cada contato interessado. <code>gasto ÷ leads</code></p></div>
+    <div class="term"><span class="s">CPA</span><span class="full">custo por aquisição</span><p>Quanto custou cada cliente/venda. <code>gasto ÷ vendas</code></p></div>
+    <div class="term"><span class="s">ROAS</span><span class="full">retorno sobre anúncio</span><p>Cada R$ 1 em anúncio virou quanto em receita. <code>receita ÷ gasto</code></p></div>
+    <div class="term"><span class="s">ROI</span><p>Lucro que a campanha gerou, menos o que ela custou, sobre o que custou. ROI 0 = empate. <code>(receita × margem − gasto) ÷ gasto</code></p></div>
+    <div class="term"><span class="s">LTV</span><span class="full">valor do cliente no tempo</span><p>Quanto um cliente gasta com você ao longo da relação. Se ele recompra, você pode pagar um CPA maior.</p></div>
+    <div class="term"><span class="s">Frequência</span><p>Quantas vezes, em média, a mesma pessoa viu. Muito alta = público cansado, criativo saturado.</p></div>
+  </div>
+
+  <div class="analogy">
+    <span class="tag">Diagnóstico</span>
+    <p><strong>CTR baixo</strong> → problema no criativo ou no público. <strong>CTR bom e conversão baixa</strong> → problema na página, na oferta ou no atendimento. <strong>Tudo bom e CPA alto</strong> → o ticket não comporta esse canal ou o CPM está caro demais.</p>
+  </div>
+
+  <div class="watch-label">Para assistir</div>
+  <div class="videos">
+    <a class="vid" href="https://www.youtube.com/watch?v=ePzGU-BwlPQ" target="_blank" rel="noopener">
+      <div class="thumb" style="background-image:url('https://i.ytimg.com/vi/ePzGU-BwlPQ/hqdefault.jpg')"></div>
+      <div class="meta"><div class="why">Todas as siglas</div><div class="ttl">Guia completo: CPC, CPA, CTR, CPM, pixel, ROI, ROAS, KPI e LTV</div></div>
+    </a>
+    <a class="vid" href="https://www.youtube.com/watch?v=gGpzEOWitb8" target="_blank" rel="noopener">
+      <div class="thumb" style="background-image:url('https://i.ytimg.com/vi/gGpzEOWitb8/hqdefault.jpg')"></div>
+      <div class="meta"><div class="why">O que olhar primeiro</div><div class="ttl">CPA, ROAS, CTR e CPM: quais métricas analisar nas campanhas</div></div>
+    </a>
+  </div>
+</section>
+
+<!-- 06 -->
+<section id="calculadora">
+  <div class="sec-num">06</div>
+  <h2>Calculadora: a campanha vale a pena?</h2>
+  <p>Antes de gastar, simule. Troque os números abaixo pelos do seu negócio. Os valores iniciais são um exemplo de serviço com ticket de R$ 600 e são só ilustrativos, porque CPM e CTR variam muito por nicho e região.</p>
+
+  <div class="calc" id="calc">
+    <div class="calc-grid">
+      <div><label for="c-budget">Verba no mês (R$)</label><input id="c-budget" type="number" min="0" step="50" value="1500"></div>
+      <div><label for="c-cpm">CPM (R$)</label><input id="c-cpm" type="number" min="0.1" step="1" value="20"><div class="hint">custo por mil impressões</div></div>
+      <div><label for="c-ctr">CTR (%)</label><input id="c-ctr" type="number" min="0" step="0.1" value="1.5"></div>
+      <div><label for="c-conv">Clique → lead (%)</label><input id="c-conv" type="number" min="0" step="0.5" value="8"></div>
+      <div><label for="c-close">Lead → venda (%)</label><input id="c-close" type="number" min="0" step="0.5" value="10"></div>
+      <div><label for="c-ticket">Ticket médio (R$)</label><input id="c-ticket" type="number" min="0" step="10" value="600"></div>
+      <div><label for="c-margin">Margem de contribuição (%)</label><input id="c-margin" type="number" min="1" max="100" step="1" value="40"><div class="hint">o que sobra após produto, impostos, taxas, frete e comissões</div></div>
+    </div>
+    <div class="chain">
+      <div class="step"><div class="lbl">Impressões</div><div class="num" id="o-imp">–</div></div>
+      <div class="step"><div class="lbl">Cliques</div><div class="num" id="o-clk">–</div><div class="sub" id="o-cpc"></div></div>
+      <div class="step"><div class="lbl">Leads</div><div class="num" id="o-lead">–</div><div class="sub" id="o-cpl"></div></div>
+      <div class="step"><div class="lbl">Vendas</div><div class="num" id="o-sale">–</div><div class="sub" id="o-cpa"></div></div>
+      <div class="step"><div class="lbl">Receita</div><div class="num" id="o-rev">–</div></div>
+      <div class="step"><div class="lbl">ROAS</div><div class="num" id="o-roas">–</div><div class="sub" id="o-be"></div></div>
+    </div>
+    <div class="verdict" id="o-verdict" role="status" aria-live="polite" aria-atomic="true"></div>
+  </div>
+  <p class="muted"><strong>ROAS de equilíbrio</strong> = 1 ÷ margem de contribuição. Com margem de 40%, você precisa de ROAS 2,5 só para empatar: cada R$ 1 de anúncio tem que trazer R$ 2,50 de receita. Esse é o número mais importante para saber se o tráfego pago é viável para o seu produto.</p>
+</section>
+
+<!-- 07 -->
+<section id="medir">
+  <div class="sec-num">07</div>
+  <h2>Como medir e o que analisar</h2>
+  <p>A plataforma te mostra mais de cem números. Pouquíssimos importam para a decisão. O segredo é saber <strong>qual número responde a qual pergunta</strong> e olhar para eles com o ritmo certo.</p>
+
+  <h3>1. Primeiro, garanta que a medição é confiável</h3>
+  <p>Se a base está errada, toda a análise está errada. Antes de olhar qualquer resultado:</p>
+  <ul class="clean">
+    <li><strong>Evento de conversão certo:</strong> o pixel/tag precisa disparar na ação que gera dinheiro (compra, lead enviado, mensagem iniciada), não em "visitou a página". Teste você mesmo e confira no Gerenciador de Eventos (Meta) ou em Conversões (Google).</li>
+    <li><strong>API de Conversões (Meta):</strong> manda os eventos também pelo servidor, porque bloqueadores e restrições de cookie fazem o pixel perder conversões. Se usar pixel + API, envie o mesmo <code>event_id</code> nos dois, senão cada venda conta duas vezes e o ROAS dobra.</li>
+    <li><strong>Conversões otimizadas (Google):</strong> enviam e-mail/telefone com hash junto da tag para recuperar conversões. Venda que fecha fora do site (WhatsApp, comercial)? Use a <strong>importação de conversões offline</strong> a partir do CRM.</li>
+    <li><strong>UTMs em todos os links:</strong> <code>?utm_source=meta&amp;utm_medium=cpc&amp;utm_campaign=captacao-out26&amp;utm_content=video-depoimento</code>. Assim o lead chega no CRM dizendo de qual campanha e qual criativo veio.</li>
+    <li><strong>A fonte da verdade é o seu caixa/CRM</strong>, não a plataforma. Meta e Google contam a conversão cada um do seu jeito (e às vezes os dois contam a mesma venda). Compare sempre com o que entrou de fato.</li>
+  </ul>
+
+  <h3>2. A pirâmide: o que importa mais</h3>
+  <p>Organize as métricas em três camadas. Quem decide é a de cima; as de baixo servem para <strong>explicar</strong> por que a de cima está boa ou ruim.</p>
+  <div class="auction">
+    <div><div class="k">Negócio · decide</div><div class="v">CPA, ROAS, lucro, LTV</div><p>"Estou ganhando ou perdendo dinheiro com isso?" É a única camada que diz se a campanha continua.</p></div>
+    <div><div class="k">Eficiência · diagnostica</div><div class="v">Taxa de conversão, CPL, CPC</div><p>"Onde no caminho estou perdendo gente?" Mostra se o problema é página, oferta ou atendimento.</p></div>
+    <div><div class="k">Atenção · explica</div><div class="v">CPM, CTR, frequência, retenção de vídeo</div><p>"O anúncio está chamando atenção do público certo?" Mostra se o problema é criativo ou público.</p></div>
+  </div>
+  <p class="muted">Curtidas, comentários, seguidores ganhos e alcance <strong>não estão na pirâmide</strong>. São métricas de vaidade: dá gosto ver, mas não dizem se a campanha se paga.</p>
+
+  <h3>3. Lendo o funil: ache o gargalo</h3>
+  <p>Leia sempre na ordem do funil e pare no primeiro número fora do esperado. Mexa só nele.</p>
+  <div class="gloss">
+    <div class="term"><span class="s">CPM alto</span><p><strong>Sintoma:</strong> aparecer está caro. <strong>Causa provável:</strong> público pequeno demais, época concorrida (Black Friday, fim de ano), anúncio com qualidade baixa. <strong>Ação:</strong> abrir o público, testar criativo novo.</p></div>
+    <div class="term"><span class="s">CTR baixo</span><p><strong>Sintoma:</strong> veem e não clicam. <strong>Causa:</strong> criativo fraco ou falando com a pessoa errada. <strong>Ação:</strong> trocar o gancho dos 3 primeiros segundos, testar outro ângulo de mensagem.</p></div>
+    <div class="term"><span class="s">CTR bom, conversão baixa</span><p><strong>Sintoma:</strong> clicam e desistem. <strong>Causa:</strong> página lenta, confusa, preço escondido, promessa do anúncio diferente da página. <strong>Ação:</strong> arrumar a página, não o anúncio.</p></div>
+    <div class="term"><span class="s">Muitos leads, poucas vendas</span><p><strong>Sintoma:</strong> CPL lindo e caixa vazio. <strong>Causa:</strong> lead desqualificado ou atendimento lento. <strong>Ação:</strong> qualificar no formulário (uma pergunta a mais filtra curioso), medir tempo de resposta.</p></div>
+    <div class="term"><span class="s">Frequência subindo</span><p><strong>Sintoma:</strong> CTR caindo semana a semana. <strong>Causa:</strong> mesmo público vendo o mesmo anúncio. <strong>Ação:</strong> renovar criativos; acima de ~3 a 4 no mês em público frio, já acenda o alerta.</p></div>
+    <div class="term"><span class="s">Tudo ok, CPA alto</span><p><strong>Sintoma:</strong> cada etapa é razoável, mas a conta não fecha. <strong>Causa:</strong> ticket ou margem não comportam o canal. <strong>Ação:</strong> aumentar ticket (combo, pacote), melhorar LTV ou testar outro canal.</p></div>
+  </div>
+
+  <h3>4. Métricas de criativo (vídeo)</h3>
+  <p>Em Meta e TikTok o criativo faz a maior parte do trabalho, então vale medir ele isoladamente:</p>
+  <ul class="clean">
+    <li><strong>Hook rate (taxa de gancho):</strong> visualizações de 3 segundos ÷ impressões. Mostra se o início do vídeo segura a rolagem.</li>
+    <li><strong>Hold rate (retenção):</strong> ThruPlays (15 s, ou o vídeo inteiro se for mais curto) ÷ visualizações de 3 s. Mostra se o miolo do vídeo prende. Para ver <em>onde</em> as pessoas saem, use as colunas de reprodução de 25%, 50%, 75% e 95%.</li>
+    <li><strong>CTR de saída / CTR do link:</strong> use o de clique no link, não o "CTR (todos)", que conta clique em curtir e no perfil.</li>
+  </ul>
+  <p class="muted">Gancho bom e retenção ruim → corte o vídeo. Retenção boa e CTR ruim → o CTA no final está fraco ou a oferta não convence.</p>
+
+  <h3>5. No Google Ads, olhe também</h3>
+  <ul class="clean">
+    <li><strong>Termos de pesquisa:</strong> o que as pessoas digitaram de verdade antes de clicar. Toda semana, negative os termos irrelevantes ("grátis", "vaga de emprego", cidade errada). É a otimização que mais economiza dinheiro.</li>
+    <li><strong>Índice de qualidade (1 a 10):</strong> diagnóstico do Google com 3 componentes: CTR esperado, relevância do anúncio e experiência na página. Melhore os componentes, não a nota: isso tende a baratear o clique.</li>
+    <li><strong>Parcela de impressões:</strong> de todas as buscas em que você poderia aparecer, em quantas apareceu. Perdida por <em>orçamento</em> → dá para escalar. Perdida por <em>classificação</em> → melhore anúncio, página ou lance antes de pôr mais verba.</li>
+  </ul>
+
+  <h3>6. Monte suas colunas</h3>
+  <p>Não use a visão padrão do gerenciador. Crie um conjunto de colunas salvo, na ordem do funil:</p>
+  <div class="formula formula--block">Valor gasto · Impressões · CPM · Frequência · CTR (link) · CPC (link) · Resultados · Custo por resultado · Taxa de conversão · Valor de conversão · ROAS</div>
+
+  <h3>7. Ritmo de análise</h3>
+  <div class="rhythm">
+    <div><h4>Diário · 5 min</h4><ul><li>A campanha está rodando e gastando?</li><li>Algum anúncio reprovado?</li><li>Gasto fora do previsto?</li><li><strong>Não otimize aqui.</strong> Um dia é ruído.</li></ul></div>
+    <div><h4>Semanal · 30 min</h4><ul><li>Leitura do funil e do gargalo</li><li>Pausar criativos ruins, subir novos</li><li>Termos de pesquisa (Google)</li><li>Conferir leads/vendas no CRM</li></ul></div>
+    <div><h4>Mensal · 1 h</h4><ul><li>CPA e ROAS reais vs. meta</li><li>Comparar com mês anterior</li><li>Decidir verba do próximo mês</li><li>Quais aprendizados viram regra</li></ul></div>
+  </div>
+
+  <h3>8. Cuidados para não tirar conclusão errada</h3>
+  <ul class="clean">
+    <li><strong>Amostra pequena engana.</strong> 2 vendas contra 0 não prova nada. Antes de declarar um vencedor, espere ~30 a 50 conversões por variação <strong>e</strong> 1 a 2 semanas, para cobrir dias da semana diferentes.</li>
+    <li><strong>Olhe o total, não só cada plataforma.</strong> CAC geral = verba total ÷ clientes novos no CRM. Se Meta + Google somam mais vendas que o caixa, tem venda contada duas vezes.</li>
+    <li><strong>Desconfie do que "converte fácil".</strong> Remarketing e anúncio na busca pela sua própria marca parecem ótimos porque parte dessas pessoas já ia comprar. Para medir o que é incremental, pause 1 a 2 semanas numa região e compare.</li>
+    <li><strong>Janela de atribuição:</strong> o padrão da Meta é <strong>7 dias após o clique + 1 dia após a visualização</strong>. Ela conta venda de quem só <em>viu</em> o anúncio (pode inflar) e não conta venda que fecha depois de 7 dias (subestima ciclo longo). Confira sempre no CRM.</li>
+    <li><strong>Os últimos 2 a 3 dias ainda vão mudar:</strong> a conversão é lançada na data do clique, não da venda. Quem analisa "ontem" vê um CPA pior do que o real.</li>
+    <li><strong>Compare iguais com iguais:</strong> semana com feriado não se compara com semana normal; dezembro não se compara com fevereiro.</li>
+    <li><strong>Uma mudança por vez</strong>, com data anotada. Se você trocou criativo, público e verba no mesmo dia, nunca vai saber o que causou o resultado.</li>
+  </ul>
+
+  <div class="watch-label">Para assistir · análise na prática</div>
+  <div class="videos">
+    <a class="vid" href="https://www.youtube.com/watch?v=wM8EPDzNXDM" target="_blank" rel="noopener">
+      <div class="thumb" style="background-image:url('https://i.ytimg.com/vi/wM8EPDzNXDM/hqdefault.jpg')"></div>
+      <div class="meta"><div class="why">Método de análise</div><div class="ttl">Como analisar campanhas no Meta Ads do jeito certo (Cleber Marques)</div></div>
+    </a>
+    <a class="vid" href="https://www.youtube.com/watch?v=C1IYwvdamEE" target="_blank" rel="noopener">
+      <div class="thumb" style="background-image:url('https://i.ytimg.com/vi/C1IYwvdamEE/hqdefault.jpg')"></div>
+      <div class="meta"><div class="why">Colunas da Meta</div><div class="ttl">O que analisar nas colunas de desempenho do Gerenciador (Leandro Telles)</div></div>
+    </a>
+    <a class="vid" href="https://www.youtube.com/watch?v=T-K86Cim0c4" target="_blank" rel="noopener">
+      <div class="thumb" style="background-image:url('https://i.ytimg.com/vi/T-K86Cim0c4/hqdefault.jpg')"></div>
+      <div class="meta"><div class="why">Colunas do Google</div><div class="ttl">Personalizando suas colunas de métricas no Google Ads (Bruno Marinho)</div></div>
+    </a>
+  </div>
+</section>
+
+<!-- 08 -->
+<section id="aplicar">
+  <div class="sec-num">08</div>
+  <h2>Aplicando no negócio, em 7 passos</h2>
+  <div class="steps">
+    <div class="stp"><div><h4>Defina um objetivo que vira número</h4><p>"Mais visibilidade" não se mede. "30 leads qualificados por mês a até R$ 25 cada" se mede. Escolha uma ação principal: mensagem no WhatsApp, formulário preenchido ou compra.</p></div></div>
+    <div class="stp"><div><h4>Faça a conta de trás pra frente</h4><p>Use a calculadora: com seu ticket e margem, qual o CPA máximo que você aguenta? Se o CPA máximo for R$ 50 e o mercado cobra R$ 15 por clique, o canal não fecha. Melhor descobrir antes.</p></div></div>
+    <div class="stp"><div><h4>Arrume a casa antes de chamar visita</h4><p>Página clara (o que é, para quem, quanto custa, como comprar), WhatsApp respondendo rápido, perfil do Instagram com prova social. Anúncio bom levando para página ruim é dinheiro queimado.</p></div></div>
+    <div class="stp"><div><h4>Instale a medição</h4><p>Pixel da Meta e/ou tag do Google configurados com o evento de conversão certo. Use UTMs nos links para saber de qual campanha veio cada lead no seu CRM.</p></div></div>
+    <div class="stp"><div><h4>Comece pequeno, com estrutura simples</h4><p>Uma campanha, um ou dois públicos, 3 a 5 criativos diferentes. Verba que você aguenta perder enquanto aprende. <strong>Regra de bolso:</strong> orçamento semanal ≥ 50 × o custo por resultado esperado. Se não cabe (ex.: CPA de R$ 167 pediria R$ 8 mil/semana), otimize para um evento mais frequente e mais acima no funil, como lead ou mensagem, e junte tudo num conjunto só.</p></div></div>
+    <div class="stp"><div><h4>Espere o aprendizado e leia os dados</h4><p>Dê de 5 a 7 dias sem mexer. Depois olhe o funil na ordem: CPM → CTR → conversão → CPA. Ache o gargalo e mexa só nele.</p></div></div>
+    <div class="stp"><div><h4>Escale o que funciona, aos poucos</h4><p>Criativo com CPA bom? Aumente a verba 20 a 30% a cada poucos dias, não dobrando de uma vez (isso reinicia o aprendizado). Desligue o que está ruim e teste criativos novos toda semana.</p></div></div>
+  </div>
+
+  <div class="example">
+    <span class="eyebrow">Exemplo · serviço local captando clientes</span>
+    <p>Uma lavanderia quer novos clientes numa cidade de praia. <strong>Google Ads Pesquisa</strong> com palavras como "lavanderia [cidade]" e "lavar edredom [cidade]" captura quem já procura. Em paralelo, uma campanha pequena de <strong>Meta Ads</strong> com raio de 5 km mostra um vídeo curto do serviço e leva direto para o WhatsApp. Quem clicou e não fechou entra num <strong>remarketing</strong> com um cupom de primeira lavagem. A métrica que manda: custo por cliente que fez o primeiro pedido, comparado com quanto ele gasta em 6 meses (LTV).</p>
+  </div>
+  <div class="example">
+    <span class="eyebrow">Exemplo · captação de leads B2B ou de proprietários</span>
+    <p>Para quem capta parceiros ou proprietários, o ciclo de venda é longo. A campanha otimiza para <strong>lead</strong> (formulário nativo da Meta ou página com formulário), e o que importa é o <strong>custo por lead qualificado</strong>, não por lead bruto. Por isso cruze os leads da campanha com o CRM (Pipedrive, por exemplo) e devolva para a plataforma quem virou negócio: assim ela aprende a buscar gente parecida com quem fecha, não com quem só preenche formulário.</p>
+  </div>
+
+  <div class="watch-label">Para assistir · subindo a primeira campanha</div>
+  <div class="videos">
+    <a class="vid" href="https://www.youtube.com/watch?v=S9i41ByCWf0" target="_blank" rel="noopener">
+      <div class="thumb" style="background-image:url('https://i.ytimg.com/vi/S9i41ByCWf0/hqdefault.jpg')"></div>
+      <div class="meta"><div class="why">Mão na massa</div><div class="ttl">Tráfego pago do zero: subindo a 1ª campanha (aulão completo)</div></div>
+    </a>
+  </div>
+</section>
+
+<!-- 09 -->
+<section id="dicas">
+  <div class="sec-num">09</div>
+  <h2>Dicas e erros comuns</h2>
+  <div class="dos">
+    <div class="yes">
+      <h4>Faça</h4>
+      <ul>
+        <li><strong>O criativo é a nova segmentação.</strong> Com público aberto, é a imagem/vídeo que "escolhe" quem para de rolar. Teste vários.</li>
+        <li>Os <strong>3 primeiros segundos</strong> do vídeo decidem tudo. Comece pelo problema ou pelo resultado, nunca pela logo.</li>
+        <li>Fale com <strong>uma pessoa específica</strong>, com a dor dela. "Para quem tem apartamento de temporada" converte mais que "para todos".</li>
+        <li>Teste <strong>uma variável por vez</strong> (criativo OU público OU oferta), senão você não sabe o que funcionou.</li>
+        <li>Anote cada teste numa planilha: o que mudou, o resultado, a decisão.</li>
+        <li>Responda leads em <strong>minutos</strong>, não horas. Lead esfria rápido.</li>
+      </ul>
+    </div>
+    <div class="no">
+      <h4>Evite</h4>
+      <ul>
+        <li>Botão <strong>"Impulsionar"</strong> do Instagram como estratégia: tem menos controle que o Gerenciador de Anúncios.</li>
+        <li>Mexer na campanha <strong>todo dia</strong>. Reinicia o aprendizado e o custo sobe.</li>
+        <li>Julgar por <strong>curtidas e cliques</strong>. Métrica de vaidade não paga conta; olhe CPA e ROAS.</li>
+        <li>Começar com <strong>várias plataformas</strong> e verba picada. Concentre para ter dado suficiente.</li>
+        <li>Rodar <strong>sem pixel</strong>/conversão configurada. Você paga e não aprende nada.</li>
+        <li>Público <strong>pequeno demais</strong> com muita segmentação: o CPM dispara e a frequência satura.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 10 -->
+<section id="checklist">
+  <div class="sec-num">10</div>
+  <h2 id="checklist-title">Checklist da primeira campanha</h2>
+  <p class="progress" id="progress" aria-live="polite"><b>0</b> de 10 itens prontos</p>
+  <ul class="check" id="checklist" aria-labelledby="checklist-title">
+    <li><label><input type="checkbox"><span>Objetivo definido como número (ex.: 30 leads/mês a até R$ 25)</span></label></li>
+    <li><label><input type="checkbox"><span>CPA máximo calculado a partir do ticket e da margem</span></label></li>
+    <li><label><input type="checkbox"><span>Conta de anúncios e Business Manager criados, com forma de pagamento</span></label></li>
+    <li><label><input type="checkbox"><span>Página de destino ou WhatsApp pronto e testado no celular</span></label></li>
+    <li><label><input type="checkbox"><span>Pixel / tag instalado e evento de conversão disparando</span></label></li>
+    <li><label><input type="checkbox"><span>Links com UTM para rastrear origem no CRM</span></label></li>
+    <li><label><input type="checkbox"><span>3 a 5 criativos diferentes (ângulos distintos, não só cores)</span></label></li>
+    <li><label><input type="checkbox"><span>Público e região definidos; exclusão de quem já é cliente</span></label></li>
+    <li><label><input type="checkbox"><span>Verba diária definida e data para a primeira análise (5 a 7 dias)</span></label></li>
+    <li><label><input type="checkbox"><span>Planilha de testes aberta para registrar resultados</span></label></li>
+  </ul>
+</section>
+
+<!-- 11 -->
+<section id="estudar">
+  <div class="sec-num">11</div>
+  <h2>Trilha de estudo sugerida</h2>
+  <p>Uma ordem que funciona: entender o conceito → escolher uma plataforma → subir uma campanha pequena de verdade → voltar para as métricas com dado real na mão. Aprender só assistindo não fixa; o primeiro R$ 100 gasto ensina mais que 10 horas de vídeo.</p>
+  <ul class="clean">
+    <li><strong>Semana 1:</strong> capítulos 1 a 4 deste guia + os vídeos de visão geral e funil.</li>
+    <li><strong>Semana 2:</strong> escolha Meta ou Google e assista a playlist/tutorial da plataforma. Configure conta e pixel.</li>
+    <li><strong>Semana 3:</strong> suba uma campanha pequena seguindo o checklist.</li>
+    <li><strong>Semana 4:</strong> leia os resultados com o glossário do capítulo 5 e ajuste um gargalo seguindo o capítulo 7.</li>
+  </ul>
+
+  <div class="watch-label">Cursos completos e gratuitos</div>
+  <div class="videos">
+    <a class="vid playlist" href="https://www.youtube.com/playlist?list=PLjm8rxH__HzKHAmXXf4_0IC8v387iFqkh" target="_blank" rel="noopener">
+      <div class="thumb"><span>▤ Playlist</span></div>
+      <div class="meta"><div class="why">Do zero ao avançado</div><div class="ttl">Curso de tráfego pago gratuito: do zero ao avançado</div></div>
+    </a>
+    <a class="vid playlist" href="https://www.youtube.com/playlist?list=PL84i8jUr-YlmuWzeWk0FMXHp0VhGp8ZjH" target="_blank" rel="noopener">
+      <div class="thumb"><span>▤ Playlist</span></div>
+      <div class="meta"><div class="why">Meta Ads em aulas curtas</div><div class="ttl">Curso Meta Ads iniciante (Professora Eliz Sapla)</div></div>
+    </a>
+  </div>
+  <p class="muted sources">Fontes oficiais e gratuitas: <a href="https://www.facebook.com/business/learn" target="_blank" rel="noopener">Meta Blueprint</a> e <a href="https://skillshop.withgoogle.com/" target="_blank" rel="noopener">Google Skillshop</a>, as duas com certificação.</p>
+</section>
+
+<footer>
+  Guia montado em 27/10/2026. Clique em qualquer vídeo para assistir aqui mesmo. Vídeos selecionados por busca no YouTube; as interfaces das plataformas mudam com frequência, então prefira os vídeos mais recentes quando houver diferença de tela. Números da calculadora são ilustrativos.
+</footer>
+
+</main>
+</div>
+
+<script>
+(function () {
+  // ---- calculadora ----
+  const $ = id => document.getElementById(id);
+  const brl = v => v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL', maximumFractionDigits: v < 100 ? 2 : 0 });
+  const int = v => Math.round(v).toLocaleString('pt-BR');
+  const dec = v => v.toLocaleString('pt-BR', { maximumFractionDigits: 2 });
+  const num = id => Math.max(0, parseFloat($(id).value.replace(',', '.')) || 0);
+
+  function calc() {
+    const budget = num('c-budget'), cpm = num('c-cpm'), ctr = num('c-ctr') / 100,
+          conv = num('c-conv') / 100, close = num('c-close') / 100,
+          ticket = num('c-ticket'), margin = num('c-margin') / 100;
+
+    const imp = cpm > 0 ? budget / cpm * 1000 : 0;
+    const clk = imp * ctr, lead = clk * conv, sale = lead * close, rev = sale * ticket;
+    const roas = budget > 0 ? rev / budget : 0;
+    const be = margin > 0 ? 1 / margin : Infinity;
+    const profit = rev * margin - budget;
+
+    $('o-imp').textContent = int(imp);
+    $('o-clk').textContent = int(clk);
+    $('o-cpc').textContent = clk ? 'CPC ' + brl(budget / clk) : '';
+    $('o-lead').textContent = int(lead);
+    $('o-cpl').textContent = lead ? 'CPL ' + brl(budget / lead) : '';
+    $('o-sale').textContent = dec(sale);
+    $('o-cpa').textContent = sale ? 'CPA ' + brl(budget / sale) : '';
+    $('o-rev').textContent = brl(rev);
+    $('o-roas').textContent = dec(roas);
+    $('o-be').textContent = isFinite(be) ? 'empate em ' + dec(be) : '';
+
+    const v = $('o-verdict');
+    if (!budget || !sale) { v.className = 'verdict bad'; v.innerHTML = 'Com esses números a campanha não gera nenhuma venda. Revise as taxas.'; return; }
+    if (profit >= 0) {
+      v.className = 'verdict good';
+      v.innerHTML = `<strong>Fecha a conta.</strong> ROAS ${dec(roas)} acima do empate (${dec(be)}): sobra cerca de ${brl(profit)} de lucro depois de pagar os anúncios (ROI ${dec(profit / budget * 100)}%). É simulação: confirme com vendas reais no CRM antes de escalar.`;
+    } else {
+      const maxCpa = ticket * margin;
+      v.className = 'verdict bad';
+      v.innerHTML = `<strong>Não fecha ainda.</strong> ROAS ${dec(roas)} abaixo do empate (${dec(be)}): prejuízo de ~${brl(-profit)}. Seu CPA máximo é ${brl(maxCpa)}; melhore a conversão da página, o fechamento ou o ticket antes de aumentar a verba.`;
+    }
+  }
+  document.querySelectorAll('#calc input').forEach(i => i.addEventListener('input', calc));
+  calc();
+
+  // ---- checklist (lembra no navegador) ----
+  const boxes = [...document.querySelectorAll('#checklist input')];
+  const KEY = 'guia-trafego-check';
+  try { const s = JSON.parse(localStorage.getItem(KEY) || '[]'); boxes.forEach((b, i) => b.checked = !!s[i]); } catch (e) {}
+  function prog() {
+    const n = boxes.filter(b => b.checked).length;
+    $('progress').innerHTML = `<b>${n}</b> de ${boxes.length} itens prontos`;
+    try { localStorage.setItem(KEY, JSON.stringify(boxes.map(b => b.checked))); } catch (e) {}
+  }
+  boxes.forEach(b => b.addEventListener('change', prog));
+  prog();
+
+  // ---- vídeos embutidos: clique troca a miniatura pelo player ----
+  document.querySelectorAll('a.vid').forEach(a => {
+    a.addEventListener('click', ev => {
+      ev.preventDefault();
+      const u = new URL(a.href);
+      const list = u.searchParams.get('list'), v = u.searchParams.get('v');
+      const src = list
+        ? `https://www.youtube-nocookie.com/embed/videoseries?list=${list}&autoplay=1&rel=0`
+        : `https://www.youtube-nocookie.com/embed/${v}?autoplay=1&rel=0`;
+      const card = document.createElement('div');
+      card.className = a.className + ' playing';
+      card.innerHTML = a.innerHTML;
+      const thumb = card.querySelector('.thumb');
+      thumb.innerHTML = `<iframe src="${src}" title="${card.querySelector('.ttl').textContent}" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>`;
+      card.querySelector('.meta').insertAdjacentHTML('beforeend', `<a class="yt" href="${a.href}" target="_blank" rel="noopener">abrir no YouTube ↗</a>`);
+      a.replaceWith(card);
+    });
+  });
+
+  // ---- sumário ativo ----
+  const links = [...document.querySelectorAll('nav.toc a')];
+  const obs = new IntersectionObserver(es => {
+    es.forEach(e => {
+      if (e.isIntersecting) links.forEach(l => l.classList.toggle('on', l.getAttribute('href') === '#' + e.target.id));
+    });
+  }, { rootMargin: '-30% 0px -60% 0px' });
+  document.querySelectorAll('main section').forEach(s => obs.observe(s));
+})();
+</script>
+</body>
+</html>
