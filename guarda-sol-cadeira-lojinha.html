@@ -114,6 +114,29 @@
   .todo b{display:block;font-weight:700}
   .todo span{color:var(--ink2);font-size:15px}
 
+  /* regra fechada */
+  .rule{margin-top:20px;border:1px solid var(--line);border-radius:var(--r);background:var(--surf);padding:18px 20px;display:grid;gap:10px}
+  .rule p{color:var(--ink2);font-size:15px}
+  .rule b{color:var(--ink)}
+
+  /* acompanhamento */
+  .meters{display:grid;grid-template-columns:1fr;gap:16px;margin-bottom:24px}
+  @media (min-width:760px){.meters{grid-template-columns:1fr 1fr}}
+  .meter{border:1px solid var(--line);border-radius:var(--r);background:var(--surf);padding:20px}
+  .meter .top{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+  .meter .name{font-weight:700}
+  .meter .q{font-size:30px;font-weight:800}
+  .meter .q small{font-size:15px;color:var(--ink3);font-weight:600}
+  .bar{position:relative;height:10px;border-radius:var(--r-full);background:var(--surf2);margin:14px 0 8px}
+  .bar i{position:absolute;left:0;top:0;bottom:0;border-radius:var(--r-full);background:var(--warn)}
+  .bar .mk{position:absolute;top:-4px;bottom:-4px;width:2px;background:var(--ink3)}
+  .scale{position:relative;height:16px;font-size:12px;color:var(--ink3)}
+  .scale span{position:absolute;transform:translateX(-50%)}
+  .meter .st{margin-top:10px;font-size:14px;color:var(--ink2)}
+  .meter .st b{color:var(--warn)}
+  td.wait{color:var(--ink3)}
+  h3{font-size:16px;margin:28px 0 12px;font-weight:700}
+
   footer{padding:32px 0 56px;font-size:13px;color:var(--ink3)}
 </style>
 </head>
@@ -123,10 +146,11 @@
 <header>
   <span class="eyebrow">Lojinha Seazone · Produtos Personalizados</span>
   <h1>Guarda-sol e Cadeira de Praia</h1>
-  <p class="lead">Os dois itens com a marca Seazone já estão na lojinha em pré-compra, e o comunicado foi enviado às franquias em 22/10. A produção só sai se o volume mínimo for atingido até 30/10.</p>
+  <p class="lead">Os dois itens com a marca Seazone já estão na lojinha em pré-compra, e o comunicado foi enviado às franquias em 22/10. A produção só sai se cada item chegar a 30 unidades até 30/10. Em 26/10 são 10 cadeiras e 6 guarda-sóis pedidos.</p>
   <div class="status">
     <span class="pill"><i></i>Na lojinha desde 21/10</span>
     <span class="pill"><i></i>Comunicado enviado em 22/10</span>
+    <span class="pill w"><i></i>26/10: 10 de 30 cadeiras · 6 de 30 guarda-sóis</span>
     <span class="pill w"><i></i>Pré-compra até 30/10</span>
   </div>
 </header>
@@ -173,6 +197,7 @@
     <li class="done"><span class="d">05/10</span><span class="dot"></span><div><b>Validação das cotações</b><span class="t">4 fornecedores cotados. A IZY Brindes foi a indicada: já é homologada (só precisa de aditivo), é a única que encaixa na lojinha e tem o menor preço nos dois itens. O risco apontado era o pedido mínimo de 30 unidades e a Seazone ficar com o que não vendesse.</span></div></li>
     <li class="done"><span class="d">21/10</span><span class="dot"></span><div><b>Produtos cadastrados na lojinha</b><span class="t">Guarda-sol e Cadeira de Praia em Produtos Personalizados, fornecedor IZY, visíveis para todos.</span></div></li>
     <li class="done"><span class="d">22/10</span><span class="dot"></span><div><b>Comunicado enviado às franquias</b><span class="t">Postado na comunidade de franquias às 10:38, no formato de pré-compra com volume mínimo.</span></div></li>
+    <li class="done"><span class="d">22 a 26/10</span><span class="dot"></span><div><b>Primeiros pedidos</b><span class="t">2 franquias pediram: 10 cadeiras e 6 guarda-sóis no total. Acompanhamento diário na seção 05.</span></div></li>
     <li class="next"><span class="d">30/10</span><span class="dot"></span><div><b>Fim da pré-compra</b><span class="t">Atingiu o mínimo: o pagamento é liberado e a IZY produz. Não atingiu: os pedidos são cancelados.</span></div></li>
   </ol>
 </section>
@@ -222,19 +247,53 @@
       </tbody>
     </table>
   </div>
-  <p class="note">A comissão é a diferença entre a cotação da IZY e o preço da lojinha: a franquia paga o preço da lojinha e a Seazone recebe a diferença. Se as 30 cadeiras e os 30 guarda-sóis saírem, são <b>R$ 371,70</b> de comissão. Segue em aberto da validação: o mínimo de 30 é por item ou para o pedido todo?</p>
+  <p class="note">A comissão é a diferença entre a cotação da IZY e o preço da lojinha: a franquia paga o preço da lojinha e a Seazone recebe a diferença. Se as 30 cadeiras e os 30 guarda-sóis saírem, são <b>R$ 371,70</b> de comissão.</p>
+  <div class="rule">
+    <p><b>Mínimo: 30 unidades por item</b> (regra padrão IZY). Mínimo total: 60 un (30 cadeiras + 30 guarda-sóis). Risco máximo R$ 6.408,30 confirmado.</p>
+    <p><b>Margem:</b> comissão de 5-6% é padrão para produtos personalizados. Se a adesão escalar para mais de 30 un/mês por item (um lote mínimo por mês), renegociar com a IZY ou revisar a regra.</p>
+  </div>
 </section>
 
 <section>
-  <div class="sechead"><span class="n">05</span><h2>Próximos passos</h2><span class="aside">Pedidos na lojinha em 22/10, 11h30: 0</span></div>
+  <div class="sechead"><span class="n">05</span><h2>Próximos passos</h2><span class="aside">Pedidos na lojinha em 26/10, 20h35</span></div>
+  <div class="meters">
+    <div class="meter">
+      <div class="top"><span class="name">Cadeira de Praia</span><span class="q num">10 <small>de 30</small></span></div>
+      <div class="bar"><i style="width:33.3%"></i><span class="mk" style="left:30%"></span><span class="mk" style="left:50%"></span></div>
+      <div class="scale"><span style="left:30%">30%</span><span style="left:50%">50%</span></div>
+      <div class="st"><b>33% do mínimo.</b> 2 pedidos (2 + 8 un). Faltam 20.</div>
+    </div>
+    <div class="meter">
+      <div class="top"><span class="name">Guarda-sol</span><span class="q num">6 <small>de 30</small></span></div>
+      <div class="bar"><i style="width:20%"></i><span class="mk" style="left:30%"></span><span class="mk" style="left:50%"></span></div>
+      <div class="scale"><span style="left:30%">30%</span><span style="left:50%">50%</span></div>
+      <div class="st"><b>20% do mínimo.</b> 2 pedidos (2 + 4 un). Faltam 24. Abaixo da régua de 30% de 27/10.</div>
+    </div>
+  </div>
+
+  <h3>Rotina diária até 30/10</h3>
+  <div class="tbl">
+    <table>
+      <thead><tr><th>Dia</th><th class="r">Cadeiras</th><th class="r">Guarda-sóis</th><th>Regra do dia</th><th>Resultado</th></tr></thead>
+      <tbody>
+        <tr><td>22/10</td><td class="r num">0</td><td class="r num">0</td><td>Comunicado enviado</td><td>Sem pedidos às 11h30</td></tr>
+        <tr><td>26/10</td><td class="r num">10</td><td class="r num">6</td><td>FUP</td><td>Cadeira 33% · Guarda-sol 20%</td></tr>
+        <tr><td>27/10</td><td class="r wait">–</td><td class="r wait">–</td><td>Abaixo de 30% (9 un) em qualquer item: 2º push para a rede</td><td class="wait">Pendente</td></tr>
+        <tr><td>28/10</td><td class="r wait">–</td><td class="r wait">–</td><td>Abaixo de 50% (15 un) em qualquer item: acionar Vic/Carol para avaliar extensão de prazo ou cancelamento</td><td class="wait">Pendente</td></tr>
+        <tr><td>29/10</td><td class="r wait">–</td><td class="r wait">–</td><td>FUP</td><td class="wait">Pendente</td></tr>
+        <tr><td>30/10</td><td class="r wait">–</td><td class="r wait">–</td><td>FUP final + decisão</td><td class="wait">Pendente</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Fechamento em 31/10</h3>
   <ul class="todo">
-    <li><span class="ic"></span><div><b>Acompanhar os pedidos até 30/10</b><span>Ainda não entrou nenhum pedido dos dois itens. Vale um lembrete às franquias na reta final se o volume estiver longe do mínimo.</span></div></li>
-    <li><span class="ic"></span><div><b>Confirmar com a IZY como conta o mínimo</b><span>30 de cada item ou 30 no total (ex.: 15 + 15). Isso decide se a pré-compra fecha ou não.</span></div></li>
-    <li><span class="ic"></span><div><b>Fechar a decisão em 31/10</b><span>Atingiu: liberar o pagamento, subir o aditivo da IZY e disparar a produção. Não atingiu: cancelar os pedidos e avisar as franquias.</span></div></li>
+    <li><span class="ic"></span><div><b>Atingiu 30 de cada item</b><span>Subir o aditivo da IZY, liberar o pagamento das franquias e disparar a produção.</span></div></li>
+    <li><span class="ic"></span><div><b>Não atingiu em algum item</b><span>Cancelar os pedidos e avisar as franquias. Nenhum pagamento foi feito, nada é produzido.</span></div></li>
   </ul>
 </section>
 
-<footer>Time de Fornecedores · Seazone · 22 de outubro de 2026 · Fontes: lojinha (cadastro dos produtos e pedidos), validação de 05/10 e print do comunicado.</footer>
+<footer>Time de Fornecedores · Seazone · atualizado em 26 de outubro de 2026 · Fontes: lojinha (cadastro dos produtos e pedidos), validação de 05/10 e print do comunicado.</footer>
 
 </div>
 </body>
