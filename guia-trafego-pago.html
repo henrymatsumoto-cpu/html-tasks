@@ -56,7 +56,7 @@
 
   /* ---------- hero ---------- */
   .hero { padding: 48px 0 56px; border-bottom: 1px solid var(--line); margin-bottom: 24px; }
-  .eyebrow { font: 600 12.5px/1 var(--sans); letter-spacing: .1em; text-transform: uppercase; color: var(--sun); }
+  .eyebrow { font: 600 12.5px/1.5 var(--sans); letter-spacing: .1em; text-transform: uppercase; color: var(--sun); }
   h1 {
     font: 800 clamp(44px, 7vw, 84px)/0.98 var(--serif); letter-spacing: -0.02em;
     margin: 18px 0 24px; max-width: 12ch;
@@ -195,7 +195,14 @@
   .vid.playing .thumb::after { display: none; }
   .vid .thumb iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
   .vid .yt { display: inline-block; margin-top: 8px; font-size: 12.5px; color: var(--ink-3); }
-  .watch-label { font: 600 12.5px var(--sans); color: var(--ink-3); text-transform: uppercase; letter-spacing: .08em; margin-top: 32px; }
+  .leadfunnel { margin: 28px 0 10px; }
+  .lf { display: grid; grid-template-columns: minmax(0, 300px) 1fr; gap: 20px; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--line); }
+  .lf-bar { width: max(var(--w), 120px); background: var(--bg-3); border-radius: 10px; padding: 10px 14px; display: flex; justify-content: space-between; gap: 10px; font-weight: 600; }
+  .lf-bar b { color: var(--sun); font-variant-numeric: tabular-nums; }
+  .lf-bar.lf-win { background: var(--sun); color: var(--bg); }
+  .lf-bar.lf-win b { color: var(--bg); }
+  .lf p { margin: 0; font-size: 15px; color: var(--ink-2); }
+  .watch-label { font: 600 12.5px/1.5 var(--sans); color: var(--ink-3); text-transform: uppercase; letter-spacing: .08em; margin-top: 32px; }
 
   /* checklist */
   .check { list-style: none; padding: 0; margin: 20px 0; max-width: 70ch; }
@@ -240,6 +247,7 @@
     .analogy .tag { justify-self: start; }
     .calc { padding: 20px; }
     .stp { grid-template-columns: 40px 1fr; gap: 12px; }
+    .lf { grid-template-columns: 1fr; gap: 8px; }
     .stp::before { font-size: 30px; }
   }
   @media (prefers-reduced-motion: reduce) { * { transition: none !important; scroll-behavior: auto !important; } }
@@ -258,6 +266,7 @@
     <li><a href="#metricas">As métricas</a></li>
     <li><a href="#calculadora">Calculadora</a></li>
     <li><a href="#medir">Como medir e analisar</a></li>
+    <li><a href="#mql-sql">Lead, MQL e SQL</a></li>
     <li><a href="#aplicar">Aplicando no negócio</a></li>
     <li><a href="#dicas">Dicas e erros comuns</a></li>
     <li><a href="#checklist">Checklist da 1ª campanha</a></li>
@@ -272,9 +281,9 @@
   <h1>Tráfego pago, <em>sem mistério</em></h1>
   <p class="lede">O que é, como as plataformas decidem quem vê seu anúncio, quais números importam, como medir e analisar resultados e como montar uma primeira campanha que dá para medir. Cada tema tem vídeos do YouTube para aprofundar.</p>
   <div class="hero-meta">
-    <span><b>11</b> capítulos</span>
+    <span><b>12</b> capítulos</span>
     <span><b>~35 min</b> de leitura</span>
-    <span><b>16</b> vídeos indicados</span>
+    <span><b>16</b> vídeos curtos (até 15 min)</span>
     <span>calculadora interativa</span>
   </div>
 </header>
@@ -316,11 +325,11 @@
   <div class="videos">
     <a class="vid" href="https://www.youtube.com/watch?v=-xDEYvULc7c" target="_blank" rel="noopener">
       <div class="thumb" style="background-image:url('https://i.ytimg.com/vi/-xDEYvULc7c/hqdefault.jpg')"></div>
-      <div class="meta"><div class="why">Comece por aqui</div><div class="ttl">Como funciona o tráfego pago no marketing digital (resumo prático)</div></div>
+      <div class="meta"><div class="why">Comece por aqui · 15 min</div><div class="ttl">Como funciona o tráfego pago no marketing digital (resumo prático)</div></div>
     </a>
-    <a class="vid" href="https://www.youtube.com/watch?v=cRSuqQNue3o" target="_blank" rel="noopener">
-      <div class="thumb" style="background-image:url('https://i.ytimg.com/vi/cRSuqQNue3o/hqdefault.jpg')"></div>
-      <div class="meta"><div class="why">Visão geral atualizada</div><div class="ttl">Como fazer tráfego pago do zero para iniciantes</div></div>
+    <a class="vid" href="https://www.youtube.com/watch?v=bUQfopeI05k" target="_blank" rel="noopener">
+      <div class="thumb" style="background-image:url('https://i.ytimg.com/vi/bUQfopeI05k/hqdefault.jpg')"></div>
+      <div class="meta"><div class="why">Pago × orgânico · 13 min</div><div class="ttl">Diferença entre tráfego pago e orgânico (qual usar primeiro?)</div></div>
     </a>
   </div>
 </section>
@@ -338,6 +347,14 @@
   </div>
   <div class="formula">valor total (Meta) = lance × chance estimada de ação + qualidade do anúncio</div>
   <p>Consequência prática: <strong>um anúncio bom paga menos</strong> pelo mesmo resultado. Melhorar o criativo e a página costuma baratear mais do que aumentar a verba.</p>
+
+  <div class="watch-label">Para assistir</div>
+  <div class="videos">
+    <a class="vid" href="https://www.youtube.com/watch?v=xK_5ZUxKQU4" target="_blank" rel="noopener">
+      <div class="thumb" style="background-image:url('https://i.ytimg.com/vi/xK_5ZUxKQU4/hqdefault.jpg')"></div>
+      <div class="meta"><div class="why">Leilão do Google · 9 min</div><div class="ttl">Como funciona o leilão do Google Ads</div></div>
+    </a>
+  </div>
 
   <h3>O algoritmo aprende com você</h3>
   <p>Quando você diz "quero mensagens no WhatsApp" ou "quero compras", a plataforma procura pessoas parecidas com as que já fizeram isso. Por isso existe a <strong>fase de aprendizado</strong>: a Meta só sai dela quando o conjunto de anúncios junta <strong>cerca de 50 conversões em 7 dias</strong>. Até lá o custo oscila. Só <strong>edições significativas</strong> reiniciam a fase: mudar orçamento, lance, público, evento de otimização, incluir criativo novo ou pausar por muitos dias.</p>
@@ -362,22 +379,22 @@
   <div class="videos">
     <a class="vid" href="https://www.youtube.com/watch?v=-j0Nqgew0GE" target="_blank" rel="noopener">
       <div class="thumb" style="background-image:url('https://i.ytimg.com/vi/-j0Nqgew0GE/hqdefault.jpg')"></div>
-      <div class="meta"><div class="why">Tour pelo gerenciador</div><div class="ttl">Como usar o Gerenciador de Anúncios da Meta, passo a passo para iniciantes</div></div>
+      <div class="meta"><div class="why">Tour pelo gerenciador · 15 min</div><div class="ttl">Como usar o Gerenciador de Anúncios da Meta, passo a passo para iniciantes</div></div>
     </a>
-    <a class="vid" href="https://www.youtube.com/watch?v=_qxagX3hLpg" target="_blank" rel="noopener">
-      <div class="thumb" style="background-image:url('https://i.ytimg.com/vi/_qxagX3hLpg/hqdefault.jpg')"></div>
-      <div class="meta"><div class="why">Fundamentos</div><div class="ttl">Comece do zero com Meta Ads</div></div>
+    <a class="vid" href="https://www.youtube.com/watch?v=e3Mbc7a2nFQ" target="_blank" rel="noopener">
+      <div class="thumb" style="background-image:url('https://i.ytimg.com/vi/e3Mbc7a2nFQ/hqdefault.jpg')"></div>
+      <div class="meta"><div class="why">Criar a conta · 5 min</div><div class="ttl">Como criar conta de anúncio no Meta Ads 2026, passo a passo</div></div>
     </a>
   </div>
   <div class="watch-label">Para assistir · Google Ads</div>
   <div class="videos">
-    <a class="vid" href="https://www.youtube.com/watch?v=5shzsRQX73k" target="_blank" rel="noopener">
-      <div class="thumb" style="background-image:url('https://i.ytimg.com/vi/5shzsRQX73k/hqdefault.jpg')"></div>
-      <div class="meta"><div class="why">Primeira campanha de pesquisa</div><div class="ttl">Tutorial de Google Ads 2026: como fazer anúncios para iniciantes</div></div>
+    <a class="vid" href="https://www.youtube.com/watch?v=jrt7_riYKcQ" target="_blank" rel="noopener">
+      <div class="thumb" style="background-image:url('https://i.ytimg.com/vi/jrt7_riYKcQ/hqdefault.jpg')"></div>
+      <div class="meta"><div class="why">Campanha de pesquisa · 6 min</div><div class="ttl">Passo a passo para criar uma campanha de pesquisa no Google</div></div>
     </a>
-    <a class="vid playlist" href="https://www.youtube.com/playlist?list=PLTq7hUzSLXekMnog0cVqWwHVlgkV9f3yI" target="_blank" rel="noopener">
-      <div class="thumb"><span>▤ Playlist · 5 aulas</span></div>
-      <div class="meta"><div class="why">Curso gratuito</div><div class="ttl">Google Ads: sua 1ª campanha de pesquisa</div></div>
+    <a class="vid" href="https://www.youtube.com/watch?v=KuLeT5u-X7k" target="_blank" rel="noopener">
+      <div class="thumb" style="background-image:url('https://i.ytimg.com/vi/KuLeT5u-X7k/hqdefault.jpg')"></div>
+      <div class="meta"><div class="why">Termos de pesquisa · 10 min</div><div class="ttl">Otimizando campanhas no Google Ads com termos de pesquisa</div></div>
     </a>
   </div>
 </section>
@@ -419,13 +436,13 @@
 
   <div class="watch-label">Para assistir</div>
   <div class="videos">
-    <a class="vid" href="https://www.youtube.com/watch?v=zQ_ZiwCNsqs" target="_blank" rel="noopener">
-      <div class="thumb" style="background-image:url('https://i.ytimg.com/vi/zQ_ZiwCNsqs/hqdefault.jpg')"></div>
-      <div class="meta"><div class="why">Funil na prática</div><div class="ttl">Funil de tráfego pago: guia completo para iniciantes</div></div>
+    <a class="vid" href="https://www.youtube.com/watch?v=fU8kGkjtYTw" target="_blank" rel="noopener">
+      <div class="thumb" style="background-image:url('https://i.ytimg.com/vi/fU8kGkjtYTw/hqdefault.jpg')"></div>
+      <div class="meta"><div class="why">Funil de conversão · 5 min</div><div class="ttl">Funil de conversão: as etapas da jornada</div></div>
     </a>
     <a class="vid" href="https://www.youtube.com/watch?v=HOsqVSZd9TE" target="_blank" rel="noopener">
       <div class="thumb" style="background-image:url('https://i.ytimg.com/vi/HOsqVSZd9TE/hqdefault.jpg')"></div>
-      <div class="meta"><div class="why">Remarketing</div><div class="ttl">Criar público de remarketing com o pixel do Facebook Ads</div></div>
+      <div class="meta"><div class="why">Remarketing · 6 min</div><div class="ttl">Criar público de remarketing com o pixel do Facebook Ads</div></div>
     </a>
   </div>
 </section>
@@ -448,6 +465,8 @@
     <div class="term"><span class="s">ROAS</span><span class="full">retorno sobre anúncio</span><p>Cada R$ 1 em anúncio virou quanto em receita. <code>receita ÷ gasto</code></p></div>
     <div class="term"><span class="s">ROI</span><p>Lucro que a campanha gerou, menos o que ela custou, sobre o que custou. ROI 0 = empate. <code>(receita × margem − gasto) ÷ gasto</code></p></div>
     <div class="term"><span class="s">LTV</span><span class="full">valor do cliente no tempo</span><p>Quanto um cliente gasta com você ao longo da relação. Se ele recompra, você pode pagar um CPA maior.</p></div>
+    <div class="term"><span class="s">MQL</span><span class="full">lead qualificado pelo marketing</span><p>Lead com perfil e interesse certos, mas ainda não validado por vendas. Ver capítulo 8.</p></div>
+    <div class="term"><span class="s">SQL</span><span class="full">lead qualificado por vendas</span><p>Lead que o comercial conversou e confirmou: tem necessidade, decide e quer agora. Vira oportunidade.</p></div>
     <div class="term"><span class="s">Frequência</span><p>Quantas vezes, em média, a mesma pessoa viu. Muito alta = público cansado, criativo saturado.</p></div>
   </div>
 
@@ -460,11 +479,11 @@
   <div class="videos">
     <a class="vid" href="https://www.youtube.com/watch?v=ePzGU-BwlPQ" target="_blank" rel="noopener">
       <div class="thumb" style="background-image:url('https://i.ytimg.com/vi/ePzGU-BwlPQ/hqdefault.jpg')"></div>
-      <div class="meta"><div class="why">Todas as siglas</div><div class="ttl">Guia completo: CPC, CPA, CTR, CPM, pixel, ROI, ROAS, KPI e LTV</div></div>
+      <div class="meta"><div class="why">Todas as siglas · 11 min</div><div class="ttl">Guia completo: CPC, CPA, CTR, CPM, pixel, ROI, ROAS, KPI e LTV</div></div>
     </a>
     <a class="vid" href="https://www.youtube.com/watch?v=gGpzEOWitb8" target="_blank" rel="noopener">
       <div class="thumb" style="background-image:url('https://i.ytimg.com/vi/gGpzEOWitb8/hqdefault.jpg')"></div>
-      <div class="meta"><div class="why">O que olhar primeiro</div><div class="ttl">CPA, ROAS, CTR e CPM: quais métricas analisar nas campanhas</div></div>
+      <div class="meta"><div class="why">O que olhar primeiro · 10 min</div><div class="ttl">CPA, ROAS, CTR e CPM: quais métricas analisar nas campanhas</div></div>
     </a>
   </div>
 </section>
@@ -574,24 +593,70 @@
 
   <div class="watch-label">Para assistir · análise na prática</div>
   <div class="videos">
-    <a class="vid" href="https://www.youtube.com/watch?v=wM8EPDzNXDM" target="_blank" rel="noopener">
-      <div class="thumb" style="background-image:url('https://i.ytimg.com/vi/wM8EPDzNXDM/hqdefault.jpg')"></div>
-      <div class="meta"><div class="why">Método de análise</div><div class="ttl">Como analisar campanhas no Meta Ads do jeito certo (Cleber Marques)</div></div>
-    </a>
     <a class="vid" href="https://www.youtube.com/watch?v=C1IYwvdamEE" target="_blank" rel="noopener">
       <div class="thumb" style="background-image:url('https://i.ytimg.com/vi/C1IYwvdamEE/hqdefault.jpg')"></div>
-      <div class="meta"><div class="why">Colunas da Meta</div><div class="ttl">O que analisar nas colunas de desempenho do Gerenciador (Leandro Telles)</div></div>
+      <div class="meta"><div class="why">Colunas da Meta · 5 min</div><div class="ttl">O que analisar nas colunas de desempenho do Gerenciador (Leandro Telles)</div></div>
     </a>
     <a class="vid" href="https://www.youtube.com/watch?v=T-K86Cim0c4" target="_blank" rel="noopener">
       <div class="thumb" style="background-image:url('https://i.ytimg.com/vi/T-K86Cim0c4/hqdefault.jpg')"></div>
-      <div class="meta"><div class="why">Colunas do Google</div><div class="ttl">Personalizando suas colunas de métricas no Google Ads (Bruno Marinho)</div></div>
+      <div class="meta"><div class="why">Colunas do Google · 8 min</div><div class="ttl">Personalizando suas colunas de métricas no Google Ads (Bruno Marinho)</div></div>
     </a>
   </div>
 </section>
 
 <!-- 08 -->
-<section id="aplicar">
+<section id="mql-sql">
   <div class="sec-num">08</div>
+  <h2>Lead não é tudo igual: MQL e SQL</h2>
+  <p>Quem vende serviço, B2B ou capta parceiros quase nunca vende direto no anúncio: o anúncio gera um <strong>lead</strong> (um contato) e o time comercial fecha depois. O problema é que lead barato pode ser lixo. Por isso o funil de leads se divide em etapas, e <strong>cada etapa tem um dono e um critério</strong>.</p>
+
+  <div class="leadfunnel">
+    <div class="lf"><div class="lf-bar" style="--w:100%"><span>Lead</span><b>90</b></div><p>Qualquer pessoa que deixou contato: preencheu formulário, chamou no WhatsApp.</p></div>
+    <div class="lf"><div class="lf-bar" style="--w:50%"><span>MQL</span><b>45</b></div><p><strong>Marketing Qualified Lead.</strong> Passou no filtro do marketing: tem o <em>perfil</em> (cidade atendida, tipo de imóvel, porte) e mostrou <em>interesse</em> real (pediu orçamento, respondeu as perguntas).</p></div>
+    <div class="lf"><div class="lf-bar" style="--w:20%"><span>SQL</span><b>18</b></div><p><strong>Sales Qualified Lead.</strong> O comercial conversou e confirmou: tem a necessidade, quem decide está na conversa, cabe no orçamento e o momento é agora. Vira oportunidade no CRM.</p></div>
+    <div class="lf"><div class="lf-bar lf-win" style="--w:10%"><span>Venda</span><b>9</b></div><p>Fechou. É aqui que se mede o CPA de verdade.</p></div>
+  </div>
+  <p class="muted">Mesmos números da calculadora (R$ 1.500, 90 leads, 9 vendas), agora com as etapas do meio aparecendo.</p>
+
+  <h3>Por que separar faz diferença</h3>
+  <div class="gloss">
+    <div class="term"><span class="s">Custo por lead</span><p>R$ 1.500 ÷ 90 = <strong>R$ 16,67</strong>. Parece ótimo, mas metade não tinha perfil.</p></div>
+    <div class="term"><span class="s">Custo por MQL</span><p>R$ 1.500 ÷ 45 = <strong>R$ 33,33</strong>. O custo real de um contato que vale a pena.</p></div>
+    <div class="term"><span class="s">Custo por SQL</span><p>R$ 1.500 ÷ 18 = <strong>R$ 83,33</strong>. Quanto custa colocar uma oportunidade na mão do comercial.</p></div>
+    <div class="term"><span class="s">Taxas entre etapas</span><p>Lead→MQL 50% · MQL→SQL 40% · SQL→venda 50%. A taxa que cair aponta <em>de quem</em> é o problema.</p></div>
+  </div>
+
+  <div class="analogy">
+    <span class="tag">Diagnóstico</span>
+    <p><strong>Lead→MQL baixo</strong> → o anúncio atrai gente fora do perfil: ajuste público, mensagem e perguntas do formulário (problema do marketing/tráfego). <strong>MQL→SQL baixo</strong> → o comercial demora a responder ou o critério de MQL está frouxo (alinhamento marketing × vendas). <strong>SQL→venda baixo</strong> → preço, proposta ou negociação (problema comercial, não do anúncio).</p>
+  </div>
+
+  <h3>Como aplicar no dia a dia</h3>
+  <ul class="clean">
+    <li><strong>Escreva o critério de MQL</strong> junto com quem vende, em uma frase. Ex.: "imóvel em cidade atendida + proprietário + quer começar em até 3 meses". Sem critério escrito, cada um chama de MQL o que quiser.</li>
+    <li><strong>Qualifique no formulário:</strong> 1 ou 2 perguntas de perfil (cidade, tipo, prazo) aumentam o custo por lead, mas baixam o custo por MQL. É uma troca boa.</li>
+    <li><strong>Marque a etapa no CRM</strong> (Pipedrive, por exemplo) com a UTM da campanha. Assim dá para ver custo por MQL e SQL <em>por campanha e por criativo</em>, não só no total.</li>
+    <li><strong>Devolva para a plataforma quem virou MQL/SQL</strong> (API de Conversões para CRM na Meta, importação de conversões offline no Google). Aí o algoritmo passa a buscar gente parecida com quem <em>qualifica</em>, não com quem só preenche formulário.</li>
+    <li><strong>Combine o SLA de resposta:</strong> MQL respondido em minutos converte muito mais em SQL do que respondido no dia seguinte.</li>
+    <li><strong>Julgue a campanha pelo custo por SQL</strong> (ou por venda), nunca só pelo custo por lead.</li>
+  </ul>
+
+  <div class="watch-label">Para assistir</div>
+  <div class="videos">
+    <a class="vid" href="https://www.youtube.com/watch?v=yIJJ0jiKwXc" target="_blank" rel="noopener">
+      <div class="thumb" style="background-image:url('https://i.ytimg.com/vi/yIJJ0jiKwXc/hqdefault.jpg')"></div>
+      <div class="meta"><div class="why">MQL × SQL · 13 min</div><div class="ttl">MQL vs SQL: entenda a diferença na prática</div></div>
+    </a>
+    <a class="vid" href="https://www.youtube.com/watch?v=XRT4BC6Tfv4" target="_blank" rel="noopener">
+      <div class="thumb" style="background-image:url('https://i.ytimg.com/vi/XRT4BC6Tfv4/hqdefault.jpg')"></div>
+      <div class="meta"><div class="why">Visão rápida · 5 min</div><div class="ttl">Conheça o funil de vendas: MQL e SQL</div></div>
+    </a>
+  </div>
+</section>
+
+<!-- 09 -->
+<section id="aplicar">
+  <div class="sec-num">09</div>
   <h2>Aplicando no negócio, em 7 passos</h2>
   <div class="steps">
     <div class="stp"><div><h4>Defina um objetivo que vira número</h4><p>"Mais visibilidade" não se mede. "30 leads qualificados por mês a até R$ 25 cada" se mede. Escolha uma ação principal: mensagem no WhatsApp, formulário preenchido ou compra.</p></div></div>
@@ -614,16 +679,16 @@
 
   <div class="watch-label">Para assistir · subindo a primeira campanha</div>
   <div class="videos">
-    <a class="vid" href="https://www.youtube.com/watch?v=S9i41ByCWf0" target="_blank" rel="noopener">
-      <div class="thumb" style="background-image:url('https://i.ytimg.com/vi/S9i41ByCWf0/hqdefault.jpg')"></div>
-      <div class="meta"><div class="why">Mão na massa</div><div class="ttl">Tráfego pago do zero: subindo a 1ª campanha (aulão completo)</div></div>
+    <a class="vid" href="https://www.youtube.com/watch?v=c8D9FtiJn4Y" target="_blank" rel="noopener">
+      <div class="thumb" style="background-image:url('https://i.ytimg.com/vi/c8D9FtiJn4Y/hqdefault.jpg')"></div>
+      <div class="meta"><div class="why">Campanha de leads · 14 min</div><div class="ttl">Como criar campanha de formulário no Meta Ads (passo a passo)</div></div>
     </a>
   </div>
 </section>
 
-<!-- 09 -->
+<!-- 10 -->
 <section id="dicas">
-  <div class="sec-num">09</div>
+  <div class="sec-num">10</div>
   <h2>Dicas e erros comuns</h2>
   <div class="dos">
     <div class="yes">
@@ -651,9 +716,9 @@
   </div>
 </section>
 
-<!-- 10 -->
+<!-- 11 -->
 <section id="checklist">
-  <div class="sec-num">10</div>
+  <div class="sec-num">11</div>
   <h2 id="checklist-title">Checklist da primeira campanha</h2>
   <p class="progress" id="progress" aria-live="polite"><b>0</b> de 10 itens prontos</p>
   <ul class="check" id="checklist" aria-labelledby="checklist-title">
@@ -670,29 +735,17 @@
   </ul>
 </section>
 
-<!-- 11 -->
+<!-- 12 -->
 <section id="estudar">
-  <div class="sec-num">11</div>
+  <div class="sec-num">12</div>
   <h2>Trilha de estudo sugerida</h2>
   <p>Uma ordem que funciona: entender o conceito → escolher uma plataforma → subir uma campanha pequena de verdade → voltar para as métricas com dado real na mão. Aprender só assistindo não fixa; o primeiro R$ 100 gasto ensina mais que 10 horas de vídeo.</p>
   <ul class="clean">
-    <li><strong>Semana 1:</strong> capítulos 1 a 4 deste guia + os vídeos de visão geral e funil.</li>
-    <li><strong>Semana 2:</strong> escolha Meta ou Google e assista a playlist/tutorial da plataforma. Configure conta e pixel.</li>
+    <li><strong>Semana 1:</strong> capítulos 1 a 4 deste guia + os vídeos de visão geral e funil (todos com até 15 min).</li>
+    <li><strong>Semana 2:</strong> escolha Meta ou Google e assista os vídeos da plataforma no capítulo 3. Configure conta e pixel.</li>
     <li><strong>Semana 3:</strong> suba uma campanha pequena seguindo o checklist.</li>
-    <li><strong>Semana 4:</strong> leia os resultados com o glossário do capítulo 5 e ajuste um gargalo seguindo o capítulo 7.</li>
+    <li><strong>Semana 4:</strong> leia os resultados com o glossário do capítulo 5 e ajuste um gargalo seguindo o capítulo 7. Se você capta leads, monte o funil MQL → SQL do capítulo 8.</li>
   </ul>
-
-  <div class="watch-label">Cursos completos e gratuitos</div>
-  <div class="videos">
-    <a class="vid playlist" href="https://www.youtube.com/playlist?list=PLjm8rxH__HzKHAmXXf4_0IC8v387iFqkh" target="_blank" rel="noopener">
-      <div class="thumb"><span>▤ Playlist</span></div>
-      <div class="meta"><div class="why">Do zero ao avançado</div><div class="ttl">Curso de tráfego pago gratuito: do zero ao avançado</div></div>
-    </a>
-    <a class="vid playlist" href="https://www.youtube.com/playlist?list=PL84i8jUr-YlmuWzeWk0FMXHp0VhGp8ZjH" target="_blank" rel="noopener">
-      <div class="thumb"><span>▤ Playlist</span></div>
-      <div class="meta"><div class="why">Meta Ads em aulas curtas</div><div class="ttl">Curso Meta Ads iniciante (Professora Eliz Sapla)</div></div>
-    </a>
-  </div>
   <p class="muted sources">Fontes oficiais e gratuitas: <a href="https://www.facebook.com/business/learn" target="_blank" rel="noopener">Meta Blueprint</a> e <a href="https://skillshop.withgoogle.com/" target="_blank" rel="noopener">Google Skillshop</a>, as duas com certificação.</p>
 </section>
 
