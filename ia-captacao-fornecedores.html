@@ -29,6 +29,23 @@ p{max-width:66ch}
 .nums b{display:block;font-size:44px;font-weight:800;line-height:1;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
 .nums span{display:block;color:var(--ink2);font-size:13.5px;margin-top:8px;max-width:22ch}
 .nums .w b{color:var(--won)} .nums .a b{color:var(--amber)}
+.bvsa{border:1px solid var(--line);border-top:0;border-radius:0 0 14px 14px;overflow-x:auto;margin-top:-1px}
+.nums.join{border-radius:14px 14px 0 0}
+.bvsa table{min-width:620px}
+.bvsa th{background:transparent}
+.bvsa td.g{color:var(--won);font-weight:700}
+.bvsa td small{display:block;color:var(--ink3);font-size:12.5px;font-weight:400;margin-top:2px}
+.dec{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px}
+.dec section{background:var(--surf);border-radius:14px;padding:20px 20px 8px}
+.dec section.c{border:1px solid var(--amber)}
+.dec h3{margin:0 0 4px;font-size:16px;font-weight:700}
+.dec h3+p{margin:0 0 12px;color:var(--ink3);font-size:13.5px}
+.dec ol{margin:0;padding:0;list-style:none;counter-reset:d}
+.dec li{counter-increment:d;display:grid;grid-template-columns:28px 1fr;gap:0 10px;padding:12px 0;border-top:1px solid var(--line)}
+.dec li::before{content:counter(d);width:24px;height:24px;border-radius:999px;background:var(--surf2);color:var(--ink);font-size:13px;font-weight:700;display:grid;place-items:center}
+.dec .c li::before{background:oklch(80% .13 80 / .2);color:var(--amber)}
+.dec li b{display:block;font-size:15px}
+.dec li span{color:var(--ink2);font-size:14px;line-height:1.5}
 
 /* fluxo */
 .flow{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:8px}
@@ -95,21 +112,30 @@ footer{margin-top:56px;color:var(--ink3);font-size:13px}
   .it .d{grid-column:1/-1}
   .it p{grid-column:1/-1}
   .vs{grid-template-columns:1fr}
+  .dec{grid-template-columns:1fr}
 }
 </style>
 </head>
 <body><main>
 <span class="eyebrow">Fornecedores · Prospecção de lavanderias, fotógrafos e outros</span>
 <h1>IA na Captação de Fornecedores</h1>
-<p class="lede">Hoje a IA já faz quatro das cinco etapas da captação: acha a cidade que precisa de fornecedor, pesquisa quem existe lá, cria o card no Pipedrive e manda as três mensagens pela SIA até o card ter resultado. Em três dias úteis o agente falou sozinho com 162 fornecedores. A negociação ainda é feita pela Wânia, e é onde entra a extensão que está em treinamento.</p>
-<p class="meta">Fonte: Pipedrive, funil 60 "Prospecção Fornecedores" (cards e anotações do agente), funil 61 "Fornecedores - Cidades", repositórios das skills e agentes · mensagens do agente entre 14/10 e 16/10/2026 · card de teste do agente fora da conta · atualizado em 18/10/2026</p>
+<p class="lede">Hoje a IA já faz quatro das cinco etapas da captação: acha a cidade que precisa de fornecedor, pesquisa quem existe lá, cria o card no Pipedrive e manda as três mensagens pela SIA até o card ter resultado. Em 3 dias úteis o agente enviou 275 mensagens de template pela SIA para 162 fornecedores. Resposta vai para a Wânia negociar. O agente não conversa nem negocia: só dispara templates aprovados e move o card; a extensão em treinamento só sugere a resposta, e quem envia é a analista.</p>
+<p class="meta">Fonte: Pipedrive, funil 60 "Prospecção Fornecedores" (cards e anotações do agente), funil 61 "Fornecedores - Cidades", repositórios das skills e agentes · mensagens do agente entre 14/10 e 16/10/2026 · card de teste do agente fora da conta · números de 18/10/2026 · base manual: relatórios de Imbituba, Pirenópolis e Trancoso · revisado em 26/10/2026</p>
 
-<div class="nums">
-  <div><b>162</b><span>fornecedores contatados só pelo agente</span></div>
-  <div><b>275</b><span>mensagens enviadas pelo agente pela SIA</span></div>
-  <div class="a"><b>36</b><span>responderam às mensagens do agente</span></div>
-  <div class="w"><b>4</b><span>fornecedores ganhos vindos da cadência do agente</span></div>
+<div class="nums join">
+  <div><b>162</b><span>fornecedores que receberam template da SIA pelo agente</span></div>
+  <div><b>275</b><span>mensagens de template enviadas (1º, 2º e último contato)</span></div>
+  <div class="a"><b>36</b><span>responderam e foram para a Wânia negociar</span></div>
+  <div class="w"><b>4</b><span>ganhos até 18/10 (2,5%, com 71 cards ainda no 1º contato)</span></div>
 </div>
+<div class="bvsa"><table>
+<thead><tr><th>Antes × depois</th><th>Manual (Wânia)</th><th>Com o agente</th></tr></thead>
+<tbody>
+<tr><td>Volume de contato</td><td>51 fornecedores em 9 dias úteis<small>Imbituba + Trancoso, 29/09 a 09/10</small></td><td class="g">162 fornecedores em 3 dias úteis<small>14 a 16/10, cerca de 9× mais por dia</small></td></tr>
+<tr><td>Tempo até fechar o card</td><td>5,6 dias em média, até 9 dias<small>Imbituba</small></td><td class="g">3,2 dias no máximo<small>lavanderias de Vila Velha</small></td></tr>
+<tr><td>Conversão (ganhos ÷ contatados)</td><td>5,8%<small>4 de 69 · Imbituba, Pirenópolis e Trancoso, cidades fechadas</small></td><td>5,0% nas cidades fechadas<small>3 de 60 · Vila Velha lavanderias e Porto Seguro fotógrafos · 2,5% no total porque 71 cards ainda estavam no 1º contato</small></td></tr>
+</tbody></table></div>
+<p class="note">A conversão ficou parecida com a manual: o agente não fecha mais, ele faz a mesma cadência em muito mais fornecedores e em menos tempo. O que limita o ganho é o mesmo de antes, valor da tabela e fornecedor que não faz o serviço que a gente precisa (autoatendimento, não passa roupa, não faz foto de imóvel). Na base manual são só fotógrafos; lavanderia ainda não tinha cidade feita à mão no Pipedrive para comparar.</p>
 
 <h2>Como a captação funciona agora</h2>
 <p class="sub">Da cidade sem fornecedor até o cadastro no Hub. O que está em verde já roda com IA; a negociação ainda é feita por pessoa, com a extensão em treinamento ao lado.</p>
@@ -151,6 +177,24 @@ footer{margin-top:56px;color:var(--ink3);font-size:13px}
     <p>Levar o mesmo fluxo para os outros prestadores do Hub de Serviços, em task separada.</p></div>
 </div>
 
+<h2>O que precisa de decisão</h2>
+<p class="sub">Separado entre o que sobe para a Carol e o que a equipe decide e só reporta.</p>
+<div class="dec">
+  <section class="c"><h3>Carol decide</h3><p>Muda quem fala com o fornecedor ou o que é oferecido.</p>
+    <ol>
+      <li><div><b>Copiloto além das etapas atuais</b><span>Hoje sugere resposta só nas etapas da negociação listadas acima (até valores × teto e tabela), com a analista aprovando cada mensagem. Usar em outras etapas, como pós-cadastro no Hub ou retomar quem parou de responder, precisa de ok.</span></div></li>
+      <li><div><b>Copiloto enviando sem aprovação</b><span>Não está no plano. Se um dia a sugestão for mandada sem a analista aprovar, é decisão da Carol, porque aí a IA passa a negociar.</span></div></li>
+      <li><div><b>Outros prestadores do Hub</b><span>Levar o agente para marido de aluguel, vidraçaria, jardinagem e afins abre contato com um público novo em nome da Seazone.</span></div></li>
+    </ol></section>
+  <section><h3>Equipe decide sozinha</h3><p>Operacional: mesmo template, mesma regra, muda ritmo ou cidade.</p>
+    <ol>
+      <li><div><b>Cadência de hora em hora</b><span>Só muda o horário do envio (8h às 17h, 24h entre etapas). Templates e número de contatos continuam os mesmos.</span></div></li>
+      <li><div><b>Quais cidades entram na fila</b><span>Sai da skill de cidades sem fornecedor (funil 61).</span></div></li>
+      <li><div><b>Seguir Poços de Caldas e Campos do Jordão</b><span>2º e último contato pela cadência que já está no ar.</span></div></li>
+      <li><div><b>Treinar a Copiloto nas etapas atuais</b><span>Salvar resposta na base e ajustar sugestão, sempre com a analista aprovando.</span></div></li>
+    </ol></section>
+</div>
+
 <h2>Volume feito só com o agente</h2>
 <p class="sub">Cards que receberam pelo menos uma mensagem do agente, de 14/10 a 16/10. "Responderam" conta quem foi para negociação, ganhou ou foi perdido por um motivo que só aparece quando há conversa.</p>
 <div class="tbl"><table>
@@ -188,8 +232,8 @@ footer{margin-top:56px;color:var(--ink3);font-size:13px}
 <h2>FUP</h2>
 <p class="sub">Texto pronto para colar na task do Taskdex.</p>
 <div class="fup">
-  <header><span>FUP · 18/10/2026</span><button type="button" id="cp">Copiar FUP</button></header>
-<pre id="fup">FUP 18/10 — IA no processo de captação de fotógrafos, lavanderias e outros
+  <header><span>FUP · 26/10/2026</span><button type="button" id="cp">Copiar FUP</button></header>
+<pre id="fup">FUP 26/10 — IA no processo de captação de fotógrafos, lavanderias e outros
 
 O que já está no ar
 • Skill de cidades sem fornecedor (14/09): mostra cidades/polígonos sem lavanderia ou fotógrafo e abre o card da cidade no funil 61.
@@ -198,8 +242,9 @@ O que já está no ar
 • Agente de cadência Pipedrive → SIA (no ar desde 14/10, Olimpo): manda 1º, 2º e último contato, move as etapas e encerra como "Sem Retorno" quem não responde. Erros vão para o #Fornecedores.
 • Relatório por cidade feito pela IA (Imbituba, Pirenópolis, Trancoso/Porto Seguro, Vila Velha) e canvas dos processos de fotógrafos e lavanderias.
 
-Volume só com o agente (14 a 16/10)
-• 162 fornecedores contatados, 275 mensagens, 36 responderam, 4 ganhos.
+Volume com o agente (14 a 16/10)
+• Em 3 dias úteis o agente enviou 275 mensagens de template pela SIA para 162 fornecedores. Resposta vai para a Wânia negociar: 36 responderam, 4 ganhos.
+• O agente não conversa nem negocia; só dispara os templates e move o card.
 • Cidades: Vila Velha (39 lavanderias + 30 fotógrafos), Porto Seguro (21 fotógrafos), Poços de Caldas (42 lavanderias), Campos do Jordão (29 fotógrafos).
 
 Case Vila Velha (lavanderias)
@@ -207,16 +252,32 @@ Case Vila Velha (lavanderias)
 • 9 responderam na mesma tarde do 1º contato; 1º ganho 2h22 depois da mensagem.
 • Cidade fechada em 3 dias e 4 horas; nenhum card passou de 3,2 dias (em Imbituba, com contato manual, a média foi 5,6 dias).
 
+Antes × depois
+• Volume: manual 51 fornecedores em 9 dias úteis (Imbituba + Trancoso) × agente 162 em 3 dias úteis.
+• Tempo: 5,6 dias em média por card (manual) × 3,2 dias no máximo (agente).
+• Conversão: 5,8% manual (4 de 69) × 5,0% com o agente nas cidades fechadas (3 de 60). Os 2,5% do total são baixos porque 71 cards ainda estavam no 1º contato. O ganho do agente é tempo e volume, não conversão.
+
 Em andamento
 • Extensão Copiloto da SIA em treinamento: sugere a resposta da negociação pela base de conhecimento e números do Sapron; ainda não envia sozinha, a analista aprova ou corrige e salva na base.
 • Cadência de hora em hora (8h às 17h): desenho fechado em 18/10, falta implementar.
 • Poços de Caldas e Campos do Jordão na cadência (2º contato nesta semana).
 • Próximo: outros prestadores do Hub (23/10, task separada).
 
+Carol decide
+1. Usar a Copiloto além das etapas atuais da negociação (ex.: pós-cadastro, retomar quem parou de responder).
+2. Copiloto enviando sem aprovação da analista (não está no plano).
+3. Levar o agente para outros prestadores do Hub.
+
+Equipe decide sozinha
+1. Cadência de hora em hora (só muda horário; mesmos templates).
+2. Quais cidades entram na fila (skill de cidades sem fornecedor).
+3. Seguir Poços de Caldas e Campos do Jordão na cadência.
+4. Treinar a Copiloto nas etapas atuais, com aprovação da analista.
+
 Detalhes: https://henrymatsumoto-cpu.github.io/html-tasks/ia-captacao-fornecedores.html</pre>
 </div>
 
-<footer>Fornecedores · Seazone · gerado em 18/10/2026</footer>
+<footer>Fornecedores · Seazone · gerado em 18/10/2026 · revisado em 26/10/2026</footer>
 </main>
 <script>
 document.getElementById('cp').addEventListener('click',function(){
