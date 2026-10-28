@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Canvas de Amenities</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,400;7..72,600;7..72,700&family=Karla:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:dark;
+  --bg:#080E32;
+  --bg-2:#0F1742;
+  --panel:#0F1742;
+  --panel-2:#18225A;
+  --line:#232E6B;
+  --line-2:#2E3A80;
+  --ink:#EEF1FB;
+  --ink-2:#B4BBD9;
+  --ink-3:#8189B0;
+  --teal:      oklch(0.80 0.115 178);
+  --teal-dim:  oklch(0.36 0.055 180);
+  --ochre:     oklch(0.815 0.135 78);
+  --ochre-dim: oklch(0.355 0.065 72);
+  --sage:      oklch(0.815 0.125 145);
+  --sage-dim:  oklch(0.345 0.060 148);
+  --clay:      oklch(0.755 0.135 32);
+  --clay-dim:  oklch(0.345 0.075 30);
+
+  --s1:4px; --s2:8px; --s3:12px; --s4:16px; --s5:24px; --s6:32px; --s7:48px; --s8:64px; --s9:96px;
+
+  --d: Literata, Georgia, serif;
+  --b: Karla, "Segoe UI", sans-serif;
+  --m: "JetBrains Mono", ui-monospace, Consolas, monospace;
+  --ease: cubic-bezier(0.22,1,0.36,1);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:110px}
+body{
+  margin:0;background:var(--bg);color:var(--ink);
+  font-family:var(--b);font-size:16px;line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,h4{margin:0;font-family:var(--d);font-weight:700;letter-spacing:-0.015em;line-height:1.18}
+p{margin:0}
+a{color:var(--teal);text-decoration-thickness:1px;text-underline-offset:3px}
+:focus-visible{outline:2px solid var(--teal);outline-offset:3px;border-radius:4px}
+
+.shell{max-width:1060px;margin:0 auto;padding-inline:var(--s5)}
+@media(max-width:640px){.shell{padding-inline:var(--s4)}}
+
+/* ---------- masthead ---------- */
+.mast{border-bottom:1px solid var(--line);background:
+  radial-gradient(120% 140% at 88% -20%, var(--teal-dim) 0%, transparent 58%),
+  var(--bg-2);}
+.mast .shell{padding-block:var(--s7) var(--s5)}
+.kicker{font-family:var(--m);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--teal);margin-bottom:var(--s4)}
+.mast h1{font-size:clamp(30px,5.4vw,50px);max-width:16ch}
+.mast .dek{margin-top:var(--s4);color:var(--ink-2);max-width:62ch;font-size:17px}
+.stamp{margin-top:var(--s5);display:flex;flex-wrap:wrap;gap:var(--s2) var(--s5);font-family:var(--m);font-size:11.5px;color:var(--ink-3);letter-spacing:.04em}
+.stamp b{color:var(--ink-2);font-weight:500}
+
+/* ---------- scoreboard ---------- */
+.score{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;margin-top:var(--s6);background:var(--line);border:1px solid var(--line)}
+.score>div{background:var(--bg-2);padding:var(--s4) var(--s4) var(--s3)}
+.score .n{font-family:var(--d);font-size:34px;font-weight:700;line-height:1;letter-spacing:-.03em}
+.score .l{font-size:13px;color:var(--ink-3);margin-top:var(--s2);line-height:1.35}
+.n.ok{color:var(--sage)} .n.mid{color:var(--ochre)} .n.no{color:var(--clay)} .n.new{color:var(--teal)}
+
+/* ---------- tabs ---------- */
+.tabs{position:sticky;top:0;z-index:40;background:color-mix(in oklab, var(--bg) 88%, transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.tabs .shell{display:flex;gap:var(--s5);align-items:stretch;overflow-x:auto}
+.tab{
+  appearance:none;background:none;border:0;border-bottom:2px solid transparent;
+  font-family:var(--b);font-size:14.5px;font-weight:600;color:var(--ink-3);
+  padding:var(--s4) 2px var(--s3);cursor:pointer;white-space:nowrap;
+  transition:color .25s var(--ease), border-color .25s var(--ease);
+}
+.tab:hover{color:var(--ink-2)}
+.tab[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--teal)}
+.tab .c{font-family:var(--m);font-size:11px;color:var(--ink-3);margin-left:6px}
+
+main{padding-block:var(--s7) var(--s9)}
+.view[hidden]{display:none}
+
+/* ---------- intro / veredicto ---------- */
+.verdict{border:1px solid var(--line);background:var(--panel);padding:var(--s5);margin-bottom:var(--s7)}
+.verdict h2{font-size:23px;margin-bottom:var(--s3)}
+.verdict p{color:var(--ink-2);max-width:72ch}
+.verdict p+p{margin-top:var(--s3)}
+.verdict .hl{color:var(--ink);font-weight:600;font-family:var(--b)}
+
+/* ---------- legend ---------- */
+.legend{display:flex;flex-wrap:wrap;gap:var(--s3);margin-bottom:var(--s6)}
+.tag{
+  font-family:var(--m);font-size:10.5px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;
+  padding:3px 9px;border:1px solid var(--line-2);color:var(--ink-2);white-space:nowrap;
+}
+.tag.novo{color:var(--teal);border-color:var(--teal);background:var(--teal-dim)}
+.tag.alt{color:var(--ochre);border-color:var(--ochre);background:var(--ochre-dim)}
+.tag.keep{color:var(--ink-3)}
+.tag.conf{color:var(--clay);border-color:var(--clay);background:var(--clay-dim)}
+.tag.ok{color:var(--sage);border-color:var(--sage);background:var(--sage-dim)}
+
+/* ---------- canvas mock ---------- */
+.sec{border:1px solid var(--line);background:var(--panel);margin-bottom:var(--s5)}
+.sec>header{display:flex;gap:var(--s3);align-items:center;flex-wrap:wrap;padding:var(--s4) var(--s5);border-bottom:1px solid var(--line);background:var(--panel-2)}
+.sec>header h3{font-size:19px;flex:1;min-width:220px}
+.sec>header .em{font-size:18px;filter:saturate(.85)}
+.body{padding:var(--s5)}
+.body>*+*{margin-top:var(--s4)}
+.body ul{margin:0;padding-left:1.15em}
+.body li{margin-bottom:var(--s2);color:var(--ink-2)}
+.body li::marker{color:var(--ink-3)}
+.body b,.body strong{color:var(--ink);font-weight:600}
+.body em{color:var(--ink-2)}
+.lbl{font-family:var(--m);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);display:block;margin-bottom:var(--s2)}
+
+.marked{background:var(--ochre-dim);box-shadow:0 0 0 2px var(--ochre-dim);color:var(--ink)}
+.added{background:var(--teal-dim);box-shadow:0 0 0 2px var(--teal-dim);color:var(--ink)}
+
+.note{border:1px solid var(--line-2);background:var(--bg);padding:var(--s4);font-size:14.5px;color:var(--ink-2)}
+.note.why{border-color:var(--teal);background:var(--teal-dim)}
+.note.ask{border-color:var(--clay);background:var(--clay-dim)}
+.note .lbl{color:inherit;opacity:.85}
+
+/* steps */
+.step{border:1px solid var(--line);background:var(--bg-2);margin-top:var(--s4)}
+.step>summary{
+  list-style:none;cursor:pointer;padding:var(--s3) var(--s4);display:flex;gap:var(--s3);align-items:baseline;
+  font-weight:600;font-size:15.5px;
+}
+.step>summary::-webkit-details-marker{display:none}
+.step>summary:hover{background:var(--panel)}
+.step .idx{font-family:var(--m);font-size:12px;color:var(--teal);font-weight:700;flex:none;width:1.4em}
+.step .sum-t{flex:1}
+.step .chev{color:var(--ink-3);font-size:12px;transition:transform .25s var(--ease)}
+.step[open] .chev{transform:rotate(90deg)}
+.step .inner{padding:0 var(--s4) var(--s4) calc(var(--s4) + 1.4em)}
+.step .inner>*+*{margin-top:var(--s3)}
+
+/* table */
+.tbl{width:100%;border-collapse:collapse;font-size:14.5px}
+.tbl th,.tbl td{text-align:left;padding:var(--s3);border:1px solid var(--line);vertical-align:top}
+.tbl th{background:var(--panel-2);font-family:var(--m);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);font-weight:500}
+.tbl td{color:var(--ink-2)}
+.tbl td:first-child{color:var(--ink);font-weight:500}
+.tbl tr:last-child td{background:var(--panel-2);color:var(--ink);font-weight:600}
+.tbl .num{font-family:var(--m);font-variant-numeric:tabular-nums}
+.tblwrap{overflow-x:auto}
+
+/* price grid */
+.prices{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:var(--s4)}
+.pcard{border:1px solid var(--line);background:var(--bg-2);padding:var(--s4)}
+.pcard h4{font-family:var(--m);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--teal);font-weight:500;margin-bottom:var(--s3)}
+.pcard dl{margin:0;display:grid;grid-template-columns:1fr auto;gap:6px var(--s3);font-size:14.5px}
+.pcard dt{color:var(--ink-2)}
+.pcard dd{margin:0;font-family:var(--m);font-variant-numeric:tabular-nums;color:var(--ink);font-weight:500}
+.pcard dd.flag{color:var(--clay)}
+
+/* copy */
+.copyrow{display:flex;gap:var(--s2);align-items:center;flex-wrap:wrap;margin-left:auto}
+.btn{
+  appearance:none;font-family:var(--b);font-size:12.5px;font-weight:600;cursor:pointer;
+  padding:6px 13px;border:1px solid var(--line-2);background:var(--bg);color:var(--ink-2);
+  transition:border-color .2s var(--ease), color .2s var(--ease), background .2s var(--ease);
+}
+.btn:hover{border-color:var(--teal);color:var(--teal)}
+.btn.on{border-color:var(--sage);color:var(--sage);background:var(--sage-dim)}
+.raw{display:none}
+.msgbox{white-space:pre-wrap;font-family:var(--m);font-size:14px;line-height:1.7;color:var(--ink);
+  background:var(--bg);border:1px solid var(--line-2);border-left:3px solid var(--teal);padding:14px 16px;margin:10px 0}
+.msgbox b{font-weight:700}
+.body h4.sub{font-family:var(--d);font-size:19px;color:var(--ink);margin:26px 0 10px;padding-top:14px;border-top:1px solid var(--line)}
+.body h4.sub .pill{font-family:var(--m);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--teal);
+  border:1px solid var(--teal-dim);border-radius:2px;padding:3px 7px;margin-left:10px;vertical-align:middle;font-weight:500}
+.obj{border-left:2px solid var(--line-2);padding:2px 0 2px 14px;margin:14px 0}
+.obj .q{font-family:var(--d);font-size:16px;color:var(--ink);margin-bottom:6px}
+.obj p{margin:0 0 6px}
+.obj .lim{font-size:14px;color:var(--ink-3)}
+.conf-inline{font-family:var(--m);font-size:12px;color:var(--ochre);border-bottom:1px dashed var(--ochre-dim);padding-bottom:1px}
+
+
+
+/* modo limpo: o que se vê é o que se cola */
+body:not(.rev) .note{display:none}
+body:not(.rev) .marked,body:not(.rev) .added{background:none;box-shadow:none;color:inherit}
+body:not(.rev) .pcard dd.flag{color:var(--ink)}
+body:not(.rev) .pcard dd.flag::after{content:""}
+body:not(.rev) .legend{display:none}
+body:not(.rev) .tag.novo,body:not(.rev) .tag.alt,body:not(.rev) .tag.conf{display:none}
+.revbar{display:flex;gap:var(--s2);align-items:center;flex-wrap:wrap;margin-bottom:var(--s6);padding-bottom:var(--s4);border-bottom:1px solid var(--line)}
+.callout{border:1px solid var(--line-2);background:var(--bg);padding:var(--s4);font-size:15px;color:var(--ink-2)}
+.callout .cl{font-family:var(--m);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);display:block;margin-bottom:6px}
+
+/* ---------- respostas ---------- */
+.filters{display:flex;gap:var(--s2);flex-wrap:wrap;align-items:center;margin-bottom:var(--s5);padding-bottom:var(--s4);border-bottom:1px solid var(--line)}
+.filters .lbl{margin:0 var(--s2) 0 0}
+.fbtn{
+  appearance:none;font-family:var(--b);font-size:12.5px;cursor:pointer;padding:5px 12px;
+  border:1px solid var(--line-2);background:transparent;color:var(--ink-2);
+  transition:all .2s var(--ease);
+}
+.fbtn:hover{border-color:var(--ink-3);color:var(--ink)}
+.fbtn[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink);font-weight:600}
+
+.grp{margin-bottom:var(--s7)}
+.grp>h3{font-size:24px;margin-bottom:var(--s2)}
+.grp>.sub{color:var(--ink-3);font-size:14.5px;margin-bottom:var(--s5);max-width:70ch}
+
+.ans{border:1px solid var(--line);background:var(--panel);margin-bottom:var(--s3)}
+.ans>summary{list-style:none;cursor:pointer;padding:var(--s4);display:grid;grid-template-columns:52px 1fr auto;gap:var(--s3);align-items:baseline}
+.ans>summary::-webkit-details-marker{display:none}
+.ans>summary:hover{background:var(--panel-2)}
+.ans .code{font-family:var(--m);font-size:12px;font-weight:700;color:var(--ink-3)}
+.ans .t{font-size:15.5px;font-weight:600;line-height:1.35}
+.ans .who{font-size:13px;color:var(--ink-3);margin-top:3px}
+.ans .inner{padding:0 var(--s4) var(--s4) calc(52px + var(--s4) + var(--s3))}
+.ans .inner>*+*{margin-top:var(--s3)}
+.ans .inner p{color:var(--ink-2);max-width:78ch}
+.ans[data-st="ok"]{border-color:color-mix(in oklab, var(--sage) 45%, var(--line))}
+.ans[data-st="mid"]{border-color:color-mix(in oklab, var(--ochre) 35%, var(--line))}
+@media(max-width:640px){
+  .ans>summary{grid-template-columns:44px 1fr;}
+  .ans>summary .tag{grid-column:2}
+  .ans .inner{padding-left:var(--s4)}
+}
+.rec{border:1px solid var(--line-2);background:var(--bg);padding:var(--s3) var(--s4);font-size:14.5px}
+.rec .lbl{color:var(--teal)}
+.rec p{color:var(--ink)!important}
+
+footer{border-top:1px solid var(--line);margin-top:var(--s9);padding-block:var(--s5) var(--s8)}
+footer p{font-size:13.5px;color:var(--ink-3);max-width:80ch}
+footer p+p{margin-top:var(--s3)}
+footer b{color:var(--ink-2);font-weight:600}
+
+@media print{
+  body{background:#fff;color:#000}
+  .tabs,.btn,.filters{display:none}
+  .view[hidden]{display:block!important}
+  details{open:true}
+}
+
+.tbl tr:last-child td{background:transparent;color:var(--ink-2);font-weight:400}
+.tbl tr:last-child td:first-child{color:var(--ink);font-weight:500}
+.body>p:has(+.tblwrap){margin-top:var(--s5)}
+body{color-scheme:dark}
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style id="sz-tema">body,body *{font-family:"Figtree",system-ui,"Segoe UI",sans-serif!important}code,pre,kbd,samp,code *,pre *{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace!important}</style>
+</head>
+<body>
+
+<header class="mast">
+  <div class="shell">
+    <p class="kicker">Fornecedores · Lojinha Seazone · Amenities</p>
+    <h1>Canvas de compras de Amenities</h1>
+    <p class="dek">O canvas ":bubbles: Processo de compras de Amenities Padronizados" reescrito para o fluxo de hoje: a franquia compra os amenities da Harus direto na lojinha, sem volume mínimo, e a Seazone recebe 5% de comissão sobre a venda. Cada seção tem o botão Copiar para colar no lugar da seção de mesmo número do canvas.</p>
+    <div class="stamp">
+      <span>Canvas atual: <b>F093PAVTWBZ</b>, atualizado em <b>02/10</b></span>
+      <span>Catálogo da lojinha de <b>27/10/2026</b></span>
+      <span>SLAs da lojinha de <b>28/09/2026</b></span>
+      <span>Versão proposta: <b>27/10/2026</b></span>
+    </div>
+    <div class="score">
+      <div><div class="n new">8</div><div class="l">seções, na mesma ordem do canvas atual</div></div>
+      <div><div class="n">8</div><div class="l">produtos de amenities na lojinha</div></div>
+      <div><div class="n ok">0</div><div class="l">volume mínimo de compra</div></div>
+      <div><div class="n ok">5%</div><div class="l">de comissão sobre a venda, paga pela Harus</div></div>
+      <div><div class="n mid">17</div><div class="l">dias úteis, no máximo, do pedido ao despacho</div></div>
+      <div><div class="n no">3</div><div class="l">pontos a confirmar antes de colar</div></div>
+    </div>
+  </div>
+</header>
+
+<main class="shell">
+
+  <div class="verdict">
+    <h2>O que muda em relação ao canvas de hoje</h2>
+    <p>O canvas atual descreve um processo que não existe mais: formulário no <span class="hl">Pipefy</span>, pedido enviado ao fornecedor pelo <span class="hl">Blip Desk</span>, consolidação de pedidos de várias franquias e link de pagamento mandado pelo analista. Hoje a franquia compra os amenities <span class="hl">na lojinha</span>, e o pedido segue o mesmo ciclo dos outros pedidos da lojinha.</p>
+    <p>Duas regras do canvas antigo estavam erradas e eram justamente as que o aviso de revisão apontava como fora do MGO: <span class="hl">não existe volume mínimo</span> (o canvas falava em 500 sabonetes, 250 shampoos e 250 condicionadores), e os 5% não são uma taxa somada à fatura. São <span class="hl">5% de comissão da Seazone sobre a venda</span>, cobrados da Harus no fechamento do mês.</p>
+    <p>As seções 7 (Prazos e SLA) e 8 (Critérios de Qualidade), que estavam vazias, agora têm conteúdo. Ligue <span class="hl">Mostrar comentários da revisão</span> para ver o que mudou e por quê. Esses comentários não entram no que você copia.</p>
+  </div>
+
+  <div class="revbar">
+    <span class="lbl" style="margin:0 8px 0 0">Exibição</span>
+    <button class="fbtn" id="revtoggle" aria-pressed="false">Mostrar comentários da revisão</button>
+    <button class="fbtn" id="stepsall" aria-pressed="false">Abrir todas as etapas</button>
+    <span style="flex:1"></span>
+    <button class="btn" id="copyall">Copiar o canvas inteiro</button>
+  </div>
+
+  <div class="legend">
+    <span class="tag novo">Trecho novo</span>
+    <span class="tag alt">Trecho alterado</span>
+    <span class="tag conf">Precisa de confirmação</span>
+  </div>
+
+  <!-- 1 -->
+  <article class="sec">
+    <header><span class="em">📌</span><h3>1. Identificação do Processo</h3><span class="tag alt">Alterado</span>
+      <span class="copyrow"><button class="btn" data-copy>Copiar</button></span></header>
+    <div class="body">
+      <ul>
+        <li><b>Nome do Processo:</b> Compra de Amenities Padronizados pela Lojinha Seazone</li>
+        <li><b>Setor Responsável:</b> Fornecedores e Compras</li>
+        <li><b>Responsável Principal:</b> @Wania Helena Lageano Espindola @Henry Yudi</li>
+        <li class="added"><b>Fornecedor:</b> Harus (fornecedor homologado de amenities com a marca Seazone)</li>
+        <li class="added"><b>Onde roda:</b> Lojinha Seazone, na categoria Amenities. O Time acompanha em Admin › Pedidos e a Harus em Fornecedor › Pedidos.</li>
+        <li class="added"><b>Versão:</b> 2, revisada em 27/10/2026</li>
+        <li class="added"><b>Próxima revisão:</b> a cada 6 meses, ou quando mudar o fornecedor, o catálogo ou a comissão</li>
+      </ul>
+      <div class="note ask"><span class="lbl">Confirmar</span>O canvas atual tem outro responsável principal (o usuário que editou em 2/10). Coloquei os mesmos responsáveis do canvas da lojinha. Troque antes de colar se o dono for outro.</div>
+    </div>
+  </article>
+
+  <!-- 2 -->
+  <article class="sec">
+    <header><span class="em">🎯</span><h3>2. Objetivo do Processo</h3><span class="tag alt">Alterado</span>
+      <span class="copyrow"><button class="btn" data-copy>Copiar</button></span></header>
+    <div class="body">
+      <p>O processo garante que as franquias comprem os amenities padronizados da Seazone (sabonete, shampoo, condicionador e shampoo 2 em 1) direto pela Lojinha Seazone, com o mesmo produto em todas as unidades, preço fechado com o fornecedor e acompanhamento da Seazone do pedido até a entrega.</p>
+      <p>Ele existe para:</p>
+      <ul>
+        <li>Facilitar a reposição de amenities: a franquia escolhe a caixa, faz o pedido e paga pela própria lojinha, sem formulário e sem pedido mínimo.</li>
+        <li>Garantir o uso de produtos padronizados e aprovados pela Seazone, com a marca Seazone.</li>
+        <li>Dar visibilidade do pedido: a franquia vê o status em Meus Pedidos e a Seazone acompanha cada fase com prazo.</li>
+        <li class="added">Gerar receita para a Seazone: a Seazone recebe 5% de comissão da Harus sobre cada venda.</li>
+      </ul>
+      <p><b>Resultados esperados:</b></p>
+      <ul>
+        <li>Mesmo padrão de amenities em todas as unidades.</li>
+        <li class="added"><b>Meta:</b> nenhum pedido de amenities passando do SLA, em nenhuma fase.</li>
+        <li class="added">Pedido pago despachado pela Harus em até 5 dias úteis após a validação do pagamento.</li>
+        <li class="added">Comissão de todas as vendas do mês cobrada da Harus no fechamento mensal.</li>
+      </ul>
+      <div class="note why"><span class="lbl">Por quê</span>O canvas antigo falava em consolidar a demanda de várias franquias para negociar melhor. Isso não acontece mais: o preço já está fechado no catálogo, e cada franquia compra quando precisa.</div>
+    </div>
+  </article>
+
+  <!-- 3 -->
+  <article class="sec">
+    <header><span class="em">📝</span><h3>3. Escopo do Processo — Detalhamento</h3><span class="tag alt">Alterado</span>
+      <span class="copyrow"><button class="btn" data-copy>Copiar</button></span></header>
+    <div class="body">
+      <p><b>Começa:</b> quando a franquia finaliza um pedido da categoria Amenities no checkout da lojinha.</p>
+      <p><b>Termina:</b> quando o Time marca o pedido como Concluído (entregue) ou Cancelado.</p>
+      <p><b>O que está incluso:</b></p>
+      <ul>
+        <li>Todas as franquias ativas.</li>
+        <li>Os produtos da categoria Amenities da lojinha, todos da Harus:</li>
+      </ul>
+      <div class="tblwrap">
+      <table class="tbl">
+        <thead><tr><th>Produto</th><th>Embalagem</th><th>Preço</th><th>Por unidade</th></tr></thead>
+        <tbody>
+          <tr><td>Sabonete 10g</td><td>caixa com 600</td><td class="num">R$ 228,00</td><td class="num">R$ 0,38</td></tr>
+          <tr><td>Sabonete 10g</td><td>caixa com 100</td><td class="num">R$ 38,00</td><td class="num">R$ 0,38</td></tr>
+          <tr><td>Shampoo 20 mL</td><td>caixa com 250</td><td class="num">R$ 165,00</td><td class="num">R$ 0,66</td></tr>
+          <tr><td>Shampoo 20 mL</td><td>caixa com 125</td><td class="num">R$ 82,50</td><td class="num">R$ 0,66</td></tr>
+          <tr><td>Condicionador 20 mL</td><td>caixa com 250</td><td class="num">R$ 185,00</td><td class="num">R$ 0,74</td></tr>
+          <tr><td>Condicionador 20 mL</td><td>caixa com 125</td><td class="num">R$ 92,50</td><td class="num">R$ 0,74</td></tr>
+          <tr><td>Shampoo e Condicionador 2 em 1, 20 mL</td><td>caixa com 250</td><td class="num">R$ 200,00</td><td class="num">R$ 0,80</td></tr>
+          <tr><td>Shampoo e Condicionador 2 em 1, 20 mL</td><td>caixa com 125</td><td class="num">R$ 100,00</td><td class="num">R$ 0,80</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <ul>
+        <li class="added"><b>Sem volume mínimo:</b> a franquia compra a partir de 1 caixa, de qualquer item.</li>
+        <li class="added">O time de Fornecedores, que acompanha o pedido, valida o pagamento e cobra a Harus quando um prazo estoura.</li>
+        <li class="added">A comissão de 5% sobre as vendas, cobrada da Harus uma vez por mês.</li>
+      </ul>
+      <p><b>O que está fora do escopo:</b></p>
+      <ul>
+        <li>Compras de amenities feitas pela franquia fora da lojinha.</li>
+        <li>Amenities de outras marcas ou de outros fornecedores.</li>
+        <li class="added">As outras categorias da lojinha (enxoval, limpeza, uniformes, produtos personalizados). Elas seguem o mesmo ciclo de pedido, descrito no canvas do Ciclo do Pedido na Lojinha.</li>
+      </ul>
+      <div class="note why"><span class="lbl">Por quê</span>Os preços e as caixas são os da lojinha em 27/10/2026. As caixas de 600 e de 250/125 do shampoo 2 em 1 aparecem cortadas no card. Os números vieram do preço por unidade, que bate com as caixas menores.</div>
+      <div class="note ask"><span class="lbl">Mudou</span>Volume mínimo removido: hoje não existe (definição do Henry em 27/10/2026). Isso também resolve o aviso do topo do canvas atual, que apontava o volume mínimo como regra fora do MGO.</div>
+    </div>
+  </article>
+
+  <!-- 4 -->
+  <article class="sec">
+    <header><span class="em">👥</span><h3>4. Responsáveis e Papéis</h3><span class="tag alt">Alterado</span>
+      <span class="copyrow"><button class="btn" data-copy>Copiar</button></span></header>
+    <div class="body">
+      <div class="tblwrap">
+      <table class="tbl">
+        <thead><tr><th>Papel</th><th>Responsável</th><th>O que faz</th></tr></thead>
+        <tbody>
+          <tr><td>Solicitante</td><td>Franquia (franqueado ou responsável local)</td><td>Faz o pedido na lojinha, paga, anexa o comprovante e acompanha em Meus Pedidos</td></tr>
+          <tr><td>Acompanhamento</td><td>Time Lojinha (Fornecedores e Compras)</td><td>Confere e encaminha o pedido, valida o pagamento, cobra os prazos da Harus, conclui ou cancela. É o único canal da franquia para problemas</td></tr>
+          <tr><td>Fornecedor</td><td>Harus</td><td>Informa o pagamento (link, Pix ou boleto), separa e despacha, e preenche nota fiscal, transportadora e rastreio no painel</td></tr>
+          <tr><td>Logística</td><td>Harus e transportadora</td><td>Entrega no endereço do pedido</td></tr>
+          <tr><td>Comissão</td><td>Time de Fornecedores e Compras</td><td>Fecha as vendas do mês e cobra os 5% da Harus</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="note why"><span class="lbl">Por quê</span>Saíram o &quot;Aprovador e Faturador&quot; e o envio de link pelo Blip Desk. Na lojinha, quem gera a cobrança é a própria Harus, e a franquia vê o link de pagamento em Meus Pedidos.</div>
+    </div>
+  </article>
+
+  <!-- 5 -->
+  <article class="sec">
+    <header><span class="em">🔄</span><h3>5. Fluxo do Processo</h3><span class="tag alt">Refeito para a lojinha</span>
+      <span class="copyrow"><button class="btn" data-copy>Copiar</button></span></header>
+    <div class="body">
+      <p>O pedido de amenities segue o mesmo ciclo de qualquer pedido da lojinha, com a Harus como fornecedor. A fase entre parênteses é a que a Harus vê no painel dela.</p>
+
+      <details class="step" open>
+        <summary><span class="idx">1</span><span class="sum-t">🛒 Fazer o pedido na lojinha</span><span class="chev">›</span></summary>
+        <div class="inner">
+          <p><b>Responsável:</b> Franquia</p>
+          <p>Na Lojinha Seazone, a franquia abre <b>Categorias › Amenities</b>, escolhe os produtos e a caixa (por exemplo, 100 ou 600 sabonetes) e coloca a quantidade de caixas no carrinho.</p>
+          <p>No checkout, confere o endereço de entrega e o CPF ou CNPJ da nota fiscal e finaliza o pedido.</p>
+          <p class="added"><b>Não há volume mínimo.</b> Uma caixa de qualquer item já é um pedido válido.</p>
+          <p><b>Saída:</b> pedido criado, na Caixa de Entrada do Time.</p>
+          <p><b>Atenção:</b> amenities não podem ser retirados na sede. A Harus envia direto para o endereço informado no pedido, então ele precisa estar certo.</p>
+      <div class="note why"><span class="lbl">Por quê</span>Substitui o formulário do Pipefy e o passo a passo com prints. O pedido agora é feito no carrinho da lojinha.</div>
+        </div>
+      </details>
+      <details class="step">
+        <summary><span class="idx">2</span><span class="sum-t">📥 Caixa de Entrada</span><span class="chev">›</span></summary>
+        <div class="inner">
+          <p><b>Responsável:</b> Time Lojinha</p>
+          <p>O Time confere itens, quantidades, endereço e documento (CPF ou CNPJ) e encaminha o pedido para a Harus.</p>
+          <p><b>SLA:</b> 1 dia útil.</p>
+          <p class="added"><b>Passou do prazo:</b> o card fica vermelho. O Time encaminha no mesmo dia ou registra no card o motivo da espera.</p>
+        </div>
+      </details>
+      <details class="step">
+        <summary><span class="idx">3</span><span class="sum-t">📤 Enviado ao Fornecedor (Harus: Recebido)</span><span class="chev">›</span></summary>
+        <div class="inner">
+          <p><b>Responsável:</b> Harus</p>
+          <p>A Harus recebe o pedido no painel do fornecedor e informa a forma de pagamento: link de cartão, chave Pix ou boleto. Se o frete real for diferente do estimado, ela ajusta aqui, antes do pagamento.</p>
+          <p><b>Sai da etapa quando:</b> a Harus preenche o pagamento. O card vai sozinho para Aguardando Pagamento.</p>
+          <p><b>SLA:</b> 3 dias úteis.</p>
+          <p class="added"><b>Passou do prazo:</b> o Time cobra a Harus no grupo de WhatsApp e registra a cobrança no card.</p>
+        </div>
+      </details>
+      <details class="step">
+        <summary><span class="idx">4</span><span class="sum-t">💳 Aguardando Pagamento</span><span class="chev">›</span></summary>
+        <div class="inner">
+          <p><b>Responsável:</b> Franquia</p>
+          <p>A franquia vê o link ou a chave em Meus Pedidos, paga e anexa o comprovante. Ela recebe os lembretes de pagamento pela SIA: no dia em que o link fica disponível, no 4º e no 7º dia útil.</p>
+          <p><b>Sai da etapa quando:</b> a franquia anexa o comprovante.</p>
+          <p><b>SLA:</b> 7 dias úteis.</p>
+          <p class="added"><b>Passou do prazo:</b> sem comprovante depois do aviso do 7º dia útil, o Analista cancela o pedido. Só o Analista pode dar mais prazo, registrando no card.</p>
+      <div class="note why"><span class="lbl">Por quê</span>Substitui o envio do link pelo Blip Desk com o template pagamentopedidoamenities. O link aparece em Meus Pedidos e a cobrança é pela SIA.</div>
+        </div>
+      </details>
+      <details class="step">
+        <summary><span class="idx">5</span><span class="sum-t">✅ Validação de Pagamento</span><span class="chev">›</span></summary>
+        <div class="inner">
+          <p><b>Responsável:</b> Time Lojinha</p>
+          <p>O Time confere se o valor do comprovante bate com o total do pedido e se o pagamento caiu, e confirma o pagamento no card.</p>
+          <p><b>SLA:</b> 1 dia útil.</p>
+          <p class="added"><b>Passou do prazo:</b> o atraso é do próprio Time. Se o pagamento não aparecer, o Time pede um comprovante novo e registra no card.</p>
+        </div>
+      </details>
+      <details class="step">
+        <summary><span class="idx">6</span><span class="sum-t">📦 Aguardando Envio (Harus: Informação de Envio)</span><span class="chev">›</span></summary>
+        <div class="inner">
+          <p><b>Responsável:</b> Harus</p>
+          <p>A Harus separa e despacha o pedido e preenche no painel a nota fiscal, a transportadora e o código de rastreio.</p>
+          <p><b>Sai da etapa quando:</b> os três dados de envio estão preenchidos. O card vai sozinho para Pedido Enviado.</p>
+          <p><b>SLA:</b> 5 dias úteis.</p>
+          <p class="added"><b>Passou do prazo:</b> o Time cobra uma data de despacho no grupo de WhatsApp com a Harus. Se faltar estoque, combina com a franquia se ela espera ou cancela.</p>
+        </div>
+      </details>
+      <details class="step">
+        <summary><span class="idx">7</span><span class="sum-t">🚚 Pedido Enviado</span><span class="chev">›</span></summary>
+        <div class="inner">
+          <p><b>Responsável:</b> Time Lojinha</p>
+          <p>O pedido está com a transportadora. O Time acompanha pelo rastreio e cobra a Harus se o rastreio parar de atualizar ou não abrir.</p>
+          <p><b>SLA:</b> 15 dias úteis.</p>
+          <p><b>Passou do prazo:</b> o Time cobra a Harus no grupo de WhatsApp e fala com a franquia. Se o pedido se perdeu, a Harus reenvia ou devolve o valor.</p>
+        </div>
+      </details>
+      <details class="step">
+        <summary><span class="idx">8</span><span class="sum-t">🏁 Concluído e confirmação de recebimento</span><span class="chev">›</span></summary>
+        <div class="inner">
+          <p><b>Responsável:</b> Time Lojinha</p>
+          <p>A franquia confere se os itens e as quantidades estão certos. Se houver divergência ou produto com problema, ela avisa o time de Fornecedores com foto ou vídeo, nunca direto a Harus. A Seazone trata com o fornecedor.</p>
+          <p>O Time marca o pedido como <b>Concluído</b> só com nota fiscal, transportadora e código de rastreio preenchidos.</p>
+        </div>
+      </details>
+      <details class="step">
+        <summary><span class="idx">9</span><span class="sum-t">💰 Comissão da Seazone (fechamento mensal)</span><span class="chev">›</span></summary>
+        <div class="inner">
+          <p><b>Responsável:</b> Time de Fornecedores e Compras</p>
+          <p class="added">A Seazone recebe <b>5% de comissão sobre o valor de cada venda</b> da Harus pela lojinha. A comissão não é somada ao preço da franquia: o preço do catálogo é o preço final.</p>
+          <p class="added">Uma vez por mês, o Time junta as notas fiscais das vendas da Harus, calcula os 5% na planilha de fechamento (pasta Comissão no Drive) e cobra a Harus pela nota fiscal e pelo boleto de comissão.</p>
+      <div class="note why"><span class="lbl">Por quê</span>O canvas antigo dizia que a Harus emitia a fatura &quot;já acrescida da taxa administrativa de 5% da Seazone&quot;. Hoje são 5% de comissão sobre a venda, paga pela Harus no fechamento do mês (definição do Henry em 27/10/2026).</div>
+        </div>
+      </details>
+      <div class="note why"><span class="lbl">Por quê</span>Saíram a validação de volume mínimo, a consolidação de pedidos de várias franquias e o envio do pedido ao fornecedor pelo Blip Desk. Nada disso existe na lojinha. O link do Miro também saiu, porque desenhava o fluxo do Pipefy.</div>
+    </div>
+  </article>
+
+  <!-- 6 -->
+  <article class="sec">
+    <header><span class="em">🔑</span><h3>6. Documentos e Ferramentas Utilizadas</h3><span class="tag alt">Alterado</span>
+      <span class="copyrow"><button class="btn" data-copy>Copiar</button></span></header>
+    <div class="body">
+      <ul>
+        <li><b>Lojinha Seazone:</b> categoria Amenities (pedido da franquia), Admin › Pedidos (Time) e Fornecedor › Pedidos (Harus).</li>
+        <li><b>Meus Pedidos:</b> onde a franquia vê o status, paga e anexa o comprovante.</li>
+        <li><b>SIA:</b> lembretes de pagamento para a franquia.</li>
+        <li><b>Grupo de WhatsApp Seazone + Harus:</b> cobrança de prazo, estoque e rastreio.</li>
+        <li><b>Planilha de fechamento mensal da Harus</b> (pasta Comissão no Drive): cálculo dos 5% de comissão.</li>
+        <li><b>Canvas do Ciclo do Pedido na Lojinha:</b> detalhes de cada fase, dos lembretes e dos cancelamentos.</li>
+      </ul>
+      <div class="note why"><span class="lbl">Por quê</span>Saíram o Pipefy, o Blip Desk, o Miro e a &quot;Planilha de Compra - Amenities - Momento Amenities&quot;, que eram do fluxo antigo.</div>
+      <div class="note ask"><span class="lbl">Confirmar</span>Se quiser, cole o link da lojinha e o da pasta Comissão no lugar dos nomes antes de publicar.</div>
+    </div>
+  </article>
+
+  <!-- 7 -->
+  <article class="sec">
+    <header><span class="em">⏳</span><h3>7. Prazos e SLA</h3><span class="tag novo">Preenchido</span>
+      <span class="copyrow"><button class="btn" data-copy>Copiar</button></span></header>
+    <div class="body">
+      <p>Todos os prazos são em <b>dias úteis</b>, sem fins de semana e sem feriados nacionais. O prazo recomeça a cada mudança de fase, e o card fica vermelho quando passa do limite.</p>
+      <div class="tblwrap">
+      <table class="tbl">
+        <thead><tr><th>Fase</th><th>SLA</th><th>Quem age</th><th>Acumulado</th></tr></thead>
+        <tbody>
+          <tr><td>Fazer o pedido</td><td class="num">sem prazo</td><td>Cliente</td><td class="num">—</td></tr>
+          <tr><td>Caixa de Entrada</td><td class="num">1 dia útil</td><td>Time Lojinha</td><td class="num">dia 1</td></tr>
+          <tr><td>Enviado ao Fornecedor (Harus: Recebido)</td><td class="num">3 dias úteis</td><td>Harus</td><td class="num">dia 4</td></tr>
+          <tr><td>Aguardando Pagamento</td><td class="num">7 dias úteis</td><td>Cliente</td><td class="num">dia 11</td></tr>
+          <tr><td>Validação de Pagamento</td><td class="num">1 dia útil</td><td>Time Lojinha</td><td class="num">dia 12</td></tr>
+          <tr><td>Aguardando Envio (Harus: Informação de Envio)</td><td class="num">5 dias úteis</td><td>Harus</td><td class="num">dia 17</td></tr>
+          <tr><td>Pedido Enviado</td><td class="num">15 dias úteis</td><td>Transportadora / Time</td><td class="num">dia 32</td></tr>
+          <tr><td>Concluído e Cancelado</td><td class="num">sem prazo</td><td>—</td><td class="num">—</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p>Pedido pago, do checkout ao despacho: até <b>17 dias úteis</b>. Até a entrega: até <b>32</b>. Esses são os tetos, não o tempo esperado.</p>
+      <p><b>Comissão:</b> fechada uma vez por mês, com as vendas do mês anterior.</p>
+      <div class="note why"><span class="lbl">Por quê</span>Essa seção estava vazia no canvas antigo. Os SLAs são os da lojinha, definidos em 28/09/2026, iguais para todos os fornecedores.</div>
+      <div class="note ask"><span class="lbl">Confirmar</span>Confirmar o dia do mês em que o fechamento da comissão da Harus é feito. Deixei só &quot;uma vez por mês&quot;.</div>
+    </div>
+  </article>
+
+  <!-- 8 -->
+  <article class="sec">
+    <header><span class="em">✅</span><h3>8. Critérios de Qualidade</h3><span class="tag novo">Preenchido</span>
+      <span class="copyrow"><button class="btn" data-copy>Copiar</button></span></header>
+    <div class="body">
+      <div class="tblwrap">
+      <table class="tbl">
+        <thead><tr><th>Indicador</th><th>De onde sai</th><th>Frequência</th></tr></thead>
+        <tbody>
+          <tr><td>% de pedidos de amenities dentro do SLA, por fase</td><td>Painel de SLA da lojinha</td><td>Semanal</td></tr>
+          <tr><td>SLA estourado pela Harus (Recebido e Informação de Envio)</td><td>Indicador de estouro do fornecedor</td><td>Mensal</td></tr>
+          <tr><td>Valor vendido de amenities no mês</td><td>Fechamento mensal da Harus</td><td>Mensal</td></tr>
+          <tr><td>Comissão de 5% cobrada × vendas do mês</td><td>Fechamento mensal da Harus</td><td>Mensal</td></tr>
+          <tr><td>Pedidos com divergência ou produto com problema</td><td>Chamados das franquias</td><td>Mensal</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="note ask"><span class="lbl">Decidir</span>A lista é um ponto de partida. Falta escolher quem acompanha e onde o número aparece.</div>
+    </div>
+  </article>
+
+</main>
+
+<footer class="shell">
+  <p><b>Como usar.</b> Cada seção tem o botão Copiar. Cole no lugar da seção de mesmo número do canvas atual, que tem as mesmas 8 seções. Depois apague o aviso de revisão de 27/10 do topo, que fica resolvido com o volume mínimo e a taxa corrigidos. Os comentários da revisão não entram no que você copia.</p>
+  <p><b>Fontes.</b> Canvas atual F093PAVTWBZ, prints da categoria Amenities da lojinha (27/10/2026), canvas do Ciclo do Pedido na Lojinha (SLAs de 28/09/2026), fechamento mensal da Harus e as definições do Henry em 27/10/2026 (sem volume mínimo, 5% de comissão sobre a venda).</p>
+</footer>
+
+<script>
+function plain(node){
+  var out=[];
+  function walk(n){
+    if(n.nodeType===3){out.push(n.textContent.replace(/\s+/g,' '));return}
+    if(n.nodeType!==1)return;
+    var t=n.tagName;
+    if(n.classList&&n.classList.contains('msgbox')){out.push('\n'+n.textContent+'\n');return}
+    if(t==='TABLE'){
+      n.querySelectorAll('tr').forEach(function(r){
+        out.push('\n'+Array.prototype.map.call(r.children,function(c){return c.textContent.trim()}).join(' | '));
+      });
+      out.push('\n');return;
+    }
+    if(t==='LI'){out.push('\n- ')}
+    if(t==='P'||t==='SUMMARY'||t==='DIV'||t==='UL'){out.push('\n')}
+    if(t==='SUMMARY'){out.push('\n');n.querySelectorAll('.sum-t').forEach(function(s){out.push(n.querySelector('.idx').textContent+'. '+s.textContent)});out.push('\n');return}
+    n.childNodes.forEach(walk);
+    if(t==='P')out.push('\n');
+  }
+  walk(node);
+  return out.join('').replace(/[ \t]+\n/g,'\n').replace(/\n /g,'\n').replace(/\n{3,}/g,'\n\n').trim();
+}
+function richHtml(node){
+  var html='';
+  function walk(n){
+    if(n.nodeType===3){html+=n.textContent.replace(/&/g,'&amp;').replace(/</g,'&lt;');return}
+    if(n.nodeType!==1)return;
+    var t=n.tagName;
+    if(t==='DETAILS'){var s=n.querySelector('.sum-t'),i=n.querySelector('.idx');html+='<h3>'+i.textContent+'. '+s.textContent+'</h3>';n.querySelector('.inner').childNodes.forEach(walk);return}
+    if(n.classList&&n.classList.contains('msgbox')){html+='<blockquote>'+n.textContent.replace(/&/g,'&amp;').replace(/</g,'&lt;').split('\n').join('<br>')+'</blockquote>';return}
+    if(t==='TABLE'){html+='<table>';n.querySelectorAll('tr').forEach(function(r){html+='<tr>'+Array.prototype.map.call(r.children,function(c){return '<td>'+c.textContent.trim()+'</td>'}).join('')+'</tr>'});html+='</table>';return}
+    var map={P:'p',UL:'ul',LI:'li',B:'b',STRONG:'b',EM:'i'};
+    var tag=map[t];
+    if(tag)html+='<'+tag+'>';
+    n.childNodes.forEach(walk);
+    if(tag)html+='</'+tag+'>';
+  }
+  walk(node);
+  return html;
+}
+function sectionParts(sec){
+  var b=sec.querySelector('.body').cloneNode(true);
+  b.querySelectorAll('.note').forEach(function(x){x.remove()});
+  var title=sec.querySelector('header .em').textContent+' '+sec.querySelector('header h3').textContent;
+  return {txt:title+'\n'+plain(b), html:'<h2>'+title+'</h2>'+richHtml(b)};
+}
+function copy(parts,btn,okLabel,label){
+  function ok(){btn.textContent=okLabel;btn.classList.add('on');setTimeout(function(){btn.textContent=label;btn.classList.remove('on')},2000)}
+  function fb(){
+    var t=document.createElement('textarea');t.value=parts.txt;t.style.position='fixed';t.style.opacity='0';
+    document.body.appendChild(t);t.select();
+    try{document.execCommand('copy');ok()}catch(e){btn.textContent='Copie manualmente'}
+    document.body.removeChild(t);
+  }
+  try{
+    if(window.ClipboardItem&&navigator.clipboard&&navigator.clipboard.write){
+      navigator.clipboard.write([new ClipboardItem({
+        'text/html':new Blob([parts.html],{type:'text/html'}),
+        'text/plain':new Blob([parts.txt],{type:'text/plain'})
+      })]).then(ok,function(){navigator.clipboard.writeText(parts.txt).then(ok,fb)});
+    }else if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(parts.txt).then(ok,fb)}
+    else fb();
+  }catch(e){fb()}
+}
+document.querySelectorAll('[data-copy]').forEach(function(b){
+  b.addEventListener('click',function(){copy(sectionParts(b.closest('.sec')),b,'Copiado','Copiar')});
+});
+document.getElementById('copyall').addEventListener('click',function(){
+  var ps=Array.prototype.map.call(document.querySelectorAll('.sec'),sectionParts);
+  copy({txt:'Processo de compras de Amenities Padronizados\n\n'+ps.map(function(p){return p.txt}).join('\n\n\n'),
+        html:'<h1>Processo de compras de Amenities Padronizados</h1>'+ps.map(function(p){return p.html}).join('')},
+       this,'Canvas inteiro copiado','Copiar o canvas inteiro');
+});
+var rt=document.getElementById('revtoggle');
+rt.addEventListener('click',function(){
+  var on=rt.getAttribute('aria-pressed')!=='true';
+  rt.setAttribute('aria-pressed',String(on));
+  document.body.classList.toggle('rev',on);
+  rt.textContent=on?'Ocultar comentários da revisão':'Mostrar comentários da revisão';
+});
+var sa=document.getElementById('stepsall');
+sa.addEventListener('click',function(){
+  var on=sa.getAttribute('aria-pressed')!=='true';
+  sa.setAttribute('aria-pressed',String(on));
+  sa.textContent=on?'Fechar todas as etapas':'Abrir todas as etapas';
+  document.querySelectorAll('.step').forEach(function(s){s.open=on});
+});
+</script>
+</body>
+</html>
