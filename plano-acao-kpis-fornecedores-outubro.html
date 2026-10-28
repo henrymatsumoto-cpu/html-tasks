@@ -1,0 +1,302 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Plano de Ação KPIs Fornecedores</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme: dark;
+  --bg:#080E32; --surf:#0F1742; --surf2:#18225A; --line:#232E6B;
+  --ink:#EEF1FB; --ink2:#B4BBD9; --ink3:#8189B0; --blue:#4D85FF; --primary:#0055FF;
+  --ok:oklch(78% .12 150); --bad:oklch(72% .13 30); --warn:oklch(82% .13 80);
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Figtree,sans-serif;font-size:15px;line-height:1.55}
+.wrap{max-width:1120px;margin:0 auto;padding:0 16px}
+a{color:var(--blue)}
+header{padding:56px 0 32px}
+.eyebrow{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--blue);margin:0 0 12px}
+h1{font-size:clamp(30px,5vw,46px);line-height:1.08;font-weight:800;margin:0 0 14px;letter-spacing:-.02em}
+.lede{font-size:18px;color:var(--ink2);max-width:760px;margin:0}
+.meta{margin-top:18px;font-size:13px;color:var(--ink3)}
+h2{font-size:24px;font-weight:800;margin:0 0 6px;letter-spacing:-.01em}
+.sub{color:var(--ink3);margin:0 0 22px;font-size:14px}
+section{padding:40px 0;border-top:1px solid var(--line)}
+
+/* números do mês */
+.nums{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.num{background:var(--surf);padding:20px 18px}
+.num b{display:block;font-size:30px;font-weight:800;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.num span{display:block;font-size:13px;color:var(--ink2);margin-top:2px}
+.num small{display:block;font-size:12px;color:var(--ink3);margin-top:8px}
+.ok{color:var(--ok)} .bad{color:var(--bad)} .warn{color:var(--warn)}
+
+/* filtros + progresso */
+.bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:20px}
+.chip{border:1px solid var(--line);background:var(--surf);color:var(--ink2);font:inherit;font-size:13px;font-weight:600;padding:7px 14px;border-radius:999px;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--primary);border-color:var(--primary);color:#fff}
+.chip:focus-visible,.task input:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+.sep{width:1px;height:22px;background:var(--line);margin:0 4px}
+.progress{margin-left:auto;font-size:13px;color:var(--ink2);display:flex;align-items:center;gap:10px}
+.track{width:120px;height:6px;border-radius:99px;background:var(--surf2);overflow:hidden}
+.fill{height:100%;background:var(--ok);width:0;transition:width .3s ease-out}
+
+.horizon{margin-top:30px}
+.horizon h3{font-size:15px;font-weight:700;margin:0 0 12px;display:flex;gap:10px;align-items:baseline}
+.horizon h3 em{font-style:normal;font-weight:500;color:var(--ink3);font-size:13px}
+.task{display:grid;grid-template-columns:28px 1fr;gap:12px;padding:16px 4px;border-bottom:1px solid var(--line)}
+.task:first-of-type{border-top:1px solid var(--line)}
+.task input{width:18px;height:18px;margin:3px 0 0;accent-color:var(--ok);cursor:pointer}
+.task .t{font-weight:600;color:var(--ink)}
+.task .n{color:var(--ink3);font-weight:700;margin-right:6px;font-variant-numeric:tabular-nums}
+.task.done .t{color:var(--ink3);text-decoration:line-through;text-decoration-color:var(--ink3)}
+.task>div{min-width:0}
+.task .t{overflow-wrap:anywhere}
+.task dl{display:grid;grid-template-columns:62px 1fr;gap:3px 12px;margin:8px 0 0;font-size:13px}
+.task dt{color:var(--ink3)}
+.task dd{margin:0;color:var(--ink2);min-width:0}
+.tag{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.04em;padding:2px 8px;border-radius:999px;background:var(--surf2);color:var(--ink2);margin-left:6px;vertical-align:2px}
+.tag.auto{color:var(--ok)}
+.task[hidden]{display:none}
+
+/* problemas */
+.probs{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.prob{background:var(--surf);border:1px solid var(--line);border-radius:14px;padding:20px}
+.prob h4{margin:0 0 10px;font-size:16px;font-weight:700;display:flex;gap:10px}
+.prob h4 i{font-style:normal;color:var(--blue);font-variant-numeric:tabular-nums}
+.prob p{margin:0 0 8px;color:var(--ink2);font-size:14px}
+.prob p b{color:var(--ink);font-weight:600}
+.prob .kp{font-size:12px;color:var(--ink3)}
+
+/* tabelas */
+.tbl{width:100%;border-collapse:collapse;font-size:14px}
+.scroll{overflow-x:auto;border:1px solid var(--line);border-radius:14px}
+.tbl th{text-align:left;font-size:12px;font-weight:700;color:var(--ink3);text-transform:uppercase;letter-spacing:.06em;padding:12px 14px;background:var(--surf);position:sticky;top:0}
+.tbl td{padding:11px 14px;border-top:1px solid var(--line);vertical-align:top;color:var(--ink2)}
+.tbl td:first-child{color:var(--ink);font-weight:600}
+.tbl .grp td{background:var(--surf2);color:var(--blue);font-weight:700;font-size:12px;text-transform:uppercase;letter-spacing:.08em}
+.st{font-weight:700;white-space:nowrap}
+.num-c{font-variant-numeric:tabular-nums;white-space:nowrap}
+details{margin-top:14px}
+summary{cursor:pointer;color:var(--blue);font-weight:600;font-size:14px}
+.notes{columns:2;column-gap:32px;color:var(--ink2);font-size:14px;padding-left:18px}
+.notes li{margin-bottom:8px;break-inside:avoid}
+footer{padding:32px 0 56px;color:var(--ink3);font-size:13px;border-top:1px solid var(--line)}
+
+@media (max-width:820px){
+  .nums{grid-template-columns:repeat(2,1fr)}
+  .probs{grid-template-columns:1fr}
+  .notes{columns:1}
+  .progress{margin-left:0;width:100%}
+}
+@media (prefers-reduced-motion:reduce){.fill{transition:none}}
+</style>
+</head>
+<body>
+<header class="wrap">
+  <p class="eyebrow">Setor 35 · Backoffice Fornecedores e Compras</p>
+  <h1>Plano de Ação KPIs Fornecedores · Outubro 2026</h1>
+  <p class="lede">A lojinha vendeu e despachou mais, mas a comissão de enxoval não fecha a meta, a fila de envio estourou na última semana e parte do painel mostra valor repetido ou mede o canal errado. Aqui estão 22 ações para resolver isso.</p>
+  <p class="meta">Dados até 27/10 (18 dias úteis), comparados com setembro. Análise com 4 frentes e revisão cética por frente. Gerado em 28/10/2026.</p>
+</header>
+
+<main>
+<section class="wrap" style="border-top:0;padding-top:8px">
+  <div class="nums">
+    <div class="num"><b class="ok">+56%</b><span>GMV da lojinha</span><small>R$ 40,4 mil vs R$ 25,9 mil em set</small></div>
+    <div class="num"><b class="ok">45,9%</b><span>Enxoval comprado conosco</span><small>meta 30% · set 42,7%</small></div>
+    <div class="num"><b class="bad">76%</b><span>Comissão enxovais vs meta</span><small>R$ 7.385 de R$ 9.672 · projeção ~R$ 7,8 mil</small></div>
+    <div class="num"><b class="warn">18–25</b><span>Cards aguardando envio</span><small>todo dia de 19 a 27/10 · meta ≤ 14</small></div>
+  </div>
+</section>
+
+<section class="wrap" id="plano">
+  <h2>Plano de ação</h2>
+  <p class="sub">As marcações ficam salvas neste navegador. Use os filtros para ver só o que é seu ou o que dá para automatizar.</p>
+
+  <div class="bar" role="toolbar" aria-label="Filtros">
+    <button class="chip" data-f="all" aria-pressed="true">Todas</button>
+    <button class="chip" data-f="henry" aria-pressed="false">Henry</button>
+    <button class="chip" data-f="wania" aria-pressed="false">Wania</button>
+    <span class="sep" aria-hidden="true"></span>
+    <button class="chip" data-f="auto" aria-pressed="false">Automatizáveis</button>
+    <button class="chip" data-f="open" aria-pressed="false">Pendentes</button>
+    <div class="progress"><span id="pc">0 de 22</span><div class="track"><div class="fill" id="pf"></div></div></div>
+  </div>
+
+  <div class="horizon">
+    <h3>Agora <em>esta semana, até 31/10</em></h3>
+    <div class="task" data-id="1" data-o="henry"><input type="checkbox" aria-label="Ação 1"><div><div class="t"><span class="n">1</span>Conferir o #944 com a Lucilene Cora e cancelar a parte Harus antes do pagamento</div><dl><dt>Por quê</dt><dd>Duplicado do #943 não cancelado; a parte Seazone já foi enviada em 26/10, e o risco é envio e cobrança em dobro</dd><dt>Medir</dt><dd>parte Harus do #944 cancelada</dd><dt>Dono</dt><dd>Henry</dd></dl></div></div>
+    <div class="task" data-id="2" data-o="henry" data-a="1"><input type="checkbox" aria-label="Ação 2"><div><div class="t"><span class="n">2</span>Rodar análise da Matinali e de comissão; testar a hipótese de venda por fora e cobrar NF dos pagos <u>já despachados</u><span class="tag auto">AUTO</span></div><dl><dt>Por quê</dt><dd>53 pedidos pagos sem NF ≈ R$ 6,4 mil de comissão represada (número do app, não reproduzido). Não pedir NF de pedido não despachado: só antecipa novembro</dd><dt>Medir</dt><dd>1993 em 30/10 e represado &lt; R$ 3 mil</dd><dt>Dono</dt><dd>Henry</dd></dl></div></div>
+    <div class="task" data-id="3" data-o="henry" data-a="1"><input type="checkbox" aria-label="Ação 3"><div><div class="t"><span class="n">3</span>Filtrar <code>source &lt;&gt; 'cadence_dispatch'</code> em 501/502/503 na skill kpis-fornecedores e recalcular 14–27/10<span class="tag auto">AUTO</span></div><dl><dt>Por quê</dt><dd>81% dos 393 fechamentos são disparos; lead de prospecção entra como atendimento a franquia</dd><dt>Medir</dt><dd>série de outubro recalculada e 502 só de franquias</dd><dt>Dono</dt><dd>Henry</dd></dl></div></div>
+    <div class="task" data-id="4" data-o="henry wania" data-a="1"><input type="checkbox" aria-label="Ação 4"><div><div class="t"><span class="n">4</span>Alerta diário às 9h no Slack: cards &gt; 2 dias úteis em "Aguardando envio" ou "Enviado ao fornecedor", com idade, agrupados por fornecedor<span class="tag auto">AUTO</span></div><dl><dt>Por quê</dt><dd>505/507 mostram só o volume, não a idade; #855 Matinali levou 22 dias</dd><dt>Medir</dt><dd>nenhum card &gt; 5 dias e 507 &lt; 14 por 5 dias úteis seguidos</dd><dt>Dono</dt><dd>Henry monta · Wania cobra</dd></dl></div></div>
+    <div class="task" data-id="5" data-o="henry" data-a="1"><input type="checkbox" aria-label="Ação 5"><div><div class="t"><span class="n">5</span>Trocar "repetido" por N/A com comentário (AB Card, 495, ML, IZY, Guarda pó) e revisar os R$ 350,09 do AB Card<span class="tag auto">AUTO</span></div><dl><dt>Por quê</dt><dd>AB Card está igual desde agosto; setembro real foi R$ 161,17</dd><dt>Medir</dt><dd>nenhum "Repetido de" em novembro</dd><dt>Dono</dt><dd>Henry</dd></dl></div></div>
+    <div class="task" data-id="6" data-o="wania"><input type="checkbox" aria-label="Ação 6"><div><div class="t"><span class="n">6</span>Limpar os 15 cards em "Pedido enviado" há mais de 7 dias</div><dl><dt>Por quê</dt><dd>31 cards nessa fase, o #412 está há 96 dias</dd><dt>Medir</dt><dd>0 cards &gt; 10 dias em "Pedido enviado"</dd><dt>Dono</dt><dd>Wania</dd></dl></div></div>
+    <div class="task" data-id="7" data-o="henry"><input type="checkbox" aria-label="Ação 7"><div><div class="t"><span class="n">7</span>IZY: confirmar com a Ray se #950, #958 e #979 ficam retidos até o fim da pré-venda (30/10) antes de cobrar</div><dl><dt>Por quê</dt><dd>Comissão IZY em R$ 0 no mês, pode ser o combinado e não atraso</dd><dt>Medir</dt><dd>cards em "Aguard. pagamento" ou adiante em novembro</dd><dt>Dono</dt><dd>Henry</dd></dl></div></div>
+  </div>
+
+  <div class="horizon">
+    <h3>Novembro <em>ajustes de processo e medição</em></h3>
+    <div class="task" data-id="8" data-o="henry"><input type="checkbox" aria-label="Ação 8"><div><div class="t"><span class="n">8</span>Combinar com Somar e Matinali cadência fixa de despacho (2× por semana) e SLA de pagamento até envio</div><dl><dt>Por quê</dt><dd>Matinali 161 h e Somar 116 h na fase, contra 24 h da Harus; despacham em lote</dd><dt>Medir</dt><dd>pagamento → envio ≤ 48 h (pronta entrega); sob demanda usa a tag "Produzindo"</dd><dt>Dono</dt><dd>Henry, na reunião mensal</dd></dl></div></div>
+    <div class="task" data-id="9" data-o="henry"><input type="checkbox" aria-label="Ação 9"><div><div class="t"><span class="n">9</span>Material Seazone: mapear quem move o card e qual transportadora, depois fixar dias de despacho com um dono</div><dl><dt>Por quê</dt><dd>Seazone 119 h na fase; houve envio em 21/10 e o seguinte só em 26/10</dd><dt>Medir</dt><dd>de 119 h para &lt; 48 h</dd><dt>Dono</dt><dd>Henry e expedição da sede</dd></dl></div></div>
+    <div class="task" data-id="10" data-o="henry" data-a="1"><input type="checkbox" aria-label="Ação 10"><div><div class="t"><span class="n">10</span>Mudar a fonte de 534/535/536 para o Pipedrive (funis 60 e 61) e fechar o card do funil 61 no dia em que a lavanderia for validada<span class="tag auto">AUTO</span></div><dl><dt>Por quê</dt><dd>Zerados o mês todo, mas 8 cidades saíram da lista. A fonte antiga foi extinta</dd><dt>Medir</dt><dd>536 bate com as saídas de 499/500</dd><dt>Dono</dt><dd>Henry</dd></dl></div></div>
+    <div class="task" data-id="11" data-o="henry" data-a="1"><input type="checkbox" aria-label="Ação 11"><div><div class="t"><span class="n">11</span>Dividir o 503 em entrada, campanha e cadência; investigar a queda da entrada (6,8 → 4,2 por dia útil)<span class="tag auto">AUTO</span></div><dl><dt>Por quê</dt><dd>"Maior Vermelho" contradiz uma meta de produtividade, e o atendimento real caiu 39%</dd><dt>Medir</dt><dd>série retroativa set/out por componente</dd><dt>Dono</dt><dd>Henry</dd></dl></div></div>
+    <div class="task" data-id="12" data-o="henry" data-a="1"><input type="checkbox" aria-label="Ação 12"><div><div class="t"><span class="n">12</span>Transformar as regras de 501/502 (almoço fixo, 1ª ação, fila da noite) num script Python determinístico<span class="tag auto">AUTO</span></div><dl><dt>Por quê</dt><dd>13 de 18 dias precisaram de ajuste manual, e a regra mudou no meio do mês</dd><dt>Medir</dt><dd>recálculo de outubro com diferença &lt; 30 s por dia</dd><dt>Dono</dt><dd>Henry</dd></dl></div></div>
+    <div class="task" data-id="13" data-o="henry" data-a="1"><input type="checkbox" aria-label="Ação 13"><div><div class="t"><span class="n">13</span>Alerta de presença travada (mensagem com status almoço/offline) e proposta de cobertura no almoço<span class="tag auto">AUTO</span></div><dl><dt>Por quê</dt><dd>Presença travou em 11 dias; atribuições represadas no almoço (10 em 20/10, 6 em 27/10)</dd><dt>Medir</dt><dd>dias com ajuste manual: de 13/18 para ≤ 3</dd><dt>Dono</dt><dd>Henry</dd></dl></div></div>
+    <div class="task" data-id="14" data-o="henry" data-a="1"><input type="checkbox" aria-label="Ação 14"><div><div class="t"><span class="n">14</span>Retomar auditorias com pré-auditoria: o script sorteia 2 sessões por dia com checklist e o Henry confirma<span class="tag auto">AUTO</span></div><dl><dt>Por quê</dt><dd>1931 zerado em outubro (22 em setembro), então o 1934 = 0 não prova nada</dd><dt>Medir</dt><dd>1931 ≥ 2 por dia em 90% dos dias</dd><dt>Dono</dt><dd>Henry</dd></dl></div></div>
+    <div class="task" data-id="15" data-o="henry" data-a="1"><input type="checkbox" aria-label="Ação 15"><div><div class="t"><span class="n">15</span>Medir o agente de lembrete de pagamento por coorte e, se o efeito se mantiver, estender ao app de enxoval (cancelar só pedido não pago)<span class="tag auto">AUTO</span></div><dl><dt>Por quê</dt><dd>Link → pagamento caiu de 67 h para 7 h após 22/10 (só 3 cards, amostra pequena)</dd><dt>Medir</dt><dd>link → pagamento &lt; 24 h</dd><dt>Dono</dt><dd>Henry</dd></dl></div></div>
+    <div class="task" data-id="16" data-o="henry wania"><input type="checkbox" aria-label="Ação 16"><div><div class="t"><span class="n">16</span>Cidades mais difíceis: mudar a oferta (deslocamento pago, lavanderia vizinha por rota) e dar prazo por cidade; reativar fotógrafos inativos nas cidades da lista</div><dl><dt>Por quê</dt><dd>Caraguatatuba, Chapecó e Arraial d'Ajuda há 50–57 dias; Caraguatatuba não converteu com 31 cards. Fotógrafos: 40 de 55 ativos, 1 entrada no mês</dd><dt>Medir</dt><dd>pendência mais antiga &lt; 30 dias até 15/12; 496 em 45 até 30/11</dd><dt>Dono</dt><dd>Henry e Wania</dd></dl></div></div>
+    <div class="task" data-id="17" data-o="henry" data-a="1"><input type="checkbox" aria-label="Ação 17"><div><div class="t"><span class="n">17</span>Cruzar semanalmente as ativações do Sapron com os pedidos Seazone e listar imóveis sem pedido de kit para o CS<span class="tag auto">AUTO</span></div><dl><dt>Por quê</dt><dd>537 abaixo da meta (1,61 real vs 2); hipótese de ativação sem kit ainda não testada</dd><dt>Medir</dt><dd>% de ativações com pedido em até 15 dias; 537 ≥ 2</dd><dt>Dono</dt><dd>Henry</dd></dl></div></div>
+  </div>
+
+  <div class="horizon">
+    <h3>Estrutural <em>mudança em sistema</em></h3>
+    <div class="task" data-id="18" data-o="henry" data-a="1"><input type="checkbox" aria-label="Ação 18"><div><div class="t"><span class="n">18</span>Trava contra duplicidade no checkout (mesmo usuário e mesmos itens em até 10 min) e passo obrigatório de cancelamento<span class="tag auto">AUTO</span></div><dl><dt>Por quê</dt><dd>27 de 126 cards cancelados (21%), a maioria duplicados</dd><dt>Medir</dt><dd>cancelamento &lt; 8%</dd><dt>Dono</dt><dd>PR no novalojaseazone + Alfred</dd></dl></div></div>
+    <div class="task" data-id="19" data-o="henry" data-a="1"><input type="checkbox" aria-label="Ação 19"><div><div class="t"><span class="n">19</span>Validar o rastreio (≥ 8 caracteres, sem "123") e trocar a transportadora por uma lista fechada<span class="tag auto">AUTO</span></div><dl><dt>Por quê</dt><dd>21 de 42 cards Harus com rastreio "123"</dd><dt>Medir</dt><dd>rastreio válido &gt; 95%</dd><dt>Dono</dt><dd>mesmo PR</dd></dl></div></div>
+    <div class="task" data-id="20" data-o="henry" data-a="1"><input type="checkbox" aria-label="Ação 20"><div><div class="t"><span class="n">20</span>Fechar o ciclo sozinho: concluir em D+10 com rastreio entregue, ou a SIA pergunta ao franqueado se recebeu<span class="tag auto">AUTO</span></div><dl><dt>Por quê</dt><dd>Ninguém é dono da conclusão do card depois do envio</dd><dt>Medir</dt><dd>0 cards &gt; 10 dias em "Pedido enviado"</dd><dt>Dono</dt><dd>Henry</dd></dl></div></div>
+    <div class="task" data-id="21" data-o="henry" data-a="1"><input type="checkbox" aria-label="Ação 21"><div><div class="t"><span class="n">21</span>Alerta de "pago sem NF" no app de enxoval e linha de "comissão represada" no comentário do 1993<span class="tag auto">AUTO</span></div><dl><dt>Por quê</dt><dd>A comissão conta pela data da NF e hoje ninguém vê o represado</dd><dt>Medir</dt><dd>≤ 5 pedidos pagos sem NF há mais de 5 dias úteis</dd><dt>Dono</dt><dd>Henry</dd></dl></div></div>
+    <div class="task" data-id="22" data-o="henry" data-a="1"><input type="checkbox" aria-label="Ação 22"><div><div class="t"><span class="n">22</span>Fotógrafos: definir a tabela oficial, registrar exceções por praça e trocar o 2451 por "R$ pago acima da tabela" (meta 0)<span class="tag auto">AUTO</span></div><dl><dt>Por quê</dt><dd>R$ 1.375 pagos acima da tabela em 8 recibos, escondidos pelo saldo líquido</dd><dt>Medir</dt><dd>0 recibo acima da tabela sem exceção aprovada</dd><dt>Dono</dt><dd>Henry e time de fotografia</dd></dl></div></div>
+  </div>
+</section>
+
+<section class="wrap" id="problemas">
+  <h2>Os problemas que importam</h2>
+  <p class="sub">Ordenados por impacto. São a origem das ações acima.</p>
+  <div class="probs">
+    <article class="prob"><h4><i>1</i>A comissão de enxoval não fecha a meta</h4><p><b>R$ 7.385</b> em 27/10, faltam R$ 2.287. No ritmo de R$ 138 por dia útil, o mês fecha em ~R$ 7,8 mil.</p><p>A Matinali não parou de emitir NF, mas emite menos. A comissão conta pela data da NF e não há alerta de "pago sem NF". Setembro teve R$ 7.838 de ajuste manual, então não é base limpa.</p><p class="kp">KPIs 1993 · 1995 · ações 2, 21</p></article>
+    <article class="prob"><h4><i>2</i>A fila de envio estourou de 19 a 27/10</h4><p><b>507 entre 18 e 25</b> todo dia (meta 14). Na semana de 05/10 a média era 9.</p><p>Tempo médio na fase: Matinali 161 h, Seazone 119 h e Somar 116 h, contra 24 h da Harus. Os três despacham em lote, sem cadência combinada.</p><p class="kp">KPIs 505 · 507 · ações 4, 8, 9</p></article>
+    <article class="prob"><h4><i>3</i>KPIs da Wania distorcidos</h4><p><b>81%</b> dos 393 fechamentos são disparos de campanha ou cadência. O atendimento de entrada caiu de 6,8 para 4,2 por dia útil.</p><p>A 1ª resposta bateu a meta em só 6 de 18 dias. A presença travou em 11 dias. Os chamados sem resposta subiram para 3,3 por dia na última semana.</p><p class="kp">KPIs 501 · 502 · 503 · ações 3, 11, 12, 13</p></article>
+    <article class="prob"><h4><i>4</i>O painel mostra valor repetido ou mede o canal errado</h4><p><b>534/535/536 zerados</b>, porque a prospecção foi para o Pipedrive. O 506 está em zero porque a tag nunca foi usada.</p><p>O AB Card está repetido desde agosto, o 495 repetido por falta de credencial e o 1934 = 0 sem auditoria. A política hoje é repetir o último valor em vez de lançar N/A.</p><p class="kp">ações 5, 10, 14</p></article>
+    <article class="prob"><h4><i>5</i>Cidades difíceis paradas e fotógrafos sem crescer</h4><p><b>50 a 57 dias</b> sem lavanderia em Caraguatatuba, Chapecó e Arraial d'Ajuda. Sem fotógrafo há pelo menos 57 dias em Uberlândia, Anitápolis e Jaguaruna.</p><p>São 40 fotógrafos ativos de 55, com 1 entrada no mês. Repetir a mesma oferta não converte.</p><p class="kp">KPIs 495 · 496 · 499 · 500 · ação 16</p></article>
+    <article class="prob"><h4><i>6</i>O ciclo do pedido não fecha</h4><p><b>21% dos cards</b> de outubro foram cancelados, a maioria duplicados. O #944 duplicado segue ativo.</p><p>Metade dos rastreios Harus é "123". Há 15 cards em "Pedido enviado" há mais de 7 dias, e o #412 está há 96.</p><p class="kp">ações 1, 6, 18, 19, 20</p></article>
+  </div>
+</section>
+
+<section class="wrap" id="placar">
+  <h2>Placar por KPI</h2>
+  <p class="sub">✅ bateu · ⚠️ no limite · ❌ abaixo · ❓ medição não confiável. Valores por dia útil quando indicado.</p>
+  <div class="scroll">
+  <table class="tbl">
+    <thead><tr><th>KPI</th><th>Meta</th><th>Outubro</th><th>Setembro</th><th>Status</th></tr></thead>
+    <tbody>
+      <tr class="grp"><td colspan="5">Lojinha e fila</td></tr>
+      <tr><td>537 Pedidos Seazone /d.u.</td><td class="num-c">2</td><td class="num-c">1,61 real (1,72 lançado)</td><td class="num-c">2,71</td><td class="st">❌</td></tr>
+      <tr><td>538 Vendas fornecedores /d.u.</td><td class="num-c">4</td><td class="num-c">3,61 ajustado</td><td class="num-c">3,67</td><td class="st">⚠️</td></tr>
+      <tr><td>505 Travados sem ação</td><td class="num-c">≤ 25</td><td class="num-c">17,9 (estourou 19, 21, 27/10)</td><td class="num-c">25,0*</td><td class="st">⚠️</td></tr>
+      <tr><td>506 Sem estoque</td><td class="num-c">≤ 5</td><td class="num-c">0 artificial</td><td class="num-c">1,05</td><td class="st">❓</td></tr>
+      <tr><td>507 Aguardando envio</td><td class="num-c">≤ 14</td><td class="num-c">15,1 (11/18 dias ok)</td><td class="num-c">15,95</td><td class="st">❌</td></tr>
+      <tr><td>508 Enviados /d.u.</td><td class="num-c">5</td><td class="num-c">5,94 (4,76 sem o mutirão)</td><td class="num-c">2,71</td><td class="st">✅</td></tr>
+      <tr class="grp"><td colspan="5">Comissões e enxoval (acumulado em 27/10)</td></tr>
+      <tr><td>1993 Comissão enxovais</td><td class="num-c">R$ 9.672</td><td class="num-c">R$ 7.385</td><td class="num-c">R$ 23.503*</td><td class="st">❌</td></tr>
+      <tr><td>1995 Comissão TT</td><td class="num-c">R$ 10.000</td><td class="num-c">R$ 9.048 (proj. 9,7–10,6 mil)</td><td class="num-c">R$ 24.809</td><td class="st">⚠️</td></tr>
+      <tr><td>1994 Taxa de enxoval</td><td class="num-c">30%</td><td class="num-c">45,9%</td><td class="num-c">42,7%</td><td class="st">✅</td></tr>
+      <tr><td>2502 Harus</td><td class="num-c">R$ 100</td><td class="num-c">R$ 846</td><td class="num-c">R$ 484</td><td class="st">✅</td></tr>
+      <tr><td>2503 IZY</td><td class="num-c">R$ 100</td><td class="num-c">R$ 0 (pré-venda)</td><td class="num-c">R$ 0</td><td class="st">❌</td></tr>
+      <tr><td>2504 Guarda pó</td><td class="num-c">R$ 100</td><td class="num-c">R$ 28,75</td><td class="num-c">R$ 15,00</td><td class="st">❌</td></tr>
+      <tr><td>2527 Somar Malhas</td><td class="num-c">R$ 400</td><td class="num-c">R$ 219</td><td class="num-c">R$ 253,50</td><td class="st">❌</td></tr>
+      <tr><td>2500 Ganho Mercado Livre</td><td class="num-c">R$ 100</td><td class="num-c">R$ 218,45</td><td class="num-c">R$ 390,82</td><td class="st">✅</td></tr>
+      <tr><td>2501 AB Card</td><td class="num-c">R$ 100</td><td class="num-c">R$ 350,09 repetido</td><td class="num-c">R$ 161,17</td><td class="st">❓</td></tr>
+      <tr><td>2933 Cliques ML /d.u.</td><td class="num-c">1</td><td class="num-c">4,94</td><td class="num-c">4,15</td><td class="st">✅</td></tr>
+      <tr class="grp"><td colspan="5">Suporte, prospecção e base</td></tr>
+      <tr><td>531 Cards criados /d.u.</td><td class="num-c">≤ 4</td><td class="num-c">0,67</td><td class="num-c">0,57</td><td class="st">✅</td></tr>
+      <tr><td>532 Cards em aberto</td><td class="num-c">≤ 10</td><td class="num-c">0,28</td><td class="num-c">0,76</td><td class="st">✅</td></tr>
+      <tr><td>533 Cards finalizados /d.u.</td><td class="num-c">4</td><td class="num-c">0,67</td><td class="num-c">0,81</td><td class="st">❌</td></tr>
+      <tr><td>534–536 Prospecção</td><td class="num-c">2 · 4 · 2</td><td class="num-c">0 (fonte extinta)</td><td class="num-c">0,05 · 0,29 · 0,19</td><td class="st">❓</td></tr>
+      <tr><td>495 Cidades com lavanderia</td><td class="num-c">66</td><td class="num-c">64</td><td class="num-c">62</td><td class="st">⚠️</td></tr>
+      <tr><td>496 Fotógrafos ativos</td><td class="num-c">50</td><td class="num-c">40</td><td class="num-c">40</td><td class="st">❌</td></tr>
+      <tr><td>2452 Fotos pagas /d.u.</td><td class="num-c">1</td><td class="num-c">13,9</td><td class="num-c">6,9</td><td class="st">✅</td></tr>
+      <tr><td>2451 Diferença tabela × pago</td><td class="num-c">R$ 1</td><td class="num-c">R$ 16,1/d.u. (R$ 1.375 acima)</td><td class="num-c">R$ 27,9</td><td class="st">❌</td></tr>
+      <tr class="grp"><td colspan="5">Atendimento Wania (SIA)</td></tr>
+      <tr><td>503 Tickets fechados /dia</td><td class="num-c">15</td><td class="num-c">21,7 (só 4,2 de entrada)</td><td class="num-c">20,6 (6,8)</td><td class="st">⚠️</td></tr>
+      <tr><td>502 1ª resposta</td><td class="num-c">00:10:00</td><td class="num-c">00:14:51 (6/18 ok)</td><td class="num-c">00:15:17</td><td class="st">❌</td></tr>
+      <tr><td>501 Tempo de resposta</td><td class="num-c">00:10:00</td><td class="num-c">00:09:22 ajustado</td><td class="num-c">00:09:26</td><td class="st">✅</td></tr>
+      <tr><td>1931 Auditorias</td><td class="num-c">2/dia</td><td class="num-c">0</td><td class="num-c">22 no mês</td><td class="st">❌</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p class="sub" style="margin-top:12px">* Método diferente entre os meses (537, 538, 505, 507, 1993, 501/502); a variação não mede só desempenho. Setembro do 1993 inclui R$ 7.838 de ajuste manual.</p>
+</section>
+
+<section class="wrap" id="higiene">
+  <h2>Higiene dos KPIs</h2>
+  <p class="sub">Definições e metas a ajustar antes de comparar meses.</p>
+  <div class="scroll">
+  <table class="tbl">
+    <thead><tr><th>KPI</th><th>Problema</th><th>Proposta</th></tr></thead>
+    <tbody>
+      <tr><td>506</td><td>Zero artificial: a tag nunca foi usada</td><td>Aposentar, ou trocar por cards &gt; 5 dias úteis em "Aguardando envio"</td></tr>
+      <tr><td>505 · 507</td><td>Contam quase os mesmos cards; fim de semana repete a sexta</td><td>505 vira "parado há mais de 48 h em qualquer fase"; fim de semana fora da média</td></tr>
+      <tr><td>537 · 538 · 539</td><td>Regra de exclusão muda por dia; 538 conta cards, não pedidos</td><td>Regra escrita na skill (pedidos, sem cancelado/interno/teste); 539 vira top 3 mensal</td></tr>
+      <tr><td>1993</td><td>07/10 inflado pela NF 29825 duplicada; 08–13/10 não recalculados</td><td>Corrigir a série; ajuste manual em comentário separado</td></tr>
+      <tr><td>1994</td><td>Pagamentos entram atrasados; acumulado começa o mês baixo</td><td>Reprocessar 7 dias; avaliar no fechamento, não no diário</td></tr>
+      <tr><td>2502 · 498</td><td>Meta muito abaixo do realizado</td><td>Harus ~R$ 600; amenities = 2</td></tr>
+      <tr><td>2501 · 2506 · 2505</td><td>AB Card repetido; RentCars com meta 0 sempre "bate"; Momento fora do endpoint</td><td>Valor real ou N/A; RentCars com meta real ou arquivado; corrigir vínculo do 2505</td></tr>
+      <tr><td>2500 · 2933</td><td>Manual e repetido; clique sem ligação com ganho</td><td>Automatizar a coleta; meta só no ganho</td></tr>
+      <tr><td>531 · 532 · 533</td><td>Subcontagem, fuso UTC, um fluxo fora; 533 impossível, 531/532 sempre verdes</td><td>Corrigir fuso e fluxos antes; 532 vira "nenhum aberto &gt; 48 h"; 533 vira lead time</td></tr>
+      <tr><td>495 · 499 · 500</td><td>Repetido por credencial; texto sem idade da pendência</td><td>Credencial read-only no mcp-secrets.env; contagem + dias da pendência mais antiga</td></tr>
+      <tr><td>2451 · 2452</td><td>Líquido esconde desvios; "Maior Verde" premia pagar abaixo</td><td>"R$ acima da tabela" e "% fora da tabela"; separar emitido de pago</td></tr>
+      <tr><td>501 · 502 · 503</td><td>Ajuste manual diário; 503 mistura disparos; formatação invertida</td><td>Script determinístico; KPI de "sem 1ª resposta"; 503 em 3 componentes</td></tr>
+      <tr><td>1931</td><td>Meta de 2 por dia nunca sustentada</td><td>Meta semanal de 10 com pré-auditoria</td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<section class="wrap" id="confianca">
+  <h2>O que ficou sem verificar</h2>
+  <p class="sub">Confiança dos revisores: lojinha 8/10 · comissões 7/10 · suporte e prospecção 6/10 · Wania 8/10.</p>
+  <ul class="notes">
+    <li>Números do app de enxoval (53 pagos sem NF, R$ 127,3 mil): o revisor não teve acesso ao banco.</li>
+    <li>Venda da Matinali "por fora" em outubro: hipótese não testada.</li>
+    <li>Queda do 537 por ativação sem kit: falta cruzar com o Sapron.</li>
+    <li>Expedição Seazone (transportadora e quem move o card): não verificada.</li>
+    <li>Efeito do lembrete de pagamento: só 3 cards após 22/10.</li>
+    <li>Transferências da Wania a gestores sem mensagem: confirmar se é o fluxo de triagem esperado.</li>
+    <li>IZY: confirmar se reter os pedidos até o fim da pré-venda é o combinado.</li>
+    <li>Das 8 cidades que saíram das listas, só 4 têm ganho confirmado; algumas podem ser só regularização.</li>
+    <li>Valor real do AB Card em outubro: desconhecido.</li>
+    <li>Endpoint da lojinha limitado a 1.000 cards: cobre set/out, não serve para histórico.</li>
+  </ul>
+</section>
+</main>
+
+<footer class="wrap">Fonte: Hub de KPIs (setor 35), lojinha, Suporte Unificado e banco SIA, todos em leitura. Análise multiagente com revisão cética por frente.</footer>
+
+<script>
+(function(){
+  var KEY='plano-kpis-out26';
+  var tasks=[].slice.call(document.querySelectorAll('.task'));
+  var state={};
+  try{state=JSON.parse(localStorage.getItem(KEY)||'{}')||{}}catch(e){state={}}
+  var filter='all';
+  function save(){try{localStorage.setItem(KEY,JSON.stringify(state))}catch(e){}}
+  function render(){
+    var done=0;
+    tasks.forEach(function(t){
+      var id=t.dataset.id, cb=t.querySelector('input'), d=!!state[id];
+      cb.checked=d; t.classList.toggle('done',d); if(d)done++;
+      var show=filter==='all'||(filter==='auto'&&t.dataset.a)||(filter==='open'&&!d)||((filter==='henry'||filter==='wania')&&t.dataset.o.indexOf(filter)>-1);
+      t.hidden=!show;
+    });
+    document.getElementById('pc').textContent=done+' de '+tasks.length;
+    document.getElementById('pf').style.width=(done/tasks.length*100)+'%';
+  }
+  tasks.forEach(function(t){t.querySelector('input').addEventListener('change',function(e){state[t.dataset.id]=e.target.checked;save();render()})});
+  [].forEach.call(document.querySelectorAll('.chip'),function(b){
+    b.addEventListener('click',function(){
+      filter=b.dataset.f;
+      [].forEach.call(document.querySelectorAll('.chip'),function(x){x.setAttribute('aria-pressed',x===b?'true':'false')});
+      render();
+    });
+  });
+  render();
+})();
+</script>
+</body>
+</html>
