@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Análise do Agente de Pagamento (Enxoval)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#080E32;--surf:#0F1742;--surf2:#18225A;--line:#232E6B;--ink:#EEF1FB;--ink2:#B4BBD9;--ink3:#8189B0;--blue:#4D85FF;
+--ok:oklch(78% .12 150);--bad:oklch(72% .13 30);--warn:oklch(82% .13 80);color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.6 Figtree,system-ui,sans-serif}
+main{max-width:1080px;margin:0 auto;padding:48px 24px 80px}
+h1{font-size:32px;font-weight:800;margin:0 0 6px;letter-spacing:-.01em}
+h2{font-size:20px;font-weight:700;margin:48px 0 14px;padding-bottom:8px;border-bottom:1px solid var(--line)}
+h3{font-size:16px;font-weight:700;margin:0 0 6px}
+.sub{color:var(--ink2);margin:0 0 28px}
+.meta{color:var(--ink3);font-size:13px}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin:20px 0}
+.tile{background:var(--surf);border:1px solid var(--line);border-radius:12px;padding:16px}
+.tile b{display:block;font-size:28px;font-weight:800}
+.tile span{color:var(--ink2);font-size:13px}
+table{width:100%;border-collapse:collapse;background:var(--surf);border-radius:12px;overflow:hidden;font-size:14px}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{background:var(--surf2);color:var(--ink2);font-weight:600;font-size:13px}
+td.n{text-align:right;font-variant-numeric:tabular-nums}
+.bar{display:inline-block;height:10px;background:var(--blue);border-radius:3px;vertical-align:middle;margin-right:6px}
+.bar.x{background:var(--warn)}
+.card{background:var(--surf);border:1px solid var(--line);border-left:4px solid var(--line);border-radius:12px;padding:16px 18px;margin:12px 0}
+.card.alta{border-left-color:var(--bad)}.card.media{border-left-color:var(--warn)}.card.baixa{border-left-color:var(--ink3)}
+.card p{margin:6px 0;color:var(--ink2)}
+.card p strong{color:var(--ink)}
+.tag{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:999px;margin-right:6px;text-transform:uppercase;letter-spacing:.04em}
+.t-alta{background:color-mix(in oklch,var(--bad) 22%,transparent);color:var(--bad)}
+.t-media{background:color-mix(in oklch,var(--warn) 22%,transparent);color:var(--warn)}
+.t-baixa{background:var(--surf2);color:var(--ink2)}
+.t-ok{background:color-mix(in oklch,var(--ok) 22%,transparent);color:var(--ok)}
+.t-pl{background:var(--surf2);color:var(--ink3)}
+code{font-family:ui-monospace,Consolas,monospace;font-size:13px;background:var(--surf2);padding:1px 6px;border-radius:5px}
+.status{display:inline-block;padding:4px 14px;border-radius:999px;font-weight:700;background:color-mix(in oklch,var(--warn) 22%,transparent);color:var(--warn)}
+ol.plan li{margin:8px 0;color:var(--ink2)} ol.plan li strong{color:var(--ink)}
+</style>
+</head>
+<body><main>
+<h1>Análise do Agente de Pagamento (Enxoval)</h1>
+<p class="sub">Funcionando e movendo cards todo dia desde 22/10. Três riscos altos: links Getnet invisíveis, rodada degradada que sai "ok" e nenhum alerta chegando ao dono.</p>
+<p class="meta">29/10/2026 · Olimpo <code>agents/agente-analise-pagamento</code> @ main <code>c3b0c9d7</code> · CronJob <code>analise-pagamento-horaria</code> (<code>0 8-18/2</code> BRT) · análise read-only, 7 agentes com verificação adversarial</p>
+
+<div class="tiles">
+  <div class="tile"><span>Status geral</span><b style="color:var(--warn)">Atenção</b></div>
+  <div class="tile"><span>Movidos hoje até 10h05</span><b>13</b><span>10 link-expirado · 3 pago</span></div>
+  <div class="tile"><span>Fila em Aguardando pagamento</span><b>153</b><span>30 há mais de 7 dias</span></div>
+  <div class="tile"><span>Duração da rodada</span><b>~75–80 min</b><span>limite 90 min</span></div>
+  <div class="tile"><span>Cards só com link Getnet</span><b style="color:var(--bad)">21</b><span>nunca conferidos</span></div>
+</div>
+
+<h2>1. Saúde operacional</h2>
+<p>O agente <strong>não está parado</strong>. A parada foi de 10/10 a 22/10 (antirrobô do Akamai bloqueando o navegador); desde a correção (#1863/#1872) ele move cards todo dia. A rodada das 10h de hoje passou no canário, moveu o <strong>AG-MRRA0301 → Pagamento confirmado às 10:05</strong> e continuava rodando às 10:36. O aviso de "TRAVADO" no MCP do EKS é alarme falso: ele dispara aos ~30 min e a rodada leva ~75.</p>
+
+<h3 style="margin-top:20px">Cards movidos pelo agente por dia</h3>
+<table>
+<tr><th>Dia</th><th class="n">Pagamento confirmado</th><th class="n">Link expirado</th><th>Volume</th></tr>
+<tr><td>10/10 a 21/10</td><td class="n">0</td><td class="n">0</td><td><span class="tag t-alta">parado</span></td></tr>
+<tr><td>22/10</td><td class="n">7</td><td class="n">45</td><td><span class="bar" style="width:14px"></span><span class="bar x" style="width:90px"></span>fila acumulada</td></tr>
+<tr><td>23/10</td><td class="n">0</td><td class="n">0</td><td></td></tr>
+<tr><td>24/10</td><td class="n">0</td><td class="n">19</td><td><span class="bar x" style="width:38px"></span></td></tr>
+<tr><td>25/10</td><td class="n">0</td><td class="n">2</td><td><span class="bar x" style="width:4px"></span></td></tr>
+<tr><td>26/10</td><td class="n">3</td><td class="n">1</td><td><span class="bar" style="width:6px"></span><span class="bar x" style="width:2px"></span></td></tr>
+<tr><td>27/10</td><td class="n">4</td><td class="n">0</td><td><span class="bar" style="width:8px"></span></td></tr>
+<tr><td>28/10</td><td class="n">6</td><td class="n">0</td><td><span class="bar" style="width:12px"></span></td></tr>
+<tr><td>29/10 (até 10h36)</td><td class="n">3</td><td class="n">10</td><td><span class="bar" style="width:6px"></span><span class="bar x" style="width:20px"></span></td></tr>
+</table>
+<p class="meta">Fonte: <code>dados-&gt;'historicoFases'</code> com <code>por = 'pagamento'</code> em <code>enxoval.pedidos_kanban</code>. Os 10 cards que foram para link-expirado hoje às 8h já voltaram para Aguardando pagamento (o fornecedor gerou links novos), que é o fluxo esperado.</p>
+
+<h3 style="margin-top:20px">Pontos de atenção da operação</h3>
+<div class="card media"><span class="tag t-media">média</span><h3>Muitos links com FALHA no pod, inclusive checkout válido</h3>
+<p>No trecho de log visível, ~7 de 16 cards tinham link em FALHA. Vários <code>prober_indefinido</code> mostram a tela "Link válido até 06/11 / Como você quer pagar?": é um link aberto que o prober não reconheceu. Card com [EXPIRADO, FALHA] nunca vai para link-expirado, e [PAGO, FALHA] depende da repescagem.</p></div>
+<div class="card media"><span class="tag t-media">média</span><h3>Rodada encostando no limite de 90 min</h3>
+<p>142 cards a ~30 s cada dá ~75 min. Com a fila crescendo, o Job pode ser morto no meio, sem <code>rodada_fim</code>, e os cards mais novos (processados por último) ficam sem conferência.</p></div>
+<div class="card baixa"><span class="tag t-baixa">baixa</span><h3>AG-MDDP0001: agente marcou expirado às 08:05, fornecedor confirmou pagamento às 10:08</h3>
+<p>Pode ter sido pago por link novo ou outro meio. Vale conferir na Rede se o link estava mesmo expirado.</p></div>
+<div class="card baixa"><span class="tag t-baixa">baixa</span><h3>Confirmações manuais após dias em Aguardando pagamento</h3>
+<p>AG-RCAO0203, AG-REPI0409, AG-MRIU0409 e P-50105 ficaram 2 a 5 dias parados e foram confirmados à mão. Pode ser atraso do agente (link em FALHA) ou link Getnet (ver achado 1 abaixo). P-2072 está há 28 dias em Aguardando pagamento.</p></div>
+<p class="meta"><strong>Não verificado:</strong> <code>rodada_fim</code> de rodadas anteriores (o log de pods antigos some), se as rodadas de 28/10 às 16h e 18h terminaram ou morreram, e limites de memória e concorrência do manifesto do CronJob.</p>
+
+<h2>2. Revisão de código: achados que sobreviveram à verificação</h2>
+<p class="meta">22 achados, 0 refutados por inteiro. <span class="tag t-ok">confirmado</span> = o verificador reproduziu o mecanismo no código · <span class="tag t-pl">plausível</span> = mecanismo real, impacto depende de condição externa.</p>
+
+<div class="card alta"><span class="tag t-alta">alta</span><span class="tag t-ok">confirmado</span><h3>1. Links Getnet da RM são invisíveis ao agente</h3>
+<p><code>link.py:11</code> só aceita <code>userede.com.br/pagamentos/pt/</code>. Desde 07/10 a RM manda link Getnet: <strong>21 dos 153 cards</strong> em Aguardando pagamento só têm Getnet e nunca são conferidos. O log diz "card sem link de pagamento", o que esconde o problema.</p>
+<p><strong>Sugestão:</strong> logar <code>cardsSemLinkRede</code> no resumo com o motivo certo. Decisão de negócio: criar prober Getnet ou deixar a RM manual.</p></div>
+
+<div class="card alta"><span class="tag t-alta">alta</span><span class="tag t-ok">confirmado</span><h3>2. Rodada com falha em massa sai com exit 0 (mesma cegueira de 10–22/10)</h3>
+<p><code>run_rodada.py</code> só sai ≠ 0 em exceção (1) ou canário (2). Se o Akamai bloquear no meio da rodada, ou a Rede cair, todos os links viram FALHA e o cron mostra "ok". O mesmo vale para <code>cards=0</code> (RLS/role) e <code>rodada_ignorada</code>.</p>
+<p><strong>Sugestão:</strong> exit 3 + <code>rodada_degradada</code> quando falhas finais / links únicos passar de ~30–50% ou quando <code>cards == 0</code>.</p></div>
+
+<div class="card alta"><span class="tag t-alta">alta</span><span class="tag t-ok">confirmado</span><h3>3. Nenhum alerta chega ao dono quando o agente para</h3>
+<p><code>agent.yaml</code> tem <code>gateways: {}</code>. Job falho vira <code>KubeJobFailed</code> no canal do SRE (time EOS), não para você. Mesmo com o #2035, um canário reprovado o dia todo passa sem ninguém do enxoval saber.</p>
+<p><strong>Sugestão:</strong> DM no Slack ao dono em exit 2/3, ou heartbeat (última <code>rodada_fim</code> ok) vigiado pelo Vel'Koz.</p></div>
+
+<div class="card media"><span class="tag t-media">média</span><span class="tag t-ok">confirmado</span><h3>4. Link preenchido mas inválido some da regra: card misto pode ir para Link expirado com o outro link pago</h3>
+<p><code>rodada.py:115</code>: crédito Getnet (ou URL Rede malformada) + Pix Rede EXPIRADO → <code>decidir(['EXPIRADO'])</code> → link-expirado, mesmo com o crédito pago. Hoje 0 cards nessa combinação, mas é o caminho de mover card errado.</p>
+<p><strong>Sugestão:</strong> link preenchido e inválido entra como <code>FALHA</code> nos statuses. Só campo vazio fica de fora.</p></div>
+
+<div class="card media"><span class="tag t-media">média</span><span class="tag t-pl">plausível</span><h3>5. Status lido por substring na URL inteira</h3>
+<p><code>prober.py:132</code>: <code>'/erro/link-pago' in final</code>. Uma rota nova como <code>/erro/link-pago-estornado</code>, ou query com essa string, viraria PAGO → pagamento-confirmado. É o único caminho em que mudança da Rede faz <em>mover errado</em> em vez de só não mover.</p>
+<p><strong>Sugestão:</strong> casar o path exato (<code>urlparse(...).path</code>). Rota desconhecida → FALHA.</p></div>
+
+<div class="card media"><span class="tag t-media">média</span><span class="tag t-ok">confirmado</span><h3>6. Sem orçamento de tempo: o deadline corta a repescagem e os cards mais novos</h3>
+<p><code>rodada.py</code> não mede tempo. A ordem é <code>updated_at ASC</code> (antigos primeiro) e a repescagem fica no fim, que é justamente o que o <code>activeDeadlineSeconds=5400</code> corta, sem <code>rodada_fim</code>.</p>
+<p><strong>Sugestão:</strong> <code>PRAZO_RODADA_S≈4800</code>, encerrar com <code>rodada_fim parcial</code> + exit 3. Ordenar <code>updated_at DESC</code>.</p></div>
+
+<div class="card media"><span class="tag t-media">média</span><span class="tag t-pl">plausível</span><h3>7. Uma única página do Chromium para ~300 links, sem reciclagem (suspeita de OOM de 27/10)</h3>
+<p><code>prober.py:83</code>: um contexto e uma aba acumulam SDKs de antifraude e cookies do Akamai por ~77 min. Se o renderer cair, todos os links seguintes viram FALHA em ~1,5 s.</p>
+<p><strong>Sugestão:</strong> recriar contexto e página a cada ~25–50 links e após exceção de página fechada. Adicionar log <code>rodada_progresso</code> com RSS e tempo decorrido.</p></div>
+
+<div class="card media"><span class="tag t-media">média</span><span class="tag t-ok">confirmado</span><h3>8. Governança: tier playground no lab escreve em produção e recebe toda imagem do main</h3>
+<p>O bump automático do CI troca a tag do lab a cada build. Como <code>EXTERNAL_WRITES_ENABLED=true</code> no lab aponta para o banco de produção do enxoval, qualquer merge em <code>prober.py</code>/<code>decidir.py</code> já entra escrevendo, sem gate de prd.</p>
+<p><strong>Sugestão:</strong> concluir o passo 6 (prd) ou fixar a tag do overlay do lab.</p></div>
+
+<div class="card media"><span class="tag t-media">média</span><span class="tag t-pl">plausível</span><h3>9. Um erro de escrita num card derruba o resto da rodada</h3>
+<p><code>_processar</code> não tem try em volta de <code>mover_card</code>, e o SQL de mover (com o <code>data-pagamento</code> de 27/10) só é testado por substring. Isso inclui queda da conexão, que fica ociosa por ~70 min.</p>
+<p><strong>Sugestão:</strong> isolar o erro por card (<code>card_erro_escrita</code>), retry com reconexão (é seguro porque a escrita é condicional) e teste de integração opcional com Postgres local.</p></div>
+
+<div class="card media"><span class="tag t-media">média</span><span class="tag t-ok">confirmado</span><h3>10. OOM e DeadlineExceeded fora da tabela de exit do DEPLOY.md</h3>
+<p>A tabela cobre só 0/1/2. Quem vê <code>137</code> ou <code>DeadlineExceeded</code> não tem roteiro, e o log some com o Job.</p></div>
+
+<h3 style="margin-top:24px">Baixa severidade</h3>
+<table>
+<tr><th>Achado</th><th>Onde</th><th>Verificação</th></tr>
+<tr><td><code>data-pagamento</code> grava a data em que o agente detectou, não a do pagamento. Os cards pagos durante a parada de 10–22/10 ficaram com data 22/10, o que pode afetar a competência de comissão/coorte</td><td><code>db.py:70</code></td><td><span class="tag t-ok">confirmado</span></td></tr>
+<tr><td>Rota <code>/api/pedidos/enriquecer</code> do app grava <code>dados</code> sem condição e pode desfazer um movimento do agente (o furo está no app, não no agente)</td><td><code>enxoval route.ts:109</code></td><td><span class="tag t-ok">confirmado</span></td></tr>
+<tr><td><code>rodada_ignorada</code> (trava ocupada) sai 0. O motivo (paralelo com o Coolify) acabou em 18/09; trava presa = agente parado com cron verde</td><td><code>run_rodada.py</code></td><td><span class="tag t-pl">plausível</span></td></tr>
+<tr><td>Advisory lock depende do pooler em session mode (5432, ok hoje). Trocar para 6543 quebra a trava em silêncio</td><td><code>db.py:159</code></td><td><span class="tag t-pl">plausível</span></td></tr>
+<tr><td>Repescagem conta <code>falhas</code>/<code>linksConsultados</code> em dobro e reabre links que já responderam. "28 falhas" pode ser ~14 links</td><td><code>rodada.py:79/136</code></td><td><span class="tag t-ok">confirmado</span></td></tr>
+<tr><td>Canário de tentativa única em exceção ou <code>/erro/problema-sistema</code>: um soluço da Rede perde a janela de 2 h. Também não pega bloqueio que começa no meio</td><td><code>prober.py:184</code></td><td><span class="tag t-pl">plausível</span></td></tr>
+<tr><td>Prober sem teste para goto com exceção, <code>link-cancelado</code>, <code>venda-negada</code> e Access Denied só no 2º carregamento</td><td><code>prober.py:147</code></td><td><span class="tag t-ok">confirmado</span></td></tr>
+<tr><td>Docs contradizem o estado real (jobs.json <code>_enabled</code> diz "inerte", docstrings dizem "de hora em hora 8–19h", "37 testes")</td><td><code>jobs.json:7</code></td><td><span class="tag t-ok">confirmado</span></td></tr>
+</table>
+
+<h2>3. Ordem sugerida</h2>
+<ol class="plan">
+  <li><strong>Decidir o Getnet</strong> (achado 1): 21 cards da RM sem conferência hoje. É decisão de negócio: prober novo ou manual.</li>
+  <li><strong>Um PR de observabilidade</strong> (achados 2, 3, 6, 7, 10): exit 3 para rodada degradada, prazo interno, <code>rodada_progresso</code> com RSS e alerta por DM. Fecha a classe de falha silenciosa.</li>
+  <li><strong>Um PR de segurança da regra</strong> (achados 4 e 5): link inválido vira FALHA e o path é casado exato. Ambos com teste em <code>decidir</code>/<code>prober</code>.</li>
+  <li><strong>Robustez do prober</strong> (achado 7 e as FALHAs em checkout válido): reciclar a página e reconhecer a tela "Como você quer pagar?" como ABERTO.</li>
+  <li><strong>Governança e docs</strong> (achado 8 e baixas): passo 6 ou tag fixa; limpar jobs.json e docstrings.</li>
+</ol>
+</main></body></html>
