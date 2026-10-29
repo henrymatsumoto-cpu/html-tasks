@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Uso de IA W44</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    color-scheme: dark;
+    --bg:#080E32; --surf:#0F1742; --surf2:#18225A; --line:#232E6B;
+    --ink:#EEF1FB; --ink2:#B4BBD9; --ink3:#8189B0; --blue:#4D85FF;
+    --ok:oklch(78% .12 150); --bad:oklch(72% .13 30); --warn:oklch(82% .13 80);
+  }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink); font-family:Figtree,system-ui,sans-serif; line-height:1.5; }
+  main { max-width:1080px; margin:0 auto; padding:40px 16px 64px; }
+  h1 { font-size:30px; font-weight:800; margin:0 0 4px; letter-spacing:-.01em; }
+  .sub { color:var(--ink2); margin:0 0 28px; }
+  h2 { font-size:18px; font-weight:700; margin:36px 0 12px; }
+  .tiles { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:12px; }
+  .tile { background:var(--surf); border:1px solid var(--line); border-radius:14px; padding:16px 18px; }
+  .tile .k { color:var(--ink3); font-size:13px; font-weight:600; text-transform:uppercase; letter-spacing:.04em; }
+  .tile .v { font-size:28px; font-weight:800; margin-top:4px; }
+  .tile .d { color:var(--ink2); font-size:14px; }
+  .scroll { overflow-x:auto; border:1px solid var(--line); border-radius:14px; background:var(--surf); }
+  table { width:100%; border-collapse:collapse; font-size:15px; min-width:760px; }
+  th, td { padding:10px 12px; text-align:right; border-bottom:1px solid var(--line); white-space:nowrap; }
+  th:first-child, td:first-child { text-align:left; }
+  th { color:var(--ink3); font-size:12px; text-transform:uppercase; letter-spacing:.05em; font-weight:700; background:var(--surf2); }
+  tr:last-child td { border-bottom:0; }
+  td .nome { font-weight:700; }
+  td .desc { display:block; color:var(--ink3); font-size:12px; }
+  .rlz { font-weight:800; }
+  .ok { color:var(--ok); } .bad { color:var(--bad); } .warn { color:var(--warn); } .na { color:var(--ink3); }
+  .cell { font-variant-numeric:tabular-nums; }
+  .dot { display:inline-block; width:8px; height:8px; border-radius:50%; margin-right:6px; vertical-align:middle; }
+  .dot.ok { background:var(--ok); } .dot.bad { background:var(--bad); } .dot.warn { background:var(--warn); }
+  .bar { height:6px; background:var(--surf2); border-radius:3px; margin-top:6px; overflow:hidden; }
+  .bar > i { display:block; height:100%; background:var(--blue); }
+  .gaps { display:grid; gap:10px; }
+  .gap { background:var(--surf); border:1px solid var(--line); border-left:4px solid var(--bad); border-radius:10px; padding:12px 16px; }
+  .gap b { font-weight:700; }
+  .gap .meta { color:var(--ink2); font-size:14px; }
+  ul.notes { color:var(--ink2); padding-left:20px; }
+  ul.notes li { margin:6px 0; }
+  .legend { color:var(--ink3); font-size:13px; margin-top:10px; }
+  footer { color:var(--ink3); font-size:13px; margin-top:40px; border-top:1px solid var(--line); padding-top:14px; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Uso de IA · Semana W44</h1>
+  <p class="sub">Parcial de 24/10 a 29/10 (snapshot de quinta às 10h) · a semana fecha na sexta, 30/10, às 17h · régua v10 estrita · coletor 1.4.19</p>
+
+  <div class="tiles">
+    <div class="tile"><div class="k">Banda atual</div><div class="v ok">P25</div><div class="d">Os 4 critérios do P25 batidos</div></div>
+    <div class="tile"><div class="k">Para o P50</div><div class="v bad">6 de 11</div><div class="d">critérios ainda abaixo da meta pró-rata</div></div>
+    <div class="tile"><div class="k">Gargalo principal</div><div class="v">Tokens</div><div class="d">4,4M de 8,3M esperados até hoje (53%)</div></div>
+    <div class="tile"><div class="k">Pontos fortes</div><div class="v ok">Sess · Org</div><div class="d">Sessões já no ritmo de P75; Org 99 bate até o P100</div></div>
+  </div>
+
+  <h2>Todos os critérios em cada banda</h2>
+  <p class="sub" style="margin-bottom:12px">Meta “até hoje” = meta da semana proporcional ao tempo já decorrido, conforme o próprio coletor calcula. A régua é estrita: uma banda só vale se todos os critérios dela e das bandas anteriores forem batidos.</p>
+  <div class="scroll">
+  <table>
+    <thead>
+      <tr><th>Critério</th><th>Realizado</th><th>P25</th><th>P50</th><th>P75</th><th>P100</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><span class="nome">Tok</span><span class="desc">tokens de saída</span></td><td class="rlz cell">4,4M</td>
+        <td class="cell ok"><span class="dot ok"></span>2,3M</td><td class="cell bad"><span class="dot bad"></span>8,3M</td><td class="cell bad"><span class="dot bad"></span>17M</td><td class="cell bad"><span class="dot bad"></span>33M</td></tr>
+      <tr><td><span class="nome">Sess</span><span class="desc">sessões</span></td><td class="rlz cell">120</td>
+        <td class="cell ok"><span class="dot ok"></span>35</td><td class="cell ok"><span class="dot ok"></span>69</td><td class="cell ok"><span class="dot ok"></span>104</td><td class="cell warn"><span class="dot warn"></span>138</td></tr>
+      <tr><td><span class="nome">Msgs</span><span class="desc">mensagens</span></td><td class="rlz cell">637</td>
+        <td class="cell ok"><span class="dot ok"></span>288</td><td class="cell ok"><span class="dot ok"></span>575</td><td class="cell bad"><span class="dot bad"></span>863</td><td class="cell bad"><span class="dot bad"></span>1,2k</td></tr>
+      <tr><td><span class="nome">TOp</span><span class="desc">tarefas operacionais</span></td><td class="rlz cell">~51</td>
+        <td class="cell na">—</td><td class="cell ok"><span class="dot ok"></span>35</td><td class="cell bad"><span class="dot bad"></span>69</td><td class="cell bad"><span class="dot bad"></span>104</td></tr>
+      <tr><td><span class="nome">TInt</span><span class="desc">tarefas internas</span></td><td class="rlz cell">~73</td>
+        <td class="cell na">—</td><td class="cell ok"><span class="dot ok"></span>35</td><td class="cell ok"><span class="dot ok"></span>69</td><td class="cell bad"><span class="dot bad"></span>104</td></tr>
+      <tr><td><span class="nome">Skl</span><span class="desc">skills criadas</span></td><td class="rlz cell">0</td>
+        <td class="cell na">—</td><td class="cell bad"><span class="dot bad"></span>3</td><td class="cell bad"><span class="dot bad"></span>5</td><td class="cell bad"><span class="dot bad"></span>9</td></tr>
+      <tr><td><span class="nome">LSis</span><span class="desc">linhas em sistemas</span></td><td class="rlz cell">6,1k</td>
+        <td class="cell na">—</td><td class="cell bad"><span class="dot bad"></span>8,3k</td><td class="cell bad"><span class="dot bad"></span>17k</td><td class="cell bad"><span class="dot bad"></span>33k</td></tr>
+      <tr><td><span class="nome">LAgt</span><span class="desc">linhas em agentes</span></td><td class="rlz cell">3,9k</td>
+        <td class="cell na">—</td><td class="cell bad"><span class="dot bad"></span>8,3k</td><td class="cell bad"><span class="dot bad"></span>17k</td><td class="cell bad"><span class="dot bad"></span>33k</td></tr>
+      <tr><td><span class="nome">Cron</span><span class="desc">rotinas agendadas</span></td><td class="rlz cell">1</td>
+        <td class="cell na">—</td><td class="cell bad"><span class="dot bad"></span>2</td><td class="cell bad"><span class="dot bad"></span>4</td><td class="cell bad"><span class="dot bad"></span>5</td></tr>
+      <tr><td><span class="nome">Wkfl</span><span class="desc">workflows concluídos</span></td><td class="rlz cell">9</td>
+        <td class="cell na">—</td><td class="cell bad"><span class="dot bad"></span>29</td><td class="cell bad"><span class="dot bad"></span>58</td><td class="cell bad"><span class="dot bad"></span>87</td></tr>
+      <tr><td><span class="nome">Org</span><span class="desc">organização do ambiente</span></td><td class="rlz cell">99</td>
+        <td class="cell ok"><span class="dot ok"></span>75</td><td class="cell ok"><span class="dot ok"></span>85</td><td class="cell ok"><span class="dot ok"></span>90</td><td class="cell ok"><span class="dot ok"></span>95</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p class="legend"><span class="dot ok"></span>bateu &nbsp; <span class="dot warn"></span>≥ 80% da meta &nbsp; <span class="dot bad"></span>&lt; 80% da meta &nbsp; — critério não entra nessa banda. P75 ou acima também exige 4 dias com tarefa na semana (hoje: TOp em 5 dias, TInt em 7).</p>
+
+  <h2>O que separa o P25 do P50</h2>
+  <div class="gaps">
+    <div class="gap"><b>Tok</b> · 4,4M de 8,3M (53%) <div class="bar"><i style="width:53%"></i></div><div class="meta">Maior distância. A meta do P50 na semana inteira é 10M, ou seja, faltam ~5,6M de saída até sexta às 17h.</div></div>
+    <div class="gap"><b>Wkfl</b> · 9 de 29 (31%) <div class="bar"><i style="width:31%"></i></div><div class="meta">Só conta workflow concluído, e scripts iguais contam uma vez só.</div></div>
+    <div class="gap"><b>LAgt</b> · 3,9k de 8,3k (47%) <div class="bar"><i style="width:47%"></i></div><div class="meta">Linhas escritas nas pastas de agente (as que estão em <code>pastas_agente</code>).</div></div>
+    <div class="gap"><b>LSis</b> · 6,1k de 8,3k (73%) <div class="bar"><i style="width:73%"></i></div><div class="meta">Mais perto: falta ~27% do ritmo esperado.</div></div>
+    <div class="gap"><b>Skl</b> · 0 de 3 &nbsp;·&nbsp; <b>Cron</b> · 1 de 2 <div class="meta">Os dois são de contagem fixa, sem pró-rata. Pela regra de reserva, só vale a pena criar o que está guardado se o P50 estiver ao alcance nos outros critérios.</div></div>
+  </div>
+
+  <h2>Leitura</h2>
+  <ul class="notes">
+    <li><b>O P25 está garantido.</b> Tok, Sess, Msgs e Org passaram com folga (Tok já está quase no dobro da meta pró-rata).</li>
+    <li><b>Volume de conversa sobra; o que falta é saída e entrega.</b> Sessões (120) e mensagens (637) já estão no nível do P50 ou acima, mas o token de saída por sessão está baixo: ~37k por sessão.</li>
+    <li><b>O P50 nesta semana é difícil.</b> Seriam ~5,6M de tokens, ~26 workflows e ~6k linhas em agentes em pouco mais de 1 dia útil, além de 3 skills e 1 cron. Usar a lista de reserva (crons e skills) só compensa se Tok e Wkfl também chegarem lá.</li>
+    <li><b>Para a W45:</b> o gargalo é o mesmo da W43 (Tok). As tarefas com mais partes devem rodar como workflow com fase de revisão desde o início da semana, e o código dos agentes deve ser escrito via Write/Edit nas pastas de agente, para subir Tok, Wkfl e LAgt juntos.</li>
+  </ul>
+
+  <footer>Fonte: <code>coletor_uso_ia.placar(enviar=False)</code> rodado em 29/10/2026, 10h · nada foi enviado para a planilha nem para o Slack.</footer>
+</main>
+</body>
+</html>
