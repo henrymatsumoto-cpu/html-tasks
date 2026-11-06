@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Saúde Agentes Olimpo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#080E32;--surf:#0F1742;--surf2:#18225A;--line:#232E6B;--ink:#EEF1FB;--ink2:#B4BBD9;--ink3:#8189B0;--blue:#4D85FF;
+--ok:oklch(78% .12 150);--err:oklch(72% .13 30);--warn:oklch(82% .13 80);color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 Figtree,system-ui,sans-serif}
+.wrap{max-width:1080px;margin:0 auto;padding:40px 16px 64px}
+h1{font-size:30px;font-weight:800;margin:0 0 6px;letter-spacing:-.01em}
+.sub{color:var(--ink2);margin:0 0 28px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:32px}
+.kpi{background:var(--surf);border:1px solid var(--line);border-radius:14px;padding:16px}
+.kpi b{display:block;font-size:28px;font-weight:800}
+.kpi span{color:var(--ink3);font-size:13px}
+h2{font-size:19px;font-weight:700;margin:36px 0 12px}
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:14px}
+table{width:100%;border-collapse:collapse;min-width:720px}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{background:var(--surf2);color:var(--ink2);font-weight:600;font-size:13px}
+tr:last-child td{border-bottom:0}
+td{background:var(--surf)}
+code{font-size:13px;color:var(--ink2)}
+.pill{display:inline-block;padding:2px 10px;border-radius:999px;font-size:12px;font-weight:700;white-space:nowrap}
+.ok{background:color-mix(in oklch,var(--ok) 20%,transparent);color:var(--ok)}
+.at{background:color-mix(in oklch,var(--warn) 20%,transparent);color:var(--warn)}
+.er{background:color-mix(in oklch,var(--err) 20%,transparent);color:var(--err)}
+.sus{background:var(--surf2);color:var(--ink3)}
+.card{background:var(--surf);border:1px solid var(--line);border-left:4px solid var(--warn);border-radius:12px;padding:14px 16px;margin-bottom:12px}
+.card h3{margin:0 0 6px;font-size:16px}
+.card p{margin:0;color:var(--ink2)}
+ul{margin:6px 0 0;padding-left:20px;color:var(--ink2)}
+.foot{color:var(--ink3);font-size:13px;margin-top:36px}
+</style>
+</head>
+<body><div class="wrap">
+<h1>Saúde dos Agentes do Olimpo</h1>
+<p class="sub">Checagem de 06/11/2026, ~15h BRT, feita em leitura no console seazone-eks, nos deploys do Olimpo e no git do olimpo e do gitops-seazone. Cobre as mudanças desde 29/10.</p>
+
+<div class="kpis">
+<div class="kpi"><b>11</b><span>agentes checados</span></div>
+<div class="kpi"><b style="color:var(--err)">0</b><span>quebrados</span></div>
+<div class="kpi"><b style="color:var(--warn)">3</b><span>com atenção</span></div>
+<div class="kpi"><b style="color:var(--ok)">8</b><span>ok (2 suspensos de propósito)</span></div>
+</div>
+
+<h2>Status por agente</h2>
+<div class="tbl"><table>
+<tr><th>Agente</th><th>Ambiente</th><th>Status</th><th>Última execução ok</th><th>Mudança de terceiros na semana</th></tr>
+<tr><td>analise-pagamento</td><td>lab</td><td><span class="pill at">atenção</span></td><td>06/11 12h (rodada das 8h falhou; a das 14h está lenta)</td><td>Não</td></tr>
+<tr><td>indicacao-itens</td><td>prd (lab desativado em 27/10)</td><td><span class="pill at">atenção</span></td><td>06/11 11h55, 3 listas, 0 falhas</td><td>Gabriel Horst #1997 (x-api-key)</td></tr>
+<tr><td>velkoz</td><td>lab</td><td><span class="pill at">atenção</span></td><td>Não verificável</td><td>Eos mexeu no RBAC do Ceos (vigiaCrons intacto)</td></tr>
+<tr><td>cadencia-fornecedores</td><td>lab</td><td><span class="pill ok">ok</span></td><td>06/11 14h, 0 erros</td><td>Não</td></tr>
+<tr><td>cancelamento-enxoval</td><td>lab</td><td><span class="pill ok">ok</span></td><td>06/11 13h, 0 cancelados</td><td>Não</td></tr>
+<tr><td>cancelamento-lojinha</td><td>prd (lab suspenso no cutover)</td><td><span class="pill ok">ok</span></td><td>05/11 20h; próxima hoje 20h</td><td>Gabriel Horst #1997</td></tr>
+<tr><td>lembrete-pagamento-lojinha</td><td>lab</td><td><span class="pill ok">ok</span></td><td>06/11 12h (rodada) e 7h (7d)</td><td>Gabriel Horst #1997</td></tr>
+<tr><td>negociacao-recompra</td><td>lab</td><td><span class="pill ok">ok</span></td><td>06/11 14h50 (a cada 2 min)</td><td>Não; 1 falha isolada de 401 em 04/11</td></tr>
+<tr><td>validacao-inbox-lojinha</td><td>lab</td><td><span class="pill ok">ok</span></td><td>06/11 12h, 2 aprovados</td><td>Gabriel Horst #1997</td></tr>
+<tr><td>validacao-pagamento-lojinha</td><td>lab</td><td><span class="pill ok">ok</span></td><td>06/11 12h, fila 0</td><td>Gabriel Horst #1997</td></tr>
+<tr><td>recompra-enxoval</td><td>lab</td><td><span class="pill sus">suspenso</span></td><td>— (nasce desligado)</td><td>Não</td></tr>
+</table></div>
+
+<h2>O que merece olhar</h2>
+<div class="card"><h3>1. analise-pagamento: rodada das 8h morreu no meio</h3>
+<p>O pod ficou Failed às 8h14, sem log de erro e sem rodada_fim, depois de mover 2 cards para link-expirado. A causa provável é o pod ter sido morto por fora (OOM ou Karpenter), mas o console não mostrou eventos. As rodadas das 10h e 12h fecharam normais e reprocessaram os cards. A das 14h aparece como "TRAVADO" no console, mas o log mostra progresso: está só lenta, ainda dentro do limite de 90 min. Vale conferir se repete.</p></div>
+<div class="card"><h3>2. indicacao-itens (prd): links de lista saem em <code>stg-lojinha.seazone.com.br</code></h3>
+<p>Desde a virada da lojinha (30/10), as listas criadas em prd voltam com o domínio <code>stg-lojinha</code>. Exemplo: AYD1507, em 06/11 às 11h56. Confirmar se é o domínio oficial do app novo ou se o secret <code>LOJINHA_URL</code> de prd aponta para staging.</p></div>
+<div class="card"><h3>3. Vel'Koz: execução não verificável</h3>
+<p>O velkoz não está no console seazone-eks e não há kubectl configurado, então não foi possível confirmar se as vigias das 18h rodaram nesta semana. O olimpo#2065 (falsos positivos) segue aberto e sem review desde 29/10, então a versão no ar ainda tem os alertas falsos conhecidos.</p></div>
+
+<h2>Contexto (não é quebra)</h2>
+<ul>
+<li><b>Gabriel Horst #1997 (30/10)</b>: os 5 agentes da lojinha passaram a mandar <code>x-api-key</code> no loja-full-export quando a env <code>LOJINHA_EXPORT_KEY</code> existe. Sem a env, nada muda. Na virada definitiva do export, os agentes do lab precisam dessa chave no SSM, senão o export dá 401. No prd da indicacao a chave já foi cadastrada (#3645).</li>
+<li><b>Imagem compartilhada</b>: a tag foi trocada cerca de 30 a 46 vezes na semana pelo CI, por merges de outros agentes no monorepo. Até agora nada quebrou com isso.</li>
+<li><b>negociacao-recompra</b>: roda com <code>SEM_TRAVA_HORARIO</code> ligado (teste de 30/10). A trava de franquia "TESTE AGENTE RECOMPRA" segura os envios (0 cards). Desligar antes de abrir a trava.</li>
+<li><b>cancelamento-lojinha</b>: o PR de promoção do bot (gitops#3622) está aberto desde 30/10. Ele muda só a base, não o código do agente.</li>
+<li>O console guarda só os 2 ou 3 últimos pods, então as rodadas de 30/10 a 05/11 não puderam ser conferidas uma a uma.</li>
+</ul>
+
+<p class="foot">Gerado por workflow de 11 checagens em paralelo, só leitura: nada foi disparado, reiniciado nem alterado.</p>
+</div></body></html>
