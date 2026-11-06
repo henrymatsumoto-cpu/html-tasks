@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Black Friday Enxoval 2026 · Andamento</title>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme:dark;
+  --bg:#080E32;--surf:#0F1742;--surf2:#18225A;
+  --line:#232E6B;--ink:#EEF1FB;--ink2:#B4BBD9;--ink3:#8189B0;
+  --won:oklch(78% .12 150);--lost:oklch(72% .13 30);--amber:oklch(82% .13 80);--blue:#4D85FF;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 "Figtree",sans-serif;-webkit-font-smoothing:antialiased}
+main{max-width:900px;margin:0 auto;padding:56px 16px 96px}
+.eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink3);font-weight:700}
+h1{font-weight:800;font-size:clamp(34px,6.5vw,56px);letter-spacing:-.03em;line-height:1;margin:14px 0}
+h2{font-weight:700;font-size:24px;letter-spacing:-.015em;margin:64px 0 6px}
+.lede{color:var(--ink2);font-size:18px;max-width:62ch;margin:0}
+.meta{color:var(--ink3);font-size:13.5px;margin-top:18px}
+.sub{color:var(--ink2);margin:0 0 22px;max-width:66ch}
+
+.nums{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:14px;overflow:hidden;margin-top:40px}
+.nums div{background:var(--surf);padding:22px 20px}
+.nums b{display:block;font-size:44px;font-weight:800;line-height:1;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.nums span{display:block;color:var(--ink2);font-size:13.5px;margin-top:8px}
+.nums em{display:block;font-style:normal;color:var(--ink3);font-size:13px;margin-top:2px}
+.nums .w b{color:var(--won)} .nums .l b{color:var(--lost)} .nums .a b{color:var(--amber)}
+
+.money{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:14px}
+.money div{background:var(--surf);border-radius:12px;padding:18px 20px}
+.money b{display:block;font-size:26px;font-weight:800;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.money span{color:var(--ink2);font-size:13.5px}
+
+.bars{display:flex;flex-direction:column;gap:10px}
+.row{display:grid;grid-template-columns:120px 1fr 40px;align-items:center;gap:14px}
+.row .t{font-size:14.5px;color:var(--ink2)}
+.row .bar{height:24px;border-radius:6px;background:var(--surf2);overflow:hidden;display:flex}
+.row .bar i{display:block;height:100%}
+.row .n{font-weight:700;text-align:right;font-variant-numeric:tabular-nums}
+.i-old{background:var(--ink3)} .i-new{background:var(--blue)}
+.i-pago{background:var(--won)} .i-pend{background:var(--amber)} .i-canc{background:var(--lost)}
+.legend{display:flex;gap:18px;flex-wrap:wrap;color:var(--ink3);font-size:13px;margin-top:12px}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+
+.tl{border-left:2px solid var(--line);margin-left:6px;padding-left:24px}
+.ev{position:relative;padding:0 0 26px}
+.ev:before{content:"";position:absolute;left:-31px;top:7px;width:12px;height:12px;border-radius:50%;background:var(--bg);border:2px solid var(--blue)}
+.ev.on:before{background:var(--won);border-color:var(--won)}
+.ev .d{font-size:13px;font-weight:700;color:var(--blue);letter-spacing:.04em}
+.ev.on .d{color:var(--won)}
+.ev h3{margin:2px 0 4px;font-size:17px;font-weight:700}
+.ev p{margin:0;color:var(--ink2);font-size:15px;max-width:68ch}
+.ev a{color:var(--blue);font-size:13.5px;text-decoration:none;word-break:break-all}
+.ev a:hover{text-decoration:underline}
+
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:12px}
+table{border-collapse:collapse;width:100%;min-width:600px;font-size:14px}
+th{text-align:left;color:var(--ink3);font-weight:600;font-size:12px;letter-spacing:.06em;text-transform:uppercase;padding:12px 14px;background:var(--surf)}
+td{padding:12px 14px;border-top:1px solid var(--line);color:var(--ink2)}
+td:first-child{color:var(--ink);font-weight:600}
+.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+
+.rules{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.rules div{background:var(--surf);border-radius:12px;padding:18px 20px}
+.rules h3{margin:0 0 6px;font-size:15px}
+.rules p{margin:0;color:var(--ink2);font-size:14.5px}
+
+.next{background:var(--surf);border-radius:16px;padding:24px 26px}
+.next ol{margin:0;padding-left:20px;color:var(--ink2)}
+.next li{margin:10px 0}
+.next li b{color:var(--ink)}
+footer{margin-top:56px;color:var(--ink3);font-size:13px}
+
+@media (max-width:680px){
+  .nums{grid-template-columns:1fr 1fr}
+  .money,.rules{grid-template-columns:1fr}
+  .row{grid-template-columns:84px 1fr 34px;gap:10px}
+}
+</style></head>
+<body><main>
+
+<div class="eyebrow">Enxoval · Fornecedores · Matinali e RM</div>
+<h1>Black Friday Enxoval 2026</h1>
+<p class="lede">O que já foi feito, do levantamento de 2025 até a campanha no ar no Jornada do Enxoval, e como estão os pedidos com promoção até agora.</p>
+<p class="meta">Atualizado em 06/11/2026, 15h40 · dados ao vivo do app Jornada Completa Enxoval (somente leitura)</p>
+
+<div class="nums">
+  <div><b>70</b><span>pedidos com promoção</span><em>desde 03/11</em></div>
+  <div class="w"><b>16</b><span>pagos</span><em>R$ 43,5 mil</em></div>
+  <div class="a"><b>49</b><span>pendentes</span><em>R$ 129,7 mil</em></div>
+  <div class="l"><b>5</b><span>cancelados</span><em>R$ 26,2 mil</em></div>
+</div>
+<div class="money">
+  <div><b>R$ 1,3 mil</b><span>comissão Seazone (3%) nos pedidos já pagos</span></div>
+  <div><b>R$ 3,8 mil</b><span>comissão a 3% ainda em aberto nos pendentes</span></div>
+  <div><b>R$ 8,9 mil</b><span>de desconto dado aos proprietários (pagos + pendentes)</span></div>
+</div>
+
+<h2>Pedidos por dia</h2>
+<p class="sub">Contados pelo dia em que o pedido entrou na promoção. Os 18 pedidos antigos (criados antes de novembro) ganharam o preço de Black Friday pelo botão "Aplicar Promoção".</p>
+<div class="bars">
+  <div class="row"><span class="t">24–27/10</span><div class="bar"><i class="i-old" style="width:21.1%"></i></div><span class="n">4</span></div>
+  <div class="row"><span class="t">03/11</span><div class="bar"><i class="i-new" style="width:36.8%"></i><i class="i-old" style="width:47.4%"></i></div><span class="n">16</span></div>
+  <div class="row"><span class="t">04/11</span><div class="bar"><i class="i-new" style="width:68.4%"></i><i class="i-old" style="width:5.3%"></i></div><span class="n">14</span></div>
+  <div class="row"><span class="t">05/11</span><div class="bar"><i class="i-new" style="width:89.5%"></i><i class="i-old" style="width:10.5%"></i></div><span class="n">19</span></div>
+  <div class="row"><span class="t">06/11</span><div class="bar"><i class="i-new" style="width:89.5%"></i></div><span class="n">17</span></div>
+</div>
+<div class="legend"><span><i class="i-new"></i>pedido novo, já nasceu com promoção</span><span><i class="i-old"></i>pedido antigo, promoção aplicada pelo botão</span></div>
+<p class="sub" style="margin-top:14px;font-size:14px;color:var(--ink3)">Os 4 de 24–27/10 são da fase de homologação; 4 dos 5 cancelados foram criados pelo time Administrador.</p>
+
+<h2>Por fornecedor</h2>
+<p class="sub">A RM ainda não tem nenhum pedido pago na promoção.</p>
+<div class="bars">
+  <div class="row"><span class="t">Matinali</span><div class="bar"><i class="i-pago" style="width:29.6%"></i><i class="i-pend" style="width:61.1%"></i><i class="i-canc" style="width:9.3%"></i></div><span class="n">54</span></div>
+  <div class="row"><span class="t">RM Enxoval</span><div class="bar"><i class="i-pend" style="width:29.6%"></i></div><span class="n">16</span></div>
+</div>
+<div class="legend"><span><i class="i-pago"></i>pago</span><span><i class="i-pend"></i>pendente</span><span><i class="i-canc"></i>cancelado</span></div>
+
+<div class="tbl" style="margin-top:22px">
+<table>
+<thead><tr><th>Fornecedor</th><th class="num">Pagos</th><th class="num">Valor pago</th><th class="num">Pendentes</th><th class="num">Valor pendente</th><th class="num">Comissão 3% (pago + pend.)</th></tr></thead>
+<tbody>
+<tr><td>Matinali</td><td class="num">16</td><td class="num">R$ 43.525,82</td><td class="num">33</td><td class="num">R$ 97.173,90</td><td class="num">R$ 4.124,39</td></tr>
+<tr><td>RM Enxoval</td><td class="num">0</td><td class="num">—</td><td class="num">16</td><td class="num">R$ 32.523,60</td><td class="num">R$ 925,37</td></tr>
+<tr><td>Total</td><td class="num">16</td><td class="num">R$ 43.525,82</td><td class="num">49</td><td class="num">R$ 129.697,50</td><td class="num">R$ 5.049,75</td></tr>
+</tbody>
+</table>
+</div>
+<p class="sub" style="margin-top:12px;font-size:14px;color:var(--ink3)">Valores com frete. A comissão usa só os itens, já com desconto, a 3%. Pendente = Aguardando link, Aguardando pagamento e Link expirado. Estados com mais pedidos: SC 30, BA 14, RJ 5, SP 5.</p>
+
+<h2>Linha do tempo</h2>
+<p class="sub">Do levantamento ao report automático.</p>
+<div class="tl">
+  <div class="ev"><div class="d">16/10</div><h3>Levantamento de 2025 e proposta de 2026</h3>
+    <p>Em 2025 a Matinali deu 5% de desconto de 10 a 30/11: Seazone cedeu 2 p.p. de comissão (5% → 3%) e a Matinali 3% no preço. Novembro/25 rendeu R$ 11.253,97 de comissão. A proposta de 2026 repete o modelo com Matinali e RM.</p>
+    <a href="https://henrymatsumoto-cpu.github.io/html-tasks/black-friday-enxoval-2026.html">https://henrymatsumoto-cpu.github.io/html-tasks/black-friday-enxoval-2026.html</a></div>
+  <div class="ev"><div class="d">16/10</div><h3>Validação com a gerência</h3>
+    <p>Duas condições: A (Seazone com 3%, proprietário paga 5% a menos) e B (Seazone com 2%, 6% a menos). Base de mês normal = média jun–ago/26: R$ 234,2 mil.</p></div>
+  <div class="ev"><div class="d">20/10</div><h3>Ray aprova a Condição A, com 5 ajustes</h3>
+    <p>Recompra entra no escopo (os dois grupos do board). Parados na época: 392 imóveis e R$ 985,3 mil, potencial de R$ 29,6 mil de comissão a 3%. Sem reemissão em massa: pedido antigo só ganha o preço de Black Friday se o proprietário pedir.</p></div>
+  <div class="ev"><div class="d">21/10</div><h3>Tabelas de preço por fornecedor</h3>
+    <p>Preço por peça hoje × Black Friday, no crédito e no Pix.</p>
+    <a href="https://henrymatsumoto-cpu.github.io/html-tasks/black-friday-matinali.html">https://henrymatsumoto-cpu.github.io/html-tasks/black-friday-matinali.html</a><br>
+    <a href="https://henrymatsumoto-cpu.github.io/html-tasks/black-friday-rm-enxoval.html">https://henrymatsumoto-cpu.github.io/html-tasks/black-friday-rm-enxoval.html</a></div>
+  <div class="ev"><div class="d">23/10</div><h3>Versão final da validação para arquivo</h3>
+    <a href="https://henrymatsumoto-cpu.github.io/html-tasks/validacao-black-friday-enxoval-2026.html">https://henrymatsumoto-cpu.github.io/html-tasks/validacao-black-friday-enxoval-2026.html</a></div>
+  <div class="ev"><div class="d">24/10</div><h3>Promoção em produção no Jornada (PRs #142, #143, #144)</h3>
+    <p>Tela de configuração com liga/desliga, início/fim e % de desconto e de comissão por fornecedor. O servidor decide o preço; pedido novo grava a promoção ao nascer. CSV do fechamento com as colunas Promoção e % Comissão.</p></div>
+  <div class="ev"><div class="d">27/10</div><h3>Botão "Aplicar Promoção" (PRs #155, #156)</h3>
+    <p>No card de pedido e de recompra, só para o time Seazone e só antes do pagamento. Pedido gerado por recompra herda a promoção dela (mesmo imóvel).</p></div>
+  <div class="ev"><div class="d">29/10</div><h3>Página única de valores</h3>
+    <a href="https://henrymatsumoto-cpu.github.io/html-tasks/black-friday-enxoval-valores.html">https://henrymatsumoto-cpu.github.io/html-tasks/black-friday-enxoval-valores.html</a></div>
+  <div class="ev"><div class="d">30–31/10</div><h3>Teste e2e no PR de promoção (#200)</h3>
+    <p>Teste de ponta a ponta roda no PR que leva a promoção pra main.</p></div>
+  <div class="ev on"><div class="d">03/11</div><h3>Campanha no ar</h3>
+    <p>Primeiros pedidos novos com preço de Black Friday e 14 pedidos antigos atualizados pelo botão entre 03 e 05/11.</p></div>
+  <div class="ev on"><div class="d">06/11</div><h3>Report automático no #black-friday-enxoval</h3>
+    <p>12h e 18h até 30/11, com realizados, pagos, pendentes e cancelados e a diferença desde o último report. Primeiro envio hoje às 15h30: 67 realizados, 14 pagos, 48 pendentes, 5 cancelados. Release 1.2.1 com o CHANGELOG da promoção.</p></div>
+</div>
+
+<h2>Regras da campanha</h2>
+<div class="rules">
+  <div><h3>Período</h3><p>Pagamentos confirmados de 01 a 30/11/2026. Medição até 10/12.</p></div>
+  <div><h3>Comissão Seazone</h3><p>3% (era 5%) sobre os itens, já com desconto, sem frete.</p></div>
+  <div><h3>Matinali</h3><p>5% de desconto no crédito. No Pix, 11,65% no total.</p></div>
+  <div><h3>RM Enxoval</h3><p>5% de desconto no crédito. No Pix, 10,7% no total.</p></div>
+  <div><h3>Pedidos novos</h3><p>Nascem com o preço de Black Friday, inclusive os de recompra de novembro. Desconto só nos itens, nunca no frete.</p></div>
+  <div><h3>Pedidos antigos</h3><p>Sem reemissão em massa. Ganham o preço pelo botão só se o proprietário pedir, e só antes do pagamento.</p></div>
+</div>
+
+<h2>Próximos passos</h2>
+<div class="next"><ol>
+  <li><b>Converter os 49 pendentes (R$ 129,7 mil)</b> até 30/11; só conta para a campanha o que for pago no mês.</li>
+  <li><b>Acompanhar a RM:</b> 16 pedidos na promoção e nenhum pago ainda.</li>
+  <li><b>Fechamento de novembro</b> com o % da campanha (o CSV já sai com as colunas Promoção e % Comissão).</li>
+  <li><b>Medição do resultado até 10/12</b>, comparando com a base de R$ 234,2 mil/mês e com novembro de 2025.</li>
+</ol></div>
+
+<footer>Fonte: app Jornada Completa Enxoval (board pedidos, pedidos com promoção ativa para o fornecedor), decks de 16 a 29/10 e histórico de PRs do repositório. Gerado em 06/11/2026.</footer>
+</main></body></html>
