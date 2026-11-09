@@ -64,6 +64,12 @@ footer{padding:28px 0 48px;color:var(--ink3);font-size:13px}
 .note{background:var(--surf);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin-top:20px;color:var(--ink2);font-size:14px}
 .note b{color:var(--ink)}
 td.hl{font-weight:700;color:var(--ink)}
+.vol{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:24px}
+.vol>div{background:var(--surf);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+.vn{display:block;font-size:26px;font-weight:800;color:var(--blue);line-height:1.1}
+.vl{display:block;font-size:13px;color:var(--ink2);margin-top:4px}
+.vl small{color:var(--ink3);font-size:12px}
+@media (max-width:720px){.vol{grid-template-columns:1fr 1fr}}
 /* lightbox */
 #lb{position:fixed;inset:0;background:rgba(4,7,26,.92);display:none;align-items:center;justify-content:center;padding:20px;z-index:10;cursor:zoom-out}
 #lb.on{display:flex}
@@ -81,6 +87,12 @@ td.hl{font-weight:700;color:var(--ink)}
     <span><b>Atualizado:</b> 09/11/2026</span>
     <span><b>Responsável:</b> Henry Yudi</span>
   </div>
+  <div class="vol">
+    <div><span class="vn">7</span><span class="vl">franquias assinam por mês<br><small>meta do KPI2135 · média real de 6,75 (jul a out)</small></span></div>
+    <div><span class="vn">~3</span><span class="vl">no Nordeste (RM, pago pela Seazone)<br><small>6 de 14 contratos em set e out (43%)</small></span></div>
+    <div><span class="vn">~4</span><span class="vl">fora do Nordeste (Matinali, doação)<br><small>custo zero para a Seazone</small></span></div>
+    <div><span class="vn">R$ 4,5 mil</span><span class="vl">custo esperado por mês<br><small>3 kits RM × R$ 1.494,30</small></span></div>
+  </div>
 </div></header>
 
 <main class="wrap">
@@ -91,8 +103,8 @@ td.hl{font-weight:700;color:var(--ink)}
     <div class="lane matinali">
       <div class="who">Fora do Nordeste</div>
       <div class="sup">Matinali</div>
-      <div class="pay">Sem custo: a Matinali dá os itens</div>
-      <p>3 mudas completas de cama queen, sem cobrança pra franquia nem pra Seazone.</p>
+      <div class="pay">Doação de 100% dos itens</div>
+      <p>A Matinali doa todas as peças das 3 mudas de cama queen. Não há cobrança de nenhum item, nem para a franquia nem para a Seazone.</p>
     </div>
     <div class="lane rm">
       <div class="who">Nordeste</div>
@@ -105,31 +117,32 @@ td.hl{font-weight:700;color:var(--ink)}
 
 <section>
   <h2>Enxoval que entrou no kit</h2>
-  <p class="sub">Itens de enxoval no Welcome Kit – Comercial, conforme a tela da lojinha. Preços unitários por fornecedor, como aparecem no configurador do kit.</p>
+  <p class="sub">Itens de enxoval no Welcome Kit – Comercial. Custo unitário para a Seazone por fornecedor, sem desconto de Black Friday. A Matinali doa 100% dos itens, por isso o custo dela é R$ 0,00.</p>
   <div style="overflow-x:auto">
   <table>
-    <thead><tr><th>Item</th><th class="r">Qtd</th><th class="r">Matinali</th><th class="r">RM Enxoval</th></tr></thead>
+    <thead><tr><th>Item</th><th class="r">Qtd</th><th class="r">Matinali (doação)</th><th class="r">RM Enxoval</th></tr></thead>
     <tbody>
-      <tr><td>Lençol Queen</td><td class="q">3x</td><td class="n">R$ 72,92</td><td class="n">R$ 79,90</td></tr>
-      <tr><td>Virol (sem elástico) Queen</td><td class="q">3x</td><td class="n">R$ 72,92</td><td class="n">R$ 79,90</td></tr>
-      <tr><td>Fronha</td><td class="q">12x</td><td class="n">R$ 11,39</td><td class="n">R$ 11,90</td></tr>
-      <tr><td>Manta Queen</td><td class="q">3x</td><td class="n">R$ 90,11</td><td class="n">R$ 93,90</td></tr>
-      <tr><td>Toalha Banho</td><td class="q">6x</td><td class="n">R$ 49,84</td><td class="n">R$ 46,90</td></tr>
-      <tr><td>Enchimento de Almofada</td><td class="q">1x</td><td class="n">R$ 21,00</td><td class="n">R$ 15,90</td></tr>
-      <tr><td>Capa de Almofada</td><td class="q">3x</td><td class="n">—</td><td class="n">R$ 13,90</td></tr>
-      <tr><td>Tapete</td><td class="q">3x</td><td class="n">—</td><td class="n">R$ 23,90</td></tr>
-      <tr><td>Toalha Rosto</td><td class="q">3x</td><td class="n">—</td><td class="n">R$ 19,90</td></tr>
+      <tr><td>Lençol Queen</td><td class="q">3x</td><td class="n">R$ 0,00</td><td class="n">R$ 79,90</td></tr>
+      <tr><td>Virol (sem elástico) Queen</td><td class="q">3x</td><td class="n">R$ 0,00</td><td class="n">R$ 79,90</td></tr>
+      <tr><td>Fronha</td><td class="q">12x</td><td class="n">R$ 0,00</td><td class="n">R$ 11,90</td></tr>
+      <tr><td>Manta Queen</td><td class="q">3x</td><td class="n">R$ 0,00</td><td class="n">R$ 93,90</td></tr>
+      <tr><td>Toalha Banho</td><td class="q">6x</td><td class="n">R$ 0,00</td><td class="n">R$ 46,90</td></tr>
+      <tr><td>Enchimento de Almofada</td><td class="q">1x</td><td class="n">R$ 0,00</td><td class="n">R$ 15,90</td></tr>
+      <tr><td>Capa de Almofada</td><td class="q">3x</td><td class="n">R$ 0,00</td><td class="n">R$ 13,90</td></tr>
+      <tr><td>Tapete</td><td class="q">3x</td><td class="n">R$ 0,00</td><td class="n">R$ 23,90</td></tr>
+      <tr><td>Toalha Rosto</td><td class="q">3x</td><td class="n">R$ 0,00</td><td class="n">R$ 19,90</td></tr>
+          <tr><td><b>Total do enxoval (3 mudas)</b></td><td></td><td class="n hl">R$ 0,00</td><td class="n hl">R$ 1.374,30</td></tr>
     </tbody>
   </table>
   </div>
-  <p class="sub" style="margin:14px 0 0">“—” = preço da Matinali ainda não registrado (nenhum kit com enxoval Matinali foi pedido até 09/11). Preços da RM conferidos no pedido #952. O kit completo tem 21 itens e custa R$ 1.314,93 na lojinha.</p>
+  <p class="sub" style="margin:14px 0 0">Preços da RM conferidos na lojinha (pedido #952, de 23/10, antes da Black Friday), sem frete. O valor de R$ 1.314,93 exibido no card do kit na lojinha é o preço de referência do configurador, não o custo para a Seazone. </p>
 </section>
 
 <section>
   <h2>O que foi feito</h2>
   <ul class="checks">
     <li><span class="dot ok">✓</span><div>Kit ajustado na lojinha<small>Welcome Kit – Comercial (categoria Kits) agora inclui o enxoval, com escolha de fornecedor por item.</small></div></li>
-    <li><span class="dot ok">✓</span><div>Regra definida com os fornecedores<small>Matinali dá as peças fora do Nordeste; no Nordeste a Seazone paga a RM.</small></div></li>
+    <li><span class="dot ok">✓</span><div>Regra definida com os fornecedores<small>A Matinali doa 100% das peças fora do Nordeste; no Nordeste a Seazone paga a RM.</small></div></li>
     <li><span class="dot ok">✓</span><div>Time comercial de franquias avisado<small>Mensagem no grupo Kit Franquia (Nathalia Carvalho, Nevine Saratt, Rayanne Oliveira e Vivih Aguilera) com a regra Nordeste → RM e restante → Matinali.</small></div></li>
   </ul>
 </section>
@@ -145,8 +158,20 @@ td.hl{font-weight:700;color:var(--ink)}
     </tbody>
   </table>
   </div>
+  <h2 style="margin-top:36px">Franquias de setembro e outubro × Welcome Kit</h2>
+  <p class="sub">Contratos fechados no KPI2135 (N° de Contrato Franquia Fechado) cruzados com os pedidos de Welcome Kit na lojinha.</p>
+  <div style="overflow-x:auto">
+  <table>
+    <thead><tr><th>Mês</th><th class="r">Contratos</th><th class="r">Nordeste</th><th class="r">Kit pedido</th><th>Versão</th><th>Situação</th></tr></thead>
+    <tbody>
+      <tr><td>set/26</td><td class="n">7</td><td class="n">3</td><td class="n">7 de 7</td><td>antiga (sem enxoval)</td><td>todos entregues (concluídos entre 15/10 e 26/10)</td></tr>
+      <tr><td>out/26</td><td class="n">7</td><td class="n">3</td><td class="n">3 de 7</td><td>2 antiga · 1 nova (#952)</td><td>2 entregues · #952 saiu para entrega · 4 franquias ainda sem pedido de kit</td></tr>
+    </tbody>
+  </table>
+  </div>
   <ul class="checks" style="margin-top:20px">
     <li><span class="dot ok">✓</span><div>Primeiro pedido do kit com enxoval feito e em entrega<small>Franquia do Nordeste, enxoval da RM pago pela Seazone, com pagamento confirmado, NF e rastreio.</small></div></li>
+    <li><span class="dot pend">•</span><div>Feedback das franquias: depois da primeira entrega<small>Só será possível colher o retorno (item faltando ou errado) depois que o primeiro kit com enxoval chegar, o que deve ocorrer até 13/11.</small></div></li>
     <li><span class="dot pend">•</span><div>Matinali (fora do Nordeste): nenhum kit com enxoval pedido até 09/11<small>Os 20 Welcome Kits pedidos entre agosto e 09/10 foram na versão antiga, sem enxoval.</small></div></li>
   </ul>
 </section>
@@ -233,7 +258,7 @@ td.hl{font-weight:700;color:var(--ink)}
   <div class="note"><b>Antes de criar o KPI, falta definir:</b>
     <ul style="margin:8px 0 0;padding-left:18px">
       <li>Se o KPI fica com a gente (Fornecedores e Compras) ou com a área que aprova o kit (Comercial de franquias), já que o custo nasce da venda da franquia.</li>
-      <li>Como definir a meta: depende de quantas franquias do Nordeste assinam por mês. Exemplo de formato: custo mensal = franquias do Nordeste no mês × R$ 1.494,30, com teto por kit para controlar preço e frete.</li>
+      <li>Como definir a meta: pela meta de 7 contratos por mês e 43% deles no Nordeste, a referência é de cerca de 3 kits RM por mês, ou R$ 4,5 mil (3 × R$ 1.494,30). A meta pode ser um teto de R$ 1.494,30 por kit (preço + frete) e o custo mensal acompanhado contra o número de franquias do Nordeste.</li>
     </ul>
   </div>
 </section>
