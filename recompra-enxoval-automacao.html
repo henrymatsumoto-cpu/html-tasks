@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Recompra de Enxoval</title>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme:dark;
+  --bg:#080E32;--surf:#0F1742;--surf2:#18225A;--line:#232E6B;
+  --ink:#EEF1FB;--ink2:#B4BBD9;--ink3:#8189B0;--blue:#4D85FF;
+  --ok:oklch(78% .12 150);--warn:oklch(82% .13 80);--bad:oklch(72% .13 30);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Figtree,sans-serif;font-size:15px;line-height:1.55}
+.wrap{max-width:1040px;margin:0 auto;padding:0 16px}
+header{padding:56px 0 32px;border-bottom:1px solid var(--line)}
+.eyebrow{display:inline-block;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--blue)}
+h1{font-size:clamp(30px,5vw,44px);font-weight:800;line-height:1.1;margin:12px 0 10px}
+.lead{font-size:18px;color:var(--ink2);max-width:66ch;margin:0}
+.meta{display:flex;flex-wrap:wrap;gap:8px 20px;margin-top:20px;font-size:13px;color:var(--ink3)}
+.meta b{color:var(--ink2);font-weight:600}
+section{padding:40px 0;border-bottom:1px solid var(--line)}
+h2{font-size:22px;font-weight:700;margin:0 0 6px}
+.sub{color:var(--ink3);margin:0 0 24px;font-size:14px;max-width:72ch}
+.parts{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.part{background:var(--surf);border:1px solid var(--line);border-radius:12px;padding:20px}
+.part .n{font-size:12px;color:var(--ink3);font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+.part h3{margin:6px 0 8px;font-size:18px;font-weight:700;line-height:1.25}
+.part p{margin:10px 0 0;color:var(--ink2);font-size:14px}
+.tag{display:inline-block;font-size:12px;font-weight:700;padding:2px 10px;border-radius:999px;white-space:nowrap}
+.tag.ok{background:color-mix(in oklch,var(--ok) 18%,transparent);color:var(--ok)}
+.tag.warn{background:color-mix(in oklch,var(--warn) 18%,transparent);color:var(--warn)}
+.tag.blue{background:rgba(77,133,255,.16);color:var(--blue)}
+.checks{list-style:none;margin:0;padding:0}
+.checks li{display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-bottom:1px solid var(--line)}
+.checks li:last-child{border-bottom:0}
+.dot{flex:none;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-size:12px;font-weight:800;margin-top:1px}
+.dot.ok{background:color-mix(in oklch,var(--ok) 20%,transparent);color:var(--ok)}
+.dot.pend{background:color-mix(in oklch,var(--warn) 20%,transparent);color:var(--warn)}
+.checks small{display:block;color:var(--ink3);font-size:13px}
+.d{color:var(--ink3);font-size:13px;font-variant-numeric:tabular-nums;margin-right:6px}
+.qa{display:grid;gap:12px}
+.qa div{background:var(--surf);border:1px solid var(--line);border-radius:12px;padding:18px 20px}
+.qa b{display:block;font-size:15px;margin-bottom:6px}
+.qa p{margin:0;color:var(--ink2);font-size:14px}
+footer{padding:28px 0 48px;color:var(--ink3);font-size:13px}
+@media (max-width:760px){.parts{grid-template-columns:1fr}header{padding-top:36px}}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+  <span class="eyebrow">Recompra de Enxoval · Automação</span>
+  <h1>Recompra de Enxoval</h1>
+  <p class="lead">A recompra saiu do Pipefy e da planilha com Make e foi para o Jornada de Enxoval, com card criado automaticamente quando o enxoval completa 2 anos e um agente que negocia com o proprietário pela SIA. As três peças estão construídas e testadas. A entrada em produção está pausada por decisão, ainda sem data.</p>
+  <div class="meta">
+    <span><b>Task:</b> Retornar processo de recompra com automação (franquias)</span>
+    <span><b>Atualizado:</b> 09/11/2026</span>
+    <span><b>Responsáveis:</b> Henry Yudi e Luiza Cechelero</span>
+  </div>
+</div></header>
+
+<main class="wrap">
+<section>
+  <h2>O que já está pronto</h2>
+  <p class="sub">As três peças da automação e em que estado cada uma está hoje.</p>
+  <div class="parts">
+    <div class="part"><span class="n">1 · Kanban</span><h3>Recompra no Jornada de Enxoval</h3><span class="tag ok">No ar</span>
+      <p>Board de recompra com as fases Caixa de Entrada, 1º, 2º e 3º Contato, Ação de CS, Em Negociação, Imóvel com Pendência e Recompra Validada. Pelo sistema já dá para enviar orçamento, validar a compra, registrar compra parcial ou adiamento com data, agendar retorno e informar os dados da NF.</p></div>
+    <div class="part"><span class="n">2 · Criação automática</span><h3>Card aos 2 anos do enxoval</h3><span class="tag warn">Em simulação</span>
+      <p>Agente no Olimpo que roda todo dia às 6h e cria o card quando o enxoval do imóvel ativo completa 2 anos. Substitui o Make que criava o card no Pipefy (parou em 25/10). Desde 06/11 o cron está ligado em modo simulado: calcula quais cards criaria, sem gravar.</p></div>
+    <div class="part"><span class="n">3 · Negociação</span><h3>Agente de negociação pela SIA</h3><span class="tag blue">Testado em staging</span>
+      <p>Agente no Olimpo que manda os templates da cadência, responde o proprietário com a base de conhecimento (42 objeções validadas a partir da matriz da Raquel) e move o card conforme a resposta. Qualquer atrito vai para Ação de CS com o motivo comentado.</p></div>
+  </div>
+</section>
+
+<section>
+  <h2>Linha do tempo</h2>
+  <ul class="checks">
+    <li><span class="dot ok">✓</span><div><span class="d">21/10</span>Call com Kelly e Amanda (SIA)<small>A SIA não tem agente de recompra. A Kelly liberou acesso via API, vinculado ao time, para testarmos por fora.</small></div></li>
+    <li><span class="dot ok">✓</span><div><span class="d">26/10</span>Call com o Roberto<small>Aprovou uma fila própria de recompra na SIA com o agente rodando no Olimpo via API, disparo pelo número oficial, primeiros lotes de cerca de 15 imóveis (os mais antigos primeiro) com a Raquel acompanhando, e liberou o staging da SIA para os testes.</small></div></li>
+    <li><span class="dot ok">✓</span><div><span class="d">26–28/10</span>Jornada preparado para a automação<small>Criação de card pelo gatilho de 2 anos, API de negociação (orçamento, mover, validar, pendência, adiamento, dados da NF, agendar retorno) e fase Em Negociação, todos em produção no Jornada.</small></div></li>
+    <li><span class="dot ok">✓</span><div><span class="d">28/10</span>Agente de negociação construído<small>Base de conhecimento validada (42 objeções e 22 dúvidas decididas) e regras de negócio: 2+1 mudas, adiamento com data, frete fixo, link de pagamento solicitado ao fornecedor, comissão nunca confirmada, atrito vai para o CS.</small></div></li>
+    <li><span class="dot ok">✓</span><div><span class="d">29/10</span>Teste ponta a ponta aprovado<small>No staging da SIA, travado na franquia de teste: compra parcial 1+2 virou card em Imóvel com Pendência com data, pedido gerado e conversa encerrada.</small></div></li>
+    <li><span class="dot ok">✓</span><div><span class="d">30/10</span>Ajustes do teste<small>10 correções no mesmo dia: abertura da conversa, retomada da conversa parada, leitura da data de adiamento, 2+1 com a data pedida, atrito com 2 contornos antes do CS e pedido de humano.</small></div></li>
+    <li><span class="dot ok">✓</span><div><span class="d">30/10</span>Acesso da plataforma resolvido<small>O pedido de acesso aberto em 29/10 no Suporte Plataforma foi concluído pelo time de plataforma (Eos) em 30/10.</small></div></li>
+    <li><span class="dot ok">✓</span><div><span class="d">06/11</span>Criação automática ligada em simulação<small>Data base passou a considerar a data de ativação do imóvel, e o cron diário foi ligado em modo simulado.</small></div></li>
+  </ul>
+</section>
+
+<section>
+  <h2>Respostas à validação de 06/11</h2>
+  <div class="qa">
+    <div><b>Por que a cadência ainda não disparou nenhum contato real?</b>
+      <p>Porque a automação ainda não entrou em produção. O agente de negociação foi testado só no staging da SIA, travado na franquia de teste, e a criação automática roda em modo simulado. A entrada em produção está pausada por decisão; os cards que estão hoje no board seguem no fluxo manual do CS.</p></div>
+    <div><b>Os 7 cards de teste cancelados por "Erro Agente"</b>
+      <p>Não são erros do agente. "Erro Agente" é o motivo de descarte padrão que usamos para tirar do board os cards de teste da franquia TESTE AGENTE RECOMPRA depois de cada rodada, para não misturar com cards reais.</p></div>
+    <div><b>Acesso com a plataforma</b>
+      <p>Não está mais aberto: o pedido de 29/10 foi concluído em 30/10 pelo Eos (time de plataforma).</p></div>
+  </div>
+</section>
+
+<section>
+  <h2>O que falta para entrar em produção</h2>
+  <p class="sub">Itens para quando a entrada em produção for retomada. Nenhum depende de nova construção.</p>
+  <ul class="checks">
+    <li><span class="dot pend">•</span><div>Chave da SIA de produção e fila "Recompra enxoval" em produção<small>Hoje o agente aponta para o staging da SIA.</small></div></li>
+    <li><span class="dot pend">•</span><div>Chaves definitivas do Jornada no cofre do agente<small>As usadas no teste são de teste e serão trocadas.</small></div></li>
+    <li><span class="dot pend">•</span><div>Tirar a trava da franquia de teste e ligar a gravação da criação automática<small>Os dois agentes têm travas que só saem por configuração.</small></div></li>
+    <li><span class="dot pend">•</span><div>Primeiros lotes acompanhados pelo CS<small>Lotes de cerca de 15 imóveis, os mais antigos primeiro, com a Raquel acompanhando, como aprovado pelo Roberto em 26/10.</small></div></li>
+  </ul>
+</section>
+</main>
+
+<footer><div class="wrap">Seazone · Fornecedores · gerado em 09/11/2026</div></footer>
+</body></html>
