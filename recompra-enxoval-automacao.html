@@ -52,7 +52,7 @@ footer{padding:28px 0 48px;color:var(--ink3);font-size:13px}
 <header><div class="wrap">
   <span class="eyebrow">Recompra de Enxoval · Automação</span>
   <h1>Recompra de Enxoval</h1>
-  <p class="lead">A recompra saiu do Pipefy e da planilha com Make e foi para o Jornada de Enxoval, com card criado automaticamente quando o enxoval completa 2 anos e um agente que negocia com o proprietário pela SIA. As três peças estão construídas e testadas. A entrada em produção está pausada por decisão, ainda sem data.</p>
+  <p class="lead">A recompra saiu do Pipefy e da planilha com Make e foi para o Jornada de Enxoval, com card criado automaticamente quando o enxoval completa 2 anos e um agente que negocia com o proprietário pela SIA. As três peças estão construídas. A cadência de comunicação com o proprietário está em treinamento, antes de entrar em produção.</p>
   <div class="meta">
     <span><b>Task:</b> Retornar processo de recompra com automação (franquias)</span>
     <span><b>Atualizado:</b> 09/11/2026</span>
@@ -69,7 +69,7 @@ footer{padding:28px 0 48px;color:var(--ink3);font-size:13px}
       <p>Board de recompra com as fases Caixa de Entrada, 1º, 2º e 3º Contato, Ação de CS, Em Negociação, Imóvel com Pendência e Recompra Validada. Pelo sistema já dá para enviar orçamento, validar a compra, registrar compra parcial ou adiamento com data, agendar retorno e informar os dados da NF.</p></div>
     <div class="part"><span class="n">2 · Criação automática</span><h3>Card aos 2 anos do enxoval</h3><span class="tag warn">Em simulação</span>
       <p>Agente no Olimpo que roda todo dia às 6h e cria o card quando o enxoval do imóvel ativo completa 2 anos. Substitui o Make que criava o card no Pipefy (parou em 25/10). Desde 06/11 o cron está ligado em modo simulado: calcula quais cards criaria, sem gravar.</p></div>
-    <div class="part"><span class="n">3 · Negociação</span><h3>Agente de negociação pela SIA</h3><span class="tag blue">Testado em staging</span>
+    <div class="part"><span class="n">3 · Negociação</span><h3>Agente de negociação pela SIA</h3><span class="tag blue">Em treinamento</span>
       <p>Agente no Olimpo que manda os templates da cadência, responde o proprietário com a base de conhecimento (42 objeções validadas a partir da matriz da Raquel) e move o card conforme a resposta. Qualquer atrito vai para Ação de CS com o motivo comentado.</p></div>
   </div>
 </section>
@@ -92,7 +92,7 @@ footer{padding:28px 0 48px;color:var(--ink3);font-size:13px}
   <h2>Respostas à validação de 06/11</h2>
   <div class="qa">
     <div><b>Por que a cadência ainda não disparou nenhum contato real?</b>
-      <p>Porque a automação ainda não entrou em produção. O agente de negociação foi testado só no staging da SIA, travado na franquia de teste, e a criação automática roda em modo simulado. A entrada em produção está pausada por decisão; os cards que estão hoje no board seguem no fluxo manual do CS.</p></div>
+      <p>Porque a cadência de comunicação ainda está em treinamento. O agente de negociação roda só no staging da SIA, travado na franquia de teste, e a criação automática roda em modo simulado. Enquanto o treinamento não termina, os cards que estão hoje no board seguem no fluxo manual do CS.</p></div>
     <div><b>Os 7 cards de teste cancelados por "Erro Agente"</b>
       <p>Não são erros do agente. "Erro Agente" é o motivo de descarte padrão que usamos para tirar do board os cards de teste da franquia TESTE AGENTE RECOMPRA depois de cada rodada, para não misturar com cards reais.</p></div>
     <div><b>Acesso com a plataforma</b>
@@ -102,7 +102,7 @@ footer{padding:28px 0 48px;color:var(--ink3);font-size:13px}
 
 <section>
   <h2>O que falta para entrar em produção</h2>
-  <p class="sub">Itens para quando a entrada em produção for retomada. Nenhum depende de nova construção.</p>
+  <p class="sub">Itens para depois que o treinamento da cadência terminar. Nenhum depende de nova construção.</p>
   <ul class="checks">
     <li><span class="dot pend">•</span><div>Chave da SIA de produção e fila "Recompra enxoval" em produção<small>Hoje o agente aponta para o staging da SIA.</small></div></li>
     <li><span class="dot pend">•</span><div>Chaves definitivas do Jornada no cofre do agente<small>As usadas no teste são de teste e serão trocadas.</small></div></li>
