@@ -179,7 +179,7 @@ footer{margin-top:56px;color:var(--ink3);font-size:13px}
   <div class="it"><span class="d">09/11</span><h3>Agente de cadência em produção</h3><span class="tag b">Em migração</span>
     <p>Hoje o agente roda no ambiente lab do Olimpo. O de produção já foi preparado (olimpo #2365 e gitops #4073) e sobe em modo simulado, sem enviar nada, enquanto o lab segue fazendo a cadência. Depois de conferir que os dois decidem igual, a virada desliga o lab e liga o envio em produção no mesmo passo, para nunca mandar mensagem em dobro. Aguarda a SRE promover a imagem base de produção.</p></div>
   <div class="it"><span class="d">09/11</span><h3>Prestadores na cadência</h3><span class="tag b">Em construção</span>
-    <p>A skill de prestadores passa a seguir o modelo da de lavanderias: pesquisa por cidade, prioriza quem está dentro do polígono da franquia e cria os cards no funil 60, em vez de mandar a mensagem direto. O agente ganha a categoria Prestadores com a mesma cadência de três mensagens; ela nasce desligada e só liga depois que os 2 templates novos (2º e último contato) forem aprovados pela Meta.</p></div>
+    <p>A skill de prestadores passa a seguir o modelo da de lavanderias: pesquisa por cidade, prioriza quem está dentro do polígono da franquia e cria os cards no funil 60, em vez de mandar a mensagem direto. O agente ganha a categoria Prestadores com um fluxo próprio: uma mensagem só, com o link de cadastro no Hub, sem esperar resposta. O card fica no 1º contato por 3 dias: se o prestador se cadastrar no Hub nesse prazo, vira ganho; se não, vai para perda. Usa o template que já está aprovado.</p></div>
   <div class="it"><span class="d">09/11</span><h3>Copiloto 0.6.0</h3><span class="tag g">No ar</span>
     <p>Quando o fornecedor confirma que não tem equipamento, a mensagem de encerramento sai sozinha (com os 30 segundos para cancelar) e o card vai para Perda "Sem Equipamento". A extensão também passou a registrar se a conversa foi de fato encerrada na SIA, para medir o fechamento.</p></div>
 </div>
@@ -206,7 +206,7 @@ footer{margin-top:56px;color:var(--ink3);font-size:13px}
     <ol>
       <li><div><b>Copiloto além das etapas atuais</b><span>Hoje sugere resposta só nas etapas da negociação listadas acima (até valores × teto e tabela), com a analista aprovando cada mensagem. Usar em outras etapas, como pós-cadastro no Hub ou retomar quem parou de responder, precisa de ok.</span></div></li>
       <li><div><b>Ampliar o envio automático da Copiloto</b><span>Hoje só saem sozinhas as respostas padrão de alta confiança (desde 20/10) e o encerramento por falta de equipamento (desde 09/11), sempre com 30 segundos para a analista cancelar. Valores, objeções e tabela continuam passando pela analista. Ampliar o automático para essas etapas é decisão da Carol, porque aí a IA passa a negociar.</span></div></li>
-      <li><div><b>Ligar a cadência para prestadores</b><span>A categoria fica pronta e desligada. Ligar significa mandar três mensagens, em vez do convite único de hoje, para marido de aluguel, vidraçaria, jardinagem e afins, em nome da Seazone.</span></div></li>
+      <li><div><b>Ligar o convite automático para prestadores</b><span>A categoria fica pronta e desligada. Ligar significa o agente mandar o convite de cadastro no Hub (uma mensagem, sem negociação) para marido de aluguel, vidraçaria, jardinagem e afins encontrados pela skill, em nome da Seazone.</span></div></li>
     </ol></section>
   <section><h3>Equipe decide sozinha</h3><p>Operacional: mesmo template, mesma regra, muda ritmo ou cidade.</p>
     <ol>
