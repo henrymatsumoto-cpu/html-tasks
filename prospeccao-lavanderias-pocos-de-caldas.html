@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lavanderias em Poços de Caldas</title>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme:dark;
+  --bg:#080E32;--surf:#0F1742;--surf2:#18225A;
+  --line:#232E6B;--ink:#EEF1FB;--ink2:#B4BBD9;--ink3:#8189B0;
+  --won:oklch(78% .12 150);--lost:oklch(72% .13 30);--amber:oklch(82% .13 80);--blue:#4D85FF;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 "Figtree",sans-serif;-webkit-font-smoothing:antialiased}
+main{max-width:880px;margin:0 auto;padding:56px 16px 96px}
+.eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink3);font-weight:700}
+h1{font-family:"Figtree",sans-serif;font-weight:800;font-size:clamp(34px,6.5vw,56px);letter-spacing:-.03em;line-height:1;margin:14px 0 14px}
+h2{font-family:"Figtree",sans-serif;font-weight:600;font-size:24px;letter-spacing:-.015em;margin:64px 0 6px}
+.lede{color:var(--ink2);font-size:18px;max-width:60ch;margin:0}
+.meta{color:var(--ink3);font-size:13.5px;margin-top:18px}
+p{max-width:66ch}
+.sub{color:var(--ink2);margin:0 0 22px}
+
+.nums{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:14px;overflow:hidden;margin-top:40px}
+.nums div{background:var(--surf);padding:22px 20px}
+.nums b{display:block;font-family:"Figtree",sans-serif;font-size:44px;font-weight:800;line-height:1;letter-spacing:-.03em}
+.nums span{display:block;color:var(--ink2);font-size:13.5px;margin-top:8px;max-width:20ch}
+.nums .w b{color:var(--won)} .nums .l b{color:var(--lost)} .nums .a b{color:var(--amber)}
+
+.funnel{display:flex;flex-direction:column;gap:10px}
+.step{display:grid;grid-template-columns:190px 1fr 44px;align-items:center;gap:14px}
+.step .t{font-size:14.5px;color:var(--ink2)}
+.step .bar{height:26px;border-radius:6px;background:var(--surf2);overflow:hidden}
+.step .bar i{display:block;height:100%;background:var(--blue);border-radius:6px}
+.step .n{font-weight:700;text-align:right;font-variant-numeric:tabular-nums}
+.step.win .bar i{background:var(--won)}
+.step.neg .bar i{background:var(--won);opacity:.55}
+
+.reasons{border-top:1px solid var(--line)}
+.r{display:grid;grid-template-columns:34px 1fr;gap:6px 18px;padding:20px 0;border-bottom:1px solid var(--line)}
+.r .c{font-family:"Figtree",sans-serif;font-size:30px;font-weight:800;line-height:1;color:var(--lost);font-variant-numeric:tabular-nums}
+.r h3{margin:0;font-size:17px;font-weight:700}
+.r h3 small{color:var(--ink3);font-weight:500;font-size:13.5px;margin-left:8px}
+.r p{grid-column:2;margin:4px 0 0;color:var(--ink2);font-size:15px}
+.r .who{grid-column:2;color:var(--ink3);font-size:13.5px;margin-top:6px}
+.meter{grid-column:2;height:6px;background:var(--surf2);border-radius:3px;overflow:hidden;margin-top:4px}
+.meter i{display:block;height:100%;background:var(--lost)}
+
+blockquote{margin:22px 0;padding:20px 22px;background:var(--surf);border-radius:12px;color:var(--ink);font-size:16.5px;line-height:1.55}
+blockquote cite{display:block;margin-top:10px;color:var(--ink3);font-style:normal;font-size:13.5px}
+
+.won{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.won div{background:var(--surf);border-radius:12px;padding:20px}
+.won h3{margin:0 0 4px;font-size:17px;color:var(--won)}
+.won p{margin:0;color:var(--ink2);font-size:14.5px}
+
+.concl{background:var(--surf);border-radius:16px;padding:28px 26px;margin-top:18px}
+.concl p{margin:0 0 14px;color:var(--ink)}
+.concl p:last-child{margin:0}
+.concl ol{margin:6px 0 14px;padding-left:20px;color:var(--ink2)}
+.concl li{margin:8px 0}
+.concl li b{color:var(--ink)}
+
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:12px}
+table{border-collapse:collapse;width:100%;min-width:640px;font-size:14px}
+th{text-align:left;color:var(--ink3);font-weight:500;font-size:12px;letter-spacing:.06em;text-transform:uppercase;padding:12px 14px;background:var(--surf)}
+td{padding:12px 14px;border-top:1px solid var(--line);vertical-align:top;color:var(--ink2)}
+td:first-child{color:var(--ink);font-weight:500}
+.tag{display:inline-block;padding:2px 10px;border-radius:999px;font-size:12px;font-weight:700;white-space:nowrap}
+.tag.g{background:oklch(78% .12 150 / .16);color:var(--won)}
+.tag.a{background:oklch(80% .13 80 / .16);color:var(--amber)}
+.tag.p{background:oklch(70% .13 35 / .16);color:var(--lost)}
+.flag{color:var(--amber)}
+.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.dim{color:var(--ink3)}
+footer{margin-top:56px;color:var(--ink3);font-size:13px}
+
+@media (max-width:640px){
+  .nums{grid-template-columns:1fr 1fr}
+  .step{grid-template-columns:1fr 40px}
+  .step .t{grid-column:1/-1}
+  .won{grid-template-columns:1fr}
+}
+
+.tl{border-left:2px solid var(--line);margin:8px 0 0 6px;padding-left:22px}
+.tl div{position:relative;padding:0 0 22px}
+.tl div:before{content:"";position:absolute;left:-29px;top:7px;width:12px;height:12px;border-radius:50%;background:var(--blue)}
+.tl div.g:before{background:var(--won)} .tl div.p:before{background:var(--lost)}
+.tl b{display:block;font-size:13px;color:var(--ink3);font-weight:600;letter-spacing:.04em;text-transform:uppercase}
+.tl p{margin:2px 0 0;color:var(--ink2);font-size:15px}
+.tl p strong{color:var(--ink)}
+.badge{display:inline-block;margin-top:22px;padding:6px 14px;border-radius:999px;background:oklch(78% .12 150 / .14);color:var(--won);font-size:13px;font-weight:700}
+
+body{overflow-x:hidden}
+.resumo{background:var(--surf);border-radius:16px;padding:24px 22px;margin-top:28px}
+.resumo ul{margin:0;padding-left:20px;color:var(--ink2)}
+.resumo li{margin:8px 0}
+.resumo li b{color:var(--ink)}
+</style></head><body><main>
+<span class="eyebrow">Prospecção de Fornecedores · Lavanderias · MG</span>
+<h1>Prospecção Lavanderias Poços de Caldas</h1>
+<p class="lede">Poços de Caldas fechou com 3 lavanderias ganhas e nenhum card em aberto. Foram 78 lavanderias no funil, 13 responderam e 75 foram perdidas, a maioria sem retorno ou com contato inválido.</p>
+<p class="meta">Fonte: Pipedrive, funil 60 "Prospecção Fornecedores" · do primeiro card (11/09/2026) ao último ganho (20/10/2026) · atualizado em 09/11/2026</p>
+<span class="badge">Cidade fechada</span>
+
+<h2>Resumo da cidade</h2>
+<div class="resumo"><ul>
+  <li><b>Período da prospecção:</b> de 11/09/2026 (primeiro card) a 20/10/2026 (último fechamento).</li>
+  <li><b>Fornecedores contatados:</b> 78 lavanderias.</li>
+  <li><b>Como:</b> 45 contatadas pelo agente de cadência pela SIA e 33 contatadas manualmente.</li>
+  <li><b>Responderam:</b> 13 de 78 (16,7%).</li>
+  <li><b>Ganhos:</b> 3 lavanderias ganhas: Lava &amp; Passa, Lavanderia da Marli e Merli. As 3 vieram do contato do agente.</li>
+  <li><b>Perdidos:</b> 75. Principais motivos: Sem Retorno (35), Contato Inválido (30) e Autoatendimento (6).</li>
+  <li><b>Abertos:</b> 0 cards abertos, nenhuma etapa com card pendente.</li>
+  <li><b>Tempo médio até o ganho:</b> 5,6 dias (média), do card criado ao ganho.</li>
+</ul></div>
+
+<div class="nums">
+  <div><b>78</b><span>lavanderias contatadas (45 pelo agente, 33 manual)</span></div>
+  <div class="a"><b>13</b><span>responderam (16,7%)</span></div>
+  <div class="w"><b>3</b><span>ganhas, em 19/10 e 20/10</span></div>
+  <div class="l"><b>75</b><span>perdidas</span></div>
+</div>
+
+<h2>Situação: Cidade fechada</h2>
+<p class="sub">Não há nenhum card aberto em Poços de Caldas no funil 60. Todos os 78 cards têm resultado: 3 ganhos e 75 perdidos. Nenhum card foi perdido depois de entrar em negociação.</p>
+
+<h2>Quem entrou</h2>
+<p class="sub">3 ganhos. Os 3 cards foram criados em 14/10/2026 e contatados pelo agente de cadência pela SIA.</p>
+<div class="tbl"><table style="min-width:0">
+<thead><tr><th>Lavanderia</th><th>Data do ganho</th><th class="num">Dias até o ganho</th><th>Anotação no card</th></tr></thead>
+<tbody>
+<tr><td>Lava &amp; Passa (CNPJ 56.481.561)</td><td>19/10/2026</td><td class="num">5,1</td><td>Cadastrado no Hub de serviço</td></tr>
+<tr><td>Lavanderia da Marli (CNPJ 53.811.574)</td><td>20/10/2026</td><td class="num">5,8</td><td class="dim">Sem anotação</td></tr>
+<tr><td>Merli</td><td>20/10/2026</td><td class="num">5,8</td><td>Já está cadastrada na base de lavanderias</td></tr>
+</tbody></table></div>
+<p class="sub" style="margin-top:14px">Tempo médio até o ganho: 5,6 dias (média dos 3 cards).</p>
+
+<h2>Por que perdemos</h2>
+<p class="sub">75 cards perdidos, por motivo marcado no Pipedrive.</p>
+<div class="tbl"><table style="min-width:0">
+<thead><tr><th>Motivo</th><th class="num">Cards</th><th class="num">% das perdas</th></tr></thead>
+<tbody>
+<tr><td>[Fornecedores] - Sem Retorno</td><td class="num">35</td><td class="num">46,7%</td></tr>
+<tr><td>Contato Inválido</td><td class="num">30</td><td class="num">40,0%</td></tr>
+<tr><td>[Fornecedores] - Autoatendimento</td><td class="num">6</td><td class="num">8,0%</td></tr>
+<tr><td>[Fornecedores] - Valor por Quilo</td><td class="num">2</td><td class="num">2,7%</td></tr>
+<tr><td>[Fornecedores] - Parou de Responder</td><td class="num">1</td><td class="num">1,3%</td></tr>
+<tr><td>[Fornecedores] - Não Trabalha com fotos de imóveis <span class="flag">(motivo de fotógrafo)</span></td><td class="num">1</td><td class="num">1,3%</td></tr>
+<tr><td><b>Total</b></td><td class="num"><b>75</b></td><td class="num"><b>100%</b></td></tr>
+</tbody></table></div>
+
+<div class="reasons" style="margin-top:28px">
+  <div class="r"><span class="c">35</span><h3>Sem retorno<small>46,7%</small></h3>
+    <div class="meter"><i style="width:46.7%"></i></div>
+    <p>Não responderam aos contatos.</p></div>
+  <div class="r"><span class="c">30</span><h3>Contato inválido<small>40%</small></h3>
+    <div class="meter"><i style="width:40%"></i></div>
+    <p>Telefone que não serve para contato. É quase metade das perdas e aponta para a qualidade da base usada.</p></div>
+  <div class="r"><span class="c">6</span><h3>Autoatendimento<small>8%</small></h3>
+    <div class="meter"><i style="width:8%"></i></div>
+    <p>Lavanderias self-service, que não atendem o modelo da Seazone.</p></div>
+  <div class="r"><span class="c">4</span><h3>Outros<small>5,3%</small></h3>
+    <div class="meter"><i style="width:5.3%"></i></div>
+    <p>Valor por quilo (2), parou de responder (1) e 1 card com o motivo "Não Trabalha com fotos de imóveis", que é de fotógrafo.</p></div>
+</div>
+
+<h2>Conclusão</h2>
+<div class="concl">
+  <p><b>Poços de Caldas está fechada com 3 lavanderias ganhas.</b> Todas vieram do agente de cadência pela SIA e foram ganhas em 19 e 20/10, em média 5,6 dias depois de o card ser criado.</p>
+  <p><b>A resposta foi baixa: 13 de 78 (16,7%).</b> Sem Retorno (35) e Contato Inválido (30) somam 65 das 75 perdas. Pontos para conferir:</p>
+  <ol>
+    <li><b>Corrigir o motivo de 1 card perdido.</b> "Não Trabalha com fotos de imóveis" é motivo de fotógrafo.</li>
+    <li><b>Conferir se Lavanderia da Marli e Merli são a mesma lavanderia.</b> Os nomes são parecidos e os dois cards foram ganhos no mesmo dia; a Merli tem a anotação "Já esta cadastrada na base de lavanderias".</li>
+  </ol>
+</div>
+
+<footer>Dados do funil 60 do Pipedrive. "Respondeu" = 13 cards com resposta registrada. Tempo até o ganho = média (não mediana) dos dias do card criado ao ganho. Nenhum número de fora do Pipedrive.</footer>
+
+</main></body></html>

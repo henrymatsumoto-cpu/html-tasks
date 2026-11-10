@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lavanderias em Pirenópolis</title>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme:dark;
+  --bg:#080E32;--surf:#0F1742;--surf2:#18225A;
+  --line:#232E6B;--ink:#EEF1FB;--ink2:#B4BBD9;--ink3:#8189B0;
+  --won:oklch(78% .12 150);--lost:oklch(72% .13 30);--amber:oklch(82% .13 80);--blue:#4D85FF;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 "Figtree",sans-serif;-webkit-font-smoothing:antialiased}
+main{max-width:880px;margin:0 auto;padding:56px 16px 96px}
+.eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink3);font-weight:700}
+h1{font-family:"Figtree",sans-serif;font-weight:800;font-size:clamp(34px,6.5vw,56px);letter-spacing:-.03em;line-height:1;margin:14px 0 14px}
+h2{font-family:"Figtree",sans-serif;font-weight:600;font-size:24px;letter-spacing:-.015em;margin:64px 0 6px}
+.lede{color:var(--ink2);font-size:18px;max-width:60ch;margin:0}
+.meta{color:var(--ink3);font-size:13.5px;margin-top:18px}
+p{max-width:66ch}
+.sub{color:var(--ink2);margin:0 0 22px}
+
+.nums{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:14px;overflow:hidden;margin-top:40px}
+.nums div{background:var(--surf);padding:22px 20px}
+.nums b{display:block;font-family:"Figtree",sans-serif;font-size:44px;font-weight:800;line-height:1;letter-spacing:-.03em}
+.nums span{display:block;color:var(--ink2);font-size:13.5px;margin-top:8px;max-width:20ch}
+.nums .w b{color:var(--won)} .nums .l b{color:var(--lost)} .nums .a b{color:var(--amber)}
+
+.funnel{display:flex;flex-direction:column;gap:10px}
+.step{display:grid;grid-template-columns:190px 1fr 44px;align-items:center;gap:14px}
+.step .t{font-size:14.5px;color:var(--ink2)}
+.step .bar{height:26px;border-radius:6px;background:var(--surf2);overflow:hidden}
+.step .bar i{display:block;height:100%;background:var(--blue);border-radius:6px}
+.step .n{font-weight:700;text-align:right;font-variant-numeric:tabular-nums}
+.step.win .bar i{background:var(--won)}
+.step.neg .bar i{background:var(--won);opacity:.55}
+
+.reasons{border-top:1px solid var(--line)}
+.r{display:grid;grid-template-columns:34px 1fr;gap:6px 18px;padding:20px 0;border-bottom:1px solid var(--line)}
+.r .c{font-family:"Figtree",sans-serif;font-size:30px;font-weight:800;line-height:1;color:var(--lost);font-variant-numeric:tabular-nums}
+.r h3{margin:0;font-size:17px;font-weight:700}
+.r h3 small{color:var(--ink3);font-weight:500;font-size:13.5px;margin-left:8px}
+.r p{grid-column:2;margin:4px 0 0;color:var(--ink2);font-size:15px}
+.r .who{grid-column:2;color:var(--ink3);font-size:13.5px;margin-top:6px}
+.meter{grid-column:2;height:6px;background:var(--surf2);border-radius:3px;overflow:hidden;margin-top:4px}
+.meter i{display:block;height:100%;background:var(--lost)}
+
+blockquote{margin:22px 0;padding:20px 22px;background:var(--surf);border-radius:12px;color:var(--ink);font-size:16.5px;line-height:1.55}
+blockquote cite{display:block;margin-top:10px;color:var(--ink3);font-style:normal;font-size:13.5px}
+
+.won{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.won div{background:var(--surf);border-radius:12px;padding:20px}
+.won h3{margin:0 0 4px;font-size:17px;color:var(--won)}
+.won p{margin:0;color:var(--ink2);font-size:14.5px}
+
+.concl{background:var(--surf);border-radius:16px;padding:28px 26px;margin-top:18px}
+.concl p{margin:0 0 14px;color:var(--ink)}
+.concl p:last-child{margin:0}
+.concl ol{margin:6px 0 14px;padding-left:20px;color:var(--ink2)}
+.concl li{margin:8px 0}
+.concl li b{color:var(--ink)}
+
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:12px}
+table{border-collapse:collapse;width:100%;min-width:640px;font-size:14px}
+th{text-align:left;color:var(--ink3);font-weight:500;font-size:12px;letter-spacing:.06em;text-transform:uppercase;padding:12px 14px;background:var(--surf)}
+td{padding:12px 14px;border-top:1px solid var(--line);vertical-align:top;color:var(--ink2)}
+td:first-child{color:var(--ink);font-weight:500}
+.tag{display:inline-block;padding:2px 10px;border-radius:999px;font-size:12px;font-weight:700;white-space:nowrap}
+.tag.g{background:oklch(78% .12 150 / .16);color:var(--won)}
+.tag.a{background:oklch(80% .13 80 / .16);color:var(--amber)}
+.tag.p{background:oklch(70% .13 35 / .16);color:var(--lost)}
+.flag{color:var(--amber)}
+.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.dim{color:var(--ink3)}
+footer{margin-top:56px;color:var(--ink3);font-size:13px}
+
+@media (max-width:640px){
+  .nums{grid-template-columns:1fr 1fr}
+  .step{grid-template-columns:1fr 40px}
+  .step .t{grid-column:1/-1}
+  .won{grid-template-columns:1fr}
+}
+
+.tl{border-left:2px solid var(--line);margin:8px 0 0 6px;padding-left:22px}
+.tl div{position:relative;padding:0 0 22px}
+.tl div:before{content:"";position:absolute;left:-29px;top:7px;width:12px;height:12px;border-radius:50%;background:var(--blue)}
+.tl div.g:before{background:var(--won)} .tl div.p:before{background:var(--lost)}
+.tl b{display:block;font-size:13px;color:var(--ink3);font-weight:600;letter-spacing:.04em;text-transform:uppercase}
+.tl p{margin:2px 0 0;color:var(--ink2);font-size:15px}
+.tl p strong{color:var(--ink)}
+.badge{display:inline-block;margin-top:22px;padding:6px 14px;border-radius:999px;background:oklch(78% .12 150 / .14);color:var(--won);font-size:13px;font-weight:700}
+</style>
+</head><body><main>
+<span class="eyebrow">Prospecção de Fornecedores · Lavanderias · GO</span>
+<h1>Prospecção Lavanderias Pirenópolis</h1>
+<p class="lede">Pirenópolis teve 2 cards de lavanderia no funil, ambos com contato manual. 1 lavanderia foi ganha (Vitória - Lavanderia) e 1 foi perdida por falta de retorno. Não há card em aberto: a cidade está fechada.</p>
+<p class="meta">Fonte: Pipedrive, funil 60 "Prospecção Fornecedores" · 2 cards criados em 04/11/2026 · ganho registrado em 04/11/2026 · atualizado em 09/11/2026</p>
+<span class="badge">Cidade fechada</span>
+
+<h2>Resumo da cidade</h2>
+<div class="concl">
+  <p><b>Período da prospecção:</b> de 04/11/2026 (primeiro card) a 04/11/2026 (último fechamento). Tudo aconteceu no mesmo dia.</p>
+  <p><b>Fornecedores contatados:</b> 2 lavanderias.</p>
+  <p><b>Como foi o contato:</b> manual nos 2 cards. Nenhum contato foi feito pelo agente de cadência da SIA (0 cards via agente).</p>
+  <p><b>Responderam:</b> 1 de 2 lavanderias (taxa de resposta de 50%).</p>
+  <p><b>Ganhos:</b> 1 lavanderia ganha, a Vitória - Lavanderia, em 04/11/2026.</p>
+  <p><b>Perdidos:</b> 1 card perdido. Motivo: "[Fornecedores] - Sem Retorno" (1). Nenhum card foi perdido já em negociação.</p>
+  <p><b>Abertos:</b> 0 cards em aberto, em nenhuma etapa.</p>
+  <p><b>Tempo médio até o ganho:</b> 0 dias (média). O card foi criado e ganho no mesmo dia, 04/11/2026.</p>
+</div>
+
+<div class="nums">
+  <div><b>2</b><span>lavanderias contatadas, todas por contato manual</span></div>
+  <div class="a"><b>1</b><span>respondeu (50%)</span></div>
+  <div class="w"><b>1</b><span>ganha, em 04/11/2026</span></div>
+  <div class="l"><b>1</b><span>perdida por sem retorno</span></div>
+</div>
+
+<h2>Ganhos</h2>
+<p class="sub">Lavanderias ganhas em Pirenópolis.</p>
+<div class="tbl"><table style="min-width:0">
+<thead><tr><th>Lavanderia</th><th>Data do ganho</th><th class="num">Dias até o ganho</th></tr></thead>
+<tbody>
+<tr><td>Vitória - Lavanderia</td><td>04/11/2026</td><td class="num">0</td></tr>
+</tbody></table></div>
+
+<h2>Perdas por motivo</h2>
+<p class="sub">1 card perdido no total.</p>
+<div class="tbl"><table style="min-width:0">
+<thead><tr><th>Motivo no Pipedrive</th><th class="num">Cards</th><th class="num">% das perdas</th></tr></thead>
+<tbody>
+<tr><td>[Fornecedores] - Sem Retorno</td><td class="num">1</td><td class="num">100%</td></tr>
+</tbody></table></div>
+
+<h2>Situação</h2>
+<div class="concl">
+  <p><b>Cidade fechada.</b> Não há card de lavanderia aberto em Pirenópolis no funil 60. A cidade fica com 1 lavanderia ganha (Vitória - Lavanderia).</p>
+  <p><b>Ponto de atenção:</b> os 2 cards foram criados em 04/11/2026 e o ganho foi registrado no mesmo dia, sem anotações nos cards. É provável que seja um registro retroativo de uma negociação feita antes, fora do Pipedrive. Por isso o tempo até o ganho (0 dias) não reflete o tempo real da negociação.</p>
+</div>
+
+<footer>Dados do Pipedrive, funil 60. "Respondeu" conta o card ganho. Tempo até o ganho em média de dias corridos, do card criado ao ganho. O card ganho (ID 532965) não tem anotações.</footer>
+</main></body></html>

@@ -63,7 +63,7 @@ blockquote cite{display:block;margin-top:10px;color:var(--ink3);font-style:norma
 .concl li b{color:var(--ink)}
 
 .tbl{overflow-x:auto;border:1px solid var(--line);border-radius:12px}
-table{border-collapse:collapse;width:100%;min-width:640px;font-size:14px}
+table{border-collapse:collapse;width:100%;min-width:0;font-size:14px}
 th{text-align:left;color:var(--ink3);font-weight:500;font-size:12px;letter-spacing:.06em;text-transform:uppercase;padding:12px 14px;background:var(--surf)}
 td{padding:12px 14px;border-top:1px solid var(--line);vertical-align:top;color:var(--ink2)}
 td:first-child{color:var(--ink);font-weight:500}
@@ -74,9 +74,17 @@ td:first-child{color:var(--ink);font-weight:500}
 .flag{color:var(--amber)}
 .num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
 .dim{color:var(--ink3)}
+.resumo{background:var(--surf);border:1px solid var(--line);border-radius:16px;padding:24px 22px;margin-top:32px}
+.resumo h2{margin:0 0 12px}
+.resumo ul{margin:0;padding-left:20px;color:var(--ink)}
+.resumo li{margin:8px 0;max-width:70ch}
+.resumo li b{color:var(--ink)}
+.status{display:inline-block;margin-top:14px;padding:6px 14px;border-radius:999px;font-weight:700;font-size:14px;background:oklch(78% .12 150 / .16);color:var(--won)}
+td.n2{color:var(--ink2);font-weight:400}
 footer{margin-top:56px;color:var(--ink3);font-size:13px}
 
 @media (max-width:640px){
+  table{font-size:13px} th,td{padding:10px 10px}
   .nums{grid-template-columns:1fr 1fr}
   .step{grid-template-columns:1fr 40px}
   .step .t{grid-column:1/-1}
@@ -86,27 +94,68 @@ footer{margin-top:56px;color:var(--ink3);font-size:13px}
 
 <span class="eyebrow">Prospecção de Fornecedores · Fotógrafos · BA</span>
 <h1>Prospecção Fotógrafos Porto Seguro</h1>
-<p class="lede">31 fotógrafos procurados e 2 cadastrados: o Duran's Films e a Camilla Vitor. Não sobrou nenhum em aberto. Metade não respondeu à cadência de contatos. Fora isso, o que mais derrubou a prospecção foi número que não recebe mensagem, seguido de fotógrafos que não fazem imóvel.</p>
-<p class="meta">Fonte: Pipedrive, funil 60 "Prospecção Fornecedores" · rodada de Porto Seguro: 42 cards criados em 13/10/2026, que são 31 fotógrafos novos (os outros 11 repetem fotógrafos de Trancoso) · contatos entre 13/10 e 16/10 · motivos de perda e anotações de cada card · atualizado em 19/10/2026</p>
+<p class="lede">42 cards de fotógrafos abertos em 13/10/2026 e 2 ganhos: o Duran's Films e a Camilla Vitor. Nenhum card ficou em aberto, então a cidade está fechada. A maior parte das perdas foi falta de retorno.</p>
+<p class="meta">Fonte: Pipedrive, funil 60 "Prospecção Fornecedores" · 42 cards de Porto Seguro (31 fotógrafos diferentes; 11 cards repetem fotógrafos que já tinham card de Trancoso) · motivos de perda e anotações de cada card · atualizado em 09/11/2026</p>
+
+<section class="resumo">
+<h2>Resumo da cidade</h2>
+<ul>
+<li><b>Período da prospecção:</b> de 13/10/2026 (primeiro card) a 16/10/2026 (último ganho).</li>
+<li><b>Fornecedores contatados:</b> 42 cards de fotógrafos no funil 60 (31 fotógrafos diferentes).</li>
+<li><b>Como foi o contato:</b> 21 cards pelo agente de cadência pela SIA (WhatsApp automático) e 21 cards com contato manual.</li>
+<li><b>Responderam:</b> 13 dos 42 cards (taxa de resposta de 31%).</li>
+<li><b>Ganhos:</b> 2, Duran's Films (Daniel Duran), ganho em 14/10/2026, e Camilla Vitor Fotografia, ganho em 16/10/2026.</li>
+<li><b>Perdidos:</b> 40 cards. Principais motivos: Sem Retorno (24), Não Trabalha com fotos de imóveis (5) e Contato Inválido (5). Nenhum card foi perdido na etapa de negociação.</li>
+<li><b>Ainda abertos:</b> 0 cards abertos, nenhuma etapa com card pendente.</li>
+<li><b>Tempo médio até o ganho:</b> 2,2 dias (média entre a criação do card e o ganho: 1,2 dia no Duran's Films e 3,1 dias na Camilla Vitor).</li>
+</ul>
+<span class="status">Situação: Cidade fechada</span>
+</section>
 
 <div class="nums">
-  <div><b>31</b><span>fotógrafos procurados</span></div>
-  <div class="w"><b>2</b><span>ganhos, cadastrados em 14/10 e 16/10</span></div>
-  <div class="l"><b>29</b><span>perdidos</span></div>
+  <div><b>42</b><span>cards de fotógrafos contatados</span></div>
+  <div class="w"><b>2</b><span>ganhos, em 14/10 e 16/10</span></div>
+  <div class="l"><b>40</b><span>perdidos</span></div>
   <div class="a"><b>0</b><span>em aberto</span></div>
 </div>
 
-<h2>Do contato ao cadastro</h2>
-<p class="sub">Todos os 31 receberam mensagem por WhatsApp, e quem não respondeu recebeu até 3 contatos automáticos entre 13 e 16/10. Em 5 números o envio falhou. Responderam 15 fotógrafos (48%), acima de Trancoso (33%).</p>
-<div class="funnel">
-  <div class="step"><span class="t">Contato enviado</span><span class="bar"><i style="width:100%"></i></span><span class="n">31</span></div>
-  <div class="step"><span class="t">Mensagem chegou</span><span class="bar"><i style="width:83.9%"></i></span><span class="n">26</span></div>
-  <div class="step"><span class="t">Respondeu</span><span class="bar"><i style="width:48.4%"></i></span><span class="n">15</span></div>
-  <div class="step win"><span class="t">Ganho</span><span class="bar"><i style="width:6.5%"></i></span><span class="n">2</span></div>
+<h2>Ganhos</h2>
+<div class="tbl"><table>
+<thead><tr><th>Fornecedor (card)</th><th>Data do ganho</th><th>Contato</th><th class="num">Dias até o ganho</th></tr></thead>
+<tbody>
+<tr><td>Duran's Films (Daniel Duran) - Fotógrafos</td><td>14/10/2026</td><td>Manual</td><td class="num">1,2</td></tr>
+<tr><td>Camilla Vitor Fotografia - Fotógrafos</td><td>16/10/2026</td><td>Agente de cadência (SIA)</td><td class="num">3,1</td></tr>
+</tbody></table></div>
+
+<h2>Perdas por motivo</h2>
+<p class="sub">Os 40 cards perdidos, pelo motivo marcado no Pipedrive (inclui os 11 cards repetidos de Trancoso).</p>
+<div class="tbl"><table>
+<thead><tr><th>Motivo de perda</th><th class="num">Cards</th><th class="num">% das perdas</th></tr></thead>
+<tbody>
+<tr><td>Sem Retorno</td><td class="num">24</td><td class="num">60%</td></tr>
+<tr><td>Não Trabalha com fotos de imóveis</td><td class="num">5</td><td class="num">12,5%</td></tr>
+<tr><td>Contato Inválido</td><td class="num">5</td><td class="num">12,5%</td></tr>
+<tr><td>Valor Alto</td><td class="num">3</td><td class="num">7,5%</td></tr>
+<tr><td>Parou de Responder</td><td class="num">2</td><td class="num">5%</td></tr>
+<tr><td>Sem Equipamento</td><td class="num">1</td><td class="num">2,5%</td></tr>
+<tr><td>Total</td><td class="num">40</td><td class="num">100%</td></tr>
+</tbody></table></div>
+
+<h2>Situação</h2>
+<div class="concl">
+  <p><b>Cidade fechada.</b> Não há card aberto em Porto Seguro no funil 60: os 42 cards terminaram como ganho (2) ou perdido (40). O card da cidade, "Porto Seguro - Fotografo" (507486, funil 61), estava aberto na versão de 19/10.</p>
 </div>
 
-<h2>Por que perdemos</h2>
-<p class="sub">Os 29 perdidos, por motivo marcado no Pipedrive, com a explicação tirada das anotações de cada card.</p>
+<h2>Do contato ao cadastro</h2>
+<p class="sub">Contagem por card. Metade dos cards foi trabalhada pelo agente de cadência pela SIA e metade com contato manual.</p>
+<div class="funnel">
+  <div class="step"><span class="t">Cards contatados</span><span class="bar"><i style="width:100%"></i></span><span class="n">42</span></div>
+  <div class="step"><span class="t">Respondeu</span><span class="bar"><i style="width:31%"></i></span><span class="n">13</span></div>
+  <div class="step win"><span class="t">Ganho</span><span class="bar"><i style="width:4.8%"></i></span><span class="n">2</span></div>
+</div>
+
+<h2>Por que perdemos, fotógrafo a fotógrafo</h2>
+<p class="sub">Aqui cada fotógrafo conta uma vez: são os 29 fotógrafos perdidos, sem os 11 cards repetidos de Trancoso. A explicação vem das anotações de cada card.</p>
 <div class="reasons">
   <div class="r"><span class="c">15</span><h3>Sem retorno<small>52%</small></h3>
     <div class="meter"><i style="width:52%"></i></div>
@@ -154,14 +203,13 @@ footer{margin-top:56px;color:var(--ink3);font-size:13px}
 
 <h2>Como melhorar a próxima rodada</h2>
 <div class="concl">
-  <p><b>A cadência automática fez a diferença na resposta:</b> 15 de 31 responderam, e a Camilla só respondeu no último contato. <b>Fora o sem retorno, o que mais custou foi número inválido (5), seguido de nicho errado (4) e preço (2 + 1).</b></p>
+  <p><b>A cadência automática ajudou na resposta:</b> a Camilla, que veio pelo agente de cadência, só respondeu no último contato. <b>Fora o sem retorno, o que mais custou foi número inválido (5), seguido de nicho errado (4) e preço (2 + 1).</b></p>
   <ol>
     <li><b>Validar o WhatsApp antes de criar o card.</b> Números da Receita com DDD de outro estado quase sempre falham. Vale procurar o Instagram ou o site antes de mandar.</li>
     <li><b>Separar produtora de vídeo e drone na pesquisa.</b> O CNAE trouxe 10 produtoras de vídeo. Só a Duran's fechou. As outras não responderam ou tinham número inválido.</li>
     <li><b>Ter a tabela maior com deslocamento pronta.</b> Foi assim que a Duran's fechou. Os três que pararam ao ver o preço podem ser retomados com essa condição.</li>
     <li><b>Seguir quem chegou a negociar e sumiu:</b> Andresson, Ellem, Tiago Simer e Valiense. E o Leo Barreto, que volta em dezembro.</li>
   </ol>
-  <p>O card da cidade, "Porto Seguro - Fotografo" (507486, funil 61), segue aberto.</p>
 </div>
 
 <h2>Todos os fotógrafos</h2>
@@ -219,5 +267,5 @@ footer{margin-top:56px;color:var(--ink3);font-size:13px}
 <tr><td>Laudin Fotografia</td><td class="num">513676</td><td class="num">502859</td></tr>
 </tbody></table></div>
 
-<footer>"Respondeu" soma os ganhos, os que deram um motivo de recusa e os que conversaram antes de sumir. Cada fotógrafo foi contado uma vez. 6 fotógrafos desta rodada (Honey Photo, Joabe Costa, Benaya Films, Alessandro Braga, Fabio Conte e Leo Barreto) também atendem Trancoso e aparecem no relatório de Trancoso. Relatório de Trancoso: prospeccao-fotografos-trancoso.html.</footer>
+<footer>O resumo, os ganhos, as perdas por motivo e o funil contam por card (42). A seção "Por que perdemos, fotógrafo a fotógrafo" e a tabela de todos os fotógrafos contam cada fotógrafo uma vez (31). 6 fotógrafos desta rodada (Honey Photo, Joabe Costa, Benaya Films, Alessandro Braga, Fabio Conte e Leo Barreto) também atendem Trancoso e aparecem no relatório de Trancoso. Relatório de Trancoso: prospeccao-fotografos-trancoso.html.</footer>
 </main></body></html>
