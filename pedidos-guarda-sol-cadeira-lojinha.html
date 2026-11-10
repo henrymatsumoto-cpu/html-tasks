@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pedidos Guarda-sol e Cadeira</title>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme:dark;
+  --bg:#080E32;--surf:#0F1742;--surf2:#18225A;
+  --line:#232E6B;--ink:#EEF1FB;--ink2:#B4BBD9;--ink3:#8189B0;
+  --won:oklch(78% .12 150);--lost:oklch(72% .13 30);--amber:oklch(82% .13 80);--blue:#4D85FF;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 "Figtree",sans-serif;-webkit-font-smoothing:antialiased}
+main{max-width:880px;margin:0 auto;padding:56px 16px 96px}
+.eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink3);font-weight:700}
+h1{font-weight:800;font-size:clamp(34px,6.5vw,56px);letter-spacing:-.03em;line-height:1;margin:14px 0 14px}
+h2{font-weight:600;font-size:24px;letter-spacing:-.015em;margin:64px 0 6px}
+.lede{color:var(--ink2);font-size:18px;max-width:60ch;margin:0}
+.meta{color:var(--ink3);font-size:13.5px;margin-top:18px}
+.sub{color:var(--ink2);margin:0 0 22px;max-width:66ch}
+.nums{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:14px;overflow:hidden;margin-top:40px}
+.nums div{background:var(--surf);padding:22px 20px}
+.nums b{display:block;font-size:44px;font-weight:800;line-height:1;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.nums span{display:block;color:var(--ink2);font-size:13.5px;margin-top:8px;max-width:20ch}
+.goal{display:flex;flex-direction:column;gap:22px}
+.g .top{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:8px}
+.g .top b{font-size:17px}
+.g .top span{color:var(--ink2);font-size:14.5px;font-variant-numeric:tabular-nums}
+.bar{position:relative;height:28px;border-radius:7px;background:var(--surf2);overflow:hidden}
+.bar i{display:block;height:100%;background:var(--amber);border-radius:7px}
+.g small{display:block;color:var(--ink3);font-size:13.5px;margin-top:6px}
+.tbl{width:100%;border-collapse:collapse;font-size:15px;font-variant-numeric:tabular-nums}
+.tbl th{text-align:left;color:var(--ink3);font-weight:600;font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;padding:0 12px 10px;border-bottom:1px solid var(--line)}
+.tbl td{padding:14px 12px;border-bottom:1px solid var(--line)}
+.tbl .r{text-align:right}
+.tbl tfoot td{font-weight:700;border-bottom:none}
+.wrap{overflow-x:auto}
+.tag{display:inline-block;font-size:12.5px;padding:2px 10px;border-radius:999px;background:var(--surf2);color:var(--ink2);white-space:nowrap}
+.concl{background:var(--surf);border-radius:16px;padding:24px 26px;margin-top:18px}
+.concl p{margin:0 0 12px}
+.concl p:last-child{margin:0}
+.concl b{color:var(--amber)}
+@media (max-width:640px){.nums{grid-template-columns:1fr 1fr}.nums b{font-size:36px}}
+</style></head>
+<body><main>
+<div class="eyebrow">Lojinha · Pré-venda IZY</div>
+<h1>Pedidos Guarda-sol e Cadeira de Praia</h1>
+<p class="lede">18 guarda-sóis e 20 cadeiras pedidos em 4 pedidos. Nenhum dos dois itens chegou ao mínimo de 30 unidades.</p>
+<p class="meta">Fonte: loja-full-export (Supabase da lojinha, tabela order_items) · extraído em 09/11/2026 · pré-venda encerrada em 30/10/2026</p>
+
+<div class="nums">
+  <div><b>18</b><span>guarda-sóis (R$ 120 cada)</span></div>
+  <div><b>20</b><span>cadeiras de praia (R$ 106 cada)</span></div>
+  <div><b>4</b><span>pedidos, todos de franquias em SC</span></div>
+  <div><b>R$ 4.280</b><span>em pedidos (sem frete)</span></div>
+</div>
+
+<h2>Meta de 30 unidades por item</h2>
+<p class="sub">O fornecedor IZY só produz a partir de 30 unidades de cada item.</p>
+<div class="goal">
+  <div class="g"><div class="top"><b>Guarda-sol</b><span>18 de 30 · 60%</span></div><div class="bar"><i style="width:60%"></i></div><small>Faltam 12 unidades</small></div>
+  <div class="g"><div class="top"><b>Cadeira de Praia</b><span>20 de 30 · 67%</span></div><div class="bar"><i style="width:66.7%"></i></div><small>Faltam 10 unidades</small></div>
+</div>
+
+<h2>Pedido a pedido</h2>
+<p class="sub">Todos os cards estão na fase "Enviado ao fornecedor" do kanban, mesmo sendo pré-venda sem pagamento.</p>
+<div class="wrap"><table class="tbl">
+<thead><tr><th>Pedido</th><th>Data</th><th>Cidade</th><th class="r">Guarda-sol</th><th class="r">Cadeira</th><th class="r">Valor</th><th>Fase</th></tr></thead>
+<tbody>
+<tr><td>#950</td><td>22/10</td><td>Balneário Camboriú/SC</td><td class="r">2</td><td class="r">2</td><td class="r">R$ 452</td><td><span class="tag">Enviado ao fornecedor</span></td></tr>
+<tr><td>#958</td><td>24/10</td><td>Garopaba/SC</td><td class="r">4</td><td class="r">8</td><td class="r">R$ 1.328</td><td><span class="tag">Enviado ao fornecedor</span></td></tr>
+<tr><td>#979</td><td>27/10</td><td>Itapema/SC</td><td class="r">7</td><td class="r">–</td><td class="r">R$ 840</td><td><span class="tag">Enviado ao fornecedor</span></td></tr>
+<tr><td>#987</td><td>29/10</td><td>Florianópolis/SC</td><td class="r">5</td><td class="r">10</td><td class="r">R$ 1.660</td><td><span class="tag">Enviado ao fornecedor</span></td></tr>
+</tbody>
+<tfoot><tr><td>Total</td><td></td><td>4 pedidos</td><td class="r">18</td><td class="r">20</td><td class="r">R$ 4.280</td><td></td></tr></tfoot>
+</table></div>
+
+<h2>Leitura</h2>
+<div class="concl">
+  <p>Não entrou nenhum pedido depois de 29/10. O número está fechado: <b>18 guarda-sóis e 20 cadeiras</b>.</p>
+  <p>Pela régua da Ray, o veredito de 31/10 era fechar aditivo com a IZY ou cancelar e avisar as franquias. Com 60% e 67% da meta, nenhum item fecha o mínimo sem aditivo.</p>
+  <p>O pedido #987 é o antigo #984 do Lovable; a numeração mudou na migração da lojinha em 29/10.</p>
+</div>
+</main></body></html>
