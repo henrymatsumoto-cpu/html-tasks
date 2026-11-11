@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Checklist prod · agente de recompra</title>
+<style>
+:root{--bg:#080E32;--card:#10184a;--borda:#24306e;--txt:#e8ecff;--sub:#a3acd6;--ok:#4ade80;--pend:#fbbf24;--bloq:#f87171;--azul:#7aa2ff}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--txt);font:15px/1.55 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+main{max-width:920px;margin:0 auto;padding:32px 16px 64px}
+h1{font-size:26px;margin:0 0 4px}
+.sub{color:var(--sub);margin:0 0 28px}
+h2{font-size:17px;margin:32px 0 12px;color:var(--azul)}
+table{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--borda);border-radius:12px;overflow:hidden}
+th,td{padding:10px 12px;text-align:left;vertical-align:top;border-bottom:1px solid var(--borda)}
+th{font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:var(--sub)}
+tr:last-child td{border-bottom:0}
+.st{display:inline-block;padding:2px 10px;border-radius:999px;font-size:12px;font-weight:600;white-space:nowrap}
+.ok{background:#4ade8022;color:var(--ok)}.pend{background:#fbbf2422;color:var(--pend)}.bloq{background:#f8717122;color:var(--bloq)}
+code{background:#ffffff14;padding:1px 6px;border-radius:6px;font-size:13px}
+.nota{color:var(--sub);font-size:13px}
+@media (max-width:640px){th:nth-child(3),td:nth-child(3){display:none}}
+</style>
+</head>
+<body>
+<main>
+<h1>Agente de recompra do enxoval: o que falta para produção</h1>
+<p class="sub">Atualizado em 11/11/2026. Hoje o agente roda no lab, travado na franquia de teste, contra a SIA de teste.</p>
+
+<h2>1. Código</h2>
+<table>
+<tr><th>Item</th><th>Status</th><th>Detalhe</th></tr>
+<tr><td>Negociação inicial (templates curtos, link na 1ª resposta, pré-atribuição, vigia de 30 min)</td><td><span class="st ok">No lab</span></td><td>olimpo #2398, #2408, #2410 mergeados</td></tr>
+<tr><td>Jornada: rota de pedidos e aviso dos links</td><td><span class="st ok">Em prod</span></td><td>jornada #239</td></tr>
+<tr><td>Jornada: aviso de links renovados (<code>avisoPendente</code>)</td><td><span class="st pend">Alfred</span></td><td>jornada #240; mergear e promover para main</td></tr>
+<tr><td>Agente: pós-aceite (links, links renovados, respostas antes e depois do link)</td><td><span class="st bloq">Templates</span></td><td>olimpo #2417; merge só com os 2 templates de links aprovados</td></tr>
+<tr><td>Teste simulado do pós-aceite (Jornada prod + SIA teste, sem envio)</td><td><span class="st ok">Feito</span></td><td>1º aviso, links renovados e "só um link" deram o esperado</td></tr>
+</table>
+
+<h2>2. SIA</h2>
+<table>
+<tr><th>Item</th><th>Status</th><th>Detalhe</th></tr>
+<tr><td>Templates na SIA de teste: <code>abertura_v3</code>, <code>lembrete_v2</code>, <code>duvida_v2</code></td><td><span class="st ok">Aprovados</span></td><td>prefixo <code>cs_renovacao_enxoval_</code></td></tr>
+<tr><td>Templates <code>links_pagamento</code> e <code>links_renovados</code> (SIA de teste)</td><td><span class="st pend">Em análise</span></td><td>UTILITY, 4 variáveis; monitorado a cada 10 min</td></tr>
+<tr><td>Os 5 templates na SIA de produção</td><td><span class="st bloq">Falta</span></td><td>mesmos nomes e textos; os nomes estão fixos no código</td></tr>
+<tr><td>Fila oficial de Recompra/CS na SIA de produção</td><td><span class="st bloq">Falta</span></td><td>vira <code>SIA_FILA_CS_ID</code> do agente</td></tr>
+<tr><td>Usuário de serviço do agente e pré-atribuição na SIA de produção</td><td><span class="st bloq">Falta</span></td><td>o mesmo ajuste de pré-atribuição feito na SIA de teste</td></tr>
+<tr><td>Chave de API da SIA de produção para o agente</td><td><span class="st bloq">Falta</span></td><td>SSM do ai-portal, nunca na env do MCP</td></tr>
+</table>
+
+<h2>3. Configuração do agente (SSM)</h2>
+<table>
+<tr><th>Item</th><th>Status</th><th>Detalhe</th></tr>
+<tr><td><code>SIA_API_BASE</code> / <code>SIA_API_KEY</code> / <code>SIA_NOME_ATENDENTE</code> de produção</td><td><span class="st bloq">Falta</span></td><td>hoje apontam para a SIA de teste</td></tr>
+<tr><td>Token definitivo do Jornada (<code>JORNADA_NEGOCIACAO_TOKEN</code>)</td><td><span class="st bloq">Falta</span></td><td>hoje é a chave de teste de 27/10</td></tr>
+<tr><td>Tirar <code>SEM_TRAVA_HORARIO</code></td><td><span class="st bloq">Falta</span></td><td>volta a respeitar dia útil e 8h às 18h</td></tr>
+<tr><td><code>TRAVA_FRANQUIA</code>: abrir para as franquias reais</td><td><span class="st bloq">Falta</span></td><td>uma franquia piloto primeiro, depois <code>*</code></td></tr>
+<tr><td><code>NEGOCIACAO_FRANQUIAS_PERMITIDAS</code> no Jornada</td><td><span class="st bloq">Falta</span></td><td>tem que bater com a trava do agente</td></tr>
+<tr><td>Slack do vigia (<code>VIGIA_SLACK_TOKEN</code> / <code>VIGIA_SLACK_CANAL</code>)</td><td><span class="st pend">Opcional</span></td><td>alerta quando a passagem ao CS falha</td></tr>
+</table>
+
+<h2>4. Limite conhecido</h2>
+<p class="nota">Dois pedidos no mesmo WhatsApp: o WhatsApp só deixa abrir uma conversa por template. O link do 2º pedido sai quando o proprietário responde (aí cai na janela de 24 h) ou quando a conversa fecha. Juntar os dois numa mensagem só exigiria um template próprio para vários imóveis.</p>
+</main>
+</body>
+</html>
