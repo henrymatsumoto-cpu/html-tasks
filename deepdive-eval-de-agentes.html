@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Eval de agentes de IA</title>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:dark;--bg:#080E32;--surf:#0F1742;--surf2:#18225A;--line:#232E6B;--ink:#EEF1FB;--ink2:#B4BBD9;--ink3:#8189B0;--blue:#4D85FF;
+--green:oklch(0.78 0.14 155);--coral:oklch(0.72 0.15 30);--yellow:oklch(0.85 0.13 90)}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 Figtree,system-ui,sans-serif}
+main{max-width:900px;margin:0 auto;padding:48px 24px 80px}
+h1{font-size:34px;margin:0 0 4px}.sub{color:var(--ink3);margin:0 0 32px;font-size:14px}
+h2{font-size:20px;margin:40px 0 12px;padding-top:16px;border-top:1px solid var(--line)}
+p,li{color:var(--ink2)}strong{color:var(--ink)}a{color:var(--blue);word-break:break-all}
+.card{background:var(--surf);border:1px solid var(--line);border-radius:14px;padding:18px 22px;margin:12px 0}
+ol.steps>li{margin:10px 0}ol.steps>li strong{display:block}
+table{width:100%;border-collapse:collapse;font-size:14px;margin-top:8px}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}th{color:var(--ink3);font-weight:600}
+.tag{display:inline-block;padding:1px 10px;border-radius:999px;font-size:12px;font-weight:600;background:var(--surf2)}
+.ok{color:var(--green)}.weak{color:var(--yellow)}.bad{color:var(--coral)}
+code{background:var(--surf2);padding:1px 6px;border-radius:6px;font-size:14px}
+</style>
+</head>
+<body><main>
+<h1>Eval de agentes de IA</h1>
+<p class="sub">Deep dive leve · 11/11/2026 · teste da skill <code>/deepdive-leve</code> · pergunta central: como montar eval simples e confiável pros agentes/rotinas do Henry (Olimpo, rotinas locais) antes de mexer neles?</p>
+
+<h2>Em 5 linhas</h2>
+<div class="card"><ul>
+<li>Eval de agente = rodar <strong>tarefas</strong> (entrada + critério de sucesso) várias vezes (<strong>trials</strong>), guardar o <strong>transcript</strong> e dar nota ao <strong>resultado final</strong> com um <strong>grader</strong>.</li>
+<li>Comece pequeno: <strong>20-50 tarefas tiradas de falhas reais</strong> já resolvem; esperar piora.</li>
+<li>Grader de código primeiro (barato, objetivo); juiz LLM só onde precisa, e <strong>calibrado com rótulo humano</strong>.</li>
+<li>Rótulo <strong>binário</strong> (passou/falhou) por tipo de falha vale mais que nota 1-5 ou métrica genérica.</li>
+<li>Ler transcript é obrigatório: é como você descobre se o eval mede o que importa (ou se o task está quebrado).</li>
+</ul></div>
+
+<h2>Playbook</h2>
+<ol class="steps">
+<li><strong>Análise de erro antes de qualquer infra.</strong> Ler na mão ~30 transcripts/logs do agente (ex.: logs em <code>~/.local/state/rotinas/</code>, threads do Olimpo), anotar a <em>primeira</em> falha de cada um; seguir até parar de aparecer falha nova (referência: ~100).</li>
+<li><strong>Virar falha em tarefa.</strong> 20-50 tarefas, cada uma com entrada, critério pass/fail sem ambiguidade (dois especialistas dariam o mesmo veredito) e, se der, uma resposta de referência.</li>
+<li><strong>Balancear.</strong> Testar quando o agente DEVE agir e quando NÃO deve (ex.: agente de cancelamento: pedido não pago → cancela; pedido pago → nunca cancela).</li>
+<li><strong>Ambiente limpo por trial.</strong> Sem estado compartilhado entre rodadas (staging, dados fake), senão a nota infla.</li>
+<li><strong>Grader pelo resultado, não pelo caminho.</strong> Checar o estado final (card movido? mensagem certa?) e não a sequência exata de tool calls.</li>
+<li><strong>Juiz LLM só com calibração.</strong> Um juiz por tipo de falha, binário, com saída "não sei"; medir concordância com rótulos humanos (TPR/TNR) num conjunto separado antes de confiar.</li>
+<li><strong>Medir consistência.</strong> Pra agente que fala com franquia/pessoa use <code>pass^k</code> (todas as k rodadas passam), não <code>pass@k</code>: 75% por rodada vira ~42% em 3 seguidas.</li>
+<li><strong>Capacidade → regressão.</strong> Eval que chegou perto de 100% vira suíte de regressão (roda a cada mudança); crie tarefas novas e difíceis pra continuar aprendendo.</li>
+</ol>
+
+<h2>Armadilhas</h2>
+<div class="card"><ul>
+<li><strong>0% em tudo</strong> costuma ser task/grader quebrado, não agente ruim. (Anthropic)</li>
+<li><strong>Exigir sequência fixa de ferramentas</strong> deixa o teste frágil. (Anthropic)</li>
+<li><strong>Grader bugado</strong> reprova resposta certa (ex.: "96.12" vs "96.124991…"). (Anthropic)</li>
+<li><strong>Métrica genérica</strong> (helpfulness, ROUGE) dá falsa confiança. (Hamel Husain)</li>
+<li><strong>Resposta convincente não é evidência suficiente</strong>: avaliar também as ações; erro de ferramenta ≠ erro de raciocínio. (Heljakka, AI Engineer)</li>
+</ul></div>
+
+<h2>Primeiro passo aqui</h2>
+<div class="card"><p>Escolher <strong>um</strong> agente com dano real se errar (sugestão: agente de cancelamento do enxoval/lojinha, REGRA "nunca cancelar pago"). Pegar 20 casos reais dos logs, metade "deve cancelar" e metade "não deve", escrever o critério pass/fail de cada um, rodar 3x em staging e reportar <code>pass^3</code>. Sem juiz LLM na primeira versão: o grader é o estado do pedido no fim.</p></div>
+
+<h2>Skills propostas (só propostas, criar com OK)</h2>
+<div class="card"><p><strong>1. <code>eval-agente</code></strong> · gatilho: "monta eval do agente X", "/eval-agente X". Lê logs/transcripts do agente, propõe 20-50 tarefas de falhas reais (positivas e negativas), gera grader de código pelo estado final e roda k trials em staging, devolvendo HTML com pass@k/pass^k e falhas lidas. Vale porque hoje os agentes do Olimpo e rotinas não têm régua antes de mudança.</p>
+<p><strong>2. <code>calibrar-juiz</code></strong> · gatilho: "calibra o juiz", "o verificador está acertando?". Pega ~50 casos rotulados pelo Henry (passou/falhou), roda o juiz LLM e mostra TPR/TNR e os casos de discordância. Vale porque o próprio deepdive-leve, o multi-review e o Vel'Koz usam juiz LLM sem calibração.</p></div>
+
+<h2>Conferência (1 rodada, verificador cético cego, modelo haiku)</h2>
+<table>
+<tr><th>#</th><th>Afirmação</th><th>Veredito</th><th>Nota do verificador</th></tr>
+<tr><td>1</td><td>20-50 tarefas de falhas reais é um bom começo</td><td class="weak">fraca</td><td>Confere como paráfrase; citação literal não verificada</td></tr>
+<tr><td>2</td><td>pass^k = todas as k passam; 75% → ~42% em 3</td><td class="weak">fraca</td><td>Definição confere; exemplo não achado (conta 0,75³ ≈ 42% bate)</td></tr>
+<tr><td>3</td><td>Task bom: dois especialistas dão o mesmo veredito</td><td class="weak">fraca</td><td>Não apareceu no trecho lido</td></tr>
+<tr><td>4</td><td>Avaliar resultado, não caminho fixo</td><td class="ok">confirmada</td><td>Recomenda avaliar o resultado</td></tr>
+<tr><td>5</td><td>0% em muitos trials ⇒ task quebrado</td><td class="weak">fraca</td><td>Não apareceu no trecho lido</td></tr>
+<tr><td>6</td><td>Grader de modelo exige calibração humana</td><td class="ok">confirmada</td><td>Manda calibrar com humanos</td></tr>
+<tr><td>7</td><td>Revisar ≥100 traces</td><td class="ok">confirmada</td><td>30 primeiro, depois ≥100</td></tr>
+<tr><td>8</td><td>Binário &gt; Likert</td><td class="ok">confirmada</td><td>Prefere pass/fail</td></tr>
+<tr><td>9</td><td>Métrica genérica dá falsa confiança</td><td class="bad">sem fonte</td><td>Trecho não lido pelo verificador</td></tr>
+<tr><td>10</td><td>Um juiz por falha + TPR/TNR em teste separado</td><td class="weak">fraca</td><td>Só achou 100-200 exemplos por falha</td></tr>
+<tr><td>11</td><td>Mapa semântico × comportamental</td><td class="ok">confirmada</td><td>Confere com o mapa</td></tr>
+<tr><td>12</td><td>"Faithfulness is not a guarantee of external truth"</td><td class="weak">fraca</td><td>Ideia confere; citação literal não obtida</td></tr>
+</table>
+<p>Leitura: 5 confirmadas, 6 fracas, 1 sem fonte, 0 erradas. As "fracas" foram lidas pelo pesquisador na fonte, mas o verificador cego (resumo de página longa) não achou o trecho. Não houve 2ª rodada (regra da skill).</p>
+
+<h2>Fontes</h2>
+<table>
+<tr><th>Tipo</th><th>Fonte</th><th>URL</th></tr>
+<tr><td>web (guia oficial)</td><td>Anthropic, "Demystifying evals for AI agents"</td><td>https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents</td></tr>
+<tr><td>canal (newsletter/blog)</td><td>Hamel Husain, "AI Evals FAQ"</td><td>https://hamel.dev/blog/posts/evals-faq/</td></tr>
+<tr><td>YouTube (versão escrita da palestra)</td><td>Ari Heljakka, "Agent Evals: Finally, With The Map", AI Engineer Summit 2025</td><td>https://ai.engineer/talks/agent-evals-finally-with-the-map · https://www.youtube.com/watch?v=y2Drx0SDZLo</td></tr>
+<tr><td>web (secundária, só triagem)</td><td>Arize, resumo da palestra da Anthropic sobre evals</td><td>https://arize.com/blog/ai-agent-evaluation</td></tr>
+<tr><td>canal (palestras)</td><td>AI Engineer: "Five hard earned lessons about Evals" (Braintrust), "The maturity phases of running evals"</td><td>https://ai.engineer/talks/the-maturity-phases-of-running-evals</td></tr>
+</table>
+
+<h2>Lacunas e limites</h2>
+<div class="card"><ul>
+<li><strong>Rodado em linha</strong>, não como Workflow: a sessão era subagente sem ferramenta de Workflow/subagente. Mesmo roteiro e tetos.</li>
+<li>Uso: 3 buscas, 3 páginas lidas, 1 verificador (claude -p --model haiku, cego, só afirmações + URLs). ~10 min.</li>
+<li>YouTube: transcrição literal não carregou ("Loading transcript…"); usada a versão escrita oficial da palestra.</li>
+<li>Não coberto: ferramentas (Braintrust, LangSmith, Promptfoo), custo de eval em produção, evals online × offline, segunda metade do FAQ do Hamel (agentes multi-step).</li>
+</ul></div>
+</main></body></html>
