@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Agente de Campanha de Venda · Lojinha</title>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:dark;--bg:#080E32;--surf:#0F1742;--surf2:#18225A;--line:#232E6B;--ink:#EEF1FB;--ink2:#B4BBD9;--ink3:#8189B0;
+--won:oklch(78% .12 150);--lost:oklch(72% .13 30);--amber:oklch(82% .13 80);--blue:#4D85FF}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 "Figtree",sans-serif;-webkit-font-smoothing:antialiased}
+main{max-width:880px;margin:0 auto;padding:56px 16px 96px}
+.eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink3);font-weight:700}
+h1{font-weight:800;font-size:clamp(32px,6vw,52px);letter-spacing:-.03em;line-height:1.05;margin:14px 0}
+h2{font-weight:700;font-size:24px;letter-spacing:-.015em;margin:64px 0 4px}
+h2 small{color:var(--ink3);font-weight:600;font-size:16px;margin-left:6px}
+.lede{color:var(--ink2);font-size:18px;max-width:62ch;margin:0}
+.meta{color:var(--ink3);font-size:13.5px;margin-top:16px}
+.sub{color:var(--ink2);margin:0 0 18px}
+.nums{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:14px;overflow:hidden;margin-top:36px}
+.nums div{background:var(--surf);padding:20px 18px}
+.nums b{display:block;font-size:40px;font-weight:800;line-height:1;letter-spacing:-.03em}
+.nums span{display:block;color:var(--ink2);font-size:13.5px;margin-top:8px}
+.nums .w b{color:var(--won)} .nums .a b{color:var(--amber)}
+.tl{list-style:none;margin:0;padding:0;border-left:2px solid var(--line)}
+.tl li{position:relative;padding:0 0 22px 26px}
+.tl li::before{content:"";position:absolute;left:-7px;top:6px;width:12px;height:12px;border-radius:50%;background:var(--blue)}
+.tl b.d{display:inline-block;min-width:54px;color:var(--blue);font-weight:800}
+.tl p{margin:4px 0 0;color:var(--ink2);font-size:15px}
+.it{background:var(--surf);border:1px solid var(--line);border-radius:14px;padding:20px 22px;margin:12px 0}
+.it h3{margin:0 0 8px;font-size:18px;font-weight:700}
+.it p{margin:8px 0 0;color:var(--ink2);font-size:15px}
+.it p b{color:var(--ink)}
+.chip{font-size:12px;font-weight:600;border:1px solid var(--line);border-radius:999px;padding:2px 10px;color:var(--ink2);margin-right:6px}
+.chip.ok{color:var(--won);border-color:var(--won)} .chip.seco{color:var(--amber);border-color:var(--amber)}
+.box{background:var(--surf);border-radius:14px;padding:22px 24px;margin-top:14px}
+.box ul,.box ol{margin:0;padding-left:20px;color:var(--ink2)}
+.box li{margin:8px 0} .box li b{color:var(--ink)}
+pre{background:var(--surf2);border-radius:12px;padding:16px 18px;color:var(--ink);font:13.5px/1.55 ui-monospace,Menlo,monospace;white-space:pre-wrap;margin:10px 0 0}
+code{background:var(--surf2);border-radius:6px;padding:1px 6px;font-size:14px}
+a{color:var(--blue)}
+@media (max-width:640px){.nums{grid-template-columns:1fr 1fr}}
+</style></head><body><main>
+<div class="eyebrow">Fornecedores e Compras · Lojinha · Agente local</div>
+<h1>Agente de Campanha de Venda</h1>
+<p class="lede">Você diz o produto; o agente monta a campanha inteira para as franquias, acompanha as vendas por uma semana e reage sozinho quando a venda não sobe.</p>
+<p class="meta">11/11/2026 · skill <code>/campanha-venda</code> + núcleo <code>campanha.py</code> + rotina diária 10h · testado ponta a ponta em modo seco</p>
+<div class="nums">
+<div class="w"><b>9</b><span>etapas do pedido cobertas</span></div>
+<div><b>7</b><span>dias de acompanhamento automático</span></div>
+<div><b>148</b><span>franquias ativas alcançáveis pela SIA</span></div>
+<div class="a"><b>0</b><span>disparos reais no teste (tudo seco)</span></div>
+</div>
+
+<h2>Como pedir</h2>
+<div class="box"><ul>
+<li><b>No Claude:</b> <code>/campanha-venda capacho personalizado, quero vender 30 até o fim do mês</code> (ou "cria uma campanha de venda de X").</li>
+<li><b>Acompanhar na hora:</b> <code>/campanha-venda status &lt;slug&gt;</code>. O acompanhamento diário roda sozinho às 10h e chega no seu DM pelo Vel'Koz.</li>
+<li><b>Testar sem efeito:</b> campanha aberta com <code>--seco</code> nunca dispara de verdade; a rotina tem <code>ROTINA_DRY_RUN=1</code>.</li>
+</ul></div>
+
+<h2>O que o agente faz <small>pedido × entrega</small></h2>
+<div class="it"><h3>1. Ver o produto foco e se existe na lojinha</h3><span class="chip ok">feito</span>
+<p>Entende o pedido (produto, público, condição, meta) e busca no catálogo da lojinha (289 produtos) com tolerância a acento e plural. Avisa se o produto está inativo ou com preço 0 antes de usar.</p></div>
+<div class="it"><h3>2. Criar o produto se não existir</h3><span class="chip ok">feito</span>
+<p>Cadastra pelo MCP admin da lojinha (fica registrado como seu): produto de fornecedor (preço, fornecedor, categoria) ou indicação externa do Mercado Livre. <b>Sem preço ou fornecedor confirmado, cria inativo e te pergunta</b>: preço não é inventado.</p></div>
+<div class="it"><h3>3. Gerar o link de indicação</h3><span class="chip ok">feito</span>
+<p>Cria a lista de indicação da campanha na lojinha (a mesma edge do agente de indicação, uma lista por campanha). O link já sai em <b>lojaitens</b>, não no host de staging. Pensado para o <b>proprietário</b>: a franquia só repassa.</p></div>
+<div class="it"><h3>4. Criar o comunicado</h3><span class="chip ok">feito</span>
+<p>Dá nome e identidade à campanha e escreve duas versões: comunicado no padrão Seazone (Central/Slack) e texto curto de WhatsApp para o proprietário, com preço e prazo reais do catálogo.</p></div>
+<div class="it"><h3>5. Abrir o suporte para o Relacionamento enviar</h3><span class="chip ok">feito</span>
+<p>Abre o chamado no Suporte Unificado em <b>Franquias › Comunicado para Franquias</b>, com os textos prontos, o link e o prazo. Usa <code>external_id</code> da campanha para não duplicar.</p></div>
+<div class="it"><h3>6. Acompanhar por uma semana se as vendas aumentaram</h3><span class="chip ok">feito</span>
+<p>Mede a <b>linha de base</b> no lançamento (pedidos com o produto nos 28 dias anteriores) e todo dia às 10h compara: pedidos, unidades, R$, franquias compradoras, variação contra o ritmo normal e % da meta. Pedido cancelado não conta.</p></div>
+<div class="it"><h3>7. Reforçar o envio</h3><span class="chip ok">feito</span>
+<p>No <b>D+3</b>, abaixo de 50% da meta, comenta no chamado pedindo o reenvio, com os números do momento e um texto de reforço mais curto e com urgência.</p></div>
+<div class="it"><h3>8. Template da SIA e disparo em massa</h3><span class="chip ok">feito</span>
+<p>No lançamento já procura um template aprovado que sirva; se não houver, escreve o rascunho (MARKETING, 1 variável, no formato do <code>franquia_cadeira_e_guarda_sol</code>) e te pede para criar na SIA. No <b>D+4</b>, abaixo de 70% da meta e com template aprovado, dispara para as franquias ativas do Sapron pelo número Loja Seazone: <b>teto de 300, um envio por telefone, conversa aberta não é insistida</b>.</p></div>
+<div class="it"><h3>9. Fechamento</h3><span class="chip ok">feito</span>
+<p>No <b>D+7</b>: relatório HTML da campanha (linha do tempo, números diários, o que funcionou) no GitHub Pages, resultado comentado no chamado e campanha encerrada.</p></div>
+
+<h2>Linha do tempo de uma campanha</h2>
+<div class="box"><ul class="tl">
+<li><b class="d">D0</b> lançamento<p>Produto confirmado ou criado · lista de indicação · comunicado · chamado no Suporte Unificado · template SIA conferido ou rascunhado · linha de base e meta (padrão: 2× o ritmo normal, mínimo 5 pedidos).</p></li>
+<li><b class="d">D+1</b> todo dia 10h<p>Vendas × linha de base no seu DM.</p></li>
+<li><b class="d">D+3</b> reforço<p>&lt; 50% da meta → pedido de reenvio no chamado.</p></li>
+<li><b class="d">D+4</b> SIA<p>&lt; 70% da meta e template aprovado → disparo em massa às franquias.</p></li>
+<li><b class="d">D+7</b> fechamento<p>Relatório, comentário no chamado e encerramento.</p></li>
+</ul></div>
+
+<h2>Teste ponta a ponta <small>11/11</small></h2>
+<p class="sub">Campanha de teste "Temporada Pé na Areia" (cadeira de praia + guarda-sol), aberta em modo seco e com a data recuada para o D+4, para a rotina passar por todas as regras.</p>
+<div class="box"><ul>
+<li><b>Busca no catálogo:</b> ok (ex.: "garrafa" achou 3, com o aviso de inativo e preço 0).</li>
+<li><b>Linha de base:</b> 4 pedidos em 28 dias (R$ 4.280, 4 franquias) → meta 5 pedidos na semana.</li>
+<li><b>Link de indicação real:</b> https://lojaitens.seazone.com.br/lista/de4bf4382cc7 (abre, 200).</li>
+<li><b>Chave da SIA:</b> válida (sem disparar). <b>Disparo seco:</b> dedupe e validação de telefone ok.</li>
+<li><b>Contatos:</b> 153 franquias ativas no Sapron → 148 telefones únicos depois de tirar cadastros de teste/genéricos (achado da própria rodada seca).</li>
+<li><b>Rotina (DRY_RUN) no D+4:</b> mediu 0 pedidos (meta 5), decidiu reforço (D+3, &lt; 50%) e disparo SIA (D+4, &lt; 70%), achou o template aprovado <code>franquia_cadeira_e_guarda_sol</code> e montou o DM. Nada foi enviado. Campanha de teste encerrada depois.</li>
+</ul></div>
+
+<h2>Exemplo de comunicado gerado</h2>
+<pre>:beach_with_umbrella: *| _Temporada Pé na Areia: cadeira e guarda-sol Seazone na lojinha_*
+
+Olá, franquias!
+
+O verão já começou nas reservas, e hóspede de praia pergunta sempre a mesma coisa: *"tem cadeira e guarda-sol?"*.
+Agora tem, com a cara da Seazone, direto na lojinha:
+
+• *Cadeira de Praia personalizada* — R$ 106,00
+• *Guarda-sol Seazone* (poliéster 170T, ø1,40 m, com bolsa) — R$ 120,00
+
+_Por que vale:_ melhora a avaliação do imóvel de praia, vira diferencial no anúncio e pode gerar renda extra com aluguel do item.
+:bulb: O link abaixo é pensado pro *proprietário*: é só repassar que ele compra direto.
+
+:point_right: _Acesse:_ https://lojaitens.seazone.com.br/lista/de4bf4382cc7
+
+Dúvidas: time de Fornecedores e Compras. :blue_heart:</pre>
+
+<h2>Decisões que tomei <small>dá pra mudar</small></h2>
+<div class="box"><ol>
+<li><b>Agente local, não Olimpo:</b> skill + rotina na sua máquina (aviso do Bill de 09/11). Roda quando você pede ou às 10h para acompanhar.</li>
+<li><b>Meta padrão:</b> 2× o ritmo dos 28 dias anteriores, mínimo 5 pedidos. Você pode passar a meta no pedido.</li>
+<li><b>Gatilhos:</b> reforço no D+3 abaixo de 50%; SIA no D+4 abaixo de 70%. Acima disso, o agente registra "dispensado" e segue.</li>
+<li><b>Template:</b> a chave da SIA só dispara (não cria template). Quando não houver um aprovado, o rascunho vem pronto no DM para criar em SIA › Templates.</li>
+<li><b>Destino do chamado:</b> Franquias › Comunicado para Franquias, com código SEM-CODIGO (o mesmo padrão de chamados sem imóvel).</li>
+</ol></div>
+
+<h2>Onde fica</h2>
+<div class="box"><ul>
+<li>Skill: <code>~/.claude/skills/campanha-venda/SKILL.md</code></li>
+<li>Núcleo, rotina e estado: <code>~/.local/share/rotinas/campanha-venda/</code> (README lá)</li>
+<li>Rotina: <code>rotina-campanha-venda.sh</code>, 10h (crontab + tarefa do Windows), log em <code>~/.local/state/rotinas/</code></li>
+</ul></div>
+</main></body></html>
