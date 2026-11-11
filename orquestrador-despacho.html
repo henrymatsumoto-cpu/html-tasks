@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Orquestrador de tasks (Despacho)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#080E32;--surf:#0F1742;--surf2:#18225A;--line:#232E6B;--ink:#EEF1FB;--ink2:#B4BBD9;--ink3:#8189B0;--blue:#4D85FF;
+--ok:oklch(78% .12 150);--bad:oklch(72% .13 30);--warn:oklch(82% .13 80);color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.6 Figtree,sans-serif}
+.wrap{max-width:1040px;margin:0 auto;padding:44px 22px 120px}
+h1{font-size:34px;font-weight:800;margin:0 0 6px;letter-spacing:-.01em}
+.sub{color:var(--ink2);margin:0 0 30px;max-width:72ch}
+h2{font-size:20px;font-weight:700;margin:40px 0 12px}
+p{max-width:76ch;color:var(--ink2)}
+p b,li b{color:var(--ink)}
+.val{border:1px solid var(--line);border-left:3px solid var(--warn);background:var(--surf);border-radius:14px;padding:16px 20px}
+.val h2{margin:0 0 6px;font-size:17px}
+.val p{margin:0}
+.board{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:14px}
+.col{background:var(--surf);border:1px solid var(--line);border-radius:14px;padding:14px;border-top:3px solid var(--c)}
+.col h3{margin:0 0 6px;font-size:15px;display:flex;align-items:center;gap:8px}
+.col h3:before{content:"";width:8px;height:8px;border-radius:50%;background:var(--c)}
+.col p{margin:0;font-size:13.5px}
+.passos{counter-reset:p;list-style:none;padding:0;margin:0}
+.passos li{counter-increment:p;padding:12px 0 12px 46px;position:relative;border-top:1px solid var(--line);color:var(--ink2)}
+.passos li:before{content:counter(p);position:absolute;left:0;top:12px;width:30px;height:30px;border-radius:50%;background:var(--surf2);color:var(--blue);font-weight:800;display:grid;place-items:center}
+.duas{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+ul.l{padding-left:18px;margin:0;color:var(--ink2)}
+ul.l li{margin:6px 0}
+.ok{color:var(--ok)}.warn{color:var(--warn)}
+.pedido{background:var(--surf2);border-radius:14px;padding:18px 22px;margin-top:10px}
+.pedido p{margin:6px 0;color:var(--ink)}
+footer{margin-top:50px;color:var(--ink3);font-size:13px}
+@media(max-width:820px){.board{grid-template-columns:1fr 1fr}.duas{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>Orquestrador de tasks (Despacho)</h1>
+<p class="sub">Quadro onde o Henry manda uma task (manual ou puxada do Taskdex) e o Claude executa de ponta a ponta, sozinho, devolvendo HTML, FUP e links pra validação. Em uso desde 10/11/2026.</p>
+
+<section class="val">
+<h2>Respostas à validação</h2>
+<p>Primeira versão, sem ajustes pedidos ainda. Cada ajuste comentado na task entra aqui, um por um, com o que foi feito.</p>
+</section>
+
+<h2>O que é</h2>
+<p>Um agente <b>pessoal e local</b>, rodando no computador do Henry (segue a orientação do Bill de 09/11: agente pessoal não vai pro Olimpo nem pro Coolify). Usa tudo o que já existe no ambiente do Henry: skills de Fornecedores, MCPs (Taskdex, Slack via Composio, KPIs, lojinha, Jornada), memória e subagentes. Sem framework e sem dependência externa.</p>
+
+<h2>Como o quadro funciona</h2>
+<div class="board">
+<div class="col" style="--c:var(--ink3)"><h3>Backlog</h3><p>Task criada na mão ou puxada do Taskdex (linhas abertas da lista Atividades Operação Iara em que o Henry é destinatário ou co-responsável). Nada roda sozinho.</p></div>
+<div class="col" style="--c:#2BB3A0"><h3>Fazendo</h3><p>O Henry seleciona uma ou várias e manda rodar. Até 3 ao mesmo tempo; o card mostra ao vivo o progresso e as ferramentas usadas.</p></div>
+<div class="col" style="--c:var(--warn)"><h3>Validação</h3><p>A IA terminou: publica o HTML, comenta o FUP no Taskdex e espera o retorno.</p></div>
+<div class="col" style="--c:var(--bad)"><h3>Travado</h3><p>Só quando esgotou as alternativas ou precisa de OK pra algo destrutivo. Faz uma pergunta objetiva; a resposta retoma do ponto em que parou.</p></div>
+<div class="col" style="--c:var(--ok)"><h3>Concluído</h3><p>Validação aprovada. Fica o resumo e os links.</p></div>
+</div>
+
+<h2>Ciclo de uma task do Taskdex</h2>
+<ol class="passos">
+<li>O Henry puxa as tasks do Taskdex pro Backlog e escolhe quais rodar.</li>
+<li>A IA lê a linha, os comentários e as pendências pedidas, e executa (levantamento, código, mensagem, lançamento, HTML).</li>
+<li>Entrega um <b>HTML</b> publicado com link e comenta o <b>FUP</b> na própria linha do Taskdex, pedindo validação.</li>
+<li>A cada 10 min o orquestrador lê os comentários novos da linha. <b>Aprovado</b> → vai pra Concluído. <b>Ajuste</b> → a IA retoma a mesma sessão, faz o ajuste, registra em "Respostas à validação" no HTML e volta pra Validação.</li>
+<li>Quando trava ou conclui, o Henry recebe DM no Slack (bot Vel'Koz).</li>
+</ol>
+
+<h2>Segurança e limites</h2>
+<div class="duas">
+<div>
+<p><b class="ok">Pode fazer sozinho</b></p>
+<ul class="l">
+<li>Código, PR, skill, rotina local, agente pessoal</li>
+<li>Mensagem no Slack, comentário no Taskdex, chamado no Suporte</li>
+<li>Lançar dado (KPIs, planilhas) e publicar HTML</li>
+</ul>
+</div>
+<div>
+<p><b class="warn">Sempre segura e pede OK</b></p>
+<ul class="l">
+<li>Apagar, cancelar, revogar, force push, drop</li>
+<li>Mudar status de linha do Taskdex (status continua com o dono da task)</li>
+<li>Segredos só em variável de ambiente, nunca em arquivo</li>
+</ul>
+</div>
+</div>
+<p style="margin-top:16px">Limitações conhecidas: só roda com o PC do Henry ligado (24/7 exigiria VPS pessoal, ainda não pedida); custo médio de ~US$ 0,50 por task simples.</p>
+
+<h2>Validação pedida</h2>
+<div class="pedido">
+<p>Ray, pode validar o orquestrador como forma de tocar as tasks de Fornecedores?</p>
+<p>Pra validar, basta comentar na task do Taskdex: <b>"aprovado"</b> ou o <b>ajuste</b> que quiser (no fluxo, na entrega do HTML/FUP ou no que ele pode fazer sozinho). O próprio orquestrador lê o comentário e faz o ajuste.</p>
+</div>
+
+<footer>Henry Matsumoto · Backoffice Fornecedores e Compras · 11/11/2026</footer>
+</div>
+</body>
+</html>
