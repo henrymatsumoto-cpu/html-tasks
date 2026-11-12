@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Passo a passo · usar o Claude pelo Ubuntu (igual ao Henry)</title>
+<style>
+body{margin:0;background:#080E32;color:#E6E9F5;font:16px/1.65 system-ui,-apple-system,"Segoe UI",sans-serif}
+main{max-width:780px;margin:0 auto;padding:40px 22px 60px}
+h1{font-size:1.6rem;margin:0 0 6px}h2{font-size:1.15rem;margin:36px 0 8px;color:#9FB4FF}
+h3{font-size:1rem;margin:22px 0 6px;color:#CFE0FF}
+.sub{color:#9AA3C7;margin:0 0 24px}
+.card{background:#111a4a;border:1px solid #23306e;border-radius:14px;padding:16px 20px;margin:12px 0}
+.passo{display:flex;gap:14px;align-items:flex-start}
+.num{flex:0 0 34px;height:34px;border-radius:999px;background:#2b3a8f;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700}
+.passo>div{flex:1;min-width:0}
+a{color:#7FD1FF}li{margin:5px 0}
+code{background:#0b1340;border:1px solid #23306e;border-radius:6px;padding:1px 6px;font-size:.92em}
+.prompt{position:relative;background:#0b1340;border:1px solid #2f3f8a;border-radius:10px;padding:14px 16px 14px;margin:10px 0;white-space:pre-wrap;font:14px/1.55 ui-monospace,Consolas,monospace;color:#DDE6FF}
+.copiar{position:absolute;top:8px;right:8px;background:#2b3a8f;color:#fff;border:0;border-radius:999px;padding:4px 12px;font-size:12px;cursor:pointer}
+.copiar:hover{background:#3a4cb0}
+.dica{color:#FFD27F}.ok{color:#7BE3A6}
+details{margin-top:28px;color:#9AA3C7}
+</style></head><body><main>
+<h1>Usar o Claude pelo Ubuntu, do jeito que o Henry usa</h1>
+<p class="sub">12/11/2026 · passo a passo pra Vivi · leva uns 20 minutos</p>
+
+<h2>O que foi feito</h2>
+<div class="card">Você perguntou se agora tem que abrir tudo pelo Ubuntu. A resposta é sim: a orquestradora do setup só funciona no Ubuntu, então o melhor é trazer o resto pra lá também (o seu CLAUDE.md, as skills e o coletor de uso de IA). Assim fica tudo num lugar só e o seu uso conta inteiro na tela de Uso de IA. Abaixo está o passo a passo. Na maior parte, você só copia um texto pronto e cola no Claude: ele mesmo faz o trabalho.</div>
+
+<h2>Como usar (passo a passo)</h2>
+
+<div class="card passo"><span class="num">1</span><div>
+<h3>Abra o Claude pelo Ubuntu</h3>
+<ol>
+<li>Clique no menu Iniciar do Windows e digite <b>Ubuntu</b>. Abra o app (uma janela preta).</li>
+<li>Dica: clique com o botão direito no ícone dele na barra de tarefas e escolha <b>Fixar na barra de tarefas</b>. A partir de agora, é por ali que você abre o Claude.</li>
+<li>Na janela preta, digite <code>claude</code> e aperte Enter.</li>
+<li>Se ele pedir login, entre com a sua conta da Seazone (o mesmo jeito que você entrou no Windows).</li>
+</ol>
+<p class="dica">Daqui pra frente, todos os textos de baixo são pra colar dentro desse Claude do Ubuntu.</p>
+</div></div>
+
+<div class="card passo"><span class="num">2</span><div>
+<h3>Traga suas configurações do Windows pro Ubuntu</h3>
+<p>O Ubuntu consegue ler as pastas do Windows. Cole este texto no Claude:</p>
+<div class="prompt"><button class="copiar">Copiar</button>Quero passar a usar o Claude só pelo Ubuntu, com as mesmas configurações que eu tenho no Windows. A minha pasta do Claude no Windows fica em /mnt/c/Users/&lt;meu usuário do Windows&gt;/.claude (descubra o caminho certo sozinho).
+
+Traga pro ~/.claude daqui do Ubuntu, SEM apagar nada que já existe aqui:
+1. o CLAUDE.md (se já existir um aqui, junte os dois sem perder nada e me mostre o resultado antes de salvar);
+2. a pasta skills (só as que ainda não existem aqui);
+3. as pastas agents e commands, se existirem.
+
+Não copie arquivos de sessão (.jsonl), nem credenciais, nem o .credentials.json.
+No fim, me mostre em uma lista curta o que você trouxe.</div>
+<p>Se ele perguntar alguma coisa no meio (ex.: "posso juntar os dois CLAUDE.md?"), pode responder que sim.</p>
+</div></div>
+
+<div class="card passo"><span class="num">3</span><div>
+<h3>Instale as skills da Seazone e confira o Composio</h3>
+<p>Cole este texto:</p>
+<div class="prompt"><button class="copiar">Copiar</button>Confira se o marketplace de skills da Seazone está instalado aqui no Ubuntu. Se não estiver, adicione o marketplace seazone-tech/seazone-skills e ative os plugins geral, ia, produto e people.
+Depois confira se o MCP do Composio está conectado aqui também (o mesmo que eu uso no Windows). Se faltar, me diga o passo a passo pra conectar.
+No fim, me diga o que precisa reiniciar.</div>
+<p>Se ele disser que precisa reiniciar: digite <code>/exit</code>, aperte Enter e abra o Claude de novo com <code>claude</code>.</p>
+</div></div>
+
+<div class="card passo"><span class="num">4</span><div>
+<h3>Deixe o Claude no mesmo padrão do nosso</h3>
+<p>Muita coisa disso o setup do Fernando já fez. Este texto só confere e completa o que faltar:</p>
+<div class="prompt"><button class="copiar">Copiar</button>Quero o meu Claude daqui do Ubuntu no padrão do Setup Retiro-AI v4:
+1. modelo Opus como padrão (no ~/.claude/settings.json);
+2. modo permissivo (não ficar pedindo permissão a cada passo), mas mantendo a trava que impede ler arquivos de segredo;
+3. Workflow (ultracode) ligado;
+4. um atalho: quando eu digitar cc no Ubuntu, abre o Claude já nesse modo.
+Antes de mudar qualquer arquivo, faça um backup dele. No fim, me mostre o que mudou.</div>
+<p>Depois disso, você pode abrir o Claude digitando só <code>cc</code>.</p>
+</div></div>
+
+<div class="card passo"><span class="num">5</span><div>
+<h3>Instale o coletor de uso de IA no Ubuntu</h3>
+<p>É ele que manda os seus números pra tela de Uso de IA. Ele só enxerga o que acontece do lado em que está instalado, por isso precisa estar no Ubuntu. Troque o e-mail e o nome e cole:</p>
+<div class="prompt"><button class="copiar">Copiar</button>Instale aqui no Ubuntu o coletor de uso de IA da Seazone, que hoje está instalado no meu Windows:
+1. ache o arquivo coletor_uso_ia.py na pasta .seazone-uso-ia do meu usuário do Windows (/mnt/c/Users/&lt;meu usuário&gt;/.seazone-uso-ia) e copie só ele pra ~/.seazone-uso-ia/ aqui no Ubuntu;
+2. rode: python3 ~/.seazone-uso-ia/coletor_uso_ia.py registrar --email SEU_EMAIL@seazone.com.br --nome "SEU NOME COMPLETO"
+3. rode: python3 ~/.seazone-uso-ia/coletor_uso_ia.py agendar
+4. me mostre o resultado de crontab -l.
+Não mexa no coletor do Windows e não copie arquivo de sessão pra forçar contagem.</div>
+<p>Use o mesmo e-mail do TeamZone; com e-mail diferente, a tela não acha os seus números.</p>
+</div></div>
+
+<div class="card passo"><span class="num">6</span><div>
+<h3>Faça o coletor rodar mesmo com a janela fechada</h3>
+<p>O agendamento do Ubuntu só roda quando o Ubuntu está ligado. Cole este texto pra ele ligar sozinho quando você entrar no Windows:</p>
+<div class="prompt"><button class="copiar">Copiar</button>O coletor de uso de IA roda pelo crontab aqui do Ubuntu às 17h e às 9h. Garanta que isso funcione mesmo sem eu abrir a janela do Ubuntu:
+1. confira se o cron está ligado aqui (systemd ativo no /etc/wsl.conf e o serviço cron rodando);
+2. crie uma tarefa no Agendador de Tarefas do Windows que inicia o Ubuntu em segundo plano quando eu faço login, sem abrir janela.
+Me explique em 2 linhas o que você fez.</div>
+</div></div>
+
+<div class="card passo"><span class="num">7</span><div>
+<h3>Confira se deu certo</h3>
+<ol>
+<li>No Claude do Ubuntu, digite <code>/uso-ia-coletor</code> e aperte Enter. Ele mostra uma lista de 7 itens. O que estiver "FALTA", ele mesmo diz o que fazer.</li>
+<li>No dia seguinte, depois das 17h, abra https://teamzone.seazone.dev/uso-ia e veja se os números do dia apareceram.</li>
+<li>Sobre o coletor que já está no Windows: pergunte à Hito se pode ficar com os dois instalados (Windows e Ubuntu) ou se é melhor deixar só o do Ubuntu. Até ela responder, não precisa desinstalar nada.</li>
+</ol>
+<p class="ok">Pronto: a partir daqui, abra sempre o Claude pelo Ubuntu (ícone na barra de tarefas + <code>cc</code>). O Windows fica pro navegador e o resto.</p>
+</div></div>
+
+<h2>Pra que serve / quando usar</h2>
+<div class="card"><ul>
+<li><b>Tudo num lugar só:</b> a orquestradora, a equipe de agentes e o seu dia a dia no mesmo Claude, com as mesmas skills e o mesmo CLAUDE.md.</li>
+<li><b>Uso de IA contando inteiro:</b> com o coletor no Ubuntu, o que você faz lá entra na tela de Uso de IA.</li>
+<li><b>Quando:</b> uma vez só, agora. Depois é só abrir o Claude pelo Ubuntu todo dia.</li>
+<li>Travou em algum passo? Tire um print e mande pro Henry no Slack.</li>
+</ul></div>
+
+<h2>Links</h2>
+<div class="card"><ul>
+<li>Tela de Uso de IA: https://teamzone.seazone.dev/uso-ia</li>
+<li>Setup Retiro-AI v4 (zip do Fernando): https://seazone-fund.slack.com/archives/CDKD79F6F/p1794362455477109?thread_ts=1794351891.262289</li>
+<li>Marketplace de skills da Seazone: https://github.com/seazone-tech/seazone-skills</li>
+</ul></div>
+
+<details><summary>Detalhe técnico</summary>
+<p>O coletor (coletor_uso_ia.py) lê as sessões do ~/.claude do lado em que roda; instalado no Windows, não enxerga o ~/.claude do WSL. No Linux, <code>registrar</code> cadastra a máquina no modo medição e <code>agendar</code> grava no crontab o <code>diario</code> (17h e 9h, com jitter) e o <code>atualizar</code> de hora em hora. Cron no WSL depende de systemd ligado (<code>[boot] systemd=true</code> no /etc/wsl.conf) e de a distro estar de pé: por isso a tarefa do Windows no logon (ex.: <code>wsl.exe -d Ubuntu --exec sleep infinity</code>, oculta). Padrão de sessão do setup: model opus, <code>CLAUDE_CODE_EVEN_MORE_DANGEROUSLY_SKIP_PERMISSIONS=1</code>, deny de leitura de segredos, plugins geral/ia/produto/people@seazone-skills.</p>
+</details>
+</main>
+<script>
+document.querySelectorAll('.copiar').forEach(b=>b.addEventListener('click',()=>{
+  const t=b.parentElement.innerText.replace(/^Copiar\s*/,'').trim();
+  navigator.clipboard.writeText(t).then(()=>{b.textContent='Copiado';setTimeout(()=>b.textContent='Copiar',1500)});
+}));
+</script>
+</body></html>
