@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Agente de recompra · passos pra SIA oficial</title>
+<style>
+body{margin:0;background:#080E32;color:#E6E9F5;font:16px/1.6 system-ui,-apple-system,"Segoe UI",sans-serif}
+main{max-width:760px;margin:0 auto;padding:40px 22px}
+h1{font-size:1.6rem;margin:0 0 6px}h2{font-size:1.1rem;margin:32px 0 8px;color:#9FB4FF}
+.sub{color:#9AA3C7;margin:0 0 24px}
+.card{background:#111a4a;border:1px solid #23306e;border-radius:14px;padding:16px 20px;margin:12px 0}
+a{color:#7FD1FF}li{margin:4px 0}
+.ok{color:#7BE3A6}.wait{color:#FFD27F}
+table{border-collapse:collapse;width:100%}td{padding:6px 8px;border-bottom:1px solid #23306e;vertical-align:top}
+details{margin-top:24px;color:#9AA3C7}
+</style></head><body><main>
+<h1>Agente de recompra: o que falta pra ir pra SIA oficial</h1>
+<p class="sub">12/11/2026 · resposta à Dinha (SIA) sem call</p>
+
+<h2>O que foi feito</h2>
+<div class="card">A Dinha disse que dá pra resolver sem call (a call das 14h foi cancelada). Ela cuida da fila, da pré-atribuição e da chave; a nossa parte são os templates e a conta do agente. Hoje:
+<ul>
+<li><span class="ok">✔</span> Respondi quem entra na fila: igual à do teste, <b>o usuário do agente + o Henry</b> (expediente 9h–18h, distribuição automática).</li>
+<li><span class="ok">✔</span> Pedi ao CS (Raquel e Luiza) pra criar os 5 templates na SIA oficial, com os textos prontos na mensagem (daqui não temos acesso pra criar na oficial).</li>
+<li><span class="ok">✔</span> Abri chamado no Suporte Plataforma pedindo a conta Google do agente (sugestão: agente.recompra@seazone.com.br).</li>
+</ul></div>
+
+<h2>Como está cada passo</h2>
+<div class="card"><table>
+<tr><td>Fila de recompra, pré-atribuição, chave</td><td class="wait">com a SIA (Dinha)</td></tr>
+<tr><td>5 templates de WhatsApp</td><td class="wait">pedido ao CS, esperando resposta</td></tr>
+<tr><td>Conta Google do agente</td><td class="wait">chamado aberto, esperando aprovação</td></tr>
+<tr><td>Login da conta na SIA oficial + aviso à Dinha</td><td>depois que a conta existir</td></tr>
+<tr><td>Guardar a chave no cofre do agente e seguir a migração</td><td>quando a Dinha mandar a chave</td></tr>
+</table></div>
+
+<h2>Como usar</h2>
+<div class="card"><ol>
+<li>Acompanhe a thread no Slack (link abaixo): ali chegam a resposta do CS sobre os templates e o aviso da Dinha.</li>
+<li>Quando a conta Google ficar pronta, alguém entra com ela uma vez em https://plataforma.sia.zone (isso cria o usuário) e avisa a Dinha na thread.</li>
+<li>Com a chave de API na mão, siga o checklist de produção do agente (link abaixo).</li>
+</ol></div>
+
+<h2>Pra que serve</h2>
+<div class="card">Destrava a ida do agente de recompra do ambiente de teste pra SIA oficial, onde ele vai conversar com os proprietários de verdade (piloto com 1 franquia).</div>
+
+<h2>Links</h2>
+<div class="card"><ul>
+<li>Thread com a Dinha: https://seazone-fund.slack.com/archives/C0CAMHY7GF7/p1794493220533049</li>
+<li>Quem entra na fila: https://seazone-fund.slack.com/archives/C0CAMHY7GF7/p1794495829562679?thread_ts=1794493220.533049&amp;cid=C0CAMHY7GF7</li>
+<li>Pedido dos templates ao CS: https://seazone-fund.slack.com/archives/C0CAMHY7GF7/p1794495867083399?thread_ts=1794493220.533049&amp;cid=C0CAMHY7GF7</li>
+<li>Checklist de produção: https://henrymatsumoto-cpu.github.io/html-tasks/checklist-prod-agente-recompra.html</li>
+</ul></div>
+
+<details><summary>Detalhe técnico</summary>
+<p>Fila do teste (stg, "Recompra enxoval" 00e2618b…): Equipe Franquias Backoffice (usuário de serviço) + Henry; working hours 09:00–18:00, auto_distribute, least_loaded. Chamado Suporte Plataforma tipo acessos (Google · Criar conta) id 6ceb2412-056a-4310-b419-47d76da66d5f, PROD-5C87F285. A chave de prd que temos (fornecedores) dá 401 em /whatsapp-templates, e o Chrome do Agente não tem sessão na SIA prd: por isso os templates foram pedidos ao CS.</p>
+</details>
+</main></body></html>
