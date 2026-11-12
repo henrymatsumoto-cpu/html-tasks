@@ -1,0 +1,53 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Heartbeat Fornecedores 05 a 12/11</title>
+<style>body{background:#080E32;color:#E6E9F5;font:16px/1.6 system-ui,Segoe UI,sans-serif;margin:0}main{max-width:820px;margin:40px auto;padding:0 20px}
+h1{font-size:26px;margin:0 0 4px}.sub{color:#9AA3C7;margin-bottom:28px}h2{font-size:18px;color:#8FB4FF;margin-top:32px}
+pre{white-space:pre-wrap;background:#111a4a;border:1px solid #24307a;border-radius:12px;padding:20px;font:15px/1.55 system-ui,sans-serif}
+a{color:#8FB4FF}li{margin:6px 0}button{background:#3D6BFF;color:#fff;border:0;border-radius:999px;padding:10px 20px;font-size:15px;cursor:pointer}</style></head><body><main>
+<h1>Heartbeat — Fornecedores | 05 a 12/11</h1><div class="sub">Rascunho pronto pra colar na thread do pedido da Ray (prazo 17h de 12/11)</div>
+<h2>O que foi feito</h2><p>Achei o pedido de Heartbeat desta semana no #liderança-franquias-ray e o último HB que você postou (23 a 29/10). Levantei os problemas reais da semana no Slack, nas tasks, nos PRs e nas reuniões, e montei 5 itens no mesmo formato (Problema / Contexto / Atualização).</p>
+<h2>Como usar</h2><ol><li>Leia o texto abaixo e os pontos a conferir.</li><li>Clique em <b>Copiar texto</b>.</li><li>Abra o link do pedido (em Links) e cole como resposta na thread.</li></ol>
+<button onclick="navigator.clipboard.writeText(document.getElementById('hb').innerText)">Copiar texto</button>
+<pre id="hb">Heartbeat — Fornecedores | 05 a 12/11
+
+1. Agente de recompra de enxoval ainda no teste, com recompra parada
+Problema: o volume de recompra de enxoval parado é grande, e a recompra da Black Friday depende do agente. Até esta semana ele só tinha rodado no ambiente de teste, sem contato real com proprietário.
+Contexto: no teste o agente já negocia, registra no card, manda os links de pagamento depois do aceite e passa a conversa para o CS quando trava. Para ir para a SIA oficial faltava fila, usuário do agente e templates aprovados.
+Atualização:
+• 11/11: o gatilho de recompra e o pós-aceite foram para produção do Jornada.
+• 12/11: a Amanda criou a fila &quot;Recompra enxoval&quot; na SIA oficial (9h às 18h) e o usuário do agente passou a ser fornecedores@seazone.com.br. A tag P0 entrou no board a pedido da Raquel, e ficou definido que a promoção da BF vale só para pedido pago até o fim da campanha.
+• Falta: pré-atribuição e chave de API (com a Amanda) e aprovação dos templates pela Meta. Previsão: piloto com uma franquia na semana de 16/11 e abertura para todas até o fim de novembro.
+
+2. Black Friday do enxoval com muito pedido pendente e link do fornecedor atrasando
+Problema: os pedidos crescem, mas a maior parte segue sem pagamento ou sem link. Pedidos ficam parados esperando o link de pagamento do fornecedor, principalmente da Matinali.
+Contexto: a campanha está no ar desde 24/10 (Matinali e RM). Em 06/11 eram 67 pedidos, 14 pagos. Em 12/11 (12h) são 118 pedidos, 43 pagos, 64 pendentes (53 aguardando pagamento e 11 aguardando link) e 11 cancelados. Em 11/11 o alerta marcou 11 cards com mais de 24h úteis esperando link, todos da Matinali.
+Atualização:
+• 10/11: saiu o comunicado às franquias com validade até 30/11, e a BF dos amenities da Harus entrou na lojinha (-4%).
+• O report automático (12h e 18h) falhou algumas vezes na semana e foi corrigido em 11 e 12/11.
+• Até 13/11 mando o cronograma atualizado e o resultado em R$, separando pedido parado de pedido novo e implantação de recompra.
+
+3. Fotógrafos: drone em Trancoso, grandes operações e segurança do painel
+Problema: a PMO SZI precisa de vídeo com drone em Trancoso até 20/11 e não temos profissional na base. Vários prédios novos viraram grande operação e precisam de fotógrafo. O painel de fotógrafos tinha brechas de segurança apontadas pela SecOrg, com prazo até 13/11.
+Contexto: em 09/11 o bot apontou 10 prédios em grande operação (Trancoso 30 unidades, Ingleses 25, entre outros). Na weekly de 09/11 ficou definido que acima de 10 unidades é grande operação e o valor é alinhado no canal antes de agendar.
+Atualização:
+• Drone: em 12/11 criei 5 cards de pilotos no Pipedrive e pedi o contrato ao Jurídico. Próximo passo é negociar e passar o contato para a Duda.
+• Segurança: em 12/11 os PRs do Lucas foram mergeados e as migrations aplicadas. Falta publicar a tela no Lovable, que está sem crédito (chamado aberto).
+• O alerta de fotógrafos parados lia o funil errado e foi corrigido em 11/11. A Roxana (Cabo Frio) passou no teste e vai para contrato.
+
+4. Lavanderias acima da tabela de teto
+Problema: várias lavanderias do Hub cobram acima da tabela de teto da Operação.
+Contexto: na revisão, 10 foram desativadas porque havia outra opção dentro da tabela na mesma cidade. Outras 17, com 22% ou mais acima, seguem ativas por serem a única da cidade (ex.: Ilhéus, Canela, Garopaba). Na weekly de 09/11, de 12 lavanderias avaliadas só 3 eram mais baratas que a atual.
+Atualização: a prospecção já roda em Canela, Garopaba e Urubici, e a próxima etapa abre mais 11 cidades. Desde 11/11 a IA confere a tabela, pede desconto, cadastra no Hub e faz o follow-up sozinha.
+
+5. Área dependente de mim e do meu computador
+Problema: com a semana do tornado (sem luz e internet até 06/11) e a Wania de férias, o setor ficou parado e as rotinas falharam. A Ray não conseguiu tocar Fornecedores sem mim por falta de acesso e de documentação.
+Contexto: os agentes e cerca de 15 rotinas diárias rodam no meu notebook.
+Atualização:
+• Vigia dos agentes voltou em 09/11 e a planilha da Arquitetura BackOffice atualiza sozinha às 18h desde 10/11. Em 09/11 publiquei 9 skills e 2 rotinas no marketplace.
+• Pedi a VPS para tirar as rotinas do notebook e em 12/11 mandei a chave SSH para a Ray.
+• Acesso admin para a Ray e a Carol pedido à Tecnologia.
+• Atenção: estou no retiro de 15 a 18/11, e as rotinas podem falhar com o PC desligado. A Wania volta em 16/11.
+</pre>
+<h2>Pontos a conferir antes de postar</h2><ul><li>Recompra: a frase &#x27;só no teste&#x27; bate com o Slack; o Vel&#x27;Koz e a planilha da Ray dizem que já roda em produção. Ajuste se o agente já falou com proprietário real.</li><li>Recompra: confirmar a previsão do piloto (semana de 16/11) passada à Raquel.</li><li>BF: se alguém respondeu o Samuel (CS) sobre o -5% para quem paga depois (NWV0805, 21/11).</li><li>Fotógrafos: se houve resposta nas threads de grande operação de 09/11.</li><li>Itens que ficaram de fora (dá pra trocar): lojinha pós-migração e pré-venda IZY sem decisão; casos de enxoval com proprietário (BEA0513, CAO0906, LPE0205, manta RM).</li></ul>
+<h2>Pra que serve</h2><p>O Heartbeat é o resumo semanal que a Ray pede às quintas: os problemas da área, o porquê e o que já foi feito. Este rascunho evita montar do zero e usa só dado real da semana.</p>
+<h2>Links</h2><ul><li>Pedido do HB desta semana (RayAI, 12/11): <a href="https://seazone-fund.slack.com/archives/C0AKB3UH8DV/p1794495625910469">https://seazone-fund.slack.com/archives/C0AKB3UH8DV/p1794495625910469</a></li><li>HB anterior usado como modelo (23 a 29/10): <a href="https://seazone-fund.slack.com/archives/C0AKB3UH8DV/p1793301889916709?thread_ts=1793286025.724309">https://seazone-fund.slack.com/archives/C0AKB3UH8DV/p1793301889916709?thread_ts=1793286025.724309</a></li></ul>
+</main></body></html>
