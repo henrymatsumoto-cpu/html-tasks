@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Revisão dos KPIs de Fornecedores · resumo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#080E32;--surf:#0F1742;--surf2:#18225A;--line:#232E6B;--ink:#EEF1FB;--ink2:#B4BBD9;--ink3:#8189B0;--blue:#4D85FF;
+--ok:oklch(78% .12 150);--bad:oklch(72% .13 30);--warn:oklch(82% .13 80);color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 Figtree,system-ui,sans-serif}
+main{max-width:920px;margin:0 auto;padding:40px 24px 64px}
+h1{font-size:28px;font-weight:800;margin:0 0 4px}
+.sub{color:var(--ink2);margin:0 0 28px}
+.placar{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:32px}
+.placar div{background:var(--surf);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+.placar b{display:block;font-size:26px;font-weight:800}
+.placar span{color:var(--ink2);font-size:13px}
+h2{font-size:18px;font-weight:700;margin:32px 0 10px;display:flex;align-items:center;gap:10px}
+h2 i{width:10px;height:10px;border-radius:50%;display:inline-block}
+.sai i{background:var(--bad)} .entra i{background:var(--ok)} .muda i{background:var(--warn)} .fica i{background:var(--blue)}
+ul{list-style:none;margin:0;padding:0;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+li{padding:10px 16px;border-top:1px solid var(--line);background:var(--surf)}
+li:first-child{border-top:0}
+li b{font-weight:600}
+li .pq{color:var(--ink2)}
+li .id{color:var(--ink3);font-size:13px;margin-right:6px}
+.nota{color:var(--ink3);font-size:13px;margin-top:8px}
+footer{margin-top:40px;color:var(--ink3);font-size:13px}
+a{color:var(--blue)}
+@media(max-width:640px){.placar{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+<main>
+<h1>Revisão dos KPIs de Fornecedores</h1>
+<p class="sub">Hoje são 38 KPIs; a proposta é ficar com 15. Aplicar em 01/12, desativando no Hub sem apagar.</p>
+
+<div class="placar">
+  <div><b>28</b><span>saem (15 de vez, 13 viram detalhe de outro)</span></div>
+  <div><b>5</b><span>entram</span></div>
+  <div><b>8</b><span>mudam</span></div>
+  <div><b>2</b><span>ficam iguais</span></div>
+</div>
+
+<h2 class="sai"><i></i>O que sai</h2>
+<ul>
+  <li><span class="id">497 · 498</span><b>Nº de fornecedores de enxoval e de amenities</b> <span class="pq">: valor fixo escrito na mão; é cadastro, não indicador.</span></li>
+  <li><span class="id">2501 · 2506</span><b>Comissão AB Card e RentCars</b> <span class="pq">: valor repetido/fixo, não é medido. Volta só no fechamento, com extrato.</span></li>
+  <li><span class="id">1931 · 1934</span><b>Auditorias e problemas (Wania)</b> <span class="pq">: auditoria parou em 23/09; hoje é 0 por regra (verde falso).</span></li>
+  <li><span class="id">503</span><b>Tickets fechados (Wania)</b> <span class="pq">: mede volume de uma pessoa, inflado por disparos em lote.</span></li>
+  <li><span class="id">534 · 535 · 536</span><b>Prospecção (criadas, em aberto, finalizadas)</b> <span class="pq">: o fluxo morreu (prospecção foi pro Pipedrive); sem card desde 23/09.</span></li>
+  <li><span class="id">506</span><b>Pedidos travados sem estoque</b> <span class="pq">: zerado desde 15/09, ninguém usa a marcação.</span></li>
+  <li><span class="id">537</span><b>Pedidos de itens Seazone na lojinha</b> <span class="pq">: é demanda/custo das franquias, não desempenho; nome confunde com o 538.</span></li>
+  <li><span class="id">539</span><b>Produto mais vendido</b> <span class="pq">: é texto, o Hub não soma. Vai pro relatório mensal do fornecedor.</span></li>
+  <li><span class="id">2452</span><b>Fotos pagas</b> <span class="pq">: volume do time de Fotos, não do nosso setor.</span></li>
+  <li><span class="id">2933</span><b>Cliques Mercado Livre</b> <span class="pq">: meta de 1 clique/dia não diz nada; vira alerta semanal de queda.</span></li>
+</ul>
+
+<h2 class="sai"><i></i>O que sai do painel e vira detalhe de outro KPI</h2>
+<ul>
+  <li><span class="id">531 · 532 · 533</span><b>Cards de suporte criados, abertos e finalizados</b> <span class="pq">: só contam volume e sempre ficam verdes, mas 42% dos cards fecham fora do SLA. Viram o novo "Suporte no SLA".</span></li>
+  <li><span class="id">507 · 508</span><b>Pedidos aguardando envio e enviados</b> <span class="pq">: o 507 é pedaço do 505; o 508 conta envio em lote. Viram detalhe do 505 e do lead time.</span></li>
+  <li><span class="id">499 · 500</span><b>Cidades pendentes (lavanderia e fotógrafo)</b> <span class="pq">: são texto, o Hub não soma. Viram o novo "Cidades pendentes há +10 d.u.".</span></li>
+  <li><span class="id">2502 · 2503 · 2504 · 2527 · 2500</span><b>Comissão por fornecedor (Harus, IZY, Guarda-pó, Somar) e Mercado Livre</b> <span class="pq">: são parcelas do 1995. Ficam só no fechamento mensal; o ML passa a ser lançado 1x por semana.</span></li>
+  <li><span class="id">501</span><b>Tempo médio de resposta (Wania)</b> <span class="pq">: repete o 502, que fica como tempo da fila.</span></li>
+</ul>
+
+<h2 class="entra"><i></i>O que entra</h2>
+<ul>
+  <li><b>GMV pago da lojinha (R$)</b> <span class="pq">: hoje não medimos R$ vendido, e a Ray pediu isso no report da BF. Meta: R$ 30,6 mil/mês.</span></li>
+  <li><b>Comissão represada</b> (pedido pago sem NF acima do SLA) <span class="pq">: em outubro havia 30 pedidos assim (R$ 3,3 mil parados) e nenhum KPI via. Meta: no máx. 5.</span></li>
+  <li><b>Lead time pagamento → despacho</b> por fornecedor <span class="pq">: atraso na entrega já gerou Reclame Aqui. Meta: até 3 d.u. de média.</span></li>
+  <li><b>Suporte de Fornecedores resolvido no SLA (%)</b> <span class="pq">: é o que a franquia sente (hoje 57%). Meta: 67%.</span></li>
+  <li><b>Cidades pendentes de fornecedor há +10 d.u.</b> <span class="pq">: há cidades paradas há 37 a 42 dias úteis. Meta: no máx. 5.</span></li>
+</ul>
+
+<h2 class="muda"><i></i>O que muda</h2>
+<ul>
+  <li><span class="id">505</span><b>Pedidos travados → Pedidos acima do SLA</b> <span class="pq">: hoje conta a fila toda (44); só 10 passaram do prazo. Meta: 25 → no máx. 5.</span></li>
+  <li><span class="id">538</span><b>Vendas da lojinha → só pedidos pagos</b> <span class="pq">: hoje conta pedido que depois é cancelado por falta de pagamento. Meta: 65 pagos/mês.</span></li>
+  <li><span class="id">1995</span><b>Comissão total</b> <span class="pq">: passa a somar só o que é medido (tira AB Card/RentCars fixos). Meta R$ 16,3 mil; os R$ 20 mil ficam como alvo à parte.</span></li>
+  <li><span class="id">502</span><b>Tempo de 1ª resposta (Wania) → da fila na SIA</b> <span class="pq">: mede o processo, não uma pessoa, e sem contar disparos.</span></li>
+  <li><span class="id">495</span><b>Cidades com lavanderia → % de polígonos cobertos</b> <span class="pq">: o número absoluto conta cidade sem imóvel. Meta: 100% (hoje cerca de 82%).</span></li>
+  <li><span class="id">496</span><b>Nº de fotógrafos → % de cidades com 2+ fotógrafos</b> <span class="pq">: "40 de 50" não diz onde falta fotógrafo.</span></li>
+  <li><span class="id">2451</span><b>Diferença projetado × pago (fotógrafo) → % de recibos acima da tabela</b> <span class="pq">: hoje valores positivos e negativos se anulam e a conta dá falso verde. Meta: no máx. 5%.</span></li>
+  <li><span class="id">3053</span><b>Kits de enxoval → % de franquias novas com kit</b> <span class="pq">: meta fixa de 7 não acompanha quantas franquias entram. Meta: 100%.</span></li>
+</ul>
+
+<h2 class="fica"><i></i>O que fica igual</h2>
+<ul>
+  <li><span class="id">1994</span><b>Taxa de enxoval</b> <span class="pq">: é o KPI mais estratégico e vira a meta oficial de venda de enxoval (45%).</span></li>
+  <li><span class="id">1993</span><b>Comissão de enxoval</b> <span class="pq">: é resultado estratégico da empresa (R077), 75 a 95% da comissão total.</span></li>
+</ul>
+<p class="nota">Cinco metas são provisórias e só fecham depois da 1ª medição em dezembro: pedidos acima do SLA, comissão represada, cidades pendentes e as duas coberturas.</p>
+
+<footer>Análise completa, com evidências e fichas (fórmula, fonte, responsável): <a href="revisao-kpis-fornecedores.html">revisao-kpis-fornecedores.html</a> · 12/11/2026</footer>
+</main>
+</body>
+</html>
