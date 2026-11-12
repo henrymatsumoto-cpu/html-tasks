@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Planilha da Ray · gravado 12/11/2026</title>
+<style>
+  body{margin:0;background:#080E32;color:#E6E9F5;font:15px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif}
+  main{max-width:980px;margin:0 auto;padding:40px 24px 64px}
+  h1{font-size:24px;margin:0 0 4px}
+  h2{font-size:17px;margin:36px 0 12px;color:#fff}
+  .sub{color:#9AA3C7;margin:0 0 24px}
+  .resumo{background:#111A4A;border:1px solid #24306B;border-radius:14px;padding:18px 22px}
+  .resumo li{margin:4px 0}
+  table{width:100%;border-collapse:collapse;font-size:14px}
+  th,td{text-align:left;vertical-align:top;padding:10px 12px;border-bottom:1px solid #1F2A5E}
+  th{color:#9AA3C7;font-weight:600}
+  .tag{display:inline-block;padding:2px 10px;border-radius:999px;font-size:12px;background:#1F2A5E}
+  .run{background:#12452F;color:#8EE6B5}.and{background:#4A3A12;color:#F2CF7A}
+  a{color:#8FB4FF}
+</style>
+</head>
+<body><main>
+<h1>Planilha da Ray · aba Fornecedores</h1>
+<p class="sub">Registro do que a rotina das 18h gravou em 12/11/2026 (sem prévia, conforme o modo rotina).</p>
+
+<div class="resumo">
+<ul>
+  <li><b>2 linhas novas</b> (A27:H28): vigia de SLA e entrega dos fornecedores · agente de contrato do fotógrafo.</li>
+  <li><b>1 link atualizado</b>: linha 25 (campanha de venda) agora aponta pro PR #1009, skill publicada no marketplace em 12/11.</li>
+  <li><b>Nenhum Status mudou.</b> Nenhuma pergunta nova (as 6 de 11/11 seguem em aberto).</li>
+</ul>
+</div>
+
+<h2>Linhas novas</h2>
+<table>
+<tr><th>Linha</th><th>Tipo</th><th>Título</th><th>O que é</th><th>Ferramentas</th><th>Status</th></tr>
+<tr><td>27</td><td>Automação</td><td>Vigia de SLA e entrega dos fornecedores</td><td>Dias úteis às 9h e 15h confere, a partir do pagamento, NF, envio e entrega (rastreio da Total Express) dos pedidos de enxoval e da lojinha; aplica o SLA (atenção, estourado, crítico) e manda DM só com alerta novo ou que piorou. Processos 8.7 e 9.5 da arquitetura.</td><td>Claude Code (rotina), Jornada, Lojinha, Google Sheets, Total Express, Slack</td><td><span class="tag run">Rodando</span></td></tr>
+<tr><td>28</td><td>Automação</td><td>Agente de contrato do fotógrafo</td><td>Pedido de homologação da Ana (fase contrato no artefato) → contrato preenchido do modelo, enviado no ClickSign pela conta fornecedores@, aviso na thread e, com todas as assinaturas, fotógrafo movido pra Concluído. A cada 15 min, 8h-20h. 1º contrato enviado em 12/11.</td><td>Claude Code (rotina), Artefato de Fotógrafos (Lovable), ClickSign, Google Drive, Slack</td><td><span class="tag and">Em andamento</span></td></tr>
+</table>
+
+<h2>Alteração em linha existente</h2>
+<table>
+<tr><th>Linha</th><th>Coluna</th><th>De</th><th>Para</th><th>Fonte</th></tr>
+<tr><td>25 · Campanha de venda da lojinha</td><td>H (Link)</td><td>HTML agente-campanha-venda</td><td><a href="https://github.com/seazone-tech/seazone-skills/pull/1009">seazone-skills#1009</a></td><td>PR mergeado 12/11 (operacao 0.129.0). Status segue Em andamento: nenhuma campanha real ativa ainda.</td></tr>
+</table>
+
+<h2>Evidências</h2>
+<ul>
+  <li>Vigia de SLA: crontab dias úteis 9h/15h; rodadas reais 12/11 9h e 15h no log (892 pedidos avaliados, exit 0).</li>
+  <li>Contrato do fotógrafo: crontab */15 8-20h; rodada real 12/11 18h ok; envelope da Roxana em 1/4 assinaturas.</li>
+  <li>Sem mudança: 25 linhas (negociação da recompra segue com trava de teste mesmo na SIA oficial; cadência Pipedrive→SIA segue sem prd no ar).</li>
+</ul>
+
+<p><a href="https://raayeoliveira.github.io/arquitetura-backoffice-franquias/">Página da Ray (Contribuições do time)</a></p>
+</main></body></html>
