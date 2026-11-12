@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Passo a passo · organização no Uso de IA</title>
+<style>
+body{margin:0;background:#080E32;color:#E6E9F5;font:16px/1.65 system-ui,-apple-system,"Segoe UI",sans-serif}
+main{max-width:780px;margin:0 auto;padding:40px 22px 60px}
+h1{font-size:1.6rem;margin:0 0 6px}h2{font-size:1.15rem;margin:36px 0 8px;color:#9FB4FF}
+h3{font-size:1rem;margin:22px 0 6px;color:#CFE0FF}
+.sub{color:#9AA3C7;margin:0 0 24px}
+.card{background:#111a4a;border:1px solid #23306e;border-radius:14px;padding:16px 20px;margin:12px 0}
+.passo{display:flex;gap:14px;align-items:flex-start}
+.num{flex:0 0 34px;height:34px;border-radius:999px;background:#2b3a8f;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700}
+.passo>div{flex:1;min-width:0}
+a{color:#7FD1FF}li{margin:5px 0}
+code{background:#0b1340;border:1px solid #23306e;border-radius:6px;padding:1px 6px;font-size:.92em}
+.prompt{position:relative;background:#0b1340;border:1px solid #2f3f8a;border-radius:10px;padding:14px 16px 14px;margin:10px 0;white-space:pre-wrap;font:14px/1.55 ui-monospace,Consolas,monospace;color:#DDE6FF}
+.copiar{position:absolute;top:8px;right:8px;background:#2b3a8f;color:#fff;border:0;border-radius:999px;padding:4px 12px;font-size:12px;cursor:pointer}
+.copiar:hover{background:#3a4cb0}
+.dica{color:#FFD27F}.ok{color:#7BE3A6}
+details{margin-top:28px;color:#9AA3C7}
+</style></head><body><main>
+<h1>Subir a nota de organização no Uso de IA</h1>
+<p class="sub">12/11/2026 · passo a passo pra Larissa · do mesmo jeito que o Henry organizou o dele</p>
+
+<h2>O que foi feito</h2>
+<div class="card">Você perguntou como melhorar a parte de <b>organização</b> na faixa de Uso de IA. Essa nota vem de uma auditoria automática do seu computador e olha só 4 coisas básicas: <b>onde ficam os seus projetos</b>, <b>se cada assunto tem a sua pasta</b>, <b>em que pasta você abre o Claude</b> e <b>se existe um CLAUDE.md</b> (o arquivo de regras do Claude). Abaixo está o passo a passo na ordem do que mais pesa. Na maior parte, você só copia um texto pronto e cola no Claude: ele mesmo faz o trabalho e pede o seu OK antes de mudar qualquer coisa.</div>
+
+<h2>O que mais pesa na nota</h2>
+<div class="card"><ul>
+<li><b>Abrir o Claude na pasta do seu usuário</b> (ex.: <code>C:\Users\larissa</code>) em vez da pasta do assunto: é o que mais tira ponto.</li>
+<li><b>Não ter uma pasta-mãe de projetos</b> (ex.: <code>C:\dev</code>), ou ela estar no OneDrive, na Área de Trabalho ou em Downloads.</li>
+<li><b>Pasta que você usa bastante sem CLAUDE.md</b> e <b>falta do CLAUDE.md geral</b>.</li>
+<li>Pesam menos: projetos espalhados fora da pasta-mãe, projeto dentro de projeto e cópias duplicadas.</li>
+</ul></div>
+
+<h2>Como usar (passo a passo)</h2>
+
+<div class="card passo"><span class="num">1</span><div>
+<h3>Veja a sua nota e o que está tirando ponto</h3>
+<ol>
+<li>Abra o Claude do jeito que você já abre.</li>
+<li>Digite <code>/uso-ia-ambiente</code> e aperte Enter. Ela vem no plugin <b>geral</b> do marketplace da Seazone.</li>
+<li>Ela mostra a nota, o que mais tira ponto e uma lista de achados. Não precisa corrigir nada ainda: só guarde essa lista (um print serve).</li>
+</ol>
+<p class="dica">Se o Claude disser que a skill não existe, cole: <i>"Instale o marketplace seazone-tech/seazone-skills e ative o plugin geral"</i>, feche com <code>/exit</code> e abra de novo.</p>
+</div></div>
+
+<div class="card passo"><span class="num">2</span><div>
+<h3>Crie a pasta-mãe dos projetos e uma pasta por assunto</h3>
+<p>A ideia é: tudo que volta toda semana (ex.: a sua central de qualidade, relatórios, um agente) ganha uma pasta própria, todas dentro de uma pasta-mãe. Cole este texto:</p>
+<div class="prompt"><button class="copiar">Copiar</button>Quero organizar o meu ambiente do Claude no padrão do Uso de IA da Seazone. Antes de mudar qualquer coisa, me mostre o plano e espere o meu OK.
+
+1. Confira se eu tenho uma pasta-mãe de projetos fora do OneDrive, da Área de Trabalho e de Downloads (ex.: C:\dev no Windows ou ~/dev no Linux). Se não tiver, proponha criar.
+2. Olhe as pastas onde eu mais abri o Claude nos últimos 30 dias (as sessões ficam em ~/.claude/projects) e me diga quais assuntos se repetem.
+3. Para cada assunto que volta toda semana, proponha uma pasta dentro da pasta-mãe, com um nome curto.
+4. Liste os projetos/repositórios que estão fora da pasta-mãe, as cópias duplicadas do mesmo repositório e as pastas de projeto dentro de outro projeto.
+Não mova nada ainda: só me mostre a lista e o plano.</div>
+<p class="dica">Mover pasta de projeto zera as linhas de código da semana que ainda não foram enviadas. O melhor momento pra mover é <b>sexta depois das 17h</b>, quando a semana já fechou.</p>
+</div></div>
+
+<div class="card passo"><span class="num">3</span><div>
+<h3>Dê um CLAUDE.md pra cada pasta</h3>
+<p>O CLAUDE.md é o "manual" do assunto: o que é, onde ficam as coisas e as regras que você já combinou. Cole este texto (troque o nome da pasta):</p>
+<div class="prompt"><button class="copiar">Copiar</button>Crie um CLAUDE.md curto para a pasta C:\dev\NOME-DO-ASSUNTO (troque pelo caminho certo), com:
+- uma linha dizendo o que é esse assunto e pra quem é;
+- onde ficam as coisas (planilhas, links, sistemas, pessoas de contato);
+- as regras que eu já combinei com você sobre esse assunto (procure nas minhas conversas anteriores dessa pasta);
+- uma seção "Lições" vazia, pra irmos anotando o que der errado.
+Máximo de 60 linhas. Me mostre antes de salvar.</div>
+<p>Repita pra cada pasta do passo 2. Se tiver um CLAUDE.md geral grande demais, peça pro Claude separar o que é de cada assunto.</p>
+</div></div>
+
+<div class="card passo"><span class="num">4</span><div>
+<h3>Confira o CLAUDE.md geral</h3>
+<p>É o que vale pra todas as pastas (idioma, tom, ferramentas que você usa). Cole este texto:</p>
+<div class="prompt"><button class="copiar">Copiar</button>Confira se eu tenho um CLAUDE.md global (~/.claude/CLAUDE.md). Se não tiver, crie um curto com: responder em português, ser direto, quais ferramentas eu uso no dia a dia e que cada assunto tem a sua pasta dentro da minha pasta-mãe de projetos. Se já tiver, tire de lá o que é de um assunto só e mova pro CLAUDE.md da pasta daquele assunto.
+Depois rode /padrao-uso-ia ensinar e me mostre o bloco "Padrão de criação" antes de gravar.</div>
+<p>O bloco "Padrão de criação" ensina o seu Claude a criar rotina, skill e código no lugar que o coletor de Uso de IA reconhece.</p>
+</div></div>
+
+<div class="card passo"><span class="num">5</span><div>
+<h3>Abra o Claude sempre dentro da pasta do assunto</h3>
+<p>É o hábito que mais pesa na nota, e não precisa de nenhum comando: é só abrir no lugar certo.</p>
+<ul>
+<li><b>No terminal:</b> entre na pasta antes de abrir (ex.: <code>cd C:\dev\central-qualidade</code> e depois <code>claude</code>).</li>
+<li><b>No app do Claude ou no VS Code:</b> escolha a pasta do assunto ao abrir, não a pasta do seu usuário.</li>
+<li>Assunto novo que volta toda semana? Peça: <i>"Crie uma pasta pra X na minha pasta-mãe, com CLAUDE.md"</i> e abra o Claude nela.</li>
+</ul>
+<p class="dica">Pergunta pontual que não é de assunto nenhum? Abra numa pasta <code>C:\dev\geral</code> (com CLAUDE.md) em vez da pasta do usuário.</p>
+</div></div>
+
+<div class="card passo"><span class="num">6</span><div>
+<h3>Confira de novo</h3>
+<ol>
+<li>Depois de fazer os passos, rode <code>/uso-ia-ambiente</code> outra vez e compare com o print do passo 1.</li>
+<li>O que ainda aparecer, peça: <i>"Corrija o primeiro achado, me mostrando antes o que muda"</i>, um de cada vez.</li>
+<li>A tela de Uso de IA atualiza no próximo envio diário do coletor (17h). O hábito do passo 5 vai subindo a nota aos poucos, conforme as sessões novas entram.</li>
+</ol>
+<p class="ok">Pronto: com a pasta-mãe, uma pasta por assunto com CLAUDE.md e o Claude aberto no lugar certo, os 4 pontos básicos ficam cobertos.</p>
+</div></div>
+
+<h2>Pra que serve / quando usar</h2>
+<div class="card"><ul>
+<li><b>Nota de organização maior</b> na faixa de Uso de IA.</li>
+<li><b>Claude melhor no dia a dia:</b> cada pasta tem o seu manual, então ele já começa sabendo do assunto e não mistura uma coisa com outra.</li>
+<li><b>Quando:</b> os passos 1 a 4 uma vez só (mover pastas na sexta depois das 17h). O passo 5 vira hábito.</li>
+<li>Travou em algum passo? Tire um print e mande pro Henry no Slack.</li>
+</ul></div>
+
+<h2>Links</h2>
+<div class="card"><ul>
+<li>Tela de Uso de IA: https://teamzone.seazone.dev/uso-ia</li>
+<li>Marketplace de skills da Seazone: https://github.com/seazone-tech/seazone-skills</li>
+<li>Skill /uso-ia-ambiente: https://github.com/seazone-tech/seazone-skills/tree/main/geral/skills/uso-ia-ambiente</li>
+</ul></div>
+
+<details><summary>Detalhe técnico</summary>
+<p>A nota de organização vem da auditoria <code>auditoria-ambiente-agentes</code> (nota v3, só "fundamentos"): ORG010 sem raiz de dev (30), ORG001 raiz em pasta sincronizada (25), SES001 sessões na HOME (25, peso cheio a partir de 10% das sessões), SES006 sessões na raiz do sistema (25), INS001 sem CLAUDE.md global (15), SES004 pasta com 3+ sessões sem CLAUDE.md (15), SES005 sessões em pasta sincronizada (15), ORG002 repo em pasta sincronizada (15), ORG007/ORG003/ORG012 (10), SES002 sessões na raiz de dev (5), ORG004 clones duplicados (5). Penalidade = peso × √(afetados/total); nota = 100 − soma. A tela usa a nota do último envio diário do coletor.</p>
+</details>
+</main>
+<script>
+document.querySelectorAll('.copiar').forEach(b=>b.addEventListener('click',()=>{
+  const t=b.parentElement.innerText.replace(/^Copiar\s*/,'').trim();
+  navigator.clipboard.writeText(t).then(()=>{b.textContent='Copiado';setTimeout(()=>b.textContent='Copiar',1500)});
+}));
+</script>
+</body></html>
