@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>T170 · Ray respondida + auto-resposta do Slack em 1 minuto</title>
+<style>
+:root{--bg:#14161a;--card:#1c1f25;--txt:#e3e5e8;--mut:#9aa1ab;--ac:#6fb3a8;--br:#2a2e36}
+body{margin:0;background:var(--bg);color:var(--txt);font:16px/1.6 system-ui,-apple-system,"Segoe UI",sans-serif}
+main{max-width:760px;margin:40px auto;padding:0 20px}
+h1{font-size:1.6rem;margin:0 0 4px}.sub{color:var(--mut);margin:0 0 28px}
+section{background:var(--card);border:1px solid var(--br);border-radius:14px;padding:18px 22px;margin:0 0 16px}
+h2{font-size:1.05rem;color:var(--ac);margin:0 0 8px}
+.num{display:flex;gap:28px;flex-wrap:wrap;margin:8px 0}.num div b{display:block;font-size:1.8rem}.num div span{color:var(--mut);font-size:.9rem}
+a{color:var(--ac)}code{background:#252932;padding:1px 6px;border-radius:6px}
+details{color:var(--mut)}summary{cursor:pointer}
+</style></head><body><main>
+<h1>Ray respondida + auto-resposta do Slack em 1 minuto</h1>
+<p class="sub">Task T170 · 13/11/2026</p>
+
+<section><h2>O que foi feito</h2>
+<p><b>Ray:</b> ela pediu (14h56) o passo a passo pra montar o agente do Slack dela. Montei um guia com as duas peças (bot que trabalha quando marca + auto-resposta como ela), com o texto pronto pra colar no Claude dela na VPS, e mandei o link na DM às 15h08.</p>
+<p><b>Por que demorou de novo:</b> a troca de 5 pra 2 minutos (T164) só valia depois de reiniciar o Azir, e o servidor continuava com o código antigo (5 min). A pergunta das 14h45 levou ~5 min, e a das 14h56 foi pega às 15h00, mas a rodada bateu no limite de 5h do Claude.</p>
+<p><b>Conserto:</b> agora o Azir procura mensagens novas <b>a cada 1 minuto</b> (com 2 min, o pior caso + o tempo de escrever ainda passava de 2 min) e o servidor já foi reiniciado com isso. Primeira checagem nova às 15h10, sem erro.</p>
+<div class="num"><div><b>5 → 1 min</b><span>intervalo da checagem (já no ar)</span></div><div><b>~1-1,5 min</b><span>esperado da mensagem até a resposta</span></div><div><b>~8 / 20</b><span>buscas por minuto × limite do Slack</span></div></div>
+</section>
+
+<section><h2>Como usar</h2>
+<p>Não precisa fazer nada. Pra conferir: aba Agentes do Azir, interruptor "Auto-resposta Slack" mostra "checa a cada 1 min". Pra mudar, variável <code>ORQ_SLACK_MIN</code> e reiniciar o Azir.</p>
+<p>O guia da Ray serve pra qualquer pessoa que queira montar o mesmo: é só mandar o link abaixo.</p>
+</section>
+
+<section><h2>Pra que serve</h2>
+<p>Quem te manda mensagem tem resposta em cerca de 1 minuto e meio. Se ainda demorar, o motivo provável é o limite de uso do Claude (a rodada espera o limite liberar), não a checagem.</p>
+</section>
+
+<section><h2>Links</h2>
+<p>Passo a passo enviado pra Ray: https://henrymatsumoto-cpu.github.io/html-tasks/passo-a-passo-agente-slack.html<br>
+Mensagem pra Ray: https://seazone-fund.slack.com/archives/D067RVAFY48/p1794593326302639</p>
+</section>
+
+<details><summary>Detalhe técnico</summary>
+<p>Commit f91fbc8 no orquestrador local (src/slack.ts: INTERVALO_MIN padrão 2 → 1; README/CLAUDE.md). 50/50 testes do Slack ok. Servidor reiniciado 15h09 (orq.sh --servico); as tasks rodando foram reassumidas (T171 concluiu normal). Busca direta com SLACK_USER_TOKEN_VELKOZ, ~8 chamadas por checagem; 429 continua com backoff dobrando o intervalo.</p>
+</details>
+</main></body></html>
