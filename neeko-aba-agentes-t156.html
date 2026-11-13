@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>T156 · Neeko rodando e visível na aba Agentes</title>
+<style>
+:root{--bg:#14161a;--card:#1c1f25;--txt:#e3e5e8;--mut:#9aa1ab;--ac:#6fb3a8;--br:#2a2e36}
+body{margin:0;background:var(--bg);color:var(--txt);font:16px/1.6 system-ui,-apple-system,"Segoe UI",sans-serif}
+main{max-width:760px;margin:40px auto;padding:0 20px}
+h1{font-size:1.6rem;margin:0 0 4px}.sub{color:var(--mut);margin:0 0 28px}
+section{background:var(--card);border:1px solid var(--br);border-radius:14px;padding:18px 22px;margin:0 0 16px}
+h2{font-size:1.05rem;color:var(--ac);margin:0 0 8px}
+.num{display:flex;gap:28px;flex-wrap:wrap;margin:8px 0}.num div b{display:block;font-size:1.8rem}.num div span{color:var(--mut);font-size:.9rem}
+a{color:var(--ac)}code{background:#252932;padding:1px 6px;border-radius:6px}
+details{color:var(--mut)}summary{cursor:pointer}
+</style></head><body><main>
+<h1>Ray respondida + auto-resposta do Slack em 1 minuto</h1>
+<h1>Neeko rodando e visível na aba Agentes</h1>
+<p class="sub">Task T156 · 13/11/2026</p>
+
+<section><h2>O que foi feito</h2>
+<p><b>Ela estava rodando:</b> ligada no automático. Rodou hoje às 13h29 (manual, T152) e às 15h05 (automática da semana, T171, terminou 15h09). Guia de voz atualizado nas duas.</p>
+<p><b>Por que a aba não mostrava:</b> enquanto ela trabalhava, a aba dizia só "última: T152 fazendo", que parecia rodada antiga. O conserto do texto foi feito às 13h41, mas o Azir estava de pé desde 10h34 e seguia com o código antigo.</p>
+<p><b>Conserto:</b> agora, enquanto ela trabalha, a aba mostra <b>"rodando agora: T### desde HH:MM"</b> e a bolinha dela no mapa pisca como "rodando" (inclusive na hora em que ela junta as mensagens da semana). Reiniciei o Azir pra valer na hora.</p>
+<div class="num"><div><b>2</b><span>rodadas hoje (13h29 e 15h05)</span></div><div><b>sex 20/11 15h</b><span>próxima rodada automática</span></div><div><b>19/19</b><span>testes da Neeko ok</span></div></div>
+</section>
+
+<section><h2>Como usar</h2>
+<p>Não precisa fazer nada. Pra ver: http://localhost:4777/?v=agentes, grupo <b>Serviços</b>, item <b>Neeko (aprendizado semanal)</b>. Clicando nela aparece a última rodada, a próxima e o que mudou no guia de voz.</p>
+<p>Quer rodar fora de hora? <code>curl -X POST localhost:4777/api/neeko/rodar</code>.</p>
+</section>
+
+<section><h2>Pra que serve</h2>
+<p>Toda sexta 15h a Neeko lê o que você escreveu na semana e atualiza o guia de voz, que o Azir usa pra responder no Slack do seu jeito. Se o PC estiver desligado na sexta, ela recupera até domingo.</p>
+</section>
+
+<section><h2>Links</h2>
+<p>Aba Agentes: http://localhost:4777/?v=agentes</p>
+</section>
+
+<details><summary>Detalhe técnico</summary>
+<p>Orquestrador local: commit 5dde47d (card aberto = "rodando agora") + 74c8d30 (coleta em andamento também começa com "rodando", que é o que o estaRodando do mapa/lista usa; teste novo). Servidor reiniciado 14h03 com os dois. kv neeko.auto = ligado; neeko.estado com W46 feita (card 58cd5a4b, concluído). As 6 falhas dos testes do Heimer e 1 da voz já existiam antes desta mudança.</p>
+</details>
+</main></body></html>
