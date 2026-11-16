@@ -26,12 +26,14 @@
   --p0:oklch(79% .115 72);
   --p1:oklch(76% .07 230);
   --p2:oklch(68% .02 255);
+  --novo:oklch(74% .16 350);
+  --novo-ink:oklch(24% .06 350);
   --sp1:4px;--sp2:8px;--sp3:12px;--sp4:16px;--sp5:24px;--sp6:32px;--sp7:48px;--sp8:64px;
   color-scheme:dark;
 }
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
-body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 "Hanken Grotesk",system-ui,sans-serif;font-variant-numeric:tabular-nums}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 "Hanken Grotesk",system-ui,sans-serif;font-variant-numeric:tabular-nums;overflow-x:hidden}
 a{color:var(--acc);text-underline-offset:3px}
 a:hover{color:var(--ink)}
 .wrap{max-width:1080px;margin:0 auto;padding:0 16px}
@@ -41,327 +43,571 @@ h3{font-size:17px;font-weight:700}
 p{margin:0 0 var(--sp3);color:var(--ink2);max-width:72ch}
 strong{color:var(--ink);font-weight:700}
 code{font-size:.88em;background:var(--bg2);border:1px solid var(--line2);border-radius:5px;padding:1px 5px;color:var(--ink)}
-section{padding:var(--sp7) 0;border-top:1px solid var(--line2)}
+main > section{padding:var(--sp7) 0;border-top:1px solid var(--line2)}
 .lede{font-size:18px;color:var(--ink2);max-width:62ch}
 .eyebrow{font-size:13px;font-weight:600;color:var(--acc);letter-spacing:.06em;text-transform:uppercase;margin-bottom:var(--sp2)}
 
 /* topo */
-header.top{padding:var(--sp8) 0 var(--sp7)}
-header.top h1{font-size:clamp(34px,5.4vw,58px);font-weight:800;max-width:16ch;margin:var(--sp2) 0 var(--sp4)}
-.meta{display:flex;flex-wrap:wrap;gap:var(--sp2) var(--sp5);color:var(--ink3);font-size:14px;margin-top:var(--sp5)}
+header.top{padding:var(--sp8) 0 var(--sp6)}
+header.top h1{font-size:clamp(34px,5.4vw,58px);font-weight:800;max-width:18ch;margin:var(--sp2) 0 var(--sp4)}
+.meta{display:flex;flex-wrap:wrap;gap:var(--sp2) var(--sp5);color:var(--ink3);font-size:14px;margin-top:var(--sp4)}
+.nums{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:0;margin-top:var(--sp6);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.num{padding:var(--sp5) var(--sp5) var(--sp5) 0}
+.num + .num{padding-left:var(--sp5);border-left:1px solid var(--line2)}
+.num b{display:block;font-family:"Schibsted Grotesk";font-weight:800;font-size:clamp(40px,6vw,64px);line-height:1;letter-spacing:-.02em}
+.num:first-child b{color:var(--acc)}
+.num span{display:block;margin-top:var(--sp2);color:var(--ink2);font-size:15px;max-width:30ch}
 nav.toc{position:sticky;top:0;z-index:5;background:color-mix(in oklch,var(--bg) 92%,transparent);border-bottom:1px solid var(--line2);backdrop-filter:blur(6px)}
 nav.toc .wrap{display:flex;gap:var(--sp4);overflow-x:auto;padding-top:10px;padding-bottom:10px;scrollbar-width:none}
 nav.toc a{color:var(--ink3);text-decoration:none;font-size:14px;white-space:nowrap}
 nav.toc a:hover{color:var(--ink)}
 
-/* resumo */
-.exec{display:grid;grid-template-columns:1.35fr 1fr;gap:var(--sp6);align-items:start}
-.five{counter-reset:l;list-style:none;padding:0;margin:0}
-.five li{counter-increment:l;display:grid;grid-template-columns:32px 1fr;gap:var(--sp2);padding:var(--sp3) 0;border-bottom:1px solid var(--line2);color:var(--ink2)}
-.five li::before{content:counter(l);font-family:"Schibsted Grotesk";font-weight:800;color:var(--acc);font-size:18px}
-.tally{background:var(--surf);border:1px solid var(--line);border-radius:14px;padding:var(--sp5)}
-.tally .big{font-family:"Schibsted Grotesk";font-size:64px;font-weight:800;line-height:1}
-.tally .big small{font-size:18px;color:var(--ink3);font-weight:500;margin-left:6px}
-.prio-bar{display:flex;height:10px;border-radius:6px;overflow:hidden;margin:var(--sp4) 0 var(--sp3)}
-.prio-bar i{display:block}
-.prio-legend{display:grid;gap:6px;font-size:14px;color:var(--ink2)}
-.prio-legend span{display:flex;justify-content:space-between;gap:var(--sp3)}
-.dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:8px;vertical-align:middle}
-.changed{margin-top:var(--sp4);padding-top:var(--sp4);border-top:1px solid var(--line2);font-size:14px;color:var(--ink3)}
-
-/* fontes */
-.sources{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:0;border:1px solid var(--line);border-radius:14px;overflow:hidden}
-.src{padding:var(--sp5);border-right:1px solid var(--line2);border-bottom:1px solid var(--line2);background:var(--bg2)}
-.src h3{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:var(--sp3)}
-.src h3 small{font-family:"Hanken Grotesk";font-weight:500;font-size:13px;color:var(--ink3)}
-.src dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:6px var(--sp3);font-size:14.5px}
-.src dt{font-weight:700;color:var(--ink);text-align:right;white-space:nowrap}
-.src dd{margin:0;color:var(--ink2)}
-.note{font-size:14px;color:var(--ink3);margin-top:var(--sp4);max-width:80ch}
-
-/* iara */
-.two{display:grid;grid-template-columns:1fr 1fr;gap:var(--sp6)}
-.copy-list{list-style:none;padding:0;margin:0}
-.copy-list li{padding:var(--sp3) 0;border-bottom:1px solid var(--line2);color:var(--ink2)}
-.copy-list li b{color:var(--ink);display:block}
-.aria{background:var(--surf);border:1px solid var(--line);border-radius:14px;padding:var(--sp5)}
-.aria .status{display:inline-flex;align-items:center;gap:8px;font-weight:700;color:var(--ok);margin-bottom:var(--sp3)}
-.aria blockquote{margin:var(--sp3) 0;padding:var(--sp3) var(--sp4);background:var(--bg2);border-radius:10px;color:var(--ink2);font-size:15px}
+/* hoje x muda */
+.vs{display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--bg2)}
+.vs-h{font-size:12.5px;font-weight:700;color:var(--ink3);text-transform:uppercase;letter-spacing:.05em;padding:10px var(--sp5);border-bottom:1px solid var(--line)}
+.vs-h.m{color:var(--acc);border-left:1px solid var(--line)}
+.vs-a,.vs-b{padding:var(--sp3) var(--sp5);border-bottom:1px solid var(--line2);font-size:15.5px}
+.vs-a{color:var(--ink3)}
+.vs-b{color:var(--ink);border-left:1px solid var(--line)}
+.vs > :nth-last-child(-n+2){border-bottom:0}
+.vs-b.same{color:var(--ok)}
 
 /* diagrama */
 .diagram{background:var(--bg2);border:1px solid var(--line);border-radius:14px;padding:var(--sp4);overflow-x:auto}
 .diagram svg{display:block;width:100%;min-width:760px;height:auto}
-.cols{display:flex;flex-wrap:wrap;gap:6px;margin:var(--sp4) 0}
-.cols span{font-size:13px;padding:4px 10px;border:1px solid var(--line);border-radius:999px;color:var(--ink2)}
-.cols span.hl{border-color:var(--acc);color:var(--acc)}
-table{width:100%;border-collapse:collapse;font-size:14.5px}
-th,td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--line2);vertical-align:top}
-th{font-size:12.5px;font-weight:700;color:var(--ink3);text-transform:uppercase;letter-spacing:.04em}
-td{color:var(--ink2)}
-td:first-child{color:var(--ink);font-weight:700;white-space:nowrap}
-.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:14px;background:var(--bg2)}
-.tbl table{min-width:620px}
-.tbl tr:last-child td{border-bottom:0}
+.note{font-size:14px;color:var(--ink3);margin-top:var(--sp4);max-width:80ch}
+
+/* prévia */
+.prev{position:relative}
+.prev .tabr{position:absolute;opacity:0;width:1px;height:1px;pointer-events:none}
+.tabbar{display:flex;flex-wrap:wrap;gap:6px;margin:var(--sp4) 0 var(--sp4)}
+.tabbar label{font-size:14px;font-weight:600;padding:6px 14px;border-radius:999px;border:1px solid var(--line);color:var(--ink2);cursor:pointer;user-select:none;display:inline-flex;align-items:center;gap:6px}
+.tabbar label:hover{border-color:var(--ink3);color:var(--ink)}
+.tabbar label i{font-style:normal;width:7px;height:7px;border-radius:50%;background:var(--novo)}
+.tabbar label i.z{background:transparent;border:1px solid var(--ink3)}
+.pane{display:none;min-width:0}
+.legend{display:grid;grid-template-columns:1fr 1fr;gap:var(--sp2) var(--sp5);margin-bottom:var(--sp4)}
+.legend p{margin:0;font-size:15px}
+.legend b{display:block;font-size:12.5px;text-transform:uppercase;letter-spacing:.05em;margin-bottom:2px}
+.legend .lm b{color:var(--novo)}
+.legend .li b{color:var(--ink3)}
+.key{display:inline-flex;align-items:center;gap:8px;font-size:14px;color:var(--ink2);margin-top:var(--sp2)}
+.key .sw{width:30px;height:16px;border-radius:5px;outline:1.5px dashed var(--novo);outline-offset:1px}
+.key .tg{font-size:10px;font-weight:700;padding:2px 6px;border-radius:999px;background:var(--novo);color:var(--novo-ink)}
+.mock-scroll{overflow-x:auto;border:1px solid var(--line);border-radius:14px;max-width:100%;-webkit-overflow-scrolling:touch}
+.scroll-hint{display:none;font-size:13px;color:var(--ink3);margin:6px 0 0}
 
 /* agentes */
-.toolbar{display:flex;flex-wrap:wrap;gap:var(--sp2);align-items:center;margin:var(--sp4) 0 var(--sp5)}
-.chip{font:inherit;font-size:14px;font-weight:600;padding:6px 14px;border-radius:999px;border:1px solid var(--line);background:transparent;color:var(--ink2);cursor:pointer}
-.chip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
-.chip:focus-visible,.vote button:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+.toolbar{display:flex;flex-wrap:wrap;gap:var(--sp2);align-items:center;margin:var(--sp4) 0 var(--sp4)}
+.fchip{font:inherit;font-size:14px;font-weight:600;padding:6px 14px;border-radius:999px;border:1px solid var(--line);background:transparent;color:var(--ink2);cursor:pointer}
+.fchip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.fchip:focus-visible,.vote button:focus-visible,.tabr:focus-visible + label{outline:2px solid var(--acc);outline-offset:2px}
 .counter{margin-left:auto;font-size:14px;color:var(--ink3)}
 .counter b{color:var(--ink)}
-.agents{display:grid;gap:var(--sp3)}
-.layer{font-size:13px;font-weight:700;color:var(--ink3);text-transform:uppercase;letter-spacing:.06em;margin:var(--sp5) 0 var(--sp1)}
-.agent{border:1px solid var(--line);border-radius:14px;background:var(--bg2);padding:var(--sp5);display:grid;grid-template-columns:1fr auto;gap:var(--sp3) var(--sp5)}
+.agents{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:var(--sp3)}
+.agent{border:1px solid var(--line);border-radius:14px;background:var(--bg2);padding:var(--sp4);display:grid;gap:var(--sp2);align-content:start}
 .agent.joker{background:color-mix(in oklch,var(--acc) 9%,var(--bg2));border-color:color-mix(in oklch,var(--acc) 55%,var(--line))}
 .agent.ok{border-color:color-mix(in oklch,var(--ok) 60%,var(--line))}
-.agent.no{opacity:.62}
-.a-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:var(--sp2) var(--sp3)}
-.a-id{font-family:"Schibsted Grotesk";font-weight:800;font-size:15px;color:var(--ink3)}
-.a-name{font-family:"Schibsted Grotesk";font-weight:800;font-size:20px}
-.tag{font-size:12px;font-weight:700;padding:2px 9px;border-radius:999px;border:1px solid var(--line);color:var(--ink2);white-space:nowrap}
+.agent.no{opacity:.6}
+.a-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:var(--sp2)}
+.a-id{font-family:"Schibsted Grotesk";font-weight:800;font-size:14px;color:var(--ink3)}
+.a-name{font-family:"Schibsted Grotesk";font-weight:800;font-size:18px}
+.tag{font-size:12px;font-weight:700;padding:2px 9px;border-radius:999px;border:1px solid var(--line);color:var(--ink2);white-space:nowrap;margin-left:auto}
 .tag.p0{background:var(--p0);color:var(--acc-ink);border-color:var(--p0)}
 .tag.p1{color:var(--p1);border-color:color-mix(in oklch,var(--p1) 60%,transparent)}
 .tag.p2{color:var(--p2)}
-.a-mission{grid-column:1/-1;color:var(--ink);margin:0;max-width:none}
-.a-grid{grid-column:1/-1;display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:var(--sp3) var(--sp5);margin:0}
-.a-grid div{min-width:0}
-.a-grid dt{font-size:12px;font-weight:700;color:var(--ink3);text-transform:uppercase;letter-spacing:.05em;margin-bottom:2px}
-.a-grid dd{margin:0;font-size:14.5px;color:var(--ink2)}
-.a-grid .wide{grid-column:1/-1}
-.a-change{grid-column:1/-1;font-size:14px;color:var(--warn);margin:0;max-width:none}
-.vote{display:flex;gap:6px;align-self:start;grid-row:1;grid-column:2}
-.vote button{font:inherit;font-size:14px;font-weight:600;padding:7px 14px;border-radius:999px;border:1px solid var(--line);background:transparent;color:var(--ink2);cursor:pointer;min-height:36px}
+.a-mission{margin:0;color:var(--ink2);font-size:15px}
+.vote{display:flex;gap:6px;margin-top:var(--sp1)}
+.vote button{font:inherit;font-size:14px;font-weight:600;padding:6px 14px;border-radius:999px;border:1px solid var(--line);background:transparent;color:var(--ink2);cursor:pointer;min-height:36px}
 .vote button[aria-pressed="true"].y{background:var(--ok);border-color:var(--ok);color:oklch(22% .04 150)}
 .vote button[aria-pressed="true"].n{background:var(--bad);border-color:var(--bad);color:oklch(22% .05 28)}
 
-/* sobrecarga */
-.measure{display:grid;grid-template-columns:1fr 1fr;gap:var(--sp5);margin-bottom:var(--sp5)}
-.measure ul{margin:0;padding-left:18px;color:var(--ink2);font-size:15px}
-.measure li{margin:4px 0}
-.measure h3{margin-bottom:var(--sp2)}
-.lvl{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:middle}
-.steps{counter-reset:s;list-style:none;padding:0;margin:var(--sp4) 0 0;display:grid;gap:var(--sp2)}
-.steps li{counter-increment:s;display:grid;grid-template-columns:28px 1fr;gap:var(--sp2);color:var(--ink2);font-size:15px}
-.steps li::before{content:counter(s);font-weight:800;color:var(--acc)}
-
-/* roadmap */
-.waves{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border:1px solid var(--line);border-radius:14px;overflow:hidden}
-.wave{padding:var(--sp5);border-right:1px solid var(--line2);background:var(--bg2)}
-.wave:last-child{border-right:0}
-.wave .when{font-size:13px;color:var(--acc);font-weight:700;margin-bottom:4px}
-.wave h3{margin-bottom:var(--sp3)}
-.wave ul{margin:0;padding-left:16px;font-size:14.5px;color:var(--ink2)}
-.wave li{margin:5px 0}
-
-/* decisões */
-.decisions{counter-reset:d -1;list-style:none;padding:0;margin:0}
-.decisions li{counter-increment:d;display:grid;grid-template-columns:44px 1fr;gap:var(--sp3);padding:var(--sp4) 0;border-bottom:1px solid var(--line2)}
-.decisions li::before{content:counter(d);font-family:"Schibsted Grotesk";font-weight:800;font-size:22px;color:var(--ink3)}
-.decisions li.key::before{color:var(--acc)}
-.decisions b{color:var(--ink);display:block;margin-bottom:2px}
-.decisions span{color:var(--ink2);font-size:15px}
-
-.cut td:nth-child(2){color:var(--ink)}
-.fail li{margin:6px 0;color:var(--ink2)}
+/* decide */
+.decide{list-style:none;padding:0;margin:0;counter-reset:d}
+.decide li{counter-increment:d;display:grid;grid-template-columns:36px 1fr auto;gap:var(--sp3);align-items:start;padding:var(--sp4) 0;border-bottom:1px solid var(--line2)}
+.decide li::before{content:counter(d);font-family:"Schibsted Grotesk";font-weight:800;font-size:22px;color:var(--acc);line-height:1.2}
+.decide b{display:block;color:var(--ink)}
+.decide span{color:var(--ink3);font-size:14.5px}
+.decide .vote{margin:0}
 footer{padding:var(--sp6) 0 var(--sp8);color:var(--ink3);font-size:14px;border-top:1px solid var(--line2)}
 
-@media (max-width:860px){
-  .exec,.two,.measure{grid-template-columns:1fr}
-  .waves{grid-template-columns:1fr 1fr}
-  .wave:nth-child(2){border-right:0}
-  .wave:nth-child(-n+2){border-bottom:1px solid var(--line2)}
-}
-@media (max-width:560px){
-  .waves{grid-template-columns:1fr}
-  .wave{border-right:0;border-bottom:1px solid var(--line2)}
-  .agent{grid-template-columns:1fr}
-  .vote{grid-column:1;grid-row:auto}
+@media (max-width:760px){
+  .nums{grid-template-columns:1fr}
+  .num,.num + .num{padding:var(--sp4) 0;border-left:0}
+  .num + .num{border-top:1px solid var(--line2)}
+  .vs{grid-template-columns:1fr}
+  .vs-h.m{display:none}
+  .vs-a{border-bottom:0;padding-bottom:2px;font-size:14px}
+  .vs-a::before{content:"Hoje: ";font-weight:700}
+  .vs-b{border-left:0}
+  .vs-b::before{content:"Muda: ";font-weight:700;color:var(--acc)}
+  .vs > :nth-last-child(2){border-bottom:0}
+  .legend{grid-template-columns:1fr}
+  .scroll-hint{display:block}
+  .decide li{grid-template-columns:28px 1fr}
+  .decide .vote{grid-column:2}
   .counter{margin-left:0;width:100%}
-  .src dl{grid-template-columns:1fr}
-  .src dt{text-align:left}
-  header.top{padding:var(--sp7) 0 var(--sp6)}
 }
 @media (prefers-reduced-motion:no-preference){
   .agent{transition:opacity .25s cubic-bezier(.22,1,.36,1),border-color .25s cubic-bezier(.22,1,.36,1)}
 }
+
+/* ============ AZIR MOCK (CSS copiado do Azir, escopado) ============ */
+.azir-mock{
+  --primary:#2fb3a2;--primary-hover:#45c6b5;--primary-light:rgba(47,179,162,.14);
+  --navy:#e8eaef;--coral:#f2766f;--fg:#dde0e7;--bg:#23272f;
+  --sup-1:#1b1e25;--sup-2:#23272f;--sup-3:#2a2f39;--on-primary:#0b1715;
+  --muted:#2c313b;--muted-fg:#959cab;--border:#323844;--page:#15171c;
+  --success:#4ade80;--error:#f87171;--shadow-card:0 1px 2px rgba(0,0,0,.35);
+  --c-backlog:#6f7686;--c-fazendo:#2fb3a2;--c-travado:#f2766f;--c-concluido:#4ade80;--c-validacao:#e9c46a;
+  --agente:#b9a4fb;--skill:#8ab8fb;--mcp:#6fd6b0;--workflow:#f9a86a;
+  --alerta:#e8a33d;--falha:#e5484d;--neutro:#8b93a3;
+  --esp:#d8c9a3;--esp-fundo:rgba(216,201,163,.09);--esp-borda:rgba(216,201,163,.22);
+  --mono:ui-monospace,"Cascadia Mono","SF Mono",Menlo,Consolas,monospace;
+  --ok:#4fc982;--degradado:#d9c24e;--falha-txt:#f2878a;--sem:#7d8596;--rot-col:#b3b9c6;
+  --novo:oklch(74% .16 350);--novo-ink:oklch(24% .06 350);
+  background:var(--page);color:var(--fg);
+  font:500 14px/1.4 "Helvetica Neue",Helvetica,Arial,system-ui,sans-serif;font-variant-numeric:tabular-nums;
+  padding:0 0 20px;
+}
+.azir-mock :is(h3,h4,p,ul,ol,li,dl,dd){margin:0;padding:0;max-width:none;color:inherit;font:inherit;letter-spacing:normal}
+.azir-mock ul{list-style:none}
+.azir-mock button{font:inherit;color:inherit;background:none;border:0;cursor:default}
+.azir-mock.w-quadro{min-width:1180px}
+.azir-mock.w-mid{min-width:1000px}
+.azir-mock.w-lat{min-width:900px}
+.azir-mock.w-gav{min-width:520px}
+.azir-mock.w-painel{width:max-content;margin:0 auto}
+.mock-scroll.ct{background:#0d0f13}
+/* marcador novo */
+.azir-mock .nv{position:relative;outline:1.5px dashed var(--novo);outline-offset:3px}
+.azir-mock .nv::after{content:"novo";text-transform:none;position:absolute;top:-10px;right:-8px;z-index:4;font:700 9.5px/1 "Hanken Grotesk",sans-serif;letter-spacing:.04em;padding:2px 6px;border-radius:999px;background:var(--novo);color:var(--novo-ink);pointer-events:none}
+.azir-mock .nv.in{outline-offset:-2px}
+.azir-mock .nv.in::after{top:6px;right:8px}
+.azir-mock .nv.lft::after{right:auto;left:-6px}
+
+/* barra */
+.azir-mock .barra{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 32px;background:var(--sup-1);border-bottom:1px solid var(--border)}
+.azir-mock .marca{display:flex;align-items:center;gap:10px}
+.azir-mock .marca svg{width:26px;height:26px}
+.azir-mock .marca-nome{font-size:18px;font-weight:700;letter-spacing:.06em;color:#e9dcc0}
+.azir-mock .vistas{display:flex;gap:4px;background:var(--page);border:1px solid var(--border);border-radius:999px;padding:3px;margin-right:auto;margin-left:24px}
+.azir-mock .vista{font:500 13px/1 "Helvetica Neue",Helvetica,Arial,sans-serif;color:var(--muted-fg);border-radius:999px;padding:7px 16px;display:inline-flex;align-items:center}
+.azir-mock .vista.ativa{background:var(--sup-3);color:var(--navy)}
+.azir-mock .vista-alerta{margin-left:6px;min-width:18px;padding:2px 5px;border-radius:999px;background:var(--falha);color:#1d0b0c;font-size:11px;font-weight:700;text-align:center}
+.azir-mock .slack-auto{display:flex;align-items:center;gap:8px;background:var(--page);border:1px solid var(--border);border-radius:999px;padding:5px 12px 5px 6px;font:500 13px/1 "Helvetica Neue",Helvetica,Arial,sans-serif;color:var(--navy)}
+.azir-mock .slack-auto small{color:var(--muted-fg);font-size:12px}
+.azir-mock .slack-trilho{width:30px;height:18px;border-radius:999px;background:rgba(47,179,162,.35);position:relative}
+.azir-mock .slack-trilho span{position:absolute;top:3px;left:15px;width:12px;height:12px;border-radius:50%;background:var(--primary)}
+.azir-mock .btn-slack{border:1px solid var(--border);border-radius:999px;padding:6px 12px;font-size:13px;color:var(--agente);display:inline-flex;gap:6px;align-items:center}
+.azir-mock .btn-slack i{width:6px;height:6px;border-radius:50%;background:var(--falha)}
+.azir-mock .pool{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--muted-fg)}
+.azir-mock .pool b{color:var(--primary);font-weight:500}
+.azir-mock .pool-slots{display:flex;gap:3px}
+.azir-mock .pool-slots i{width:14px;height:6px;border-radius:2px;background:var(--muted)}
+.azir-mock .pool-slots i[data-on]{background:var(--primary)}
+
+/* botões */
+.azir-mock .btn{font:500 14px/1 "Helvetica Neue",Helvetica,Arial,sans-serif;border-radius:999px;padding:9px 18px;border:1px solid transparent;display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+.azir-mock .btn-primario{background:var(--primary);color:var(--on-primary);font-weight:600}
+.azir-mock .btn-contorno{background:var(--sup-2);color:var(--primary);border-color:rgba(47,179,162,.45)}
+.azir-mock .btn-leve{background:transparent;color:var(--muted-fg)}
+.azir-mock .btn-mini{padding:5px 12px;font-size:13px}
+.azir-mock .secao{display:block;margin-bottom:8px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted-fg);font-size:12px;font-weight:600}
+
+/* quadro */
+.azir-mock .q-topo{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;padding:24px 32px 18px}
+.azir-mock .q-topo h3{font-size:26px;font-weight:700;color:var(--navy);letter-spacing:-.01em}
+.azir-mock .q-topo p{color:var(--muted-fg);font-size:14px;margin-top:4px}
+.azir-mock .q-acoes{display:flex;gap:8px;align-items:center}
+.azir-mock .quadro{display:grid;grid-template-columns:repeat(5,minmax(210px,1fr));gap:16px;padding:0 32px}
+.azir-mock .coluna{display:flex;flex-direction:column;background:var(--sup-1);border-radius:14px;border-top:3px solid var(--c-backlog)}
+.azir-mock [data-coluna=fazendo]{border-top-color:var(--c-fazendo)}
+.azir-mock [data-coluna=travado]{border-top-color:var(--c-travado)}
+.azir-mock [data-coluna=validacao]{border-top-color:var(--c-validacao)}
+.azir-mock [data-coluna=concluido]{border-top-color:var(--c-concluido)}
+.azir-mock .coluna > header{display:flex;align-items:center;gap:8px;padding:14px 14px 10px;color:var(--navy);font-size:14px}
+.azir-mock .ponto{width:9px;height:9px;border-radius:50%;background:var(--c-backlog)}
+.azir-mock [data-coluna=fazendo] .ponto{background:var(--c-fazendo)}
+.azir-mock [data-coluna=travado] .ponto{background:var(--c-travado)}
+.azir-mock [data-coluna=validacao] .ponto{background:var(--c-validacao)}
+.azir-mock [data-coluna=concluido] .ponto{background:var(--c-concluido)}
+.azir-mock .conta{margin-left:auto;font-size:12px;font-weight:600;padding:1px 9px;border-radius:999px;background:var(--sup-2);color:var(--muted-fg)}
+.azir-mock [data-coluna=travado] .conta{background:var(--coral);color:#1d0d0c}
+.azir-mock .lista{padding:2px 10px 14px;display:flex;flex-direction:column;gap:10px}
+.azir-mock .card{background:var(--sup-2);border:1px solid var(--border);border-radius:12px;padding:12px 14px;box-shadow:var(--shadow-card)}
+.azir-mock [data-lista=travado] .card{border-color:rgba(242,118,111,.45)}
+.azir-mock [data-lista=concluido] .card{opacity:.55}
+.azir-mock .card-topo{display:flex;align-items:center;gap:8px;font-size:12px}
+.azir-mock .cbx{width:15px;height:15px;border:1.5px solid #5a6170;border-radius:3px}
+.azir-mock .origem{white-space:nowrap;padding:1px 9px;border-radius:999px;background:var(--muted);color:var(--navy);font-size:12px}
+.azir-mock .origem.taskdex{background:var(--primary-light);color:var(--primary)}
+.azir-mock .origem.slack{background:rgba(185,164,251,.14);color:var(--agente)}
+.azir-mock .origem.melhoria{background:rgba(249,168,106,.13);color:var(--workflow)}
+.azir-mock .tempo{margin-left:auto;color:var(--muted-fg);font-size:12px}
+.azir-mock .card .titulo{margin-top:8px;color:var(--navy);line-height:1.35;font-size:14px}
+.azir-mock .card .sub{margin-top:4px;color:var(--muted-fg);font-size:12px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.azir-mock [data-lista=fazendo] .sub{color:var(--primary)}
+.azir-mock [data-lista=travado] .sub{color:#f49a94}
+.azir-mock .prog{margin-top:10px;display:grid;gap:4px;font-size:11px;color:var(--muted-fg)}
+.azir-mock .prog div{display:flex;justify-content:space-between}
+.azir-mock .prog b{color:var(--c-concluido);font-weight:600}
+.azir-mock .prog-trilho{height:4px;border-radius:999px;background:var(--muted);overflow:hidden}
+.azir-mock .prog-trilho span{display:block;height:100%;background:var(--c-concluido)}
+.azir-mock .chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.azir-mock .chip{font-size:12px;font-weight:500;padding:2px 9px;border-radius:999px;background:var(--muted);color:var(--navy)}
+.azir-mock .chip.mcp{background:rgba(111,214,176,.12);color:var(--mcp)}
+.azir-mock .chip.mcp small{font:700 9px/1 var(--mono);opacity:.8;margin-right:4px}
+.azir-mock .esp-chip{display:inline-flex;align-items:center;gap:5px;margin-top:9px;padding:2px 9px 2px 7px;border-radius:999px;font-size:12px;color:var(--esp);background:var(--esp-fundo);box-shadow:inset 0 0 0 1px var(--esp-borda)}
+.azir-mock .esp-chip[data-esp=generalista],.azir-mock .esp-chip[data-esp=semdono]{color:var(--muted-fg);background:rgba(149,156,171,.08);box-shadow:inset 0 0 0 1px rgba(149,156,171,.18)}
+.azir-mock .esp-chip[data-esp=semdono]{box-shadow:none;border:1px dashed rgba(149,156,171,.4)}
+.azir-mock .esp-ic{width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.azir-mock .est{font:600 10px/1 var(--mono);padding:2px 4px;border-radius:4px;background:rgba(216,201,163,.14);color:var(--esp)}
+.azir-mock [data-esp=generalista] .est{background:rgba(149,156,171,.14);color:var(--muted-fg)}
+.azir-mock .ok-card{margin-top:10px;background:rgba(242,118,111,.06);border:1px solid rgba(242,118,111,.28);border-radius:10px;padding:10px 12px;display:grid;gap:8px;font-size:13px;color:var(--navy)}
+.azir-mock .ok-card .secao{color:#f49a94;margin:0;font-size:11px}
+.azir-mock .ok-card textarea{background:var(--sup-1);border:1px solid var(--border);border-radius:8px;height:40px;resize:none;color:var(--muted-fg);font:inherit;font-size:12px;padding:6px 8px}
+.azir-mock .vazio{border:1px dashed var(--border);border-radius:12px;padding:14px;color:var(--muted-fg);font-size:13px}
+
+/* central */
+.azir-mock .pad{padding:24px 32px 0}
+.azir-mock .central-grade{display:grid;grid-template-columns:minmax(300px,1.3fr) minmax(240px,.9fr) minmax(280px,1.2fr);gap:16px;margin-bottom:16px}
+.azir-mock .caixa,.azir-mock .equipe,.azir-mock .grafico,.azir-mock .tabela-central{background:var(--sup-1);border:1px solid var(--border);border-radius:14px;padding:16px;display:grid;gap:10px;align-content:start}
+.azir-mock .caixa{border-top:3px solid var(--primary)}
+.azir-mock .caixa textarea{min-height:110px;font-family:var(--mono);font-size:12.5px;background:var(--page);border:1px solid var(--border);border-radius:10px;color:var(--muted-fg);padding:10px;resize:none}
+.azir-mock .membro{display:grid;grid-template-columns:10px 1fr auto;gap:10px;align-items:center;padding:8px 12px;border-radius:10px;background:var(--sup-2);border:1px solid var(--border);font-size:13px;color:var(--navy)}
+.azir-mock .membro small{display:block;color:var(--muted-fg);font-size:11.5px}
+.azir-mock .membro em{font-style:normal;font:500 11px/1 var(--mono);color:var(--muted-fg)}
+.azir-mock .membro .bola{width:8px;height:8px;border-radius:50%;background:var(--success)}
+.azir-mock .barras{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;align-items:end;height:120px;padding-top:6px}
+.azir-mock .barras div{display:flex;gap:3px;align-items:end;height:100%}
+.azir-mock .barras i{flex:1;border-radius:3px 3px 0 0}
+.azir-mock .barras .r{background:#7a6fe0}.azir-mock .barras .e{background:#26a291}
+.azir-mock .eixo{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;font-size:11px;color:var(--muted-fg);text-align:center}
+.azir-mock .sw{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:5px}
+.azir-mock .sw.rec{background:#7a6fe0}.azir-mock .sw.ent{background:#26a291}
+.azir-mock .filtros{display:flex;gap:4px;font-size:12.5px}
+.azir-mock .filtros span{padding:5px 11px;border-radius:999px;color:var(--muted-fg);border:1px solid var(--border)}
+.azir-mock .filtros span.on{background:var(--sup-3);color:var(--navy)}
+.azir-mock .central-tab{width:100%;border-collapse:collapse;font-size:13px}
+.azir-mock .central-tab th{font-size:11px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--muted-fg);padding:8px 10px;text-align:left;border-bottom:1px solid var(--border);background:none}
+.azir-mock .central-tab td{padding:10px;border-bottom:1px solid var(--border);color:var(--navy);font-weight:500;white-space:normal;vertical-align:middle}
+.azir-mock .central-tab td:first-child{font-family:var(--mono);font-weight:600}
+.azir-mock .central-tab .st-ok{color:var(--success)}.azir-mock .central-tab .st-tr{color:var(--coral)}
+.azir-mock .central-tab .rel{color:var(--c-validacao)}
+.azir-mock .central-tab .mut{color:var(--muted-fg)}
+
+/* agentes */
+.azir-mock .ag-topo{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px 16px;padding:22px 32px 14px}
+.azir-mock .ag-titulo{display:flex;align-items:center;gap:14px}
+.azir-mock .ag-titulo h3{font-size:24px;font-weight:700;letter-spacing:-.02em;color:var(--navy)}
+.azir-mock .ag-sync{font:500 12px/1 var(--mono);color:var(--rot-col)}
+.azir-mock .ag-sync::before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--ok);margin-right:6px;vertical-align:middle}
+.azir-mock .ag-modo{display:inline-flex;gap:2px;padding:3px;border:1px solid var(--border);border-radius:999px;background:var(--sup-1)}
+.azir-mock .ag-modo span{color:var(--rot-col);font:500 12px/1 "Helvetica Neue",Helvetica,Arial,sans-serif;padding:6px 13px;border-radius:999px}
+.azir-mock .ag-modo span.on{background:var(--sup-3);color:var(--fg);box-shadow:inset 0 0 0 1px rgba(47,179,162,.35)}
+.azir-mock .ag-dir{display:flex;align-items:center;gap:8px;flex-basis:100%}
+.azir-mock .ag-auto{display:flex;align-items:center;gap:4px;padding:3px 4px 3px 12px;border:1px solid var(--border);border-radius:999px;background:var(--sup-1);flex-wrap:nowrap}
+.azir-mock .ag-rot{font:600 11px/1.3 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--rot-col)}
+.azir-mock .ag-switch{display:inline-flex;align-items:center;gap:7px;color:var(--fg);font:500 12.5px/1 "Helvetica Neue",Helvetica,Arial,sans-serif;padding:5px 8px 5px 8px;border-radius:999px;white-space:nowrap}
+.azir-mock .ag-trilho{position:relative;width:26px;height:14px;border-radius:999px;background:var(--muted);box-shadow:inset 0 0 0 1px #4a5160}
+.azir-mock .ag-trilho::after{content:"";position:absolute;top:2px;left:2px;width:10px;height:10px;border-radius:50%;background:#9aa1af}
+.azir-mock .ag-switch[aria-checked=true] .ag-trilho{background:rgba(79,201,130,.35);box-shadow:inset 0 0 0 1px var(--ok)}
+.azir-mock .ag-switch[aria-checked=true] .ag-trilho::after{transform:translateX(12px);background:var(--ok)}
+.azir-mock .ag-pill{font:600 10.5px/1 var(--mono);color:var(--rot-col)}
+.azir-mock .ag-switch[aria-checked=true] .ag-pill{color:var(--ok)}
+.azir-mock .ag-faixa{display:grid;grid-template-columns:repeat(7,minmax(0,1fr)) minmax(0,1.4fr) minmax(0,1.2fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:10px;overflow:hidden;margin:0 32px 14px}
+.azir-mock .ag-seg{display:grid;gap:5px;align-content:start;min-height:70px;padding:11px 14px;background:var(--sup-1)}
+.azir-mock .ag-seg span{font:600 10.5px/1.2 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--rot-col)}
+.azir-mock .ag-seg b{font-family:var(--mono);font-size:21px;font-weight:600;color:var(--sem)}
+.azir-mock .ag-seg[data-st=atrasado]{box-shadow:inset 0 2px 0 var(--alerta)}
+.azir-mock .ag-seg[data-st=atrasado] b{font-size:30px;color:var(--alerta)}
+.azir-mock .ag-seg[data-st=ok] b{color:var(--ok)}
+.azir-mock .ag-seg[data-st=up] b{color:var(--ok)}
+.azir-mock .ag-seg small{font:500 10.5px/1 var(--mono);color:var(--muted-fg)}
+.azir-mock .ag-corpo{padding:0 32px;display:grid;gap:14px}
+.azir-mock .ag-grupo{background:var(--sup-1);border:1px solid var(--border);border-radius:10px}
+.azir-mock .ag-grupo[data-tipo=atencao]{border-color:rgba(232,163,61,.35)}
+.azir-mock .ag-g-cab{display:flex;align-items:center;gap:10px;padding:12px 16px}
+.azir-mock .ag-g-tit{font:600 11.5px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--fg)}
+.azir-mock .ag-g-conta{font-family:var(--mono);font-size:11.5px;color:var(--rot-col)}
+.azir-mock .ag-g-conta .r{color:var(--falha-txt)}.azir-mock .ag-g-conta .a{color:var(--degradado)}
+.azir-mock .ag-item{display:grid;grid-template-columns:10px minmax(0,1fr) 184px 110px 170px 80px 150px;grid-template-rows:44px;column-gap:12px;align-items:center;padding:0 16px;border-top:1px solid var(--border);font-size:13px}
+.azir-mock .ag-item.std{grid-template-columns:10px minmax(0,1fr) 150px 44px 110px 96px 110px 150px}
+.azir-mock .ag-cab{grid-template-rows:28px;font:600 10.5px/1 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--rot-col);background:rgba(0,0,0,.14)}
+.azir-mock .ag-item[data-grav=precisa]{background:rgba(232,163,61,.06);box-shadow:inset 3px 0 0 var(--alerta)}
+.azir-mock .ag-led{width:8px;height:8px;border-radius:50%;background:var(--sem)}
+.azir-mock .ag-led.ok{background:var(--ok)}.azir-mock .ag-led.al{background:var(--alerta)}.azir-mock .ag-led.and{background:var(--primary)}
+.azir-mock .ag-nome{display:flex;align-items:baseline;gap:8px;min-width:0;white-space:nowrap;overflow:hidden}
+.azir-mock .ag-nome b{font-size:14px;font-weight:500;color:var(--navy)}
+.azir-mock .ag-id{font:500 11.5px/1 var(--mono);color:var(--muted-fg)}
+.azir-mock .ag-pal{font:600 10px/1 var(--mono);padding:2px 5px;border-radius:4px;background:rgba(216,201,163,.12);color:var(--esp)}
+.azir-mock .ag-pct{font:500 12px/1 var(--mono);color:var(--muted-fg)}
+.azir-mock .ag-pct[data-nivel=ok]{color:var(--ok)}
+.azir-mock .ag-pct[data-nivel=meio]{color:var(--degradado)}
+.azir-mock .ag-pct[data-nivel=baixo]{color:var(--falha-txt);font-weight:700}
+.azir-mock .ag-dias{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:3px;height:18px}
+.azir-mock .ag-dia{position:relative;display:grid;place-items:center;border-radius:3px;background:rgba(79,201,130,.55)}
+.azir-mock .ag-dia[data-st=falhou]{background:rgba(229,72,77,.85)}
+.azir-mock .ag-dia[data-st=faltou]{background:repeating-linear-gradient(135deg,rgba(232,163,61,.32) 0 3px,rgba(232,163,61,.08) 3px 6px);box-shadow:inset 0 0 0 1px rgba(232,163,61,.35)}
+.azir-mock .ag-dia[data-st=vazio]{background:rgba(255,255,255,.035)}
+.azir-mock .ag-dia[data-hoje]{outline:1px dashed #c3c9d4;outline-offset:-1px}
+.azir-mock .ag-qn{font:700 9.5px/1 var(--mono);color:rgba(10,12,16,.85)}
+.azir-mock .ag-dia[data-st=faltou] .ag-qn{color:#f5d6a2}
+.azir-mock .ag-dia[data-st=vazio] .ag-qn,.azir-mock .ag-dia[data-hoje] .ag-qn{color:#c3c9d4}
+.azir-mock .ag-qtd{position:absolute;left:2px;bottom:2px;height:2px;border-radius:1px;background:rgba(10,12,16,.6)}
+.azir-mock .ag-ult{font:500 12px/1.3 var(--mono);color:var(--fg)}
+.azir-mock .ag-ult small{display:block;color:var(--muted-fg);font-size:11px}
+.azir-mock .ag-chip{font:500 11px/1 var(--mono);padding:3px 6px;border-radius:4px;background:var(--page);border:1px solid var(--border);color:var(--rot-col);justify-self:start}
+.azir-mock .ag-selo{justify-self:end;padding:6px 12px;border-radius:999px;border:1px solid rgba(47,179,162,.45);color:var(--primary);font-size:12.5px;white-space:nowrap}
+.azir-mock .ag-selo.alt{border-color:var(--border);color:var(--rot-col)}
+.azir-mock .ag-mais{padding:10px 16px 12px 38px;border-top:1px solid var(--border);font:500 12px/1 var(--mono);color:var(--muted-fg)}
+.azir-mock .ag-warn{margin:0 16px 12px 38px;padding:9px 12px;border-radius:6px;background:rgba(0,0,0,.18);box-shadow:inset 2px 0 0 var(--alerta);font:500 12px/1.3 var(--mono);color:var(--fg)}
+.azir-mock .ag-warn b{color:var(--alerta);margin-right:8px}
+.azir-mock .sup-alertas{margin:0 16px 14px 38px;border:1px solid var(--border);border-radius:8px;background:rgba(0,0,0,.14)}
+.azir-mock .sup-alertas .ag-rot{display:block;padding:10px 12px 6px}
+.azir-mock .sup-l{display:grid;grid-template-columns:160px 1fr 70px 110px;gap:12px;align-items:center;padding:8px 12px;border-top:1px solid var(--border);font:500 12px/1.3 var(--mono);color:var(--fg)}
+.azir-mock .sup-l .r{color:var(--falha-txt)}.azir-mock .sup-l .a{color:var(--degradado)}
+
+/* mapa */
+.azir-mock .mp{position:relative;width:1180px;height:680px;border-radius:18px;overflow:hidden;border:1px solid rgba(255,255,255,.05);margin:0 auto;
+  background:radial-gradient(ellipse 46% 50% at 50% 46%,rgba(16,58,78,.85),rgba(14,48,70,.25) 55%,transparent 78%),radial-gradient(ellipse 120% 90% at 50% 100%,#171b22,#13151a)}
+.azir-mock .mp svg{position:absolute;inset:0;width:100%;height:100%}
+.azir-mock .mp-rot{fill:#c9d6de;font:500 10px/1 "Helvetica Neue",Helvetica,Arial,sans-serif}
+.azir-mock .mp-rot-bg{fill:rgba(16,19,24,.72);stroke:rgba(255,255,255,.05)}
+.azir-mock .mp-no[data-cor=alerta] .mp-rot{fill:#f5d6a2}
+.azir-mock .mp-no[data-cor=falha] .mp-rot{fill:#ffb9bb}
+.azir-mock .mp-badge circle{fill:#8b93a3;stroke:#15171c;stroke-width:1.5}
+.azir-mock .mp-badge[data-cor=falha] circle{fill:#e5484d}
+.azir-mock .mp-badge[data-cor=alerta] circle{fill:#e8a33d}
+.azir-mock .mp-no[data-cor=falha] .mp-badge circle{fill:#e5484d}
+.azir-mock .mp-no[data-cor=precisa] .mp-badge circle{fill:#f2766f}
+.azir-mock .mp-badge text{fill:#fff;font:700 9.5px/1 "Helvetica Neue",Helvetica,Arial,sans-serif}
+.azir-mock .mp-legenda rect{fill:rgba(20,24,30,.78);stroke:rgba(160,220,235,.16)}
+.azir-mock .mp-legenda text{fill:#c3cad6;font:600 11.5px/1 "Helvetica Neue",Helvetica,Arial,sans-serif}
+.azir-mock .mp-mini{fill:#9aa2b1;font:500 10px/1 "Helvetica Neue",Helvetica,Arial,sans-serif}
+.azir-mock .mp-orb-t{fill:#e8eaef;font:700 15px/1 "Helvetica Neue",Helvetica,Arial,sans-serif}
+.azir-mock .mp-orb-s{fill:#b3b9c6;font:500 11px/1 ui-monospace,Menlo,Consolas,monospace}
+.azir-mock .mp-novo{stroke:var(--novo);stroke-width:1.5;stroke-dasharray:5 4}
+.azir-mock .mp-novo-tag rect{fill:var(--novo)}
+.azir-mock .mp-novo-tag text{fill:var(--novo-ink);font:700 10px/1 "Hanken Grotesk",sans-serif}
+.azir-mock .mp-dica rect:first-child{fill:rgba(20,23,29,.92);stroke:var(--novo);stroke-dasharray:4 3}
+.azir-mock .mp-dica-t{fill:#e8eaef;font:600 12px/1 "Helvetica Neue",Helvetica,Arial,sans-serif}
+.azir-mock .mp-dica-s{fill:#f2878a;font:600 11px/1 ui-monospace,Menlo,Consolas,monospace}
+.azir-mock .mp-dica-pill{fill:rgba(229,72,77,.16)}
+.azir-mock .mp-dica-pt{fill:#ff9a9d;font:600 10.5px/1 ui-monospace,Menlo,Consolas,monospace}
+.azir-mock .mp-card{position:absolute;z-index:2;width:196px;display:grid;gap:5px;padding:11px 14px 10px;border-radius:14px;border:1px solid transparent;
+  background:linear-gradient(180deg,rgba(120,210,230,.08),rgba(120,200,220,0) 40%) padding-box,linear-gradient(160deg,rgba(30,38,50,.6),rgba(16,20,28,.7)) padding-box,linear-gradient(150deg,rgba(140,225,240,.42),rgba(140,225,240,.08) 38%,rgba(255,255,255,.04) 70%,rgba(140,225,240,.18)) border-box;
+  box-shadow:0 18px 40px rgba(0,0,0,.32),inset 0 1px 0 rgba(255,255,255,.1)}
+.azir-mock .mp-card .ag-rot{font-size:10.5px}
+.azir-mock .mp-grande{font-size:24px;font-weight:600;color:var(--navy);font-family:var(--mono)}
+.azir-mock .mp-pe{font-size:11px;color:#9aa2b1}
+.azir-mock .mp-fontes{display:flex;gap:18px;align-items:center;margin:12px 32px 0;padding:10px 14px;border:1px solid var(--border);border-radius:10px;background:var(--sup-1);font:500 11.5px/1 var(--mono);color:var(--rot-col)}
+.azir-mock .mp-fontes b{color:var(--fg)}
+.azir-mock .mp-fontes i{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--ok);margin-right:6px}
+
+/* lateral */
+.azir-mock .lat-grade{display:grid;grid-template-columns:1fr 1fr;gap:16px;padding:20px 24px 0}
+.azir-mock .mp-lat{border-radius:16px;padding:16px 20px;background:linear-gradient(180deg,rgba(120,200,220,.05),transparent 120px),rgba(20,23,29,.92);border:1px solid rgba(255,255,255,.1);box-shadow:-24px 0 60px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.1)}
+.azir-mock .lat-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.azir-mock .lat-top span:last-child{color:var(--muted-fg);font-size:14px}
+.azir-mock .esp-lat{display:grid;gap:14px}
+.azir-mock .esp-lat-cab{display:flex;align-items:center;gap:12px}
+.azir-mock .esp-lat-marca{flex:none;width:44px;height:44px;border-radius:50%;background:radial-gradient(circle at 36% 30%,#fbf6ea 0%,#c9b98f 45%,#352f22 100%);box-shadow:0 0 0 1px rgba(216,201,163,.35),0 0 18px rgba(216,201,163,.18)}
+.azir-mock .esp-lat-marca.ctl{background:radial-gradient(circle at 36% 30%,#e9eef5 0%,#8b97aa 45%,#20262f 100%);box-shadow:0 0 0 1px rgba(160,180,200,.35)}
+.azir-mock .esp-lat-cab h4{font-size:18px;font-weight:600;color:var(--navy);display:flex;align-items:center;gap:8px}
+.azir-mock .esp-lat-cab .linha{display:flex;gap:6px;align-items:center;margin-top:5px;flex-wrap:wrap}
+.azir-mock .mp-dica-st{font:600 11px/1 var(--mono);padding:3px 7px;border-radius:999px;color:#5fd0bf;background:rgba(47,179,162,.14)}
+.azir-mock .mp-dica-st[data-cor=alerta]{color:var(--alerta);background:rgba(232,163,61,.14)}
+.azir-mock .mp-dica-st[data-cor=falha]{color:#ff9a9d;background:rgba(229,72,77,.16)}
+.azir-mock .aut{font:600 11px/1 var(--mono);padding:3px 7px;border-radius:999px;color:var(--rot-col);border:1px solid var(--border)}
+.azir-mock .esp-lat-desc{font-size:13px;line-height:1.55;color:#c9ced8}
+.azir-mock .esp-lat-grupo{display:grid;gap:7px}
+.azir-mock .esp-lat-rot{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted-fg)}
+.azir-mock .esp-lat-task{display:grid;grid-template-columns:auto 1fr auto;gap:10px;font-size:12.5px;background:rgba(255,255,255,.03);border:1px solid transparent;border-radius:8px;padding:7px 10px;color:var(--fg)}
+.azir-mock .esp-lat-task .mono{font:600 11.5px/1.4 var(--mono);color:var(--esp)}
+.azir-mock .esp-lat-col{font-size:11.5px;color:var(--muted-fg)}
+.azir-mock .esp-lat-col.f{color:var(--primary)}.azir-mock .esp-lat-col.a{color:var(--degradado)}.azir-mock .esp-lat-col.r{color:var(--falha-txt)}
+.azir-mock .esp-lat-chips{display:flex;flex-wrap:wrap;gap:6px}
+.azir-mock .esp-lat-chips li{font:500 11.5px/1.4 var(--mono);padding:2px 9px;border-radius:999px;background:rgba(255,255,255,.05);color:#d3d7e0}
+.azir-mock .esp-lat-chips .sk{color:var(--skill);background:rgba(138,184,251,.1)}
+.azir-mock .esp-lat-chips .mc{color:var(--mcp);background:rgba(111,214,176,.1)}
+.azir-mock .esp-lat-vazio{font-size:12.5px;color:var(--muted-fg)}
+.azir-mock .big-dias{height:28px}
+.azir-mock .big-dias .ag-qn{font-size:11px}
+.azir-mock .big-eixo{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;font:500 10px/1 var(--mono);color:var(--muted-fg);text-align:center}
+.azir-mock .cor-est{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+.azir-mock .cor-est div{background:rgba(255,255,255,.03);border-radius:8px;padding:8px 10px;font-size:11px;color:var(--muted-fg)}
+.azir-mock .cor-est b{display:block;font:600 18px/1.2 var(--mono);color:var(--navy)}
+
+/* uso de ia */
+.azir-mock .ui-topo{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
+.azir-mock .ui-topo h3{font-size:24px;font-weight:700;letter-spacing:-.02em;color:var(--navy)}
+.azir-mock .ui-topo small{font:500 12px/1 var(--mono);color:var(--rot-col);margin-left:10px}
+.azir-mock .ui-hero{display:flex;justify-content:space-between;gap:20px 32px;padding:20px 24px;background:var(--sup-1);border:1px solid var(--border);border-radius:16px}
+.azir-mock .ui-faixa-b{font-size:44px;font-weight:700;line-height:1;letter-spacing:-.03em;color:var(--primary);margin-top:8px}
+.azir-mock .ui-dias{display:grid;grid-template-columns:repeat(7,minmax(44px,1fr));gap:6px;min-width:380px}
+.azir-mock .ui-dia{display:grid;gap:4px;text-align:center;font-size:11px;color:var(--muted-fg)}
+.azir-mock .ui-dia-c{height:26px;border-radius:8px;background:var(--sup-3);border:2px solid transparent}
+.azir-mock .ui-dia.completo .ui-dia-c{background:var(--primary)}
+.azir-mock .ui-dia.hoje .ui-dia-c{border-color:var(--navy)}
+.azir-mock .ui-aviso{margin:14px 0;padding:10px 14px;border-radius:10px;border:1px solid rgba(74,222,128,.35);background:rgba(74,222,128,.05);font-size:13px;color:var(--fg)}
+.azir-mock .ui-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.azir-mock .ui-card{background:var(--sup-1);border:1px solid var(--border);border-radius:14px;padding:14px 16px;display:grid;gap:6px}
+.azir-mock .ui-card b{font-size:28px;font-weight:700;color:var(--navy);letter-spacing:-.02em}
+.azir-mock .ui-card small{font-size:12px;color:var(--muted-fg)}
+.azir-mock .ui-provisoria{font-size:12px;color:var(--alerta)}
+
+/* painel do card */
+.azir-mock .painel-wrap{display:flex;justify-content:flex-end;background:linear-gradient(90deg,rgba(10,12,16,.6),rgba(10,12,16,.75)),var(--page);padding:0 0 0 48px}
+.azir-mock .painel{width:580px;background:var(--sup-1);border-left:1px solid var(--border);box-shadow:-12px 0 40px rgba(0,0,0,.5)}
+.azir-mock .painel-cabeca{padding:20px 24px;display:grid;gap:8px;border-bottom:1px solid var(--border)}
+.azir-mock .p-linha{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted-fg)}
+.azir-mock .p-linha .dir{margin-left:auto;display:flex;gap:16px}
+.azir-mock .pill{font-size:12px;font-weight:500;padding:2px 10px;border-radius:999px;background:var(--muted);color:var(--navy)}
+.azir-mock .pill.fazendo{background:var(--primary);color:var(--on-primary)}
+.azir-mock .painel h4{font-size:20px;font-weight:500;color:var(--navy);line-height:1.3}
+.azir-mock .painel-corpo{padding:22px 24px 28px;display:grid;gap:22px}
+.azir-mock .bloco{border-radius:12px;padding:16px;display:grid;gap:10px}
+.azir-mock .bloco-perg{background:var(--sup-2);border:1px solid var(--border)}
+.azir-mock .bloco-perg .secao{color:var(--primary)}
+.azir-mock .atalhos{display:flex;gap:6px;flex-wrap:wrap}
+.azir-mock .atalhos span{font-size:12.5px;padding:5px 11px;border-radius:999px;border:1px solid var(--border);color:var(--navy)}
+.azir-mock .p-esp{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.azir-mock .p-esp .esp-chip{margin-top:0;font-size:13px;padding:4px 11px 4px 9px}
+.azir-mock .p-motivo{font-size:12px;color:var(--muted-fg)}
+.azir-mock .campo{display:grid;gap:4px;font-size:12px;color:var(--muted-fg)}
+.azir-mock .inp{font-size:13px;color:var(--fg);background:var(--sup-3);border:1px solid var(--border);border-radius:999px;padding:5px 12px;display:inline-flex;align-items:center;gap:8px;min-height:30px}
+.azir-mock .inp.q{border-radius:10px}
+.azir-mock .inp.ph{color:var(--muted-fg)}
+.azir-mock .inp .car{margin-left:auto;color:var(--muted-fg)}
+.azir-mock .passar{display:grid;grid-template-columns:200px 1fr;gap:10px;align-items:end}
+.azir-mock .passar .full{grid-column:1/-1}
+.azir-mock .req{color:var(--coral)}
+.azir-mock .psg{display:grid;grid-template-columns:42px 1fr;gap:10px;padding:8px 12px;border-top:1px solid var(--border);font-size:12.5px;color:var(--fg)}
+.azir-mock .psg:first-child{border-top:0}
+.azir-mock .psg .h{font:500 11px/1.5 var(--mono);color:var(--muted-fg)}
+.azir-mock .psg small{display:block;color:var(--muted-fg);font-size:11.5px}
+.azir-mock .caixa-l{border:1px solid var(--border);border-radius:12px}
+.azir-mock .obs{display:grid;gap:3px;padding:10px 12px;border-top:1px solid var(--border);font-size:12.5px;color:var(--fg)}
+.azir-mock .obs:first-child{border-top:0}
+.azir-mock .obs small{font-size:11px;color:var(--muted-fg)}
+.azir-mock .obs small b{color:var(--esp);font-weight:500}
+.azir-mock .timeline{border:1px solid var(--border);border-radius:12px}
+.azir-mock .ev{display:grid;grid-template-columns:42px 64px 1fr;gap:10px;padding:9px 14px;font-size:12.5px;border-top:1px solid var(--border);color:var(--fg);align-items:baseline}
+.azir-mock .ev:first-child{border-top:0}
+.azir-mock .ev .h{font:500 11px/1 var(--mono);color:var(--muted-fg)}
+.azir-mock .ev .tipo{font-size:10px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--muted-fg)}
+.azir-mock .ev .tipo.sis{color:var(--esp)}
+
+/* gavetas */
+.azir-mock .gaveta{width:520px;margin-left:auto;background:var(--sup-1);border-left:1px solid var(--border);min-height:100%;padding:20px 22px;display:grid;gap:12px;align-content:start}
+.azir-mock .gaveta h4{font-size:18px;font-weight:600;color:var(--navy);display:flex;align-items:center;gap:8px}
+.azir-mock .gaveta h4 .conta{margin-left:0}
+.azir-mock .gaveta .dica{font-size:12.5px;color:var(--muted-fg)}
+.azir-mock .sc-lista{display:grid;gap:8px}
+.azir-mock .sc-item{display:grid;gap:4px;padding:10px 12px;border:1px solid var(--border);border-left:3px solid var(--muted);border-radius:12px;background:var(--sup-2)}
+.azir-mock .sc-item[data-st=resp]{border-left-color:var(--agente)}
+.azir-mock .sc-item[data-st=task]{border-left-color:var(--success)}
+.azir-mock .sc-l1{display:flex;align-items:center;gap:8px}
+.azir-mock .sc-quem{color:var(--navy);font-size:14px;font-weight:500}
+.azir-mock .sc-onde{color:var(--muted-fg);font-size:12px}
+.azir-mock .sc-st{margin-left:auto;font-size:11px;font-weight:500;padding:2px 8px;border-radius:999px;background:var(--muted);color:var(--muted-fg)}
+.azir-mock .sc-st.resp{background:rgba(185,164,251,.14);color:var(--agente)}
+.azir-mock .sc-st.task{background:rgba(74,222,128,.12);color:var(--success)}
+.azir-mock .sc-resumo{font-size:13px;color:var(--fg);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.azir-mock .sc-link{color:var(--agente);font-size:12px}
+.azir-mock .busca{border:1px solid var(--border);border-radius:999px;padding:8px 14px;color:var(--muted-fg);font-size:13px;background:var(--page)}
+.azir-mock .arq-item{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;padding:10px 12px;border:1px solid var(--border);border-radius:12px;background:var(--sup-2)}
+.azir-mock .arq-item b{display:block;font-weight:500;color:var(--navy);font-size:13.5px}
+.azir-mock .arq-item small{color:var(--muted-fg);font-size:12px}
+.azir-mock .gav-fundo{display:flex;background:linear-gradient(90deg,rgba(10,12,16,.55),rgba(10,12,16,.75)),var(--page)}
+
+#tb-quadro:checked ~ .tabbar label[for=tb-quadro]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+#tb-quadro:checked ~ .panes #pn-quadro{display:block}
+#tb-quadro:focus-visible ~ .tabbar label[for=tb-quadro]{outline:2px solid var(--acc);outline-offset:2px}
+#tb-card:checked ~ .tabbar label[for=tb-card]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+#tb-card:checked ~ .panes #pn-card{display:block}
+#tb-card:focus-visible ~ .tabbar label[for=tb-card]{outline:2px solid var(--acc);outline-offset:2px}
+#tb-lista:checked ~ .tabbar label[for=tb-lista]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+#tb-lista:checked ~ .panes #pn-lista{display:block}
+#tb-lista:focus-visible ~ .tabbar label[for=tb-lista]{outline:2px solid var(--acc);outline-offset:2px}
+#tb-mapa:checked ~ .tabbar label[for=tb-mapa]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+#tb-mapa:checked ~ .panes #pn-mapa{display:block}
+#tb-mapa:focus-visible ~ .tabbar label[for=tb-mapa]{outline:2px solid var(--acc);outline-offset:2px}
+#tb-lat:checked ~ .tabbar label[for=tb-lat]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+#tb-lat:checked ~ .panes #pn-lat{display:block}
+#tb-lat:focus-visible ~ .tabbar label[for=tb-lat]{outline:2px solid var(--acc);outline-offset:2px}
+#tb-central:checked ~ .tabbar label[for=tb-central]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+#tb-central:checked ~ .panes #pn-central{display:block}
+#tb-central:focus-visible ~ .tabbar label[for=tb-central]{outline:2px solid var(--acc);outline-offset:2px}
+#tb-barra:checked ~ .tabbar label[for=tb-barra]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+#tb-barra:checked ~ .panes #pn-barra{display:block}
+#tb-barra:focus-visible ~ .tabbar label[for=tb-barra]{outline:2px solid var(--acc);outline-offset:2px}
+#tb-uso:checked ~ .tabbar label[for=tb-uso]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+#tb-uso:checked ~ .panes #pn-uso{display:block}
+#tb-uso:focus-visible ~ .tabbar label[for=tb-uso]{outline:2px solid var(--acc);outline-offset:2px}
+#tb-slack:checked ~ .tabbar label[for=tb-slack]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+#tb-slack:checked ~ .panes #pn-slack{display:block}
+#tb-slack:focus-visible ~ .tabbar label[for=tb-slack]{outline:2px solid var(--acc);outline-offset:2px}
+#tb-arq:checked ~ .tabbar label[for=tb-arq]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+#tb-arq:checked ~ .panes #pn-arq{display:block}
+#tb-arq:focus-visible ~ .tabbar label[for=tb-arq]{outline:2px solid var(--acc);outline-offset:2px}
+.tabr:checked ~ .tabbar label i.z{}
 </style>
 </head>
 <body>
 
 <header class="top">
   <div class="wrap">
-    <div class="eyebrow">Relatório de aprovação · Backoffice · Fornecedores e Compras</div>
-    <h1>Fábrica de agentes para as tasks do Henry</h1>
-    <p class="lede">O Azir vira a linha de produção: toda task ganha dono, o que não tem estação vai para um agente coringa, e um supervisor sem IA mostra quem está sobrecarregado. Esta é a versão já revisada pelos céticos. Marque Aprovar ou Reprovar em cada agente.</p>
+    <div class="eyebrow">Para aprovar · Azir</div>
+    <h1>O Azir vira linha de produção</h1>
+    <p class="lede">Todo card ganha dono, o que sobra vai para um Coringa e cada agente mostra a própria carga. O visual do Azir fica como está: a linha só acrescenta.</p>
+    <div class="nums">
+      <div class="num"><b>0 de 287</b><span>cards do Azir têm dono hoje</span></div>
+      <div class="num"><b>82%</b><span>dos cards são manutenção do próprio Azir (Heimer)</span></div>
+      <div class="num"><b>16</b><span>agentes para você aprovar ou reprovar</span></div>
+    </div>
     <div class="meta">
       <span>16/11/2026</span>
-      <span>Janela analisada: 17/10 a 16/11/2026</span>
-      <span>Só leitura: nada foi ligado, publicado ou enviado</span>
+      <span>Leitura de uns 3 minutos</span>
+      <span>Só leitura: nada foi ligado nem alterado</span>
     </div>
   </div>
 </header>
 
 <nav class="toc" aria-label="Seções">
   <div class="wrap">
-    <a href="#resumo">Resumo</a>
-    <a href="#deepdive">Deep dive</a>
-    <a href="#iara">Modelo da Iara</a>
-    <a href="#arquitetura">Arquitetura</a>
+    <a href="#muda">Hoje × O que muda</a>
+    <a href="#arquitetura">Como anda</a>
+    <a href="#previa">Prévia por aba</a>
     <a href="#agentes">Agentes</a>
-    <a href="#coringa">Coringa</a>
-    <a href="#carga">Sobrecarga</a>
-    <a href="#roadmap">Roadmap</a>
-    <a href="#decisoes">Decisões</a>
-    <a href="#descartado">Descartado</a>
-    <a href="#falhas">Fontes que falharam</a>
+    <a href="#decide">Você decide</a>
   </div>
 </nav>
 
 <main>
-<section id="resumo" style="border-top:0">
-  <div class="wrap exec">
-    <div>
-      <h2>O problema</h2>
-      <p>Os agentes existem, mas não estão organizados para executar tasks. No Azir, <strong>0 de 287 cards têm dono</strong>, as <strong>20 linhas do Taskdex estão paradas no Backlog desde 11/11</strong> e o Heimer ocupa <strong>82% dos cards e cerca de 70% dos minutos</strong>. Quando o Henry some (31/10 a 05/11, sem energia), a fila inteira para. E não há série nenhuma de carga: dá para ver o instante, não a semana.</p>
-      <h2 style="margin-top:var(--sp5)">A proposta em 5 linhas</h2>
-      <ol class="five">
-        <li>Nenhum orquestrador novo: cada estação é um especialista do Azir, no mesmo pool.</li>
-        <li>Recepção e Roteador dão dono a todo card. O que não casa vai para o Coringa, nunca para "-".</li>
-        <li>Um Supervisor sem IA, dentro do Azir, mede idade, fila e falha por estação e só alerta na 3ª leitura vermelha.</li>
-        <li>As 10 estações de domínio entram uma por vez, em sombra, com níveis de autonomia A0 a A3.</li>
-        <li>A batelada começa pelo ciclo mensal de novembro, a partir de 01/12, com 1 filho por fornecedor.</li>
-      </ol>
-    </div>
-    <aside class="tally" aria-label="Agentes por prioridade">
-      <div class="big">16<small>agentes</small></div>
-      <div class="prio-bar" aria-hidden="true">
-        <i style="width:43.75%;background:var(--p0)"></i>
-        <i style="width:50%;background:var(--p1)"></i>
-        <i style="width:6.25%;background:var(--p2)"></i>
-      </div>
-      <div class="prio-legend">
-        <span><span><i class="dot" style="background:var(--p0)"></i>P0 · base da fábrica</span><b>7</b></span>
-        <span><span><i class="dot" style="background:var(--p1)"></i>P1 · estações em sombra</span><b>8</b></span>
-        <span><span><i class="dot" style="background:var(--p2)"></i>P2 · depois da BF</span><b>1</b></span>
-      </div>
-      <p class="changed">6 de controle + 10 estações. A proposta original tinha 21 peças. A revisão cortou 3 (S9, S10, S14), fundiu 4 (C4 no Coringa, S2 e o balcão do S11 na Caixa de Entrada, o guardião do S11 na Oficina) e adicionou 1 (N1 Compras pontuais).</p>
-    </aside>
-  </div>
-</section>
-
-<section id="deepdive">
+<section id="muda" style="border-top:0;padding-top:var(--sp5)">
   <div class="wrap">
-    <div class="eyebrow">O que vimos</div>
-    <h2>Deep dive por fonte</h2>
-    <p>Seis fontes lidas em paralelo, só leitura. Os números abaixo são os que sustentam cada agente do catálogo.</p>
-    <div class="sources">
-      <div class="src">
-        <h3>Slack <small>Composio · 100% de cobertura</small></h3>
-        <dl>
-          <dt>1.973</dt><dd>mensagens do Henry em 22 dias úteis (cerca de 90/dia; 10% depois das 20h)</dd>
-          <dt>289</dt><dd>menções a ele: 210 de bots, 79 de pessoas</dd>
-          <dt>20</dt><dd>menções de pessoas sem resposta visível</dd>
-          <dt>40</dt><dd>cobranças do bot do comitê; 6 da Íris (app marcada para apagar 2x)</dd>
-          <dt>129</dt><dd>mensagens sobre acesso, senha e chave</dd>
-          <dt>4</dt><dd>chaves coladas em texto puro (trocar)</dd>
-          <dt>31/10–05/11</dt><dd>buraco de 2 a 7 msgs/dia; a fila parou</dd>
-        </dl>
-      </div>
-      <div class="src">
-        <h3>Gmail <small>henry@ e NFXML@</small></h3>
-        <dl>
-          <dt>10.848</dt><dd>mensagens; 9.159 (84%) são links de login do Claude</dd>
-          <dt>1.689</dt><dd>na inbox real, 97% não lidas</dd>
-          <dt>904</dt><dd>do GitHub (495 do Alfred, 24 CI quebrado, 61 pedidos de review)</dd>
-          <dt>343</dt><dd>falhas de Apps Script; 279 do "Projeto sem título"</dd>
-          <dt>160</dt><dd>NFs na NFXML: 151 Matinali, 2 RM; 159 não lidas</dd>
-          <dt>3</dt><dd>e-mails enviados no mês, todos de comissão</dd>
-          <dt>7</dt><dd>alertas de API do Pipedrive a 75%</dd>
-        </dl>
-      </div>
-      <div class="src">
-        <h3>Agenda <small>416 eventos</small></h3>
-        <dl>
-          <dt>86h</dt><dd>de reunião em 20 dias úteis (3,5h/dia sem as task forces)</dd>
-          <dt>72%</dt><dd>do dia útil ocupado; sobram 2h a 2h30 para executar</dd>
-          <dt>31,5h</dt><dd>em blocos próprios: Auditoria (21h) e Comentários KPIs (10,5h). Blocos marcados, não trabalho comprovado</dd>
-          <dt>0</dt><dd>reunião mensal com fornecedor marcada para novembro</dd>
-          <dt>4</dt><dd>convites com pauta, de 52 reuniões distintas</dd>
-        </dl>
-      </div>
-      <div class="src">
-        <h3>Taskdex <small>lista Atividades Operação Iara</small></h3>
-        <dl>
-          <dt>19</dt><dd>linhas abertas em Fornecedores, todas com o Henry como dono de fato</dd>
-          <dt>4</dt><dd>sem nenhum comentário há 3 a 4 semanas</dd>
-          <dt>4</dt><dd>travadas em terceiro (iPag há 9 semanas, Doti, Flylift, Sapron)</dd>
-          <dt>4 / 4 / 3</dt><dd>rodadas de devolução: Kit, IA na captação, BF</dd>
-          <dt>~60%</dt><dd>dos ajustes da régua da Carol são de forma</dd>
-          <dt>16</dt><dd>FUPs idênticos em lote em 10/11 (já é batelada)</dd>
-        </dl>
-      </div>
-      <div class="src">
-        <h3>Sessões <small>796 arquivos, 445 sessões</small></h3>
-        <dl>
-          <dt>2.885</dt><dd>mensagens digitadas pelo Henry</dd>
-          <dt>355</dt><dd>sobre manutenção da própria fábrica</dd>
-          <dt>214</dt><dd>"veja o que X mandou / responde X"</dd>
-          <dt>22/22</dt><dd>cards de Compra e Monitoramento com a Wania (até 101h)</dd>
-          <dt>5 · 10 · 33 · 24</dt><dd>perdas iguais no Pipedrive · "está na tabela?" · cadastros no Hub · perguntas ao Sapron</dd>
-          <dt>584 → 3</dt><dd>rodadas da negociacao-recompra para 3 ações</dd>
-        </dl>
-      </div>
-      <div class="src">
-        <h3>Ambiente <small>Azir, rotinas, skills</small></h3>
-        <dl>
-          <dt>0/287</dt><dd>cards com <code>dono</code>; <code>custo_usd</code> = 0 em todos</dd>
-          <dt>26 · 14 · 9 · 0 · 1 · 0</dt><dd>cards fora de melhoria por dia, de 11 a 16/11</dd>
-          <dt>3</dt><dd>travados há 86 a 89h esperando terceiro (T107, T064, T129)</dd>
-          <dt>100%</dt><dd>do crontab do PC comentado desde 14/11</dd>
-          <dt>88 · 67</dt><dd>vezes <code>/login</code> e <code>/mcp</code> em 30 dias</dd>
-          <dt>14 · 11 · 39</dt><dd>linhas de cron na VPS (OK) · agentes no Olimpo · skills locais</dd>
-        </dl>
-      </div>
-    </div>
-    <p class="note"><strong>Divergência de contagem:</strong> o quadro dá 287, 288 ou 374 cards conforme a leitura (o 374 conta <code>analise</code> 28 e <code>slack</code> 59), e comunicação aparece com 71 ou 25 cards. A proposta original usava o número maior para dividir Comunicação. Nesta versão, o Supervisor só vira fonte única depois de a regra de contagem ser decidida (decisão 9), e Comunicação não é dividida agora.</p>
-  </div>
-</section>
-
-<section id="iara">
-  <div class="wrap">
-    <div class="eyebrow">Referência</div>
-    <h2>O modelo da Iara e da Aria</h2>
-    <div class="two">
-      <div>
-        <p>A Iara mostrou hoje às 9h, na abertura do retiro, o <strong>Comercial Franquia Agêntica</strong>: um orquestrador (Maestro), 7 frentes, 19 agentes e um <strong>Supervisor sem IA</strong> que "acha agente parado e prazo vencido". Primeiro mapearam as atividades e depois deram dono a cada uma: <strong>172 de 189</strong> já têm agente dono, e o desenho fecha com nenhuma sem dono. <a href="https://seazone-fund.slack.com/archives/C0CH2HAJFT7/p1794830402472409">Slides no #retiro-ia-operacao</a></p>
-        <h3 style="margin:var(--sp4) 0 var(--sp2)">O que copiamos</h3>
-        <ul class="copy-list">
-          <li><b>Mapa atividade → dono, meta de zero sem dono</b>Vira o <code>estacoes.yaml</code> no formato do Davi: Nome · Processo (Área › Subárea) · Gatilho · Prova · SLA · classe.</li>
-          <li><b>Supervisor sem IA</b>Vira o C5, rodando dentro do Azir.</li>
-          <li><b>Mesa "Precisa de você"</b>Do Posto da Iara: aprovar ou devolver, e a resposta volta sozinha ao agente que entregou.</li>
-          <li><b>Alarme só na 3ª repetição, e métrica que não pune acerto</b>Lições da Nina e da Aurora: card resolvido por humano conta como "resolvido por outro", não como falha.</li>
-          <li><b>Sombra e teste às cegas antes de soltar</b>Como o Atlas: 10 execuções em sombra com 0 correção e eval cego antes de subir de nível.</li>
-          <li><b>Classes PR, OP, IN, P100</b>A Iara criou em 07/11 e ainda não usa. Viram a classe do card no Roteador.</li>
-        </ul>
-      </div>
-      <div class="aria">
-        <div class="status"><span class="dot" style="background:var(--ok);margin:0"></span>A Aria respondeu, em cerca de 2 minutos</div>
-        <p>Uma mensagem com 5 perguntas, mandada em nome do Henry no #retiro-ia-operacao.</p>
-        <p><a href="https://seazone-fund.slack.com/archives/C0CH2HAJFT7/p1794839922993959">Link da pergunta</a> · <a href="https://seazone-fund.slack.com/archives/C0CH2HAJFT7/p1794840062549869?thread_ts=1794839922.993959">Link da resposta</a></p>
-        <blockquote>"Agente coringa e métrica de sobrecarga (WIP, tempo parado) o guia não cobre. Chama a Iara na sala ou marca a pergunta no fio."</blockquote>
-        <p>No resto, ela confirmou o guia: a orquestradora só registra e repassa; ajudante, triagem, supervisor e verificador evitam a trava; a batelada entra pela caixa de rodada, com Workflow e céticos dentro de cada pedido; a Central mostra ID, status, prova e um gráfico de 7 dias.</p>
-        <p><strong>Conclusão:</strong> o Coringa e a medida de sobrecarga são desenho nosso. Vale levar a pergunta à Iara no retiro (17 ou 18/11). No painel da Aria, o Henry está em <strong>9/15</strong>, com o <strong>item 20 (Batelada) faltando</strong>. Ele só fecha com quadro de ID, status e prova visível, ou seja, depois da aba Carga.</p>
-      </div>
+    <h2>Hoje × O que muda</h2>
+    <div class="vs">
+      <div class="vs-h">Hoje</div><div class="vs-h m">O que muda</div>
+      <div class="vs-a">Nenhum card tem dono.</div><div class="vs-b">Todo card ganha dono assim que entra.</div>
+      <div class="vs-a">Card que não casa com ninguém fica parado.</div><div class="vs-b">O Coringa assume depois de 15 minutos.</div>
+      <div class="vs-a">Não dá para ver quem está cheio.</div><div class="vs-b">Cada agente mostra "3 · 2 na fila", em âmbar quando enche e vermelho quando passa do limite.</div>
+      <div class="vs-a">Só se vê o agora.</div><div class="vs-b">Cada agente ganha uma faixa com a carga dos últimos 7 dias.</div>
+      <div class="vs-a">Trocar de especialista é um seletor, sem motivo.</div><div class="vs-b">"Passar para…" pede um motivo, e cada passagem fica registrada no card.</div>
+      <div class="vs-a">O Heimer conserta o Azir sem fila nem limite.</div><div class="vs-b">A Oficina recebe pedidos de melhoria numa fila e usa no máximo 10% do pool.</div>
+      <div class="vs-a">Ninguém avisa quando um agente estoura.</div><div class="vs-b">O Supervisor de carga, sem IA, avisa na 3ª leitura vermelha seguida.</div>
+      <div class="vs-a">Cores, colunas, botões e abas.</div><div class="vs-b same">Ficam iguais.</div>
     </div>
   </div>
 </section>
 
 <section id="arquitetura">
   <div class="wrap">
-    <div class="eyebrow">Como a fábrica anda</div>
-    <h2>Arquitetura</h2>
-    <p>Tudo roda no pool do Azir. O único código novo é o Supervisor, sem IA, como um timer dentro do próprio Azir (mesmo SQLite, nenhum processo à parte). O <code>rotinas-healthcheck</code> atual serve de vigia externa dele.</p>
+    <h2>Como a linha anda</h2>
+    <p>Tudo roda no pool que o Azir já tem. A única peça nova é o Supervisor de carga, um relógio sem IA dentro do próprio Azir.</p>
     <div class="diagram" role="img" aria-label="Fluxo: fontes, recepção, roteador, pronto com dono, estações, portão de saída, mesa, aguardando terceiro ou concluído. O coringa recebe o que não casa. O supervisor de carga mede tudo. A batelada entra como card-lote com filhos.">
       <svg viewBox="0 0 1000 430" xmlns="http://www.w3.org/2000/svg" font-family="Hanken Grotesk, sans-serif">
         <defs>
@@ -436,428 +682,883 @@ footer{padding:var(--sp6) 0 var(--sp8);color:var(--ink3);font-size:14px;border-t
         </g>
       </svg>
     </div>
-    <div class="cols" aria-label="Colunas do quadro">
-      <span>Entrada</span><span>Triado</span><span>Pronto (com dono)</span><span>Fazendo</span><span>Verificação</span><span class="hl">Precisa de você</span><span>Aguardando terceiro</span><span>Concluído</span>
+  </div>
+</section>
+
+<section id="previa">
+  <div class="wrap prev">
+    <h2>Como o Azir vai ficar (prévia por aba)</h2>
+    <p>Desenho estático com o CSS do Azir e dados de exemplo. Só o que tem o contorno tracejado rosa é novo; o resto já está no Azir hoje.</p>
+    <div class="key"><span class="sw"></span><span class="tg">novo</span> = o que a linha de produção acrescenta</div>
+
+    <input class="tabr" type="radio" name="az" id="tb-quadro" checked><input class="tabr" type="radio" name="az" id="tb-card"><input class="tabr" type="radio" name="az" id="tb-lista"><input class="tabr" type="radio" name="az" id="tb-mapa"><input class="tabr" type="radio" name="az" id="tb-lat"><input class="tabr" type="radio" name="az" id="tb-central"><input class="tabr" type="radio" name="az" id="tb-barra"><input class="tabr" type="radio" name="az" id="tb-uso"><input class="tabr" type="radio" name="az" id="tb-slack"><input class="tabr" type="radio" name="az" id="tb-arq">
+    <div class="tabbar">
+      <label for="tb-quadro"><i></i>Quadro</label>
+      <label for="tb-card"><i></i>Detalhe do card</label>
+      <label for="tb-lista"><i></i>Agentes · Lista</label>
+      <label for="tb-mapa"><i></i>Agentes · Mapa</label>
+      <label for="tb-lat"><i></i>Lateral do agente</label>
+      <label for="tb-central"><i></i>Central</label>
+      <label for="tb-barra"><i class="z"></i>Barra superior</label>
+      <label for="tb-uso"><i class="z"></i>Uso de IA</label>
+      <label for="tb-slack"><i class="z"></i>Conversas do Slack</label>
+      <label for="tb-arq"><i class="z"></i>Arquivadas</label>
     </div>
-    <p>"Travado" fica só para decisão do Henry. Os 3 cards de hoje (T107, T064, T129) esperam terceiros e vão para "Aguardando terceiro"; o T285 (ClickSign) fica na mesa. A mesa entrega em 2 janelas por dia (sugestão: 15h e 17h30), um item por linha, com os botões Aprovar/Reprovar do Vel'Koz.</p>
 
-    <h3 style="margin:var(--sp5) 0 var(--sp3)">Níveis de autonomia</h3>
-    <div class="tbl"><table>
-      <thead><tr><th>Nível</th><th>Pode</th><th>Exemplos</th></tr></thead>
-      <tbody>
-        <tr><td>A0</td><td>Só ler</td><td>Sapron, dashboards, logs</td></tr>
-        <tr><td>A1</td><td>Escrever no próprio ambiente</td><td>Card, HTML, rascunho, DM ao Henry</td></tr>
-        <tr><td>A2</td><td>Escrever em sistema interno reversível, com log, sem falar com ninguém</td><td>Pipedrive lost + 527, comentário em card da lojinha, planilha da Ray, cadastro no Hub</td></tr>
-        <tr><td>A3</td><td>Falar com qualquer pessoa ou agir em nome do Henry</td><td>Mensagem, cobrança, e-mail com NF/boleto, ClickSign, cancelar, apagar, abrir chamado</td></tr>
-      </tbody>
-    </table></div>
-    <p class="note">A3 exige o botão Aprovar, exceto a lista branca que já é REGRA: auto-resposta do Slack só com status factual, "abre um suporte" quando o Henry pede, contrato do fotógrafo disparado pela Ana, report da BF e thread de fotógrafos parados. Item novo só entra depois de 10 execuções em sombra com 0 correção e eval cego (<code>eval-agente</code>). Cada estação tem um kill-switch <code>ORQ_ESTACAO_&lt;X&gt;=off</code>.</p>
+    <div class="panes">
 
-    <h3 style="margin:var(--sp5) 0 var(--sp3)">Batelada</h3>
-    <p>Card-lote = template + N filhos, cada filho com ID, status e prova próprios (item 20 do setup v4). Dentro de cada filho o Workflow roda em paralelo com céticos. O pai só fecha quando todos passam no Portão. Templates com evidência: <strong>ciclo mensal por fornecedor</strong> (piloto), FUP de prospecção por cidade (16 iguais em 10/11) e conferência de NF da RM em sombra. A batelada usa slot ocioso de dia e a noite, mas a noite não é capacidade livre: KPIs às 21h e contribuições às 18h e 23h já gastam a mesma conta.</p>
+<!-- ============ QUADRO ============ -->
+<div class="pane" id="pn-quadro">
+  <div class="legend">
+    <p class="lm"><b>Muda</b>O chip marfim do especialista vira o dono, com a estação na frente (S8, S6…). Card sem dono mostra "sem dono" em cinza, nunca em vermelho. O Coringa aparece em cinza. Pedido da Oficina vira card próprio.</p>
+    <p class="li"><b>Fica igual</b>As 5 colunas, as cores, os contadores, os botões e o bloco "Precisa que você".</p>
+  </div>
+  <div class="mock-scroll"><div class="azir-mock w-quadro">
+    <div class="q-topo">
+      <div><h3>Quadro de tasks</h3><p>Você manda, a IA faz.</p></div>
+      <div class="q-acoes"><span class="btn btn-leve">Resumo geral</span><span class="btn btn-leve">Arquivadas</span><span class="btn btn-contorno">Puxar do Taskdex</span><span class="btn btn-contorno">Falar</span><span class="btn btn-contorno">Nova task</span><span class="btn btn-primario">Rodar selecionadas</span></div>
+    </div>
+    <div class="quadro">
+      <div class="coluna" data-coluna="backlog"><header><span class="ponto"></span>Backlog<span class="conta">20</span></header>
+        <div class="lista" data-lista="backlog">
+          <div class="card"><div class="card-topo"><span class="cbx"></span><span class="origem taskdex">T009 · Taskdex</span><span class="tempo">5d</span></div>
+            <div class="titulo">Processo para fotos de Grandes Operações</div><div class="sub">prazo 25/09 · Monitoramento</div>
+            <span class="esp-chip nv"><span class="est">S7</span><svg class="esp-ic" viewBox="0 0 16 16"><rect x="2" y="4.5" width="12" height="8.5" rx="1.5"/><circle cx="8" cy="8.7" r="2.3"/><path d="M6 4.5l1-2h2l1 2"/></svg>Homologação</span></div>
+          <div class="card"><div class="card-topo"><span class="cbx"></span><span class="origem">T412 · Manual</span><span class="tempo">22min</span></div>
+            <div class="titulo">Levantar quais skills mudaram nesta semana</div><div class="sub">assumido pelo Coringa: sem casamento há 15 min</div>
+            <span class="esp-chip nv" data-esp="generalista"><span class="est">C3</span><svg class="esp-ic" viewBox="0 0 16 16"><path d="M8 2l1.8 3.8 4.2.5-3.1 2.9.8 4.1L8 11.3 4.3 13.3l.8-4.1L2 6.3l4.2-.5z"/></svg>Coringa</span></div>
+          <div class="card"><div class="card-topo"><span class="cbx"></span><span class="origem">T415 · Manual</span><span class="tempo">4min</span></div>
+            <div class="titulo">Revisar o texto do aviso de pausa das rotinas</div><div class="sub">Recepção sem sinal claro</div>
+            <span class="esp-chip nv" data-esp="semdono">sem dono</span></div>
+        </div></div>
+      <div class="coluna" data-coluna="fazendo"><header><span class="ponto"></span>Fazendo<span class="conta">2</span></header>
+        <div class="lista" data-lista="fazendo">
+          <div class="card"><div class="card-topo"><span class="cbx"></span><span class="origem">T377 · Manual</span><span class="tempo">3h</span></div>
+            <div class="titulo">KPIs de ontem: conferir 3 lançamentos com falha</div><div class="sub">rodando · rodada 2</div>
+            <div class="prog"><div>Em andamento<b>60%</b></div><div class="prog-trilho"><span style="width:60%"></span></div></div>
+            <span class="esp-chip nv"><span class="est">S8</span><svg class="esp-ic" viewBox="0 0 16 16"><path d="M2.5 13.5h11M4.5 11V8M8 11V4.5M11.5 11V6.5"/></svg>KPIs</span>
+            <div class="chips"><span class="chip mcp"><small>MCP</small>kpi-system</span></div></div>
+          <div class="card nv"><div class="card-topo"><span class="cbx"></span><span class="origem melhoria">T418 · Melhoria</span><span class="tempo">40min</span></div>
+            <div class="titulo">Oficina · kpis-fornecedores: tratar o timeout do Hub antes de lançar</div><div class="sub">pedido por T377 · faixa do Heimer</div>
+            <span class="esp-chip"><span class="est">S13</span><svg class="esp-ic" viewBox="0 0 16 16"><path d="M6 4L2 8l4 4M10 4l4 4-4 4"/></svg>Oficina · Programador</span></div>
+        </div></div>
+      <div class="coluna" data-coluna="validacao"><header><span class="ponto"></span>Validação<span class="conta">2</span></header>
+        <div class="lista" data-lista="validacao">
+          <div class="card"><div class="card-topo"><span class="cbx"></span><span class="origem">T376 · Manual</span><span class="tempo">1h34</span></div>
+            <div class="titulo">Lembrar a Wania de avisar que o Henry está off</div><div class="sub">DM de lembrete enviada; HTML publicado</div>
+            <div class="prog"><div>Em validação<b>95%</b></div><div class="prog-trilho"><span style="width:95%"></span></div></div>
+            <span class="esp-chip nv"><span class="est">S1</span><svg class="esp-ic" viewBox="0 0 16 16"><path d="M2.5 3.5h11v7h-6l-3 2.5v-2.5h-2z"/></svg>Caixa</span>
+            <div class="chips"><span class="chip mcp"><small>MCP</small>composio</span></div></div>
+        </div></div>
+      <div class="coluna" data-coluna="travado"><header><span class="ponto"></span>Travado<span class="conta">3</span></header>
+        <div class="lista" data-lista="travado">
+          <div class="card"><div class="card-topo"><span class="cbx"></span><span class="origem slack">T107 · Slack</span><span class="tempo">86h</span></div>
+            <div class="titulo">Plaquinhas de Camaçari sem data de entrega</div><div class="sub">Aguardando: fornecedor reagiu sem data</div>
+            <div class="ok-card"><span class="secao">Precisa que você:</span>Faz 86h que estou esperando. Cobro de novo ou você fala direto?<textarea aria-label="exemplo" disabled>Comentário ou ajuste (opcional)</textarea><div style="display:flex;gap:8px"><span class="btn btn-primario btn-mini">Feito</span><span class="btn btn-leve btn-mini">Agora não</span></div></div>
+            <span class="esp-chip nv"><span class="est">N1</span><svg class="esp-ic" viewBox="0 0 16 16"><path d="M2.5 5.5L8 2.5l5.5 3v6L8 14.5l-5.5-3z M2.5 5.5L8 8.5l5.5-3M8 8.5v6"/></svg>Compras</span></div>
+        </div></div>
+      <div class="coluna" data-coluna="concluido"><header><span class="ponto"></span>Concluído<span class="conta">268</span></header>
+        <div class="lista" data-lista="concluido">
+          <div class="card"><div class="card-topo"><span class="cbx"></span><span class="origem">T381 · Manual</span><span class="tempo">34min</span></div>
+            <div class="titulo">Heimer · Especialista Agentes e rotinas</div><div class="sub">Nada de valor hoje: a única mudança foi a revisão das 15:47</div>
+            <div class="prog"><div>Concluída<b>100%</b></div><div class="prog-trilho"><span style="width:100%"></span></div></div>
+            <span class="esp-chip nv"><span class="est">S13</span><svg class="esp-ic" viewBox="0 0 16 16"><rect x="3.5" y="5" width="9" height="7.5" rx="1.5"/><path d="M8 5V2.5M6 8.5h.01M10 8.5h.01"/></svg>Oficina · Guardião</span></div>
+          <div class="card"><div class="card-topo"><span class="cbx"></span><span class="origem">T380 · Manual</span><span class="tempo">36min</span></div>
+            <div class="titulo">Vel'Koz vigia 18h (pulso)</div><div class="sub">A vigia rodou ok todos os dias</div>
+            <span class="esp-chip nv"><span class="est">S13</span><svg class="esp-ic" viewBox="0 0 16 16"><rect x="3.5" y="5" width="9" height="7.5" rx="1.5"/><path d="M8 5V2.5M6 8.5h.01M10 8.5h.01"/></svg>Oficina · Guardião</span></div>
+        </div></div>
+    </div>
+  </div></div>
+  <p class="scroll-hint">Arraste para o lado para ver as 5 colunas.</p>
+</div>
+
+<!-- ============ DETALHE DO CARD ============ -->
+<div class="pane" id="pn-card">
+  <div class="legend">
+    <p class="lm"><b>Muda</b>"Especialista" vira <strong>Dono</strong>, com desde quando e quem decidiu. Ganha campo de prazo. O seletor vira "Passar para…" com motivo obrigatório e nota opcional. Entra a lista de passagens, e a linha do tempo mostra Recepção, Coringa e cada troca de dono.</p>
+    <p class="li"><b>Fica igual</b>A gaveta de 580px, o cabeçalho, "Pergunte sobre esta task", as observações, a descrição e o jeito da linha do tempo.</p>
+  </div>
+  <div class="mock-scroll ct"><div class="azir-mock w-painel"><div class="painel-wrap"><div class="painel">
+    <div class="painel-cabeca">
+      <div class="p-linha"><span class="pill fazendo">Fazendo</span><span class="pill">T377 · Manual · painel t377</span><span class="dir"><span>Editar</span><span>✕</span></span></div>
+      <h4>KPIs de ontem: conferir 3 lançamentos com falha</h4>
+      <div class="p-linha">2 rodadas · 11 min de execução</div>
+      <div class="prog" style="margin-top:0"><div>Em andamento<b>60%</b></div><div class="prog-trilho"><span style="width:60%"></span></div></div>
+    </div>
+    <div class="painel-corpo">
+      <div class="bloco bloco-perg"><span class="secao">Pergunte sobre esta task</span><div class="atalhos"><span>Como está?</span><span>O que falta?</span><span>O que você precisa de mim?</span></div></div>
+
+      <div>
+        <span class="secao nv" style="display:inline-block">Dono</span>
+        <div class="p-esp"><span class="esp-chip"><span class="est">S8</span><svg class="esp-ic" viewBox="0 0 16 16"><path d="M2.5 13.5h11M4.5 11V8M8 11V4.5M11.5 11V6.5"/></svg>KPIs &amp; Auditoria</span><span class="p-motivo">desde 13:42 · passagem do Coringa</span></div>
+        <div class="campo nv" style="margin-top:14px;width:180px">Prazo<span class="inp q">17/11/2026<span class="car">▾</span></span></div>
+      </div>
+
+      <div class="bloco bloco-perg nv in">
+        <span class="secao">Passar para…</span>
+        <div class="passar">
+          <div class="campo">Novo dono<span class="inp">S13 Oficina · Programador<span class="car">▾</span></span></div>
+          <div class="campo"><span>Motivo <span class="req">obrigatório</span></span><span class="inp q ph">Ex.: o erro é no código da rotina, não no lançamento</span></div>
+          <div class="campo full">Nota para quem recebe (opcional)<span class="inp q ph">Vira observação "via passagem de S8 KPIs"</span></div>
+          <div class="full" style="display:flex;justify-content:flex-end"><span class="btn btn-contorno btn-mini">Passar</span></div>
+        </div>
+      </div>
+
+      <div class="nv">
+        <span class="secao">Passagens</span>
+        <div class="caixa-l">
+          <div class="psg"><span class="h">13:42</span><div>C3 Coringa → S8 KPIs<small>roteador · "lançamento do Hub de KPIs no título"</small></div></div>
+          <div class="psg"><span class="h">13:35</span><div>sem dono → C3 Coringa<small>coringa · sem casamento há 15 min</small></div></div>
+        </div>
+      </div>
+
+      <div>
+        <span class="secao">Observações pra IA</span>
+        <div class="caixa-l">
+          <div class="obs"><small>henry · 13:10</small>Confere só os 3 que falharam, os outros estão certos.</div>
+          <div class="obs nv in"><small><b>oficina</b> · 14:20</small>Oficina concluiu: timeout do Hub tratado com nova tentativa. PR #212.</div>
+        </div>
+      </div>
+
+      <div>
+        <span class="secao">Linha do tempo</span>
+        <div class="timeline">
+          <div class="ev"><span class="h">14:20</span><span class="tipo">nota</span><span>Oficina concluiu o pedido T418</span></div>
+          <div class="ev"><span class="h">13:50</span><span class="tipo">rodada</span><span>Rodada 2 começou</span></div>
+          <div class="ev nv in"><span class="h">13:42</span><span class="tipo sis">sistema</span><span>Passou de C3 Coringa para S8 KPIs: lançamento do Hub</span></div>
+          <div class="ev nv in"><span class="h">13:35</span><span class="tipo sis">sistema</span><span>Coringa assumiu (sem casamento há 15 min)</span></div>
+          <div class="ev nv in"><span class="h">13:20</span><span class="tipo sis">sistema</span><span>Recepção: sem dono (nenhum sinal claro)</span></div>
+          <div class="ev"><span class="h">13:20</span><span class="tipo">criado</span><span>Card criado na Nova task</span></div>
+        </div>
+      </div>
+    </div>
+  </div></div></div></div>
+</div>
+
+<!-- ============ AGENTES LISTA ============ -->
+<div class="pane" id="pn-lista">
+  <div class="legend">
+    <p class="lm"><b>Muda</b>Botão "Carga" ao lado de Mapa | Lista (ligado por padrão; desligado só esconde). Quatro chaves novas na Automação. Grupo novo <strong>Fábrica · agentes</strong>: carga "4 · 2 na fila" com cor pelo limite, faixa de 7 dias de carga e alertas do Supervisor. Em Serviços entra o relógio do Supervisor.</p>
+    <p class="li"><b>Fica igual</b>A faixa de números (falhou, atrasado, uptime…), o badge da aba, a Yummi, os grupos Atenção, Rotinas, Serviços e Olimpo. A carga não entra no "problema" nem no uptime.</p>
+  </div>
+  <div class="mock-scroll"><div class="azir-mock w-quadro">
+    <div class="ag-topo">
+      <div class="ag-titulo"><h3>Agentes</h3><span class="ag-sync">sync 13:30:06</span><span class="ag-modo"><span>Mapa</span><span class="on">Lista</span></span><span class="ag-modo nv"><span class="on">Carga</span></span></div>
+      <div class="ag-dir">
+        <div class="ag-auto"><span class="ag-rot">Automação</span>
+          <span class="ag-switch" aria-checked="true"><span class="ag-trilho"></span>auto-resposta slack <span class="ag-pill">ON</span></span>
+          <span class="ag-switch" aria-checked="true"><span class="ag-trilho"></span>Yummi <span class="ag-pill">ON</span></span>
+          <span class="ag-switch" aria-checked="true"><span class="ag-trilho"></span>Heimer <span class="ag-pill">ON</span></span>
+          <span class="ag-switch nv" aria-checked="false" title="desligado: só assume; quem roda é você"><span class="ag-trilho"></span>coringa executa <span class="ag-pill">OFF</span></span>
+          <span class="ag-switch nv" aria-checked="true"><span class="ag-trilho"></span>sup. carga <span class="ag-pill">ON</span></span>
+          <span class="ag-switch nv" aria-checked="true"><span class="ag-trilho"></span>DM sup. carga <span class="ag-pill">ON</span></span>
+          <span class="ag-switch nv" aria-checked="true"><span class="ag-trilho"></span>oficina <span class="ag-pill">ON</span></span>
+        </div>
+        <span class="btn btn-primario btn-mini">Analisar 1</span>
+      </div>
+    </div>
+    <div class="ag-faixa">
+      <div class="ag-seg"><span>Falhou</span><b>00</b></div>
+      <div class="ag-seg"><span>Precisa de você</span><b>00</b></div>
+      <div class="ag-seg" data-st="atrasado"><span>Atrasado</span><b>01</b></div>
+      <div class="ag-seg"><span>Sem efeito</span><b>00</b></div>
+      <div class="ag-seg"><span>Degradado</span><b>00</b></div>
+      <div class="ag-seg"><span>Sem dado</span><b>02</b></div>
+      <div class="ag-seg" data-st="ok"><span>OK</span><b>28</b></div>
+      <div class="ag-seg" data-st="up"><span>Uptime 7d</span><b>98.7%</b><small>meta 95%</small></div>
+      <div class="ag-seg"><span>Próxima</span><b style="color:var(--navy)">13:31</b><small>em 44s · Auto-resp…</small></div>
+    </div>
+    <div class="ag-corpo">
+      <div class="ag-grupo" data-tipo="atencao">
+        <div class="ag-g-cab"><span class="ag-g-tit" style="color:var(--alerta)">Atenção</span><span class="ag-g-conta">01 · 1 atrasado</span></div>
+        <div class="ag-item std" data-grav="precisa"><span class="ag-led al"></span><span class="ag-nome"><b>Coletor de uso de IA (diário)</b><span class="ag-id">coletor-uso-ia</span></span>
+          <span class="ag-dias"><i class="ag-dia"><span class="ag-qn">13</span></i><i class="ag-dia"><span class="ag-qn">23</span></i><i class="ag-dia"><span class="ag-qn">29</span></i><i class="ag-dia"><span class="ag-qn">47</span></i><i class="ag-dia"><span class="ag-qn">9</span></i><i class="ag-dia" data-st="vazio"></i><i class="ag-dia" data-st="vazio" data-hoje></i></span>
+          <span class="ag-pct" data-nivel="ok">100%</span><span class="ag-ult" style="color:var(--alerta)">14/11 14:26<small>há 1d23h</small></span><span class="ag-ult">17:00<small>em 3h29m</small></span><span class="ag-chip">0 9,17 * * *</span><span class="ag-selo">Analisar e consertar</span></div>
+        <div class="ag-warn"><b>WARN</b>não rodou às 16/11 09:00 · última 14/11 14:26</div>
+      </div>
+
+      <div class="ag-grupo nv">
+        <div class="ag-g-cab"><span class="ag-g-tit">Fábrica · agentes</span><span class="ag-g-conta">18 · <span class="r">2 estourados</span> · <span class="a">2 cheios</span></span></div>
+        <div class="ag-item ag-cab"><span></span><span>Nome</span><span>Carga 7 dias</span><span>Carga</span><span>Agora</span><span>Limite</span><span></span></div>
+        <div class="ag-item"><span class="ag-led and"></span><span class="ag-nome"><b>KPIs &amp; Auditoria</b><span class="ag-pal">S8</span><span class="ag-id">kpis</span></span>
+          <span class="ag-dias"><i class="ag-dia"><span class="ag-qn">2</span><span class="ag-qtd" style="width:40%"></span></i><i class="ag-dia"><span class="ag-qn">2</span><span class="ag-qtd" style="width:40%"></span></i><i class="ag-dia" data-st="faltou"><span class="ag-qn">3</span></i><i class="ag-dia" data-st="falhou"><span class="ag-qn">4</span><span class="ag-qtd" style="width:80%"></span></i><i class="ag-dia" data-st="faltou"><span class="ag-qn">3</span></i><i class="ag-dia"><span class="ag-qn">2</span><span class="ag-qtd" style="width:40%"></span></i><i class="ag-dia" data-st="falhou" data-hoje><span class="ag-qn" style="color:rgba(10,12,16,.85)">4</span></i></span>
+          <span class="ag-pct" data-nivel="baixo">4 · 2 na fila</span><span class="ag-ult">Fazendo T377<small>há 3h</small></span><span class="ag-chip">limite 3</span><span class="ag-selo alt">Ver tasks</span></div>
+        <div class="ag-item"><span class="ag-led and"></span><span class="ag-nome"><b>Prospecção</b><span class="ag-pal">S6</span><span class="ag-id">prospeccao</span></span>
+          <span class="ag-dias"><i class="ag-dia"><span class="ag-qn">1</span></i><i class="ag-dia"><span class="ag-qn">1</span></i><i class="ag-dia"><span class="ag-qn">2</span></i><i class="ag-dia"><span class="ag-qn">1</span></i><i class="ag-dia" data-st="vazio"><span class="ag-qn">0</span></i><i class="ag-dia" data-st="faltou"><span class="ag-qn">3</span></i><i class="ag-dia" data-st="falhou" data-hoje><span class="ag-qn" style="color:rgba(10,12,16,.85)">4</span></i></span>
+          <span class="ag-pct" data-nivel="baixo">3 · 1 na fila</span><span class="ag-ult">Fazendo T409<small>há 1h10</small></span><span class="ag-chip">limite 3</span><span class="ag-selo alt">Ver tasks</span></div>
+        <div class="ag-item"><span class="ag-led and"></span><span class="ag-nome"><b>Oficina · Programador</b><span class="ag-pal">S13</span><span class="ag-id">dev</span></span>
+          <span class="ag-dias"><i class="ag-dia"><span class="ag-qn">1</span></i><i class="ag-dia" data-st="faltou"><span class="ag-qn">2</span></i><i class="ag-dia"><span class="ag-qn">1</span></i><i class="ag-dia" data-st="vazio"><span class="ag-qn">0</span></i><i class="ag-dia"><span class="ag-qn">1</span></i><i class="ag-dia"><span class="ag-qn">1</span></i><i class="ag-dia" data-st="faltou" data-hoje><span class="ag-qn">2</span></i></span>
+          <span class="ag-pct" data-nivel="meio">2 · 1 na fila</span><span class="ag-ult">Fazendo T418<small>há 40min</small></span><span class="ag-chip">limite 2</span><span class="ag-selo alt">Ver fila</span></div>
+        <div class="ag-item"><span class="ag-led and"></span><span class="ag-nome"><b>Coringa</b><span class="ag-pal">C3</span><span class="ag-id">generalista</span></span>
+          <span class="ag-dias"><i class="ag-dia" data-st="vazio"><span class="ag-qn">0</span></i><i class="ag-dia"><span class="ag-qn">1</span></i><i class="ag-dia" data-st="faltou"><span class="ag-qn">2</span></i><i class="ag-dia"><span class="ag-qn">1</span></i><i class="ag-dia"><span class="ag-qn">1</span></i><i class="ag-dia" data-st="faltou"><span class="ag-qn">2</span></i><i class="ag-dia" data-st="faltou" data-hoje><span class="ag-qn">2</span></i></span>
+          <span class="ag-pct" data-nivel="meio">2 · 1 na fila</span><span class="ag-ult">Assumiu T412<small>há 6min</small></span><span class="ag-chip">limite 2</span><span class="ag-selo alt">Ver tasks</span></div>
+        <div class="ag-item"><span class="ag-led ok"></span><span class="ag-nome"><b>Caixa de Entrada</b><span class="ag-pal">S1</span><span class="ag-id">comunicacao</span></span>
+          <span class="ag-dias"><i class="ag-dia"><span class="ag-qn">2</span></i><i class="ag-dia"><span class="ag-qn">1</span></i><i class="ag-dia"><span class="ag-qn">2</span></i><i class="ag-dia"><span class="ag-qn">1</span></i><i class="ag-dia"><span class="ag-qn">2</span></i><i class="ag-dia"><span class="ag-qn">1</span></i><i class="ag-dia" data-hoje><span class="ag-qn">2</span></i></span>
+          <span class="ag-pct" data-nivel="ok">2</span><span class="ag-ult">Validação T376<small>há 1h34</small></span><span class="ag-chip">limite 3</span><span class="ag-selo alt">Ver tasks</span></div>
+        <div class="ag-item"><span class="ag-led ok"></span><span class="ag-nome"><b>Supervisor de carga</b><span class="ag-pal">C5</span><span class="ag-id">supervisor-carga</span></span>
+          <span class="ag-dias"><i class="ag-dia" data-st="vazio"></i><i class="ag-dia" data-st="vazio"></i><i class="ag-dia" data-st="vazio"></i><i class="ag-dia" data-st="vazio"></i><i class="ag-dia" data-st="vazio"></i><i class="ag-dia" data-st="vazio"></i><i class="ag-dia" data-st="vazio" data-hoje></i></span>
+          <span class="ag-pct">–</span><span class="ag-ult" style="color:var(--falha-txt)">2 alertas abertos<small>controle, sem IA</small></span><span class="ag-chip">controle</span><span class="ag-selo alt">Ver alertas</span></div>
+        <div class="sup-alertas"><span class="ag-rot">Alertas do Supervisor · 2</span>
+          <div class="sup-l"><span>kpis</span><span class="r">wip · estourado há 3 leituras</span><span>T377</span><span class="ag-selo alt" style="justify-self:start">Abrir card</span></div>
+          <div class="sup-l"><span>prospeccao</span><span class="r">idade × SLA · 1 card acima de 24h</span><span>T409</span><span class="ag-selo alt" style="justify-self:start">Abrir card</span></div>
+        </div>
+        <div class="ag-mais">+ 12 agentes com carga ok ou vazia (Recepção, Roteador, Cobrador, Portão, Guardião, S3, S4, S5, S7, S12, N1, Dados)</div>
+      </div>
+
+      <div class="ag-grupo">
+        <div class="ag-g-cab"><span class="ag-g-tit">Serviços</span><span class="ag-g-conta">06</span></div>
+        <div class="ag-item std"><span class="ag-led ok"></span><span class="ag-nome"><b>Auto-resposta Slack</b><span class="ag-id">velkoz-agente</span></span>
+          <span class="ag-dias"><i class="ag-dia"></i><i class="ag-dia"></i><i class="ag-dia"></i><i class="ag-dia"></i><i class="ag-dia"></i><i class="ag-dia"></i><i class="ag-dia" data-hoje></i></span>
+          <span class="ag-pct" data-nivel="ok">100%</span><span class="ag-ult">13:30<small>há 1min</small></span><span class="ag-ult">13:31<small>em 44s</small></span><span class="ag-chip">systemd</span><span class="ag-selo alt">Detalhe</span></div>
+        <div class="ag-item std nv in"><span class="ag-led ok"></span><span class="ag-nome"><b>Supervisor de carga (relógio)</b><span class="ag-id">servico:supervisor-carga</span></span>
+          <span class="ag-dias"><i class="ag-dia"></i><i class="ag-dia"></i><i class="ag-dia"></i><i class="ag-dia"></i><i class="ag-dia"></i><i class="ag-dia"></i><i class="ag-dia" data-hoje></i></span>
+          <span class="ag-pct" data-nivel="ok">100%</span><span class="ag-ult">13:30<small>último tick</small></span><span class="ag-ult">13:35<small>a cada 5 min</small></span><span class="ag-chip">no Azir</span><span class="ag-selo alt">Detalhe</span></div>
+      </div>
+    </div>
+  </div></div>
+  <p class="scroll-hint">Arraste para o lado para ver todas as colunas.</p>
+</div>
+
+<!-- ============ AGENTES MAPA ============ -->
+<div class="pane" id="pn-mapa">
+  <div class="legend">
+    <p class="lm"><b>Muda</b>"Especialistas · 11" vira <strong>Fábrica</strong>, com 7 nós novos (Recepção, Roteador, Supervisor de carga, Cobrador, KPIs, Fila técnica, Compras). Generalista vira Coringa, e "Código" e "Agentes" viram Oficina. Cada nó leva a estação no nome e fica âmbar quando enche e vermelho quando passa do limite. A dica mostra "carga 4/3". Aparece a linha "melhora" da Oficina e o relógio do Supervisor em Serviços.</p>
+    <p class="li"><b>Fica igual</b>O palco, o Azir no centro, Equipe, Rotinas, Olimpo, os 4 cartões de vidro e o rodapé de fontes. O coral continua só para "precisa de você".</p>
+  </div>
+  <div class="mock-scroll"><div class="azir-mock" style="min-width:1244px;padding-top:20px">
+    <div class="mp">
+      <svg viewBox="0 0 1180 680" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Mapa de agentes com a área nova Fábrica: 18 nós, KPIs e Prospecção em vermelho, Coringa e Oficina em âmbar">
+<defs>
+<radialGradient id="g-esp" cx="36%" cy="30%" r="75%"><stop offset="0" stop-color="#fbf6ea"/><stop offset=".45" stop-color="#c9b98f"/><stop offset="1" stop-color="#352f22"/></radialGradient>
+<radialGradient id="g-ctl" cx="36%" cy="30%" r="75%"><stop offset="0" stop-color="#e9eef5"/><stop offset=".45" stop-color="#8b97aa"/><stop offset="1" stop-color="#20262f"/></radialGradient>
+<radialGradient id="g-tea" cx="36%" cy="30%" r="75%"><stop offset="0" stop-color="#a6e6ee"/><stop offset=".45" stop-color="#3f8e9c"/><stop offset="1" stop-color="#0f2a33"/></radialGradient>
+<radialGradient id="g-orb" cx="38%" cy="30%" r="75%"><stop offset="0" stop-color="#bfe9ff"/><stop offset=".4" stop-color="#2f8fd0"/><stop offset="1" stop-color="#0b2a52"/></radialGradient>
+<pattern id="g-pts" width="22" height="22" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="1" fill="rgba(160,220,235,.08)"/></pattern>
+</defs>
+<rect width="1180" height="680" fill="url(#g-pts)"/>
+<rect x="300" y="40" width="300" height="150" rx="22" fill="rgba(160,220,235,.02)" stroke="rgba(160,220,235,.08)"/>
+<g class="mp-legenda"><rect x="368.2" y="27" width="163.6" height="26" rx="13"/><circle cx="382.2" cy="40" r="4" fill="#8ab8fb"/><text x="394.2" y="44">Equipe do Azir · 7</text></g>
+<g class="mp-no" data-cor="" transform="translate(345,85)">
+<circle r="21" fill="none" stroke="rgba(255,255,255,.18)" stroke-width="1"/>
+<circle r="18" fill="url(#g-tea)"/>
+<ellipse cx="-5.4" cy="-7.6" rx="7.6" ry="4.0" fill="rgba(255,255,255,.28)"/>
+<rect class="mp-rot-bg" x="-29.6" y="26" width="59.2" height="17" rx="5"/><text class="mp-rot" y="38" text-anchor="middle">Ajudante</text>
+</g>
+<g class="mp-no" data-cor="" transform="translate(415,85)">
+<circle r="21" fill="none" stroke="rgba(255,255,255,.18)" stroke-width="1"/>
+<circle r="18" fill="url(#g-tea)"/>
+<ellipse cx="-5.4" cy="-7.6" rx="7.6" ry="4.0" fill="rgba(255,255,255,.28)"/>
+<rect class="mp-rot-bg" x="-44.35" y="26" width="88.7" height="17" rx="5"/><text class="mp-rot" y="38" text-anchor="middle">Orquestradora</text>
+</g>
+<g class="mp-no" data-cor="" transform="translate(485,85)">
+<circle r="21" fill="none" stroke="rgba(255,255,255,.18)" stroke-width="1"/>
+<circle r="18" fill="url(#g-tea)"/>
+<ellipse cx="-5.4" cy="-7.6" rx="7.6" ry="4.0" fill="rgba(255,255,255,.28)"/>
+<rect class="mp-rot-bg" x="-35.5" y="26" width="71.0" height="17" rx="5"/><text class="mp-rot" y="38" text-anchor="middle">Supervisor</text>
+</g>
+<g class="mp-no" data-cor="" transform="translate(555,85)">
+<circle r="21" fill="none" stroke="rgba(255,255,255,.18)" stroke-width="1"/>
+<circle r="18" fill="url(#g-tea)"/>
+<ellipse cx="-5.4" cy="-7.6" rx="7.6" ry="4.0" fill="rgba(255,255,255,.28)"/>
+<rect class="mp-rot-bg" x="-26.650000000000002" y="26" width="53.300000000000004" height="17" rx="5"/><text class="mp-rot" y="38" text-anchor="middle">Triagem</text>
+</g>
+<g class="mp-no" data-cor="" transform="translate(380,148)">
+<circle r="21" fill="none" stroke="rgba(255,255,255,.18)" stroke-width="1"/>
+<circle r="18" fill="url(#g-tea)"/>
+<ellipse cx="-5.4" cy="-7.6" rx="7.6" ry="4.0" fill="rgba(255,255,255,.28)"/>
+<rect class="mp-rot-bg" x="-38.45" y="26" width="76.9" height="17" rx="5"/><text class="mp-rot" y="38" text-anchor="middle">Verificador</text>
+</g>
+<g class="mp-no" data-cor="precisa" transform="translate(450,148)">
+<circle r="25" fill="#f2766f" opacity=".16"/>
+<circle r="21" fill="none" stroke="#f2766f" stroke-width="2"/>
+<circle r="18" fill="url(#g-tea)"/>
+<ellipse cx="-5.4" cy="-7.6" rx="7.6" ry="4.0" fill="rgba(255,255,255,.28)"/>
+<rect class="mp-rot-bg" x="-20.75" y="26" width="41.5" height="17" rx="5"/><text class="mp-rot" y="38" text-anchor="middle">Yummi</text>
+<g class="mp-badge" data-cor="" transform="translate(14,-14)"><circle r="8"/><text y="3.5" text-anchor="middle">!</text></g>
+</g>
+<g class="mp-no" data-cor="ok" transform="translate(520,148)">
+<circle r="21" fill="none" stroke="#4fc982" stroke-width="2"/>
+<circle r="18" fill="url(#g-tea)"/>
+<ellipse cx="-5.4" cy="-7.6" rx="7.6" ry="4.0" fill="rgba(255,255,255,.28)"/>
+<rect class="mp-rot-bg" x="-23.700000000000003" y="26" width="47.400000000000006" height="17" rx="5"/><text class="mp-rot" y="38" text-anchor="middle">Heimer</text>
+</g>
+<rect x="650" y="60" width="240" height="125" rx="22" fill="rgba(160,220,235,.02)" stroke="rgba(160,220,235,.08)"/>
+<g class="mp-legenda"><rect x="709.8" y="47" width="120.4" height="26" rx="13"/><circle cx="723.8" cy="60" r="4" fill="#8ab8fb"/><text x="735.8" y="64">Serviços · 6</text></g>
+<g class="mp-no" data-cor="" transform="translate(700,100)">
+<circle r="12" fill="none" stroke="rgba(255,255,255,.18)" stroke-width="1"/>
+<circle r="9" fill="url(#g-tea)"/>
+<ellipse cx="-2.7" cy="-3.8" rx="3.8" ry="2.0" fill="rgba(255,255,255,.28)"/>
+</g>
+<g class="mp-no" data-cor="" transform="translate(770,100)">
+<circle r="12" fill="none" stroke="rgba(255,255,255,.18)" stroke-width="1"/>
+<circle r="9" fill="url(#g-tea)"/>
+<ellipse cx="-2.7" cy="-3.8" rx="3.8" ry="2.0" fill="rgba(255,255,255,.28)"/>
+</g>
+<g class="mp-no" data-cor="" transform="translate(840,100)">
+<circle r="12" fill="none" stroke="rgba(255,255,255,.18)" stroke-width="1"/>
+<circle r="9" fill="url(#g-tea)"/>
+<ellipse cx="-2.7" cy="-3.8" rx="3.8" ry="2.0" fill="rgba(255,255,255,.28)"/>
+</g>
+<g class="mp-no" data-cor="" transform="translate(700,150)">
+<circle r="12" fill="none" stroke="rgba(255,255,255,.18)" stroke-width="1"/>
+<circle r="9" fill="url(#g-tea)"/>
+<ellipse cx="-2.7" cy="-3.8" rx="3.8" ry="2.0" fill="rgba(255,255,255,.28)"/>
+</g>
+<g class="mp-no" data-cor="" transform="translate(770,150)">
+<circle r="12" fill="none" stroke="rgba(255,255,255,.18)" stroke-width="1"/>
+<circle r="9" fill="url(#g-tea)"/>
+<ellipse cx="-2.7" cy="-3.8" rx="3.8" ry="2.0" fill="rgba(255,255,255,.28)"/>
+</g>
+<g class="mp-no" data-cor="" transform="translate(840,150)">
+<circle r="12" fill="none" stroke="rgba(255,255,255,.18)" stroke-width="1"/>
+<circle r="9" fill="url(#g-ctl)"/>
+<ellipse cx="-2.7" cy="-3.8" rx="3.8" ry="2.0" fill="rgba(255,255,255,.28)"/>
+</g>
+<rect x="822" y="132" width="36" height="36" rx="10" fill="none" class="mp-novo"/><g class="mp-novo-tag"><rect x="830" y="113" width="40" height="17" rx="8.5"/><text x="850" y="125" text-anchor="middle">novo</text></g>
+<text x="770" y="178" text-anchor="middle" class="mp-mini">+ Sup. carga (tick)</text>
+<rect x="215" y="225" width="260" height="135" rx="22" fill="rgba(160,220,235,.02)" stroke="rgba(160,220,235,.08)"/>
+<g class="mp-legenda"><rect x="259.6" y="212" width="170.8" height="26" rx="13"/><circle cx="273.6" cy="225" r="4" fill="#8ab8fb"/><text x="285.6" y="229">Rotinas locais · 13</text></g>
+<g class="mp-no" data-cor="" transform="translate(250,265)">
+<circle r="12" fill="none" stroke="rgba(255,255,255,.18)" stroke-width="1"/>
+<circle r="9" fill="url(#g-tea)"/>
+<ellipse cx="-2.7" cy="-3.8" rx="3.8" ry="2.0" fill="rgba(255,255,255,.28)"/>
+</g>
+<g class="mp-no" data-cor="" transform="translate(298,265)">
+<circle r="12" fill="none" stroke="rgba(255,255,255,.18)" stroke-width="1"/>
+<circle r="9" fill="url(#g-tea)"/>
+<ellipse cx="-2.7" cy="-3.8" rx="3.8" ry="2.0" fill="rgba(255,255,255,.28)"/>
+</g>
+<g class="mp-no" data-cor="" transform="translate(346,265)">
+<circle r="12" fill="none" stroke="rgba(255,255,255,.18)" stroke-width="1"/>
+<circle r="9" fill="url(#g-tea)"/>
+<ellipse cx="-2.7" cy="-3.8" rx="3.8" ry="2.0" fill="rgba(255,255,255,.28)"/>
+</g>
+<g class="mp-no" data-cor="" transform="translate(394,265)">
+<circle r="12" fill="none" stroke="rgba(255,255,255,.18)" stroke-width="1"/>
+<circle r="9" fill="url(#g-tea)"/>
+<ellipse cx="-2.7" cy="-3.8" rx="3.8" ry="2.0" fill="rgba(255,255,255,.28)"/>
+</g>
+<g class="mp-no" data-cor="alerta" transform="translate(442,265)">
+<circle r="16" fill="#e8a33d" opacity=".16"/>
+<circle r="12" fill="none" stroke="#e8a33d" stroke-width="2"/>
+<circle r="9" fill="url(#g-tea)"/>
+<ellipse cx="-2.7" cy="-3.8" rx="3.8" ry="2.0" fill="rgba(255,255,255,.28)"/>
+</g>
+<g class="mp-no" data-cor="" transform="translate(250,303)">
+<circle r="12" fill="none" stroke="rgba(255,255,255,.18)" stroke-width="1"/>
+<circle r="9" fill="url(#g-tea)"/>
+<ellipse cx="-2.7" cy="-3.8" rx="3.8" ry="2.0" fill="rgba(255,255,255,.28)"/>
+</g>
+<g class="mp-no" data-cor="" transform="translate(298,303)">
+<circle r="12" fill="none" stroke="rgba(255,255,255,.18)" stroke-width="1"/>
+<circle r="9" fill="url(#g-tea)"/>
+<ellipse cx="-2.7" cy="-3.8" rx="3.8" ry="2.0" fill="rgba(255,255,255,.28)"/>
+</g>
+<g class="mp-no" data-cor="" transform="translate(346,303)">
+<circle r="12" fill="none" stroke="rgba(255,255,255,.18)" stroke-width="1"/>
+<circle r="9" fill="url(#g-tea)"/>
+<ellipse cx="-2.7" cy="-3.8" rx="3.8" ry="2.0" fill="rgba(255,255,255,.28)"/>
+</g>
+<g class="mp-no" data-cor="" transform="translate(394,303)">
+<circle r="12" fill="none" stroke="rgba(255,255,255,.18)" stroke-width="1"/>
+<circle r="9" fill="url(#g-tea)"/>
+<ellipse cx="-2.7" cy="-3.8" rx="3.8" ry="2.0" fill="rgba(255,255,255,.28)"/>
+</g>
+<g class="mp-no" data-cor="" transform="translate(442,303)">
+<circle r="12" fill="none" stroke="rgba(255,255,255,.18)" stroke-width="1"/>
+<circle r="9" fill="url(#g-tea)"/>
+<ellipse cx="-2.7" cy="-3.8" rx="3.8" ry="2.0" fill="rgba(255,255,255,.28)"/>
+</g>
+<g class="mp-no" data-cor="" transform="translate(250,341)">
+<circle r="12" fill="none" stroke="rgba(255,255,255,.18)" stroke-width="1"/>
+<circle r="9" fill="url(#g-tea)"/>
+<ellipse cx="-2.7" cy="-3.8" rx="3.8" ry="2.0" fill="rgba(255,255,255,.28)"/>
+</g>
+<g class="mp-no" data-cor="" transform="translate(298,341)">
+<circle r="12" fill="none" stroke="rgba(255,255,255,.18)" stroke-width="1"/>
+<circle r="9" fill="url(#g-tea)"/>
+<ellipse cx="-2.7" cy="-3.8" rx="3.8" ry="2.0" fill="rgba(255,255,255,.28)"/>
+</g>
+<g class="mp-no" data-cor="" transform="translate(346,341)">
+<circle r="12" fill="none" stroke="rgba(255,255,255,.18)" stroke-width="1"/>
+<circle r="9" fill="url(#g-tea)"/>
+<ellipse cx="-2.7" cy="-3.8" rx="3.8" ry="2.0" fill="rgba(255,255,255,.28)"/>
+</g>
+<rect x="720" y="225" width="300" height="110" rx="22" fill="rgba(160,220,235,.02)" stroke="rgba(160,220,235,.08)"/>
+<g class="mp-legenda"><rect x="791.8" y="212" width="156.4" height="26" rx="13"/><circle cx="805.8" cy="225" r="4" fill="#8ab8fb"/><text x="817.8" y="229">Olimpo / EKS · 14</text></g>
+<g class="mp-no" data-cor="" transform="translate(752,265)">
+<circle r="12" fill="none" stroke="rgba(255,255,255,.18)" stroke-width="1"/>
+<circle r="9" fill="url(#g-tea)"/>
+<ellipse cx="-2.7" cy="-3.8" rx="3.8" ry="2.0" fill="rgba(255,255,255,.28)"/>
+</g>
+<g class="mp-no" data-cor="" transform="translate(792,265)">
+<circle r="12" fill="none" stroke="rgba(255,255,255,.18)" stroke-width="1"/>
+<circle r="9" fill="url(#g-tea)"/>
+<ellipse cx="-2.7" cy="-3.8" rx="3.8" ry="2.0" fill="rgba(255,255,255,.28)"/>
+</g>
+<g class="mp-no" data-cor="" transform="translate(832,265)">
+<circle r="12" fill="none" stroke="rgba(255,255,255,.18)" stroke-width="1"/>
+<circle r="9" fill="url(#g-tea)"/>
+<ellipse cx="-2.7" cy="-3.8" rx="3.8" ry="2.0" fill="rgba(255,255,255,.28)"/>
+</g>
+<g class="mp-no" data-cor="" transform="translate(872,265)">
+<circle r="12" fill="none" stroke="rgba(255,255,255,.18)" stroke-width="1"/>
+<circle r="9" fill="url(#g-tea)"/>
+<ellipse cx="-2.7" cy="-3.8" rx="3.8" ry="2.0" fill="rgba(255,255,255,.28)"/>
+</g>
+<g class="mp-no" data-cor="" transform="translate(912,265)">
+<circle r="12" fill="none" stroke="rgba(255,255,255,.18)" stroke-width="1"/>
+<circle r="9" fill="url(#g-tea)"/>
+<ellipse cx="-2.7" cy="-3.8" rx="3.8" ry="2.0" fill="rgba(255,255,255,.28)"/>
+</g>
+<g class="mp-no" data-cor="" transform="translate(952,265)">
+<circle r="12" fill="none" stroke="rgba(255,255,255,.18)" stroke-width="1"/>
+<circle r="9" fill="url(#g-tea)"/>
+<ellipse cx="-2.7" cy="-3.8" rx="3.8" ry="2.0" fill="rgba(255,255,255,.28)"/>
+</g>
+<g class="mp-no" data-cor="" transform="translate(992,265)">
+<circle r="12" fill="none" stroke="rgba(255,255,255,.18)" stroke-width="1"/>
+<circle r="9" fill="url(#g-tea)"/>
+<ellipse cx="-2.7" cy="-3.8" rx="3.8" ry="2.0" fill="rgba(255,255,255,.28)"/>
+</g>
+<g class="mp-no" data-cor="" transform="translate(752,305)">
+<circle r="12" fill="none" stroke="rgba(255,255,255,.18)" stroke-width="1"/>
+<circle r="9" fill="url(#g-tea)"/>
+<ellipse cx="-2.7" cy="-3.8" rx="3.8" ry="2.0" fill="rgba(255,255,255,.28)"/>
+</g>
+<g class="mp-no" data-cor="" transform="translate(792,305)">
+<circle r="12" fill="none" stroke="rgba(255,255,255,.18)" stroke-width="1"/>
+<circle r="9" fill="url(#g-tea)"/>
+<ellipse cx="-2.7" cy="-3.8" rx="3.8" ry="2.0" fill="rgba(255,255,255,.28)"/>
+</g>
+<g class="mp-no" data-cor="" transform="translate(832,305)">
+<circle r="12" fill="none" stroke="rgba(255,255,255,.18)" stroke-width="1"/>
+<circle r="9" fill="url(#g-tea)"/>
+<ellipse cx="-2.7" cy="-3.8" rx="3.8" ry="2.0" fill="rgba(255,255,255,.28)"/>
+</g>
+<g class="mp-no" data-cor="" transform="translate(872,305)">
+<circle r="12" fill="none" stroke="rgba(255,255,255,.18)" stroke-width="1"/>
+<circle r="9" fill="url(#g-tea)"/>
+<ellipse cx="-2.7" cy="-3.8" rx="3.8" ry="2.0" fill="rgba(255,255,255,.28)"/>
+</g>
+<g class="mp-no" data-cor="" transform="translate(912,305)">
+<circle r="12" fill="none" stroke="rgba(255,255,255,.18)" stroke-width="1"/>
+<circle r="9" fill="url(#g-tea)"/>
+<ellipse cx="-2.7" cy="-3.8" rx="3.8" ry="2.0" fill="rgba(255,255,255,.28)"/>
+</g>
+<g class="mp-no" data-cor="" transform="translate(952,305)">
+<circle r="12" fill="none" stroke="rgba(255,255,255,.18)" stroke-width="1"/>
+<circle r="9" fill="url(#g-tea)"/>
+<ellipse cx="-2.7" cy="-3.8" rx="3.8" ry="2.0" fill="rgba(255,255,255,.28)"/>
+</g>
+<g class="mp-no" data-cor="" transform="translate(992,305)">
+<circle r="12" fill="none" stroke="rgba(255,255,255,.18)" stroke-width="1"/>
+<circle r="9" fill="url(#g-tea)"/>
+<ellipse cx="-2.7" cy="-3.8" rx="3.8" ry="2.0" fill="rgba(255,255,255,.28)"/>
+</g>
+<ellipse cx="590" cy="350" rx="95" ry="16" fill="none" stroke="rgba(120,210,230,.25)"/><ellipse cx="590" cy="350" rx="120" ry="22" fill="none" stroke="rgba(120,210,230,.12)"/>
+<circle cx="590" cy="285" r="62" fill="url(#g-orb)"/><ellipse cx="568" cy="258" rx="26" ry="12" fill="rgba(255,255,255,.22)"/>
+<path d="M590 262 l9 14 l18 -6 l-12 16 l12 10 h-54 l12 -10 l-12 -16 l18 6z" fill="#e8b85a" opacity=".92"/>
+<text x="590" y="375" text-anchor="middle" class="mp-orb-t">Azir</text><text x="590" y="391" text-anchor="middle" class="mp-orb-s">39 agentes · 1 atrasado · 2 sem dado</text>
+<rect x="226" y="425" width="732" height="250" rx="22" fill="rgba(216,201,163,.018)" stroke="rgba(216,201,163,.16)"/>
+<g class="mp-legenda"><rect x="531.8" y="412" width="120.4" height="26" rx="13"/><circle cx="545.8" cy="425" r="4" fill="#d8c9a3"/><text x="557.8" y="429">Fábrica · 18</text></g>
+<rect x="221" y="405" width="742" height="275" rx="26" fill="none" class="mp-novo"/>
+<g class="mp-novo-tag"><rect x="914" y="396" width="40" height="17" rx="8.5"/><text x="934" y="408" text-anchor="middle">novo</text></g>
+<path d="M754 534 C 754 546, 702 528, 686 544" fill="none" stroke="#2fb3a2" stroke-width="1.6" stroke-dasharray="5 4"/>
+<g class="mp-novo-tag"><rect x="728" y="516" width="52" height="17" rx="8.5" style="fill:rgba(47,179,162,.2)"/><text x="754" y="528" text-anchor="middle" style="fill:#5fd0bf">melhora</text></g>
+<g class="mp-no" data-cor="" transform="translate(262,478)">
+<circle r="21" fill="none" stroke="rgba(255,255,255,.18)" stroke-width="1"/>
+<circle r="18" fill="url(#g-ctl)"/>
+<ellipse cx="-5.4" cy="-7.6" rx="7.6" ry="4.0" fill="rgba(255,255,255,.28)"/>
+<rect class="mp-rot-bg" x="-38.45" y="26" width="76.9" height="17" rx="5"/><text class="mp-rot" y="38" text-anchor="middle">C1 Recepção</text>
+</g>
+<g class="mp-no" data-cor="" transform="translate(344,478)">
+<circle r="21" fill="none" stroke="rgba(255,255,255,.18)" stroke-width="1"/>
+<circle r="18" fill="url(#g-ctl)"/>
+<ellipse cx="-5.4" cy="-7.6" rx="7.6" ry="4.0" fill="rgba(255,255,255,.28)"/>
+<rect class="mp-rot-bg" x="-38.45" y="26" width="76.9" height="17" rx="5"/><text class="mp-rot" y="38" text-anchor="middle">C2 Roteador</text>
+</g>
+<g class="mp-no" data-cor="alerta" transform="translate(426,478)">
+<circle r="25" fill="#e8a33d" opacity=".16"/>
+<circle r="21" fill="none" stroke="#e8a33d" stroke-width="2"/>
+<circle r="18" fill="url(#g-esp)"/>
+<ellipse cx="-5.4" cy="-7.6" rx="7.6" ry="4.0" fill="rgba(255,255,255,.28)"/>
+<rect class="mp-rot-bg" x="-35.5" y="26" width="71.0" height="17" rx="5"/><text class="mp-rot" y="38" text-anchor="middle">C3 Coringa</text>
+<g class="mp-badge" data-cor="alerta" transform="translate(14,-14)"><circle r="8"/><text y="3.5" text-anchor="middle">2</text></g>
+</g>
+<g class="mp-no" data-cor="" transform="translate(508,478)">
+<circle r="21" fill="none" stroke="rgba(255,255,255,.18)" stroke-width="1"/>
+<circle r="18" fill="url(#g-ctl)"/>
+<ellipse cx="-5.4" cy="-7.6" rx="7.6" ry="4.0" fill="rgba(255,255,255,.28)"/>
+<rect class="mp-rot-bg" x="-44.35" y="26" width="88.7" height="17" rx="5"/><text class="mp-rot" y="38" text-anchor="middle">C5 Sup. carga</text>
+<g class="mp-badge" data-cor="falha" transform="translate(14,-14)"><circle r="8"/><text y="3.5" text-anchor="middle">2</text></g>
+</g>
+<g class="mp-no" data-cor="" transform="translate(590,478)">
+<circle r="21" fill="none" stroke="rgba(255,255,255,.18)" stroke-width="1"/>
+<circle r="18" fill="url(#g-esp)"/>
+<ellipse cx="-5.4" cy="-7.6" rx="7.6" ry="4.0" fill="rgba(255,255,255,.28)"/>
+<rect class="mp-rot-bg" x="-38.45" y="26" width="76.9" height="17" rx="5"/><text class="mp-rot" y="38" text-anchor="middle">C6 Cobrador</text>
+<g class="mp-badge" data-cor="neutro" transform="translate(14,-14)"><circle r="8"/><text y="3.5" text-anchor="middle">1</text></g>
+</g>
+<g class="mp-no" data-cor="" transform="translate(672,478)">
+<circle r="21" fill="none" stroke="rgba(255,255,255,.18)" stroke-width="1"/>
+<circle r="18" fill="url(#g-esp)"/>
+<ellipse cx="-5.4" cy="-7.6" rx="7.6" ry="4.0" fill="rgba(255,255,255,.28)"/>
+<rect class="mp-rot-bg" x="-32.55" y="26" width="65.1" height="17" rx="5"/><text class="mp-rot" y="38" text-anchor="middle">C7 Portão</text>
+<g class="mp-badge" data-cor="neutro" transform="translate(14,-14)"><circle r="8"/><text y="3.5" text-anchor="middle">1</text></g>
+</g>
+<g class="mp-no" data-cor="alerta" transform="translate(754,478)">
+<circle r="25" fill="#e8a33d" opacity=".16"/>
+<circle r="21" fill="none" stroke="#e8a33d" stroke-width="2"/>
+<circle r="18" fill="url(#g-esp)"/>
+<ellipse cx="-5.4" cy="-7.6" rx="7.6" ry="4.0" fill="rgba(255,255,255,.28)"/>
+<rect class="mp-rot-bg" x="-38.45" y="26" width="76.9" height="17" rx="5"/><text class="mp-rot" y="38" text-anchor="middle">S13 Oficina</text>
+<g class="mp-badge" data-cor="alerta" transform="translate(14,-14)"><circle r="8"/><text y="3.5" text-anchor="middle">2</text></g>
+</g>
+<g class="mp-no" data-cor="" transform="translate(836,478)">
+<circle r="21" fill="none" stroke="rgba(255,255,255,.18)" stroke-width="1"/>
+<circle r="18" fill="url(#g-esp)"/>
+<ellipse cx="-5.4" cy="-7.6" rx="7.6" ry="4.0" fill="rgba(255,255,255,.28)"/>
+<rect class="mp-rot-bg" x="-41.400000000000006" y="26" width="82.80000000000001" height="17" rx="5"/><text class="mp-rot" y="38" text-anchor="middle">S13 Guardião</text>
+<g class="mp-badge" data-cor="neutro" transform="translate(14,-14)"><circle r="8"/><text y="3.5" text-anchor="middle">1</text></g>
+</g>
+<g class="mp-no" data-cor="" transform="translate(918,478)">
+<circle r="21" fill="none" stroke="rgba(255,255,255,.18)" stroke-width="1"/>
+<circle r="18" fill="url(#g-esp)"/>
+<ellipse cx="-5.4" cy="-7.6" rx="7.6" ry="4.0" fill="rgba(255,255,255,.28)"/>
+<rect class="mp-rot-bg" x="-29.6" y="26" width="59.2" height="17" rx="5"/><text class="mp-rot" y="38" text-anchor="middle">S1 Caixa</text>
+<g class="mp-badge" data-cor="neutro" transform="translate(14,-14)"><circle r="8"/><text y="3.5" text-anchor="middle">2</text></g>
+</g>
+<g class="mp-no" data-cor="" transform="translate(262,568)">
+<circle r="21" fill="none" stroke="rgba(255,255,255,.18)" stroke-width="1"/>
+<circle r="18" fill="url(#g-esp)"/>
+<ellipse cx="-5.4" cy="-7.6" rx="7.6" ry="4.0" fill="rgba(255,255,255,.28)"/>
+<rect class="mp-rot-bg" x="-44.35" y="26" width="88.7" height="17" rx="5"/><text class="mp-rot" y="38" text-anchor="middle">S3 Compras NF</text>
+<g class="mp-badge" data-cor="neutro" transform="translate(14,-14)"><circle r="8"/><text y="3.5" text-anchor="middle">1</text></g>
+</g>
+<g class="mp-no" data-cor="" transform="translate(344,568)">
+<circle r="21" fill="none" stroke="rgba(255,255,255,.18)" stroke-width="1"/>
+<circle r="18" fill="url(#g-esp)"/>
+<ellipse cx="-5.4" cy="-7.6" rx="7.6" ry="4.0" fill="rgba(255,255,255,.28)"/>
+<rect class="mp-rot-bg" x="-35.5" y="26" width="71.0" height="17" rx="5"/><text class="mp-rot" y="38" text-anchor="middle">S4 Lojinha</text>
+</g>
+<g class="mp-no" data-cor="" transform="translate(426,568)">
+<circle r="21" fill="none" stroke="rgba(255,255,255,.18)" stroke-width="1"/>
+<circle r="18" fill="url(#g-esp)"/>
+<ellipse cx="-5.4" cy="-7.6" rx="7.6" ry="4.0" fill="rgba(255,255,255,.28)"/>
+<rect class="mp-rot-bg" x="-32.55" y="26" width="65.1" height="17" rx="5"/><text class="mp-rot" y="38" text-anchor="middle">S5 Mensal</text>
+</g>
+<g class="mp-no" data-cor="falha" transform="translate(508,568)">
+<circle r="25" fill="#e5484d" opacity=".16"/>
+<circle r="21" fill="none" stroke="#e5484d" stroke-width="2"/>
+<circle r="18" fill="url(#g-esp)"/>
+<ellipse cx="-5.4" cy="-7.6" rx="7.6" ry="4.0" fill="rgba(255,255,255,.28)"/>
+<rect class="mp-rot-bg" x="-44.35" y="26" width="88.7" height="17" rx="5"/><text class="mp-rot" y="38" text-anchor="middle">S6 Prospecção</text>
+<g class="mp-badge" data-cor="" transform="translate(14,-14)"><circle r="8"/><text y="3.5" text-anchor="middle">3</text></g>
+</g>
+<g class="mp-no" data-cor="" transform="translate(590,568)">
+<circle r="21" fill="none" stroke="rgba(255,255,255,.18)" stroke-width="1"/>
+<circle r="18" fill="url(#g-esp)"/>
+<ellipse cx="-5.4" cy="-7.6" rx="7.6" ry="4.0" fill="rgba(255,255,255,.28)"/>
+<rect class="mp-rot-bg" x="-38.45" y="26" width="76.9" height="17" rx="5"/><text class="mp-rot" y="38" text-anchor="middle">S7 Homolog.</text>
+<g class="mp-badge" data-cor="neutro" transform="translate(14,-14)"><circle r="8"/><text y="3.5" text-anchor="middle">1</text></g>
+</g>
+<g class="mp-no" data-cor="falha" transform="translate(672,568)">
+<circle r="25" fill="#e5484d" opacity=".16"/>
+<circle r="21" fill="none" stroke="#e5484d" stroke-width="2"/>
+<circle r="18" fill="url(#g-esp)"/>
+<ellipse cx="-5.4" cy="-7.6" rx="7.6" ry="4.0" fill="rgba(255,255,255,.28)"/>
+<rect class="mp-rot-bg" x="-26.650000000000002" y="26" width="53.300000000000004" height="17" rx="5"/><text class="mp-rot" y="38" text-anchor="middle">S8 KPIs</text>
+<g class="mp-badge" data-cor="" transform="translate(14,-14)"><circle r="8"/><text y="3.5" text-anchor="middle">4</text></g>
+</g>
+<g class="mp-no" data-cor="" transform="translate(754,568)">
+<circle r="21" fill="none" stroke="rgba(255,255,255,.18)" stroke-width="1"/>
+<circle r="18" fill="url(#g-esp)"/>
+<ellipse cx="-5.4" cy="-7.6" rx="7.6" ry="4.0" fill="rgba(255,255,255,.28)"/>
+<rect class="mp-rot-bg" x="-44.35" y="26" width="88.7" height="17" rx="5"/><text class="mp-rot" y="38" text-anchor="middle">S12 Fila téc.</text>
+<g class="mp-badge" data-cor="neutro" transform="translate(14,-14)"><circle r="8"/><text y="3.5" text-anchor="middle">1</text></g>
+</g>
+<g class="mp-no" data-cor="" transform="translate(836,568)">
+<circle r="21" fill="none" stroke="rgba(255,255,255,.18)" stroke-width="1"/>
+<circle r="18" fill="url(#g-esp)"/>
+<ellipse cx="-5.4" cy="-7.6" rx="7.6" ry="4.0" fill="rgba(255,255,255,.28)"/>
+<rect class="mp-rot-bg" x="-35.5" y="26" width="71.0" height="17" rx="5"/><text class="mp-rot" y="38" text-anchor="middle">N1 Compras</text>
+</g>
+<g class="mp-no" data-cor="" transform="translate(918,568)">
+<circle r="21" fill="none" stroke="rgba(255,255,255,.18)" stroke-width="1"/>
+<circle r="18" fill="url(#g-esp)"/>
+<ellipse cx="-5.4" cy="-7.6" rx="7.6" ry="4.0" fill="rgba(255,255,255,.28)"/>
+<rect class="mp-rot-bg" x="-20.75" y="26" width="41.5" height="17" rx="5"/><text class="mp-rot" y="38" text-anchor="middle">Dados</text>
+</g>
+<g class="mp-dica"><rect x="554" y="613" width="236" height="46" rx="10"/><text x="568" y="632" class="mp-dica-t">S8 KPIs &amp; Auditoria</text><text x="568" y="649" class="mp-dica-s">carga 4/3 · 2 na fila · T377</text><rect x="710" y="621" width="68" height="18" rx="9" class="mp-dica-pill"/><text x="744" y="634" text-anchor="middle" class="mp-dica-pt">estourado</text></g>
+</svg>
+
+      <div class="mp-card" style="left:12px;top:12px"><span class="ag-rot">Estado agora</span><div style="display:flex;gap:18px;align-items:baseline"><span class="mp-grande" style="color:var(--alerta)">1</span><span class="mp-grande" style="font-size:18px">2</span><span class="mp-grande" style="font-size:18px">1</span></div><span class="mp-pe">atrasado · sem dado · desligado</span><span class="mp-pe">39 agentes · 28 ok</span></div>
+      <div class="mp-card" style="right:12px;top:12px"><span class="ag-rot">Uptime 7 dias</span><span class="mp-grande" style="color:var(--ok)">98.7%</span><span class="mp-pe">1322/1339 runs ok · meta 95%</span></div>
+      <div class="mp-card" style="left:12px;bottom:12px"><span class="ag-rot">Próxima execução</span><span class="mp-grande" style="color:var(--primary)">em 28s</span><span class="mp-pe">Auto-resposta Slack · 13:31</span></div>
+      <div class="mp-card" style="right:12px;bottom:12px"><span class="ag-rot">Últimas falhas</span><span class="mp-pe" style="color:#e8eaef">Contrato do fo… <span style="color:var(--falha-txt)">14/11 14:30</span></span><span class="mp-pe" style="color:#e8eaef">Contrato do fo… <span style="color:var(--falha-txt)">14/11 14:15</span></span><span class="mp-pe" style="color:var(--coral)">Yummi · 2 cuidando</span></div>
+    </div>
+    <div class="mp-fontes"><span>FONTES</span><span><i></i><b>logs</b> 29ms</span><span><i></i><b>coletor</b> 19ms</span><span><i></i><b>systemd</b> 23ms</span><span><i></i><b>slack</b> 121ms</span><span><i></i><b>eks</b> 2.4s</span><span style="margin-left:auto">clique num agente = detalhe</span></div>
+  </div></div>
+  <p class="scroll-hint">Arraste para o lado para ver o mapa inteiro.</p>
+</div>
+
+<!-- ============ LATERAL ============ -->
+<div class="pane" id="pn-lat">
+  <div class="legend">
+    <p class="lm"><b>Muda</b>Estação e autonomia (A1, A2, A3) no cabeçalho. Bloco "Carga 7 dias" e bloco "Na fila". Na Oficina, a fila de melhorias com quem pediu e o estado. No Supervisor, os alertas abertos. No Coringa, o que ele assumiu e se pode executar.</p>
+    <p class="li"><b>Fica igual</b>O painel de vidro, a esfera marfim, "Fazendo agora", "Recentes", skills, MCPs e aprendizados.</p>
+  </div>
+  <div class="mock-scroll"><div class="azir-mock w-lat"><div class="lat-grade">
+    <div class="mp-lat">
+      <div class="lat-top"><span class="ag-rot">Especialista</span><span>✕</span></div>
+      <div class="esp-lat">
+        <div class="esp-lat-cab"><span class="esp-lat-marca"></span><div><h4><span class="ag-pal nv" style="font-size:11px">S8</span>KPIs &amp; Auditoria</h4><div class="linha"><span class="mp-dica-st" data-cor="falha">carga 4/3 · 2 na fila</span><span class="aut nv">A2 · lança no Hub</span></div></div></div>
+        <p class="esp-lat-desc">Lança e confere os KPIs diários do setor e corrige o que falhou antes de comentar.</p>
+        <div class="esp-lat-grupo nv"><span class="esp-lat-rot">Carga 7 dias</span>
+          <span class="ag-dias big-dias"><i class="ag-dia"><span class="ag-qn">2</span></i><i class="ag-dia"><span class="ag-qn">2</span></i><i class="ag-dia" data-st="faltou"><span class="ag-qn">3</span></i><i class="ag-dia" data-st="falhou"><span class="ag-qn">4</span></i><i class="ag-dia" data-st="faltou"><span class="ag-qn">3</span></i><i class="ag-dia"><span class="ag-qn">2</span></i><i class="ag-dia" data-st="falhou" data-hoje><span class="ag-qn" style="color:rgba(10,12,16,.85)">4</span></i></span>
+          <span class="big-eixo"><span>qua</span><span>qui</span><span>sex</span><span>sáb</span><span>dom</span><span>seg</span><span>hoje</span></span></div>
+        <div class="esp-lat-grupo"><span class="esp-lat-rot">Fazendo agora</span>
+          <span class="esp-lat-task"><span class="mono">T377</span><span>KPIs de ontem: conferir 3 lançamentos</span><span class="esp-lat-col f">Fazendo</span></span></div>
+        <div class="esp-lat-grupo nv"><span class="esp-lat-rot">Na fila</span>
+          <span class="esp-lat-task"><span class="mono">T420</span><span>Mercado Livre de domingo</span><span class="esp-lat-col">Backlog</span></span>
+          <span class="esp-lat-task"><span class="mono">T421</span><span>Comentário da auditoria semanal</span><span class="esp-lat-col">Backlog</span></span></div>
+        <div class="esp-lat-grupo"><span class="esp-lat-rot">Recentes</span>
+          <span class="esp-lat-task"><span class="mono">T370</span><span>KPIs de sábado</span><span class="esp-lat-col">Concluído</span></span></div>
+        <div class="esp-lat-grupo"><span class="esp-lat-rot">Skills</span><ul class="esp-lat-chips"><li class="sk">kpis-fornecedores</li></ul></div>
+        <div class="esp-lat-grupo"><span class="esp-lat-rot">MCPs</span><ul class="esp-lat-chips"><li class="mc">kpi-system</li><li class="mc">nekt</li></ul></div>
+      </div>
+    </div>
+
+    <div style="display:grid;gap:16px;align-content:start">
+      <div class="mp-lat">
+        <div class="lat-top"><span class="ag-rot">Especialista</span><span>✕</span></div>
+        <div class="esp-lat">
+          <div class="esp-lat-cab"><span class="esp-lat-marca"></span><div><h4><span class="ag-pal nv" style="font-size:11px">S13</span>Oficina · Programador</h4><div class="linha"><span class="mp-dica-st" data-cor="alerta">carga 2/2 · 1 na fila</span><span class="aut nv">A2 · conserta o reversível</span></div></div></div>
+          <div class="esp-lat-grupo nv"><span class="esp-lat-rot">Fila da Oficina</span>
+            <span class="esp-lat-task"><span class="mono">T418</span><span>kpis-fornecedores: timeout do Hub<br><span class="esp-lat-col">pediu T377</span></span><span class="esp-lat-col f">fazendo</span></span>
+            <span class="esp-lat-task"><span class="mono">T422</span><span>Coringa: limite de 2 ciclos por card<br><span class="esp-lat-col">pediu Supervisor</span></span><span class="esp-lat-col">na fila</span></span>
+            <span class="esp-lat-task"><span class="mono">T402</span><span>Vel'Koz: botão Aprovar no celular<br><span class="esp-lat-col">pediu Henry</span></span><span class="esp-lat-col" style="color:var(--ok)">PR aberto</span></span>
+          </div>
+        </div>
+      </div>
+      <div class="mp-lat">
+        <div class="lat-top"><span class="ag-rot">Controle</span><span>✕</span></div>
+        <div class="esp-lat">
+          <div class="esp-lat-cab"><span class="esp-lat-marca ctl"></span><div><h4><span class="ag-pal nv" style="font-size:11px">C5</span>Supervisor de carga</h4><div class="linha"><span class="mp-dica-st" data-cor="falha">2 alertas abertos</span></div></div></div>
+          <div class="esp-lat-grupo nv"><span class="esp-lat-rot">Alertas abertos</span>
+            <span class="esp-lat-task"><span class="mono">kpis</span><span>wip · estourado há 3 leituras</span><span class="esp-lat-col r">T377</span></span>
+            <span class="esp-lat-task"><span class="mono">prospeccao</span><span>idade × SLA · acima de 24h</span><span class="esp-lat-col r">T409</span></span>
+            <span class="esp-lat-vazio">Amarelos agora: dev, generalista · último DM 18:00 de ontem</span></div>
+        </div>
+      </div>
+      <div class="mp-lat">
+        <div class="lat-top"><span class="ag-rot">Coringa</span><span>✕</span></div>
+        <div class="esp-lat">
+          <div class="esp-lat-cab"><span class="esp-lat-marca" style="filter:grayscale(.7)"></span><div><h4><span class="ag-pal nv" style="font-size:11px">C3</span>Coringa</h4><div class="linha"><span class="mp-dica-st" data-cor="alerta">carga 2/2 · 1 na fila</span></div></div></div>
+          <div class="cor-est nv"><div><b>1</b>sem dono agora</div><div><b>3</b>assumidos hoje</div><div><b style="color:var(--rot-col)">OFF</b>executar sozinho</div></div>
+        </div>
+      </div>
+    </div>
+  </div></div></div>
+</div>
+
+<!-- ============ CENTRAL ============ -->
+<div class="pane" id="pn-central">
+  <div class="legend">
+    <p class="lm"><b>Muda</b>Quase nada. O dono aparece ao lado do nome da task, como exemplo. Os cards da caixa de rodada passam pela Recepção ao serem criados.</p>
+    <p class="li"><b>Fica igual</b>Caixa de rodada, Equipe no Herdr (o Supervisor de carga não entra aqui), o gráfico de 7 dias, os filtros e a tabela.</p>
+  </div>
+  <div class="mock-scroll"><div class="azir-mock w-mid"><div class="pad">
+    <div class="central-grade">
+      <div class="caixa"><span class="secao">Caixa de rodada</span><textarea disabled aria-label="exemplo">T009 · fotos de Grandes Operações
+T013 · calculadora do fotógrafo
+T006 · Black Friday</textarea><div style="display:flex;gap:8px;flex-wrap:wrap"><span class="btn btn-leve btn-mini">Colar linhas da planilha</span><span class="btn btn-leve btn-mini">Copiar status</span><span class="btn btn-primario btn-mini">Mandar pra orquestradora</span></div></div>
+      <div class="equipe"><span class="secao">Equipe no Herdr</span>
+        <div class="membro"><span class="bola"></span><span>orquestradora<small>registra e repassa</small></span><em>pronta · w1:p1</em></div>
+        <div class="membro"><span class="bola"></span><span>ajudante<small>destrava</small></span><em>pronta · w1:p2</em></div>
+        <div class="membro"><span class="bola"></span><span>triagem<small>classifica</small></span><em>pronta · w1:p3</em></div>
+        <div class="membro"><span class="bola"></span><span>supervisor<small>acha parado</small></span><em>pronta · w1:p4</em></div>
+        <div class="membro"><span class="bola"></span><span>verificador<small>confere a prova</small></span><em>pronta · w1:p5</em></div>
+      </div>
+      <div class="grafico"><span class="secao">Últimos 7 dias</span>
+        <div class="barras"><div><i class="r" style="height:70%"></i><i class="e" style="height:40%"></i></div><div><i class="r" style="height:45%"></i><i class="e" style="height:55%"></i></div><div><i class="r" style="height:30%"></i><i class="e" style="height:35%"></i></div><div><i class="r" style="height:8%"></i><i class="e" style="height:12%"></i></div><div><i class="r" style="height:4%"></i><i class="e" style="height:6%"></i></div><div><i class="r" style="height:20%"></i><i class="e" style="height:15%"></i></div><div><i class="r" style="height:26%"></i><i class="e" style="height:18%"></i></div></div>
+        <div class="eixo"><span>10</span><span>11</span><span>12</span><span>13</span><span>14</span><span>15</span><span>16</span></div>
+        <span style="font-size:12px;color:var(--muted-fg)"><span class="sw rec"></span>Recebidas <span class="sw ent" style="margin-left:10px"></span>Entregues</span></div>
+    </div>
+    <div class="tabela-central">
+      <div style="display:flex;justify-content:space-between;align-items:center"><span class="secao" style="margin:0">Tasks</span><span class="filtros"><span class="on">Abertas</span><span>Pra revisar</span><span>Da caixa de rodada</span><span>Todas</span></span></div>
+      <table class="central-tab"><thead><tr><th>ID</th><th>Task</th><th>Status</th><th>Prova</th><th>Triagem</th><th>Atualizada</th></tr></thead><tbody>
+        <tr><td>T377</td><td>KPIs de ontem: conferir 3 lançamentos <span class="esp-chip nv" style="margin:0 0 0 8px"><span class="est">S8</span>KPIs</span></td><td class="mut">● fazendo</td><td class="mut">–</td><td class="mut">pela recepção</td><td class="mut">13:50</td></tr>
+        <tr><td>T376</td><td>Lembrar a Wania de avisar que o Henry está off <span class="esp-chip nv" style="margin:0 0 0 8px"><span class="est">S1</span>Caixa</span></td><td class="st-ok">✓ pronto, com prova</td><td>2 links</td><td class="rel">relevante</td><td class="mut">11:39</td></tr>
+        <tr><td>T107</td><td>Plaquinhas de Camaçari sem data <span class="esp-chip nv" style="margin:0 0 0 8px"><span class="est">N1</span>Compras</span></td><td class="st-tr">● travado</td><td class="mut">–</td><td class="mut">aguardando terceiro</td><td class="mut">ontem</td></tr>
+      </tbody></table>
+    </div>
+  </div></div></div>
+</div>
+
+<!-- ============ BARRA ============ -->
+<div class="pane" id="pn-barra">
+  <div class="legend">
+    <p class="lm"><b>Muda</b>Nada.</p>
+    <p class="li"><b>Fica igual</b>Tudo. A carga dos agentes não soma no número vermelho da aba Agentes, que segue só para falha e atraso.</p>
+  </div>
+  <div class="mock-scroll"><div class="azir-mock w-mid" style="padding:0">
+    <div class="barra">
+      <span class="marca"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2 4 4.5-1.5L16 10l3 2.5H5L8 10 5.5 5.5 10 7z" fill="#d9b46a"/><path d="M8 14h8l-1 5h-6z" fill="#d9b46a" opacity=".7"/></svg><span class="marca-nome">Azir</span></span>
+      <span class="vistas"><span class="vista ativa">Quadro</span><span class="vista">Central</span><span class="vista">Agentes<span class="vista-alerta">1</span></span><span class="vista">Uso de IA</span></span>
+      <span class="slack-auto"><span class="slack-trilho"><span></span></span>Auto-resposta Slack <small>checou 13:23</small></span>
+      <span class="btn-slack">Slack · 9 hoje <i></i></span>
+      <span class="pool"><span class="pool-slots"><i></i><i></i><i></i></span><b>0/3</b> rodando · 2 vagas com Slack</span>
+    </div>
+  </div></div>
+</div>
+
+<!-- ============ USO DE IA ============ -->
+<div class="pane" id="pn-uso">
+  <div class="legend">
+    <p class="lm"><b>Muda</b>Nada. Tokens por agente ficam para depois.</p>
+    <p class="li"><b>Fica igual</b>O placar do coletor, os 7 dias da semana e os cards de cada métrica.</p>
+  </div>
+  <div class="mock-scroll"><div class="azir-mock w-mid"><div class="pad">
+    <div class="ui-topo"><h3>Uso de IA<small>lido 13:30</small></h3><span class="btn btn-contorno btn-mini">Atualizar</span></div>
+    <div class="ui-hero">
+      <div><span class="secao">Placar do coletor · esta máquina</span><div class="ui-faixa-b">sem dado</div><div style="font-size:13px;color:var(--muted-fg);margin-top:8px">W47 · 13/11 17h → 20/11 17h · dia 3 de 7</div></div>
+      <div class="ui-dias"><div class="ui-dia completo"><span class="ui-dia-c"></span>qui</div><div class="ui-dia completo"><span class="ui-dia-c"></span>sex</div><div class="ui-dia hoje"><span class="ui-dia-c"></span>sáb</div><div class="ui-dia"><span class="ui-dia-c"></span>dom</div><div class="ui-dia"><span class="ui-dia-c"></span>seg</div><div class="ui-dia"><span class="ui-dia-c"></span>ter</div><div class="ui-dia"><span class="ui-dia-c"></span>qua</div></div>
+    </div>
+    <div class="ui-aviso">Outra medição: o TeamZone mostra os seus números da faixa. Este placar é só desta máquina.</div>
+    <div class="ui-cards">
+      <div class="ui-card"><span class="secao" style="margin:0">Tokens de saída</span><b>1,2 mi</b><span class="ui-provisoria">parcial</span><small>W46: 3,4 mi · conta</small></div>
+      <div class="ui-card"><span class="secao" style="margin:0">Sessões</span><b>41</b><span class="ui-provisoria">parcial</span><small>W46: 118 · conta</small></div>
+      <div class="ui-card"><span class="secao" style="margin:0">Rotinas</span><b>14</b><small>W46: 14 · conta</small></div>
+      <div class="ui-card"><span class="secao" style="margin:0">Workflows</span><b>9</b><span class="ui-provisoria">parcial</span><small>W46: 22 · não conta</small></div>
+    </div>
+  </div></div></div>
+</div>
+
+<!-- ============ SLACK ============ -->
+<div class="pane" id="pn-slack">
+  <div class="legend">
+    <p class="lm"><b>Muda</b>Nada. Conversa do Slack não tem dono nem carga. Quando vira task, entra no Quadro e passa pela Recepção.</p>
+    <p class="li"><b>Fica igual</b>A gaveta, os estados (respondida, respondendo, virou task) e o link para o Slack.</p>
+  </div>
+  <div class="mock-scroll"><div class="azir-mock w-gav" style="padding:0"><div class="gav-fundo"><div class="gaveta">
+    <h4>Conversas do Slack <span class="conta">32</span></h4>
+    <span class="dica">O que o Azir respondeu ou virou task hoje.</span>
+    <div class="sc-lista">
+      <div class="sc-item" data-st="resp"><div class="sc-l1"><span class="sc-quem">Ray</span><span class="sc-onde">DM · 12:05</span><span class="sc-st resp">respondendo</span></div><div class="sc-resumo">Perguntou o status da planilha de contribuições</div><span class="sc-link">abrir no Slack ↗</span></div>
+      <div class="sc-item" data-st="task"><div class="sc-l1"><span class="sc-quem">Ana Carolina</span><span class="sc-onde">#fornecedores-implantação · 11:40 · T352</span><span class="sc-st task">virou task</span></div><div class="sc-resumo">Pediu para seguir com a homologação</div><span class="sc-link">abrir no Slack ↗</span></div>
+      <div class="sc-item"><div class="sc-l1"><span class="sc-quem">Wania</span><span class="sc-onde">DM · 10:12</span><span class="sc-st">respondida</span></div><div class="sc-resumo">Confirmou que avisa os fornecedores</div><span class="sc-link">abrir no Slack ↗</span></div>
+    </div>
+  </div></div></div></div>
+</div>
+
+<!-- ============ ARQUIVADAS ============ -->
+<div class="pane" id="pn-arq">
+  <div class="legend">
+    <p class="lm"><b>Muda</b>Nada.</p>
+    <p class="li"><b>Fica igual</b>A busca e a lista de cards arquivados.</p>
+  </div>
+  <div class="mock-scroll"><div class="azir-mock w-gav" style="padding:0"><div class="gav-fundo"><div class="gaveta">
+    <h4>Arquivadas <span class="conta">47</span></h4>
+    <span class="busca">Buscar nas arquivadas…</span>
+    <div class="arq-item"><div><b>T301 · Conferir crontab da VPS</b><small>arquivada 12/11</small></div><span class="btn btn-leve btn-mini">Restaurar</span></div>
+    <div class="arq-item"><div><b>T288 · Teste do botão Aprovar</b><small>arquivada 11/11</small></div><span class="btn btn-leve btn-mini">Restaurar</span></div>
+    <div class="arq-item"><div><b>T274 · Rascunho do pulso</b><small>arquivada 10/11</small></div><span class="btn btn-leve btn-mini">Restaurar</span></div>
+  </div></div></div></div>
+</div>
+
+    </div>
   </div>
 </section>
 
 <section id="agentes">
   <div class="wrap">
-    <div class="eyebrow">Para aprovar</div>
     <h2>Os 16 agentes</h2>
-    <p>Cada linha diz o que mudou depois da revisão cética, quando mudou. A marcação fica só neste navegador; serve para você levar a lista às decisões.</p>
+    <p>Um cartão por agente. A marcação fica salva só neste navegador.</p>
     <div class="toolbar" role="group" aria-label="Filtrar por prioridade">
-      <button class="chip" data-f="all" aria-pressed="true">Todos</button>
-      <button class="chip" data-f="P0" aria-pressed="false">P0</button>
-      <button class="chip" data-f="P1" aria-pressed="false">P1</button>
-      <button class="chip" data-f="P2" aria-pressed="false">P2</button>
+      <button class="fchip" data-f="all" aria-pressed="true">Todos</button>
+      <button class="fchip" data-f="P0" aria-pressed="false">P0 · base</button>
+      <button class="fchip" data-f="P1" aria-pressed="false">P1 · em sombra</button>
+      <button class="fchip" data-f="P2" aria-pressed="false">P2 · depois da BF</button>
       <span class="counter" id="counter" aria-live="polite"></span>
     </div>
     <div class="agents" id="agents"></div>
-    <p class="note"><strong>Estações humanas</strong>, medidas no mesmo painel se você e elas concordarem (decisão 11): Henry (mesa e menções), Wania (chamados e idade), Ray (devoluções por semana). <strong>Configurações, não agentes:</strong> teto do Heimer e filtros do Gmail (com OK).</p>
   </div>
 </section>
 
-<section id="coringa">
-  <div class="wrap two">
-    <div>
-      <div class="eyebrow">Em destaque</div>
-      <h2>C3 Coringa: nada fica sem dono</h2>
-      <p>Hoje o Azir tem um <code>generalista.md</code> com <code>quando: []</code>: só entra em card que alguém já puxou para Fazendo. O Coringa é esse generalista com fila própria e regra de saída.</p>
-      <p><strong>Antes da decisão 0</strong>, ele só tria e decompõe: o card vai para "Pronto, aguardando disparo". A REGRA de 10/11 diz que as tasks do Azir "só rodam quando eu mando", e o pull automático muda isso.</p>
-      <p><strong>Depois da decisão 0</strong>, ordem de pull a cada 15 min:</p>
-      <ol class="steps">
-        <li>Card sem dono há mais de 15 min.</li>
-        <li>Card em Pronto há mais de 24h.</li>
-        <li>Card PR ou OP de estação vermelha, acima do SLA.</li>
-        <li>Linha do Taskdex sem FUP há 7 dias ou mais.</li>
-        <li>Fila da pessoa ausente.</li>
-      </ol>
-    </div>
-    <div>
-      <h3 style="margin-bottom:var(--sp3)">Regras</h3>
-      <ul class="copy-list">
-        <li><b>Iniciativa vira DAG</b>Card de classe IN é quebrado em subtasks com "pronto quando", estação e dependência. Os campos <code>parent_id</code> e <code>depende_de</code> já existem. Subtask no Taskdex só com OK (decisão 7).</li>
-        <li><b>Fica dono até o fim quando a estação não existe</b>Enquanto a estação de destino não estiver ligada, ele executa, com teto de escopo. Não empurra a trava para a mesa.</li>
-        <li><b>Travas</b>WIP 2; no máximo 2 ciclos por card; nunca pega A3 sensível (ClickSign, e-mail financeiro, banco), pelo campo <code>coringa_elegivel</code>.</li>
-        <li><b>Mapa cresce</b>Mesmo tema 3 vezes por semana no Coringa vira proposta de estação nova.</li>
-        <li><b>Modo ausência</b>Gatilho por inatividade do Henry (0 mensagens em X horas úteis), não pelo Calendar: a queda de 31/10 foi falta de energia sem aviso. Não duplica o <code>blocoAusencia</code> de 16/11. Pela Wania, só com o consentimento dela.</li>
-        <li><b>Métrica</b>Idade até a 1ª ação real e lead time até Concluído. "Sem dono = 0" sozinho fica verde com a task parada.</li>
-        <li><b>Carga esperada</b>3 a 8 cards por semana, mais as 20 iniciativas uma vez. As 20 linhas não estão sem dono: são guarda-chuvas do Henry tratadas como task pelo importador.</li>
-      </ul>
-    </div>
-  </div>
-</section>
-
-<section id="carga">
+<section id="decide">
   <div class="wrap">
-    <div class="eyebrow">Painel de sobrecarga</div>
-    <h2>Quem está sobrecarregado, e como saber</h2>
-    <div class="measure">
-      <div>
-        <h3><span class="lvl" style="background:var(--ok)"></span>Já dá para medir</h3>
-        <ul>
-          <li>Campos que existem no banco: <code>dono</code>, <code>aguardando_desde</code>, <code>origem_ref</code> (com dedupe), <code>parent_id</code>, <code>depende_de</code>, <code>iniciado_em</code>, <code>rodadas</code>, <code>agente</code>. Só ninguém preenche.</li>
-          <li>Baseline retroativo de 11 a 16/11: WIP e lead time aproximados a partir de <code>criado_em</code>, <code>iniciado_em</code> e <code>atualizado_em</code>.</li>
-          <li>Falha e rodada vazia dos agentes do Olimpo pelo <code>efeito_rodada</code>.</li>
-        </ul>
-      </div>
-      <div>
-        <h3><span class="lvl" style="background:var(--bad)"></span>Falta construir</h3>
-        <ul>
-          <li><strong>Histórico de coluna:</strong> registrar <code>tipo='coluna'</code> na tabela <code>eventos</code>. Antes de 11/11 não há série.</li>
-          <li><strong>Custo:</strong> o motor herdr fecha com custo 0 (<code>executor.ts:977</code>). Somar tokens do transcript; medir em tokens e minutos, porque em assinatura o USD é nocional.</li>
-          <li><strong>Janela de 5h:</strong> não há telemetria. Usar um sinal binário "bateu o limite, volta às X", contando também as rotinas da VPS. Com a troca de conta, nada calibrado antes vale; confirmar se PC e VPS estão na mesma conta.</li>
-          <li><strong>Pipedrive:</strong> só os e-mails de 75%. A cadência roda no Olimpo e não reporta.</li>
-          <li><strong>Rotinas do PC:</strong> o espelho de logs parou em 13/11. Consertar o <code>ambiente-sync</code> antes da vigia cruzada.</li>
-        </ul>
-      </div>
-    </div>
-
-    <h3 style="margin-bottom:var(--sp3)">Limiares iniciais</h3>
-    <div class="tbl"><table>
-      <thead><tr><th>Métrica</th><th><span class="lvl" style="background:var(--warn)"></span>Amarelo</th><th><span class="lvl" style="background:var(--bad)"></span>Vermelho</th></tr></thead>
-      <tbody>
-        <tr><td>Idade do mais velho × SLA (P0 4h úteis, P1 24h, P2 72h; S1 15 min)</td><td>&gt; 50% do SLA</td><td>&gt; SLA</td></tr>
-        <tr><td>Card sem dono</td><td>&gt; 15 min</td><td>&gt; 1h</td></tr>
-        <tr><td>Idade até a 1ª ação real</td><td>&gt; 24h úteis</td><td>&gt; 72h úteis</td></tr>
-        <tr><td>ρ = chegadas ÷ saídas (7d), <strong>só com 5+ chegadas</strong></td><td>&gt; 0,8</td><td>&gt; 1,0 por 2 dias</td></tr>
-        <tr><td>Participação nos minutos do pool, <strong>sem melhoria no denominador</strong></td><td>&gt; 35%</td><td>&gt; 50%</td></tr>
-        <tr><td>Heimer (teto próprio)</td><td>—</td><td>&gt; 10% do pool no dia</td></tr>
-        <tr><td>Falha (7d)</td><td>&gt; 10%</td><td>&gt; 25% ou 3 seguidas</td></tr>
-        <tr><td>Rodadas vazias</td><td>&gt; 80%</td><td>&gt; 95% → reduzir frequência</td></tr>
-        <tr><td>Devoluções por card</td><td>1</td><td>2 ou mais</td></tr>
-        <tr><td>Aguardando terceiro</td><td>&gt; 48h</td><td>&gt; 72h</td></tr>
-        <tr><td>Janela de 5h do Claude</td><td>—</td><td>bateu o limite</td></tr>
-        <tr><td>Cota do Pipedrive (e-mail)</td><td>—</td><td>alerta de 75% no dia</td></tr>
-        <tr><td>Henry (mesa + menções)</td><td>&gt; 8 itens ou &gt; 24h úteis</td><td>&gt; 15 ou &gt; 48h</td></tr>
-        <tr><td>Wania (chamados), se ela concordar</td><td>&gt; 10 ou p90 &gt; 48h</td><td>&gt; 15 ou algum &gt; 72h</td></tr>
-      </tbody>
-    </table></div>
-    <p class="note">Com 3 a 8 cards por semana por estação, ρ e p90 são ruído. Até haver volume, valem idade, fila e "sem dono". Recalibração quando cada estação tiver 5+ chegadas por semana em 3 semanas, não numa data fixa.</p>
-
-    <div class="two" style="margin-top:var(--sp5)">
-      <div>
-        <h3 style="margin-bottom:var(--sp2)">Alerta</h3>
-        <ul class="copy-list">
-          <li><b>Só na 3ª leitura vermelha seguida</b>Card resolvido por humano conta como "resolvido por outro"; rodada vazia legítima conta como vazio.</li>
-          <li><b>Um DM às 18h, só se houver alerta</b>Pelo Vel'Koz, fallback Composio. Tudo verde = nada.</li>
-          <li><b>Imediato em 3 casos</b>Humano vermelho, S1 com ρ &gt; 1, ou janela de 5h estourada.</li>
-          <li><b>Pulso próprio</b>O Supervisor edita uma mensagem dele, com o próprio verificador "não editada há 2h". O pulso do Vel'Koz e a vigia das 18h45 ficam intocados.</li>
-          <li><b>Coleta externa diária</b>O tick de 5 min lê só o SQLite e o <code>efeito_rodada</code>. Menções, Gmail, chamados e Calendar entram 1 vez por dia (Slack dá 429).</li>
-        </ul>
-      </div>
-      <div>
-        <h3 style="margin-bottom:var(--sp2)">Aba "Carga" no Azir</h3>
-        <p>Mesa no topo; heatmap estação × dia (7 e 30 dias) pelo pior limiar; gráfico de 7 dias de entradas, saídas e fila, como a Central da Iara; top 10 cards mais velhos; faixas humanas; tokens e minutos por estação; cotas externas; radar de agenda (dias com mais de 5h de reunião, dias 18 a 21, BF até 30/11). Relatório na segunda às 8h.</p>
-        <h3 style="margin:var(--sp4) 0 var(--sp2)">Rebalanceamento (sem IA no gatilho)</h3>
-        <ol class="steps">
-          <li>Estação amarela: o Coringa puxa os cards PR dela.</li>
-          <li>Estação vermelha: Heimer pausa, batelada vai para a noite, excedente elegível vai para o Coringa, e sai rascunho de repactuar prazo se a origem for o Taskdex.</li>
-          <li>Janela de 5h estourada: congela Heimer, Neeko, P2 e batelada.</li>
-          <li>Cota do Pipedrive vermelha: avisa o Henry. Mexer na cadência do Olimpo é PR, não ação automática.</li>
-          <li>Véspera de dia cheio: antecipa a batelada e segura a mesa para o próximo bloco livre.</li>
-          <li>Humano vermelho ou ausente: a Recepção para de rotear para a pessoa e só o A3 vai para a mesa.</li>
-        </ol>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="roadmap">
-  <div class="wrap">
-    <div class="eyebrow">Ondas</div>
-    <h2>Roadmap</h2>
-    <p>O Henry está no retiro até 18/11 e o <code>contrato-fotografo</code> só religa em 19/11. Por isso a primeira onda é só código no Azir, sem nada que dependa de OK.</p>
-    <div class="waves">
-      <div class="wave">
-        <div class="when">16 a 18/11</div>
-        <h3>Só código no Azir</h3>
-        <ul>
-          <li>Preencher <code>dono</code> e <code>agente</code> na aplicação, validando ao mudar de coluna</li>
-          <li>Registrar transição de coluna na <code>eventos</code></li>
-          <li>Somar tokens do transcript do herdr</li>
-          <li>Sinal binário de 5h</li>
-          <li>Baseline retroativo 11 a 16/11</li>
-          <li>C2 termina no Coringa; C3 só tria e decompõe</li>
-          <li>Teto do Heimer (configuração)</li>
-          <li>Conferir no financeiro e no Drive as cobranças de outubro (leitura)</li>
-          <li>Levar à Iara a pergunta do Coringa e da sobrecarga</li>
-        </ul>
-      </div>
-      <div class="wave">
-        <div class="when">19 a 22/11</div>
-        <h3>Consertos com OK</h3>
-        <ul>
-          <li>Religar 5 linhas do crontab do PC; desligar a <code>rotina-despacho</code></li>
-          <li>Relogar o Mercado Livre</li>
-          <li>Religar o <code>contrato-fotografo</code> depois do login do fornecedores@</li>
-          <li>Trocar as 4 chaves</li>
-          <li>Consertar o <code>ambiente-sync</code> e o espelho de logs</li>
-          <li>C5 v1 com DM das 18h só com alerta</li>
-          <li>C6 em sombra nos 3 cards aguardando</li>
-        </ul>
-      </div>
-      <div class="wave">
-        <div class="when">23 a 29/11</div>
-        <h3>Fila única e portão</h3>
-        <ul>
-          <li>C1 com agregação por script e PR</li>
-          <li>S1 Caixa de Entrada</li>
-          <li>C7 com a régua da Carol</li>
-          <li>Aba Carga no Azir (fecha o item 20)</li>
-          <li>Em sombra: S3 e N1</li>
-          <li>S8: corrigir as falhas antes de comentar</li>
-          <li>S4 segue com a BF até 30/11</li>
-        </ul>
-      </div>
-      <div class="wave">
-        <div class="when">Dezembro</div>
-        <h3>Batelada e o resto</h3>
-        <ul>
-          <li>S5: ciclo de novembro em batelada a partir de 01/12</li>
-          <li>Uma estação P1 por vez, em sombra com eval: S6, S7, S12, S13 completa</li>
-          <li>S4 fino depois da BF</li>
-          <li>Recalibrar limiares quando houver volume</li>
-          <li>Revisão mensal do mapa: meta zero sem dono</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="decisoes">
-  <div class="wrap">
-    <div class="eyebrow">Com você</div>
-    <h2>Decisões pendentes do Henry</h2>
-    <ol class="decisions">
-      <li class="key"><div><b>Coringa com pull automático</b><span>Revoga a REGRA de 10/11 ("só rodam quando eu mando")? Até lá, ele só tria e decompõe.</span></div></li>
-      <li class="key"><div><b>Arquitetura</b><span>Estações como especialistas do Azir no mesmo pool; Supervisor como timer dentro do Azir; colunas novas e mesa "Precisa de você" com 2 janelas (15h e 17h30)?</span></div></li>
-      <li><div><b>Pool</b><span>Manter 3 de dia e limitar o Heimer, em vez de subir para 5+2. Só subir depois que o sinal de 5h existir. Concorda?</span></div></li>
-      <li class="key"><div><b>Teto do Heimer</b><span>10% do pool até o <code>efeito_rodada</code> mostrar ganho (proposto pela revisão), ou 20%?</span></div></li>
-      <li><div><b>Níveis A0 a A3 e lista branca</b><span>Confirmar a lista atual, que a S1 só responde status factual sem compromisso e que responder o bot do comitê é A3.</span></div></li>
-      <li><div><b>Modo ausência</b><span>Gatilho por inatividade (quantas horas úteis?). Pela Wania, só se ela consentir: você pergunta a ela?</span></div></li>
-      <li><div><b>Cobrador</b><span>Toda cobrança é A3 até 10 execuções em sombra. Jurídico e iPag ficam sempre com OK?</span></div></li>
-      <li><div><b>Subtasks</b><span>O Coringa cria subtasks no Taskdex com OK, ou só no Azir?</span></div></li>
-      <li><div><b>Rotinas de não-respondidas</b><span>Deixam de mandar DM e viram card na fila, mudando a REGRA de 09/11?</span></div></li>
-      <li><div><b>Contagem oficial do quadro</b><span>Conversa do Slack e card de análise contam como card? Sem isso o Supervisor vira uma terceira contagem.</span></div></li>
-      <li><div><b>Consertos pontuais, cada um com OK</b><span>5 linhas do crontab do PC e <code>rotina-despacho</code>; 4 chaves; vigia da <code>negociacao-recompra</code> de 5 para 30 min; desligar o Apps Script "Projeto sem título"; filtros do Gmail; aposentar <code>cidades-sem-lavanderia</code> e <code>analise-capacho-franquia</code> (Pipefy); trazer para a cópia local as 4 skills só do marketplace.</span></div></li>
-      <li><div><b>Medir pessoas no painel</b><span>Wania e Ray como estações humanas? Combinar com elas antes.</span></div></li>
-      <li><div><b>Ciclo mensal</b><span>Liberar o piloto de novembro (01/12) e propor as datas das mensais de novembro, que ainda não estão marcadas?</span></div></li>
-      <li><div><b>Blocos "Auditoria" e "Comentários KPIs"</b><span>O que você faz neles hoje? A S8 só desenha a lista das 9h30 depois dessa resposta.</span></div></li>
-      <li><div><b>Conta nova</b><span>Você trocou de conta. PC e VPS estão na mesma? Isso define se existe uma janela de 5h única e zera qualquer referência antiga de cota.</span></div></li>
-      <li><div><b>Iara</b><span>Levar no retiro a pergunta sobre Coringa e sobrecarga, que a Aria disse que o guia não cobre.</span></div></li>
-    </ol>
-  </div>
-</section>
-
-<section id="descartado">
-  <div class="wrap">
-    <div class="eyebrow">Fora</div>
-    <h2>O que foi descartado, e por quê</h2>
-    <div class="tbl cut"><table>
-      <thead><tr><th>Item</th><th>Virou</th><th>Por quê</th></tr></thead>
-      <tbody>
-        <tr><td>C4 Decompositor</td><td>Função do C3</td><td>Dois agentes para as mesmas 20 linhas; decompor é o 1º passo do Coringa.</td></tr>
-        <tr><td>S2 Redator</td><td>S1 + skill <code>campanha-venda</code></td><td>2 comunicados em 30 dias, 1 heartbeat por semana, 7 posts no #ai-rats: não chega a 5 por semana.</td></tr>
-        <tr><td>S9 Recompra & SIA</td><td>Dono (S3) + configuração (S13)</td><td>Os agentes já existem; 584 rodadas para 3 ações é frequência, não trabalho novo.</td></tr>
-        <tr><td>S10 Ritos, Atas & Ausência</td><td>Ata → C1; pauta → C5; ausência → C3</td><td>Weekly Operação e Comitê não geram ação para o Henry; só as 9 atas da Daily de Fornecedores. Gatilho por Calendar não teria pego 31/10.</td></tr>
-        <tr><td>S11 Plataforma</td><td>Guardião → S13; balcão → S1</td><td>Duplica Yummi, healthcheck, <code>rotinas-ultima</code> e checkup. Religar crontab e trocar chaves são consertos pontuais.</td></tr>
-        <tr><td>S14 Suporte Interno</td><td>FAQ do Kit, atendido pela S1</td><td>154 das ~200 mensagens eram com o David, que foi desligado; o Kit da Vivi já foi entregue.</td></tr>
-        <tr><td>Dividir Comunicação</td><td>Não agora</td><td>O pico de 28 e 23 cards em 12–13/11 foi task force e teste; de 14 a 16/11 entraram 0, 1 e 0 cards fora de melhoria.</td></tr>
-        <tr><td>Pool 5 + 2</td><td>Fica 3, com teto no Heimer</td><td>Sem evidência de demanda; limitar o Heimer libera mais e não custa nada.</td></tr>
-        <tr><td><code>dono</code> NOT NULL</td><td>Validação na aplicação</td><td>SQLite não aplica NOT NULL em coluna adicionada por ALTER; há 262 concluídos com dono nulo.</td></tr>
-        <tr><td>Custo via <code>claude -p --output-format json</code></td><td>Tokens do transcript</td><td>O motor é o herdr; o caminho <code>claude -p</code> não é o que roda.</td></tr>
-        <tr><td>Limiares 60/80% da janela de 5h</td><td>Sinal binário</td><td>Não existe telemetria percentual.</td></tr>
-        <tr><td>Supervisor espaça a cadência</td><td>Aviso ao Henry</td><td>A cadência é agente do Olimpo: mexer é PR ou A3.</td></tr>
-        <tr><td>Pulso editado no mesmo lugar do Vel'Koz</td><td>Mensagem própria</td><td>Mascararia a falha da vigia das 18h (REGRA de 11/11).</td></tr>
-        <tr><td>Aditivo e distrato automáticos</td><td>Manuais</td><td>2 casos em 30 dias.</td></tr>
-        <tr><td>"31h/mês" da Auditoria e Comentários KPIs</td><td>Pergunta (decisão 13)</td><td>São blocos na agenda; nenhuma fonte mostra o trabalho feito neles.</td></tr>
-        <tr><td>Ciclo de outubro como piloto</td><td>Ciclo de novembro em 01/12</td><td>Outubro já foi enviado entre 06 e 13/11. A falta de cobrança de Matinali, Somar e Harus não está provada: a cobrança vai pelo form do financeiro e pelo Drive, não por e-mail.</td></tr>
-        <tr><td>EasyCover e nowseguros no S5</td><td>Fora do piloto</td><td>Não têm skill na cadeia mensal.</td></tr>
-      </tbody>
-    </table></div>
-  </div>
-</section>
-
-<section id="falhas">
-  <div class="wrap">
-    <div class="eyebrow">Limites</div>
-    <h2>Fontes que falharam ou ficaram parciais</h2>
-    <ul class="fail">
-      <li><strong>Slack:</strong> 429 várias vezes. Retentado com backoff até completar o <code>from:me</code> e as menções. Os fios da Iara e da Aria foram lidos por busca e podem ter vindo incompletos.</li>
-      <li><strong>Financeiro e Drive:</strong> não lidos. Por isso a falta de cobrança de outubro (Matinali, Somar, Harus) não está provada.</li>
-      <li><strong>Pipedrive:</strong> não consultado direto; o padrão saiu das mensagens e dos e-mails de limite.</li>
-      <li><strong>Azir no PC:</strong> <code>localhost:4777</code> não respondia (túnel <code>azir-tunel</code>); os números saíram da VPS.</li>
-      <li><strong>Rotinas do PC vistas da VPS:</strong> o espelho de logs parou em 13/11.</li>
-      <li><strong>Painel da Aria:</strong> só abre pela Tailscale; usamos o que ela publicou no Slack.</li>
-      <li><strong>Nesta sessão:</strong> os MCPs do Sapron (502), da KB e do <code>kpi-system</code> não conectaram. Nenhum número deste relatório depende deles.</li>
-    </ul>
+    <h2>Você decide</h2>
+    <p>Seis perguntas de sim ou não. A resposta também fica só neste navegador.</p>
+    <ol class="decide" id="decide"></ol>
   </div>
 </section>
 </main>
 
 <footer>
-  <div class="wrap">Montado em 16/11/2026 sobre o dossiê de 6 fontes e duas revisões céticas. Nada foi ligado, gravado ou enviado.</div>
+  <div class="wrap">16/11/2026 · Prévia feita sobre o código e os prints do Azir, sem mexer nele. Dados das telas são exemplos.</div>
 </footer>
 
 <script>
-const AG = [
- {l:"Controle (dentro do Azir)"},
- {id:"C1",n:"Recepção",tipo:"Fusão",p:"P0",aut:"A1 (filtros do Gmail = A3)",carga:"40 a 120 cards/sem, já agregados",
-  m:"Fila única: todo trabalho vira card com origem_ref (o dedupe já existe no banco). Um pré-filtro sem IA descarta ruído e agrega: 1 card por script, por PR, por dia.",
-  abs:"As 6 entradas do Azir; as rotinas slack-nao-respondidas e emails-nao-respondidos (se a decisão 8 aprovar); 79 menções de pessoas no mês; as 9 atas da Daily de Fornecedores; 343 falhas de Apps Script agregadas por script; falhas de rotina e do EKS como card de saúde. Descarta 9.159 links de login, 125 avisos do Slack e 26 avisos de app do Pipedrive.",
-  g:"Tick do Azir e Socket Mode do Vel'Koz; fontes externas de 2 em 2h",f:"Composio (Slack, Gmail, leitura), Taskdex (leitura), Suporte Unificado, API do Azir",dep:"dono e agente preenchidos",
-  ch:"Agrega por script e por PR, senão vira o novo Heimer em volume. Atas da Weekly Operação e do Comitê ficam de fora."},
- {id:"C2",n:"Roteador",tipo:"Evolução (triagem)",p:"P0",aut:"A1",carga:"igual à entrada",
-  m:"Dá classe (PR, OP, IN, P100, PH), estação e dono a cada card, validando na aplicação ao mudar de coluna. Mantém o estacoes.yaml. Sem casamento, manda para o Coringa, nunca para \"-\".",
-  abs:"0 de 287 cards com dono; 25 cards sem especialista (efeito da subida de 11/11); generalista com quando: []; classes da Iara sem uso.",
-  g:"Card em Entrada",f:"Regra, depois haiku, depois o mapa",dep:"estacoes.yaml"},
- {id:"C3",n:"Coringa",tipo:"Evolução + fusão (C4)",p:"P0",aut:"A1; status em ausência pela lista branca",carga:"3 a 8 cards/sem, WIP 2",joker:true,
-  m:"Nada fica sem dono. Pega o que não casou, quebra iniciativa em DAG e dá o 1º passo. Fica dono até o fim quando a estação de destino ainda não existe.",
-  abs:"O antigo C4 Decompositor; as 20 linhas-iniciativa do Taskdex; as 4 linhas sem comentário (Hub melhorias, Conversão enxoval, SIA no WhatsApp, artefato de fotos); a ausência de 31/10 a 05/11.",
-  g:"Até a decisão 0: só tria e decompõe. Depois: pull a cada 15 min e transbordo do C5",f:"generalista.md, leitura de todos os MCPs, orqctl consultar, DAG do Azir",dep:"C2, C5, decisão 0",
-  ch:"Carga caiu de 15–30 para 3–8 por semana. Mede idade até a 1ª ação, não só \"sem dono\"."},
- {id:"C5",n:"Supervisor de Carga",tipo:"Fusão (sem IA)",p:"P0",aut:"A1 (código)",carga:"contínuo",
-  m:"Mede idade, fila, falha e vazio por estação, alerta só na 3ª leitura vermelha e rebalanceia. Roda como timer dentro do Azir, sem processo novo.",
-  abs:"ocupacao instantânea; agentes-serie sem duração; quadro.py de 16/11; guarda de cota do Pipedrive (pelos e-mails de 75%); radar de agenda; pauta de dados dos rituais e da Interface Implantação.",
-  g:"Tick de 5 min (só SQLite e efeito_rodada); externos 1x/dia; consolidação 23h55; semanal na segunda 8h",f:"SQLite, efeito_rodada, logs, transcript do herdr, Composio Calendar (leitura)",dep:"histórico de coluna, tokens, sinal de 5h, espelho de logs do PC",
-  ch:"Pulso em mensagem própria; o pulso do Vel'Koz fica intocado. DM das 18h só com alerta. Vigia externa é o rotinas-healthcheck."},
- {id:"C6",n:"Cobrador de Terceiros",tipo:"Novo",p:"P0",aut:"A3 (Aprovar) até 10 execuções em sombra",carga:"10 a 20 cards/sem",
-  m:"O que está em Aguardando terceiro não envelhece: monitora a cada 10 min (leitura) e cobra em 24, 48 e 72h úteis, no máximo 3 vezes por card, depois escala para o Henry.",
-  abs:"T107, T064 e T129 (86 a 89h); iPag (9 semanas); Doti (4 semanas); Flylift (desde 27/10); polígono no Sapron; suportes de 25 a 137h.",
-  g:"Relógio do card, em horário comercial",f:"Composio Slack, Suporte Unificado, Seajuri (leitura)",dep:"aguardando_desde preenchido",
-  ch:"Cobrar alguém é falar em nome do Henry: toda cobrança é A3. Jurídico e iPag ficam sempre com OK."},
- {id:"C7",n:"Portão de Saída",tipo:"Fusão",p:"P0",aut:"A1 checar e devolver; FUP publicado = A3",carga:"20 a 40 cards/sem",
-  m:"Verificador + régua do Validador Carol v1.2.0 + FUP e higiene do Taskdex, antes de qualquer coisa chegar à mesa.",
-  abs:"Cerca de 60% das devoluções são de forma; Kit e IA na captação com 4 rodadas, BF com 3; skill fup-taskdex; especialista taskdex; contribuicoes-backoffice (planilha da Ray, 18h).",
-  g:"Card em Verificação; linha sem FUP há 7 dias ou mais",f:"Rubrica da Carol, fup-taskdex, html-tasks",dep:"C2",
-  ch:"P0 para a régua; FUP automático entra como P1."},
- {l:"Estações de domínio"},
- {id:"S1",n:"Caixa de Entrada",tipo:"Fusão",p:"P1",aut:"Status factual pela lista branca; prazo, \"pode apagar\" e bot do comitê = A3",carga:"30 a 70 itens/sem",
-  m:"Resposta rápida e porta-voz de status no Slack e no e-mail. Também é o balcão de acesso e o FAQ do Kit.",
-  abs:"214 pedidos \"veja o que X mandou\"; 20 menções sem resposta; Íris (app marcada para apagar 2x); Donna; 24 perguntas ao Sapron; o antigo S2 (comunicados, heartbeat da rayai, #ai-rats); o balcão do S11 (abre suporte, secrets-agente-olimpo); o FAQ do S14.",
-  g:"Menção, DM, e-mail com ação; lock por thread (pula se o Henry respondeu há menos de 10 min)",f:"Vel'Koz (sessão por thread), Composio, Azir, Taskdex, Sapron, Suporte Unificado",dep:"C1, C5",
-  ch:"Não divide Comunicação agora: o pico de 12–13/11 foi task force e teste."},
- {id:"S3",n:"Compras 1ª linha & NF",tipo:"Fusão",p:"P1",aut:"Rascunho A1; status em template A2 depois da sombra; banco e troca de código A3",carga:"20 a 35 itens/sem",
-  m:"Primeira linha da Wania no fluxo Compra e Monitoramento e dona dos agentes de enxoval e recompra.",
-  abs:"22 de 22 cards com a Wania (até 101h); vigia-sla-fornecedores; analise-planilha-matinali e -rm; enxoval-pagamento-loop; taxa-enxoval; analise-pagamento e cancelamento-enxoval (Olimpo); dona de negociacao-recompra, recompra-enxoval, placar e conformidade do SIA (ex-S9). NFXML entra como hipótese em sombra, começando pela RM (só 2 NFs).",
-  g:"Chamado novo; lote às 7h; vigia às 9h e 15h",f:"Suporte Unificado, Jornada, Gmail NFXML (leitura), lojinha, planilhas",dep:"C1, C7",
-  ch:"Escopo menor: as exceções do Jornada (GRL0801, P-50162) vão para a S12."},
- {id:"S4",n:"Lojinha & Campanhas",tipo:"Fusão",p:"P2",aut:"Cobrar e comentar A2; mover, cancelar, disparo pela SIA A3",carga:"5 a 15 itens/sem",
-  m:"Supervisiona os agentes de lojinha que já existem e trata o que eles não pegam.",
-  abs:"Os 6 agentes de lojinha do Olimpo; monitorar-aguardando-link (11 cards acima de 24h); indicacao-itens; rastreio #781, #906, #996; T129; campanha-venda; report da BF até 30/11.",
-  g:"Pedido além do SLA; horários da campanha",f:"lojinha-admin, Slack, Suporte Unificado",dep:"C6",
-  ch:"Fino: a faixa de 20–60 por semana não tinha base. Entra depois da BF."},
- {id:"S5",n:"Ciclo Mensal do Fornecedor",tipo:"Fusão (batelada)",p:"P1",aut:"Gerar A1; acompanhar \"pagou?\" A2; e-mail com NF/boleto e convite A3",carga:"20 a 30 cards no pico do mês",
-  m:"Card-lote com 1 filho por fornecedor: fechamento, análise de comissão, cobrança pelo form do financeiro e Drive, relatório e deck da reunião.",
-  abs:"RM, Matinali, Somar e Harus (AB Card só na cobrança); 72 mensagens; 3 pedidos seguidos em 06/11; 1h30 de pauta em 20/10; novembro sem mensal marcada.",
-  g:"D+1 (fechamento), D+5 a D+15 (cobrança), D-3 da reunião (deck)",f:"Skills fechamento, analise-comissao, cobranca, relatorio e reuniao-mensal; Drive; Gmail (rascunho); financeiro; Calendar",dep:"Batelada, C7",
-  ch:"Piloto de batelada no ciclo de novembro, a partir de 01/12. EasyCover e nowseguros ficam fora (sem skill)."},
- {id:"S6",n:"Prospecção & Pipedrive",tipo:"Fusão",p:"P1",aut:"Lost + 527 e mover etapa A2; deals em massa e proposta A3",carga:"30 a 60 ações/sem",
-  m:"Rodadas e FUP por cidade, perdas no padrão da REGRA, busca de card e conferência de preço contra a tabela.",
-  abs:"16 FUPs por cidade em 10/11; 5 perdas iguais em 2 dias; 10 \"está dentro da tabela?\" em 2 dias; drone em Trancoso; dona de cadencia-fornecedores, cidades-sem-fornecedor, prospeccao-fotografos e do aviso de 80% de leads.",
-  g:"Comando curto, conversa na SIA, lote semanal",f:"Pipedrive, SIA, hub-servicos (consultar_tabela), Drive",dep:"C5 (cota); 4 skills do marketplace na cópia local"},
- {id:"S7",n:"Homologação & Cadastro",tipo:"Fusão",p:"P1",aut:"Cadastro A2; contrato V3.1 pela lista branca; resto A3",carga:"10 a 20 itens/sem",
-  m:"Contrato do fotógrafo, cadastro no Hub e no artefato, e as rotinas de fotógrafos e polígonos.",
-  abs:"contrato-fotografo (volta em 19/11; Roxana em 3/4); 33 mensagens de cadastro em 9 dias; fotografos-parados (erro de fonte em 11/11, precisa de eval); bot-gops-fotografo; revisao-poligono e poligono-cidade; base de lavanderias de outubro da Iasmin.",
-  g:"Ana na thread; PDF ou WhatsApp; e-mail \"Documento assinado\"",f:"chrome-agente e ClickSign, stay-sync-shine, hub-servicos",dep:"S13 (sessão do ClickSign)",
-  ch:"Aditivo e distrato ficam manuais (2 casos em 30 dias)."},
- {id:"S8",n:"KPIs & Auditoria",tipo:"Evolução",p:"P1",aut:"Lançar A2 (já é regra); comentário A1",carga:"7 rodadas + 1 análise/sem",
-  m:"Deixar a rotina de KPIs confiável antes de qualquer coisa nova.",
-  abs:"kpis-fornecedores (8 falhas em 28); Mercado Livre (OAuth caiu em 14/11); analise-kpis-fornecedores-semanal (quarta 10h30); regras 2506, 1931/1934 e Wania.",
-  g:"21h, 9h15, quarta 10h30",f:"Hub de KPIs, Nekt, chrome-agente",dep:"S13",
-  ch:"Sem os \"31h/mês\": comentário e lista das 9h30 só depois da decisão 13."},
- {id:"S12",n:"Fila Técnica",tipo:"Evolução (dev)",p:"P1",aut:"Correção simples do Alfred em branch A2; merge e deploy em prd A3",carga:"15 a 30 itens agrupados/sem",
-  m:"Consolida por PR (o Alfred pediu X, o CI falhou em Y), aplica o que é simples e só escala decisão. Nunca aprova review.",
-  abs:"24 falhas de CI; cerca de 15 PRs ativos; 495 e-mails do Alfred; exceções do Jornada (GRL0801, P-50162); bugs B1 a B5 da Raiza.",
-  g:"Evento do GitHub agrupado por PR; poll de 10 min (REGRA de 11/11)",f:"gh",dep:"C1",
-  ch:"904 e-mails medem notificação, não trabalho. Os 49 pedidos de review da Raiza são julgamento humano."},
- {id:"S13",n:"Oficina",tipo:"Fusão",p:"P0",aut:"Consertar o reversível A2; desligar, mudar frequência A3",carga:"teto de 10% do pool para o Heimer",
-  m:"Yummi, Heimer e Neeko mais o guardião de sessões e rotinas: mantém a fábrica de pé sem virar a maior carga dela.",
-  abs:"Heimer com 82% dos cards e ~70% dos minutos, sem efeito medido; 28 \"Analisar e consertar\"; 343 falhas de Apps Script; 88 /login e 67 /mcp; crontab do PC comentado; 9 \"o agente X está funcionando?\"; guardião do ex-S11; healthcheck, rotinas-ultima, cron-x-windows, checkup-claude, forcar-uso-ia, skills-marketplace, velkoz-vigia; frequência da negociacao-recompra.",
-  g:"Incidente do C5; pool ocioso; semanal",f:"Azir, logs, efeito_rodada, chrome-agente (relogin pelo Google)",dep:"C5",
-  ch:"Teto do Heimer cai para 10% até haver efeito_rodada positivo. P0 só para teto e guardião; o resto é P1."},
- {id:"N1",n:"Compras Pontuais & Cotação",tipo:"Novo",p:"P1",aut:"Cotação e rascunho A1; responder fornecedor ou contratar A3",carga:"3 a 8 itens/sem",
-  m:"Dono da compra avulsa e da triagem \"tem fit com Compras?\". Hoje isso cai no Coringa por falta de dono.",
-  abs:"Orçamento de camisetas (handover da Wania); drone em Trancoso (R$ 3 a 3,5 mil, Seajuri #624); plaquinhas de Camaçari (T107); guarda-sol; adesivo; Flylift × Onfly; videomaker (Doti); prospects Gienex (4x) e Wash Me (4x) sem resposta.",
-  g:"Pedido de compra ou oferta de fornecedor no e-mail ou Slack; linha avulsa no Taskdex",f:"Gmail (leitura), Pipedrive, Seajuri (leitura), Drive",dep:"C1",
-  ch:"Adicionado na revisão: o setor é Fornecedores e Compras e nenhuma estação cobria compra avulsa."}
+const AG=[
+ {id:"C1",n:"Recepção",p:"P0",m:"Recebe tudo o que chega e cria um card por assunto, sem duplicar."},
+ {id:"C2",n:"Roteador",p:"P0",m:"Dá estação e dono a cada card. Se nada casar, manda para o Coringa."},
+ {id:"C3",n:"Coringa",p:"P0",j:1,m:"Assume o card sem dono depois de 15 minutos, quebra o que é grande e dá o primeiro passo."},
+ {id:"C5",n:"Supervisor de carga",p:"P0",m:"Sem IA: mede fila e idade de cada agente e avisa na 3ª leitura vermelha."},
+ {id:"C6",n:"Cobrador de terceiros",p:"P0",m:"Cuida do card parado esperando alguém de fora e só cobra com o seu OK."},
+ {id:"C7",n:"Portão de saída",p:"P0",m:"Confere a entrega antes de chegar a você e devolve o que está fora do padrão."},
+ {id:"S13",n:"Oficina",p:"P0",m:"Conserta os próprios agentes, com fila de pedidos e no máximo 10% do pool."},
+ {id:"S1",n:"Caixa de entrada",p:"P1",m:"Responde status simples e transforma em card o que pede trabalho."},
+ {id:"S3",n:"Compras 1ª linha & NF",p:"P1",m:"Estação de compras e notas, começando em sombra."},
+ {id:"S5",n:"Ciclo mensal do fornecedor",p:"P1",m:"Roda o fechamento do mês como lote: um card filho por fornecedor."},
+ {id:"S6",n:"Prospecção",p:"P1",m:"Estação do funil de prospecção; o simples faz sozinha, o resto com OK."},
+ {id:"S7",n:"Homologação & cadastro",p:"P1",m:"Estação de contratos e cadastros de fornecedor."},
+ {id:"S8",n:"KPIs & auditoria",p:"P1",m:"Deixa a rotina de KPIs confiável antes de qualquer coisa nova."},
+ {id:"S12",n:"Fila técnica",p:"P1",m:"Junta avisos de PR e de CI num card por PR e aplica o que é simples."},
+ {id:"N1",n:"Compras pontuais",p:"P1",m:"Dono da compra avulsa, que hoje não tem estação."},
+ {id:"S4",n:"Lojinha & campanhas",p:"P2",m:"Estação da lojinha, só depois de 30/11."}
 ];
-
-const KEY="fabrica-agentes-2026-11-16";
-let votes={};
-try{votes=JSON.parse(localStorage.getItem(KEY)||"{}")||{}}catch(e){votes={}}
-function save(){try{localStorage.setItem(KEY,JSON.stringify(votes))}catch(e){}}
+const DEC=[
+ {id:"d0",t:"O Coringa pode rodar sozinho?",s:"Muda a regra de 10/11 (\"só rodam quando eu mando\"). Até lá ele só assume e organiza."},
+ {id:"d1",t:"Cada agente vira especialista do Azir, no mesmo pool?",s:"Sem orquestrador novo e sem subir o pool de 3."},
+ {id:"d2",t:"Teto de 10% do pool para o Heimer e a Oficina?",s:"Até mostrarem ganho medido."},
+ {id:"d3",t:"\"Passar para…\" com motivo obrigatório?",s:"Sem motivo, o botão Passar fica apagado."},
+ {id:"d4",t:"Supervisor de carga manda DM às 18h só quando houver alerta?",s:"Tudo verde, nada chega."},
+ {id:"d5",t:"Carga ligada por padrão na aba Agentes?",s:"O botão Carga esconde tudo com um clique."}
+];
+const KEY="fabrica-agentes-2026-11-16",KD=KEY+"-decide";
+function load(k){try{return JSON.parse(localStorage.getItem(k)||"{}")||{}}catch(e){return {}}}
+function store(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
 function esc(s){return String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
-
+let votes=load(KEY),dec=load(KD);
 const box=document.getElementById("agents");
-let html="";
-for(const a of AG){
-  if(a.l){html+=`<div class="layer" data-layer>${esc(a.l)}</div>`;continue}
-  html+=`<article class="agent${a.joker?" joker":""}" data-id="${a.id}" data-p="${a.p}">
-    <div class="a-head"><span class="a-id">${a.id}</span><span class="a-name">${esc(a.n)}</span>
-      <span class="tag ${a.p.toLowerCase()}">${a.p}</span><span class="tag">${esc(a.tipo)}</span>${a.joker?'<span class="tag" style="color:var(--acc);border-color:var(--acc)">coringa</span>':""}</div>
-    <div class="vote" role="group" aria-label="Voto ${a.id}">
-      <button class="y" data-v="ok" aria-pressed="false">Aprovar</button>
-      <button class="n" data-v="no" aria-pressed="false">Reprovar</button>
-    </div>
-    <p class="a-mission">${esc(a.m)}</p>
-    <dl class="a-grid">
-      <div class="wide"><dt>Absorve (evidência)</dt><dd>${esc(a.abs)}</dd></div>
-      <div><dt>Gatilho</dt><dd>${esc(a.g)}</dd></div>
-      <div><dt>Ferramentas</dt><dd>${esc(a.f)}</dd></div>
-      <div><dt>Autonomia</dt><dd>${esc(a.aut)}</dd></div>
-      <div><dt>Carga/semana</dt><dd>${esc(a.carga)}</dd></div>
-      <div><dt>Depende de</dt><dd>${esc(a.dep)}</dd></div>
-    </dl>
-    ${a.ch?`<p class="a-change">Mudou na revisão: ${esc(a.ch)}</p>`:""}
-  </article>`;
-}
-box.innerHTML=html;
-
-const total=AG.filter(a=>a.id).length;
+box.innerHTML=AG.map(a=>`<article class="agent${a.j?" joker":""}" data-id="${a.id}" data-p="${a.p}">
+  <div class="a-head"><span class="a-id">${a.id}</span><span class="a-name">${esc(a.n)}</span><span class="tag ${a.p.toLowerCase()}">${a.p}</span></div>
+  <p class="a-mission">${esc(a.m)}</p>
+  <div class="vote" role="group" aria-label="Voto ${a.id}"><button class="y" data-v="ok" aria-pressed="false">Aprovar</button><button class="n" data-v="no" aria-pressed="false">Reprovar</button></div>
+</article>`).join("");
 function paint(){
   let ok=0,no=0;
-  box.querySelectorAll(".agent").forEach(el=>{
-    const v=votes[el.dataset.id];
+  box.querySelectorAll(".agent").forEach(el=>{const v=votes[el.dataset.id];
     el.classList.toggle("ok",v==="ok");el.classList.toggle("no",v==="no");
-    el.querySelectorAll(".vote button").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.v===v)));
-    if(v==="ok")ok++;if(v==="no")no++;
-  });
-  document.getElementById("counter").innerHTML=`<b>${ok}</b> aprovados · <b>${no}</b> reprovados · ${total-ok-no} sem voto`;
+    el.querySelectorAll("button").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.v===v)));
+    if(v==="ok")ok++;if(v==="no")no++;});
+  document.getElementById("counter").innerHTML=`<b>${ok}</b> aprovados · <b>${no}</b> reprovados · ${AG.length-ok-no} sem voto`;
 }
-box.addEventListener("click",e=>{
-  const b=e.target.closest(".vote button");if(!b)return;
-  const id=b.closest(".agent").dataset.id;
-  votes[id]=votes[id]===b.dataset.v?undefined:b.dataset.v;
-  if(!votes[id])delete votes[id];
-  save();paint();
-});
-document.querySelectorAll(".chip").forEach(c=>c.addEventListener("click",()=>{
-  document.querySelectorAll(".chip").forEach(x=>x.setAttribute("aria-pressed",String(x===c)));
-  const f=c.dataset.f;
-  box.querySelectorAll(".agent").forEach(el=>{el.hidden=!(f==="all"||el.dataset.p===f)});
-  box.querySelectorAll("[data-layer]").forEach(el=>{el.hidden=f!=="all"});
-}));
+box.addEventListener("click",e=>{const b=e.target.closest(".vote button");if(!b)return;
+  const id=b.closest(".agent").dataset.id;votes[id]=votes[id]===b.dataset.v?undefined:b.dataset.v;if(!votes[id])delete votes[id];store(KEY,votes);paint();});
+document.querySelectorAll(".fchip").forEach(c=>c.addEventListener("click",()=>{
+  document.querySelectorAll(".fchip").forEach(x=>x.setAttribute("aria-pressed",String(x===c)));
+  box.querySelectorAll(".agent").forEach(el=>{el.hidden=!(c.dataset.f==="all"||el.dataset.p===c.dataset.f)});}));
 paint();
+const dl=document.getElementById("decide");
+dl.innerHTML=DEC.map(d=>`<li data-id="${d.id}"><div><b>${esc(d.t)}</b><span>${esc(d.s)}</span></div>
+  <div class="vote" role="group" aria-label="${esc(d.t)}"><button class="y" data-v="ok" aria-pressed="false">Sim</button><button class="n" data-v="no" aria-pressed="false">Não</button></div></li>`).join("");
+function paintD(){dl.querySelectorAll("li").forEach(li=>li.querySelectorAll("button").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.v===dec[li.dataset.id]))));}
+dl.addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;const id=b.closest("li").dataset.id;
+  dec[id]=dec[id]===b.dataset.v?undefined:b.dataset.v;if(!dec[id])delete dec[id];store(KD,dec);paintD();});
+paintD();
 </script>
 </body>
 </html>
