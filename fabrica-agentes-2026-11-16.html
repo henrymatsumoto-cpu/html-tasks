@@ -1,0 +1,863 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Fábrica de Agentes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@500;700;800&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:oklch(21% .012 255);
+  --bg2:oklch(24.5% .014 255);
+  --surf:oklch(27.5% .015 255);
+  --line:oklch(35% .016 255);
+  --line2:oklch(30% .014 255);
+  --ink:oklch(93% .008 85);
+  --ink2:oklch(80% .01 255);
+  --ink3:oklch(66% .014 255);
+  --acc:oklch(79% .115 72);
+  --acc-ink:oklch(25% .04 72);
+  --ok:oklch(77% .11 150);
+  --bad:oklch(72% .13 28);
+  --warn:oklch(83% .12 88);
+  --p0:oklch(79% .115 72);
+  --p1:oklch(76% .07 230);
+  --p2:oklch(68% .02 255);
+  --sp1:4px;--sp2:8px;--sp3:12px;--sp4:16px;--sp5:24px;--sp6:32px;--sp7:48px;--sp8:64px;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 "Hanken Grotesk",system-ui,sans-serif;font-variant-numeric:tabular-nums}
+a{color:var(--acc);text-underline-offset:3px}
+a:hover{color:var(--ink)}
+.wrap{max-width:1080px;margin:0 auto;padding:0 16px}
+h1,h2,h3{font-family:"Schibsted Grotesk",sans-serif;line-height:1.15;margin:0;letter-spacing:-.01em}
+h2{font-size:clamp(22px,2.6vw,28px);font-weight:800;margin-bottom:var(--sp3)}
+h3{font-size:17px;font-weight:700}
+p{margin:0 0 var(--sp3);color:var(--ink2);max-width:72ch}
+strong{color:var(--ink);font-weight:700}
+code{font-size:.88em;background:var(--bg2);border:1px solid var(--line2);border-radius:5px;padding:1px 5px;color:var(--ink)}
+section{padding:var(--sp7) 0;border-top:1px solid var(--line2)}
+.lede{font-size:18px;color:var(--ink2);max-width:62ch}
+.eyebrow{font-size:13px;font-weight:600;color:var(--acc);letter-spacing:.06em;text-transform:uppercase;margin-bottom:var(--sp2)}
+
+/* topo */
+header.top{padding:var(--sp8) 0 var(--sp7)}
+header.top h1{font-size:clamp(34px,5.4vw,58px);font-weight:800;max-width:16ch;margin:var(--sp2) 0 var(--sp4)}
+.meta{display:flex;flex-wrap:wrap;gap:var(--sp2) var(--sp5);color:var(--ink3);font-size:14px;margin-top:var(--sp5)}
+nav.toc{position:sticky;top:0;z-index:5;background:color-mix(in oklch,var(--bg) 92%,transparent);border-bottom:1px solid var(--line2);backdrop-filter:blur(6px)}
+nav.toc .wrap{display:flex;gap:var(--sp4);overflow-x:auto;padding-top:10px;padding-bottom:10px;scrollbar-width:none}
+nav.toc a{color:var(--ink3);text-decoration:none;font-size:14px;white-space:nowrap}
+nav.toc a:hover{color:var(--ink)}
+
+/* resumo */
+.exec{display:grid;grid-template-columns:1.35fr 1fr;gap:var(--sp6);align-items:start}
+.five{counter-reset:l;list-style:none;padding:0;margin:0}
+.five li{counter-increment:l;display:grid;grid-template-columns:32px 1fr;gap:var(--sp2);padding:var(--sp3) 0;border-bottom:1px solid var(--line2);color:var(--ink2)}
+.five li::before{content:counter(l);font-family:"Schibsted Grotesk";font-weight:800;color:var(--acc);font-size:18px}
+.tally{background:var(--surf);border:1px solid var(--line);border-radius:14px;padding:var(--sp5)}
+.tally .big{font-family:"Schibsted Grotesk";font-size:64px;font-weight:800;line-height:1}
+.tally .big small{font-size:18px;color:var(--ink3);font-weight:500;margin-left:6px}
+.prio-bar{display:flex;height:10px;border-radius:6px;overflow:hidden;margin:var(--sp4) 0 var(--sp3)}
+.prio-bar i{display:block}
+.prio-legend{display:grid;gap:6px;font-size:14px;color:var(--ink2)}
+.prio-legend span{display:flex;justify-content:space-between;gap:var(--sp3)}
+.dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:8px;vertical-align:middle}
+.changed{margin-top:var(--sp4);padding-top:var(--sp4);border-top:1px solid var(--line2);font-size:14px;color:var(--ink3)}
+
+/* fontes */
+.sources{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:0;border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.src{padding:var(--sp5);border-right:1px solid var(--line2);border-bottom:1px solid var(--line2);background:var(--bg2)}
+.src h3{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:var(--sp3)}
+.src h3 small{font-family:"Hanken Grotesk";font-weight:500;font-size:13px;color:var(--ink3)}
+.src dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:6px var(--sp3);font-size:14.5px}
+.src dt{font-weight:700;color:var(--ink);text-align:right;white-space:nowrap}
+.src dd{margin:0;color:var(--ink2)}
+.note{font-size:14px;color:var(--ink3);margin-top:var(--sp4);max-width:80ch}
+
+/* iara */
+.two{display:grid;grid-template-columns:1fr 1fr;gap:var(--sp6)}
+.copy-list{list-style:none;padding:0;margin:0}
+.copy-list li{padding:var(--sp3) 0;border-bottom:1px solid var(--line2);color:var(--ink2)}
+.copy-list li b{color:var(--ink);display:block}
+.aria{background:var(--surf);border:1px solid var(--line);border-radius:14px;padding:var(--sp5)}
+.aria .status{display:inline-flex;align-items:center;gap:8px;font-weight:700;color:var(--ok);margin-bottom:var(--sp3)}
+.aria blockquote{margin:var(--sp3) 0;padding:var(--sp3) var(--sp4);background:var(--bg2);border-radius:10px;color:var(--ink2);font-size:15px}
+
+/* diagrama */
+.diagram{background:var(--bg2);border:1px solid var(--line);border-radius:14px;padding:var(--sp4);overflow-x:auto}
+.diagram svg{display:block;width:100%;min-width:760px;height:auto}
+.cols{display:flex;flex-wrap:wrap;gap:6px;margin:var(--sp4) 0}
+.cols span{font-size:13px;padding:4px 10px;border:1px solid var(--line);border-radius:999px;color:var(--ink2)}
+.cols span.hl{border-color:var(--acc);color:var(--acc)}
+table{width:100%;border-collapse:collapse;font-size:14.5px}
+th,td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--line2);vertical-align:top}
+th{font-size:12.5px;font-weight:700;color:var(--ink3);text-transform:uppercase;letter-spacing:.04em}
+td{color:var(--ink2)}
+td:first-child{color:var(--ink);font-weight:700;white-space:nowrap}
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:14px;background:var(--bg2)}
+.tbl table{min-width:620px}
+.tbl tr:last-child td{border-bottom:0}
+
+/* agentes */
+.toolbar{display:flex;flex-wrap:wrap;gap:var(--sp2);align-items:center;margin:var(--sp4) 0 var(--sp5)}
+.chip{font:inherit;font-size:14px;font-weight:600;padding:6px 14px;border-radius:999px;border:1px solid var(--line);background:transparent;color:var(--ink2);cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.chip:focus-visible,.vote button:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+.counter{margin-left:auto;font-size:14px;color:var(--ink3)}
+.counter b{color:var(--ink)}
+.agents{display:grid;gap:var(--sp3)}
+.layer{font-size:13px;font-weight:700;color:var(--ink3);text-transform:uppercase;letter-spacing:.06em;margin:var(--sp5) 0 var(--sp1)}
+.agent{border:1px solid var(--line);border-radius:14px;background:var(--bg2);padding:var(--sp5);display:grid;grid-template-columns:1fr auto;gap:var(--sp3) var(--sp5)}
+.agent.joker{background:color-mix(in oklch,var(--acc) 9%,var(--bg2));border-color:color-mix(in oklch,var(--acc) 55%,var(--line))}
+.agent.ok{border-color:color-mix(in oklch,var(--ok) 60%,var(--line))}
+.agent.no{opacity:.62}
+.a-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:var(--sp2) var(--sp3)}
+.a-id{font-family:"Schibsted Grotesk";font-weight:800;font-size:15px;color:var(--ink3)}
+.a-name{font-family:"Schibsted Grotesk";font-weight:800;font-size:20px}
+.tag{font-size:12px;font-weight:700;padding:2px 9px;border-radius:999px;border:1px solid var(--line);color:var(--ink2);white-space:nowrap}
+.tag.p0{background:var(--p0);color:var(--acc-ink);border-color:var(--p0)}
+.tag.p1{color:var(--p1);border-color:color-mix(in oklch,var(--p1) 60%,transparent)}
+.tag.p2{color:var(--p2)}
+.a-mission{grid-column:1/-1;color:var(--ink);margin:0;max-width:none}
+.a-grid{grid-column:1/-1;display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:var(--sp3) var(--sp5);margin:0}
+.a-grid div{min-width:0}
+.a-grid dt{font-size:12px;font-weight:700;color:var(--ink3);text-transform:uppercase;letter-spacing:.05em;margin-bottom:2px}
+.a-grid dd{margin:0;font-size:14.5px;color:var(--ink2)}
+.a-grid .wide{grid-column:1/-1}
+.a-change{grid-column:1/-1;font-size:14px;color:var(--warn);margin:0;max-width:none}
+.vote{display:flex;gap:6px;align-self:start;grid-row:1;grid-column:2}
+.vote button{font:inherit;font-size:14px;font-weight:600;padding:7px 14px;border-radius:999px;border:1px solid var(--line);background:transparent;color:var(--ink2);cursor:pointer;min-height:36px}
+.vote button[aria-pressed="true"].y{background:var(--ok);border-color:var(--ok);color:oklch(22% .04 150)}
+.vote button[aria-pressed="true"].n{background:var(--bad);border-color:var(--bad);color:oklch(22% .05 28)}
+
+/* sobrecarga */
+.measure{display:grid;grid-template-columns:1fr 1fr;gap:var(--sp5);margin-bottom:var(--sp5)}
+.measure ul{margin:0;padding-left:18px;color:var(--ink2);font-size:15px}
+.measure li{margin:4px 0}
+.measure h3{margin-bottom:var(--sp2)}
+.lvl{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:middle}
+.steps{counter-reset:s;list-style:none;padding:0;margin:var(--sp4) 0 0;display:grid;gap:var(--sp2)}
+.steps li{counter-increment:s;display:grid;grid-template-columns:28px 1fr;gap:var(--sp2);color:var(--ink2);font-size:15px}
+.steps li::before{content:counter(s);font-weight:800;color:var(--acc)}
+
+/* roadmap */
+.waves{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.wave{padding:var(--sp5);border-right:1px solid var(--line2);background:var(--bg2)}
+.wave:last-child{border-right:0}
+.wave .when{font-size:13px;color:var(--acc);font-weight:700;margin-bottom:4px}
+.wave h3{margin-bottom:var(--sp3)}
+.wave ul{margin:0;padding-left:16px;font-size:14.5px;color:var(--ink2)}
+.wave li{margin:5px 0}
+
+/* decisões */
+.decisions{counter-reset:d -1;list-style:none;padding:0;margin:0}
+.decisions li{counter-increment:d;display:grid;grid-template-columns:44px 1fr;gap:var(--sp3);padding:var(--sp4) 0;border-bottom:1px solid var(--line2)}
+.decisions li::before{content:counter(d);font-family:"Schibsted Grotesk";font-weight:800;font-size:22px;color:var(--ink3)}
+.decisions li.key::before{color:var(--acc)}
+.decisions b{color:var(--ink);display:block;margin-bottom:2px}
+.decisions span{color:var(--ink2);font-size:15px}
+
+.cut td:nth-child(2){color:var(--ink)}
+.fail li{margin:6px 0;color:var(--ink2)}
+footer{padding:var(--sp6) 0 var(--sp8);color:var(--ink3);font-size:14px;border-top:1px solid var(--line2)}
+
+@media (max-width:860px){
+  .exec,.two,.measure{grid-template-columns:1fr}
+  .waves{grid-template-columns:1fr 1fr}
+  .wave:nth-child(2){border-right:0}
+  .wave:nth-child(-n+2){border-bottom:1px solid var(--line2)}
+}
+@media (max-width:560px){
+  .waves{grid-template-columns:1fr}
+  .wave{border-right:0;border-bottom:1px solid var(--line2)}
+  .agent{grid-template-columns:1fr}
+  .vote{grid-column:1;grid-row:auto}
+  .counter{margin-left:0;width:100%}
+  .src dl{grid-template-columns:1fr}
+  .src dt{text-align:left}
+  header.top{padding:var(--sp7) 0 var(--sp6)}
+}
+@media (prefers-reduced-motion:no-preference){
+  .agent{transition:opacity .25s cubic-bezier(.22,1,.36,1),border-color .25s cubic-bezier(.22,1,.36,1)}
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <div class="eyebrow">Relatório de aprovação · Backoffice · Fornecedores e Compras</div>
+    <h1>Fábrica de agentes para as tasks do Henry</h1>
+    <p class="lede">O Azir vira a linha de produção: toda task ganha dono, o que não tem estação vai para um agente coringa, e um supervisor sem IA mostra quem está sobrecarregado. Esta é a versão já revisada pelos céticos. Marque Aprovar ou Reprovar em cada agente.</p>
+    <div class="meta">
+      <span>16/11/2026</span>
+      <span>Janela analisada: 17/10 a 16/11/2026</span>
+      <span>Só leitura: nada foi ligado, publicado ou enviado</span>
+    </div>
+  </div>
+</header>
+
+<nav class="toc" aria-label="Seções">
+  <div class="wrap">
+    <a href="#resumo">Resumo</a>
+    <a href="#deepdive">Deep dive</a>
+    <a href="#iara">Modelo da Iara</a>
+    <a href="#arquitetura">Arquitetura</a>
+    <a href="#agentes">Agentes</a>
+    <a href="#coringa">Coringa</a>
+    <a href="#carga">Sobrecarga</a>
+    <a href="#roadmap">Roadmap</a>
+    <a href="#decisoes">Decisões</a>
+    <a href="#descartado">Descartado</a>
+    <a href="#falhas">Fontes que falharam</a>
+  </div>
+</nav>
+
+<main>
+<section id="resumo" style="border-top:0">
+  <div class="wrap exec">
+    <div>
+      <h2>O problema</h2>
+      <p>Os agentes existem, mas não estão organizados para executar tasks. No Azir, <strong>0 de 287 cards têm dono</strong>, as <strong>20 linhas do Taskdex estão paradas no Backlog desde 11/11</strong> e o Heimer ocupa <strong>82% dos cards e cerca de 70% dos minutos</strong>. Quando o Henry some (31/10 a 05/11, sem energia), a fila inteira para. E não há série nenhuma de carga: dá para ver o instante, não a semana.</p>
+      <h2 style="margin-top:var(--sp5)">A proposta em 5 linhas</h2>
+      <ol class="five">
+        <li>Nenhum orquestrador novo: cada estação é um especialista do Azir, no mesmo pool.</li>
+        <li>Recepção e Roteador dão dono a todo card. O que não casa vai para o Coringa, nunca para "-".</li>
+        <li>Um Supervisor sem IA, dentro do Azir, mede idade, fila e falha por estação e só alerta na 3ª leitura vermelha.</li>
+        <li>As 10 estações de domínio entram uma por vez, em sombra, com níveis de autonomia A0 a A3.</li>
+        <li>A batelada começa pelo ciclo mensal de novembro, a partir de 01/12, com 1 filho por fornecedor.</li>
+      </ol>
+    </div>
+    <aside class="tally" aria-label="Agentes por prioridade">
+      <div class="big">16<small>agentes</small></div>
+      <div class="prio-bar" aria-hidden="true">
+        <i style="width:43.75%;background:var(--p0)"></i>
+        <i style="width:50%;background:var(--p1)"></i>
+        <i style="width:6.25%;background:var(--p2)"></i>
+      </div>
+      <div class="prio-legend">
+        <span><span><i class="dot" style="background:var(--p0)"></i>P0 · base da fábrica</span><b>7</b></span>
+        <span><span><i class="dot" style="background:var(--p1)"></i>P1 · estações em sombra</span><b>8</b></span>
+        <span><span><i class="dot" style="background:var(--p2)"></i>P2 · depois da BF</span><b>1</b></span>
+      </div>
+      <p class="changed">6 de controle + 10 estações. A proposta original tinha 21 peças. A revisão cortou 3 (S9, S10, S14), fundiu 4 (C4 no Coringa, S2 e o balcão do S11 na Caixa de Entrada, o guardião do S11 na Oficina) e adicionou 1 (N1 Compras pontuais).</p>
+    </aside>
+  </div>
+</section>
+
+<section id="deepdive">
+  <div class="wrap">
+    <div class="eyebrow">O que vimos</div>
+    <h2>Deep dive por fonte</h2>
+    <p>Seis fontes lidas em paralelo, só leitura. Os números abaixo são os que sustentam cada agente do catálogo.</p>
+    <div class="sources">
+      <div class="src">
+        <h3>Slack <small>Composio · 100% de cobertura</small></h3>
+        <dl>
+          <dt>1.973</dt><dd>mensagens do Henry em 22 dias úteis (cerca de 90/dia; 10% depois das 20h)</dd>
+          <dt>289</dt><dd>menções a ele: 210 de bots, 79 de pessoas</dd>
+          <dt>20</dt><dd>menções de pessoas sem resposta visível</dd>
+          <dt>40</dt><dd>cobranças do bot do comitê; 6 da Íris (app marcada para apagar 2x)</dd>
+          <dt>129</dt><dd>mensagens sobre acesso, senha e chave</dd>
+          <dt>4</dt><dd>chaves coladas em texto puro (trocar)</dd>
+          <dt>31/10–05/11</dt><dd>buraco de 2 a 7 msgs/dia; a fila parou</dd>
+        </dl>
+      </div>
+      <div class="src">
+        <h3>Gmail <small>henry@ e NFXML@</small></h3>
+        <dl>
+          <dt>10.848</dt><dd>mensagens; 9.159 (84%) são links de login do Claude</dd>
+          <dt>1.689</dt><dd>na inbox real, 97% não lidas</dd>
+          <dt>904</dt><dd>do GitHub (495 do Alfred, 24 CI quebrado, 61 pedidos de review)</dd>
+          <dt>343</dt><dd>falhas de Apps Script; 279 do "Projeto sem título"</dd>
+          <dt>160</dt><dd>NFs na NFXML: 151 Matinali, 2 RM; 159 não lidas</dd>
+          <dt>3</dt><dd>e-mails enviados no mês, todos de comissão</dd>
+          <dt>7</dt><dd>alertas de API do Pipedrive a 75%</dd>
+        </dl>
+      </div>
+      <div class="src">
+        <h3>Agenda <small>416 eventos</small></h3>
+        <dl>
+          <dt>86h</dt><dd>de reunião em 20 dias úteis (3,5h/dia sem as task forces)</dd>
+          <dt>72%</dt><dd>do dia útil ocupado; sobram 2h a 2h30 para executar</dd>
+          <dt>31,5h</dt><dd>em blocos próprios: Auditoria (21h) e Comentários KPIs (10,5h). Blocos marcados, não trabalho comprovado</dd>
+          <dt>0</dt><dd>reunião mensal com fornecedor marcada para novembro</dd>
+          <dt>4</dt><dd>convites com pauta, de 52 reuniões distintas</dd>
+        </dl>
+      </div>
+      <div class="src">
+        <h3>Taskdex <small>lista Atividades Operação Iara</small></h3>
+        <dl>
+          <dt>19</dt><dd>linhas abertas em Fornecedores, todas com o Henry como dono de fato</dd>
+          <dt>4</dt><dd>sem nenhum comentário há 3 a 4 semanas</dd>
+          <dt>4</dt><dd>travadas em terceiro (iPag há 9 semanas, Doti, Flylift, Sapron)</dd>
+          <dt>4 / 4 / 3</dt><dd>rodadas de devolução: Kit, IA na captação, BF</dd>
+          <dt>~60%</dt><dd>dos ajustes da régua da Carol são de forma</dd>
+          <dt>16</dt><dd>FUPs idênticos em lote em 10/11 (já é batelada)</dd>
+        </dl>
+      </div>
+      <div class="src">
+        <h3>Sessões <small>796 arquivos, 445 sessões</small></h3>
+        <dl>
+          <dt>2.885</dt><dd>mensagens digitadas pelo Henry</dd>
+          <dt>355</dt><dd>sobre manutenção da própria fábrica</dd>
+          <dt>214</dt><dd>"veja o que X mandou / responde X"</dd>
+          <dt>22/22</dt><dd>cards de Compra e Monitoramento com a Wania (até 101h)</dd>
+          <dt>5 · 10 · 33 · 24</dt><dd>perdas iguais no Pipedrive · "está na tabela?" · cadastros no Hub · perguntas ao Sapron</dd>
+          <dt>584 → 3</dt><dd>rodadas da negociacao-recompra para 3 ações</dd>
+        </dl>
+      </div>
+      <div class="src">
+        <h3>Ambiente <small>Azir, rotinas, skills</small></h3>
+        <dl>
+          <dt>0/287</dt><dd>cards com <code>dono</code>; <code>custo_usd</code> = 0 em todos</dd>
+          <dt>26 · 14 · 9 · 0 · 1 · 0</dt><dd>cards fora de melhoria por dia, de 11 a 16/11</dd>
+          <dt>3</dt><dd>travados há 86 a 89h esperando terceiro (T107, T064, T129)</dd>
+          <dt>100%</dt><dd>do crontab do PC comentado desde 14/11</dd>
+          <dt>88 · 67</dt><dd>vezes <code>/login</code> e <code>/mcp</code> em 30 dias</dd>
+          <dt>14 · 11 · 39</dt><dd>linhas de cron na VPS (OK) · agentes no Olimpo · skills locais</dd>
+        </dl>
+      </div>
+    </div>
+    <p class="note"><strong>Divergência de contagem:</strong> o quadro dá 287, 288 ou 374 cards conforme a leitura (o 374 conta <code>analise</code> 28 e <code>slack</code> 59), e comunicação aparece com 71 ou 25 cards. A proposta original usava o número maior para dividir Comunicação. Nesta versão, o Supervisor só vira fonte única depois de a regra de contagem ser decidida (decisão 9), e Comunicação não é dividida agora.</p>
+  </div>
+</section>
+
+<section id="iara">
+  <div class="wrap">
+    <div class="eyebrow">Referência</div>
+    <h2>O modelo da Iara e da Aria</h2>
+    <div class="two">
+      <div>
+        <p>A Iara mostrou hoje às 9h, na abertura do retiro, o <strong>Comercial Franquia Agêntica</strong>: um orquestrador (Maestro), 7 frentes, 19 agentes e um <strong>Supervisor sem IA</strong> que "acha agente parado e prazo vencido". Primeiro mapearam as atividades e depois deram dono a cada uma: <strong>172 de 189</strong> já têm agente dono, e o desenho fecha com nenhuma sem dono. <a href="https://seazone-fund.slack.com/archives/C0CH2HAJFT7/p1794830402472409">Slides no #retiro-ia-operacao</a></p>
+        <h3 style="margin:var(--sp4) 0 var(--sp2)">O que copiamos</h3>
+        <ul class="copy-list">
+          <li><b>Mapa atividade → dono, meta de zero sem dono</b>Vira o <code>estacoes.yaml</code> no formato do Davi: Nome · Processo (Área › Subárea) · Gatilho · Prova · SLA · classe.</li>
+          <li><b>Supervisor sem IA</b>Vira o C5, rodando dentro do Azir.</li>
+          <li><b>Mesa "Precisa de você"</b>Do Posto da Iara: aprovar ou devolver, e a resposta volta sozinha ao agente que entregou.</li>
+          <li><b>Alarme só na 3ª repetição, e métrica que não pune acerto</b>Lições da Nina e da Aurora: card resolvido por humano conta como "resolvido por outro", não como falha.</li>
+          <li><b>Sombra e teste às cegas antes de soltar</b>Como o Atlas: 10 execuções em sombra com 0 correção e eval cego antes de subir de nível.</li>
+          <li><b>Classes PR, OP, IN, P100</b>A Iara criou em 07/11 e ainda não usa. Viram a classe do card no Roteador.</li>
+        </ul>
+      </div>
+      <div class="aria">
+        <div class="status"><span class="dot" style="background:var(--ok);margin:0"></span>A Aria respondeu, em cerca de 2 minutos</div>
+        <p>Uma mensagem com 5 perguntas, mandada em nome do Henry no #retiro-ia-operacao.</p>
+        <p><a href="https://seazone-fund.slack.com/archives/C0CH2HAJFT7/p1794839922993959">Link da pergunta</a> · <a href="https://seazone-fund.slack.com/archives/C0CH2HAJFT7/p1794840062549869?thread_ts=1794839922.993959">Link da resposta</a></p>
+        <blockquote>"Agente coringa e métrica de sobrecarga (WIP, tempo parado) o guia não cobre. Chama a Iara na sala ou marca a pergunta no fio."</blockquote>
+        <p>No resto, ela confirmou o guia: a orquestradora só registra e repassa; ajudante, triagem, supervisor e verificador evitam a trava; a batelada entra pela caixa de rodada, com Workflow e céticos dentro de cada pedido; a Central mostra ID, status, prova e um gráfico de 7 dias.</p>
+        <p><strong>Conclusão:</strong> o Coringa e a medida de sobrecarga são desenho nosso. Vale levar a pergunta à Iara no retiro (17 ou 18/11). No painel da Aria, o Henry está em <strong>9/15</strong>, com o <strong>item 20 (Batelada) faltando</strong>. Ele só fecha com quadro de ID, status e prova visível, ou seja, depois da aba Carga.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="arquitetura">
+  <div class="wrap">
+    <div class="eyebrow">Como a fábrica anda</div>
+    <h2>Arquitetura</h2>
+    <p>Tudo roda no pool do Azir. O único código novo é o Supervisor, sem IA, como um timer dentro do próprio Azir (mesmo SQLite, nenhum processo à parte). O <code>rotinas-healthcheck</code> atual serve de vigia externa dele.</p>
+    <div class="diagram" role="img" aria-label="Fluxo: fontes, recepção, roteador, pronto com dono, estações, portão de saída, mesa, aguardando terceiro ou concluído. O coringa recebe o que não casa. O supervisor de carga mede tudo. A batelada entra como card-lote com filhos.">
+      <svg viewBox="0 0 1000 430" xmlns="http://www.w3.org/2000/svg" font-family="Hanken Grotesk, sans-serif">
+        <defs>
+          <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="oklch(66% .014 255)"/></marker>
+          <marker id="ara" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="oklch(79% .115 72)"/></marker>
+        </defs>
+        <g fill="none" stroke="oklch(66% .014 255)" stroke-width="1.5">
+          <path d="M150 150 H190" marker-end="url(#ar)"/>
+          <path d="M320 150 H360" marker-end="url(#ar)"/>
+          <path d="M490 150 H530" marker-end="url(#ar)"/>
+          <path d="M660 150 H700" marker-end="url(#ar)"/>
+          <path d="M830 150 H850 V95 H870" marker-end="url(#ar)"/>
+          <path d="M830 150 H850 V170 H870" marker-end="url(#ar)"/>
+          <path d="M830 150 H850 V245 H870" marker-end="url(#ar)"/>
+        </g>
+        <g fill="none" stroke="oklch(79% .115 72)" stroke-width="1.6">
+          <path d="M425 185 V250 H530" marker-end="url(#ara)"/>
+          <path d="M630 225 V188" marker-end="url(#ara)" stroke-dasharray="5 4"/>
+        </g>
+        <g fill="none" stroke="oklch(76% .07 230)" stroke-width="1.5" stroke-dasharray="4 4">
+          <path d="M85 330 V190" marker-end="url(#ar)"/>
+        </g>
+        <!-- caixas -->
+        <g font-size="13" fill="oklch(93% .008 85)">
+          <rect x="20" y="105" width="130" height="90" rx="10" fill="oklch(27.5% .015 255)" stroke="oklch(35% .016 255)"/>
+          <text x="85" y="132" text-anchor="middle" font-weight="700">Fontes</text>
+          <text x="85" y="152" text-anchor="middle" fill="oklch(80% .01 255)" font-size="11.5">Slack, Gmail, Taskdex</text>
+          <text x="85" y="168" text-anchor="middle" fill="oklch(80% .01 255)" font-size="11.5">Suporte, GitHub, atas</text>
+          <text x="85" y="184" text-anchor="middle" fill="oklch(80% .01 255)" font-size="11.5">falhas de rotina</text>
+
+          <rect x="190" y="115" width="130" height="70" rx="10" fill="oklch(27.5% .015 255)" stroke="oklch(35% .016 255)"/>
+          <text x="255" y="142" text-anchor="middle" font-weight="700">C1 Recepção</text>
+          <text x="255" y="162" text-anchor="middle" fill="oklch(80% .01 255)" font-size="11.5">dedupe + agrega</text>
+
+          <rect x="360" y="115" width="130" height="70" rx="10" fill="oklch(27.5% .015 255)" stroke="oklch(35% .016 255)"/>
+          <text x="425" y="142" text-anchor="middle" font-weight="700">C2 Roteador</text>
+          <text x="425" y="162" text-anchor="middle" fill="oklch(80% .01 255)" font-size="11.5">classe + dono</text>
+
+          <rect x="530" y="115" width="130" height="70" rx="10" fill="oklch(27.5% .015 255)" stroke="oklch(35% .016 255)"/>
+          <text x="595" y="142" text-anchor="middle" font-weight="700">Estações</text>
+          <text x="595" y="162" text-anchor="middle" fill="oklch(80% .01 255)" font-size="11.5">S1 a S13, N1</text>
+
+          <rect x="700" y="115" width="130" height="70" rx="10" fill="oklch(27.5% .015 255)" stroke="oklch(35% .016 255)"/>
+          <text x="765" y="142" text-anchor="middle" font-weight="700">C7 Portão</text>
+          <text x="765" y="162" text-anchor="middle" fill="oklch(80% .01 255)" font-size="11.5">régua Carol + FUP</text>
+
+          <rect x="870" y="75" width="115" height="40" rx="8" fill="oklch(30% .03 72)" stroke="oklch(79% .115 72)"/>
+          <text x="927" y="100" text-anchor="middle" font-weight="700" font-size="12">Precisa de você</text>
+          <rect x="870" y="150" width="115" height="40" rx="8" fill="oklch(27.5% .015 255)" stroke="oklch(35% .016 255)"/>
+          <text x="927" y="168" text-anchor="middle" font-size="12" font-weight="700">Aguardando</text>
+          <text x="927" y="182" text-anchor="middle" font-size="11" fill="oklch(80% .01 255)">terceiro · C6</text>
+          <rect x="870" y="225" width="115" height="40" rx="8" fill="oklch(27.5% .015 255)" stroke="oklch(77% .11 150)"/>
+          <text x="927" y="250" text-anchor="middle" font-weight="700" font-size="12">Concluído</text>
+
+          <rect x="530" y="225" width="130" height="58" rx="10" fill="oklch(30% .03 72)" stroke="oklch(79% .115 72)" stroke-width="1.5"/>
+          <text x="595" y="249" text-anchor="middle" font-weight="800">C3 Coringa</text>
+          <text x="595" y="268" text-anchor="middle" fill="oklch(85% .05 72)" font-size="11.5">sem casamento + DAG</text>
+          <text x="440" y="242" fill="oklch(79% .115 72)" font-size="11.5">não casou</text>
+          <text x="638" y="212" fill="oklch(79% .115 72)" font-size="11.5">devolve</text>
+
+          <rect x="20" y="330" width="250" height="70" rx="10" fill="oklch(24.5% .014 255)" stroke="oklch(76% .07 230)" stroke-dasharray="5 4"/>
+          <text x="145" y="357" text-anchor="middle" font-weight="700">Batelada · card-lote</text>
+          <text x="145" y="377" text-anchor="middle" fill="oklch(80% .01 255)" font-size="11.5">1 filho por fornecedor/cidade/NF</text>
+          <text x="145" y="392" text-anchor="middle" fill="oklch(80% .01 255)" font-size="11.5">caixa de rodada ou calendário</text>
+
+          <rect x="300" y="330" width="685" height="70" rx="10" fill="oklch(24.5% .014 255)" stroke="oklch(35% .016 255)"/>
+          <text x="320" y="357" font-weight="700">C5 Supervisor de Carga · sem IA · tick de 5 min dentro do Azir</text>
+          <text x="320" y="379" fill="oklch(80% .01 255)" font-size="12">lê SQLite e efeito_rodada · idade × SLA, fila, falha, vazio · fontes externas 1x/dia · alerta na 3ª leitura · rebalanceia</text>
+        </g>
+        <g stroke="oklch(35% .016 255)" stroke-width="1" stroke-dasharray="2 4">
+          <path d="M255 185 V330"/><path d="M595 283 V330"/><path d="M765 185 V330"/>
+        </g>
+      </svg>
+    </div>
+    <div class="cols" aria-label="Colunas do quadro">
+      <span>Entrada</span><span>Triado</span><span>Pronto (com dono)</span><span>Fazendo</span><span>Verificação</span><span class="hl">Precisa de você</span><span>Aguardando terceiro</span><span>Concluído</span>
+    </div>
+    <p>"Travado" fica só para decisão do Henry. Os 3 cards de hoje (T107, T064, T129) esperam terceiros e vão para "Aguardando terceiro"; o T285 (ClickSign) fica na mesa. A mesa entrega em 2 janelas por dia (sugestão: 15h e 17h30), um item por linha, com os botões Aprovar/Reprovar do Vel'Koz.</p>
+
+    <h3 style="margin:var(--sp5) 0 var(--sp3)">Níveis de autonomia</h3>
+    <div class="tbl"><table>
+      <thead><tr><th>Nível</th><th>Pode</th><th>Exemplos</th></tr></thead>
+      <tbody>
+        <tr><td>A0</td><td>Só ler</td><td>Sapron, dashboards, logs</td></tr>
+        <tr><td>A1</td><td>Escrever no próprio ambiente</td><td>Card, HTML, rascunho, DM ao Henry</td></tr>
+        <tr><td>A2</td><td>Escrever em sistema interno reversível, com log, sem falar com ninguém</td><td>Pipedrive lost + 527, comentário em card da lojinha, planilha da Ray, cadastro no Hub</td></tr>
+        <tr><td>A3</td><td>Falar com qualquer pessoa ou agir em nome do Henry</td><td>Mensagem, cobrança, e-mail com NF/boleto, ClickSign, cancelar, apagar, abrir chamado</td></tr>
+      </tbody>
+    </table></div>
+    <p class="note">A3 exige o botão Aprovar, exceto a lista branca que já é REGRA: auto-resposta do Slack só com status factual, "abre um suporte" quando o Henry pede, contrato do fotógrafo disparado pela Ana, report da BF e thread de fotógrafos parados. Item novo só entra depois de 10 execuções em sombra com 0 correção e eval cego (<code>eval-agente</code>). Cada estação tem um kill-switch <code>ORQ_ESTACAO_&lt;X&gt;=off</code>.</p>
+
+    <h3 style="margin:var(--sp5) 0 var(--sp3)">Batelada</h3>
+    <p>Card-lote = template + N filhos, cada filho com ID, status e prova próprios (item 20 do setup v4). Dentro de cada filho o Workflow roda em paralelo com céticos. O pai só fecha quando todos passam no Portão. Templates com evidência: <strong>ciclo mensal por fornecedor</strong> (piloto), FUP de prospecção por cidade (16 iguais em 10/11) e conferência de NF da RM em sombra. A batelada usa slot ocioso de dia e a noite, mas a noite não é capacidade livre: KPIs às 21h e contribuições às 18h e 23h já gastam a mesma conta.</p>
+  </div>
+</section>
+
+<section id="agentes">
+  <div class="wrap">
+    <div class="eyebrow">Para aprovar</div>
+    <h2>Os 16 agentes</h2>
+    <p>Cada linha diz o que mudou depois da revisão cética, quando mudou. A marcação fica só neste navegador; serve para você levar a lista às decisões.</p>
+    <div class="toolbar" role="group" aria-label="Filtrar por prioridade">
+      <button class="chip" data-f="all" aria-pressed="true">Todos</button>
+      <button class="chip" data-f="P0" aria-pressed="false">P0</button>
+      <button class="chip" data-f="P1" aria-pressed="false">P1</button>
+      <button class="chip" data-f="P2" aria-pressed="false">P2</button>
+      <span class="counter" id="counter" aria-live="polite"></span>
+    </div>
+    <div class="agents" id="agents"></div>
+    <p class="note"><strong>Estações humanas</strong>, medidas no mesmo painel se você e elas concordarem (decisão 11): Henry (mesa e menções), Wania (chamados e idade), Ray (devoluções por semana). <strong>Configurações, não agentes:</strong> teto do Heimer e filtros do Gmail (com OK).</p>
+  </div>
+</section>
+
+<section id="coringa">
+  <div class="wrap two">
+    <div>
+      <div class="eyebrow">Em destaque</div>
+      <h2>C3 Coringa: nada fica sem dono</h2>
+      <p>Hoje o Azir tem um <code>generalista.md</code> com <code>quando: []</code>: só entra em card que alguém já puxou para Fazendo. O Coringa é esse generalista com fila própria e regra de saída.</p>
+      <p><strong>Antes da decisão 0</strong>, ele só tria e decompõe: o card vai para "Pronto, aguardando disparo". A REGRA de 10/11 diz que as tasks do Azir "só rodam quando eu mando", e o pull automático muda isso.</p>
+      <p><strong>Depois da decisão 0</strong>, ordem de pull a cada 15 min:</p>
+      <ol class="steps">
+        <li>Card sem dono há mais de 15 min.</li>
+        <li>Card em Pronto há mais de 24h.</li>
+        <li>Card PR ou OP de estação vermelha, acima do SLA.</li>
+        <li>Linha do Taskdex sem FUP há 7 dias ou mais.</li>
+        <li>Fila da pessoa ausente.</li>
+      </ol>
+    </div>
+    <div>
+      <h3 style="margin-bottom:var(--sp3)">Regras</h3>
+      <ul class="copy-list">
+        <li><b>Iniciativa vira DAG</b>Card de classe IN é quebrado em subtasks com "pronto quando", estação e dependência. Os campos <code>parent_id</code> e <code>depende_de</code> já existem. Subtask no Taskdex só com OK (decisão 7).</li>
+        <li><b>Fica dono até o fim quando a estação não existe</b>Enquanto a estação de destino não estiver ligada, ele executa, com teto de escopo. Não empurra a trava para a mesa.</li>
+        <li><b>Travas</b>WIP 2; no máximo 2 ciclos por card; nunca pega A3 sensível (ClickSign, e-mail financeiro, banco), pelo campo <code>coringa_elegivel</code>.</li>
+        <li><b>Mapa cresce</b>Mesmo tema 3 vezes por semana no Coringa vira proposta de estação nova.</li>
+        <li><b>Modo ausência</b>Gatilho por inatividade do Henry (0 mensagens em X horas úteis), não pelo Calendar: a queda de 31/10 foi falta de energia sem aviso. Não duplica o <code>blocoAusencia</code> de 16/11. Pela Wania, só com o consentimento dela.</li>
+        <li><b>Métrica</b>Idade até a 1ª ação real e lead time até Concluído. "Sem dono = 0" sozinho fica verde com a task parada.</li>
+        <li><b>Carga esperada</b>3 a 8 cards por semana, mais as 20 iniciativas uma vez. As 20 linhas não estão sem dono: são guarda-chuvas do Henry tratadas como task pelo importador.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="carga">
+  <div class="wrap">
+    <div class="eyebrow">Painel de sobrecarga</div>
+    <h2>Quem está sobrecarregado, e como saber</h2>
+    <div class="measure">
+      <div>
+        <h3><span class="lvl" style="background:var(--ok)"></span>Já dá para medir</h3>
+        <ul>
+          <li>Campos que existem no banco: <code>dono</code>, <code>aguardando_desde</code>, <code>origem_ref</code> (com dedupe), <code>parent_id</code>, <code>depende_de</code>, <code>iniciado_em</code>, <code>rodadas</code>, <code>agente</code>. Só ninguém preenche.</li>
+          <li>Baseline retroativo de 11 a 16/11: WIP e lead time aproximados a partir de <code>criado_em</code>, <code>iniciado_em</code> e <code>atualizado_em</code>.</li>
+          <li>Falha e rodada vazia dos agentes do Olimpo pelo <code>efeito_rodada</code>.</li>
+        </ul>
+      </div>
+      <div>
+        <h3><span class="lvl" style="background:var(--bad)"></span>Falta construir</h3>
+        <ul>
+          <li><strong>Histórico de coluna:</strong> registrar <code>tipo='coluna'</code> na tabela <code>eventos</code>. Antes de 11/11 não há série.</li>
+          <li><strong>Custo:</strong> o motor herdr fecha com custo 0 (<code>executor.ts:977</code>). Somar tokens do transcript; medir em tokens e minutos, porque em assinatura o USD é nocional.</li>
+          <li><strong>Janela de 5h:</strong> não há telemetria. Usar um sinal binário "bateu o limite, volta às X", contando também as rotinas da VPS. Com a troca de conta, nada calibrado antes vale; confirmar se PC e VPS estão na mesma conta.</li>
+          <li><strong>Pipedrive:</strong> só os e-mails de 75%. A cadência roda no Olimpo e não reporta.</li>
+          <li><strong>Rotinas do PC:</strong> o espelho de logs parou em 13/11. Consertar o <code>ambiente-sync</code> antes da vigia cruzada.</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3 style="margin-bottom:var(--sp3)">Limiares iniciais</h3>
+    <div class="tbl"><table>
+      <thead><tr><th>Métrica</th><th><span class="lvl" style="background:var(--warn)"></span>Amarelo</th><th><span class="lvl" style="background:var(--bad)"></span>Vermelho</th></tr></thead>
+      <tbody>
+        <tr><td>Idade do mais velho × SLA (P0 4h úteis, P1 24h, P2 72h; S1 15 min)</td><td>&gt; 50% do SLA</td><td>&gt; SLA</td></tr>
+        <tr><td>Card sem dono</td><td>&gt; 15 min</td><td>&gt; 1h</td></tr>
+        <tr><td>Idade até a 1ª ação real</td><td>&gt; 24h úteis</td><td>&gt; 72h úteis</td></tr>
+        <tr><td>ρ = chegadas ÷ saídas (7d), <strong>só com 5+ chegadas</strong></td><td>&gt; 0,8</td><td>&gt; 1,0 por 2 dias</td></tr>
+        <tr><td>Participação nos minutos do pool, <strong>sem melhoria no denominador</strong></td><td>&gt; 35%</td><td>&gt; 50%</td></tr>
+        <tr><td>Heimer (teto próprio)</td><td>—</td><td>&gt; 10% do pool no dia</td></tr>
+        <tr><td>Falha (7d)</td><td>&gt; 10%</td><td>&gt; 25% ou 3 seguidas</td></tr>
+        <tr><td>Rodadas vazias</td><td>&gt; 80%</td><td>&gt; 95% → reduzir frequência</td></tr>
+        <tr><td>Devoluções por card</td><td>1</td><td>2 ou mais</td></tr>
+        <tr><td>Aguardando terceiro</td><td>&gt; 48h</td><td>&gt; 72h</td></tr>
+        <tr><td>Janela de 5h do Claude</td><td>—</td><td>bateu o limite</td></tr>
+        <tr><td>Cota do Pipedrive (e-mail)</td><td>—</td><td>alerta de 75% no dia</td></tr>
+        <tr><td>Henry (mesa + menções)</td><td>&gt; 8 itens ou &gt; 24h úteis</td><td>&gt; 15 ou &gt; 48h</td></tr>
+        <tr><td>Wania (chamados), se ela concordar</td><td>&gt; 10 ou p90 &gt; 48h</td><td>&gt; 15 ou algum &gt; 72h</td></tr>
+      </tbody>
+    </table></div>
+    <p class="note">Com 3 a 8 cards por semana por estação, ρ e p90 são ruído. Até haver volume, valem idade, fila e "sem dono". Recalibração quando cada estação tiver 5+ chegadas por semana em 3 semanas, não numa data fixa.</p>
+
+    <div class="two" style="margin-top:var(--sp5)">
+      <div>
+        <h3 style="margin-bottom:var(--sp2)">Alerta</h3>
+        <ul class="copy-list">
+          <li><b>Só na 3ª leitura vermelha seguida</b>Card resolvido por humano conta como "resolvido por outro"; rodada vazia legítima conta como vazio.</li>
+          <li><b>Um DM às 18h, só se houver alerta</b>Pelo Vel'Koz, fallback Composio. Tudo verde = nada.</li>
+          <li><b>Imediato em 3 casos</b>Humano vermelho, S1 com ρ &gt; 1, ou janela de 5h estourada.</li>
+          <li><b>Pulso próprio</b>O Supervisor edita uma mensagem dele, com o próprio verificador "não editada há 2h". O pulso do Vel'Koz e a vigia das 18h45 ficam intocados.</li>
+          <li><b>Coleta externa diária</b>O tick de 5 min lê só o SQLite e o <code>efeito_rodada</code>. Menções, Gmail, chamados e Calendar entram 1 vez por dia (Slack dá 429).</li>
+        </ul>
+      </div>
+      <div>
+        <h3 style="margin-bottom:var(--sp2)">Aba "Carga" no Azir</h3>
+        <p>Mesa no topo; heatmap estação × dia (7 e 30 dias) pelo pior limiar; gráfico de 7 dias de entradas, saídas e fila, como a Central da Iara; top 10 cards mais velhos; faixas humanas; tokens e minutos por estação; cotas externas; radar de agenda (dias com mais de 5h de reunião, dias 18 a 21, BF até 30/11). Relatório na segunda às 8h.</p>
+        <h3 style="margin:var(--sp4) 0 var(--sp2)">Rebalanceamento (sem IA no gatilho)</h3>
+        <ol class="steps">
+          <li>Estação amarela: o Coringa puxa os cards PR dela.</li>
+          <li>Estação vermelha: Heimer pausa, batelada vai para a noite, excedente elegível vai para o Coringa, e sai rascunho de repactuar prazo se a origem for o Taskdex.</li>
+          <li>Janela de 5h estourada: congela Heimer, Neeko, P2 e batelada.</li>
+          <li>Cota do Pipedrive vermelha: avisa o Henry. Mexer na cadência do Olimpo é PR, não ação automática.</li>
+          <li>Véspera de dia cheio: antecipa a batelada e segura a mesa para o próximo bloco livre.</li>
+          <li>Humano vermelho ou ausente: a Recepção para de rotear para a pessoa e só o A3 vai para a mesa.</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="roadmap">
+  <div class="wrap">
+    <div class="eyebrow">Ondas</div>
+    <h2>Roadmap</h2>
+    <p>O Henry está no retiro até 18/11 e o <code>contrato-fotografo</code> só religa em 19/11. Por isso a primeira onda é só código no Azir, sem nada que dependa de OK.</p>
+    <div class="waves">
+      <div class="wave">
+        <div class="when">16 a 18/11</div>
+        <h3>Só código no Azir</h3>
+        <ul>
+          <li>Preencher <code>dono</code> e <code>agente</code> na aplicação, validando ao mudar de coluna</li>
+          <li>Registrar transição de coluna na <code>eventos</code></li>
+          <li>Somar tokens do transcript do herdr</li>
+          <li>Sinal binário de 5h</li>
+          <li>Baseline retroativo 11 a 16/11</li>
+          <li>C2 termina no Coringa; C3 só tria e decompõe</li>
+          <li>Teto do Heimer (configuração)</li>
+          <li>Conferir no financeiro e no Drive as cobranças de outubro (leitura)</li>
+          <li>Levar à Iara a pergunta do Coringa e da sobrecarga</li>
+        </ul>
+      </div>
+      <div class="wave">
+        <div class="when">19 a 22/11</div>
+        <h3>Consertos com OK</h3>
+        <ul>
+          <li>Religar 5 linhas do crontab do PC; desligar a <code>rotina-despacho</code></li>
+          <li>Relogar o Mercado Livre</li>
+          <li>Religar o <code>contrato-fotografo</code> depois do login do fornecedores@</li>
+          <li>Trocar as 4 chaves</li>
+          <li>Consertar o <code>ambiente-sync</code> e o espelho de logs</li>
+          <li>C5 v1 com DM das 18h só com alerta</li>
+          <li>C6 em sombra nos 3 cards aguardando</li>
+        </ul>
+      </div>
+      <div class="wave">
+        <div class="when">23 a 29/11</div>
+        <h3>Fila única e portão</h3>
+        <ul>
+          <li>C1 com agregação por script e PR</li>
+          <li>S1 Caixa de Entrada</li>
+          <li>C7 com a régua da Carol</li>
+          <li>Aba Carga no Azir (fecha o item 20)</li>
+          <li>Em sombra: S3 e N1</li>
+          <li>S8: corrigir as falhas antes de comentar</li>
+          <li>S4 segue com a BF até 30/11</li>
+        </ul>
+      </div>
+      <div class="wave">
+        <div class="when">Dezembro</div>
+        <h3>Batelada e o resto</h3>
+        <ul>
+          <li>S5: ciclo de novembro em batelada a partir de 01/12</li>
+          <li>Uma estação P1 por vez, em sombra com eval: S6, S7, S12, S13 completa</li>
+          <li>S4 fino depois da BF</li>
+          <li>Recalibrar limiares quando houver volume</li>
+          <li>Revisão mensal do mapa: meta zero sem dono</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="decisoes">
+  <div class="wrap">
+    <div class="eyebrow">Com você</div>
+    <h2>Decisões pendentes do Henry</h2>
+    <ol class="decisions">
+      <li class="key"><div><b>Coringa com pull automático</b><span>Revoga a REGRA de 10/11 ("só rodam quando eu mando")? Até lá, ele só tria e decompõe.</span></div></li>
+      <li class="key"><div><b>Arquitetura</b><span>Estações como especialistas do Azir no mesmo pool; Supervisor como timer dentro do Azir; colunas novas e mesa "Precisa de você" com 2 janelas (15h e 17h30)?</span></div></li>
+      <li><div><b>Pool</b><span>Manter 3 de dia e limitar o Heimer, em vez de subir para 5+2. Só subir depois que o sinal de 5h existir. Concorda?</span></div></li>
+      <li class="key"><div><b>Teto do Heimer</b><span>10% do pool até o <code>efeito_rodada</code> mostrar ganho (proposto pela revisão), ou 20%?</span></div></li>
+      <li><div><b>Níveis A0 a A3 e lista branca</b><span>Confirmar a lista atual, que a S1 só responde status factual sem compromisso e que responder o bot do comitê é A3.</span></div></li>
+      <li><div><b>Modo ausência</b><span>Gatilho por inatividade (quantas horas úteis?). Pela Wania, só se ela consentir: você pergunta a ela?</span></div></li>
+      <li><div><b>Cobrador</b><span>Toda cobrança é A3 até 10 execuções em sombra. Jurídico e iPag ficam sempre com OK?</span></div></li>
+      <li><div><b>Subtasks</b><span>O Coringa cria subtasks no Taskdex com OK, ou só no Azir?</span></div></li>
+      <li><div><b>Rotinas de não-respondidas</b><span>Deixam de mandar DM e viram card na fila, mudando a REGRA de 09/11?</span></div></li>
+      <li><div><b>Contagem oficial do quadro</b><span>Conversa do Slack e card de análise contam como card? Sem isso o Supervisor vira uma terceira contagem.</span></div></li>
+      <li><div><b>Consertos pontuais, cada um com OK</b><span>5 linhas do crontab do PC e <code>rotina-despacho</code>; 4 chaves; vigia da <code>negociacao-recompra</code> de 5 para 30 min; desligar o Apps Script "Projeto sem título"; filtros do Gmail; aposentar <code>cidades-sem-lavanderia</code> e <code>analise-capacho-franquia</code> (Pipefy); trazer para a cópia local as 4 skills só do marketplace.</span></div></li>
+      <li><div><b>Medir pessoas no painel</b><span>Wania e Ray como estações humanas? Combinar com elas antes.</span></div></li>
+      <li><div><b>Ciclo mensal</b><span>Liberar o piloto de novembro (01/12) e propor as datas das mensais de novembro, que ainda não estão marcadas?</span></div></li>
+      <li><div><b>Blocos "Auditoria" e "Comentários KPIs"</b><span>O que você faz neles hoje? A S8 só desenha a lista das 9h30 depois dessa resposta.</span></div></li>
+      <li><div><b>Conta nova</b><span>Você trocou de conta. PC e VPS estão na mesma? Isso define se existe uma janela de 5h única e zera qualquer referência antiga de cota.</span></div></li>
+      <li><div><b>Iara</b><span>Levar no retiro a pergunta sobre Coringa e sobrecarga, que a Aria disse que o guia não cobre.</span></div></li>
+    </ol>
+  </div>
+</section>
+
+<section id="descartado">
+  <div class="wrap">
+    <div class="eyebrow">Fora</div>
+    <h2>O que foi descartado, e por quê</h2>
+    <div class="tbl cut"><table>
+      <thead><tr><th>Item</th><th>Virou</th><th>Por quê</th></tr></thead>
+      <tbody>
+        <tr><td>C4 Decompositor</td><td>Função do C3</td><td>Dois agentes para as mesmas 20 linhas; decompor é o 1º passo do Coringa.</td></tr>
+        <tr><td>S2 Redator</td><td>S1 + skill <code>campanha-venda</code></td><td>2 comunicados em 30 dias, 1 heartbeat por semana, 7 posts no #ai-rats: não chega a 5 por semana.</td></tr>
+        <tr><td>S9 Recompra & SIA</td><td>Dono (S3) + configuração (S13)</td><td>Os agentes já existem; 584 rodadas para 3 ações é frequência, não trabalho novo.</td></tr>
+        <tr><td>S10 Ritos, Atas & Ausência</td><td>Ata → C1; pauta → C5; ausência → C3</td><td>Weekly Operação e Comitê não geram ação para o Henry; só as 9 atas da Daily de Fornecedores. Gatilho por Calendar não teria pego 31/10.</td></tr>
+        <tr><td>S11 Plataforma</td><td>Guardião → S13; balcão → S1</td><td>Duplica Yummi, healthcheck, <code>rotinas-ultima</code> e checkup. Religar crontab e trocar chaves são consertos pontuais.</td></tr>
+        <tr><td>S14 Suporte Interno</td><td>FAQ do Kit, atendido pela S1</td><td>154 das ~200 mensagens eram com o David, que foi desligado; o Kit da Vivi já foi entregue.</td></tr>
+        <tr><td>Dividir Comunicação</td><td>Não agora</td><td>O pico de 28 e 23 cards em 12–13/11 foi task force e teste; de 14 a 16/11 entraram 0, 1 e 0 cards fora de melhoria.</td></tr>
+        <tr><td>Pool 5 + 2</td><td>Fica 3, com teto no Heimer</td><td>Sem evidência de demanda; limitar o Heimer libera mais e não custa nada.</td></tr>
+        <tr><td><code>dono</code> NOT NULL</td><td>Validação na aplicação</td><td>SQLite não aplica NOT NULL em coluna adicionada por ALTER; há 262 concluídos com dono nulo.</td></tr>
+        <tr><td>Custo via <code>claude -p --output-format json</code></td><td>Tokens do transcript</td><td>O motor é o herdr; o caminho <code>claude -p</code> não é o que roda.</td></tr>
+        <tr><td>Limiares 60/80% da janela de 5h</td><td>Sinal binário</td><td>Não existe telemetria percentual.</td></tr>
+        <tr><td>Supervisor espaça a cadência</td><td>Aviso ao Henry</td><td>A cadência é agente do Olimpo: mexer é PR ou A3.</td></tr>
+        <tr><td>Pulso editado no mesmo lugar do Vel'Koz</td><td>Mensagem própria</td><td>Mascararia a falha da vigia das 18h (REGRA de 11/11).</td></tr>
+        <tr><td>Aditivo e distrato automáticos</td><td>Manuais</td><td>2 casos em 30 dias.</td></tr>
+        <tr><td>"31h/mês" da Auditoria e Comentários KPIs</td><td>Pergunta (decisão 13)</td><td>São blocos na agenda; nenhuma fonte mostra o trabalho feito neles.</td></tr>
+        <tr><td>Ciclo de outubro como piloto</td><td>Ciclo de novembro em 01/12</td><td>Outubro já foi enviado entre 06 e 13/11. A falta de cobrança de Matinali, Somar e Harus não está provada: a cobrança vai pelo form do financeiro e pelo Drive, não por e-mail.</td></tr>
+        <tr><td>EasyCover e nowseguros no S5</td><td>Fora do piloto</td><td>Não têm skill na cadeia mensal.</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+</section>
+
+<section id="falhas">
+  <div class="wrap">
+    <div class="eyebrow">Limites</div>
+    <h2>Fontes que falharam ou ficaram parciais</h2>
+    <ul class="fail">
+      <li><strong>Slack:</strong> 429 várias vezes. Retentado com backoff até completar o <code>from:me</code> e as menções. Os fios da Iara e da Aria foram lidos por busca e podem ter vindo incompletos.</li>
+      <li><strong>Financeiro e Drive:</strong> não lidos. Por isso a falta de cobrança de outubro (Matinali, Somar, Harus) não está provada.</li>
+      <li><strong>Pipedrive:</strong> não consultado direto; o padrão saiu das mensagens e dos e-mails de limite.</li>
+      <li><strong>Azir no PC:</strong> <code>localhost:4777</code> não respondia (túnel <code>azir-tunel</code>); os números saíram da VPS.</li>
+      <li><strong>Rotinas do PC vistas da VPS:</strong> o espelho de logs parou em 13/11.</li>
+      <li><strong>Painel da Aria:</strong> só abre pela Tailscale; usamos o que ela publicou no Slack.</li>
+      <li><strong>Nesta sessão:</strong> os MCPs do Sapron (502), da KB e do <code>kpi-system</code> não conectaram. Nenhum número deste relatório depende deles.</li>
+    </ul>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">Montado em 16/11/2026 sobre o dossiê de 6 fontes e duas revisões céticas. Nada foi ligado, gravado ou enviado.</div>
+</footer>
+
+<script>
+const AG = [
+ {l:"Controle (dentro do Azir)"},
+ {id:"C1",n:"Recepção",tipo:"Fusão",p:"P0",aut:"A1 (filtros do Gmail = A3)",carga:"40 a 120 cards/sem, já agregados",
+  m:"Fila única: todo trabalho vira card com origem_ref (o dedupe já existe no banco). Um pré-filtro sem IA descarta ruído e agrega: 1 card por script, por PR, por dia.",
+  abs:"As 6 entradas do Azir; as rotinas slack-nao-respondidas e emails-nao-respondidos (se a decisão 8 aprovar); 79 menções de pessoas no mês; as 9 atas da Daily de Fornecedores; 343 falhas de Apps Script agregadas por script; falhas de rotina e do EKS como card de saúde. Descarta 9.159 links de login, 125 avisos do Slack e 26 avisos de app do Pipedrive.",
+  g:"Tick do Azir e Socket Mode do Vel'Koz; fontes externas de 2 em 2h",f:"Composio (Slack, Gmail, leitura), Taskdex (leitura), Suporte Unificado, API do Azir",dep:"dono e agente preenchidos",
+  ch:"Agrega por script e por PR, senão vira o novo Heimer em volume. Atas da Weekly Operação e do Comitê ficam de fora."},
+ {id:"C2",n:"Roteador",tipo:"Evolução (triagem)",p:"P0",aut:"A1",carga:"igual à entrada",
+  m:"Dá classe (PR, OP, IN, P100, PH), estação e dono a cada card, validando na aplicação ao mudar de coluna. Mantém o estacoes.yaml. Sem casamento, manda para o Coringa, nunca para \"-\".",
+  abs:"0 de 287 cards com dono; 25 cards sem especialista (efeito da subida de 11/11); generalista com quando: []; classes da Iara sem uso.",
+  g:"Card em Entrada",f:"Regra, depois haiku, depois o mapa",dep:"estacoes.yaml"},
+ {id:"C3",n:"Coringa",tipo:"Evolução + fusão (C4)",p:"P0",aut:"A1; status em ausência pela lista branca",carga:"3 a 8 cards/sem, WIP 2",joker:true,
+  m:"Nada fica sem dono. Pega o que não casou, quebra iniciativa em DAG e dá o 1º passo. Fica dono até o fim quando a estação de destino ainda não existe.",
+  abs:"O antigo C4 Decompositor; as 20 linhas-iniciativa do Taskdex; as 4 linhas sem comentário (Hub melhorias, Conversão enxoval, SIA no WhatsApp, artefato de fotos); a ausência de 31/10 a 05/11.",
+  g:"Até a decisão 0: só tria e decompõe. Depois: pull a cada 15 min e transbordo do C5",f:"generalista.md, leitura de todos os MCPs, orqctl consultar, DAG do Azir",dep:"C2, C5, decisão 0",
+  ch:"Carga caiu de 15–30 para 3–8 por semana. Mede idade até a 1ª ação, não só \"sem dono\"."},
+ {id:"C5",n:"Supervisor de Carga",tipo:"Fusão (sem IA)",p:"P0",aut:"A1 (código)",carga:"contínuo",
+  m:"Mede idade, fila, falha e vazio por estação, alerta só na 3ª leitura vermelha e rebalanceia. Roda como timer dentro do Azir, sem processo novo.",
+  abs:"ocupacao instantânea; agentes-serie sem duração; quadro.py de 16/11; guarda de cota do Pipedrive (pelos e-mails de 75%); radar de agenda; pauta de dados dos rituais e da Interface Implantação.",
+  g:"Tick de 5 min (só SQLite e efeito_rodada); externos 1x/dia; consolidação 23h55; semanal na segunda 8h",f:"SQLite, efeito_rodada, logs, transcript do herdr, Composio Calendar (leitura)",dep:"histórico de coluna, tokens, sinal de 5h, espelho de logs do PC",
+  ch:"Pulso em mensagem própria; o pulso do Vel'Koz fica intocado. DM das 18h só com alerta. Vigia externa é o rotinas-healthcheck."},
+ {id:"C6",n:"Cobrador de Terceiros",tipo:"Novo",p:"P0",aut:"A3 (Aprovar) até 10 execuções em sombra",carga:"10 a 20 cards/sem",
+  m:"O que está em Aguardando terceiro não envelhece: monitora a cada 10 min (leitura) e cobra em 24, 48 e 72h úteis, no máximo 3 vezes por card, depois escala para o Henry.",
+  abs:"T107, T064 e T129 (86 a 89h); iPag (9 semanas); Doti (4 semanas); Flylift (desde 27/10); polígono no Sapron; suportes de 25 a 137h.",
+  g:"Relógio do card, em horário comercial",f:"Composio Slack, Suporte Unificado, Seajuri (leitura)",dep:"aguardando_desde preenchido",
+  ch:"Cobrar alguém é falar em nome do Henry: toda cobrança é A3. Jurídico e iPag ficam sempre com OK."},
+ {id:"C7",n:"Portão de Saída",tipo:"Fusão",p:"P0",aut:"A1 checar e devolver; FUP publicado = A3",carga:"20 a 40 cards/sem",
+  m:"Verificador + régua do Validador Carol v1.2.0 + FUP e higiene do Taskdex, antes de qualquer coisa chegar à mesa.",
+  abs:"Cerca de 60% das devoluções são de forma; Kit e IA na captação com 4 rodadas, BF com 3; skill fup-taskdex; especialista taskdex; contribuicoes-backoffice (planilha da Ray, 18h).",
+  g:"Card em Verificação; linha sem FUP há 7 dias ou mais",f:"Rubrica da Carol, fup-taskdex, html-tasks",dep:"C2",
+  ch:"P0 para a régua; FUP automático entra como P1."},
+ {l:"Estações de domínio"},
+ {id:"S1",n:"Caixa de Entrada",tipo:"Fusão",p:"P1",aut:"Status factual pela lista branca; prazo, \"pode apagar\" e bot do comitê = A3",carga:"30 a 70 itens/sem",
+  m:"Resposta rápida e porta-voz de status no Slack e no e-mail. Também é o balcão de acesso e o FAQ do Kit.",
+  abs:"214 pedidos \"veja o que X mandou\"; 20 menções sem resposta; Íris (app marcada para apagar 2x); Donna; 24 perguntas ao Sapron; o antigo S2 (comunicados, heartbeat da rayai, #ai-rats); o balcão do S11 (abre suporte, secrets-agente-olimpo); o FAQ do S14.",
+  g:"Menção, DM, e-mail com ação; lock por thread (pula se o Henry respondeu há menos de 10 min)",f:"Vel'Koz (sessão por thread), Composio, Azir, Taskdex, Sapron, Suporte Unificado",dep:"C1, C5",
+  ch:"Não divide Comunicação agora: o pico de 12–13/11 foi task force e teste."},
+ {id:"S3",n:"Compras 1ª linha & NF",tipo:"Fusão",p:"P1",aut:"Rascunho A1; status em template A2 depois da sombra; banco e troca de código A3",carga:"20 a 35 itens/sem",
+  m:"Primeira linha da Wania no fluxo Compra e Monitoramento e dona dos agentes de enxoval e recompra.",
+  abs:"22 de 22 cards com a Wania (até 101h); vigia-sla-fornecedores; analise-planilha-matinali e -rm; enxoval-pagamento-loop; taxa-enxoval; analise-pagamento e cancelamento-enxoval (Olimpo); dona de negociacao-recompra, recompra-enxoval, placar e conformidade do SIA (ex-S9). NFXML entra como hipótese em sombra, começando pela RM (só 2 NFs).",
+  g:"Chamado novo; lote às 7h; vigia às 9h e 15h",f:"Suporte Unificado, Jornada, Gmail NFXML (leitura), lojinha, planilhas",dep:"C1, C7",
+  ch:"Escopo menor: as exceções do Jornada (GRL0801, P-50162) vão para a S12."},
+ {id:"S4",n:"Lojinha & Campanhas",tipo:"Fusão",p:"P2",aut:"Cobrar e comentar A2; mover, cancelar, disparo pela SIA A3",carga:"5 a 15 itens/sem",
+  m:"Supervisiona os agentes de lojinha que já existem e trata o que eles não pegam.",
+  abs:"Os 6 agentes de lojinha do Olimpo; monitorar-aguardando-link (11 cards acima de 24h); indicacao-itens; rastreio #781, #906, #996; T129; campanha-venda; report da BF até 30/11.",
+  g:"Pedido além do SLA; horários da campanha",f:"lojinha-admin, Slack, Suporte Unificado",dep:"C6",
+  ch:"Fino: a faixa de 20–60 por semana não tinha base. Entra depois da BF."},
+ {id:"S5",n:"Ciclo Mensal do Fornecedor",tipo:"Fusão (batelada)",p:"P1",aut:"Gerar A1; acompanhar \"pagou?\" A2; e-mail com NF/boleto e convite A3",carga:"20 a 30 cards no pico do mês",
+  m:"Card-lote com 1 filho por fornecedor: fechamento, análise de comissão, cobrança pelo form do financeiro e Drive, relatório e deck da reunião.",
+  abs:"RM, Matinali, Somar e Harus (AB Card só na cobrança); 72 mensagens; 3 pedidos seguidos em 06/11; 1h30 de pauta em 20/10; novembro sem mensal marcada.",
+  g:"D+1 (fechamento), D+5 a D+15 (cobrança), D-3 da reunião (deck)",f:"Skills fechamento, analise-comissao, cobranca, relatorio e reuniao-mensal; Drive; Gmail (rascunho); financeiro; Calendar",dep:"Batelada, C7",
+  ch:"Piloto de batelada no ciclo de novembro, a partir de 01/12. EasyCover e nowseguros ficam fora (sem skill)."},
+ {id:"S6",n:"Prospecção & Pipedrive",tipo:"Fusão",p:"P1",aut:"Lost + 527 e mover etapa A2; deals em massa e proposta A3",carga:"30 a 60 ações/sem",
+  m:"Rodadas e FUP por cidade, perdas no padrão da REGRA, busca de card e conferência de preço contra a tabela.",
+  abs:"16 FUPs por cidade em 10/11; 5 perdas iguais em 2 dias; 10 \"está dentro da tabela?\" em 2 dias; drone em Trancoso; dona de cadencia-fornecedores, cidades-sem-fornecedor, prospeccao-fotografos e do aviso de 80% de leads.",
+  g:"Comando curto, conversa na SIA, lote semanal",f:"Pipedrive, SIA, hub-servicos (consultar_tabela), Drive",dep:"C5 (cota); 4 skills do marketplace na cópia local"},
+ {id:"S7",n:"Homologação & Cadastro",tipo:"Fusão",p:"P1",aut:"Cadastro A2; contrato V3.1 pela lista branca; resto A3",carga:"10 a 20 itens/sem",
+  m:"Contrato do fotógrafo, cadastro no Hub e no artefato, e as rotinas de fotógrafos e polígonos.",
+  abs:"contrato-fotografo (volta em 19/11; Roxana em 3/4); 33 mensagens de cadastro em 9 dias; fotografos-parados (erro de fonte em 11/11, precisa de eval); bot-gops-fotografo; revisao-poligono e poligono-cidade; base de lavanderias de outubro da Iasmin.",
+  g:"Ana na thread; PDF ou WhatsApp; e-mail \"Documento assinado\"",f:"chrome-agente e ClickSign, stay-sync-shine, hub-servicos",dep:"S13 (sessão do ClickSign)",
+  ch:"Aditivo e distrato ficam manuais (2 casos em 30 dias)."},
+ {id:"S8",n:"KPIs & Auditoria",tipo:"Evolução",p:"P1",aut:"Lançar A2 (já é regra); comentário A1",carga:"7 rodadas + 1 análise/sem",
+  m:"Deixar a rotina de KPIs confiável antes de qualquer coisa nova.",
+  abs:"kpis-fornecedores (8 falhas em 28); Mercado Livre (OAuth caiu em 14/11); analise-kpis-fornecedores-semanal (quarta 10h30); regras 2506, 1931/1934 e Wania.",
+  g:"21h, 9h15, quarta 10h30",f:"Hub de KPIs, Nekt, chrome-agente",dep:"S13",
+  ch:"Sem os \"31h/mês\": comentário e lista das 9h30 só depois da decisão 13."},
+ {id:"S12",n:"Fila Técnica",tipo:"Evolução (dev)",p:"P1",aut:"Correção simples do Alfred em branch A2; merge e deploy em prd A3",carga:"15 a 30 itens agrupados/sem",
+  m:"Consolida por PR (o Alfred pediu X, o CI falhou em Y), aplica o que é simples e só escala decisão. Nunca aprova review.",
+  abs:"24 falhas de CI; cerca de 15 PRs ativos; 495 e-mails do Alfred; exceções do Jornada (GRL0801, P-50162); bugs B1 a B5 da Raiza.",
+  g:"Evento do GitHub agrupado por PR; poll de 10 min (REGRA de 11/11)",f:"gh",dep:"C1",
+  ch:"904 e-mails medem notificação, não trabalho. Os 49 pedidos de review da Raiza são julgamento humano."},
+ {id:"S13",n:"Oficina",tipo:"Fusão",p:"P0",aut:"Consertar o reversível A2; desligar, mudar frequência A3",carga:"teto de 10% do pool para o Heimer",
+  m:"Yummi, Heimer e Neeko mais o guardião de sessões e rotinas: mantém a fábrica de pé sem virar a maior carga dela.",
+  abs:"Heimer com 82% dos cards e ~70% dos minutos, sem efeito medido; 28 \"Analisar e consertar\"; 343 falhas de Apps Script; 88 /login e 67 /mcp; crontab do PC comentado; 9 \"o agente X está funcionando?\"; guardião do ex-S11; healthcheck, rotinas-ultima, cron-x-windows, checkup-claude, forcar-uso-ia, skills-marketplace, velkoz-vigia; frequência da negociacao-recompra.",
+  g:"Incidente do C5; pool ocioso; semanal",f:"Azir, logs, efeito_rodada, chrome-agente (relogin pelo Google)",dep:"C5",
+  ch:"Teto do Heimer cai para 10% até haver efeito_rodada positivo. P0 só para teto e guardião; o resto é P1."},
+ {id:"N1",n:"Compras Pontuais & Cotação",tipo:"Novo",p:"P1",aut:"Cotação e rascunho A1; responder fornecedor ou contratar A3",carga:"3 a 8 itens/sem",
+  m:"Dono da compra avulsa e da triagem \"tem fit com Compras?\". Hoje isso cai no Coringa por falta de dono.",
+  abs:"Orçamento de camisetas (handover da Wania); drone em Trancoso (R$ 3 a 3,5 mil, Seajuri #624); plaquinhas de Camaçari (T107); guarda-sol; adesivo; Flylift × Onfly; videomaker (Doti); prospects Gienex (4x) e Wash Me (4x) sem resposta.",
+  g:"Pedido de compra ou oferta de fornecedor no e-mail ou Slack; linha avulsa no Taskdex",f:"Gmail (leitura), Pipedrive, Seajuri (leitura), Drive",dep:"C1",
+  ch:"Adicionado na revisão: o setor é Fornecedores e Compras e nenhuma estação cobria compra avulsa."}
+];
+
+const KEY="fabrica-agentes-2026-11-16";
+let votes={};
+try{votes=JSON.parse(localStorage.getItem(KEY)||"{}")||{}}catch(e){votes={}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(votes))}catch(e){}}
+function esc(s){return String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
+
+const box=document.getElementById("agents");
+let html="";
+for(const a of AG){
+  if(a.l){html+=`<div class="layer" data-layer>${esc(a.l)}</div>`;continue}
+  html+=`<article class="agent${a.joker?" joker":""}" data-id="${a.id}" data-p="${a.p}">
+    <div class="a-head"><span class="a-id">${a.id}</span><span class="a-name">${esc(a.n)}</span>
+      <span class="tag ${a.p.toLowerCase()}">${a.p}</span><span class="tag">${esc(a.tipo)}</span>${a.joker?'<span class="tag" style="color:var(--acc);border-color:var(--acc)">coringa</span>':""}</div>
+    <div class="vote" role="group" aria-label="Voto ${a.id}">
+      <button class="y" data-v="ok" aria-pressed="false">Aprovar</button>
+      <button class="n" data-v="no" aria-pressed="false">Reprovar</button>
+    </div>
+    <p class="a-mission">${esc(a.m)}</p>
+    <dl class="a-grid">
+      <div class="wide"><dt>Absorve (evidência)</dt><dd>${esc(a.abs)}</dd></div>
+      <div><dt>Gatilho</dt><dd>${esc(a.g)}</dd></div>
+      <div><dt>Ferramentas</dt><dd>${esc(a.f)}</dd></div>
+      <div><dt>Autonomia</dt><dd>${esc(a.aut)}</dd></div>
+      <div><dt>Carga/semana</dt><dd>${esc(a.carga)}</dd></div>
+      <div><dt>Depende de</dt><dd>${esc(a.dep)}</dd></div>
+    </dl>
+    ${a.ch?`<p class="a-change">Mudou na revisão: ${esc(a.ch)}</p>`:""}
+  </article>`;
+}
+box.innerHTML=html;
+
+const total=AG.filter(a=>a.id).length;
+function paint(){
+  let ok=0,no=0;
+  box.querySelectorAll(".agent").forEach(el=>{
+    const v=votes[el.dataset.id];
+    el.classList.toggle("ok",v==="ok");el.classList.toggle("no",v==="no");
+    el.querySelectorAll(".vote button").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.v===v)));
+    if(v==="ok")ok++;if(v==="no")no++;
+  });
+  document.getElementById("counter").innerHTML=`<b>${ok}</b> aprovados · <b>${no}</b> reprovados · ${total-ok-no} sem voto`;
+}
+box.addEventListener("click",e=>{
+  const b=e.target.closest(".vote button");if(!b)return;
+  const id=b.closest(".agent").dataset.id;
+  votes[id]=votes[id]===b.dataset.v?undefined:b.dataset.v;
+  if(!votes[id])delete votes[id];
+  save();paint();
+});
+document.querySelectorAll(".chip").forEach(c=>c.addEventListener("click",()=>{
+  document.querySelectorAll(".chip").forEach(x=>x.setAttribute("aria-pressed",String(x===c)));
+  const f=c.dataset.f;
+  box.querySelectorAll(".agent").forEach(el=>{el.hidden=!(f==="all"||el.dataset.p===f)});
+  box.querySelectorAll("[data-layer]").forEach(el=>{el.hidden=f!=="all"});
+}));
+paint();
+</script>
+</body>
+</html>
