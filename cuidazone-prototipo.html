@@ -1,0 +1,1065 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CuidaZone · Protótipo</title>
+<meta name="description" content="Protótipo navegável do CuidaZone, pacote mensal de manutenção da Seazone. Dados fictícios.">
+<style>
+:root{
+  --color-primary:#0055FF;
+  --color-primary-hover:#0044CC;
+  --color-primary-light:#E8F0FE;
+  --color-on-primary:#FFFFFF;
+  --color-foreground:#080E32;
+  --color-background:#FFFFFF;
+  --color-surface:#F7F8FB;
+  --color-muted:#F3F3F5;
+  --color-muted-fg:#6B6E84;
+  --color-border:#E6E7EA;
+  --color-success:#22C55E;
+  --color-success-fg:#137A3A;
+  --color-success-bg:#E9F9EF;
+  --color-error:#E7000B;
+  --color-error-bg:#FDECEC;
+  --color-warning:#F54A00;
+  --color-warning-fg:#B83700;
+  --color-warning-bg:#FFF1EA;
+  --color-ring:rgba(0,85,255,.35);
+  --color-primary-fg:#0055FF;
+  --color-error-fg:#B5000A;
+  --color-on-error:#FFFFFF;
+  --color-on-success:#062B14;
+  --color-input-border:#8A8DA0;
+  --overlay-bg:rgba(8,14,50,.72);
+  --overlay-fg:#F2F4FA;
+  --shadow-msg:0 1px 0 rgba(8,14,50,.06);
+  --cam-bg:#111735;
+  --cam-grid:rgba(255,255,255,.12);
+  --toggle-knob:#FFFFFF;
+  --chat-bg:#EEF1F7;
+  --chat-in:#FFFFFF;
+  --chat-out:#DCE8FF;
+  --photo-a:#C9CFDE;
+  --photo-b:#9AA3BA;
+  --radius-sm:4px;--radius-md:6px;--radius-lg:8px;--radius-xl:12px;--radius-2xl:16px;--radius-full:9999px;
+  --space-1:4px;--space-2:8px;--space-3:12px;--space-4:16px;--space-6:24px;--space-8:32px;--space-12:48px;--space-16:64px;
+  --ease:cubic-bezier(.22,1,.36,1);
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --color-primary:#4D88FF;--color-primary-hover:#6B9DFF;--color-primary-light:#16245A;--color-on-primary:#060A24;
+    --color-foreground:#E9ECF8;--color-background:#080E32;--color-surface:#0E1640;--color-muted:#141D4C;
+    --color-muted-fg:#A2A8C6;--color-border:#26305F;
+    --color-success-fg:#5BE38D;--color-success-bg:#0F2E2A;--color-error:#FF5A5F;--color-error-bg:#3A1428;
+    --color-warning:#FF7A3D;--color-warning-fg:#FF9A66;--color-warning-bg:#3A1E1E;--color-ring:rgba(77,136,255,.5);
+    --color-primary-fg:#6B9DFF;--color-error-fg:#FF8A8E;--color-on-error:#060A24;--color-input-border:#5A6494;
+    --chat-bg:#0B1238;--chat-in:#162054;--chat-out:#1D3478;--photo-a:#2A3466;--photo-b:#3C4884;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --color-primary:#4D88FF;--color-primary-hover:#6B9DFF;--color-primary-light:#16245A;--color-on-primary:#060A24;
+  --color-foreground:#E9ECF8;--color-background:#080E32;--color-surface:#0E1640;--color-muted:#141D4C;
+  --color-muted-fg:#A2A8C6;--color-border:#26305F;
+  --color-success-fg:#5BE38D;--color-success-bg:#0F2E2A;--color-error:#FF5A5F;--color-error-bg:#3A1428;
+  --color-warning:#FF7A3D;--color-warning-fg:#FF9A66;--color-warning-bg:#3A1E1E;--color-ring:rgba(77,136,255,.5);
+    --color-primary-fg:#6B9DFF;--color-error-fg:#FF8A8E;--color-on-error:#060A24;--color-input-border:#5A6494;
+  --chat-bg:#0B1238;--chat-in:#162054;--chat-out:#1D3478;--photo-a:#2A3466;--photo-b:#3C4884;
+  color-scheme:dark;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--color-background);color:var(--color-foreground);
+  font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-size:14px;font-weight:400;line-height:1.5;overflow-x:hidden}
+h1,h2,h3,h4{margin:0}
+[hidden]{display:none!important}
+h1{font-size:clamp(32px,7vw,48px);font-weight:700;line-height:1.1}
+h2{font-size:clamp(24px,4.5vw,30px);font-weight:500;line-height:1.2}
+h3{font-size:24px;font-weight:500;line-height:1.3}
+h4,.h4{font-size:20px;font-weight:500;line-height:1.4}
+p{margin:0;max-width:68ch}
+.lead{font-size:20px;font-weight:500;line-height:1.5}
+.detail{font-size:12px;font-weight:500;line-height:1.4}
+.muted{color:var(--color-muted-fg)}
+.num{font-variant-numeric:tabular-nums}
+a{color:var(--color-primary)}
+:focus-visible{outline:2px solid var(--color-primary);outline-offset:2px;border-radius:4px}
+.wrap{max-width:1080px;margin:0 auto;padding:0 16px}
+.stack{display:flex;flex-direction:column;gap:var(--space-4)}
+.row{display:flex;gap:var(--space-2);flex-wrap:wrap;align-items:center}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.skip{position:absolute;left:16px;top:-64px;z-index:60;background:var(--color-primary);color:var(--color-on-primary);padding:8px 16px;border-radius:var(--radius-full);font-weight:500;text-decoration:none}
+.skip:focus{top:8px}
+h1[tabindex="-1"]:focus:not(:focus-visible){outline:none}
+
+/* header */
+.top{position:sticky;top:0;z-index:20;background:var(--color-background);border-bottom:1px solid var(--color-border)}
+.top-in{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-top:12px;padding-bottom:8px}
+.brand{display:flex;align-items:baseline;gap:8px;text-decoration:none;color:inherit}
+.brand b{font-size:20px;font-weight:700}
+.brand b span{color:var(--color-primary)}
+.brand small{font-size:12px;color:var(--color-muted-fg)}
+.seal{font-size:12px;font-weight:500;color:var(--color-muted-fg);border:1px dashed var(--color-border);border-radius:var(--radius-full);padding:3px 10px;white-space:nowrap}
+.tabs{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;padding-bottom:8px;margin:0 -16px;padding-left:16px;padding-right:16px}
+.tabs::-webkit-scrollbar{display:none}
+.tab{flex:0 0 auto;text-decoration:none;color:var(--color-muted-fg);font-weight:500;font-size:14px;padding:7px 14px;border-radius:var(--radius-full);border:1px solid transparent;white-space:nowrap}
+.tab:hover{color:var(--color-foreground);background:var(--color-muted)}
+.tab[aria-current="page"]{color:var(--color-primary-fg);background:var(--color-primary-light)}
+.tab .k{font-size:12px;margin-right:4px}
+
+/* buttons */
+.btn{appearance:none;border:1px solid transparent;border-radius:var(--radius-full);font:inherit;font-weight:500;font-size:14px;
+  min-height:40px;padding:0 18px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;text-decoration:none;
+  transition:background .2s var(--ease),color .2s var(--ease),border-color .2s var(--ease),transform .1s}
+.btn:active{transform:scale(.98)}
+.btn-primary{background:var(--color-primary);color:var(--color-on-primary)}
+.btn-primary:hover{background:var(--color-primary-hover)}
+.btn-outline{background:transparent;color:var(--color-foreground);border-color:var(--color-border)}
+.btn-outline:hover{border-color:var(--color-primary);color:var(--color-primary)}
+.btn-ghost{background:transparent;color:var(--color-primary)}
+.btn-ghost:hover{background:var(--color-primary-light)}
+.btn-danger{background:var(--color-error);color:var(--color-on-error)}
+.btn-danger:hover{background:color-mix(in srgb,var(--color-error) 88%,var(--color-foreground))}
+.btn-sm{min-height:32px;padding:0 12px;font-size:14px}
+.btn-lg{min-height:48px;padding:0 24px;font-size:16px}
+.btn[disabled]{opacity:.5;cursor:not-allowed;transform:none}
+.badge{display:inline-flex;align-items:center;gap:4px;border-radius:var(--radius-full);padding:2px 10px;font-size:12px;font-weight:500;background:var(--color-muted);color:var(--color-foreground);white-space:nowrap}
+.badge.blue{background:var(--color-primary-light);color:var(--color-primary-fg)}
+.badge.ok{background:var(--color-success-bg);color:var(--color-success-fg)}
+.badge.warn{background:var(--color-warning-bg);color:var(--color-warning-fg)}
+.badge.err{background:var(--color-error-bg);color:var(--color-error-fg)}
+
+/* forms */
+label.f{display:flex;flex-direction:column;gap:6px;font-weight:500}
+select,input[type=text],textarea{font:inherit;color:var(--color-foreground);background:var(--color-background);border:1px solid var(--color-input-border);
+  border-radius:var(--radius-lg);min-height:44px;padding:10px 14px;width:100%}
+textarea{min-height:96px;resize:vertical}
+select:focus,input[type=text]:focus,textarea:focus{border-color:var(--color-primary)}
+select:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid var(--color-primary);outline-offset:2px}
+.check{display:flex;gap:10px;align-items:flex-start;cursor:pointer}
+.check input{width:20px;height:20px;margin:1px 0 0;accent-color:var(--color-primary);flex:0 0 auto}
+
+/* sections */
+main{padding:var(--space-8) 0 var(--space-16)}
+section[data-route]{display:none}
+section[data-route].on{display:block;animation:enter .45s var(--ease)}
+@keyframes enter{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.eyebrow{font-size:12px;font-weight:500;color:var(--color-primary);margin-bottom:8px}
+.block{margin-top:var(--space-12)}
+.block>h2{margin-bottom:var(--space-4)}
+.panel{background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-xl);padding:var(--space-6) var(--space-4)}
+@media (min-width:640px){.panel{padding:var(--space-6)}}
+.hr{border:0;border-top:1px solid var(--color-border);margin:var(--space-4) 0}
+.kv{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px 16px}
+.kv dt{color:var(--color-muted-fg)}
+.kv dd{margin:0;text-align:right;font-weight:500}
+
+/* hero */
+.hero{display:grid;gap:var(--space-6);align-items:end}
+.hero p.lead{color:var(--color-muted-fg)}
+@media (min-width:860px){.hero{grid-template-columns:1.4fr 1fr}}
+.hero-aside{display:flex;flex-direction:column;gap:6px;border-top:2px solid var(--color-foreground);padding-top:12px}
+.hero-aside div{display:flex;justify-content:space-between;gap:12px;padding:6px 0;border-bottom:1px solid var(--color-border)}
+
+/* steps */
+.steps{list-style:none;padding:0;margin:0;display:grid;gap:var(--space-4);counter-reset:s}
+@media (min-width:720px){.steps{grid-template-columns:repeat(4,1fr)}}
+.steps li{counter-increment:s;display:flex;flex-direction:column;gap:6px;padding-top:12px;border-top:1px solid var(--color-border)}
+.steps li::before{content:counter(s,decimal-leading-zero);font-size:14px;font-weight:700;color:var(--color-primary)}
+
+/* packages */
+.pkgs{display:grid;gap:var(--space-4)}
+@media (min-width:860px){.pkgs{grid-template-columns:repeat(3,1fr)}}
+.pkg{border:1px solid var(--color-border);border-radius:var(--radius-xl);padding:var(--space-6) var(--space-4);display:flex;flex-direction:column;gap:12px;background:var(--color-background)}
+@media (min-width:640px){.pkg{padding:var(--space-6)}}
+.pkg.feat{border-color:var(--color-primary);box-shadow:0 0 0 1px var(--color-primary)}
+.pkg .price{font-size:30px;font-weight:700}
+.pkg .price small{font-size:14px;font-weight:400;color:var(--color-muted-fg)}
+.pkg ul{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:4px}
+.pkg .out{color:var(--color-muted-fg)}
+.pkg h4 small{font-weight:400;color:var(--color-muted-fg)}
+.outlist{display:grid;gap:6px 24px;padding-left:18px;margin:12px 0 0}
+@media (min-width:720px){.outlist{grid-template-columns:1fr 1fr}}
+
+/* simulator */
+.sim{display:grid;gap:var(--space-6)}
+@media (min-width:900px){.sim{grid-template-columns:minmax(0,5fr) minmax(0,7fr)}}
+.ruler{position:relative;margin:28px 0 8px}
+.ruler-bar{display:grid;grid-template-columns:29fr 46fr 57.5fr 40fr;gap:2px;height:10px}
+.ruler-bar span{background:var(--color-muted);border-radius:2px}
+.ruler-bar span.hit{background:var(--color-primary)}
+.ruler-lbl{display:grid;grid-template-columns:29fr 46fr 57.5fr 40fr;gap:2px;margin-top:6px}
+.ruler-lbl span{font-size:12px;color:var(--color-muted-fg)}
+.ruler-lbl span b{display:block;font-size:14px;color:var(--color-foreground)}
+.marker{position:absolute;top:-26px;left:0;width:100%;transform:translateX(var(--pos,0%));transition:transform .5s var(--ease);pointer-events:none}
+.marker span{display:inline-block;transform:translateX(-50%);font-size:12px;font-weight:700;color:var(--color-primary);white-space:nowrap}
+.marker span::after{content:"";display:block;width:2px;height:14px;background:var(--color-primary);margin:2px auto 0}
+.hist{list-style:none;margin:0;padding:0}
+.hist li{display:flex;justify-content:space-between;gap:12px;padding:8px 0;border-bottom:1px solid var(--color-border)}
+.quote{display:flex;flex-direction:column;gap:0}
+.qrow{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px 16px;align-items:center;padding:16px 0;border-bottom:1px solid var(--color-border)}
+.qrow:first-child{padding-top:0}
+.qrow .p{font-size:24px;font-weight:700;text-align:right}
+.qrow .p small{font-size:12px;font-weight:400;color:var(--color-muted-fg)}
+.qrow .act{grid-column:1/-1}
+.why{background:var(--color-primary-light);border-radius:var(--radius-lg);padding:14px 16px;margin-top:16px}
+.why p+p{margin-top:6px}
+.why .muted{color:var(--color-foreground)}
+
+/* contratar */
+.two{display:grid;gap:var(--space-6)}
+@media (min-width:900px){.two{grid-template-columns:minmax(0,7fr) minmax(0,5fr);align-items:start}}
+.doc{max-height:320px;overflow:auto;border:1px solid var(--color-border);border-radius:var(--radius-lg);padding:16px;background:var(--color-background)}
+.doc ol{margin:8px 0 0;padding-left:20px;display:flex;flex-direction:column;gap:8px}
+.confirm{text-align:left}
+.tick{width:48px;height:48px;border-radius:50%;background:var(--color-success-bg);color:var(--color-success-fg);display:grid;place-items:center;margin-bottom:12px}
+
+/* area */
+.meter{display:flex;gap:6px;margin:10px 0 6px}
+.meter span{flex:1;height:8px;border-radius:var(--radius-full);background:var(--color-muted)}
+.meter span.used{background:var(--color-primary)}
+.ovw{display:grid;gap:0;border:1px solid var(--color-border);border-radius:var(--radius-xl)}
+@media (min-width:720px){.ovw{grid-template-columns:repeat(3,1fr)}}
+.ovw>div{padding:16px;border-bottom:1px solid var(--color-border)}
+.ovw>div:last-child{border-bottom:0}
+@media (min-width:720px){.ovw>div{border-bottom:0;border-right:1px solid var(--color-border)}.ovw>div:last-child{border-right:0}}
+.big{font-size:30px;font-weight:700}
+.tl{list-style:none;margin:0;padding:0;position:relative}
+.tl li{position:relative;padding:0 0 20px 32px}
+.tl li::before{content:"";position:absolute;left:9px;top:22px;bottom:0;width:2px;background:var(--color-border)}
+.tl li:last-child::before{display:none}
+.tl .dot{position:absolute;left:0;top:2px;width:20px;height:20px;border-radius:50%;background:var(--color-primary);color:var(--color-on-primary);display:grid;place-items:center}
+.tl .dot.pend{background:var(--color-background);border:2px solid var(--color-input-border)}
+.tl .when{font-size:12px;color:var(--color-muted-fg)}
+.photos{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px;max-width:420px}
+.photo{position:relative;border-radius:var(--radius-lg);overflow:hidden;aspect-ratio:4/3;background:var(--photo-a)}
+.photo svg{display:block;width:100%;height:100%}
+.photo .stamp{position:absolute;left:6px;bottom:6px;right:6px;font-size:12px;font-weight:500;background:var(--overlay-bg);color:var(--overlay-fg);padding:3px 6px;border-radius:4px}
+.photo .tag{position:absolute;left:6px;top:6px;font-size:12px;font-weight:700;background:var(--color-background);color:var(--color-foreground);padding:2px 8px;border-radius:var(--radius-full)}
+.stars{display:flex;gap:2px}
+.stars button{appearance:none;background:none;border:0;padding:4px;cursor:pointer;color:var(--color-input-border);border-radius:var(--radius-full)}
+.stars button.on{color:var(--color-warning)}
+.ledger{width:100%;border-collapse:collapse}
+.ledger td{padding:10px 0;border-bottom:1px solid var(--color-border);vertical-align:top}
+.ledger td:last-child{text-align:right;white-space:nowrap;font-weight:500}
+.ledger .pos{color:var(--color-success-fg)}
+.prevs{list-style:none;margin:0;padding:0}
+.prevs li{display:flex;gap:14px;padding:10px 0;border-bottom:1px solid var(--color-border);align-items:center}
+.cal{flex:0 0 48px;text-align:center;border:1px solid var(--color-border);border-radius:var(--radius-lg);padding:4px 0;line-height:1.1}
+.cal b{display:block;font-size:18px}
+.cal small{font-size:12px;color:var(--color-muted-fg);text-transform:uppercase}
+.approval{display:grid;gap:16px;border:1px solid var(--color-warning);border-radius:var(--radius-xl);padding:16px;background:var(--color-warning-bg)}
+@media (min-width:640px){.approval{grid-template-columns:160px 1fr}}
+.approval .photo{max-width:220px}
+.area-grid{display:grid;gap:var(--space-8)}
+@media (min-width:960px){.area-grid{grid-template-columns:minmax(0,7fr) minmax(0,5fr)}}
+
+/* chat */
+.phone-wrap{display:grid;gap:var(--space-6)}
+@media (min-width:900px){.phone-wrap{grid-template-columns:400px 1fr;align-items:start}}
+.phone{border:1px solid var(--color-border);border-radius:24px;overflow:hidden;background:var(--chat-bg);max-width:400px;width:100%;display:flex;flex-direction:column;height:640px}
+.phone-head{display:flex;align-items:center;gap:10px;padding:12px 14px;background:var(--color-background);border-bottom:1px solid var(--color-border)}
+.avatar{width:34px;height:34px;border-radius:50%;background:var(--color-primary);color:var(--color-on-primary);display:grid;place-items:center;font-weight:700;font-size:12px;flex:0 0 auto}
+.chat{flex:1;overflow-y:auto;padding:14px 12px;display:flex;flex-direction:column;gap:8px}
+.msg{max-width:86%;padding:8px 12px 6px;border-radius:12px;background:var(--chat-in);align-self:flex-start;animation:pop .3s var(--ease);box-shadow:var(--shadow-msg)}
+.msg.me{align-self:flex-end;background:var(--chat-out)}
+.msg .t{display:block;text-align:right;font-size:12px;color:var(--color-muted-fg);margin-top:2px}
+.msg.me .t{color:var(--color-foreground)}
+.msg .acts{display:flex;flex-direction:column;gap:6px;margin-top:8px}
+.msg .acts .btn{width:100%}
+.msg b.code{font-size:24px;letter-spacing:.2em;display:block;margin:4px 0}
+.sysnote{align-self:center;font-size:12px;color:var(--color-muted-fg);background:var(--color-background);border-radius:var(--radius-full);padding:2px 10px}
+@keyframes pop{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.chat-foot{padding:10px 12px;background:var(--color-background);border-top:1px solid var(--color-border);display:flex;gap:8px;flex-wrap:wrap}
+/* pwa */
+.pwa{border:1px solid var(--color-border);border-radius:24px;max-width:400px;width:100%;background:var(--color-background);overflow:hidden}
+.pwa-head{padding:14px 16px;background:var(--color-foreground);color:var(--color-background);display:flex;justify-content:space-between;align-items:center;gap:12px}
+.pwa-head .btn{color:inherit;border-color:currentColor;background:transparent}
+.pwa-body{padding:16px;display:flex;flex-direction:column;gap:16px}
+.pstep{display:flex;flex-direction:column;gap:8px;padding-bottom:16px;border-bottom:1px solid var(--color-border)}
+.pstep[aria-disabled="true"]{opacity:.45;pointer-events:none}
+.pstep h4{display:flex;align-items:center;gap:8px}
+.pstep h4 .n{width:22px;height:22px;border-radius:50%;background:var(--color-muted);font-size:12px;display:grid;place-items:center}
+.pstep.done h4 .n{background:var(--color-success);color:var(--color-on-success)}
+.cam{position:relative;aspect-ratio:4/3;border-radius:var(--radius-lg);overflow:hidden;background:var(--cam-bg)}
+.cam .grid{position:absolute;inset:0;background-image:linear-gradient(var(--cam-grid) 1px,transparent 1px),linear-gradient(90deg,var(--cam-grid) 1px,transparent 1px);background-size:33.33% 33.33%}
+.cam .chal{position:absolute;top:8px;left:8px;right:8px;font-size:12px;color:var(--overlay-fg);background:color-mix(in srgb,var(--color-primary) 85%,transparent);padding:4px 8px;border-radius:4px}
+.gps{display:flex;align-items:center;gap:10px}
+.gps svg{flex:0 0 auto}
+
+/* exceptions */
+.filters{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding-bottom:4px}
+.chip{appearance:none;font:inherit;font-size:14px;font-weight:500;border:1px solid var(--color-border);background:var(--color-background);color:var(--color-foreground);border-radius:var(--radius-full);padding:6px 12px;cursor:pointer;white-space:nowrap}
+.chip[aria-pressed="true"]{background:var(--color-foreground);color:var(--color-background);border-color:var(--color-foreground)}
+.stats{display:flex;flex-wrap:wrap;gap:8px 28px;margin:16px 0}
+.stats div{display:flex;flex-direction:column}
+.stats b{font-size:24px}
+.queue{list-style:none;padding:0;margin:0;border-top:1px solid var(--color-border)}
+.exc{display:grid;gap:10px;padding:16px 0;border-bottom:1px solid var(--color-border)}
+@media (min-width:860px){.exc{grid-template-columns:150px minmax(0,1fr) 120px 240px;align-items:start;gap:16px}}
+.exc .sla{font-weight:700;font-variant-numeric:tabular-nums}
+.exc .sla.late{color:var(--color-error)}
+.exc .acts{display:flex;gap:6px;flex-wrap:wrap}
+.exc.done{background:var(--color-surface);padding-left:12px;padding-right:12px}
+.switches{display:grid;gap:10px;margin-top:12px}
+@media (min-width:720px){.switches{grid-template-columns:1fr 1fr}}
+.sw{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 14px;border:1px solid var(--color-border);border-radius:var(--radius-lg)}
+.sw code{font-size:12px;overflow-wrap:anywhere}
+.toggle{appearance:none;width:44px;height:26px;border-radius:var(--radius-full);background:var(--color-input-border);position:relative;cursor:pointer;flex:0 0 auto;border:0;margin:0;transition:background .2s}
+.toggle::after{content:"";position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:var(--toggle-knob);transition:transform .25s var(--ease)}
+.toggle:checked{background:var(--color-primary)}
+.toggle:checked::after{transform:translateX(18px)}
+
+/* flow */
+.flow{list-style:none;margin:0;padding:0}
+.fstep{display:grid;grid-template-columns:36px minmax(0,1fr);gap:0 14px;position:relative;padding-bottom:18px}
+.fstep::before{content:"";position:absolute;left:17px;top:36px;bottom:0;width:2px;background:var(--color-border);transition:background .4s var(--ease)}
+.fstep:last-child::before{display:none}
+.fstep .bulb{width:36px;height:36px;border-radius:50%;border:2px solid var(--color-border);background:var(--color-background);display:grid;place-items:center;font-size:12px;font-weight:700;color:var(--color-muted-fg);transition:background .4s var(--ease),border-color .4s var(--ease),box-shadow .4s var(--ease),color .4s var(--ease)}
+.fstep:not(.lit) .body h3{color:var(--color-muted-fg)}
+.fstep .body h3{transition:color .4s var(--ease)}
+.fstep .state{font-family:inherit;font-size:12px;font-weight:700;letter-spacing:.02em;color:var(--color-muted-fg)}
+.fstep .agents{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.fstep.lit .bulb{background:var(--color-primary);border-color:var(--color-primary);color:var(--color-on-primary)}
+.fstep.lit::before{background:var(--color-primary)}
+.fstep.now .bulb{box-shadow:0 0 0 6px var(--color-ring)}
+.flow-grid{display:grid;gap:var(--space-8)}
+@media (min-width:960px){.flow-grid{grid-template-columns:minmax(0,7fr) minmax(0,5fr);align-items:start}}
+.log{font-size:12px;list-style:none;margin:0;padding:0;max-height:420px;overflow:auto}
+.log li{padding:6px 0;border-bottom:1px solid var(--color-border);display:grid;grid-template-columns:52px 1fr;gap:8px}
+.log li span{color:var(--color-muted-fg);font-variant-numeric:tabular-nums}
+.policy{display:grid;gap:8px;margin-top:12px}
+@media (min-width:640px){.policy{grid-template-columns:repeat(3,1fr)}}
+.policy div{padding:12px;border-radius:var(--radius-lg);background:var(--color-muted)}
+
+/* toast */
+.toast{position:fixed;left:50%;bottom:20px;transform:translate(-50%,calc(100% + 40px));opacity:0;pointer-events:none;background:var(--color-foreground);color:var(--color-background);padding:10px 18px;border-radius:var(--radius-full);font-weight:500;z-index:50;max-width:calc(100% - 32px);transition:transform .35s var(--ease),opacity .35s;text-align:center}
+.toast.show{transform:translate(-50%,0);opacity:1}
+footer{border-top:1px solid var(--color-border);padding:20px 0 32px;color:var(--color-muted-fg);font-size:12px}
+@media (prefers-reduced-motion: reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Pular para o conteúdo</a>
+<header class="top">
+  <div class="wrap">
+    <div class="top-in">
+      <a class="brand" href="#site" aria-label="CuidaZone, início"><b>Cuida<span>Zone</span></b><small>by Seazone</small></a>
+      <span class="seal" title="Nenhum dado real de pessoa ou imóvel">Protótipo · dados fictícios</span>
+    </div>
+    <nav class="tabs" aria-label="Telas do protótipo">
+      <a class="tab" href="#site"><span class="k">1</span>Site do proprietário</a>
+      <a class="tab" href="#contratar"><span class="k">2</span>Contratação</a>
+      <a class="tab" href="#area"><span class="k">3</span>Área do proprietário</a>
+      <a class="tab" href="#prestador"><span class="k">4</span>Prestador</a>
+      <a class="tab" href="#excecoes"><span class="k">5</span>Exceções</a>
+      <a class="tab" href="#como"><span class="k">6</span>Como funciona</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap" id="main">
+
+<!-- 1. SITE -->
+<section data-route="site" aria-labelledby="h-site">
+  <div class="hero">
+    <div class="stack">
+      <div class="eyebrow">Para proprietários Seazone</div>
+      <h1 id="h-site" tabindex="-1">Manutenção do seu imóvel com valor fixo, prazo e prova.</h1>
+      <p class="lead">Um pacote mensal descontado do seu repasse. Preventiva no calendário, conserto leve dentro da cota e foto de antes e depois em cada chamado.</p>
+      <div class="row"><a class="btn btn-primary btn-lg" href="#simulador">Ver o preço do meu imóvel</a><a class="btn btn-ghost" href="#pacotes">Comparar pacotes</a></div>
+    </div>
+    <div class="hero-aside" role="region" aria-label="Regras que valem para todos os pacotes">
+      <div><span class="muted">Cobrança</span><b>No repasse, sem boleto</b></div>
+      <div><span class="muted">Fidelidade</span><b>12 meses</b></div>
+      <div><span class="muted">Arrependimento</span><b>7 dias</b></div>
+      <div><span class="muted">Garantia do serviço</span><b>90 dias</b></div>
+    </div>
+  </div>
+
+  <div class="block">
+    <h2>Passo a passo</h2>
+    <ol class="steps">
+      <li><h3 class="h4">Veja o preço do seu imóvel</h3><p class="muted">O valor sai do histórico real de manutenção dos últimos 12 meses. Você vê o cálculo.</p></li>
+      <li><h3 class="h4">Assine com um clique</h3><p class="muted">Aditivo ao seu contrato de gestão, aceito por botão. Nada vem marcado.</p></li>
+      <li><h3 class="h4">A gente cuida</h3><p class="muted">Preventiva entre reservas e conserto despachado para prestador verificado, com código de acesso só na janela.</p></li>
+      <li><h3 class="h4">Você acompanha</h3><p class="muted">Foto de antes e depois, prazo cumprido e 72h para contestar, tudo na sua área.</p></li>
+    </ol>
+  </div>
+
+  <div class="block" id="pacotes">
+    <h2>Pacotes</h2>
+    <p class="muted" style="margin-bottom:16px">Preço mensal para 0-1 · 2 · 3+ quartos. O Completo e o Premium variam pela faixa de histórico do imóvel (A, B, C ou Novo). Valores de tabela, antes do ajuste da cidade e dos +10% para casa.</p>
+    <div class="pkgs">
+      <article class="pkg">
+        <h3>Essencial</h3>
+        <div class="price">R$ 59 <small>a R$ 69/mês, igual em todas as faixas</small></div>
+        <h4>Cobre</h4>
+        <ul><li>Higienização de todos os splits 1x/ano</li><li>Dedetização 1x/ano</li><li>Feitas em lote por rota, na baixa temporada</li><li>10% de desconto em serviço avulso</li></ul>
+        <h4>Fica fora</h4>
+        <ul class="out"><li>Conserto (sem chamados inclusos)</li></ul>
+      </article>
+      <article class="pkg feat">
+        <div class="row"><h3>Completo</h3><span class="badge blue">Mais escolhido</span></div>
+        <div class="price">R$ 69 <small>a R$ 139/mês, conforme faixa</small></div>
+        <h4>Cobre</h4>
+        <ul><li>Tudo do Essencial</li><li><b>1 chamado por mês</b> (não acumula)</li><li>Elétrica e hidráulica leves, fixações, marcenaria, eletrodoméstico, mão de obra de ar</li><li>Teto de R$ 300 por chamado, material incluso dentro do teto</li><li>Coparticipação de R$ 50 por chamado, no repasse</li><li>Prazo pela prioridade; urgente com evidência em até 24h</li></ul>
+        <h4>Fica fora</h4>
+        <ul class="out"><li>Valor acima do teto, peça e carga de gás</li><li>Faixa D (não vende)</li></ul>
+      </article>
+      <article class="pkg">
+        <h3>Premium</h3>
+        <div class="price">R$ 99 <small>a R$ 189/mês, conforme faixa</small></div>
+        <h4>Cobre</h4>
+        <ul><li>Tudo do Completo, mais 1 checagem/ano</li><li><b>2 chamados por mês</b> (não acumula)</li><li>Teto de R$ 500 por chamado</li><li>Coparticipação de R$ 50 por chamado</li><li>Chegada em até 4h nos urgentes, das 8h às 21h</li></ul>
+        <h4>Fica fora</h4>
+        <ul class="out"><li>Imóvel Novo (menos de 12 meses) e faixa D</li></ul>
+      </article>
+    </div>
+    <div class="panel" style="margin-top:16px">
+      <h3 class="h4">Nenhum pacote cobre</h3>
+      <ul class="outlist muted">
+        <li>Pintura, alvenaria, impermeabilização e obra civil</li>
+        <li>Instalação de split e condensadora, box e vidro temperado, pós-obra</li>
+        <li>Dano causado por hóspede: segue cobrado do hóspede, sem passar pelo pacote</li>
+        <li>Peça de equipamento (compressor, placa, motor), carga de gás e valor acima do teto</li>
+        <li>Defeito anterior à adesão, apontado na vistoria de entrada (vira orçamento avulso)</li>
+        <li>Piscina e jardim (fora do MVP)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="block" id="simulador">
+    <h2>Quanto custa para o seu imóvel</h2>
+    <div class="sim">
+      <div class="stack">
+        <label class="f">Seu imóvel
+          <select id="simProp" aria-describedby="simPropHelp"></select>
+        </label>
+        <p id="simPropHelp" class="detail muted">Imóveis fictícios para demonstração.</p>
+        <div>
+          <div class="detail muted">Gasto com manutenção nos últimos 12 meses</div>
+          <div class="ruler" aria-hidden="true">
+            <div class="marker" id="marker"><span id="markerTxt">R$ 0</span></div>
+            <div class="ruler-bar"><span data-f="A"></span><span data-f="B"></span><span data-f="C"></span><span data-f="D"></span></div>
+            <div class="ruler-lbl"><span><b>A</b>até 290</span><span><b>B</b>290 a 750</span><span><b>C</b>750 a 1.325</span><span><b>D</b>acima</span></div>
+          </div>
+          <p class="detail muted" id="rulerNote" hidden></p>
+          <p class="sr" id="rulerSr" aria-live="polite"></p>
+        </div>
+        <div>
+          <h3 class="h4" id="histTitle" style="margin-bottom:4px">Histórico</h3>
+          <ul class="hist" id="hist"></ul>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="row" style="justify-content:space-between;margin-bottom:16px">
+          <h3 id="quoteTitle">Preço</h3><span class="badge blue" id="faixaBadge">Faixa</span>
+        </div>
+        <div class="quote" id="quote"></div>
+        <div class="why" id="why"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 2. CONTRATAR -->
+<section data-route="contratar" aria-labelledby="h-contr">
+  <h1 id="h-contr" tabindex="-1">Assinar o pacote</h1>
+  <div id="contrForm" class="two block" style="margin-top:24px">
+    <div class="stack">
+      <div>
+        <h3 style="margin-bottom:10px">Aditivo ao contrato de gestão</h3>
+        <div class="doc" tabindex="0" role="region" aria-label="Texto do aditivo, versão 1.0">
+          <p class="detail muted">Versão 1.0 · texto de demonstração, pendente de aprovação do Jurídico</p>
+          <ol id="aditivo"></ol>
+        </div>
+      </div>
+      <label class="check"><input type="checkbox" id="aceite"><span>Li e aceito o aditivo e autorizo o desconto da mensalidade e da coparticipação no meu repasse.</span></label>
+      <div class="row">
+        <button class="btn btn-primary btn-lg" id="btnAssinar" disabled>Assinar</button>
+        <a class="btn btn-ghost" href="#simulador" id="trocar">Trocar pacote</a>
+      </div>
+      <p class="detail muted">O aceite registra data, hora, IP e a versão do termo. Você pode desistir em 7 dias sem custo.</p>
+    </div>
+    <div class="panel">
+      <h3 style="margin-bottom:14px">Resumo</h3>
+      <dl class="kv" id="resumo"></dl>
+      <hr class="hr">
+      <h4 style="margin-bottom:6px">Forma de cobrança</h4>
+      <p><b>Descontado do seu repasse.</b> Sem boleto e sem cartão.</p>
+      <dl class="kv" id="cobranca" style="margin-top:10px"></dl>
+    </div>
+  </div>
+  <div id="contrOk" class="block" hidden>
+    <div class="panel confirm" style="max-width:640px">
+      <div class="tick" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div>
+      <h2 id="okTitle" tabindex="-1">Assinatura ativa</h2>
+      <p class="muted" id="okText" style="margin-top:8px"></p>
+      <dl class="kv" id="okReg" style="margin-top:16px"></dl>
+      <div class="row" style="margin-top:20px"><a class="btn btn-primary" href="#area">Ir para minha área</a><button class="btn btn-outline" id="btnDesistir">Desistir (7 dias)</button></div>
+    </div>
+  </div>
+</section>
+
+<!-- 3. AREA -->
+<section data-route="area" aria-labelledby="h-area">
+  <div class="row" style="justify-content:space-between;align-items:flex-end;gap:16px">
+    <div>
+      <div class="eyebrow">Área do proprietário · Carla M. (fictícia)</div>
+      <h1 id="h-area" tabindex="-1">FLN0412 · Jurerê</h1>
+      <p class="muted" style="margin-top:6px" id="areaPlanLine">Completo · faixa B · 2 quartos · assinante desde 15/08/2026</p>
+    </div>
+    <button class="btn btn-primary" id="btnAbrir" aria-controls="novoChamado" aria-expanded="false">Abrir chamado</button>
+  </div>
+  <p id="newSubNote" class="why" hidden style="margin-top:16px"></p>
+
+  <form id="novoChamado" class="panel" hidden style="margin-top:20px">
+    <h3 style="margin-bottom:12px">Novo chamado</h3>
+    <div class="stack">
+      <label class="f">O que aconteceu?
+        <select id="ncCat">
+          <option value="Elétrica">Elétrica (tomada, lâmpada, chuveiro)</option>
+          <option value="Hidráulica">Hidráulica (vazamento, entupimento)</option>
+          <option value="Ar">Ar-condicionado</option>
+          <option value="Marcenaria">Porta, móvel ou fechadura</option>
+          <option value="Eletrodomésticos">Eletrodoméstico</option>
+          <option value="Outro">Outro</option>
+        </select>
+      </label>
+      <label class="f">Descreva em uma frase
+        <input type="text" id="ncDesc" placeholder="Ex.: tomada da cozinha sem energia" required>
+      </label>
+      <div class="row"><button class="btn btn-primary" type="submit">Enviar chamado</button><button class="btn btn-ghost" type="button" id="ncCancel">Cancelar</button></div>
+    </div>
+  </form>
+
+  <div class="ovw block" style="margin-top:24px">
+    <div>
+      <div class="detail muted">Chamados do mês (novembro)</div>
+      <div class="big num" id="cotaTxt">1 de 1</div>
+      <div class="meter" id="cotaMeter"></div>
+      <div class="detail muted">Renova em 01/12. Não acumula.</div>
+    </div>
+    <div>
+      <div class="detail muted">Próxima preventiva</div>
+      <div class="big">Mar/2027</div>
+      <div class="detail muted">Higienização dos splits, baixa temporada</div>
+    </div>
+    <div>
+      <div class="detail muted">Mensalidade</div>
+      <div class="big num">R$ 119</div>
+      <div class="detail muted">Débito no repasse · fidelidade até 15/08/2027</div>
+    </div>
+  </div>
+
+  <div class="block" id="aprovacaoWrap">
+    <h2>Aprovação pendente</h2>
+    <div class="approval" id="aprovacao">
+      <div class="photo" role="img" aria-label="Foto do sifão trincado enviada pelo prestador. CZ-0043, 16/11, 14:28, GPS ok">
+        <svg viewBox="0 0 160 120" aria-hidden="true"><rect width="160" height="120" fill="var(--photo-a)"/><rect x="18" y="14" width="124" height="22" rx="4" fill="var(--photo-b)"/><path d="M80 36v22c0 14 -24 14 -24 28v18" stroke="var(--color-foreground)" stroke-opacity=".55" stroke-width="9" fill="none" stroke-linecap="round"/><path d="M62 70l8 6-6 5 9 6" stroke="var(--color-error)" stroke-width="2.5" fill="none"/></svg>
+        <span class="tag">CZ-0043</span><span class="stamp">CZ-0043 · 16/11 14:28 · GPS ok</span>
+      </div>
+      <div class="stack" style="gap:10px">
+        <div class="row"><span class="badge warn">Pedido novo · P2</span><span class="detail muted">aberto pelo prestador hoje, 16/11, às 14:28</span></div>
+        <h3>Sifão da pia do banheiro trincado</h3>
+        <p>Na troca da resistência (CZ-0042, já concluído), o prestador viu um vazamento no sifão e voltou hoje para avaliar. Troca de torneira ou sifão: <b>R$ 145</b> (preço de assinante; no avulso, R$ 160).</p>
+        <p class="detail muted">Conta como chamado novo (CZ-0043) e fica fora da cota de novembro, que já foi usada. O valor é pago por link Pix antes da execução. Vazamento é P2: sem resposta até 18:28 (4h), aprovamos sozinhos, porque fica abaixo de R$ 300 (regra do MGO).</p>
+        <div class="row" id="aprovActs" tabindex="-1"><button class="btn btn-primary" id="btnAprovar">Aprovar R$ 145</button><button class="btn btn-outline" id="btnRecusar">Recusar</button></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="area-grid block">
+    <div>
+      <div class="row" style="justify-content:space-between;margin-bottom:16px">
+        <h2>Chamado CZ-0042</h2><span class="badge ok">Concluído</span>
+      </div>
+      <p class="muted" style="margin-bottom:20px">Chuveiro sem água quente · Elétrica · P2 · coberto pelo Completo. No avulso custaria <b>R$ 165</b>; você paga só a coparticipação de <b>R$ 50</b>.</p>
+      <ol class="tl" id="timeline"></ol>
+      <div class="row" style="margin-top:4px"><button class="btn btn-outline btn-sm" id="btnContestar">Contestar (até 17/11, 14:38)</button><span class="detail muted" id="contestNote" tabindex="-1">Janela de 72h aberta.</span></div>
+      <div class="stack block" style="gap:6px" id="meusChamados" hidden>
+        <h3>Outros chamados</h3>
+        <ul class="hist" id="ncList"></ul>
+      </div>
+    </div>
+    <div class="stack" style="gap:var(--space-12)">
+      <div>
+        <h2 style="margin-bottom:8px">Preventivas agendadas</h2>
+        <ul class="prevs">
+          <li><div class="cal"><b>Mar</b><small>2027</small></div><div><b>Higienização de todos os splits</b><div class="detail muted">Em lote com o prédio, entre check-out e check-in</div></div></li>
+          <li><div class="cal"><b>Abr</b><small>2027</small></div><div><b>Dedetização preventiva</b><div class="detail muted">Data confirmada 7 dias antes, conforme o calendário de reservas</div></div></li>
+        </ul>
+      </div>
+      <div>
+        <h2 style="margin-bottom:8px">Extrato do pacote</h2>
+        <table class="ledger" aria-label="Extrato do pacote"><tbody id="ledger"></tbody></table>
+        <p class="detail muted" style="margin-top:8px">Serviço coberto nunca vira despesa sua no extrato do imóvel.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 4. PRESTADOR -->
+<section data-route="prestador" aria-labelledby="h-prest">
+  <div class="eyebrow">Prestador · simulação de WhatsApp</div>
+  <h1 id="h-prest" tabindex="-1">O prestador não baixa app.</h1>
+  <p class="lead muted" style="margin-top:8px">Oferta, aceite e pagamento pelo WhatsApp. Prova por um link de uso único, aberto no navegador.</p>
+  <div class="phone-wrap block" style="margin-top:24px">
+    <div class="phone" role="region" aria-label="Conversa de WhatsApp simulada">
+      <div class="phone-head"><div class="avatar" aria-hidden="true">CZ</div><div><b>CuidaZone Operação</b><div class="detail muted">conta comercial · respostas por botão</div></div></div>
+      <div class="chat" id="chat" role="log" aria-live="polite"></div>
+      <div class="chat-foot" id="chatFoot"></div>
+    </div>
+    <div id="pwaSide">
+      <div class="stack" id="pwaIntro">
+        <h3>Como o prestador recebe</h3>
+        <p class="muted">Ele vê o valor <b>líquido</b>, o bairro e a janela antes de aceitar. O endereço exato e o código de acesso só chegam depois do aceite, na hora do serviço. Recusar não tira ponto.</p>
+        <p class="muted">Valor de referência: mediana do Sapron (troca de resistência de chuveiro, R$ 130). O repasse sai por Pix com a NF conferida, depois da janela de 72h do proprietário.</p>
+        <button class="btn btn-outline" id="chatReset">Reiniciar conversa</button>
+      </div>
+      <div class="pwa" id="pwa" hidden role="region" aria-label="Página de captura">
+        <div class="pwa-head"><div><div class="detail">captura.cuidazone · link de uso único</div><b>Pedido CZ-0042 · FLN0412</b></div><button class="btn btn-sm" id="pwaReset" type="button">Reiniciar</button></div>
+        <div class="pwa-body">
+          <div class="pstep" id="ps1">
+            <h4><span class="n">1</span>Check-in no local</h4>
+            <div class="gps" id="gpsBox"><svg width="40" height="40" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="18" fill="var(--color-primary-light)"/><circle cx="20" cy="20" r="5" fill="var(--color-primary)"/></svg><span class="muted">Precisa estar a até 150 m do imóvel.</span></div>
+            <button class="btn btn-primary btn-sm" id="btnGps">Fazer check-in com GPS</button>
+          </div>
+          <div class="pstep" id="ps2" aria-disabled="true" inert>
+            <h4><span class="n">2</span>Fotos de antes</h4>
+            <div class="cam" id="camA"><div class="grid"></div><div class="chal">Desafio: foto com o registro do chuveiro à esquerda · CZ-0042</div></div>
+            <button class="btn btn-outline btn-sm" id="btnFotoA">Tirar foto (câmera ao vivo)</button>
+          </div>
+          <div class="pstep" id="ps3" aria-disabled="true" inert>
+            <h4><span class="n">3</span>Checklist</h4>
+            <label class="check"><input type="checkbox" class="ck"><span>Disjuntor desligado antes da troca</span></label>
+            <label class="check"><input type="checkbox" class="ck"><span>Resistência nova da mesma voltagem</span></label>
+            <label class="check"><input type="checkbox" class="ck"><span>Água quente testada nas 3 posições</span></label>
+          </div>
+          <div class="pstep" id="ps4" aria-disabled="true" inert>
+            <h4><span class="n">4</span>Fotos de depois e NF</h4>
+            <div class="cam" id="camB"><div class="grid"></div><div class="chal">Mesmo ângulo · código CZ-0042 na cena</div></div>
+            <div class="row"><button class="btn btn-outline btn-sm" id="btnFotoB">Tirar foto</button><button class="btn btn-outline btn-sm" id="btnNf">Anexar NF do MEI</button></div>
+          </div>
+          <button class="btn btn-primary" id="btnEnviarProva" disabled>Enviar prova</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 5. EXCECOES -->
+<section data-route="excecoes" aria-labelledby="h-exc">
+  <h1 id="h-exc" tabindex="-1">Fila de exceções</h1>
+  <p class="lead muted" style="margin-top:8px">Só chega aqui o que os agentes não podem resolver dentro da alçada. Cada item tem prazo, quem escalou e a ação que destrava.</p>
+  <div class="stats" id="excStats"></div>
+  <div class="filters" role="group" aria-label="Filtrar por tipo" id="excFilters"></div>
+  <ul class="queue" id="queue" style="margin-top:12px"></ul>
+  <div class="block">
+    <h2>Interruptores de segurança</h2>
+    <p class="muted">Desligar para tudo o que escreve fora do sistema. Usado em incidente ou no início do piloto.</p>
+    <div class="switches" id="switches"></div>
+  </div>
+</section>
+
+<!-- 6. COMO FUNCIONA -->
+<section data-route="como" aria-labelledby="h-como">
+  <div class="eyebrow">Por trás</div>
+  <h1 id="h-como" tabindex="-1">Um chamado, do aviso ao Pix</h1>
+  <p class="lead muted" style="margin-top:8px">Quatro papéis de IA e o resto em código. A IA só propõe; quem decide valor, aceite e pagamento é regra ou botão.</p>
+  <div class="row" style="margin-top:20px"><button class="btn btn-primary btn-lg" id="btnSim">Simular um chamado</button><button class="btn btn-ghost" id="btnSimReset">Limpar</button></div>
+  <div class="flow-grid block" style="margin-top:28px">
+    <ol class="flow" id="flow"></ol>
+    <div class="stack" style="gap:var(--space-8)">
+      <div>
+        <h3 style="margin-bottom:8px">Eventos</h3>
+        <ul class="log" id="log" role="log" aria-live="polite"><li><span>--:--</span><em class="muted">Clique em "Simular um chamado".</em></li></ul>
+      </div>
+      <div>
+        <h3>Regra de ouro</h3>
+        <div class="policy">
+          <div><b>IA propõe</b><p class="detail muted">Intake, Conversador, QA e Exceções só geram um comando.</p></div>
+          <div><b>Policy decide</b><p class="detail muted">Código responde ALLOW, DENY ou EXCEÇÃO.</p></div>
+          <div><b>Executor age</b><p class="detail muted">Único com chaves externas. Idempotente.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer><div class="wrap">CuidaZone · protótipo do MVP · todos os nomes, imóveis e valores de pessoas são fictícios. Preços e regras do blueprint de 16/11/2026, ainda sujeitos a validação fiscal e jurídica.</div></footer>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function(){
+"use strict";
+var $=function(s,r){return (r||document).querySelector(s)};
+var $$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
+var brl=function(v){return "R$ "+v.toLocaleString("pt-BR",{minimumFractionDigits:v%1?2:0,maximumFractionDigits:2})};
+var brl2=function(v){return "R$ "+v.toLocaleString("pt-BR",{minimumFractionDigits:2,maximumFractionDigits:2})};
+var esc=function(s){return String(s).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]})};
+var toastT;
+function toast(msg){var t=$("#toast");t.classList.add("show");t.textContent="";clearTimeout(toastT);setTimeout(function(){t.textContent=msg},50);toastT=setTimeout(function(){t.classList.remove("show")},3200)}
+var reduce=window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+/* ---------- dados ---------- */
+var PROPS={
+  FLN0412:{cod:"FLN0412",bairro:"Jurerê",quartos:2,casa:false,meses:26,hist:[["Troca de resistência de chuveiro",130],["Reparo de vazamento",130],["Limpeza de filtro do ar",200],["Troca de torneira",125],["Troca de lâmpada",55]]},
+  FLN0107:{cod:"FLN0107",bairro:"Canasvieiras",quartos:1,casa:false,meses:31,hist:[["Configuração de fechadura eletrônica",45],["Instalação de cortina",75],["Reparo de dobradiça",90]]},
+  FLN0839:{cod:"FLN0839",bairro:"Campeche",quartos:3,casa:true,meses:19,hist:[["Conserto de ar-condicionado",250],["Desentupimento simples",123],["Remoção de mofo",190],["Curto-circuito: reparo",150],["Válvula de descarga",158],["Dedetização corretiva",149]]},
+  FLN1150:{cod:"FLN1150",bairro:"Itacorubi",quartos:2,casa:false,meses:7,hist:[["Instalação de luminária",130],["Troca de lâmpada",50]]},
+  FLN0566:{cod:"FLN0566",bairro:"Ingleses",quartos:3,casa:false,meses:40,hist:[["Conserto de ar-condicionado",250],["Conserto de ar-condicionado",250],["Instalação de chuveiro elétrico",200],["Remoção de mofo",190],["Reparo de micro-ondas",184],["Troca de roldana de vidro",165],["Troca de disjuntor",150],["Reparo de vazamento",147],["Reparo de geladeira",74]]}
+};
+var ESS=[59,59,69];
+var COMP={A:[69,79,89],Novo:[89,109,119],B:[99,119,129],C:[99,129,139],D:null};
+var PREM={A:[99,119,129],Novo:null,B:[129,169,179],C:[139,179,189],D:null};
+var PKG={
+  Essencial:{cota:0,teto:null,cop:null,txt:"Preventiva anual (splits e dedetização) e 10% de desconto no avulso"},
+  Completo:{cota:1,teto:300,cop:50,txt:"1 chamado/mês, teto de R$ 300, coparticipação de R$ 50"},
+  Premium:{cota:2,teto:500,cop:50,txt:"2 chamados/mês, teto de R$ 500, chegada em até 4h nos urgentes"}
+};
+var F_CIDADE=1.00; /* exemplo: custo da cidade ÷ 520, limitado a 0,90-1,20 */
+
+function gasto(p){return p.hist.reduce(function(a,h){return a+h[1]},0)}
+function faixa(p){var g=gasto(p);if(p.meses<12)return "Novo";if(g<=290)return "A";if(g<=750)return "B";if(g<=1325)return "C";return "D"}
+function qi(p){return Math.min(Math.max(p.quartos,1),3)-1}
+function preco(p,pkg){
+  var f=faixa(p),base;
+  if(pkg==="Essencial")base=ESS[qi(p)];
+  else{var t=(pkg==="Completo"?COMP:PREM)[f];if(!t)return null;base=t[qi(p)]}
+  var v=base*F_CIDADE*(p.casa?1.1:1);
+  return {base:base,valor:Math.round(v*100)/100};
+}
+
+var state={prop:"FLN0412",pkg:"Completo",signed:null};
+
+/* ---------- roteador ---------- */
+var ROUTES=["site","contratar","area","prestador","excecoes","como"];
+var TITLES={site:"Site do proprietário",contratar:"Contratação",area:"Área do proprietário",prestador:"Prestador",excecoes:"Exceções",como:"Como funciona"};
+function route(initial){
+  var h=location.hash.replace("#","");
+  var anchor=null;
+  if(ROUTES.indexOf(h)<0){ if(h&&document.getElementById(h)&&$("[data-route=site]").contains(document.getElementById(h))){anchor=h;h="site"} else h="site"}
+  $$("section[data-route]").forEach(function(s){s.classList.toggle("on",s.dataset.route===h)});
+  $$(".tab").forEach(function(t){if(t.getAttribute("href")==="#"+h)t.setAttribute("aria-current","page");else t.removeAttribute("aria-current")});
+  var cur=$(".tab[aria-current]");if(cur&&cur.scrollIntoView)cur.scrollIntoView({block:"nearest",inline:"nearest"});
+  document.title=TITLES[h]+" · CuidaZone";
+  if(h==="contratar")renderContratar();
+  if(anchor){var el=document.getElementById(anchor);var y=el.getBoundingClientRect().top+window.scrollY-110;window.scrollTo(0,y)}
+  else{window.scrollTo(0,0);var hd=$("section.on h1");if(hd&&initial!==true)hd.focus({preventScroll:true})}
+}
+window.addEventListener("hashchange",function(){route()});
+/* clique na rota atual não dispara hashchange: roda o roteador mesmo assim */
+document.addEventListener("click",function(e){var a=e.target.closest('a[href^="#"]');if(!a||a.hasAttribute("data-open-pwa")||a.classList.contains("skip"))return;if(a.getAttribute("href")===location.hash){e.preventDefault();route()}});
+$(".skip").addEventListener("click",function(e){e.preventDefault();var hd=$("section.on h1");if(hd)hd.focus()});
+
+/* ---------- 1. simulador ---------- */
+var sel=$("#simProp");
+Object.keys(PROPS).forEach(function(k){var p=PROPS[k];var o=document.createElement("option");o.value=k;o.textContent=p.cod+" · "+p.bairro+" · "+(p.casa?"casa, ":"")+p.quartos+(p.quartos>1?" quartos":" quarto");sel.appendChild(o)});
+sel.value=state.prop;
+sel.addEventListener("change",function(){state.prop=sel.value;renderSim()});
+function renderSim(){
+  var p=PROPS[state.prop],g=gasto(p),f=faixa(p);
+  var seg=[[0,290,29],[290,750,46],[750,1325,57.5],[1325,1725,40]],acc=0,pos=0;
+  seg.forEach(function(s){if(g>s[0]){pos=acc+Math.min(1,(g-s[0])/(s[1]-s[0]))*s[2]}acc+=s[2]});pos=Math.min(pos/acc*100,97);
+  var m=$("#marker");m.style.setProperty("--pos",pos+"%");$("#markerTxt").textContent=brl(g);var rn=$("#rulerNote");rn.hidden=f!=="Novo";rn.textContent="Sem 12 meses de gestão, o "+p.cod+" entra como Novo, fora da régua A-D.";
+  $$(".ruler-bar span").forEach(function(s){s.classList.toggle("hit",s.dataset.f===f)});
+  $("#rulerSr").textContent=f==="Novo"?"Gasto de "+brl(g)+" em "+p.meses+" meses; sem 12 meses de histórico, entra como Novo":"Gasto de "+brl(g)+" em 12 meses, faixa "+f;
+  $("#histTitle").textContent=p.meses<12?"Histórico ("+p.meses+" meses de gestão)":"Histórico dos últimos 12 meses";
+  $("#hist").innerHTML=p.hist.map(function(h){return "<li><span>"+esc(h[0])+"</span><span class='num'>"+brl(h[1])+"</span></li>"}).join("")+"<li><b>"+p.hist.length+" chamados</b><b class='num'>"+brl(g)+"</b></li>";
+  $("#faixaBadge").textContent=f==="Novo"?"Faixa Novo":"Faixa "+f;
+  $("#quoteTitle").textContent="Preço para o "+p.cod;
+  var html="";
+  ["Essencial","Completo","Premium"].forEach(function(k){
+    var pr=preco(p,k),info=PKG[k];
+    var motivo="";
+    if(!pr){motivo=f==="D"?"A faixa D compra só o Essencial.":"Sem 12 meses de histórico, o Premium ainda não é vendido."}
+    html+="<div class='qrow'><div><h4>"+k+(k==="Completo"&&f==="Novo"?" <small class='badge warn'>carência 60 dias</small>":"")+"</h4><div class='detail muted'>"+info.txt+"</div></div>"+
+      (pr?"<div class='p num'>"+brl(pr.valor)+"<small>/mês</small></div><div class='act'><button class='btn "+(k==="Completo"?"btn-primary":"btn-outline")+" btn-sm' data-assinar='"+k+"'>Assinar "+k+"</button></div>"
+         :"<div class='p'><small>indisponível</small></div><div class='act detail muted'>"+motivo+"</div>")+"</div>";
+  });
+  $("#quote").innerHTML=html;
+  var c=preco(p,"Completo"),why;
+  var calc=function(pr){return "tabela "+brl(pr.base)+" × ajuste da cidade "+F_CIDADE.toFixed(2).replace(".",",")+" (exemplo)"+(p.casa?" × casa 1,10":"")+" = <b>"+brl(pr.valor)+"</b>"};
+  if(f==="Novo"){
+    why="<p><b>Por que esse preço?</b> O "+p.cod+" tem só "+p.meses+" meses de gestão. Sem 12 meses de histórico, ele entra como <b>Novo</b> e não como A, para não subestimar o risco.</p><p>Completo: "+calc(c)+". O conserto coberto começa depois de 60 dias.</p>";
+  }else if(f==="D"){
+    why="<p><b>Por que só o Essencial?</b> Nos últimos 12 meses o "+p.cod+" gastou "+brl(g)+" em "+p.hist.length+" chamados, acima de R$ 1.325 (faixa D). Para esse uso, um pacote com conserto incluso não fecha a conta.</p><p>O Essencial ("+brl(preco(p,"Essencial").valor)+") cuida da preventiva e dá 10% de desconto no avulso.</p>";
+  }else{
+    why="<p><b>Por que esse preço?</b> Em 12 meses o "+p.cod+" gastou "+brl(g)+" em "+p.hist.length+" chamados. Isso o coloca na faixa "+f+". No Completo, você paga "+brl(c.valor)+" fixos por mês, com prazo e prova.</p><p>Cálculo: "+calc(c)+". Nenhum preço é gerado por IA: sai da tabela, por código.</p><p class='detail muted'>Não é para economizar: é para ter valor previsível, prazo garantido e foto de cada serviço. A faixa é revista a cada 12 meses pelo uso real, para cima ou para baixo.</p>";
+  }
+  $("#why").innerHTML=why;
+}
+$("#quote").addEventListener("click",function(e){var b=e.target.closest("[data-assinar]");if(!b)return;state.pkg=b.dataset.assinar;location.hash="#contratar"});
+
+/* ---------- 2. contratação ---------- */
+var SIGN_DATE=new Date(2026,10,16,15,42);
+function addDays(d,n){var x=new Date(d);x.setDate(x.getDate()+n);return x}
+function fmt(d){return d.toLocaleDateString("pt-BR")}
+function renderContratar(){
+  var p=PROPS[state.prop],pr=preco(p,state.pkg);
+  if(!pr){var de=state.pkg;state.pkg=(de==="Premium"&&preco(p,"Completo"))?"Completo":"Essencial";pr=preco(p,state.pkg);toast(de+" não está disponível para o "+p.cod+": mostramos o "+state.pkg)}
+  var info=PKG[state.pkg],f=faixa(p);
+  $("#contrForm").hidden=!!state.signed&&state.signed.prop===state.prop&&state.signed.pkg===state.pkg;
+  $("#contrOk").hidden=$("#contrForm").hidden===false;
+  var r=[["Imóvel",p.cod+" · "+p.bairro],["Pacote",state.pkg],["Faixa",f],["Mensalidade",brl(pr.valor)],
+    ["Chamados inclusos",info.cota?info.cota+" por mês":"nenhum"],["Teto por chamado",info.teto?brl(info.teto):"–"],["Coparticipação",info.cop?brl(info.cop)+" por chamado":"–"],
+    ["Fidelidade","12 meses"],["Arrependimento","até "+fmt(addDays(SIGN_DATE,7))]];
+  if(info.cota)r.push(["Conserto coberto a partir de",fmt(addDays(SIGN_DATE,f==="Novo"?60:8))]);
+  var pv=new Date(SIGN_DATE.getFullYear(),SIGN_DATE.getMonth()+2,1);
+  r.push(["Preventiva a partir de",pv.toLocaleDateString("pt-BR",{month:"short"}).replace(".","")+"/"+pv.getFullYear()+" (3º mês; o mês da assinatura conta como o 1º)"]);
+  $("#resumo").innerHTML=r.map(function(x){return "<dt>"+x[0]+"</dt><dd>"+esc(x[1])+"</dd>"}).join("");
+  var pro=Math.round(pr.valor*15/30*100)/100;
+  $("#cobranca").innerHTML="<dt>1ª mensalidade (pro-rata, 15 dias)</dt><dd class='num'>"+brl2(pro)+"</dd><dt>Próximo débito</dt><dd>repasse de dezembro</dd><dt>Fechamento</dt><dd>25/11/2026</dd><dt>Depois</dt><dd class='num'>"+brl2(pr.valor)+"/mês</dd>";
+  var cl=[
+    "O proprietário contrata o pacote "+state.pkg+" do CuidaZone para o imóvel "+p.cod+", pelo valor mensal de "+brl2(pr.valor)+".",
+    "Autoriza o desconto da mensalidade e de cada coparticipação no repasse mensal. Serviço coberto não é lançado como despesa do imóvel.",
+    info.teto?"Dentro do teto de "+brl(info.teto)+" por chamado, este aditivo substitui a autorização prévia de R$ 300. Excedente, aditivo de escopo e avulso acima de R$ 300 seguem exigindo aprovação por botão, salvo a regra de emergência do MGO.":"O Essencial não inclui conserto. Serviço avulso tem 10% de desconto e exige aprovação por botão.",
+    "Não ficam cobertos: obra civil, pintura, impermeabilização, instalação de split, box e vidro temperado, peça de equipamento, carga de gás, dano de hóspede e defeito anterior à adesão apontado na vistoria de entrada.",
+    "Conserto coberto a partir do 8º dia da adesão. Imóvel Novo (menos de 12 meses de gestão) tem carência de 60 dias. A 1ª mensalidade é cobrada pro-rata aos dias restantes do ciclo.",
+    "Fidelidade de 12 meses, com multa proporcional ao período restante. Arrependimento sem custo em 7 dias. Depois da fidelidade, cancelamento com 1 clique.",
+    "Reajuste anual pelo IPCA de serviços. Sem chamado no ano, a renovação é só pelo IPCA. A faixa é revista a cada 12 meses pelo uso real.",
+    "Se o saldo do repasse ficar negativo em mais de uma mensalidade por 2 ciclos seguidos, sem reservas que cubram o próximo ciclo, o conserto é suspenso e a preventiva continua. A reativação é imediata ao quitar por link Pix.",
+    "Se o imóvel sair da gestão Seazone ou for vendido, a assinatura encerra no fim do ciclo. Pedido já aceito termina e é pago; os anteriores são cancelados com aviso. Mensalidade pendente e multa proporcional vão no último repasse; sem saldo, por link Pix."
+  ];
+  $("#aditivo").innerHTML=cl.map(function(c){return "<li>"+esc(c)+"</li>"}).join("");
+  $("#aceite").checked=false;$("#btnAssinar").disabled=true;
+  $("#btnAssinar").textContent="Assinar "+state.pkg+" · "+brl(pr.valor)+"/mês";
+}
+$("#aceite").addEventListener("change",function(){$("#btnAssinar").disabled=!this.checked});
+$("#btnAssinar").addEventListener("click",function(){
+  if(!$("#aceite").checked)return;
+  var p=PROPS[state.prop],pr=preco(p,state.pkg);
+  var hash="";for(var i=0;i<16;i++)hash+="0123456789abcdef"[Math.floor(Math.random()*16)];
+  state.signed={prop:state.prop,pkg:state.pkg,valor:pr.valor,hash:hash};
+  $("#contrForm").hidden=true;$("#contrOk").hidden=false;
+  $("#okText").textContent="O "+state.pkg+" do "+p.cod+" está ativo. A 1ª mensalidade sai pro-rata no repasse de dezembro. Você recebe a confirmação por e-mail e WhatsApp.";
+  $("#okReg").innerHTML="<dt>Termo</dt><dd>aditivo v1.0</dd><dt>Aceite</dt><dd>"+fmt(SIGN_DATE)+", 15:42</dd><dt>IP</dt><dd>189.0.x.x (exemplo)</dd><dt>Registro</dt><dd class='num'>sha256 "+hash+"…</dd>";
+  $("#okTitle").focus();
+  var n=$("#newSubNote");n.hidden=false;n.innerHTML="Nova assinatura registrada: <b>"+esc(state.pkg)+" para o "+esc(p.cod)+"</b>. Abaixo, um imóvel com plano já em uso, para você ver como fica.";
+  toast("Assinatura ativa");
+});
+$("#btnDesistir").addEventListener("click",function(){state.signed=null;$("#newSubNote").hidden=true;toast("Assinatura cancelada sem custo (arrependimento)");renderContratar();$("#contrForm").hidden=false;$("#contrOk").hidden=true;$("#h-contr").focus()});
+
+/* ---------- 3. área ---------- */
+var area={usados:1,cota:1,rating:0,aprov:null,contest:false,novos:[]};
+var TL=[
+  ["Aberto pela limpeza","14/11 · 10:14","Checklist da limpeza marcou: chuveiro sem água quente."],
+  ["Triagem","14/11 · 10:15","Elétrica · prioridade P2 · coberto pelo Completo · cota de novembro usada (1 de 1)."],
+  ["Prestador aceitou","14/11 · 10:41","Marcos S. (fictício), nota 4,8 · janela 14h-17h, entre check-out e check-in."],
+  ["Check-in","14/11 · 14:06","GPS a 38 m do imóvel. Código da fechadura válido só na janela."],
+  ["Fotos antes e depois","14/11 · 14:32","Câmera ao vivo, código do pedido na cena."],
+  ["Concluído","14/11 · 14:38","Prova validada em 6 min. Janela de contestação de 72h aberta."],
+  ["Avaliado","","Sua nota ajuda a escolher quem atende seu imóvel."]
+];
+function shower(after){
+  return "<svg viewBox='0 0 160 120' aria-hidden='true'><rect width='160' height='120' fill='var(--photo-a)'/><rect x='0' y='86' width='160' height='34' fill='var(--photo-b)'/>"+
+  "<path d='M38 20h52v10' stroke='var(--color-foreground)' stroke-opacity='.6' stroke-width='6' fill='none' stroke-linecap='round'/><ellipse cx='98' cy='40' rx='22' ry='10' fill='var(--color-foreground)' fill-opacity='.55'/>"+
+  (after?"<g stroke='var(--color-primary)' stroke-width='2' stroke-linecap='round'><path d='M86 56l-4 18M94 56l-2 20M102 56l0 22M110 56l2 18'/></g><path d='M90 92c4-4 12-4 16 0' stroke='var(--color-primary)' stroke-width='2' fill='none'/>"
+        :"<path d='M88 52l6 6 -6 6 6 6' stroke='var(--color-error)' stroke-width='2.5' fill='none'/><circle cx='120' cy='34' r='5' fill='var(--color-error)' fill-opacity='.7'/>")+"</svg>";
+}
+function renderArea(){
+  var ap=area;
+  $("#cotaTxt").textContent=ap.usados+" de "+ap.cota;
+  $("#cotaMeter").innerHTML=Array.from({length:ap.cota}).map(function(_,i){return "<span class='"+(i<ap.usados?"used":"")+"'></span>"}).join("");
+  $("#timeline").innerHTML=TL.map(function(s,i){
+    var last=i===TL.length-1, done=!last||ap.rating>0;
+    var extra="";
+    if(i===4)extra="<div class='photos'><div class='photo' role='img' aria-label='Antes: resistência queimada. CZ-0042, 14:12, GPS ok'>"+shower(false)+"<span class='tag'>Antes</span><span class='stamp'>CZ-0042 · 14:12 · GPS ok</span></div><div class='photo' role='img' aria-label='Depois: chuveiro funcionando. CZ-0042, 14:32, GPS ok'>"+shower(true)+"<span class='tag'>Depois</span><span class='stamp'>CZ-0042 · 14:32 · GPS ok</span></div></div>";
+    if(last){
+      extra="<div class='stars' role='radiogroup' aria-label='Avaliar de 1 a 5'>"+[1,2,3,4,5].map(function(n){var sel=n===ap.rating,tab=sel||(!ap.rating&&n===1);return "<button type='button' role='radio' data-star='"+n+"' class='"+(n<=ap.rating?"on":"")+"' aria-label='"+n+" de 5' aria-checked='"+sel+"' tabindex='"+(tab?0:-1)+"'><svg width='22' height='22' viewBox='0 0 24 24' fill='currentColor' aria-hidden='true'><path d='M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2 6.4 20.2l1.1-6.3L2.9 9.5l6.3-.9z'/></svg></button>"}).join("")+"</div>"+
+      (ap.rating?"<div class='detail muted'>Você deu "+ap.rating+" de 5. A próxima limpeza também confirma se o chuveiro funciona.</div>":"");
+    }
+    return "<li><span class='dot "+(done?"":"pend")+"' aria-hidden='true'>"+(done?"<svg width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'><path d='M5 12.5l4.5 4.5L19 7.5'/></svg>":"")+"</span>"+
+      "<h3 class='h4'>"+s[0]+"</h3>"+(s[1]?"<div class='when'>"+s[1]+"</div>":"")+"<p class='muted' style='margin-top:2px'>"+s[2]+"</p>"+extra+"</li>";
+  }).join("");
+  var rows=[["25/10","Mensalidade Completo (outubro)","−119,00"],["14/11","Coparticipação · CZ-0042 (no avulso: R$ 165)","−50,00"]];
+  if(ap.aprov==="ok")rows.push(["16/11","Pedido CZ-0043 · sifão (pago por Pix, fora do repasse)","R$ 145,00 · Pix"]);
+  if(ap.contest)rows.push(["16/11","Contestação · CZ-0042 · repasse do prestador retido","em análise"]);
+  ap.novos.forEach(function(n){rows.push([n.d,n.cat==="Outro"?"Chamado "+n.id+" · visita de diagnóstico (R$ 100, abatida se o serviço fechar)":"Chamado "+n.id+" · fora da cota (assinante)","a aprovar"])});
+  rows.push(["25/11","Mensalidade Completo (novembro) · previsto","−119,00"]);
+  $("#ledger").innerHTML=rows.map(function(r){return "<tr><td><div class='detail muted'>"+r[0]+"</div>"+esc(r[1])+"</td><td class='num'>"+r[2]+"</td></tr>"}).join("");
+  $("#meusChamados").hidden=!ap.novos.length;
+  $("#ncList").innerHTML=ap.novos.map(function(n){return "<li><span><b>"+n.id+"</b> · "+esc(n.cat)+" · "+esc(n.desc)+"</span><span class='badge "+(n.st==="ABERTO"?"":"warn")+"'>"+n.stLabel+"</span></li>"}).join("");
+}
+function rate(n){area.rating=n;renderArea();toast("Avaliação registrada");var f=$("[data-star='"+n+"']");if(f)f.focus()}
+$("#timeline").addEventListener("click",function(e){var b=e.target.closest("[data-star]");if(!b)return;rate(+b.dataset.star)});
+$("#timeline").addEventListener("keydown",function(e){var b=e.target.closest("[data-star]");if(!b)return;var cur=area.rating||+b.dataset.star,n=null;
+  if(e.key==="ArrowRight"||e.key==="ArrowUp")n=cur>=5?1:cur+1;else if(e.key==="ArrowLeft"||e.key==="ArrowDown")n=cur<=1?5:cur-1;else if(e.key===" "||e.key==="Enter")n=+b.dataset.star;
+  if(n===null)return;e.preventDefault();rate(n)});
+$("#btnAprovar").addEventListener("click",function(){area.aprov="ok";$("#aprovActs").innerHTML="<span class='badge ok'>Aprovado</span><span class='detail muted'>Link Pix de R$ 145 enviado no seu WhatsApp. O prestador executa assim que o pagamento cair.</span>";$("#aprovacao").style.borderColor="var(--color-success)";renderArea();$("#aprovActs").focus();toast("Pedido CZ-0043 aprovado")});
+$("#btnRecusar").addEventListener("click",function(){area.aprov="no";$("#aprovActs").innerHTML="<span class='badge warn'>Recusa registrada</span><span class='detail muted'>Vazamento é item urgente do MGO: o risco foi avisado, o CS Proprietários foi acionado e o calendário segue bloqueado até o reparo.</span>";renderArea();$("#aprovActs").focus();toast("Recusa registrada · CS Proprietários avisado")});
+$("#btnContestar").addEventListener("click",function(){if(area.contest)return;area.contest=true;this.disabled=true;$("#contestNote").textContent="Contestação aberta. Repasse retido; resposta em até 24h (retrabalho ou crédito no pacote).";renderArea();$("#contestNote").focus();toast("Contestação aberta")});
+var bA=$("#btnAbrir"),fN=$("#novoChamado");
+bA.addEventListener("click",function(){fN.hidden=!fN.hidden;bA.setAttribute("aria-expanded",String(!fN.hidden));if(!fN.hidden)$("#ncCat").focus()});
+$("#ncCancel").addEventListener("click",function(){fN.hidden=true;bA.setAttribute("aria-expanded","false");bA.focus()});
+var ncSeq=57;
+fN.addEventListener("submit",function(e){
+  e.preventDefault();var d=$("#ncDesc").value.trim();if(!d){$("#ncDesc").focus();return}
+  var n={id:"CZ-00"+(ncSeq++),cat:$("#ncCat").value,desc:d,d:"16/11",st:"ABERTO",stLabel:"Aberto"};
+  area.novos.unshift(n);fN.reset();fN.hidden=true;bA.setAttribute("aria-expanded","false");renderArea();bA.focus();toast("Chamado "+n.id+" aberto");
+  setTimeout(function(){
+    var fora=area.usados>=area.cota;
+    n.st="TRIADO";n.stLabel=n.cat==="Outro"?"Triado · visita de diagnóstico (R$ 100, abatida se o serviço fechar)":fora?"Triado · fora da cota, preço antes do despacho":"Triado · coberto";
+    renderArea();
+  },1400);
+});
+
+/* ---------- 4. prestador ---------- */
+var chat=$("#chat"),foot=$("#chatFoot");
+var clock=["09:58"];
+function addMsg(html,me,time){var d=document.createElement("div");d.className="msg"+(me?" me":"");d.innerHTML=html+"<span class='t'>"+(time||clock[0])+"</span>";chat.appendChild(d);chat.scrollTop=chat.scrollHeight;return d}
+function sys(t){var d=document.createElement("div");d.className="sysnote";d.textContent=t;chat.appendChild(d);chat.scrollTop=chat.scrollHeight}
+function setFoot(btns){var ae=document.activeElement,lost=!ae||ae===document.body||chat.contains(ae)||foot.contains(ae)||$("#pwa").contains(ae);
+  foot.innerHTML="";btns.forEach(function(b){var x=document.createElement("button");x.className="btn btn-sm "+(b[2]||"btn-outline");x.textContent=b[0];x.addEventListener("click",b[1]);foot.appendChild(x)});
+  if(lost&&foot.firstChild&&$("section.on")===$("[data-route=prestador]"))foot.firstChild.focus()}
+var chatT=[];
+function later(fn,ms){chatT.push(setTimeout(fn,reduce?0:ms))}
+function startChat(){
+  chatT.forEach(clearTimeout);chatT=[];
+  chat.innerHTML="";foot.innerHTML="";$("#pwa").hidden=true;$("#pwaIntro").hidden=false;resetPwa();
+  sys("Hoje");
+  clock[0]="10:39";
+  var m=addMsg("<b>Novo serviço CuidaZone</b><br>Troca de resistência de chuveiro<br>Jurerê, Florianópolis (a ~2,1 km de você)<br>Hoje, janela 14h-17h<br>Você recebe <b>R$ 130,00 líquido</b><br><span class='detail muted'>Endereço exato e código de acesso só depois do aceite. Recusar não tira ponto.</span><div class='acts'><button class='btn btn-primary btn-sm' data-a='ok'>Aceitar</button><button class='btn btn-outline btn-sm' data-a='no'>Recusar</button></div>");
+  m.addEventListener("click",function(e){var b=e.target.closest("[data-a]");if(!b||m.dataset.done)return;m.dataset.done=1;$$("[data-a]",m).forEach(function(x){x.disabled=true});b.dataset.a==="ok"?aceitar():recusar()});
+}
+function recusar(){
+  clock[0]="10:40";addMsg("Recusar",true);
+  later(function(){addMsg("Sem problema, obrigado por avisar. Isso não afeta seu score. Mando a próxima oferta da sua região quando surgir.");setFoot([["Ver a oferta de novo",startChat]])},700);
+}
+function aceitar(){
+  clock[0]="10:41";addMsg("Aceitar",true);
+  later(function(){addMsg("Serviço confirmado, Marcos.<br><b>Rua das Gaivotas, 1xx, ap. 2xx · Jurerê</b> (exemplo)<br>Janela: hoje 14h-17h. O código da fechadura chega aqui às 14h e vale só até 17h.");
+    setFoot([["Avançar para 14h",chegou,"btn-primary"]])},800);
+}
+function chegou(){
+  foot.innerHTML="";clock[0]="14:00";sys("14:00");
+  addMsg("Código de acesso do FLN0412<b class='code'>4 8 1 9 #</b><span class='detail muted'>Válido até 17:00. Troca sozinho depois.</span>");
+  later(function(){addMsg("Faça o check-in e envie as fotos por este link (uso único):<br><a href='#prestador' data-open-pwa>captura.cuidazone/p/CZ-0042</a>");
+    setFoot([["Abrir link de captura",openPwa,"btn-primary"]]);
+    $("[data-open-pwa]",chat).addEventListener("click",function(e){e.preventDefault();openPwa()})},700);
+}
+function openPwa(){$("#pwaIntro").hidden=true;$("#pwa").hidden=false;foot.innerHTML="";$("#btnGps").focus();if(window.innerWidth<900)$("#pwa").scrollIntoView({behavior:reduce?"auto":"smooth",block:"start"})}
+var pw={gps:false,a:false,b:false,nf:false};
+function setStep(id,on){var el=$(id);el.setAttribute("aria-disabled",String(!on));el.inert=!on;if(on)el.removeAttribute("inert");else el.setAttribute("inert","")}
+function resetPwa(){pw={gps:false,a:false,b:false,nf:false};
+  ["#ps2","#ps3","#ps4"].forEach(function(s){setStep(s,false)});$$(".pstep").forEach(function(s){s.classList.remove("done")});
+  $("#gpsBox span").textContent="Precisa estar a até 150 m do imóvel.";$("#btnGps").disabled=false;$("#btnGps").textContent="Fazer check-in com GPS";
+  $("#camA").innerHTML="<div class='grid'></div><div class='chal'>Desafio: foto com o registro do chuveiro à esquerda · CZ-0042</div>";
+  $("#camB").innerHTML="<div class='grid'></div><div class='chal'>Mesmo ângulo · código CZ-0042 na cena</div>";
+  $("#btnFotoA").disabled=false;$("#btnFotoB").disabled=false;$("#btnNf").disabled=false;$("#btnNf").textContent="Anexar NF do MEI";
+  $$(".ck").forEach(function(c){c.checked=false});$("#btnEnviarProva").disabled=true}
+function checkPwa(){
+  var ck=$$(".ck").every(function(c){return c.checked});
+  var s3=ck&&pw.a;
+  $("#ps3").classList.toggle("done",s3);setStep("#ps4",s3);
+  $("#ps4").classList.toggle("done",s3&&pw.b&&pw.nf);
+  $("#btnEnviarProva").disabled=!(pw.gps&&pw.a&&ck&&pw.b&&pw.nf);
+}
+$("#btnGps").addEventListener("click",function(){var b=this;b.disabled=true;b.textContent="Localizando…";
+  later(function(){pw.gps=true;$("#gpsBox span").innerHTML="<b>Check-in às 14:06</b> · 38 m do imóvel, dentro do raio de 150 m";b.textContent="Check-in feito";$("#ps1").classList.add("done");setStep("#ps2",true);$("#btnFotoA").focus()},900)});
+$("#btnFotoA").addEventListener("click",function(){pw.a=true;this.disabled=true;$("#camA").innerHTML="<div class='photo' role='img' aria-label='Foto de antes: resistência queimada. CZ-0042, 14:12, GPS ok, desafio ok' style='height:100%;aspect-ratio:auto'>"+shower(false)+"<span class='stamp'>CZ-0042 · 14:12 · GPS ok · desafio ok</span></div>";$("#ps2").classList.add("done");setStep("#ps3",true);$$(".ck")[0].focus();checkPwa()});
+$$(".ck").forEach(function(c){c.addEventListener("change",checkPwa)});
+$("#btnFotoB").addEventListener("click",function(){pw.b=true;this.disabled=true;$("#camB").innerHTML="<div class='photo' role='img' aria-label='Foto de depois: chuveiro funcionando. CZ-0042, 14:32, GPS ok, mesmo ângulo' style='height:100%;aspect-ratio:auto'>"+shower(true)+"<span class='stamp'>CZ-0042 · 14:32 · GPS ok · mesmo ângulo</span></div>";checkPwa();(pw.nf?$("#btnEnviarProva"):$("#btnNf")).focus()});
+$("#btnNf").addEventListener("click",function(){pw.nf=true;this.disabled=true;this.textContent="NF anexada · CNPJ e valor conferem";checkPwa();(pw.b?$("#btnEnviarProva"):$("#btnFotoB")).focus()});
+$("#btnEnviarProva").addEventListener("click",function(){
+  this.disabled=true;$("#pwa").hidden=true;$("#pwaIntro").hidden=false;
+  clock[0]="14:33";addMsg("Prova enviada pelo link",true);
+  later(function(){clock[0]="14:38";addMsg("Prova validada (fotos, GPS e desafio conferidos).<br>O proprietário tem 72h para contestar. Sem contestação, o Pix sai em até 2 dias úteis.");
+    setFoot([["Avançar para o repasse",function(){foot.innerHTML="";sys("18/11");clock[0]="10:02";
+      addMsg("<b>Pix de R$ 130,00 enviado</b><br>Para a chave cadastrada (titular conferido).<br>Pedido CZ-0042 encerrado. Obrigado, Marcos!<br><span class='detail muted'>Garantia de 90 dias: se o defeito voltar, o retrabalho é com você.</span>");
+      setFoot([["Recomeçar simulação",startChat]]);toast("Repasse confirmado")},"btn-primary"]])},900);
+});
+$("#chatReset").addEventListener("click",startChat);
+$("#pwaReset").addEventListener("click",function(){startChat();$("#chatReset").focus()});
+
+/* ---------- 5. exceções ---------- */
+var now0=Date.now();
+var EXC=[
+  {t:"noshow",tipo:"No-show",im:"FLN0298 · Canasvieiras",txt:"2º no-show seguido no pedido CZ-0051 (desentupimento, P2). Redespacho automático já tentou 1 vez.",ag:"Seleção e oferta",sla:9*60+12,acts:[["Reofertar com prioridade","btn-primary"],["Acionar franquia pela tabela","btn-outline"]]},
+  {t:"noturna",tipo:"Emergência noturna",im:"FLN0921 · Ingleses",txt:"P1 elétrica às 23:12. Pool 24h sem aceite em 20 min. Roteiro de contenção (desligar o disjuntor) enviado ao hóspede pela SIA.",ag:"Seleção e oferta + Conversador",sla:13*60+40,acts:[["Assumir plantão","btn-primary"],["Ligar para o pool","btn-outline"]]},
+  {t:"aditivo",tipo:"Aditivo acima da alçada",im:"FLN0733 · Lagoa da Conceição",txt:"Aditivo de R$ 480 (válvula + caixa acoplada). Proprietária sem resposta após 2 lembretes. Não é P1: sem aprovação, encerra parcial.",ag:"Precificação + Financeiro",sla:3*3600+5*60,acts:[["Reenviar ao proprietário","btn-primary"],["Encerrar parcial","btn-outline"]]},
+  {t:"contest",tipo:"Contestação",im:"FLN0156 · Centro",txt:"Contestação de CZ-0038 (reparo de vazamento) dentro das 72h. A limpeza respondeu \"não\" no oráculo. Crédito pedido de R$ 165, acima da alçada do agente.",ag:"Exceções (Opus 5.5)",sla:-(12*60),acts:[["Retrabalho com o mesmo prestador","btn-primary"],["Crédito no pacote","btn-outline"]]},
+  {t:"repasse",tipo:"Repasse falhou",im:"Prestador J. R. (fictício)",txt:"3 tentativas de Pix de R$ 120 falharam: chave inválida. Troca de chave só por link, com carência de 72h.",ag:"Financeiro",sla:20*3600+30*60,acts:[["Enviar link de troca de Pix","btn-primary"],["Reprocessar","btn-outline"]]}
+];
+EXC.forEach(function(e){e.due=now0+e.sla*1000});
+var excFilter="todos",resolved={};
+var TYPES=[["todos","Todos"],["noshow","No-show"],["aditivo","Aditivo acima da alçada"],["noturna","Emergência noturna"],["contest","Contestação"],["repasse","Repasse falhou"]];
+$("#excFilters").innerHTML=TYPES.map(function(t){return "<button class='chip' data-f='"+t[0]+"' aria-pressed='"+(t[0]==="todos")+"'>"+t[1]+"</button>"}).join("");
+$("#excFilters").addEventListener("click",function(e){var b=e.target.closest(".chip");if(!b)return;excFilter=b.dataset.f;$$(".chip").forEach(function(c){c.setAttribute("aria-pressed",String(c===b))});renderQueue()});
+function fmtSla(ms){var neg=ms<0,s=Math.abs(Math.round(ms/1000)),h=Math.floor(s/3600),m=Math.floor(s%3600/60),ss=s%60;
+  var str=(h?h+"h ":"")+String(m).padStart(h?2:1,"0")+"min"+(h?"":" "+String(ss).padStart(2,"0")+"s");return neg?"estourado há "+str:str}
+function badgeFor(t){return t==="noturna"||t==="noshow"?"err":t==="contest"||t==="aditivo"?"warn":""}
+function renderQueue(){
+  var list=EXC.filter(function(e){return excFilter==="todos"||e.t===excFilter});
+  /* só um primário por tela: o item aberto com SLA estourado, ou o 1º aberto da lista */
+  var openL=list.filter(function(e){return !resolved[EXC.indexOf(e)]}),lateL=openL.filter(function(e){return e.due<Date.now()});
+  var hot=(lateL[0]||openL[0])?EXC.indexOf(lateL[0]||openL[0]):-1;
+  $("#queue").innerHTML=list.length?list.map(function(e,i){var idx=EXC.indexOf(e),r=resolved[idx];
+    var cls=function(a){return a[1]==="btn-primary"&&idx!==hot?"btn-outline":a[1]};
+    return "<li class='exc"+(r?" done":"")+"'><div><span class='badge "+badgeFor(e.t)+"'>"+e.tipo+"</span><div class='detail muted' style='margin-top:6px'>"+esc(e.im)+"</div></div>"+
+      "<div><p>"+esc(e.txt)+"</p><div class='detail muted' style='margin-top:4px'>Escalado por: <b>"+esc(e.ag)+"</b></div></div>"+
+      "<div><div class='detail muted'>SLA</div><div class='sla' data-sla='"+idx+"'>"+(r?"resolvido":fmtSla(e.due-Date.now()))+"</div></div>"+
+      "<div class='acts'>"+(r?"<span class='badge ok'>"+esc(r)+"</span>":e.acts.map(function(a,j){return "<button class='btn btn-sm "+cls(a)+"' data-ex='"+idx+"' data-ac='"+j+"'>"+a[0]+"</button>"}).join(""))+"</div></li>"}).join("")
+    :"<li class='exc'><p class='muted'>Nada nesta fila. Os agentes resolveram dentro da alçada.</p></li>";
+  renderStats();tickSla();
+}
+function renderStats(){
+  var open=EXC.filter(function(e,i){return !resolved[i]}),late=open.filter(function(e){return e.due<Date.now()}).length;
+  $("#excStats").innerHTML="<div><b class='num'>"+open.length+"</b><span class='detail muted'>abertas</span></div><div><b class='num' style='color:"+(late?"var(--color-error)":"inherit")+"'>"+late+"</b><span class='detail muted'>SLA estourado</span></div><div><b class='num'>412</b><span class='detail muted'>pedidos no mês (exemplo)</span></div><div><b class='num'>94%</b><span class='detail muted'>desvios resolvidos sem humano</span></div>";
+}
+var lastLate=-1;
+function tickSla(){$$("[data-sla]").forEach(function(el){var i=+el.dataset.sla;if(resolved[i])return;var ms=EXC[i].due-Date.now();el.textContent=fmtSla(ms);el.classList.toggle("late",ms<0)});
+  var late=EXC.filter(function(e,i){return !resolved[i]&&e.due<Date.now()}).length;if(late!==lastLate){lastLate=late;renderStats()}}
+setInterval(tickSla,1000);
+$("#queue").addEventListener("click",function(e){var b=e.target.closest("[data-ex]");if(!b)return;var i=+b.dataset.ex,a=EXC[i].acts[+b.dataset.ac][0];resolved[i]=a;renderQueue();
+  var nx=$$("#queue [data-ex]").filter(function(x){return +x.dataset.ex>i})[0]||$("#queue [data-ex]")||$(".chip[aria-pressed=true]");if(nx)nx.focus();
+  toast(EXC[i].tipo+": "+a.toLowerCase())});
+var SW=[["EXTERNAL_WRITES_ENABLED","Escrita em Sapron, Stays e fechaduras"],["PAGAMENTOS_ENABLED","Pix ao prestador e links de cobrança"],["MENSAGENS_ENABLED","Envio de WhatsApp"],["PILOTO_SOMENTE_LISTA","Só imóveis da lista do piloto"]];
+$("#switches").innerHTML=SW.map(function(s,i){return "<label class='sw'><span><code>"+s[0]+"</code><div class='detail muted'>"+s[1]+"</div></span><input type='checkbox' class='toggle' role='switch' checked data-sw='"+i+"'></label>"}).join("");
+$("#switches").addEventListener("change",function(e){var c=e.target;if(!c.dataset.sw)return;toast(SW[+c.dataset.sw][0]+(c.checked?" ligado":" desligado: fila acumula e retoma depois"))});
+
+/* ---------- 6. como funciona ---------- */
+var FLOW=[
+  ["Gatilho","ABERTO","A limpeza marca no checklist: chuveiro sem água quente.",[["Intake/Triagem","llm"]]],
+  ["Triagem","TRIADO","Imóvel, categoria Elétrica, prioridade P2, sem duplicata em 72h.",[["Intake/Triagem · Sonnet 5.5","llm"]]],
+  ["Cobertura e preço","PRECIFICADO","Coberto pelo Completo, cota disponível, preço fixo da tabela.",[["Precificação","code"]]],
+  ["Espelho e calendário","APROVADO","Card no Sapron com origem cuidazone; bloqueio na Stays se for urgente.",[["Executor","code"],["Roteador","code"]]],
+  ["Oferta","OFERTADO","Oferta paralela aos 3 melhores (P2). O 1º aceite válido vence.",[["Seleção e oferta","code"]]],
+  ["Aceite e agenda","ACEITO","Janela entre check-out e check-in; lembretes por WhatsApp.",[["Seleção e oferta","code"],["Conversador · Sonnet 5.5","llm"]]],
+  ["Acesso","ACEITO","Código da fechadura válido só na janela.",[["Executor","code"]]],
+  ["Check-in e execução","CHECKIN","GPS dentro de 150 m. Escopo maior vira aditivo.",[["Executor","code"],["Precificação","code"]]],
+  ["Prova","PROVA_ENVIADA","Fotos antes e depois com código do pedido, NF do MEI.",[["Prestador pelo link","human"]]],
+  ["Validação","VALIDADO","pHash, GPS, desafio e checklist visual, isolado da conversa.",[["QA da prova · Sonnet 5.5","llm"]]],
+  ["Janela de 72h","JANELA_CONTESTACAO","Proprietário vê fotos e \"no avulso custaria R$ 165\".",[["Código","code"]]],
+  ["Repasse","PAGO","Pix com NF conferida; PAGO só com o webhook do Asaas.",[["Financeiro","code"],["Executor","code"]]],
+  ["Oráculo e avaliação","ENCERRADO","A próxima limpeza confirma: \"o chuveiro funciona?\". Garantia de 90 dias.",[["Código","code"],["Juiz (amostra de 10%)","llm"]]]
+];
+var TIMES=["10:14","10:15","10:15","10:15","10:16","10:41","14:00","14:06","14:32","14:38","14:38","D+2","próx. limpeza"];
+function renderFlow(){
+  $("#flow").innerHTML=FLOW.map(function(f,i){return "<li class='fstep' data-i='"+i+"'><div class='bulb' aria-hidden='true'>"+(i+1)+"</div><div class='body'><div class='state'>"+f[1]+"</div><h3 class='h4'>"+f[0]+"</h3><p class='muted'>"+esc(f[2])+"</p><div class='agents'>"+f[3].map(function(a){return "<span class='badge "+(a[1]==="llm"?"blue":a[1]==="human"?"warn":"")+"'>"+(a[1]==="llm"?"IA · ":a[1]==="code"?"código · ":"")+esc(a[0])+"</span>"}).join("")+"</div></div></li>"}).join("");
+}
+var simT=[];
+function resetSim(){simT.forEach(clearTimeout);simT=[];$$(".fstep").forEach(function(s){s.classList.remove("lit","now")});$("#log").innerHTML="<li><span>--:--</span><em class='muted'>Clique em \"Simular um chamado\".</em></li>";$("#btnSim").disabled=false}
+$("#btnSim").addEventListener("click",function(){
+  resetSim();this.disabled=true;$("#btnSimReset").focus();$("#log").innerHTML="";
+  FLOW.forEach(function(f,i){simT.push(setTimeout(function(){
+    $$(".fstep").forEach(function(s){s.classList.remove("now")});
+    var el=$(".fstep[data-i='"+i+"']");el.classList.add("lit","now");
+    if(window.innerWidth<960&&el.scrollIntoView)el.scrollIntoView({block:"center",behavior:reduce?"auto":"smooth"});
+    var li=document.createElement("li");li.innerHTML="<span>"+TIMES[i]+"</span><div><b>"+f[1]+"</b> · "+esc(f[3].map(function(a){return a[0]}).join(" + "))+"</div>";$("#log").appendChild(li);$("#log").scrollTop=$("#log").scrollHeight;
+    if(i===FLOW.length-1){$("#btnSim").disabled=false;$("#btnSim").textContent="Simular de novo";toast("Chamado encerrado em 13 etapas, sem toque humano no fluxo (no piloto, o repasse do mês 1 tem aprovação humana)")}
+  },reduce?i*150:i*900))});
+});
+$("#btnSimReset").addEventListener("click",function(){resetSim();$("#btnSim").textContent="Simular um chamado"});
+
+/* ---------- init ---------- */
+renderSim();renderArea();startChat();renderQueue();renderFlow();route(true);
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,2261 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CuidaZone · Blueprint do MVP</title>
+<meta name="description" content="Blueprint do MVP do CuidaZone: pacotes de manutenção para proprietários Seazone, unit economics, jornadas, agentes, riscos, roadmap e decisões pendentes.">
+<style>
+:root {
+  --color-primary: #0055FF;
+  --color-primary-hover: #0044CC;
+  --color-primary-light: #E8F0FE;
+  --color-on-primary: #FFFFFF;
+  --color-foreground: #080E32;
+  --color-background: #FFFFFF;
+  --color-page: #F7F8FB;
+  --color-muted: #F3F3F5;
+  /* Desvios do Bluezone de proposito (contraste AA como texto): muted-fg oficial #6B6E84 da 4.38 sobre primary-light e 4.52 sobre muted;
+     success oficial #22C55E e warning oficial #F54A00 nao passam 4.5:1 como texto sobre branco. */
+  --color-muted-fg: #5E6178;
+  --color-border: #E6E7EA;
+  --color-success: #16803C;
+  --color-success-bg: #E7F7EC;
+  --color-error: #E7000B;
+  --color-error-bg: #FDECEC;
+  --color-error-fg: #B80009;
+  --color-warning: #C23A00;
+  --color-warning-bg: #FFF0E8;
+  --mm-node: #FFFFFF;
+  --mm-line: #8A8EA6;
+  --radius-sm: 4px;
+  --radius-lg: 8px;
+  --radius-xl: 12px;
+  --radius-full: 9999px;
+  --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px; --space-5: 24px; --space-6: 32px; --space-7: 48px; --space-8: 64px;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --color-primary: #4D88FF;
+    --color-primary-hover: #6B9BFF;
+    --color-primary-light: #13234A;
+    --color-on-primary: #0A0F26;
+    --color-foreground: #E6E9F5;
+    --color-background: #111733;
+    --color-page: #0A0F26;
+    --color-muted: #182042;
+    --color-muted-fg: #A1A7C2;
+    --color-border: #263055;
+    --color-success: #5BD68A;
+    --color-success-bg: #10301F;
+    --color-error: #FF6B70;
+    --color-error-bg: #3A1418;
+    --color-error-fg: #FF6B70;
+    --color-warning: #FF8F5C;
+    --color-warning-bg: #3A1D10;
+    --mm-node: #111733;
+    --mm-line: #7C83A6;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --color-primary: #4D88FF;
+  --color-primary-hover: #6B9BFF;
+  --color-primary-light: #13234A;
+  --color-on-primary: #0A0F26;
+  --color-foreground: #E6E9F5;
+  --color-background: #111733;
+  --color-page: #0A0F26;
+  --color-muted: #182042;
+  --color-muted-fg: #A1A7C2;
+  --color-border: #263055;
+  --color-success: #5BD68A;
+  --color-success-bg: #10301F;
+  --color-error: #FF6B70;
+  --color-error-bg: #3A1418;
+  --color-error-fg: #FF6B70;
+  --color-warning: #FF8F5C;
+  --color-warning-bg: #3A1D10;
+  --mm-node: #111733;
+  --mm-line: #7C83A6;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--color-page);
+  color: var(--color-foreground);
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+.wrap { max-width: 1040px; margin: 0 auto; padding: 0 16px; }
+a { color: var(--color-primary); }
+a:hover { color: var(--color-primary-hover); }
+code { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-size: 0.86em; background: var(--color-muted); padding: 1px 5px; border-radius: var(--radius-sm); word-break: break-word; }
+b, strong { font-weight: 700; }
+
+/* Topo */
+.hero { padding: var(--space-8) 0 var(--space-6); }
+.eyebrow { font-size: 12px; font-weight: 500; letter-spacing: 0.04em; color: var(--color-muted-fg); margin: 0 0 var(--space-3); }
+.hero h1 { font-size: clamp(36px, 7vw, 48px); font-weight: 700; line-height: 1.05; margin: 0 0 var(--space-4); letter-spacing: -0.02em; }
+.hero h1 span { color: var(--color-primary); }
+.hero .lead { font-size: clamp(18px, 2.2vw, 20px); font-weight: 500; line-height: 1.5; max-width: 68ch; margin: 0; }
+.stats { display: grid; grid-template-columns: 1.4fr 1fr; margin: var(--space-6) 0 0; border-top: 1px solid var(--color-border); border-bottom: 1px solid var(--color-border); }
+.stat { padding: var(--space-5) var(--space-4) var(--space-5) 0; }
+.stat + .stat { padding-left: var(--space-4); border-left: 1px solid var(--color-border); }
+.stat .k { font-size: 12px; font-weight: 500; color: var(--color-muted-fg); margin: 0 0 var(--space-2); }
+.stat .v { font-size: clamp(30px, 4vw, 48px); font-weight: 700; line-height: 1.1; margin: 0 0 var(--space-2); letter-spacing: -0.01em; }
+.stat .v small { font-size: 0.55em; font-weight: 500; color: var(--color-muted-fg); }
+.stat .d { font-size: 14px; color: var(--color-muted-fg); margin: 0; line-height: 1.45; }
+.stat.alert .v { color: var(--color-warning); font-size: clamp(24px, 3vw, 30px); }
+
+.toc { margin: var(--space-6) 0 0; }
+.toc h2 { font-size: 12px; font-weight: 500; color: var(--color-muted-fg); margin: 0 0 var(--space-3); letter-spacing: 0.04em; }
+.toc ol { list-style: none; padding: 0; margin: 0; columns: 3 220px; column-gap: var(--space-5); }
+.toc li { break-inside: avoid; }
+.toc a { display: flex; gap: var(--space-3); padding: 6px 0; text-decoration: none; color: var(--color-foreground); font-weight: 500; border-bottom: 1px solid var(--color-border); }
+.toc a:hover { color: var(--color-primary); }
+.num { font-variant-numeric: tabular-nums; color: var(--color-primary); font-weight: 700; min-width: 2ch; }
+
+/* Seções */
+.overview { background: var(--color-background); border: 1px solid var(--color-border); border-radius: var(--radius-xl); padding: var(--space-5); margin: var(--space-6) 0 0; }
+.overview h2 { font-size: 30px; font-weight: 500; margin: 0 0 var(--space-2); }
+.overview > p { margin: 0 0 var(--space-4); color: var(--color-muted-fg); max-width: 72ch; }
+.sec { padding: var(--space-7) 0 var(--space-2); border-bottom: 1px solid var(--color-border); scroll-margin-top: 8px; }
+.sec:last-of-type { border-bottom: 0; }
+.sec h2 { display: flex; gap: var(--space-3); align-items: baseline; font-size: clamp(24px, 3.4vw, 30px); font-weight: 500; line-height: 1.2; margin: 0 0 var(--space-4); letter-spacing: -0.01em; }
+.sec h2 .num { font-size: 0.6em; }
+.sum { font-size: 18px; line-height: 1.6; max-width: 72ch; margin: 0 0 var(--space-5); }
+.journey { margin: var(--space-6) 0 0; }
+.journey h3 { font-size: 24px; font-weight: 500; margin: 0 0 var(--space-2); }
+.journey .sum { font-size: 16px; color: var(--color-foreground); }
+
+details { margin: 0 0 var(--space-5); border: 1px solid var(--color-border); border-radius: var(--radius-lg); background: var(--color-background); }
+details > summary { list-style: none; cursor: pointer; padding: var(--space-3) var(--space-4); font-weight: 500; display: flex; align-items: center; gap: var(--space-3); color: var(--color-primary); border-radius: var(--radius-lg); }
+details > summary::-webkit-details-marker { display: none; }
+details > summary::before { content: ""; width: 8px; height: 8px; border-right: 2px solid currentColor; border-bottom: 2px solid currentColor; transform: rotate(-45deg); transition: transform .2s cubic-bezier(.22,1,.36,1); flex: none; }
+details[open] > summary::before { transform: rotate(45deg); }
+details > summary:hover { background: var(--color-primary-light); }
+details > summary:focus-visible { outline: 2px solid var(--color-primary); outline-offset: 2px; }
+.det { padding: var(--space-2) var(--space-4) var(--space-4); border-top: 1px solid var(--color-border); }
+.det p, .det li { max-width: 72ch; }
+.det h3 { font-size: 20px; font-weight: 500; margin: var(--space-5) 0 var(--space-2); }
+.det ul, .det ol { padding-left: 1.3em; }
+.det li { margin: 4px 0; }
+
+/* Tabelas */
+.tbl { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; margin: var(--space-3) 0 var(--space-4); border: 1px solid var(--color-border); border-radius: var(--radius-lg); background: var(--color-background); }
+.det .tbl { border: 0; border-radius: 0; }
+.tbl:focus-visible, .mermaid-out:focus-visible { outline: 2px solid var(--color-primary); outline-offset: 2px; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+table { border-collapse: collapse; width: 100%; font-size: 14px; line-height: 1.45; }
+th, td { text-align: left; vertical-align: top; padding: 9px 12px; border-bottom: 1px solid var(--color-border); }
+thead th { background: var(--color-muted); font-weight: 700; font-size: 12px; white-space: nowrap; position: sticky; top: 0; }
+tbody tr:last-child > * { border-bottom: 0; }
+.det .tbl table { min-width: 720px; }
+.det .tbl table td { min-width: 110px; }
+.det .tbl table td:first-child, .det .tbl table tbody th { min-width: 0; }
+table.econ td, table.econ th { white-space: nowrap; }
+
+/* Badges e pills */
+.badge, .pill { display: inline-block; border-radius: var(--radius-full); font-size: 12px; font-weight: 500; line-height: 1.3; padding: 2px 9px; vertical-align: 1px; }
+.badge { white-space: normal; }
+.b-dado { background: var(--color-primary-light); color: var(--color-primary); }
+.b-premissa { background: var(--color-muted); color: var(--color-muted-fg); border: 1px solid var(--color-border); }
+.b-confirmar { background: var(--color-warning-bg); color: var(--color-warning); }
+.pill { background: var(--color-muted); color: var(--color-muted-fg); white-space: nowrap; }
+.m-llm { background: var(--color-primary-light); color: var(--color-primary); white-space: normal; }
+.m-code { background: var(--color-muted); color: var(--color-foreground); }
+.m-f2 { background: var(--color-muted); color: var(--color-muted-fg); }
+.p-block { background: var(--color-error-bg); color: var(--color-error-fg); }
+.legend { list-style: none; padding: 0; margin: var(--space-5) 0 var(--space-4); display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-5); font-size: 14px; color: var(--color-muted-fg); }
+
+/* Pacotes */
+.pkgs { display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: var(--space-4); margin: 0 0 var(--space-5); }
+.pkg { background: var(--color-background); border: 1px solid var(--color-border); border-radius: var(--radius-xl); padding: var(--space-5); display: flex; flex-direction: column; }
+.pkg-main { border: 2px solid var(--color-primary); }
+.pkg header { display: flex; justify-content: space-between; align-items: center; gap: var(--space-2); }
+.pkg h3 { font-size: 24px; font-weight: 500; margin: 0; }
+.pkg-main .pill { background: var(--color-primary); color: var(--color-on-primary); }
+.pkg-tag { color: var(--color-muted-fg); margin: 2px 0 var(--space-3); font-size: 14px; }
+.pkg-label { font-size: 12px; font-weight: 500; color: var(--color-muted-fg); letter-spacing: 0.03em; margin: var(--space-4) 0 var(--space-2); }
+.pkg ul { margin: 0; padding-left: 1.1em; font-size: 14px; }
+.pkg li { margin: 3px 0; }
+.pkg ul.neg { color: var(--color-muted-fg); }
+.tbl-mini { margin: 0; border: 0; border-radius: 0; background: none; }
+.tbl-mini table { font-size: 14px; font-variant-numeric: tabular-nums; }
+.tbl-mini th, .tbl-mini td { padding: 6px 10px; }
+.tbl-mini td { text-align: right; font-weight: 700; }
+.tbl-mini thead th:not(:first-child) { text-align: right; }
+.tbl-mini td.muted { text-align: center; font-weight: 400; color: var(--color-muted-fg); }
+.pkg-note { font-size: 12px; color: var(--color-muted-fg); margin: 6px 0 0; }
+.pkg-num { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-2); margin: auto 0 0; padding-top: var(--space-4); }
+.pkg-num > div { padding-top: var(--space-3); border-top: 1px solid var(--color-border); }
+.pkg-num dt { font-size: 12px; color: var(--color-muted-fg); }
+.pkg-num dd { margin: 0; font-weight: 700; font-size: 14px; }
+.out { background: var(--color-muted); border-radius: var(--radius-lg); padding: var(--space-4); margin: 0 0 var(--space-5); }
+.out h3 { margin: 0 0 var(--space-2); font-size: 16px; font-weight: 700; }
+.out ul { margin: 0; padding-left: 1.2em; }
+.out li { margin: 3px 0; }
+
+/* Agentes */
+.det .grp { font-size: 20px; font-weight: 500; margin: var(--space-6) 0 var(--space-2); display: flex; gap: var(--space-2); align-items: center; }
+.grp .count { font-size: 12px; font-weight: 500; color: var(--color-muted-fg); background: var(--color-muted); border-radius: var(--radius-full); padding: 1px 8px; }
+.agents { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 0 var(--space-5); }
+.agent { border-top: 1px solid var(--color-border); padding: var(--space-4) 0; }
+.agent header { display: flex; justify-content: space-between; align-items: flex-start; gap: var(--space-2); }
+.agent h4 { margin: 0; font-size: 16px; font-weight: 700; }
+.agent-mission { margin: var(--space-2) 0 var(--space-3); font-size: 14px; }
+.agent dl { margin: 0; display: grid; gap: var(--space-2); font-size: 14px; }
+.agent dt { font-size: 12px; font-weight: 700; color: var(--color-muted-fg); }
+.agent dd { margin: 0; }
+.agent-f2 { border-top-style: dashed; }
+
+/* Roadmap e decisões */
+.steps { list-style: none; padding: 0; margin: 0 0 var(--space-5); display: grid; grid-template-columns: repeat(4, 1fr); counter-reset: st; }
+.steps li { position: relative; padding: var(--space-5) var(--space-3) 0 0; border-top: 2px solid var(--color-border); }
+.steps li::before { content: ""; position: absolute; top: -7px; left: 0; width: 12px; height: 12px; border-radius: var(--radius-full); background: var(--color-primary); }
+.steps b { display: block; font-size: 16px; margin-bottom: 2px; }
+.steps span { font-size: 14px; color: var(--color-muted-fg); }
+.decisions { padding-left: 1.4em; margin: 0 0 var(--space-5); max-width: 72ch; }
+.decisions details { margin: var(--space-2) 0 0; font-weight: 400; }
+.decisions li { margin: 0 0 var(--space-3); }
+.decisions li.block { font-weight: 500; }
+
+/* Mermaid */
+figure.diagram { margin: 0 0 var(--space-4); }
+.mermaid-out { overflow-x: auto; -webkit-overflow-scrolling: touch; text-align: center; min-height: 60px; }
+.mermaid-out svg { height: auto; max-width: 100%; }
+.mermaid-out.err { text-align: left; color: var(--color-muted-fg); font-size: 14px; white-space: pre-wrap; }
+figure.diagram figcaption { font-size: 12px; color: var(--color-muted-fg); margin-top: var(--space-2); }
+.mermaid-out .node.etapa rect, .mermaid-out .node.etapa polygon { fill: var(--color-primary) !important; stroke: var(--color-primary) !important; }
+.mermaid-out .node.etapa .nodeLabel, .mermaid-out .node.etapa span { color: var(--color-on-primary) !important; font-weight: 700; }
+.mermaid-out .node.agente rect { fill: var(--color-primary-light) !important; stroke: var(--color-primary) !important; }
+.mermaid-out .node.transversal rect { fill: var(--color-warning-bg) !important; stroke: var(--color-warning) !important; }
+.mermaid-out .node.transversal .nodeLabel { color: var(--color-warning) !important; }
+
+footer { padding: var(--space-6) 0 var(--space-8); font-size: 14px; color: var(--color-muted-fg); border-top: 1px solid var(--color-border); margin-top: var(--space-6); }
+footer p { margin: 0; }
+
+@media (max-width: 760px) {
+  .stats { grid-template-columns: 1fr; }
+  .stat + .stat { border-left: 0; padding-left: 0; border-top: 1px solid var(--color-border); }
+  .hero { padding-top: var(--space-6); }
+  .steps { grid-template-columns: 1fr 1fr; row-gap: var(--space-5); }
+  .sum { font-size: 16px; }
+  .overview { padding: var(--space-4); }
+}
+@media (max-width: 420px) {
+  .pkg-num { grid-template-columns: 1fr 1fr 1fr; }
+}
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } details > summary::before { transition: none; } }
+</style>
+</head>
+<body>
+<main class="wrap">
+  <header class="hero">
+    <p class="eyebrow">Blueprint do MVP · Retiro de IA da Seazone · 16/11/2026</p>
+    <h1>Cuida<span>Zone</span></h1>
+    <p class="lead">Pacote mensal de manutenção vendido ao proprietário Seazone: preventiva por calendário e conserto leve com cota, teto e coparticipação, com a mensalidade descontada no repasse. São 3 pacotes (Essencial, Completo e Premium, de R$ 59 a 189/mês, por faixa de risco e nº de quartos), com piloto de 10 a 20 imóveis na Grande Florianópolis (833 ativos no Sapron e 184 prestadores no Hub). A execução vai para prestadores do Hub de Serviços, despachados por código, com prova por link e pagamento só depois da validação.</p>
+    <div class="stats" role="list">
+      <div class="stat" role="listitem"><p class="k">Contribuição por assinante</p><p class="v">R$ 20,9 <small>/mês</small></p><p class="d">24% depois de imposto no mix 35/50/15; R$ 12,4 no estresse</p></div>
+      <div class="stat alert" role="listitem"><p class="k">Decisões que bloqueiam</p><p class="v">3 <small>de 16</small></p><p class="d">Papel da franquia, aditivo de débito no repasse e parecer SUSEP/CDC</p></div>
+    </div>
+    <nav class="toc" aria-label="Índice">
+      <h2>Índice</h2>
+      <ol><li><a href="#s1"><span class="num">01</span>Resumo executivo e tese de lucro</a></li><li><a href="#s2"><span class="num">02</span>Pacotes</a></li><li><a href="#s3"><span class="num">03</span>Catálogo de serviços avulsos</a></li><li><a href="#s4"><span class="num">04</span>Unit economics</a></li><li><a href="#s5"><span class="num">05</span>Fluxo ponta a ponta</a></li><li><a href="#s6"><span class="num">06</span>Agentes</a></li><li><a href="#s7"><span class="num">07</span>Plataforma</a></li><li><a href="#s8"><span class="num">08</span>Diferenciais</a></li><li><a href="#s9"><span class="num">09</span>Onde ainda precisa de humano</a></li><li><a href="#s10"><span class="num">10</span>Riscos e mitigação</a></li><li><a href="#s11"><span class="num">11</span>Roadmap</a></li><li><a href="#s12"><span class="num">12</span>Decisões pendentes para a liderança</a></li></ol>
+    </nav>
+    <ul class="legend" aria-label="Legenda dos selos"><li><span class="badge b-dado">dado</span> vem dos relatórios ou do Sapron</li><li><span class="badge b-premissa">premissa</span> decisão deste blueprint, a medir no piloto</li><li><span class="badge b-confirmar">confirmar</span> depende de terceiro (fiscal, jurídico, Asaas, Meta)</li></ul>
+    <details><summary><span>Base e fontes</span></summary><div class="det"><p><strong>Base:</strong> estratégia 3 ("vantagens injustas"), com as melhores ideias das estratégias 1, 2 e 4 enxertadas conforme os juízes.</p><p><strong>Fontes:</strong> relatórios de pesquisa 01 a 11. O catálogo da seção 3 vem de uma consulta só de leitura ao Sapron feita em 16/11 (<code>financial_expenses</code>, últimos 12 meses, <code>MAINTENANCE_(RENOV%</code>, sem Canceled/Denied).</p></div></details>
+  </header>
+
+  <section class="overview" aria-labelledby="geral-t">
+    <h2 id="geral-t">De ponta a ponta</h2>
+    <p>Da prospecção do prestador ao pagamento, com o agente que atua em cada etapa. O LLM só propõe; o policy engine (código) libera e o Executor age.</p>
+    <figure class="diagram"><div class="mermaid-src" data-key="geral" hidden>flowchart TD
+  subgraph P1[&quot; &quot;]
+    direction LR
+    S1[&quot;1. Prospecção do prestador&quot;] -.- G1([&quot;Radar de Cobertura · Captador · Abordador&lt;br/&gt;Cadastrador · Verificador · Contratador&lt;br/&gt;Ativador · Zelador&quot;])
+  end
+  subgraph P2[&quot; &quot;]
+    direction LR
+    S2[&quot;2. Venda do pacote&quot;] -.- G2([&quot;Ofertador · Cotador&lt;br/&gt;Conversador · checkout por botão&quot;])
+  end
+  subgraph P3[&quot; &quot;]
+    direction LR
+    S3[&quot;3. Chamado&quot;] -.- G3([&quot;Preventiva (cron 6h) · Intake/Triagem&lt;br/&gt;Precificação · aprovação do excedente&quot;])
+  end
+  subgraph P4[&quot; &quot;]
+    direction LR
+    S4[&quot;4. Despacho&quot;] -.- G4([&quot;Seleção e oferta&lt;br/&gt;Executor: espelho no Sapron e agenda na Stays&quot;])
+  end
+  subgraph P5[&quot; &quot;]
+    direction LR
+    S5[&quot;5. Execução&quot;] -.- G5([&quot;Executor: código da fechadura e check-in GPS&lt;br/&gt;QA da prova&quot;])
+  end
+  subgraph P6[&quot; &quot;]
+    direction LR
+    S6[&quot;6. Pagamento&quot;] -.- G6([&quot;Financeiro: Pix após NF e webhook&lt;br/&gt;Juiz: nota cega diária&quot;])
+  end
+  P1 --&gt; P2 --&gt; P3 --&gt; P4 --&gt; P5 --&gt; P6
+  P6 -.- X([&quot;Transversal: Roteador leva cada evento ao próximo passo;&lt;br/&gt;Exceções (Opus) resolve desvios dentro da alçada&quot;])
+  class S1,S2,S3,S4,S5,S6 etapa
+  class G1,G2,G3,G4,G5,G6 agente
+  class X transversal
+  classDef etapa stroke-width:2px
+  classDef agente stroke-width:1px
+  classDef transversal stroke-width:1px
+</div><div class="mermaid-out" role="img" tabindex="0" aria-label="Ponta a ponta: etapa e agente que atua em cada uma" aria-describedby="mm-desc-geral"></div><ol class="sr-only" id="mm-desc-geral"><li>1. Prospecção do prestador</li><li>Radar de Cobertura · Captador · Abordador Cadastrador · Verificador · Contratador Ativador · Zelador</li><li>2. Venda do pacote</li><li>Ofertador · Cotador Conversador · checkout por botão</li><li>3. Chamado</li><li>Preventiva (cron 6h) · Intake/Triagem Precificação · aprovação do excedente</li><li>4. Despacho</li><li>Seleção e oferta Executor: espelho no Sapron e agenda na Stays</li><li>5. Execução</li><li>Executor: código da fechadura e check-in GPS QA da prova</li><li>6. Pagamento</li><li>Financeiro: Pix após NF e webhook Juiz: nota cega diária</li><li>Transversal: Roteador leva cada evento ao próximo passo; Exceções (Opus) resolve desvios dentro da alçada</li></ol><figcaption>Ponta a ponta: etapa e agente que atua em cada uma</figcaption></figure>
+  </section>
+
+  <section class="sec" id="s1"><h2><span class="num">01</span>Resumo executivo e tese de lucro</h2>
+<p class="sum">Vender <b>previsibilidade, não economia</b>: preço calibrado pelo histórico de risco do imóvel, sinistro limitado por cota, teto, coparticipação e faixa, e cobrança descontada no repasse. O lucro vem da margem de contribuição do pacote; rede a 0,9×, peça e avulso ficam fora da conta base.</p>
+<details><summary><span>Os 5 pontos da tese</span></summary><div class="det"><ol>
+<li><strong>O que é:</strong> pacote mensal de manutenção (Essencial, Completo e Premium) vendido ao proprietário Seazone. Cobre preventiva por calendário e conserto leve com cota, teto e coparticipação. A execução vai para prestadores do Hub de Serviços, despachados por código, com prova por link e pagamento depois da validação.</li>
+<li><strong>Por que lucra:</strong> o preço sai do histórico real de cada imóvel (faixas A/B/C/D por 12 meses de Sapron) e a mensalidade é descontada no repasse. Por isso o CAC fica perto de zero e não há chargeback nem boleto. Contribuição de <strong>R$ 20,9 por assinante/mês (24%)</strong> depois de imposto, e de R$ 12,4 no estresse.</li>
+<li><strong>Por que ninguém copia:</strong> são 3.795 imóveis cativos mais 762 em onboarding, a vistoria e a limpeza de cada reserva servem de oráculo grátis, o calendário da Stays encaixa o serviço entre reservas e o repasse prende o cliente.</li>
+<li><strong>Zero toque:</strong> 4 papéis de LLM mais código. Valor, aceite e aprovação passam só por botão ou link autenticado. O humano entra só por gatilho objetivo, nos pontos listados na seção 9, cada um com saída automática e métrica para zerar.</li>
+<li><strong>Tamanho:</strong> com 500 assinantes, a contribuição é de <strong>R$ 125 mil/ano</strong> (R$ 74 mil no estresse), antes do custo fixo. Cada R$ 10 mil/mês de fixo exige <strong>479 assinantes</strong> (807 no estresse). O piloto começa em Florianópolis (833 ativos no Sapron; no Hub, 797 imóveis para 184 prestadores).</li>
+</ol></div></details>
+</section><section class="sec" id="s2"><h2><span class="num">02</span>Pacotes</h2>
+<p class="sum">Três pacotes mensais com preço pela <b>faixa de risco</b> (A, B, C, D, calculada por 12 meses de Sapron) e pelo número de quartos. Preços da revisão de CFO, já com 14,25% de imposto <span class="badge b-confirmar">confirmar</span>, 2% de perda e R$ 5/mês de operação.</p>
+<div class="pkgs">
+<article class="pkg">
+  <header><h3>Essencial</h3><span class="pill">35% do mix</span></header>
+  <p class="pkg-tag">Porta de entrada</p>
+  <div class="tbl tbl-mini" tabindex="0" role="region" aria-label="Preços do Essencial por faixa e quartos (R$/mês)"><table><caption class="sr-only">Preços do Essencial por faixa e quartos (R$/mês)</caption><thead><tr><th scope="col">Faixa</th><th scope="col">0-1q</th><th scope="col">2q</th><th scope="col">3q+</th></tr></thead><tbody><tr><th scope='row'>Todas as faixas (A a D e Novo)</th><td>59</td><td>59</td><td>69</td></tr></tbody></table></div>
+  <p class="pkg-note">R$/mês por número de quartos</p>
+  <p class="pkg-label">Cobre</p>
+  <ul><li>Higienização de todos os splits 1x/ano + dedetização 1x/ano, em lote por rota, na baixa temporada</li><li>10% de desconto no avulso</li></ul>
+  <p class="pkg-label">Não cobre</p>
+  <ul class="neg"><li>Corretivo: 0 chamados inclusos</li></ul>
+  <p class="pkg-note">Única opção para a faixa D</p>
+  <dl class="pkg-num"><div><dt>Contribuição</dt><dd>R$ 16,0/mês</dd></div><div><dt>Margem</dt><dd>22% a 29%</dd></div><div><dt>Estresse</dt><dd>R$ 16,0 (sem risco de uso)</dd></div></dl>
+</article>
+<article class="pkg pkg-main">
+  <header><h3>Completo</h3><span class="pill">50% do mix</span></header>
+  <p class="pkg-tag">Chamado mensal</p>
+  <div class="tbl tbl-mini" tabindex="0" role="region" aria-label="Preços do Completo por faixa e quartos (R$/mês)"><table><caption class="sr-only">Preços do Completo por faixa e quartos (R$/mês)</caption><thead><tr><th scope="col">Faixa</th><th scope="col">0-1q</th><th scope="col">2q</th><th scope="col">3q+</th></tr></thead><tbody><tr><th scope='row'>A</th><td>69</td><td>79</td><td>89</td></tr><tr><th scope='row'>Novo</th><td>89</td><td>109</td><td>119</td></tr><tr><th scope='row'>B</th><td>99</td><td>119</td><td>129</td></tr><tr><th scope='row'>C</th><td>99</td><td>129</td><td>139</td></tr><tr><th scope='row'>D</th><td colspan='3' class='muted'>não vende</td></tr></tbody></table></div>
+  <p class="pkg-note">R$/mês por número de quartos</p>
+  <p class="pkg-label">Cobre</p>
+  <ul><li>Preventiva igual ao Essencial</li><li><b>1 chamado por mês</b> (não acumula), teto de <b>R$ 300</b>, coparticipação de <b>R$ 50</b> no repasse</li><li>Elétrica e hidráulica leves, fixações, marcenaria, eletrodoméstico, mão de obra de ar</li><li>Consumível incluso dentro do teto do chamado</li><li>Prazo pela tabela P1-P4; urgente do MGO com evidência em até 24h</li><li>Faixa Novo com carência de 60 dias</li></ul>
+  <p class="pkg-label">Não vende para</p>
+  <ul class="neg"><li>Faixa D</li></ul>
+  <dl class="pkg-num"><div><dt>Contribuição</dt><dd>R$ 21,7/mês</dd></div><div><dt>Margem</dt><dd>20% a 26%</dd></div><div><dt>Estresse</dt><dd>R$ 9,5</dd></div></dl>
+</article>
+<article class="pkg">
+  <header><h3>Premium</h3><span class="pill">15% do mix</span></header>
+  <p class="pkg-tag">Prazo garantido</p>
+  <div class="tbl tbl-mini" tabindex="0" role="region" aria-label="Preços do Premium por faixa e quartos (R$/mês)"><table><caption class="sr-only">Preços do Premium por faixa e quartos (R$/mês)</caption><thead><tr><th scope="col">Faixa</th><th scope="col">0-1q</th><th scope="col">2q</th><th scope="col">3q+</th></tr></thead><tbody><tr><th scope='row'>A</th><td>99</td><td>119</td><td>129</td></tr><tr><th scope='row'>Novo</th><td colspan='3' class='muted'>não vende</td></tr><tr><th scope='row'>B</th><td>129</td><td>169</td><td>179</td></tr><tr><th scope='row'>C</th><td>139</td><td>179</td><td>189</td></tr><tr><th scope='row'>D</th><td colspan='3' class='muted'>não vende</td></tr></tbody></table></div>
+  <p class="pkg-note">R$/mês por número de quartos</p>
+  <p class="pkg-label">Cobre</p>
+  <ul><li>Tudo do Completo + 1 checagem/ano</li><li><b>2 chamados por mês</b> (não acumula), teto de <b>R$ 500</b>, coparticipação de <b>R$ 50</b></li><li>Chegada em até 4h em P1/P2 das 8h às 21h (P1 noturno segue o pool 24h)</li></ul>
+  <p class="pkg-label">Não vende para</p>
+  <ul class="neg"><li>Faixas Novo e D</li></ul>
+  <dl class="pkg-num"><div><dt>Contribuição</dt><dd>R$ 29,4/mês</dd></div><div><dt>Margem</dt><dd>20% a 24%</dd></div><div><dt>Estresse</dt><dd>R$ 13,8</dd></div></dl>
+</article></div>
+<div class="out">
+  <h3>Fica fora de todos os pacotes</h3>
+  <ul>
+<li>pintura, alvenaria, impermeabilização e obra civil;</li>
+<li>instalação de split e condensadora, box e vidro temperado, pós-obra;</li>
+<li><strong>dano de hóspede</strong>, que continua sendo cobrado do hóspede, sem markup e sem passar pelo pacote;</li>
+<li>peça de equipamento (compressor, placa, motor), carga de gás e qualquer valor acima do teto;</li>
+<li>defeito que já existia antes da adesão, apontado na vistoria de entrada. Esse vira orçamento avulso.</li>
+</ul>
+</div>
+<details><summary><span>Tabela completa, ajustes de preço, elegibilidade e regras de uso</span></summary><div class="det"><h3>2.1 Tabela dos pacotes</h3>
+<p>Os preços são os da revisão de CFO (relatório 07), já com 14,25% de imposto <span class="badge b-confirmar">confirmar</span>, 2% de perda e R$ 5/mês de operação. Os preços estão em R$/mês para <strong>0-1 quarto · 2 quartos · 3 quartos ou mais</strong>.</p>
+<div class="tbl" tabindex="0" role="region" aria-label="2.1 Tabela dos pacotes"><table><caption class="sr-only">2.1 Tabela dos pacotes</caption>
+<thead>
+<tr>
+<th scope="col">Item</th>
+<th scope="col"><strong>Essencial</strong></th>
+<th scope="col"><strong>Completo</strong></th>
+<th scope="col"><strong>Premium</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th scope="row">Preventiva</th>
+<td>Higienização de todos os splits 1x/ano + dedetização 1x/ano, em lote por rota, na baixa temporada</td>
+<td>Igual ao Essencial</td>
+<td>Igual + 1 checagem/ano</td>
+</tr>
+<tr>
+<th scope="row">Corretivo coberto</th>
+<td>Não tem; 10% de desconto no avulso</td>
+<td>Elétrica e hidráulica leves, fixações, marcenaria, eletrodoméstico, mão de obra de ar</td>
+<td>Igual ao Completo</td>
+</tr>
+<tr>
+<th scope="row">Chamados inclusos</th>
+<td>0</td>
+<td>1 por mês (não acumula)</td>
+<td>2 por mês (não acumula)</td>
+</tr>
+<tr>
+<th scope="row">Teto por chamado</th>
+<td>–</td>
+<td>R$ 300</td>
+<td>R$ 500</td>
+</tr>
+<tr>
+<th scope="row">Coparticipação</th>
+<td>–</td>
+<td>R$ 50 por chamado, no repasse</td>
+<td>R$ 50 por chamado, no repasse</td>
+</tr>
+<tr>
+<th scope="row">Consumível</th>
+<td>–</td>
+<td>Incluso <strong>dentro do teto</strong> do chamado (o preço já carrega +10% de material <span class="badge b-dado">dado 07</span>; o ticket médio de <code>MATERIAL_PURCHASE</code> é R$ 64 <span class="badge b-dado">dado 07</span>, não é franquia de material por chamado)</td>
+<td>Igual</td>
+</tr>
+<tr>
+<th scope="row">Prazo de atendimento</th>
+<td>–</td>
+<td>Tabela P1-P4. Categoria urgente do MGO (gás, elétrica, água e esgoto, chuveiro, ar, mofo ou pragas, vidro, fechadura, móvel com risco de queda, geladeira) entra como P1 ou P2 e precisa de execução com evidência no card em até 24h <span class="badge b-dado">dado 01</span></td>
+<td>Igual + chegada em até 4h em P1/P2 das 8h às 21h (custo de R$ 8/mês já no preço <span class="badge b-dado">dado 07</span>; P1 noturno segue o pool 24h)</td>
+</tr>
+<tr>
+<th scope="row"><strong>Faixa A</strong> (até R$ 290/ano)</th>
+<td>59 · 59 · 69 (igual em todas as faixas)</td>
+<td>69 · 79 · 89</td>
+<td>99 · 119 · 129</td>
+</tr>
+<tr>
+<th scope="row"><strong>Faixa Novo</strong> (&lt; 12 meses ou quase sem registro)</th>
+<td>igual</td>
+<td>89 · 109 · 119 (carência de 60 dias; estimativa aproximada do relatório 07)</td>
+<td>não vende <span class="badge b-premissa">premissa: o 07 não precifica Premium Novo</span></td>
+</tr>
+<tr>
+<th scope="row"><strong>Faixa B</strong> (R$ 290 a 750)</th>
+<td>igual</td>
+<td>99 · 119 · 129</td>
+<td>129 · 169 · 179</td>
+</tr>
+<tr>
+<th scope="row"><strong>Faixa C</strong> (R$ 750 a 1.325)</th>
+<td>igual</td>
+<td>99 · 129 · 139</td>
+<td>139 · 179 · 189</td>
+</tr>
+<tr>
+<th scope="row"><strong>Faixa D</strong> (&gt; R$ 1.325)</th>
+<td>igual</td>
+<td>não vende</td>
+<td>não vende</td>
+</tr>
+<tr>
+<th scope="row"><strong>Custo esperado/mês</strong> (mix de quartos)</th>
+<td>R$ 29,4</td>
+<td>R$ 52,7</td>
+<td>R$ 76,3</td>
+</tr>
+<tr>
+<th scope="row">Receita média/mês</th>
+<td>R$ 60,2</td>
+<td>R$ 94,9</td>
+<td>R$ 132,2</td>
+</tr>
+<tr>
+<th scope="row">Margem de contribuição</th>
+<td>22% a 29% (R$ 16,0)</td>
+<td>20% a 26% (R$ 21,7)</td>
+<td>20% a 24% (R$ 29,4)</td>
+</tr>
+<tr>
+<th scope="row"><strong>Margem no estresse</strong> (material 1,2, uso 1,4)</th>
+<td>22% a 29% (sem risco de uso)</td>
+<td>3% a 17% (R$ 9,5)</td>
+<td>4% a 16% (R$ 13,8)</td>
+</tr>
+</tbody>
+</table></div>
+<p>Custo por faixa do Completo, em R$/mês <span class="badge b-dado">dado, relatório 07</span>: A 36,5 · 45,4 · 51,0; B 52,0 · 68,9 · 77,2; C 55,7 · 74,4 · 83,3. Custo do Premium: A 56,0 · 66,4 · 72,6; B 75,7 · 97,0 · 106,6; C 80,4 · 104,1 · 114,6. Custo do Essencial: 27,4 · 31,5 · 35,6.</p>
+<p><strong>Ajustes de preço:</strong></p>
+<ul>
+<li><code>F_cidade</code> = custo da cidade ÷ 520, limitado entre 0,90 e 1,20.</li>
+<li>Casa paga +10%.</li>
+<li>Piscina e jardim são add-on, fora do MVP.</li>
+</ul>
+<h3>2.2 Elegibilidade</h3>
+<ul>
+<li><strong>Imóvel:</strong> ativo na gestão Seazone, com repasse mensal. Imóvel em onboarding só entra como "Novo" e só depois da ativação.</li>
+<li><strong>Faixa:</strong> calculada pelo código a partir do custo dos últimos 12 meses no Sapron (<code>MAINTENANCE_(RENOV%</code> + <code>Maintenance</code>).<ul>
+<li>Imóvel com menos de 12 meses de histórico, ou em praça com subnotificação (Campos do Jordão, Curitiba, casas de 1 quarto com custo perto de zero), entra como <strong>Novo</strong>, não como A <span class="badge b-dado">dado, relatório 07, risco 5</span>.</li>
+<li>A faixa D só compra o Essencial.</li>
+</ul>
+</li>
+<li><strong>Piloto:</strong> só imóvel com fechadura eletrônica ou cofre de chave (pré-requisito F12).</li>
+<li><strong>Adesão:</strong> aceite por botão ou link click-wrap, <strong>nunca pré-marcado</strong> (lição da multa de £ 30,6 mi da HomeServe). Arrependimento em 7 dias.</li>
+<li><strong>Contrato:</strong> aditivo ao contrato de gestão. Ele autoriza o desconto no repasse e substitui a autorização de R$ 300 só dentro do teto do pacote (R$ 300 no Completo, R$ 500 no Premium). Excedente, aditivo de escopo e avulso acima de R$ 300 continuam exigindo autorização prévia do proprietário (botão), salvo a regra de emergência do MGO <span class="badge b-dado">dado 01</span>.</li>
+<li><strong>Início da cobertura <span class="badge b-premissa">premissa</span>:</strong> o corretivo coberto começa no 8º dia, depois do prazo de arrependimento; antes disso, só avulso. A 1ª mensalidade é pro-rata no repasse seguinte.</li>
+</ul>
+<h3>2.3 Regras de uso e reajuste</h3>
+<ul>
+<li><strong>Fidelidade:</strong> 12 meses, com multa proporcional ao que falta. Sem ela, o proprietário assina antes da temporada e cancela depois.</li>
+<li><strong>Preventiva só a partir do 3º mês:</strong> custa de R$ 330 a 430/ano e não pode sair antes da carência de caixa.</li>
+<li><strong>Carência de 60 dias no corretivo</strong> para a faixa Novo.</li>
+<li><strong>Cota mensal sem acúmulo:</strong> o saldo aparece na área do proprietário.</li>
+<li><strong>Reajuste anual:</strong> IPCA de serviços (o custo por imóvel subiu 10% em um ano na coorte de 24 meses <span class="badge b-dado">dado</span>).<ul>
+<li><strong>Renovação só pelo IPCA para quem não abriu chamado no ano</strong> (modelo Hometree). Segura o cliente que dá lucro.</li>
+<li><strong>Reclassificação de faixa a cada 12 meses pelo uso real no pacote,</strong> nos dois sentidos: a faixa pode subir ou cair.</li>
+</ul>
+</li>
+<li><strong>Gatilho de reajuste extraordinário:</strong> sinistralidade da carteira (custo de serviço ÷ receita) acima de 60% por 3 meses seguidos. A base é de 54% (48,1 ÷ 88,4).</li>
+<li><strong>Regra de saldo negativo</strong> (vinda da estratégia 3, com ajuste pela crítica do juiz 3):<ul>
+<li>O saldo negativo passa para o mês seguinte, como já acontece hoje.</li>
+<li>Se o saldo ficar negativo em mais de 1 mensalidade por 2 ciclos seguidos <strong>e</strong> não houver reservas confirmadas na Stays cobrindo o próximo ciclo, o corretivo é suspenso e a preventiva continua.</li>
+<li>O proprietário reativa na hora quitando por link Pix. É o único trilho fora do repasse, e o código oferece sozinho.</li>
+</ul>
+</li>
+<li><strong>Cancelamento:</strong> 1 clique depois da fidelidade. Pedido já <code>ACEITO</code> ou mais adiante termina e é pago.</li>
+<li><strong>Imóvel sai da gestão Seazone ou é vendido (F16):</strong> a assinatura encerra no fim do ciclo; pedido já <code>ACEITO</code> ou mais adiante termina e é pago, os anteriores são cancelados com aviso. Mensalidade pendente e multa proporcional vão no último repasse; sem saldo, link Pix; sem pagamento em 30 dias, CS Proprietários.</li>
+</ul></div></details>
+</section><section class="sec" id="s3"><h2><span class="num">03</span>Catálogo de serviços avulsos</h2>
+<p class="sum">Top 25 serviços de conserto e manutenção pela <b>mediana do Sapron</b> nos últimos 12 meses. Sem pacote: mediana × 1,25; assinante: 10% de desconto. No MVP o avulso é sobretudo âncora de venda.</p>
+<details><summary><span>Tabela dos 25 serviços, regra de preço e margem do avulso</span></summary><div class="det"><p><strong>Base <span class="badge b-dado">dado, consulta própria ao Sapron em 16/11, fora dos relatórios</span>:</strong> mediana do Sapron nos últimos 12 meses, por item (<code>reason</code>). A quantidade é o volume no ano. Diverge do relatório 01 onde ele traz média em vez de mediana (ex.: filtro do ar com 1.092 ocorrências e média de R$ 227 no 01, contra 1.051 e mediana de R$ 200 aqui); o preço usa a mediana. São só itens de conserto e manutenção com escopo fechado; os "outros" genéricos ficaram de fora.</p>
+<p><strong>Regra de preço <span class="badge b-premissa">premissa</span>:</strong></p>
+<ul>
+<li><strong>Proprietário sem pacote:</strong> mediana × 1,25, arredondado para cima até o próximo múltiplo de R$ 5. É uma taxa de garantia mostrada no extrato (modelo TaskRabbit), que cobre 90 dias de garantia, prazo, prova e substituição em no-show.</li>
+<li><strong>Assinante:</strong> 10% de desconto no avulso, arredondado para o múltiplo de R$ 5 mais próximo (empate para cima). Vale para o que está fora da cota ou fora do pacote; dentro da cota, o assinante paga só a coparticipação.</li>
+<li><strong>Quem compra avulso no MVP:</strong> só o assinante (excedente e itens fora do pacote). Para o não assinante a tabela é âncora de venda; vender avulso a ele concorre com a franquia e depende da decisão 1 da seção 12.</li>
+<li><strong>Prestador:</strong> recebe 1,0× a mediana no corretivo e 0,9× na preventiva em lote. A coluna "prestador" mostra o corretivo.</li>
+<li><strong>Coluna "no pacote":</strong> indica se o item entra como chamado coberto do Completo/Premium (C), como preventiva inclusa (P) ou fica fora (F).</li>
+</ul>
+<div class="tbl" tabindex="0" role="region" aria-label="Tabela dos 25 serviços, regra de preço e margem do avulso"><table><caption class="sr-only">Tabela dos 25 serviços, regra de preço e margem do avulso</caption>
+<thead>
+<tr>
+<th scope="col">#</th>
+<th scope="col">Serviço</th>
+<th scope="col">Grupo</th>
+<th scope="col">Qtd./ano</th>
+<th scope="col">Mediana Sapron</th>
+<th scope="col">Avulso proprietário</th>
+<th scope="col">Avulso assinante</th>
+<th scope="col">Prestador</th>
+<th scope="col">No pacote</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<th scope="row">Limpeza ou troca de filtro do ar (por visita)</th>
+<td>Ar</td>
+<td>1.051</td>
+<td>200</td>
+<td>250</td>
+<td>225</td>
+<td>200 (180 em lote)</td>
+<td>P (1x/ano)</td>
+</tr>
+<tr>
+<td>2</td>
+<th scope="row">Troca de lâmpada comum ou LED</th>
+<td>Elétrica</td>
+<td>397</td>
+<td>75</td>
+<td>95</td>
+<td>85</td>
+<td>75</td>
+<td>C</td>
+</tr>
+<tr>
+<td>3</td>
+<th scope="row">Reparo de vazamento</th>
+<td>Hidráulica</td>
+<td>395</td>
+<td>130</td>
+<td>165</td>
+<td>150</td>
+<td>130</td>
+<td>C</td>
+</tr>
+<tr>
+<td>4</td>
+<th scope="row">Desentupimento simples</th>
+<td>Hidráulica</td>
+<td>384</td>
+<td>123</td>
+<td>155</td>
+<td>140</td>
+<td>123</td>
+<td>C</td>
+</tr>
+<tr>
+<td>5</td>
+<th scope="row">Troca de resistência de chuveiro</th>
+<td>Elétrica</td>
+<td>360</td>
+<td>130</td>
+<td>165</td>
+<td>150</td>
+<td>130</td>
+<td>C</td>
+</tr>
+<tr>
+<td>6</td>
+<th scope="row">Troca de torneira ou sifão</th>
+<td>Hidráulica</td>
+<td>272</td>
+<td>125</td>
+<td>160</td>
+<td>145</td>
+<td>125</td>
+<td>C</td>
+</tr>
+<tr>
+<td>7</td>
+<th scope="row">Instalação de cortina ou persiana</th>
+<td>Fixações</td>
+<td>245</td>
+<td>75</td>
+<td>95</td>
+<td>85</td>
+<td>75</td>
+<td>C</td>
+</tr>
+<tr>
+<td>8</td>
+<th scope="row">Reparo de porta, dobradiça ou trilho</th>
+<td>Marcenaria</td>
+<td>237</td>
+<td>120</td>
+<td>150</td>
+<td>135</td>
+<td>120</td>
+<td>C</td>
+</tr>
+<tr>
+<td>9</td>
+<th scope="row">Instalação de luminária ou lustre simples</th>
+<td>Elétrica</td>
+<td>225</td>
+<td>130</td>
+<td>165</td>
+<td>150</td>
+<td>130</td>
+<td>C</td>
+</tr>
+<tr>
+<td>10</td>
+<th scope="row">Instalação de chuveiro elétrico</th>
+<td>Elétrica</td>
+<td>206</td>
+<td>200</td>
+<td>250</td>
+<td>225</td>
+<td>200</td>
+<td>C (aparelho fora)</td>
+</tr>
+<tr>
+<td>11</td>
+<th scope="row">Conserto de ar-condicionado (mão de obra)</th>
+<td>Ar</td>
+<td>203</td>
+<td>250</td>
+<td>315</td>
+<td>285</td>
+<td>250</td>
+<td>C até o teto; gás e peça fora</td>
+</tr>
+<tr>
+<td>12</td>
+<th scope="row">Instalação de tomada ou interruptor</th>
+<td>Elétrica</td>
+<td>183</td>
+<td>120</td>
+<td>150</td>
+<td>135</td>
+<td>120</td>
+<td>C</td>
+</tr>
+<tr>
+<td>13</td>
+<th scope="row">Reparo simples de móvel</th>
+<td>Marcenaria</td>
+<td>176</td>
+<td>125</td>
+<td>160</td>
+<td>145</td>
+<td>125</td>
+<td>C</td>
+</tr>
+<tr>
+<td>14</td>
+<th scope="row">Remoção de mofo ou mancha</th>
+<td>Conservação</td>
+<td>167</td>
+<td>190</td>
+<td>240</td>
+<td>215</td>
+<td>190</td>
+<td>C</td>
+</tr>
+<tr>
+<td>15</td>
+<th scope="row">Dedetização corretiva</th>
+<td>Dedetização</td>
+<td>133</td>
+<td>170</td>
+<td>215</td>
+<td>195</td>
+<td>170</td>
+<td>C (fora da preventiva anual)</td>
+</tr>
+<tr>
+<td>16</td>
+<th scope="row">Válvula de descarga ou caixa acoplada</th>
+<td>Hidráulica</td>
+<td>128</td>
+<td>158</td>
+<td>200</td>
+<td>180</td>
+<td>158</td>
+<td>C</td>
+</tr>
+<tr>
+<td>17</td>
+<th scope="row">Ducha higiênica ou bidê</th>
+<td>Hidráulica</td>
+<td>93</td>
+<td>125</td>
+<td>160</td>
+<td>145</td>
+<td>125</td>
+<td>C</td>
+</tr>
+<tr>
+<td>18</td>
+<th scope="row">Configuração de fechadura eletrônica</th>
+<td>Automação</td>
+<td>74</td>
+<td>45</td>
+<td>60</td>
+<td>55</td>
+<td>45</td>
+<td>C</td>
+</tr>
+<tr>
+<td>19</td>
+<th scope="row">Curto-circuito: diagnóstico e reparo</th>
+<td>Elétrica</td>
+<td>74</td>
+<td>150</td>
+<td>190</td>
+<td>170</td>
+<td>150</td>
+<td>C</td>
+</tr>
+<tr>
+<td>20</td>
+<th scope="row">Reparo de geladeira (borracha, dreno)</th>
+<td>Eletrodomésticos</td>
+<td>72</td>
+<td>74</td>
+<td>95</td>
+<td>85</td>
+<td>74</td>
+<td>C</td>
+</tr>
+<tr>
+<td>21</td>
+<th scope="row">Instalação de trinco ou fechadura</th>
+<td>Marcenaria</td>
+<td>55</td>
+<td>100</td>
+<td>125</td>
+<td>115</td>
+<td>100</td>
+<td>C (fechadura fora)</td>
+</tr>
+<tr>
+<td>22</td>
+<th scope="row">Troca de disjuntor</th>
+<td>Elétrica</td>
+<td>48</td>
+<td>150</td>
+<td>190</td>
+<td>170</td>
+<td>150</td>
+<td>C</td>
+</tr>
+<tr>
+<td>23</td>
+<th scope="row">Troca de roldana ou trilho de vidro</th>
+<td>Vidraçaria</td>
+<td>46</td>
+<td>165</td>
+<td>210</td>
+<td>190</td>
+<td>165</td>
+<td>C</td>
+</tr>
+<tr>
+<td>24</td>
+<th scope="row">Dedetização preventiva</th>
+<td>Dedetização</td>
+<td>44</td>
+<td>180</td>
+<td>225</td>
+<td>205</td>
+<td>162 (em lote)</td>
+<td>P (1x/ano)</td>
+</tr>
+<tr>
+<td>25</td>
+<th scope="row">Reparo de micro-ondas</th>
+<td>Eletrodomésticos</td>
+<td>36</td>
+<td>184</td>
+<td>230</td>
+<td>205</td>
+<td>184</td>
+<td>C</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Fora da tabela:</strong></p>
+<ul>
+<li><strong>Visita de diagnóstico (F5):</strong> taxa fixa, <strong>abatida se o serviço fechar</strong> (modelo Doutor Resolve). A referência é a mediana de "Elétrico/outros", R$ 100 <span class="badge b-premissa">premissa</span>.</li>
+<li><strong>Peça (e material acima do teto do chamado):</strong> sai pela tabela da lojinha e dos fornecedores, a preço de tabela + 10%, mostrado e aprovado por botão <span class="badge b-premissa">premissa, fora da conta base</span>.</li>
+<li><strong>Troca de ar-condicionado velho, parcelada no repasse</strong> (modelo Frontdoor HVAC): fase 2.</li>
+</ul>
+<p><strong>Margem do avulso</strong> por R$ 100 de mediana, que depende do enquadramento fiscal <span class="badge b-confirmar">confirmar</span>:</p>
+<ul>
+<li><strong>Intermediação</strong> (NF do prestador para o proprietário e imposto só sobre a taxa): cerca de R$ 21.</li>
+<li><strong>Revenda</strong> (imposto sobre R$ 125): cerca de R$ 4,7.</li>
+</ul>
+<p>O avulso é sobretudo âncora de venda ("no avulso custaria R$ X"). Só vira linha de lucro se o fiscal confirmar a intermediação.</p></div></details>
+</section><section class="sec" id="s4"><h2><span class="num">04</span>Unit economics</h2>
+<p class="sum">Mix 35/50/15 gera <b>R$ 88,4 de receita</b> e <b>R$ 20,9 de contribuição (24%)</b> por assinante/mês; R$ 12,4 no estresse. Com 500 assinantes, R$ 125 mil/ano antes do custo fixo. Cada R$ 10 mil/mês de fixo exige 479 assinantes (807 no estresse).</p>
+<div class="tbl" tabindex="0" role="region" aria-label="04Unit economics"><table class="econ"><caption class="sr-only">04Unit economics</caption><thead><tr><th scope="col">Assinantes</th><th scope="col">500</th><th scope="col">1.000</th><th scope="col">2.000</th></tr></thead><tbody>
+<tr><th scope="row">Contribuição/ano</th><td><b>R$ 125 mil</b></td><td><b>R$ 251 mil</b></td><td><b>R$ 502 mil</b></td></tr>
+<tr><th scope="row">No estresse</th><td>R$ 74 mil</td><td>R$ 149 mil</td><td>R$ 298 mil</td></tr>
+</tbody></table></div>
+<details><summary><span>Premissas, conta por imóvel, exemplo ao centavo, cenários e teto do MEI</span></summary><div class="det"><h3>4.1 Premissas</h3>
+<div class="tbl" tabindex="0" role="region" aria-label="4.1 Premissas"><table><caption class="sr-only">4.1 Premissas</caption>
+<thead>
+<tr>
+<th scope="col">Premissa</th>
+<th scope="col">Valor</th>
+<th scope="col">Fonte</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th scope="row">Mix de pacotes</th>
+<td>35% Essencial, 50% Completo, 15% Premium</td>
+<td><span class="badge b-premissa">premissa</span>, estratégia 3 (conservadora no Premium)</td>
+</tr>
+<tr>
+<th scope="row">Mix de quartos</th>
+<td>64% 0-1q, 24% 2q, 12% 3q+</td>
+<td><span class="badge b-dado">dado</span> 07</td>
+</tr>
+<tr>
+<th scope="row">Mix de faixas entre compradores</th>
+<td>40% A, 35% B, 25% C</td>
+<td><span class="badge b-premissa">premissa</span> 07 (compradores concentrados no risco)</td>
+</tr>
+<tr>
+<th scope="row">Imposto</th>
+<td>14,25% da receita (PIS/COFINS 9,25% + ISS 5%)</td>
+<td><span class="badge b-confirmar">confirmar</span> fiscal</td>
+</tr>
+<tr>
+<th scope="row">Perda</th>
+<td>2% da receita</td>
+<td><span class="badge b-premissa">premissa</span> 07. Com cobrança no repasse tende a zero, mas fica na base</td>
+</tr>
+<tr>
+<th scope="row">Operação</th>
+<td>R$ 5/assinante/mês (LLM, WhatsApp, Maps, Pix ao prestador)</td>
+<td><span class="badge b-premissa">premissa</span> 07; o 09 estima R$ 2,50 a 6 <strong>por pedido corretivo</strong>, então o Premium com 2 chamados/mês usados fica acima de R$ 5 e precisa ser medido</td>
+</tr>
+<tr>
+<th scope="row">Custo do prestador</th>
+<td>1,0× a mediana no corretivo; 0,9× na preventiva em lote</td>
+<td><span class="badge b-dado">dado</span> 07 (o Hub cobra igual ou acima da mediana)</td>
+</tr>
+<tr>
+<th scope="row">Uso</th>
+<td>+10% com coparticipação, ×1,10 de seleção residual, ×1,10 de material, ×1,05 de preço</td>
+<td><span class="badge b-premissa">premissa calibrada nos dados</span> 07</td>
+</tr>
+<tr>
+<th scope="row">Estresse</th>
+<td>material ×1,20 e uso ×1,40, sem coparticipação reduzindo o uso</td>
+<td><span class="badge b-dado">dado</span> 07</td>
+</tr>
+<tr>
+<th scope="row">Cobrança</th>
+<td>Desconto no repasse, sem taxa de boleto/Pix (a taxa do Asaas é R$ 2,15 por cobrança)</td>
+<td><span class="badge b-dado">dado</span> 03</td>
+</tr>
+</tbody>
+</table></div>
+<h3>4.2 Por imóvel/mês</h3>
+<p><strong>Carteira:</strong></p>
+<div class="tbl" tabindex="0" role="region" aria-label="4.2 Por imóvel/mês"><table><caption class="sr-only">4.2 Por imóvel/mês</caption>
+<thead>
+<tr>
+<th scope="col">Pacote</th>
+<th scope="col">Receita</th>
+<th scope="col">Custo prestador</th>
+<th scope="col">Imposto</th>
+<th scope="col">Perda</th>
+<th scope="col">Operação</th>
+<th scope="col">Contribuição</th>
+<th scope="col">Estresse</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th scope="row">Essencial</th>
+<td>60,2</td>
+<td>29,4</td>
+<td>8,6</td>
+<td>1,2</td>
+<td>5,0</td>
+<td>16,0 (27%)</td>
+<td>16,0</td>
+</tr>
+<tr>
+<th scope="row">Completo</th>
+<td>94,9</td>
+<td>52,7</td>
+<td>13,5</td>
+<td>1,9</td>
+<td>5,0</td>
+<td>21,7 (23%)</td>
+<td>9,5</td>
+</tr>
+<tr>
+<th scope="row">Premium</th>
+<td>132,2</td>
+<td>76,3</td>
+<td>18,8</td>
+<td>2,6</td>
+<td>5,0</td>
+<td>29,4 (22%)</td>
+<td>13,8</td>
+</tr>
+<tr>
+<th scope="row">Mix 35/50/15</th>
+<td><strong>88,4</strong></td>
+<td><strong>48,1</strong></td>
+<td><strong>12,6</strong></td>
+<td><strong>1,8</strong></td>
+<td><strong>5,0</strong></td>
+<td><strong>20,9 (24%)</strong></td>
+<td><strong>12,4</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Exemplo fechado ao centavo</strong> (Completo, faixa B, 2 quartos, R$ 119):</p>
+<div class="tbl" tabindex="0" role="region" aria-label="4.2 Por imóvel/mês"><table><caption class="sr-only">4.2 Por imóvel/mês</caption>
+<thead>
+<tr>
+<th scope="col">Item</th>
+<th scope="col">Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th scope="row">Receita</th>
+<td>R$ 119,00</td>
+</tr>
+<tr>
+<th scope="row">Imposto</th>
+<td>− R$ 16,96</td>
+</tr>
+<tr>
+<th scope="row">Perda</th>
+<td>− R$ 2,38</td>
+</tr>
+<tr>
+<th scope="row">Operação</th>
+<td>− R$ 5,00</td>
+</tr>
+<tr>
+<th scope="row">Serviço</th>
+<td>− R$ 68,90</td>
+</tr>
+<tr>
+<th scope="row">Contribuição</th>
+<td><strong>R$ 25,76 (21,6%)</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p>Esse é o modelo de transparência que o piloto mede linha a linha.</p>
+<h3>4.3 Cenários anuais (contribuição antes do custo fixo)</h3>
+<div class="tbl" tabindex="0" role="region" aria-label="4.3 Cenários anuais (contribuição antes do custo fixo)"><table><caption class="sr-only">4.3 Cenários anuais (contribuição antes do custo fixo)</caption>
+<thead>
+<tr>
+<th scope="col">Linha</th>
+<th scope="col"><strong>500 assinantes</strong> (13% dos 3.795 ativos)</th>
+<th scope="col"><strong>1.000</strong> (26%)</th>
+<th scope="col"><strong>2.000</strong> (53%)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th scope="row">Receita</th>
+<td>R$ 530 mil</td>
+<td>R$ 1,06 mi</td>
+<td>R$ 2,12 mi</td>
+</tr>
+<tr>
+<th scope="row">Custo prestador</th>
+<td>R$ 289 mil</td>
+<td>R$ 577 mil</td>
+<td>R$ 1,15 mi</td>
+</tr>
+<tr>
+<th scope="row">Impostos (14,25%)</th>
+<td>R$ 76 mil</td>
+<td>R$ 151 mil</td>
+<td>R$ 302 mil</td>
+</tr>
+<tr>
+<th scope="row">Perda (2%)</th>
+<td>R$ 11 mil</td>
+<td>R$ 21 mil</td>
+<td>R$ 42 mil</td>
+</tr>
+<tr>
+<th scope="row">IA + WhatsApp + Pix + Maps (R$ 5/mês)</th>
+<td>R$ 30 mil</td>
+<td>R$ 60 mil</td>
+<td>R$ 120 mil</td>
+</tr>
+<tr>
+<th scope="row">Contribuição</th>
+<td><strong>R$ 125 mil</strong></td>
+<td><strong>R$ 251 mil</strong></td>
+<td><strong>R$ 502 mil</strong></td>
+</tr>
+<tr>
+<th scope="row">Contribuição no estresse</th>
+<td>R$ 74 mil</td>
+<td>R$ 149 mil</td>
+<td>R$ 298 mil</td>
+</tr>
+<tr>
+<th scope="row">Preventiva em lote/ano</th>
+<td>~500 higienizações + ~500 dedetizações</td>
+<td>~1.000 + 1.000</td>
+<td>~2.000 + 2.000</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Custo fixo e break-even:</strong></p>
+<ul>
+<li>Os relatórios não levantam o custo fixo.</li>
+<li><strong>Break-even <span class="badge b-dado">cálculo</span>:</strong> R$ 10 mil/mês de fixo ÷ R$ 20,9 = <strong>479 assinantes</strong>; no estresse (R$ 12,4), <strong>807</strong>.</li>
+<li>Com 500 assinantes, a contribuição mensal é de cerca de R$ 10,4 mil. O plantonista P1, a fila de exceção e a aprovação humana dos repasses do mês 1 precisam caber nisso, ou o piloto roda com equipe compartilhada da Operação.</li>
+<li>2.000 assinantes é meta de 24 meses, não do ano 1. São 53% dos ativos de hoje (44% contando os 762 em onboarding), acima dos 30% a 40% de adesão que o relatório 10 usa como hipótese.</li>
+</ul>
+<p><strong>Ganhos possíveis, fora da base (hipóteses a medir):</strong></p>
+<div class="tbl" tabindex="0" role="region" aria-label="4.3 Cenários anuais (contribuição antes do custo fixo)"><table><caption class="sr-only">4.3 Cenários anuais (contribuição antes do custo fixo)</caption>
+<thead>
+<tr>
+<th scope="col">Alavanca</th>
+<th scope="col">Efeito estimado</th>
+<th scope="col">Uso proposto</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th scope="row">Perda de 2% perto de zero com o repasse</th>
+<td>até +R$ 1,8/assinante/mês</td>
+<td><strong>Financia o bônus da franquia por assinante retido</strong> (seção 5, A7). Não vira margem</td>
+</tr>
+<tr>
+<th scope="row">Corretivo a 0,9× com densidade (prioridade publicada, sem punição)</th>
+<td>~+R$ 2,3/mês no Completo</td>
+<td>Margem, só depois de medir 3 meses</td>
+</tr>
+<tr>
+<th scope="row">Peça +10%, avulso, troca de ar parcelada</th>
+<td>sem número</td>
+<td>Medir no piloto</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Teto do MEI <span class="badge b-dado">dado 03</span>:</strong> R$ 81 mil/ano equivale a cerca de 45 jobs/mês a R$ 150. Dono: o Financeiro soma o que cada prestador recebeu no ano e marca o limite; o Zelador só manda o aviso. Ao chegar a 80% do teto, o prestador recebe aviso e convite para migrar para ME; a 100%, sai da oferta até migrar.</p></div></details>
+</section><section class="sec" id="s5"><h2><span class="num">05</span>Fluxo ponta a ponta</h2>
+<p class="sum">Quatro jornadas: oferta (prestador), venda (proprietário), serviço e exceções. Valor, aceite e aprovação só passam por botão ou link autenticado; nenhum preço vem de LLM.</p>
+<details><summary><span>Convenções</span></summary><div class="det"><p><strong>Convenções:</strong> <code>cz_*</code> são tabelas do schema <code>cuidazone</code> (relatório 09). O canal "botão" é uma mensagem interativa do WhatsApp; "link" é uma página com token de uso único. SLA P1/P2/P3/P4 conforme a tabela da máquina de estados (relatório 09, seção 2).</p></div></details>
+
+<section class="journey" id="jornada-a">
+  <h3>Jornada A: oferta (prestador)</h3>
+  <p class="sum">Radar acha a célula sem cobertura, Captador e Abordador trazem o lead, o Cadastrador faz o N1 em até 8 perguntas pelo WhatsApp e o Verificador sobe para N2. Contrato por clickwrap, sandbox de 5 jobs e Zelador mantendo a base.</p>
+  <figure class="diagram"><div class="mermaid-src" data-key="A" hidden>flowchart TD
+  R[&quot;Radar: buraco na célula&quot;] --&gt; C[&quot;Captador: lead por fonte&quot;]
+  C --&gt; AB[&quot;Abordador: template + cadência&quot;]
+  AB --&gt;|&quot;Quero saber&quot;| CAD[&quot;Cadastrador N1: geo, raio, agenda,&lt;br/&gt;aceite da tabela, Pix&quot;]
+  AB --&gt;|&quot;opt-out&quot;| OPT[&quot;Lista global de opt-out&quot;]
+  CAD --&gt; V[&quot;Verificador N2: CNPJ, liveness,&lt;br/&gt;prova prática&quot;]
+  V --&gt;|&quot;reprovado&quot;| RET[&quot;Nova tentativa em 7 dias&quot;]
+  V --&gt;|&quot;zona cinza&quot;| FX[&quot;Fila identidade/fraude&quot;]
+  V --&gt; CT[&quot;Contratador: clickwrap + MEI/PJ&quot;]
+  CT --&gt; AT[&quot;Ativador: sandbox 5 jobs, titular do Pix&quot;]
+  AT --&gt; N4[&quot;N4: entra no ranking normal&quot;]
+  N4 --&gt; Z[&quot;Zelador: reativação, rebaixamento, teto MEI&quot;]
+  Z --&gt;|&quot;saiu ou inativo&quot;| R
+</div><div class="mermaid-out" role="img" tabindex="0" aria-label="Oferta: do buraco na célula ao prestador ativo" aria-describedby="mm-desc-A"></div><ol class="sr-only" id="mm-desc-A"><li>Radar: buraco na célula</li><li>Captador: lead por fonte</li><li>Abordador: template + cadência</li><li>Cadastrador N1: geo, raio, agenda, aceite da tabela, Pix</li><li>Lista global de opt-out</li><li>Verificador N2: CNPJ, liveness, prova prática</li><li>Nova tentativa em 7 dias</li><li>Fila identidade/fraude</li><li>Contratador: clickwrap + MEI/PJ</li><li>Ativador: sandbox 5 jobs, titular do Pix</li><li>N4: entra no ranking normal</li><li>Zelador: reativação, rebaixamento, teto MEI</li></ol><figcaption>Oferta: do buraco na célula ao prestador ativo</figcaption></figure>
+  <details><summary><span>Jornada A, passo a passo: agente, canal, dado gravado e SLA</span></summary><div class="det"><div class="tbl" tabindex="0" role="region" aria-label="Jornada A, passo a passo: agente, canal, dado gravado e SLA"><table><caption class="sr-only">Jornada A, passo a passo: agente, canal, dado gravado e SLA</caption>
+<thead>
+<tr>
+<th scope="col">#</th>
+<th scope="col">Passo</th>
+<th scope="col">Agente</th>
+<th scope="col">Canal</th>
+<th scope="col">Dado gravado</th>
+<th scope="col">SLA/meta</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th scope="row">A1</th>
+<td>Detectar buraco: célula cidade × categoria com menos de 3 N2+, capacidade &lt; 1,5× a demanda ou aceite médio &gt; 4h</td>
+<td>Radar de Cobertura (código, diário)</td>
+<td>–</td>
+<td><code>oferta_celulas</code> (gap, prioridade, meta = faltantes × 1,5)</td>
+<td>Buraco → 1º N2 novo em até 21 dias</td>
+</tr>
+<tr>
+<th scope="row">A2</th>
+<td>Puxar lead por ordem de risco: abandonos do bot (1.159), indicação paga por ativação, anúncio click-to-WhatsApp, QR code em lojas, Places e, por último, a base Receita (51.989)</td>
+<td>Captador (regra + LLM só na busca e no dedupe)</td>
+<td>–</td>
+<td><code>contatos_prospeccao</code> (fonte, base legal, dedupe por telefone/CNPJ em 90 dias)</td>
+<td>≥20 leads elegíveis por prestador faltante</td>
+</tr>
+<tr>
+<th scope="row">A3</th>
+<td>Abordar com template aprovado, no máximo 3 toques em 30 dias e 72h entre eles, das 8h às 20h</td>
+<td>Abordador (código + LLM só nas variáveis)</td>
+<td>WhatsApp, número de recrutamento separado</td>
+<td>Envio, entrega, leitura, resposta, opt-out</td>
+<td>Entrega ≥95%; bloqueio &lt;2%; denúncia &lt;1%</td>
+</tr>
+<tr>
+<th scope="row">A4</th>
+<td>Cadastro N1 em até 8 perguntas: serviços, pin de localização, raio, agenda, <strong>aceite da tabela CuidaZone</strong> (contraproposta até +15%), CPF/CNPJ, termos e Pix do próprio titular</td>
+<td>Cadastrador (LLM conversacional com slots)</td>
+<td>WhatsApp (botões, localização, áudio)</td>
+<td><code>hub_prestadores</code> (geo, raio, agenda, preço aceito, Pix com hash), <code>aceites_termos</code></td>
+<td>Abriu → N1: 50%; cadastro em ≤5 min</td>
+</tr>
+<tr>
+<th scope="row">A5</th>
+<td>Qualificar N1 → N2: CNPJ ativo e CNAE, selfie com liveness, antecedentes só para quem entra sem o dono, prova prática por foto ou vídeo com código na cena (nota ≥6)</td>
+<td>Verificador (regra + API + LLM visão)</td>
+<td>Link de captura</td>
+<td>Resultado apto/não apto e motivo (nunca o documento), <code>prestador_nivel_hist</code>, score inicial 70</td>
+<td>N1 → N2 ≥60% em ≤48h; R$ 7 a 25 por aprovado</td>
+</tr>
+<tr>
+<th scope="row">A6</th>
+<td>Contrato: clickwrap com hash SHA-256, data e hora e ID do WhatsApp. Exige MEI/PJ e NF; sem CNPJ fica fora do piloto</td>
+<td>Contratador (código)</td>
+<td>WhatsApp + link</td>
+<td><code>aceites_termos</code>, enquadramento fiscal</td>
+<td>N2 → contrato ≥95% em 24h</td>
+</tr>
+<tr>
+<th scope="row">A7</th>
+<td>Ativação (sandbox): 5 primeiros jobs com teto de R$ 300 e no máximo 2 abertos, <strong>com aprovação humana do repasse de cada um</strong> (gatilho "sandbox" do relatório 09). A 1ª transferência confere o titular do Pix pelo DICT. <strong>Franquia entra aqui como prestadora prioritária pela tabela</strong>, com bônus por assinante retido</td>
+<td>Ativador (código) + Seleção e oferta</td>
+<td>WhatsApp</td>
+<td>Jobs, nível N3, titular conferido</td>
+<td>N2 → 1º job em 14 dias ≥70%</td>
+</tr>
+<tr>
+<th scope="row">A8</th>
+<td>Manutenção da base: ping depois de 30 dias sem job, rebaixamento automático, CNPJ revisado todo mês, aviso do teto do MEI (o cálculo é do Financeiro)</td>
+<td>Zelador (código + LLM nas mensagens)</td>
+<td>WhatsApp</td>
+<td><code>disponibilidade</code>, <code>score_snapshots</code>, recebido no ano</td>
+<td>Ativos/N2+ ≥65%; churn ≤5%/mês</td>
+</tr>
+</tbody>
+</table></div></div></details>
+</section>
+<section class="journey" id="jornada-b">
+  <h3>Jornada B: venda (proprietário)</h3>
+  <p class="sum">A oferta sai no momento de dor (chamado caro, extrato, pré-temporada, onboarding). Cotação em código com o gasto real do imóvel, aceite por botão nunca pré-marcado e mensalidade debitada no repasse.</p>
+  <figure class="diagram"><div class="mermaid-src" data-key="B" hidden>flowchart TD
+  G{&quot;Gatilho: chamado caro, extrato,&lt;br/&gt;pré-temporada, onboarding, score&quot;} --&gt; CO[&quot;Cotador: faixa x tabela x F_cidade&quot;]
+  CO --&gt; LP[&quot;Landing do imóvel: gasto real e preço fixo&quot;]
+  LP --&gt;|&quot;dúvida&quot;| CV[&quot;Conversador: sem ferramenta de efeito&quot;]
+  CV --&gt; LP
+  LP --&gt;|&quot;aceite por botão + click-wrap&quot;| ASS[&quot;Assinatura ATIVA&quot;]
+  LP --&gt;|&quot;sem aceite em 3 dias&quot;| PD[&quot;PERDIDO&quot;]
+  ASS --&gt; VE[&quot;Vistoria de entrada:&lt;br/&gt;pré-existente vira orçamento&quot;]
+  VE --&gt; RP[&quot;Débito mensal no repasse&quot;]
+  RP --&gt;|&quot;saldo negativo 2 ciclos&quot;| SC[&quot;Suspende corretivo;&lt;br/&gt;link Pix para quitar&quot;]
+  SC --&gt;|&quot;quitou&quot;| RP
+  RP --&gt; RN[&quot;Renovação: IPCA se não usou;&lt;br/&gt;reclassifica faixa&quot;]
+</div><div class="mermaid-out" role="img" tabindex="0" aria-label="Venda: do gatilho à renovação" aria-describedby="mm-desc-B"></div><ol class="sr-only" id="mm-desc-B"><li>Gatilho: chamado caro, extrato, pré-temporada, onboarding, score</li><li>Cotador: faixa x tabela x F_cidade</li><li>Landing do imóvel: gasto real e preço fixo</li><li>Conversador: sem ferramenta de efeito</li><li>Assinatura ATIVA</li><li>PERDIDO</li><li>Vistoria de entrada: pré-existente vira orçamento</li><li>Débito mensal no repasse</li><li>Suspende corretivo; link Pix para quitar</li><li>Renovação: IPCA se não usou; reclassifica faixa</li></ol><figcaption>Venda: do gatilho à renovação</figcaption></figure>
+  <details><summary><span>Jornada B, passo a passo: agente, canal, dado gravado e SLA</span></summary><div class="det"><div class="tbl" tabindex="0" role="region" aria-label="Jornada B, passo a passo: agente, canal, dado gravado e SLA"><table><caption class="sr-only">Jornada B, passo a passo: agente, canal, dado gravado e SLA</caption>
+<thead>
+<tr>
+<th scope="col">#</th>
+<th scope="col">Passo</th>
+<th scope="col">Agente</th>
+<th scope="col">Canal</th>
+<th scope="col">Dado gravado</th>
+<th scope="col">SLA/meta</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th scope="row">B1</th>
+<td><strong>Gatilho de oferta:</strong> (a) logo depois de um chamado caro ou de um card acima de R$ 300 pedindo aprovação (momento de dor); (b) extrato mensal; (c) pré-temporada set/out ("ar higienizado antes do verão"); (d) ativação de imóvel do onboarding; (e) score do imóvel ("seu ar não é higienizado há 14 meses")</td>
+<td>Ofertador (código, eventos do Sapron)</td>
+<td>Extrato/carteira, e-mail, WhatsApp do proprietário</td>
+<td><code>cz_ofertas_venda</code> (gatilho, imóvel, faixa)</td>
+<td>Até 1 oferta por imóvel a cada 30 dias</td>
+</tr>
+<tr>
+<th scope="row">B2</th>
+<td><strong>Cotação personalizada:</strong> calcula a faixa, aplica a tabela × F_cidade × casa e mostra "em 12 meses você gastou R$ X em N chamados; no Completo, R$ Y fixos, com prazo"</td>
+<td>Cotador (código, regra do relatório 07)</td>
+<td>Link autenticado (landing do imóvel)</td>
+<td>Faixa, preço e histórico usado</td>
+<td>Cotação em &lt;2s; nenhum preço vem de LLM</td>
+</tr>
+<tr>
+<th scope="row">B3</th>
+<td>Dúvidas sobre cobertura e exclusões</td>
+<td>Conversador (LLM, sem ferramenta de efeito)</td>
+<td>WhatsApp</td>
+<td><code>cz_mensagens</code></td>
+<td>Resposta em &lt;1 min</td>
+</tr>
+<tr>
+<th scope="row">B4</th>
+<td><strong>Adesão:</strong> termo click-wrap com aceite por botão, IP, data e versão. Aditivo autoriza o desconto no repasse. Nunca pré-marcado</td>
+<td>Código (checkout)</td>
+<td>Link autenticado</td>
+<td><code>cz_assinaturas</code> (versão do termo, consentimento para P1 na carteira)</td>
+<td>Lead → ativa em 3 dias, senão <code>PERDIDO</code></td>
+</tr>
+<tr>
+<th scope="row">B5</th>
+<td><strong>Vistoria de entrada:</strong> usa a última vistoria Seazone; o pré-existente vira orçamento avulso, não sinistro</td>
+<td>Intake (LLM) sobre a vistoria + código</td>
+<td>–</td>
+<td><code>cz_preexistentes</code></td>
+<td>Até 7 dias</td>
+</tr>
+<tr>
+<th scope="row">B6</th>
+<td><strong>Cobrança:</strong> mensalidade e coparticipação lançadas como débito no repasse. Serviço coberto <strong>nunca</strong> vira despesa do proprietário (F10)</td>
+<td>Financeiro (código)</td>
+<td>Carteira digital do Sapron</td>
+<td><code>cz_consumo_periodo</code>, lançamento de assinatura</td>
+<td>Fechamento até o dia 25</td>
+</tr>
+<tr>
+<th scope="row">B7</th>
+<td><strong>Saldo negativo:</strong> passa para o mês seguinte; 2 ciclos &gt; 1 mensalidade sem reserva futura → suspende o corretivo e oferece link Pix para quitar</td>
+<td>Financeiro (código)</td>
+<td>Extrato + link</td>
+<td>Estado <code>SUSPENSA_CORRETIVO</code></td>
+<td>Automático</td>
+</tr>
+<tr>
+<th scope="row">B8</th>
+<td><strong>Renovação:</strong> aviso 30 dias antes no extrato; IPCA para quem não usou; reclassificação para quem usou; cancelamento com 1 clique</td>
+<td>Código</td>
+<td>Extrato + link</td>
+<td>Nova versão do preço</td>
+<td>–</td>
+</tr>
+</tbody>
+</table></div></div></details>
+</section>
+<section class="journey" id="jornada-c">
+  <h3>Jornada C: serviço</h3>
+  <p class="sum">Do gatilho ao encerramento: triagem por LLM, preço em código, espelho no Sapron que trava a franquia, oferta por botão, código da fechadura na janela, prova por link com QA e repasse Pix depois da janela de 72h. A próxima limpeza confirma o serviço.</p>
+  <figure class="diagram"><div class="mermaid-src" data-key="C" hidden>flowchart TD
+  T{&quot;Gatilho: preventiva, hóspede,&lt;br/&gt;vistoria, limpeza, card&quot;} --&gt; TR[&quot;Intake: categoria, P1-P4, duplicata&quot;]
+  TR --&gt; PC[&quot;Precificação: coberto? tabela?&quot;]
+  PC --&gt;|&quot;coberto&quot;| AP[&quot;APROVADO&quot;]
+  PC --&gt;|&quot;fora da tabela&quot;| VD[&quot;Visita de diagnóstico&quot;]
+  VD --&gt; PC
+  PC --&gt;|&quot;excedente&quot;| AA[&quot;Aprovação por botão&quot;]
+  AA --&gt;|&quot;carteira ou Pix&quot;| AP
+  AP --&gt; SP[&quot;Espelho no Sapron trava a franquia&quot;]
+  SP --&gt; OFE[&quot;Oferta: sequencial P3/P4, paralela P1/P2&quot;]
+  OFE --&gt;|&quot;sem aceite em 3 rodadas&quot;| SEM[&quot;SEM_PRESTADOR: exceção&quot;]
+  OFE --&gt;|&quot;aceite por botão&quot;| AG[&quot;Agenda entre reservas /&lt;br/&gt;consentimento do hóspede&quot;]
+  AG --&gt; AC[&quot;Código da fechadura na janela&quot;]
+  AC --&gt; CK[&quot;Check-in GPS&quot;]
+  CK --&gt; EXE[&quot;Execução&quot;]
+  EXE --&gt;|&quot;escopo maior&quot;| AD[&quot;Aditivo: policy e proprietário&quot;]
+  AD --&gt; EXE
+  EXE --&gt; PV[&quot;Prova pelo link + NF&quot;]
+  PV --&gt; QA[&quot;QA: pHash, desafio, GPS, visão&quot;]
+  QA --&gt;|&quot;reprovada 1x&quot;| AG
+  QA --&gt; JC[&quot;Janela de 72h&quot;]
+  JC --&gt; RPX[&quot;Repasse Pix após webhook&quot;]
+  RPX --&gt; ORA[&quot;Oráculo: próxima limpeza confirma&quot;]
+  ORA --&gt;|&quot;não&quot;| GA[&quot;Garantia: retrabalho&quot;]
+  ORA --&gt;|&quot;sim&quot;| ENC[&quot;ENCERRADO após 90 dias&quot;]
+</div><div class="mermaid-out" role="img" tabindex="0" aria-label="Serviço: do chamado ao encerramento após 90 dias" aria-describedby="mm-desc-C"></div><ol class="sr-only" id="mm-desc-C"><li>Gatilho: preventiva, hóspede, vistoria, limpeza, card</li><li>Intake: categoria, P1-P4, duplicata</li><li>Precificação: coberto? tabela?</li><li>APROVADO</li><li>Visita de diagnóstico</li><li>Aprovação por botão</li><li>Espelho no Sapron trava a franquia</li><li>Oferta: sequencial P3/P4, paralela P1/P2</li><li>SEM_PRESTADOR: exceção</li><li>Agenda entre reservas / consentimento do hóspede</li><li>Código da fechadura na janela</li><li>Check-in GPS</li><li>Execução</li><li>Aditivo: policy e proprietário</li><li>Prova pelo link + NF</li><li>QA: pHash, desafio, GPS, visão</li><li>Janela de 72h</li><li>Repasse Pix após webhook</li><li>Oráculo: próxima limpeza confirma</li><li>Garantia: retrabalho</li><li>ENCERRADO após 90 dias</li></ol><figcaption>Serviço: do chamado ao encerramento após 90 dias</figcaption></figure>
+  <details><summary><span>Jornada C, passo a passo: agente, canal, dado gravado e SLA</span></summary><div class="det"><div class="tbl" tabindex="0" role="region" aria-label="Jornada C, passo a passo: agente, canal, dado gravado e SLA"><table><caption class="sr-only">Jornada C, passo a passo: agente, canal, dado gravado e SLA</caption>
+<thead>
+<tr>
+<th scope="col">#</th>
+<th scope="col">Passo</th>
+<th scope="col">Agente</th>
+<th scope="col">Canal</th>
+<th scope="col">Dado gravado</th>
+<th scope="col">SLA</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th scope="row">C1</th>
+<td><strong>Gatilho:</strong> preventiva por regra de recorrência (cron das 6h, em lote por prédio e bairro, na janela entre check-out e check-in); mensagem do hóspede pela SIA; diferença de vistoria; checklist da limpeza; card do Sapron; proprietário</td>
+<td>Preventiva (código) / Intake</td>
+<td>Sapron, SIA, WhatsApp</td>
+<td><code>cz_pedidos</code> (<code>ABERTO</code>, origem)</td>
+<td>ABERTO: 5 min / 30 min / 4h / 24h</td>
+</tr>
+<tr>
+<th scope="row">C2</th>
+<td><strong>Triagem:</strong> imóvel, categoria, prioridade P1-P4, fotos e duplicata (imóvel + categoria + 72h vira vínculo)</td>
+<td>Intake/Triagem (LLM Sonnet → Haiku)</td>
+<td>–</td>
+<td><code>TRIADO</code>, <code>duplicata_de</code></td>
+<td>Junto com C1</td>
+</tr>
+<tr>
+<th scope="row">C3</th>
+<td><strong>Cobertura e preço:</strong> "coberto" vem de <code>cz_plano_coberturas</code> e da cota do mês. Serviço da tabela sai a preço fixo; fora da tabela vira <code>VISITA_DIAGNOSTICO</code>; excedente vai para aprovação</td>
+<td>Precificação (código)</td>
+<td>–</td>
+<td><code>PRECIFICADO</code>, <code>valor_aprovado</code>, <code>coberto</code></td>
+<td>Imediato</td>
+</tr>
+<tr>
+<th scope="row">C4</th>
+<td><strong>Aprovação do excedente:</strong> botão com valor. <strong>Padrão do relatório 09 (F9):</strong> pago por link Pix <strong>antes</strong> do despacho; só P1 com consentimento prévio no aditivo vai direto para a carteira. Lançar na carteira quando o saldo projetado cobrir é proposta, pendente da decisão 5 (seção 12)</td>
+<td>Financeiro (código) + Conversador (lembrete)</td>
+<td>Botão/link</td>
+<td><code>AGUARDANDO_APROVACAO</code> → <code>AGUARDANDO_PAGAMENTO_EXCEDENTE</code> → <code>APROVADO</code></td>
+<td>30 min / 4h / 48h / 72h; 2 lembretes. Sem resposta: P1/P2 aprovam sozinhos só até R$ 300 (limite do MGO) ou até a alçada de urgência que o proprietário assinou no aditivo, o que for maior; acima disso, só P1 com risco ao imóvel, à segurança ou ao hóspede (regra de emergência do MGO, com a tentativa de contato registrada). O resto cancela (<code>CANCELADO_SEM_APROVACAO</code>)</td>
+</tr>
+<tr>
+<th scope="row">C5</th>
+<td><strong>Espelho no Sapron:</strong> card com <code>origem=cuidazone</code>, que trava o despacho da franquia (F15). Card <code>origem=cuidazone</code> fica <strong>fora</strong> da pontuação de manutenção da franquia, das ocorrências (7 dias, 20+ cards, 48h úteis no urgente) e das cobranças automáticas (SIA diária e quarta-feira): exige mudança no MGO (decisão 1)</td>
+<td>Executor (código)</td>
+<td>API do Sapron <span class="badge b-confirmar">confirmar endpoint</span></td>
+<td><code>sapron_card_id</code></td>
+<td>Imediato</td>
+</tr>
+<tr>
+<th scope="row">C5b</th>
+<td><strong>Bloqueio do calendário (urgente do MGO):</strong> bloqueia o imóvel na Stays até a evidência entrar no card e desbloqueia sozinho depois do QA. Hoje isso é pedido por pessoa no Suporte Unificado</td>
+<td>Executor (código)</td>
+<td>API da Stays <span class="badge b-confirmar">confirmar escrita de bloqueio</span>; reserva: chamado automático no Suporte Unificado</td>
+<td><code>cz_agendamentos</code> (bloqueio, desbloqueio)</td>
+<td>Imediato</td>
+</tr>
+<tr>
+<th scope="row">C6</th>
+<td><strong>Despacho:</strong> ranking por distância, score, carga, categoria e <code>atende_24h</code>. Oferta sequencial em P3/P4 e paralela para os 3 melhores em P1/P2. Lock otimista: o 1º aceite válido vence. <strong>Recusa sem punição, com log</strong> (Tema 1291)</td>
+<td>Seleção e oferta (código)</td>
+<td>Botão</td>
+<td><code>cz_ofertas</code> (rodada, <code>aceite_via</code>)</td>
+<td>Rodada: 10 min / 1h / 8h / 24h; 3 rodadas → <code>SEM_PRESTADOR</code></td>
+</tr>
+<tr>
+<th scope="row">C7</th>
+<td><strong>Aceite e agenda:</strong> janela livre no calendário da Stays; com hóspede, consentimento dele pela SIA, na janela que ele escolhe</td>
+<td>Seleção e oferta + Conversador</td>
+<td>Botão (prestador) / SIA (hóspede)</td>
+<td><code>cz_agendamentos</code></td>
+<td>ACEITO: 1h / 12h / 48h / 72h</td>
+</tr>
+<tr>
+<th scope="row">C8</th>
+<td><strong>Acesso:</strong> código da fechadura ou do cofre por pedido, válido só na janela e trocado depois</td>
+<td>Executor (código)</td>
+<td>Link</td>
+<td>Código cifrado</td>
+<td>No horário</td>
+</tr>
+<tr>
+<th scope="row">C9</th>
+<td><strong>Check-in e execução:</strong> check-in por GPS no link (geofence de 150 m). Escopo maior vira <code>ADITIVO_SOLICITADO</code> (foto + valor por formulário → policy → proprietário)</td>
+<td>Executor + Precificação</td>
+<td>Link de captura</td>
+<td><code>CHECKIN</code>, <code>cz_aditivos</code></td>
+<td>Sem check-in até o horário + 2h → <code>NO_SHOW_PRESTADOR</code></td>
+</tr>
+<tr>
+<th scope="row">C10</th>
+<td><strong>Prova:</strong> fotos antes e depois pelo link (câmera, GPS, código do pedido na foto, ângulo aleatório), NF do MEI/PJ</td>
+<td>Prestador → QA</td>
+<td>Link (forte); WhatsApp só como reserva (fraca)</td>
+<td><code>cz_evidencias</code> (pHash, GPS, desafio, força)</td>
+<td>Fim previsto + 4h</td>
+</tr>
+<tr>
+<th scope="row">C11</th>
+<td><strong>Validação:</strong> pHash contra a base, desafio, GPS e checklist visual. Isolado da conversa</td>
+<td>QA da prova (código + LLM visão Sonnet; Opus no duvidoso)</td>
+<td>–</td>
+<td>Veredito</td>
+<td>&lt;15 min</td>
+</tr>
+<tr>
+<th scope="row">C12</th>
+<td><strong>Janela de contestação de 72h:</strong> o proprietário vê foto e "no avulso custaria R$ X" na área dele</td>
+<td>Código</td>
+<td>Área do proprietário</td>
+<td><code>JANELA_CONTESTACAO</code></td>
+<td>72h</td>
+</tr>
+<tr>
+<th scope="row">C13</th>
+<td><strong>Repasse:</strong> Pix só com NF conferida (CNPJ e valor) e <code>PAGO</code> só com o webhook <code>TRANSFER_DONE</code>. No mês 1, cada repasse tem aprovação humana; depois, só acima da alçada. <strong>Baixa do card:</strong> como o serviço coberto não gera despesa ao proprietário (F10), o agente atual de baixa (NF + foto + despesa) não fecha o card; o Executor fecha o card espelhado com a evidência e um registro informativo <code>paid_by=Seazone</code></td>
+<td>Financeiro + Executor (código)</td>
+<td>Asaas, Sapron</td>
+<td><code>cz_repasses</code>, <code>cz_lancamentos_sapron</code></td>
+<td>D+2 depois da janela</td>
+</tr>
+<tr>
+<th scope="row">C14</th>
+<td><strong>Oráculo atrasado:</strong> a próxima limpeza ou vistoria pergunta por botão "o chuveiro funciona?". "Não" abre garantia e tira score. Sem limpeza ou vistoria em 30 dias, a pergunta vai ao hóspede seguinte pela SIA</td>
+<td>Código + time de limpeza da franquia</td>
+<td>Botão no checklist da limpeza <span class="badge b-confirmar">confirmar integração com o app de limpeza</span></td>
+<td><code>cz_evidencias.confirmacao_oraculo</code></td>
+<td>Na próxima limpeza</td>
+</tr>
+<tr>
+<th scope="row">C15</th>
+<td><strong>Avaliação:</strong> nota do oráculo, do hóspede (quando houver) e do proprietário</td>
+<td>Código</td>
+<td>Botão</td>
+<td><code>score_snapshots</code></td>
+<td>–</td>
+</tr>
+<tr>
+<th scope="row">C16</th>
+<td><strong>Garantia de 90 dias:</strong> retrabalho com o mesmo prestador; se ele recusar, outro faz e o custo é descontado do repasse futuro dele</td>
+<td>Seleção e oferta + Financeiro</td>
+<td>Botão</td>
+<td><code>EM_GARANTIA</code> → <code>RETRABALHO</code></td>
+<td>90 dias</td>
+</tr>
+</tbody>
+</table></div></div></details>
+</section>
+<section class="journey" id="jornada-d">
+  <h3>Jornada D: exceções</h3>
+  <p class="sum">16 desvios mapeados, cada um com saída automática e degrau humano: no-show, imóvel inacessível, contestação, P1 noturno, repasse falhou, dependência caída, dano de hóspede e saída do imóvel da gestão.</p>
+  <figure class="diagram"><div class="mermaid-src" data-key="D" hidden>flowchart TD
+  E{&quot;Desvio&quot;} --&gt;|&quot;no-show&quot;| NS[&quot;Redespacho + score -1&quot;]
+  NS --&gt;|&quot;2º seguido&quot;| H[&quot;EXCECAO_HUMANA&quot;]
+  E --&gt;|&quot;sem acesso&quot;| IA[&quot;Taxa de visita Seazone + reagenda&quot;]
+  IA --&gt;|&quot;repete&quot;| FR[&quot;Franquia abre&quot;]
+  E --&gt;|&quot;cancelamento prestador&quot;| CP[&quot;Volta para OFERTADO&quot;]
+  E --&gt;|&quot;aditivo&quot;| AD[&quot;Policy + botão do proprietário&quot;]
+  AD --&gt;|&quot;sem resposta&quot;| EP[&quot;ENCERRADO_PARCIAL&quot;]
+  E --&gt;|&quot;contestação&quot;| CT[&quot;Retém repasse: retrabalho ou crédito&quot;]
+  CT --&gt;|&quot;acima da alçada&quot;| H
+  E --&gt;|&quot;P1 noturno&quot;| P24[&quot;Pool 24h, oferta paralela&quot;]
+  P24 --&gt;|&quot;20 min sem aceite&quot;| CON[&quot;Contenção ao hóspede&quot;]
+  CON --&gt; PL[&quot;Plantonista 15 min&quot;]
+  E --&gt;|&quot;débito contestado&quot;| CS[&quot;Exceção financeira&quot;]
+  E --&gt;|&quot;repasse falhou 3x&quot;| H
+  E --&gt;|&quot;dependência caída&quot;| PZ[&quot;PAUSADO_DEPENDENCIA + retry&quot;]
+</div><div class="mermaid-out" role="img" tabindex="0" aria-label="Exceções: saída automática de cada desvio" aria-describedby="mm-desc-D"></div><ol class="sr-only" id="mm-desc-D"><li>Desvio</li><li>Redespacho + score -1</li><li>EXCECAO_HUMANA</li><li>Taxa de visita Seazone + reagenda</li><li>Franquia abre</li><li>Volta para OFERTADO</li><li>Policy + botão do proprietário</li><li>ENCERRADO_PARCIAL</li><li>Retém repasse: retrabalho ou crédito</li><li>Pool 24h, oferta paralela</li><li>Contenção ao hóspede</li><li>Plantonista 15 min</li><li>Exceção financeira</li><li>PAUSADO_DEPENDENCIA + retry</li></ol><figcaption>Exceções: saída automática de cada desvio</figcaption></figure>
+  <details><summary><span>Tabela das 16 exceções: saída, agente, degrau humano e SLA</span></summary><div class="det"><div class="tbl" tabindex="0" role="region" aria-label="Tabela das 16 exceções: saída, agente, degrau humano e SLA"><table><caption class="sr-only">Tabela das 16 exceções: saída, agente, degrau humano e SLA</caption>
+<thead>
+<tr>
+<th scope="col">#</th>
+<th scope="col">Exceção</th>
+<th scope="col">Saída automática</th>
+<th scope="col">Agente</th>
+<th scope="col">Degrau humano</th>
+<th scope="col">SLA</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th scope="row">D1</th>
+<td><strong>No-show do prestador</strong></td>
+<td><code>NO_SHOW_PRESTADOR</code> → nova oferta com prioridade; −1 nível; 2 em 30 dias = bloqueio de 7 dias</td>
+<td>Seleção e oferta</td>
+<td>2º no-show seguido no mesmo pedido</td>
+<td>Redespacho em 10 min (P1)</td>
+</tr>
+<tr>
+<th scope="row">D2</th>
+<td><strong>Imóvel inacessível</strong> (o prestador foi e não entrou)</td>
+<td><code>IMOVEL_INACESSIVEL</code> → taxa de visita paga pela Seazone e reagendamento; novo código</td>
+<td>Exceções (LLM)</td>
+<td>Franquia abre a porta (custo repassado)</td>
+<td>Reagenda em 24h</td>
+</tr>
+<tr>
+<th scope="row">D3</th>
+<td><strong>Prestador cancela</strong> depois do aceite</td>
+<td><code>CANCELADO_PRESTADOR</code> → volta para <code>OFERTADO</code>; 2 em 30 dias = bloqueio</td>
+<td>Seleção e oferta</td>
+<td>–</td>
+<td>Imediato</td>
+</tr>
+<tr>
+<th scope="row">D4</th>
+<td><strong>Proprietário cancela o pedido</strong></td>
+<td>Antes do aceite: <code>CANCELADO</code>; depois: <code>CANCELADO_COM_TAXA</code> (taxa de visita)</td>
+<td>Código</td>
+<td>–</td>
+<td>–</td>
+</tr>
+<tr>
+<th scope="row">D5</th>
+<td><strong>Aditivo de escopo</strong></td>
+<td>Foto + valor por formulário → policy → aprovação por botão; sem aprovação: <code>ENCERRADO_PARCIAL</code></td>
+<td>Precificação + Financeiro</td>
+<td>Acima da alçada sem resposta</td>
+<td>Igual a C4</td>
+</tr>
+<tr>
+<th scope="row">D6</th>
+<td><strong>Contestação</strong></td>
+<td>Dentro de 72h: repasse retido → retrabalho ou <strong>crédito no pacote</strong> até a alçada. Depois de pago: garantia ou crédito, nunca estorno em dinheiro automático</td>
+<td>Exceções (LLM, alçada de crédito)</td>
+<td>Acima da alçada ou dano causado pelo prestador (seguro RC)</td>
+<td>24h</td>
+</tr>
+<tr>
+<th scope="row">D7</th>
+<td><strong>Emergência noturna</strong> (P1 das 21h às 8h)</td>
+<td>Pool <code>atende_24h</code> com adicional noturno e oferta paralela. Sem aceite em 20 min: roteiro de contenção ao hóspede pela SIA (registro, disjuntor)</td>
+<td>Seleção e oferta + Conversador</td>
+<td>Plantonista rotativo, SLA de 15 min</td>
+<td>20 min</td>
+</tr>
+<tr>
+<th scope="row">D8</th>
+<td><strong>"Chargeback"</strong></td>
+<td>Não existe no trilho do repasse (F8 eliminado). Equivalente: contestação de débito no extrato → D6. Pix de quitação (B7) só entra por link e com titular conferido</td>
+<td>Financeiro</td>
+<td>CS Proprietários se for contestação do débito da mensalidade</td>
+<td>48h</td>
+</tr>
+<tr>
+<th scope="row">D9</th>
+<td><strong>Repasse falhou</strong></td>
+<td>3 tentativas → exceção; troca de chave Pix só por link, com carência de 72h</td>
+<td>Financeiro</td>
+<td>3ª falha</td>
+<td>24h</td>
+</tr>
+<tr>
+<th scope="row">D10</th>
+<td><strong>Prova reprovada</strong></td>
+<td>1 nova tentativa agendada; se reprovar de novo ou o prestador contestar → exceção</td>
+<td>QA + Exceções</td>
+<td>Sim</td>
+<td>24h</td>
+</tr>
+<tr>
+<th scope="row">D11</th>
+<td><strong>Dependência caída</strong> (Sapron, Asaas, Meta)</td>
+<td><code>PAUSADO_DEPENDENCIA</code> com retry; webhooks acumulam na inbox</td>
+<td>Roteador</td>
+<td>Alerta se a inbox ficar parada &gt; 5 min</td>
+<td>5 min</td>
+</tr>
+<tr>
+<th scope="row">D12</th>
+<td><strong>Proprietário sem resposta</strong></td>
+<td>2 lembretes; P1/P2 aprovam sozinhos só até R$ 300 ou até a alçada de urgência assinada no aditivo; acima disso, só P1 com risco (emergência do MGO); P3/P4 cancelam</td>
+<td>Código</td>
+<td>–</td>
+<td>Igual a C4</td>
+</tr>
+<tr>
+<th scope="row">D13</th>
+<td><strong>Proprietário recusa manutenção essencial</strong> (categoria urgente do MGO ou risco à segurança)</td>
+<td>Não cancela calado: registra a recusa, avisa o risco por botão e mantém o calendário bloqueado se for urgente</td>
+<td>Código</td>
+<td>CS Proprietários (regra atual do relatório 01)</td>
+<td>24h</td>
+</tr>
+<tr>
+<th scope="row">D14</th>
+<td><strong><code>SEM_PRESTADOR</code> em P2-P4</strong></td>
+<td>Amplia o raio, oferece à franquia como prestadora pela tabela e reabre a rodada no dia seguinte; o Radar marca a célula</td>
+<td>Seleção e oferta + Radar</td>
+<td>Exceção humana se for urgente do MGO e passar de 12h sem aceite</td>
+<td>12h (urgente) / 72h</td>
+</tr>
+<tr>
+<th scope="row">D15</th>
+<td><strong>Dano de hóspede detectado na triagem</strong></td>
+<td>Sai do pacote: segue o fluxo atual (lançado em até 14 dias após o check-out, cobrado do hóspede, Jurídico decide a partir de R$ 250). O conserto pode sair pelo CuidaZone como avulso aprovado pelo proprietário</td>
+<td>Intake + Financeiro</td>
+<td>Palavra final no dano continua humana</td>
+<td>14 dias</td>
+</tr>
+<tr>
+<th scope="row">D16</th>
+<td><strong>Imóvel sai da gestão ou é vendido com pedido aberto (F16)</strong></td>
+<td>Pedido <code>ACEITO</code> ou mais adiante termina e é pago; os anteriores são cancelados com aviso; acerto no último repasse</td>
+<td>Financeiro</td>
+<td>CS Proprietários se não houver saldo nem pagamento em 30 dias</td>
+<td>Fim do ciclo</td>
+</tr>
+</tbody>
+</table></div></div></details>
+</section>
+</section><section class="sec" id="s6"><h2><span class="num">06</span>Agentes</h2>
+<p class="sum">Regra: o LLM só propõe um <code>Command</code>. O policy engine (código) responde ALLOW, DENY ou EXCECAO, e o executor (código, idempotente) age.</p>
+<ul class="legend"><li><span class="pill m-llm">LLM</span> Sonnet 5.5, Haiku 5.5 ou Opus 5.5</li><li><span class="pill m-code">Código</span> regra determinística, sem modelo</li></ul>
+<details><summary><span>Todos os agentes por frente: missão, gatilho, ferramentas, modelo e alçada</span></summary><div class="det"><p>Os nomes são funcionais; o nome definitivo é dado na implementação. Modelos via LiteLLM Hub: começa com Sonnet 5.5 e só desce para Haiku 5.5 onde o eval provar a qualidade.</p><h3 class="grp">Operação do serviço <span class="count">11</span></h3><div class="agents"><article class="agent"><header><h4>Roteador</h4><span class="pill m-code">Código</span></header>
+<p class="agent-mission">Leva estado + evento ao próximo passo</p>
+<dl><div><dt>Gatilho</dt><dd>Evento em <code>cz_inbox</code> ou timer</dd></div><div><dt>Ferramentas</dt><dd><code>cz_transicoes</code>, <code>pgmq</code></dd></div><div><dt>Alçada</dt><dd>Total, só transições permitidas</dd></div><div><dt>Métrica</dt><dd>0 transição inválida</dd></div></dl></article><article class="agent"><header><h4>Executor</h4><span class="pill m-code">Código</span></header>
+<p class="agent-mission">Único processo com chaves externas: espelho e baixa do card no Sapron, bloqueio e desbloqueio na Stays, código da fechadura, envio de mensagem, chamada ao Asaas</p>
+<dl><div><dt>Gatilho</dt><dd><code>Command</code> com ALLOW do policy engine</dd></div><div><dt>Ferramentas</dt><dd>Sapron, Stays, fechadura/cofre, WhatsApp, Asaas (<code>cz_journal_acoes</code> antes de agir)</dd></div><div><dt>Alçada</dt><dd>Só executa o que o policy liberou; idempotente</dd></div><div><dt>Métrica</dt><dd>0 ação duplicada; 0 ação sem evento</dd></div></dl></article><article class="agent"><header><h4>Intake/Triagem</h4><span class="pill m-llm"><strong>Sonnet 5.5 → Haiku 5.5</strong></span></header>
+<p class="agent-mission">Classifica a entrada, extrai imóvel, categoria, P1-P4 e fotos, aponta duplicata</p>
+<dl><div><dt>Gatilho</dt><dd>Mensagem, card, vistoria, limpeza</dd></div><div><dt>Ferramentas</dt><dd>Leitura do Sapron, visão</dd></div><div><dt>Alçada</dt><dd>Propõe; "coberto" é decidido em código; nunca descarta</dd></div><div><dt>Métrica</dt><dd>Acurácia de categoria e prioridade ≥95% no eval</dd></div></dl></article><article class="agent"><header><h4>Precificação</h4><span class="pill m-code">Código</span></header>
+<p class="agent-mission">Preço fixo da tabela, visita de diagnóstico, excedente</p>
+<dl><div><dt>Gatilho</dt><dd>Pedido <code>TRIADO</code></dd></div><div><dt>Ferramentas</dt><dd><code>cz_precos_tabela</code>, <code>cz_plano_coberturas</code></dd></div><div><dt>Alçada</dt><dd>Total; nenhum preço vem de LLM</dd></div><div><dt>Métrica</dt><dd>Divergência de preço = 0</dd></div></dl></article><article class="agent"><header><h4>Seleção e oferta</h4><span class="pill m-code">Código</span></header>
+<p class="agent-mission">Ranking e oferta sequencial ou paralela, com lock otimista</p>
+<dl><div><dt>Gatilho</dt><dd><code>APROVADO</code></dd></div><div><dt>Ferramentas</dt><dd>Hub, Maps (matriz no top 10), agenda</dd></div><div><dt>Alçada</dt><dd>Total; só prestador N2+ com NF e sem bloqueio; recusa sem punição</dd></div><div><dt>Métrica</dt><dd>Tempo até aceite; % sem prestador &lt;5%</dd></div></dl></article><article class="agent"><header><h4>Conversador WhatsApp</h4><span class="pill m-llm"><strong>Sonnet 5.5 (low)</strong></span></header>
+<p class="agent-mission">Tira dúvidas de prestador, proprietário e hóspede, lembra prazos, coleta disponibilidade</p>
+<dl><div><dt>Gatilho</dt><dd>Mensagem recebida</dd></div><div><dt>Ferramentas</dt><dd>Leitura do pedido; registrar intenção</dd></div><div><dt>Alçada</dt><dd><strong>Sem ferramenta de efeito.</strong> Valor e aceite só por botão ou link</dd></div><div><dt>Métrica</dt><dd>Resolução sem humano; casos de injection = 0 sucesso</dd></div></dl></article><article class="agent"><header><h4>QA da prova</h4><span class="pill m-llm">Código + <strong>Sonnet 5.5</strong> (Opus 5.5 no duvidoso)</span></header>
+<p class="agent-mission">Valida evidência contra o checklist</p>
+<dl><div><dt>Gatilho</dt><dd><code>PROVA_ENVIADA</code></dd></div><div><dt>Ferramentas</dt><dd>pHash, GPS, desafio, visão</dd></div><div><dt>Alçada</dt><dd>Aprova ou reprova; não paga; isolado da conversa</dd></div><div><dt>Métrica</dt><dd>Falso positivo; % de "não" no oráculo</dd></div></dl></article><article class="agent"><header><h4>Financeiro</h4><span class="pill m-code">Código</span></header>
+<p class="agent-mission">Débito no repasse, excedente, repasse Pix, NF, cálculo do teto do MEI, conciliação</p>
+<dl><div><dt>Gatilho</dt><dd>Validação + janela; fechamento mensal</dd></div><div><dt>Ferramentas</dt><dd>Asaas, Sapron (carteira), consulta de NF</dd></div><div><dt>Alçada</dt><dd>Valor = valor aprovado no banco. Mês 1: humano aprova todo repasse</dd></div><div><dt>Métrica</dt><dd>Conciliação Asaas × <code>cz_repasses</code> × Sapron = 0</dd></div></dl></article><article class="agent"><header><h4>Exceções</h4><span class="pill m-llm"><strong>Opus 5.5 (high)</strong></span></header>
+<p class="agent-mission">Resolve desvios dentro da alçada: troca prestador, reagenda, crédito no pacote</p>
+<dl><div><dt>Gatilho</dt><dd>Gatilho de desvio</dd></div><div><dt>Ferramentas</dt><dd>Tools tipadas de reagendar, reofertar e creditar</dd></div><div><dt>Alçada</dt><dd>Crédito até a alçada; não paga, não estorna, não muda contrato</dd></div><div><dt>Métrica</dt><dd>% de exceções resolvidas sem humano</dd></div></dl></article><article class="agent"><header><h4>Preventiva</h4><span class="pill m-code">Código</span></header>
+<p class="agent-mission">Abre pedidos das regras de recorrência cobertas, em lote por rota</p>
+<dl><div><dt>Gatilho</dt><dd>Cron 06h</dd></div><div><dt>Ferramentas</dt><dd><code>maintenance_maintenancerecurrencerule</code>, Stays</dd></div><div><dt>Alçada</dt><dd>Total</dd></div><div><dt>Métrica</dt><dd>Preventiva no prazo ≥95%; jobs por rota</dd></div></dl></article><article class="agent"><header><h4>Juiz</h4><span class="pill m-llm"><strong>Modelo ou prompt diferente</strong> (Haiku 5.5 / Sonnet 5.5 em Batch)</span></header>
+<p class="agent-mission">Nota cega de 10% dos pedidos encerrados; regressão no CI</p>
+<dl><div><dt>Gatilho</dt><dd>Diário (Batch)</dd></div><div><dt>Ferramentas</dt><dd>Leitura do log</dd></div><div><dt>Alçada</dt><dd>Nenhuma ação</dd></div><div><dt>Métrica</dt><dd>Nota média; queda gera alerta</dd></div></dl></article></div><h3 class="grp">Venda <span class="count">2 + 1 na fase 2</span></h3><div class="agents"><article class="agent"><header><h4>Ofertador</h4><span class="pill m-code">Código</span></header>
+<p class="agent-mission">Escolhe o momento e o imóvel para a oferta</p>
+<dl><div><dt>Gatilho</dt><dd>Chamado caro, extrato, set/out, ativação</dd></div><div><dt>Ferramentas</dt><dd>Sapron (eventos e despesas)</dd></div><div><dt>Alçada</dt><dd>Total; máximo 1 oferta a cada 30 dias por imóvel</dd></div><div><dt>Métrica</dt><dd>Conversão por gatilho</dd></div></dl></article><article class="agent"><header><h4>Cotador</h4><span class="pill m-code">Código</span></header>
+<p class="agent-mission">Faixa + tabela + F_cidade; landing com o gasto real</p>
+<dl><div><dt>Gatilho</dt><dd>Ofertador ou clique</dd></div><div><dt>Ferramentas</dt><dd>Sapron, tabela do relatório 07</dd></div><div><dt>Alçada</dt><dd>Total</dd></div><div><dt>Métrica</dt><dd>0 erro de faixa</dd></div></dl></article><article class="agent agent-f2"><header><h4>Vendas conversacional</h4><span class="pill m-f2">Fase 2</span></header><p>Negociação e objeções</p></article></div><h3 class="grp">Oferta (prestador) <span class="count">8</span></h3><div class="agents"><article class="agent"><header><h4>Radar de Cobertura</h4><span class="pill m-code">Código</span></header>
+<p class="agent-mission">Detecta buraco por célula</p>
+<dl><div><dt>Gatilho</dt><dd>Diário</dd></div><div><dt>Ferramentas</dt><dd>Sapron, Hub, histórico de jobs</dd></div><div><dt>Alçada</dt><dd>Total</dd></div><div><dt>Métrica</dt><dd>Células com buraco −50% em 90 dias</dd></div></dl></article><article class="agent"><header><h4>Captador</h4><span class="pill m-llm">Código + <strong>Haiku 5.5</strong> (busca e dedupe)</span></header>
+<p class="agent-mission">Junta e prioriza leads (score 40/25/15/10/10)</p>
+<dl><div><dt>Gatilho</dt><dd>Célula com buraco</dd></div><div><dt>Ferramentas</dt><dd>Hub, Places, base Receita, indicação</dd></div><div><dt>Alçada</dt><dd>Total; descarta inválido com log</dd></div><div><dt>Métrica</dt><dd>Custo por N2 ≤ R$ 150 <span class="badge b-premissa">premissa</span></dd></div></dl></article><article class="agent"><header><h4>Abordador</h4><span class="pill m-llm">Código + <strong>Haiku 5.5</strong> (variáveis)</span></header>
+<p class="agent-mission">Cadência e templates com freio automático</p>
+<dl><div><dt>Gatilho</dt><dd>Lead em fila</dd></div><div><dt>Ferramentas</dt><dd>WhatsApp Cloud API (número de recrutamento)</dd></div><div><dt>Alçada</dt><dd>Total, dentro dos limites da Meta</dd></div><div><dt>Métrica</dt><dd>Resposta ≥8% fria / ≥30% opt-in</dd></div></dl></article><article class="agent"><header><h4>Cadastrador</h4><span class="pill m-llm"><strong>Sonnet 5.5</strong></span></header>
+<p class="agent-mission">N1 conversacional em 8 perguntas</p>
+<dl><div><dt>Gatilho</dt><dd>"Quero saber"</dd></div><div><dt>Ferramentas</dt><dd>WhatsApp (botões, localização, áudio), geocoding, CNPJ, tabela</dd></div><div><dt>Alçada</dt><dd>Total; contraproposta &gt; +15% vai para lote semanal</dd></div><div><dt>Métrica</dt><dd>Abriu → N1 50%</dd></div></dl></article><article class="agent"><header><h4>Verificador</h4><span class="pill m-llm">Código + <strong>Sonnet 5.5</strong> (visão)</span></header>
+<p class="agent-mission">N1 → N2</p>
+<dl><div><dt>Gatilho</dt><dd>N1 concluído em célula com buraco</dd></div><div><dt>Ferramentas</dt><dd>Infosimples/Direct Data, Didit, certidão PF, visão</dd></div><div><dt>Alçada</dt><dd>Total; zona cinza vai para fila</dd></div><div><dt>Métrica</dt><dd>N1 → N2 ≥60% em 48h</dd></div></dl></article><article class="agent"><header><h4>Contratador</h4><span class="pill m-code">Código</span></header>
+<p class="agent-mission">Clickwrap versionado</p>
+<dl><div><dt>Gatilho</dt><dd>N2</dd></div><div><dt>Ferramentas</dt><dd>WhatsApp + link; ClickSign só para dedetização e PJ maior</dd></div><div><dt>Alçada</dt><dd>Total</dd></div><div><dt>Métrica</dt><dd>≥95% em 24h</dd></div></dl></article><article class="agent"><header><h4>Ativador</h4><span class="pill m-code">Código</span></header>
+<p class="agent-mission">Sandbox de 5 jobs, titular do Pix</p>
+<dl><div><dt>Gatilho</dt><dd>Contrato aceito</dd></div><div><dt>Ferramentas</dt><dd>Fila de jobs, DICT</dd></div><div><dt>Alçada</dt><dd>Total; titular divergente bloqueia</dd></div><div><dt>Métrica</dt><dd>1º job em 14 dias ≥70%</dd></div></dl></article><article class="agent"><header><h4>Zelador</h4><span class="pill m-llm">Código + <strong>Haiku 5.5</strong> (mensagens)</span></header>
+<p class="agent-mission">Reativação, rebaixamento, revalidação, teto do MEI</p>
+<dl><div><dt>Gatilho</dt><dd>Diário</dd></div><div><dt>Ferramentas</dt><dd>Hub, Receita</dd></div><div><dt>Alçada</dt><dd>Total</dd></div><div><dt>Métrica</dt><dd>Churn ≤5%/mês; ativos ≥65%</dd></div></dl></article></div></div></details>
+</section><section class="sec" id="s7"><h2><span class="num">07</span>Plataforma</h2>
+<p class="sum">Três superfícies: site e área do proprietário, prestador por WhatsApp + PWA de captura (sem app) e painel interno de exceções no padrão do Vel'Koz.</p>
+<details><summary><span>Telas, modelo de dados, integrações e onde roda</span></summary><div class="det"><p>Schema próprio <code>cuidazone</code>, workers TS na VPS do time no MVP, webhooks em Edge Function e migração para EKS em produção.</p><h3>7.1 Telas</h3>
+<p><strong>Site do proprietário (landing pública + landing do imóvel por link):</strong></p>
+<ol>
+<li>Pacotes com cobertura, exclusões, teto, coparticipação e fidelidade escritos. Uma regra única de garantia em todas as telas (erro do Houser).</li>
+<li>Landing do imóvel (token): gasto real de 12 meses, chamados, preço por pacote e "no avulso custaria R$ X".</li>
+<li>Checkout: escolha do pacote, termo click-wrap, aceite por botão, nunca pré-marcado.</li>
+</ol>
+<p><strong>Área do proprietário</strong> (dentro da carteira digital ou link autenticado):</p>
+<ol>
+<li>Saldo de chamados do mês, próxima preventiva agendada e faixa atual.</li>
+<li>Linha do tempo de cada chamado: foto antes e depois, prestador, prazo cumprido, "no avulso custaria R$ X" e botão de contestar (72h).</li>
+<li>Extrato do pacote: débitos no repasse, coparticipações e créditos.</li>
+<li>Aprovações pendentes (excedente e aditivo) por botão.</li>
+<li>Renovação, cancelamento com 1 clique e upgrade.</li>
+</ol>
+<p><strong>Interface do prestador</strong> (WhatsApp + PWA de captura, sem app):</p>
+<ol>
+<li>WhatsApp: oferta com valor líquido, botões Aceitar/Recusar, escolha de janela, lembretes, pagamento recebido.</li>
+<li>Link PWA por pedido (token de uso único): check-in GPS, código de acesso na janela, fotos antes e depois com câmera ao vivo e código do pedido, checklist, aditivo (foto + valor), upload da NF.</li>
+<li>Link de perfil: agenda, raio, pausas, troca de Pix (carência de 72h), ganhos e quanto já recebeu no ano (teto do MEI).</li>
+</ol>
+<p><strong>Painel interno de exceções</strong> (padrão do Vel'Koz no Slack + web):</p>
+<ol>
+<li>Fila por gatilho com contexto e botões Aprovar/Reprovar, que retomam pelo <code>order_id</code>.</li>
+<li>Funil por estado e tempo em cada estado, SLA estourado, no-show, inacessível e % de "não" no oráculo.</li>
+<li>Conciliação, sinistralidade por categoria e cidade, ocupação dos prestadores e células com buraco.</li>
+<li>Kill switches: <code>EXTERNAL_WRITES_ENABLED</code>, <code>PAGAMENTOS_ENABLED</code>, <code>MENSAGENS_ENABLED</code> e lista do piloto.</li>
+</ol>
+<h3>7.2 Modelo de dados mínimo (schema <code>cuidazone</code>, role própria, sem <code>service_role</code> nos workers)</h3>
+<div class="tbl" tabindex="0" role="region" aria-label="7.2 Modelo de dados mínimo (schema cuidazone, role própria, sem service_role nos workers)"><table><caption class="sr-only">7.2 Modelo de dados mínimo (schema cuidazone, role própria, sem service_role nos workers)</caption>
+<thead>
+<tr>
+<th scope="col">Domínio</th>
+<th scope="col">Tabelas</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th scope="row">Plano e venda</th>
+<td><code>cz_planos</code>, <code>cz_plano_coberturas</code>, <code>cz_precos_tabela</code> (serviço × cidade + checklist), <code>cz_politicas</code> (alçadas), <code>cz_ofertas_venda</code>, <code>cz_assinaturas</code>, <code>cz_consumo_periodo</code>, <code>cz_preexistentes</code></td>
+</tr>
+<tr>
+<th scope="row">Pedido</th>
+<td><code>cz_pedidos</code> (estado, prioridade, origem, <code>duplicata_de</code>, <code>sapron_card_id</code>, <code>valor_aprovado</code>, <code>coberto</code>, <code>version</code>), <code>cz_transicoes</code>, <code>cz_eventos</code> (append-only, mesma transação), <code>cz_timers</code>, <code>cz_inbox</code>/<code>cz_outbox</code>, <code>cz_journal_acoes</code></td>
+</tr>
+<tr>
+<th scope="row">Execução</th>
+<td><code>cz_ofertas</code>, <code>cz_agendamentos</code> (código de acesso cifrado), <code>cz_aditivos</code>, <code>cz_evidencias</code> (pHash, GPS, desafio, força, oráculo)</td>
+</tr>
+<tr>
+<th scope="row">Dinheiro</th>
+<td><code>cz_repasses</code> (NF, <code>transfer_id</code>, retenção), <code>cz_cobrancas_excedente</code>, <code>cz_lancamentos_sapron</code>, <code>cz_prestador_conta</code> (Pix com carência, score, sandbox, <code>atende_24h</code>, recebido no ano)</td>
+</tr>
+<tr>
+<th scope="row">Exceção e conversa</th>
+<td><code>cz_excecoes</code> (alimenta o eval), <code>cz_conversas</code>/<code>cz_mensagens</code> (telefone em hash, retenção LGPD)</td>
+</tr>
+<tr>
+<th scope="row">Oferta (no Hub)</th>
+<td>Campos novos em <code>hub_prestadores</code> (lat, lng, raio, agenda, opt-in, status operacional, Pix, <code>franquia_id</code>, score) + <code>oferta_celulas</code>, <code>contatos_prospeccao</code>, <code>consentimentos</code>, <code>aceites_termos</code>, <code>prestador_nivel_hist</code>, <code>score_snapshots</code>, <code>disponibilidade</code>, <code>filas_excecao</code></td>
+</tr>
+</tbody>
+</table></div>
+<h3>7.3 Integrações</h3>
+<div class="tbl" tabindex="0" role="region" aria-label="7.3 Integrações"><table><caption class="sr-only">7.3 Integrações</caption>
+<thead>
+<tr>
+<th scope="col">Integração</th>
+<th scope="col">Uso</th>
+<th scope="col">Observação</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th scope="row">Sapron</th>
+<td>Imóvel, proprietário, despesas (faixa), recorrência, cards; escrita do espelho do card e dos lançamentos</td>
+<td>Escrita REST no molde do <code>anuncios-backend</code>; endpoint do card <span class="badge b-confirmar">confirmar</span></td>
+</tr>
+<tr>
+<th scope="row">Carteira digital / repasse</th>
+<td>Débito da mensalidade, da coparticipação e do excedente; crédito no pacote</td>
+<td>Precisa do aditivo contratual. É o trilho único de cobrança</td>
+</tr>
+<tr>
+<th scope="row">Hub de Serviços</th>
+<td>Prestadores, categorias, preços, cobertura</td>
+<td>Join no mesmo banco; escrita do funil de oferta</td>
+</tr>
+<tr>
+<th scope="row">Stays</th>
+<td>Janela entre reservas, ocupação para o saldo projetado; bloqueio e desbloqueio do calendário nos urgentes do MGO</td>
+<td>Leitura; escrita de bloqueio <span class="badge b-confirmar">confirmar</span> (reserva: chamado automático no Suporte Unificado)</td>
+</tr>
+<tr>
+<th scope="row">WhatsApp Cloud API</th>
+<td>2 números próprios: operação e recrutamento (não o da SIA). Hóspede só pela SIA</td>
+<td>Templates utility com botão (~US$ 0,0068/msg) aprovados antes do piloto</td>
+</tr>
+<tr>
+<th scope="row">Asaas</th>
+<td>Repasse Pix ao prestador (webhook <code>TRANSFER_DONE</code>) e link Pix de quitação/excedente</td>
+<td>Taxa de transferência <span class="badge b-confirmar">confirmar</span>; subconta, split e escrow só na fase 3</td>
+</tr>
+<tr>
+<th scope="row">Contrato eletrônico</th>
+<td>Click-wrap próprio (hash, IP, data) para proprietário e prestador; ClickSign (fornecedores@) só para dedetização e PJ maior</td>
+<td>Termo aprovado pelo Jurídico</td>
+</tr>
+<tr>
+<th scope="row">Google Maps</th>
+<td>Geocode em cache + Routes Matrix no top 10</td>
+<td>10 mil grátis/mês, depois US$ 5/mil</td>
+</tr>
+<tr>
+<th scope="row">KYC</th>
+<td>Infosimples/Direct Data (CNPJ), Didit (liveness)</td>
+<td>R$ 7 a 25 por aprovado</td>
+</tr>
+<tr>
+<th scope="row">Fechadura/cofre</th>
+<td>Código por pedido</td>
+<td>Pré-requisito do piloto</td>
+</tr>
+<tr>
+<th scope="row">Slack</th>
+<td>Fila humana Aprovar/Reprovar</td>
+<td>Padrão do Vel'Koz</td>
+</tr>
+</tbody>
+</table></div>
+<h3>7.4 Onde roda</h3>
+<ul>
+<li><strong>MVP:</strong> VPS do time, com workers TS como serviços systemd (<code>router</code>, <code>executor</code> único com chaves, <code>conversador</code>, <code>intake</code>, <code>qa</code>, <code>excecoes</code>) e crontab com flock.</li>
+<li><strong>Webhooks:</strong> Edge Function fina no Supabase (HMAC → <code>cz_inbox</code> → 200), independente da VPS.</li>
+<li><strong>Timers e filas:</strong> <code>pg_cron</code> a cada 1 min e <code>pgmq</code>.</li>
+<li><strong>PWA de captura e landing:</strong> estáticos com token.</li>
+<li><strong>Produção:</strong> exceção <code>agente-novo-autorizado</code> e migração para EKS no molde <code>agente-cadencia-fornecedores</code>. Temporal só acima de cerca de 5 mil pedidos/mês.</li>
+</ul></div></details>
+</section><section class="sec" id="s8"><h2><span class="num">08</span>Diferenciais</h2>
+<p class="sum">Houser, Frontdoor/AHS, Urban Company, AMC Dubai e Porto. A barreira: base cativa + desconto no repasse + vistoria e limpeza como oráculo + 12 a 24 meses de despesa real por imóvel + calendário da Stays. Nenhum player encontrado liga o SLA à ocupação.</p>
+<details><summary><span>Comparativo com 5 concorrentes</span></summary><div class="det"><div class="tbl" tabindex="0" role="region" aria-label="Comparativo com 5 concorrentes"><table><caption class="sr-only">Comparativo com 5 concorrentes</caption>
+<thead>
+<tr>
+<th scope="col">Concorrente</th>
+<th scope="col">O que ele faz</th>
+<th scope="col">Fraqueza</th>
+<th scope="col">Onde o CuidaZone ganha</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th scope="row">Houser (Plus/Now, BR)</th>
+<td>R$ 69,90 / 109,90 / 189,90 por mês, 2 a 4 chamados <strong>por ano</strong>, 5% a 15% de desconto no avulso; Now com preço fixo, custódia e despacho por score</td>
+<td>Não define "1 chamado", teto, carência, material nem SLA. Sem preventiva. Exige adulto presente. Cadastro do prestador passa por pessoas. Contradições no site (12x × 18x, 15% × 5%)</td>
+<td>12 a 24 chamados/ano a partir de R$ 69, com teto e coparticipação escritos; preventiva por calendário entre reservas; execução sem o dono (fechadura e oráculo); cobrança no repasse; cadastro do prestador 100% agêntico; preço pelo histórico real, não por satélite</td>
+</tr>
+<tr>
+<th scope="row">Frontdoor/AHS (EUA)</th>
+<td>US$ 30–90/mês + US$ 100 ou 125 por chamado; margem bruta de 55%; retenção de 79%; 84% dos chamados em ~4,2 mil preferenciais</td>
+<td>Nega sinistro por "falta de manutenção"; CAC alto (corretor, venda direta)</td>
+<td>Coparticipação de só R$ 50; a própria Seazone faz a preventiva, então a negativa não existe; CAC perto de zero; repasse para mirar retenção acima de 79%; rede preferencial por prioridade publicada, sem punição</td>
+</tr>
+<tr>
+<th scope="row">Urban Company (Índia)</th>
+<td>Marketplace full-stack, 34% do NTV de receita, ocupação de 36% para 46%</td>
+<td>EBITDA de só 4,4% do NTV; marketing pesado; revolta contra distribuição automática e bloqueio</td>
+<td>Demanda cativa sem marketing nos dois lados; ocupação como indicador nº 1 do prestador; regras do ranking publicadas, recusa sem punição e revisão pelo art. 20 da LGPD</td>
+</tr>
+<tr>
+<th scope="row">AMC Dubai (mplus)</th>
+<td>AED 1.186 a 3.101/ano (≈ R$ 1,8 a 4,7 mil) por 6 a 10 chamados; peças até AED 400</td>
+<td>SLA só no site, não no contrato; aviso de 60 dias para cancelar</td>
+<td>R$ 708 a 2.268/ano; prazo no contrato, ligado ao calendário de reservas; cota mensal, não anual; cancelamento com 1 clique depois da fidelidade</td>
+</tr>
+<tr>
+<th scope="row">Porto (Residência Fácil, BR)</th>
+<td>2 atendimentos/ano, até 3 itens por OS, só mão de obra, garantia de 90 dias</td>
+<td>Peça do cliente; exclui "falta de manutenção"; sem preventiva</td>
+<td>Mesma lógica de mão de obra coberta, mas com consumível incluso dentro do teto, cota mensal e preventiva inclusa; peça a preço de tabela mostrado</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>A barreira:</strong> base cativa + desconto no repasse + vistoria e limpeza como sensor e oráculo + 12 a 24 meses de despesa real por imóvel + calendário da Stays. Nenhum player encontrado liga o SLA à ocupação <span class="badge b-premissa">inferência, relatório 11</span>.</p></div></details>
+</section><section class="sec" id="s9"><h2><span class="num">09</span>Onde ainda precisa de humano</h2>
+<p class="sum">14 pontos ainda com humano no MVP (acesso ao imóvel, P1 noturno, repasse do mês 1, KYC na zona cinza, disputas, entre outros), cada um com saída automática, métrica e plano para zerar. Cada decisão humana vira caso de eval.</p>
+<details><summary><span>Os 14 pontos e o plano para zerar</span></summary><div class="det"><div class="tbl" tabindex="0" role="region" aria-label="Os 14 pontos e o plano para zerar"><table><caption class="sr-only">Os 14 pontos e o plano para zerar</caption>
+<thead>
+<tr>
+<th scope="col">Ponto</th>
+<th scope="col">Hoje no MVP</th>
+<th scope="col">Saída automática</th>
+<th scope="col">Métrica</th>
+<th scope="col">Plano para zerar</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th scope="row">Acesso ao imóvel</th>
+<td>Só entra imóvel com fechadura ou cofre; senão a franquia abre</td>
+<td>Código por pedido</td>
+<td>% de imóveis com acesso remoto</td>
+<td>Instalar fechadura como avulso parcelado no repasse para assinante (fase 2)</td>
+</tr>
+<tr>
+<th scope="row">P1 noturno</th>
+<td>Plantonista com SLA de 15 min</td>
+<td>Pool 24h + contenção ao hóspede</td>
+<td>% de P1 noturnos sem humano</td>
+<td>Ampliar o pool <code>atende_24h</code> por célula; voz por IA 24h (modelo Soomgo) na fase 2</td>
+</tr>
+<tr>
+<th scope="row">Repasse ao prestador</th>
+<td>Humano aprova <strong>todos</strong> no mês 1</td>
+<td>Código + QA + janela</td>
+<td>Divergência de conciliação = 0</td>
+<td>Mês 3: só acima da alçada; mês 6: só exceção</td>
+</tr>
+<tr>
+<th scope="row">KYC na zona cinza</th>
+<td>Fila identidade/fraude (48h)</td>
+<td>Liveness + face match</td>
+<td>% que cai na fila</td>
+<td>Segunda prova automática; meta &lt;5%</td>
+</tr>
+<tr>
+<th scope="row">Disputa e dano causado pelo prestador</th>
+<td>Humano acima da alçada de crédito</td>
+<td>Crédito no pacote até a alçada</td>
+<td>% resolvidas por crédito</td>
+<td>Subir a alçada conforme o eval; seguro RC coletivo</td>
+</tr>
+<tr>
+<th scope="row">Templates da Meta</th>
+<td>Humano submete os recusados</td>
+<td>Biblioteca aprovada</td>
+<td>Templates ativos, quality rating</td>
+<td>Biblioteca estável depois do piloto</td>
+</tr>
+<tr>
+<th scope="row">Contrato fora do padrão</th>
+<td>Jurídico (seajuri)</td>
+<td>Click-wrap fixo</td>
+<td>Nenhum desvio no MVP</td>
+<td>Manter sem exceção</td>
+</tr>
+<tr>
+<th scope="row">Contestação de débito no extrato</th>
+<td>CS Proprietários</td>
+<td>Crédito automático se o QA reprovou</td>
+<td>Taxa de contestação</td>
+<td>Mostrar prova e "no avulso custaria R$ X" antes do débito</td>
+</tr>
+<tr>
+<th scope="row">Franquia porteira (imóvel sem fechadura)</th>
+<td>Franquia abre</td>
+<td>–</td>
+<td>–</td>
+<td>Tira do piloto; entra só com o acordo da franquia</td>
+</tr>
+<tr>
+<th scope="row">Sandbox do prestador novo</th>
+<td>Humano aprova o repasse dos 5 primeiros jobs</td>
+<td>Teto de R$ 300 e no máximo 2 abertos</td>
+<td>Fraude e retrabalho no sandbox</td>
+<td>Sandbox só por exceção quando o eval do QA estiver estável</td>
+</tr>
+<tr>
+<th scope="row">Bloqueio e desbloqueio do calendário (urgente do MGO)</th>
+<td>Chamado no Suporte Unificado, se a escrita na Stays não for liberada</td>
+<td>Executor bloqueia e desbloqueia pela Stays <span class="badge b-confirmar">confirmar</span></td>
+<td>% de bloqueios sem pessoa</td>
+<td>Liberar a escrita de bloqueio na Stays para o CuidaZone</td>
+</tr>
+<tr>
+<th scope="row">Recusa de manutenção essencial</th>
+<td>CS Proprietários</td>
+<td>Aviso do risco por botão e calendário bloqueado</td>
+<td>Recusas por mês</td>
+<td>Manter humano (decisão sobre segurança)</td>
+</tr>
+<tr>
+<th scope="row">Urgente sem prestador (P2-P4)</th>
+<td>Exceção humana depois de 12h</td>
+<td>Raio maior, franquia pela tabela, rodada no dia seguinte</td>
+<td>% de <code>SEM_PRESTADOR</code></td>
+<td>Radar fecha a célula (≥3 N2+)</td>
+</tr>
+<tr>
+<th scope="row">Dano de hóspede</th>
+<td>Palavra final humana e Jurídico (fluxo atual)</td>
+<td>Intake separa do pacote e lança em até 14 dias</td>
+<td>–</td>
+<td>Fora do escopo do CuidaZone</td>
+</tr>
+</tbody>
+</table></div>
+<p>Regra: cada decisão humana vira caso de eval. A autonomia sobe por degrau (shadow → alçada baixa → alçada alta) quando o erro fica abaixo do limiar em N pedidos seguidos e o "não" do oráculo fica abaixo de X%.</p></div></details>
+</section><section class="sec" id="s10"><h2><span class="num">10</span>Riscos e mitigação</h2>
+<p class="sum">Os maiores: enquadramento como seguro (SUSEP), vínculo de emprego (Tema 1291), seleção adversa, conflito com a franquia e fraude de prova ou de Pix. Cada um tem mitigação desenhada no fluxo.</p>
+<details><summary><span>Riscos jurídicos, fiscais, operacionais e de segurança</span></summary><div class="det"><div class="tbl" tabindex="0" role="region" aria-label="Riscos jurídicos, fiscais, operacionais e de segurança"><table><caption class="sr-only">Riscos jurídicos, fiscais, operacionais e de segurança</caption>
+<thead>
+<tr>
+<th scope="col">Tipo</th>
+<th scope="col">Risco</th>
+<th scope="col">Mitigação</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th scope="row">Jurídico</th>
+<td>Enquadramento como seguro ou assistência pela SUSEP</td>
+<td>Vender como pacote de serviços com cobertura listada, cota e sem indenização em dinheiro ("não é seguro", como a Houser). Parecer do Jurídico <strong>antes</strong> do piloto</td>
+</tr>
+<tr>
+<th scope="row">Jurídico</th>
+<td>CDC: responsabilidade solidária (arts. 14 e 34)</td>
+<td>Direito de regresso no contrato do prestador, garantia de 90 dias, retenção do repasse por 72h, seguro RC coletivo, arrependimento em 7 dias</td>
+</tr>
+<tr>
+<th scope="row">Jurídico</th>
+<td>Vínculo de emprego (Tema 1291 pendente, C193)</td>
+<td>MEI/PJ obrigatório; recusa sem punição, sem agenda imposta nem exclusividade; ranking publicado; log das recusas. "Volume garantido" vira prioridade publicada, nunca obrigação</td>
+</tr>
+<tr>
+<th scope="row">Jurídico</th>
+<td>Venda casada ou renovação escondida (HomeServe: £ 30,6 mi)</td>
+<td>Aceite por botão nunca pré-marcado; aviso de renovação 30 dias antes; cancelamento com 1 clique</td>
+</tr>
+<tr>
+<th scope="row">Jurídico</th>
+<td>Aditivo para débito no repasse e substituição do limite de R$ 300</td>
+<td>Aditivo padrão no click-wrap; mudança no MGO e na Política para proprietário</td>
+</tr>
+<tr>
+<th scope="row">Fiscal</th>
+<td>Imposto de 14,25% e revenda × intermediação</td>
+<td>Validar com o contador antes de fixar a tabela; CBS/IBS a partir de 2027</td>
+</tr>
+<tr>
+<th scope="row">Fiscal</th>
+<td>Pagar sem NF; teto do MEI de R$ 81 mil</td>
+<td>Repasse só com NFS-e Nacional conferida (CNPJ e valor); controle do recebido no ano e migração para ME</td>
+</tr>
+<tr>
+<th scope="row">Operacional</th>
+<td>Demanda: todos os preços ficam acima do gasto médio atual (R$ 36/mês)</td>
+<td>Vender previsibilidade; Essencial como porta de entrada; teste com cerca de 100 imóveis antes de abrir</td>
+</tr>
+<tr>
+<th scope="row">Operacional</th>
+<td>Seleção adversa (Q4 custa 1,7× a média)</td>
+<td>Faixas A/B/C/D; D só no Essencial; carência; vistoria de entrada; quase sem registro entra como "Novo"</td>
+</tr>
+<tr>
+<th scope="row">Operacional</th>
+<td>Risco moral: quem abre o chamado também recebe (Itapema: 6,6 a 7,5 chamados/ano contra 3,2)</td>
+<td>Coparticipação, cota, prova por link, oráculo, auditoria nas cidades com 100% dos imóveis com chamado; card espelhado trava a franquia</td>
+</tr>
+<tr>
+<th scope="row">Operacional</th>
+<td>Conflito com a franquia (perde a receita de manutenção e a margem de até 20%)</td>
+<td>Prestadora prioritária pela tabela + bônus por assinante retido, financiado pela perda que cai a zero; decisão antes do piloto</td>
+</tr>
+<tr>
+<th scope="row">Operacional</th>
+<td>Oferta: 398 combinações cidade × categoria sem prestador; só 0,3% dos cadastros com documento anexado e 52% dos validados (471) sem CPF/CNPJ; Porto Seguro com 20 imóveis por prestador</td>
+<td>Expandir só onde o Radar marcar ≥3 N2+ por célula; requalificar os 471 validados sem documento em 60 dias</td>
+</tr>
+<tr>
+<th scope="row">Operacional</th>
+<td>Sazonalidade de ±25% (picos em mar-mai e out)</td>
+<td>Reserva de caixa de 1 mês de custo; preventiva de ar fora do pico; fidelidade de 12 meses</td>
+</tr>
+<tr>
+<th scope="row">Operacional</th>
+<td>Saldo negativo na baixa temporada deixa o assinante sem corretivo</td>
+<td>Regra só dispara sem reserva futura confirmada; link Pix para reativar na hora</td>
+</tr>
+<tr>
+<th scope="row">Segurança</th>
+<td>Prompt injection pelo WhatsApp, PDF ou foto</td>
+<td>Conversador sem ferramenta de efeito; valor e aceite só por botão ou link; número desconhecido não muda estado; schema estrito comparado com a tabela</td>
+</tr>
+<tr>
+<th scope="row">Segurança</th>
+<td>Fraude de foto (o WhatsApp apaga EXIF/GPS)</td>
+<td>Link de captura com GPS, código do pedido na foto, ângulo aleatório, pHash, oráculo da limpeza seguinte</td>
+</tr>
+<tr>
+<th scope="row">Segurança</th>
+<td>Fraude de Pix e troca de chave</td>
+<td>Pix só para titular = CPF/CNPJ do cadastro (DICT); troca só por link, com carência de 72h e aviso no número antigo</td>
+</tr>
+<tr>
+<th scope="row">Segurança</th>
+<td>LGPD (foto com pertence do hóspede, transferência internacional ao LLM)</td>
+<td>Retenção curta, telefone e CPF em hash nos logs, base legal documentada, nada de Managed Agents no fluxo transacional</td>
+</tr>
+<tr>
+<th scope="row">Segurança</th>
+<td>Credenciais</td>
+<td>Executor é o único com chaves; workers sem <code>service_role</code>; HMAC em todos os webhooks; kill switches</td>
+</tr>
+</tbody>
+</table></div></div></details>
+</section><section class="sec" id="s11"><h2><span class="num">11</span>Roadmap</h2>
+<p class="sum">Semanas 1-2 no retiro (decisões, schema, cotador e shadow), mês 1 com 10 a 20 assinantes na Grande Florianópolis, mês 3 com cerca de 100 assinantes, mês 6 com meta de 300 a 500 por densidade. Go/no-go em cada marco.</p>
+<ol class="steps">
+<li><b>Semanas 1-2</b><span>Decisões, schema, cotador, Intake e QA em shadow</span></li>
+<li><b>Mês 1</b><span>Piloto operacional: 10 a 20 assinantes, 5 a 10 prestadores</span></li>
+<li><b>Mês 3</b><span>Teste de demanda: cerca de 100 assinantes (faixas B e C)</span></li>
+<li><b>Mês 6</b><span>Expansão por densidade: 300 a 500 assinantes</span></li>
+</ol>
+<details><summary><span>Plano por fase, métricas de sucesso e critérios de go/no-go</span></summary><div class="det"><h3>Semana 1-2 (retiro)</h3>
+<ul>
+<li>Fechar as decisões da seção 12 (as 3 primeiras bloqueiam o piloto).</li>
+<li>Criar o schema <code>cuidazone</code>, <code>cz_transicoes</code>, inbox/outbox, timers e políticas; montar router e executor com escrita desligada.</li>
+<li>Carregar a tabela de preços (seção 3) e as coberturas (seção 2) em <code>cz_precos_tabela</code> e <code>cz_plano_coberturas</code>.</li>
+<li>Cotador com a regra do relatório 07, rodando sobre todos os imóveis da Grande Florianópolis (faixa e preço de cada um).</li>
+<li>Intake e QA em <strong>shadow</strong> sobre cards reais do Sapron da Grande Florianópolis; dataset de eval com cerca de 100 cards, incluindo injection e fraude.</li>
+<li>Pedidos externos: WABA e templates com botão (Meta), conta, sandbox e taxas (Asaas), termo click-wrap e parecer SUSEP (Jurídico), confirmação do imposto (fiscal).</li>
+<li>Levantar quais imóveis da Grande Florianópolis têm fechadura eletrônica ou cofre.</li>
+</ul>
+<h3>Mês 1: piloto operacional (Grande Florianópolis)</h3>
+<ul>
+<li><strong>Por quê lá:</strong> Florianópolis tem 833 ativos no Sapron (797 imóveis no recorte do Hub) e 184 prestadores (4,3 imóveis por prestador), SC tem 49% da base do Hub e o gasto é de R$ 578/imóvel/ano.</li>
+<li><strong>Escopo:</strong> 10 a 20 imóveis <strong>assinantes</strong> (aditivo assinado) com fechadura ou cofre; hidráulica e elétrica leve; 5 a 10 prestadores com CNPJ tirados dos 903 validados (52% deles ainda sem CPF/CNPJ). Preventiva com 2 ou 3 regras, mas cobrada como hoje (despesa do proprietário com aprovação), porque a preventiva do pacote só sai a partir do 3º mês de assinatura.</li>
+<li>Oferta e aceite por botão, prova por link, oráculo pela limpeza, repasse depois de 72h <strong>com aprovação humana em todos</strong>, pool P1 noturno + plantonista, painel e alertas.</li>
+<li>Lado da oferta: campanha do bot para os validados de Florianópolis aceitarem a tabela, mandarem CNPJ e Pix.</li>
+</ul>
+<h3>Mês 3: teste de demanda</h3>
+<ul>
+<li><strong>Cerca de 100 assinantes</strong> das faixas B e C em Florianópolis, com os gatilhos de oferta (momento de dor, extrato, onboarding).</li>
+<li>Repasse automático até a alçada nas rotas aprovadas pelo eval; garantia e score ligados.</li>
+<li>Itapema (276 ativos, R$ 865/imóvel/ano) só depois de cobrir dedetização e marido de aluguel, que hoje têm 0 prestador lá <span class="badge b-dado">dado 02</span>.</li>
+<li>Medir a rede preferencial a 0,9× sem punição de recusa.</li>
+</ul>
+<h3>Mês 6: expansão por densidade</h3>
+<ul>
+<li>Florianópolis + Itapema + Balneário Camboriú/Bombinhas/Penha, só nas células com ≥3 N2+.</li>
+<li><strong>Meta proposta: 300 a 500 assinantes.</strong></li>
+<li>Garantia "Imóvel Pronto" (prazo escrito com crédito da mensalidade), só nas células com ≥3 N2 e só se o custo medido couber na margem.</li>
+<li>Pré-temporada (set/out) com a oferta "ar higienizado antes do verão".</li>
+<li>Salvador (276 imóveis e 57 prestadores no Hub, 4,8 por prestador) vem depois; lá falta prestador de piscina, que é add-on fora do MVP. Balneário Camboriú também não tem marido de aluguel e Penha tem 1 só de hidráulica: entram só nas células com ≥3 N2+. Porto Seguro, Curitiba e Brasília por último.</li>
+</ul>
+<h3>Métricas de sucesso</h3>
+<div class="tbl" tabindex="0" role="region" aria-label="Métricas de sucesso"><table><caption class="sr-only">Métricas de sucesso</caption>
+<thead>
+<tr>
+<th scope="col">Métrica</th>
+<th scope="col">Meta proposta</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th scope="row">Sinistralidade (custo de serviço ÷ receita)</th>
+<td>≤ 60% (base de 54%)</td>
+</tr>
+<tr>
+<th scope="row">Contribuição por assinante</th>
+<td>≥ R$ 18/mês</td>
+</tr>
+<tr>
+<th scope="row">Pedidos sem humano no caminho feliz</th>
+<td>≥ 90% no mês 3; ≥ 97% no mês 6</td>
+</tr>
+<tr>
+<th scope="row">Prazo P1-P4 cumprido</th>
+<td>≥ 95%</td>
+</tr>
+<tr>
+<th scope="row">"Não" no oráculo</th>
+<td>≤ 5%</td>
+</tr>
+<tr>
+<th scope="row">No-show do prestador</th>
+<td>≤ 3%</td>
+</tr>
+<tr>
+<th scope="row">Divergência de conciliação</th>
+<td>0</td>
+</tr>
+<tr>
+<th scope="row">Conversão da oferta no momento de dor</th>
+<td>medir; referência ≥ 10%</td>
+</tr>
+<tr>
+<th scope="row">Churn de assinante</th>
+<td>≤ 21%/ano (retenção ≥ 79%, a da Frontdoor)</td>
+</tr>
+<tr>
+<th scope="row">Ocupação dos prestadores N2+ (≥1 job em 30 dias)</th>
+<td>≥ 65%</td>
+</tr>
+</tbody>
+</table></div>
+<h3>Go/no-go</h3>
+<p><strong>Fim do mês 1 (operação):</strong></p>
+<ul>
+<li><strong>Vai:</strong> ≥ 90% dos pedidos sem humano fora da aprovação do repasse, 0 divergência financeira, 0 injection bem-sucedida, "não" no oráculo ≤ 10%.</li>
+<li><strong>Não vai:</strong> fraude de prova confirmada sem detecção, ou mais de 2 P1 sem atendimento no prazo.</li>
+</ul>
+<p><strong>Fim do mês 3 (demanda):</strong></p>
+<ul>
+<li><strong>Vai:</strong> ≥ 100 assinantes, sinistralidade ≤ 60% e contribuição ≥ R$ 15/mês por assinante.</li>
+<li><strong>Revisa preço:</strong> sinistralidade entre 60% e 70%.</li>
+<li><strong>Para:</strong> sinistralidade acima de 70%, ou menos de 50 assinantes com todos os gatilhos rodando. Nesse caso, mantém só o Essencial e o avulso.</li>
+</ul>
+<p><strong>Fim do mês 6 (escala):</strong></p>
+<ul>
+<li><strong>Vai:</strong> contribuição mensal ≥ custo fixo do plantão + exceção (break-even de 479 assinantes por R$ 10 mil/mês de fixo) e retenção projetada ≥ 79%.</li>
+</ul></div></details>
+</section><section class="sec" id="s12"><h2><span class="num">12</span>Decisões pendentes para a liderança</h2>
+<p class="sum">16 decisões para a liderança. <b>As 3 primeiras bloqueiam o piloto</b>: papel da franquia, aditivo contratual para débito no repasse e parecer SUSEP/CDC.</p>
+<ol class="decisions"><li class='block'><span class='pill p-block'>bloqueia</span> <strong>Papel da franquia</strong> (bloqueia o piloto): prestadora prioritária + bônus por assinante retido (até R$ 1,8/mês)?<details><summary><span>Detalhe e o que vem junto</span></summary><div class="det"><p>Prestadora prioritária pela tabela + bônus por assinante retido no lugar da margem de até 20%. Qual o valor do bônus (proposta: até R$ 1,8/assinante/mês, financiado pela perda que some com o repasse)? Junto: mudar o MGO para tirar o card <code>origem=cuidazone</code> da pontuação, das ocorrências e das cobranças da franquia, e definir se o avulso pode ser vendido a quem não assina.</p></div></details></li><li class='block'><span class='pill p-block'>bloqueia</span> <strong>Aditivo contratual</strong> para descontar a mensalidade e a coparticipação no repasse, substituindo o limite de R$ 300 dentro do teto do pacote (Jurídico + CS Proprietários).</li><li class='block'><span class='pill p-block'>bloqueia</span> <strong>Parecer SUSEP e CDC</strong> antes do piloto: pacote de serviços com cota pode ser vendido sem ser seguro?</li></ol>
+<details><summary><span>As outras 13 decisões</span></summary><div class="det"><ol class="decisions" start="4"><li><strong>Enquadramento fiscal:</strong> confirmar 14,25%, revenda × intermediação (muda a margem do avulso de ~R$ 4,7 para ~R$ 21 por R$ 100) e quem emite a nota de quê.</li><li><strong>Excedente:</strong> o padrão do relatório 09 é Pix antes do despacho, com carteira só em P1 com consentimento prévio (decisão nº 5 da arquitetura). Ampliar para lançar na carteira sempre que o saldo projetado cobrir, com o Pix só como reserva?</li><li><strong>Regra de saldo negativo:</strong> suspender o corretivo depois de 2 ciclos negativos sem reserva futura?</li><li><strong>Acesso:</strong> piloto restrito a imóveis com fechadura ou cofre? Há esse dado no Sapron?</li><li><strong>NF obrigatória:</strong> deixar fora quem não tem CNPJ (diaristas e os 52% dos validados sem CPF/CNPJ)?</li><li><strong>Plantonista P1 noturno:</strong> quem faz, com qual SLA e com qual custo fixo?</li><li><strong>Orçamento de custo fixo do piloto</strong> (plantão, exceção, aprovação de repasse): cabe em R$ 10,4 mil/mês com 500 assinantes, ou a Operação absorve até lá?</li><li><strong>Canal:</strong> WABA própria do CuidaZone com 2 números (operação e recrutamento), separada da SIA?</li><li><strong>Garantia "Imóvel Pronto"</strong> (crédito da mensalidade se o prazo estourar, diária coberta no Premium): só depois de medir o custo no piloto?</li><li><strong>Alçadas:</strong> por pedido, de urgência em P1 e de crédito automático por contestação.</li><li><strong>Metas e critérios de go/no-go</strong> da seção 11.</li><li><strong>Escrita na Stays</strong> para bloqueio e desbloqueio automático do calendário nos urgentes (hoje é pedido por pessoa no Suporte Unificado).</li><li><strong>Procuração para reparo emergencial</strong> (base antiga, abr/2026): confirmar se ainda vale para o P1 aprovado sem resposta do proprietário.</li></ol></div></details>
+</section>
+
+  <footer>
+    <p>Levantamento de 16/11/2026 · fontes: 11 relatórios de pesquisa (Sapron, Hub de Serviços, KB, Houser, Frontdoor, Urban Company, AMC Dubai e outros)</p>
+  </footer>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.min.js"></script>
+<script>
+(function () {
+  if (!window.mermaid) {
+    document.querySelectorAll('.mermaid-out').forEach(function (el) { el.classList.add('err'); el.textContent = 'Não foi possível carregar o Mermaid para desenhar este fluxograma.'; });
+    return;
+  }
+  function tok(name) { return getComputedStyle(document.documentElement).getPropertyValue(name).trim(); }
+  var seq = 0;
+  async function renderAll() {
+    var fg = tok('--color-foreground'), node = tok('--mm-node'), prim = tok('--color-primary'),
+        light = tok('--color-primary-light'), line = tok('--mm-line'), bg = tok('--color-background'), muted = tok('--color-muted');
+    mermaid.initialize({
+      startOnLoad: false,
+      securityLevel: 'strict',
+      theme: 'base',
+      fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif',
+      flowchart: { htmlLabels: true, curve: 'basis', useMaxWidth: true, nodeSpacing: 36, rankSpacing: 44, padding: 12 },
+      themeVariables: {
+        fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif',
+        fontSize: '14px',
+        background: bg,
+        primaryColor: node,
+        primaryTextColor: fg,
+        primaryBorderColor: prim,
+        secondaryColor: light,
+        tertiaryColor: muted,
+        lineColor: line,
+        textColor: fg,
+        mainBkg: node,
+        nodeBorder: prim,
+        clusterBkg: muted,
+        clusterBorder: line,
+        edgeLabelBackground: bg,
+        titleColor: fg
+      }
+    });
+    var srcs = document.querySelectorAll('.mermaid-src');
+    for (var i = 0; i < srcs.length; i++) {
+      var src = srcs[i], out = src.parentNode.querySelector('.mermaid-out');
+      try {
+        var res = await mermaid.render('mm' + (seq++), src.textContent);
+        out.classList.remove('err');
+        out.innerHTML = res.svg;
+      } catch (e) {
+        out.classList.add('err');
+        out.textContent = 'Erro ao desenhar o fluxograma: ' + (e && e.message ? e.message : e);
+      }
+    }
+  }
+  renderAll();
+  var mq = window.matchMedia('(prefers-color-scheme: dark)');
+  if (mq.addEventListener) mq.addEventListener('change', renderAll);
+  new MutationObserver(renderAll).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+})();
+</script>
+</body>
+</html>
