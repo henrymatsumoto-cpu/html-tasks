@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Captação de fornecedor por cidade · hoje × com agentes · 16/11/2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg: oklch(0.205 0.012 240);
+  --bg-2: oklch(0.235 0.013 240);
+  --bg-3: oklch(0.27 0.014 240);
+  --line: oklch(0.34 0.014 240);
+  --text: oklch(0.91 0.01 85);
+  --text-2: oklch(0.75 0.012 85);
+  --text-3: oklch(0.62 0.012 240);
+  --accent: oklch(0.80 0.11 72);
+  --accent-soft: oklch(0.80 0.11 72 / 0.12);
+  --display: "Bricolage Grotesque", "Avenir Next", "Segoe UI", sans-serif;
+  --body: "Source Sans 3", "Segoe UI", "Helvetica Neue", sans-serif;
+  --s1:4px;--s2:8px;--s3:12px;--s4:16px;--s5:24px;--s6:32px;--s7:48px;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--body);font-size:17px;line-height:1.5;overflow-x:hidden}
+.wrap{max-width:960px;margin:0 auto;padding:var(--s7) var(--s6)}
+h1,h2{font-family:var(--display);color:var(--text);line-height:1.15;margin:0}
+h1{font-size:clamp(1.8rem,4vw,2.6rem);font-weight:700;letter-spacing:-.015em}
+h2{font-size:clamp(1.25rem,2.2vw,1.5rem);font-weight:700;margin-bottom:var(--s4)}
+p,li{color:var(--text-2)}
+strong{color:var(--text)}
+.eyebrow{font-size:.85rem;color:var(--text-3);letter-spacing:.04em;margin-bottom:var(--s3)}
+.lead{font-size:1.1rem;margin:var(--s3) 0 0;max-width:60ch}
+
+.nums{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:10px;overflow:hidden;margin-top:var(--s6)}
+.nums div{background:var(--bg-2);padding:var(--s5)}
+.nums b{display:block;font-family:var(--display);font-size:clamp(2rem,5vw,2.8rem);font-weight:700;line-height:1;color:var(--text)}
+.nums .final b{color:var(--accent)}
+.nums span{display:block;margin-top:var(--s2);font-size:.92rem;color:var(--text-3);line-height:1.35}
+
+section{padding:var(--s7) 0 0}
+
+.cols{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:var(--s4);padding:0 var(--s4) var(--s2);font-size:.78rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--text-3)}
+.cols span:last-child{color:var(--accent)}
+.etapas{list-style:none;margin:0;padding:0;display:grid;gap:var(--s3)}
+.etapa{background:var(--bg-2);border:1px solid var(--line);border-radius:10px;padding:var(--s4)}
+.etapa h3{font-family:var(--display);font-size:1.05rem;font-weight:700;margin:0 0 var(--s3);color:var(--text)}
+.par{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:var(--s4)}
+.par p{margin:0;font-size:.97rem}
+.par .novo{color:var(--text)}
+.par .tag{display:none;font-size:.72rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--text-3);margin-bottom:2px}
+.par .novo .tag{color:var(--accent)}
+
+ul.lista{list-style:none;margin:0;padding:0;display:grid;gap:0}
+ul.lista li{padding:var(--s3) 0;border-top:1px solid var(--line)}
+ul.lista li:last-child{border-bottom:1px solid var(--line)}
+.duo{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:var(--s6)}
+
+ol.dec{list-style:none;margin:0;padding:0;counter-reset:d;display:grid}
+ol.dec li{counter-increment:d;display:grid;grid-template-columns:2.4rem 1fr;gap:var(--s3);padding:var(--s3) 0;border-top:1px solid var(--line);color:var(--text)}
+ol.dec li:last-child{border-bottom:1px solid var(--line)}
+ol.dec li::before{content:counter(d);font-family:var(--display);font-weight:700;color:var(--accent);font-size:1.15rem}
+
+footer{margin-top:var(--s7);padding-top:var(--s4);border-top:1px solid var(--line);font-size:.9rem;color:var(--text-3)}
+
+@media (max-width:700px){
+  body{font-size:16px}
+  .wrap{padding:var(--s6) var(--s4)}
+  .nums{grid-template-columns:1fr}
+  .cols{display:none}
+  .par{grid-template-columns:1fr;gap:var(--s3)}
+  .par .tag{display:block}
+  .duo{grid-template-columns:1fr;gap:0}
+  .duo > div + div{padding-top:var(--s7)}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="eyebrow">Processo com agentes · 16/11/2026</div>
+  <h1>Captação de fornecedor por cidade</h1>
+  <p class="lead">Achar lavanderia e fotógrafo para toda cidade que ainda não tem, sem depender de alguém estar com o navegador aberto.</p>
+  <div class="nums">
+    <div><b>47%</b><span>do trabalho roda sozinho hoje (cai para 22% nas férias da Wania)</span></div>
+    <div class="final"><b>87%</b><span>vai rodar sozinho no fim (64% já no primeiro passo)</span></div>
+    <div><b>8 de 10</b><span>conversas com fornecedor resolvidas sem ninguém do time, no fim (hoje são 6 de 10)</span></div>
+  </div>
+</header>
+
+<section>
+  <h2>Hoje × O que muda</h2>
+  <div class="cols"><span>Hoje</span><span>Com agentes</span></div>
+  <ol class="etapas">
+    <li class="etapa"><h3>Achar cidade sem fornecedor</h3><div class="par">
+      <p><span class="tag">Hoje</span>Henry roda a busca à mão. 17 cidades estão sem dono.</p>
+      <p class="novo"><span class="tag">Com agentes</span>Toda sexta um agente atualiza a lista, tira repetidas e diz por onde começar.</p></div></li>
+    <li class="etapa"><h3>Pesquisar fornecedores</h3><div class="par">
+      <p><span class="tag">Hoje</span>Pesquisa feita à mão. A fila de contatos novos está zerada.</p>
+      <p class="novo"><span class="tag">Com agentes</span>À noite o agente pesquisa e cria de 15 a 30 contatos por cidade.</p></div></li>
+    <li class="etapa"><h3>Primeiro contato</h3><div class="par">
+      <p><span class="tag">Hoje</span>O robô de mensagens já existe, mas roda só em teste.</p>
+      <p class="novo"><span class="tag">Com agentes</span>O mesmo robô passa a valer de verdade. Sem código novo.</p></div></li>
+    <li class="etapa"><h3>Conversa e preço</h3><div class="par">
+      <p><span class="tag">Hoje</span>Wania responde com a aba aberta. Leva cerca de 1h e para nas férias dela.</p>
+      <p class="novo"><span class="tag">Com agentes</span>O agente responde em minutos, a qualquer hora. Caso difícil vai para a Wania com resumo.</p></div></li>
+    <li class="etapa"><h3>Cobrar quem sumiu</h3><div class="par">
+      <p><span class="tag">Hoje</span>11 negociações paradas há até 26 dias.</p>
+      <p class="novo"><span class="tag">Com agentes</span>Lembrete automático no 2º e no 5º dia útil. No 10º, encerra.</p></div></li>
+    <li class="etapa"><h3>Cadastrar no Hub</h3><div class="par">
+      <p><span class="tag">Hoje</span>Henry cadastra à mão.</p>
+      <p class="novo"><span class="tag">Com agentes</span>O agente cadastra assim que fecha, e alguém só confere.</p></div></li>
+    <li class="etapa"><h3>Teste e contrato do fotógrafo</h3><div class="par">
+      <p><span class="tag">Hoje</span>13 de 15 fotógrafos parados há 5 dias ou mais. Contrato desligado até 19/11.</p>
+      <p class="novo"><span class="tag">Com agentes</span>O agente lembra o fotógrafo e a Ana. O contrato volta a sair sozinho.</p></div></li>
+    <li class="etapa"><h3>Fechar a cidade</h3><div class="par">
+      <p><span class="tag">Hoje</span>Ninguém fecha. As cidades ficam abertas para sempre.</p>
+      <p class="novo"><span class="tag">Com agentes</span>O agente fecha quando a cidade tem fornecedor e monta o resumo da semana.</p></div></li>
+  </ol>
+</section>
+
+<section class="duo">
+  <div>
+    <h2>Continua com gente</h2>
+    <ul class="lista">
+      <li><strong>Wania:</strong> casos difíceis, no máximo 10 abertos por vez.</li>
+      <li><strong>Henry:</strong> preço acima da tabela e contrato abaixo dela.</li>
+      <li><strong>Ana:</strong> avalia o teste prático do fotógrafo.</li>
+      <li><strong>Assinaturas</strong> do contrato no ClickSign.</li>
+      <li><strong>Ray:</strong> libera cada passo olhando os números.</li>
+    </ul>
+  </div>
+  <div>
+    <h2>Para começar precisa de</h2>
+    <ul class="lista">
+      <li>Um usuário próprio do agente na SIA (pedido à Plataforma).</li>
+      <li>Uma fila só de fornecedores na SIA. Sem ela, nada começa.</li>
+      <li>Novos modelos de mensagem do WhatsApp aprovados.</li>
+      <li>Acesso próprio ao Pipedrive, sem usar o do Henry.</li>
+      <li>OK do Bill para ligar de vez o robô de primeiro contato.</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <h2>Você decide</h2>
+  <ol class="dec">
+    <li>O agente assina como “Equipe de Fornecedores” em vez de “Wania”?</li>
+    <li>Os agentes de captação podem puxar trabalho sozinhos, à noite, sem você mandar?</li>
+    <li>Quando o caso vai para a Wania, o fornecedor recebe na hora um “Recebi, já te retorno”?</li>
+    <li>Os KPIs da Wania passam a medir só os casos difíceis?</li>
+    <li>Prestadores de serviço entram só no último passo?</li>
+  </ol>
+</section>
+
+<footer>Os agentes novos rodam no Azir, no servidor do time.</footer>
+</div>
+</body>
+</html>
