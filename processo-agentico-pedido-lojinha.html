@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Pedido da lojinha de ponta a ponta · processo agêntico · 16/11/2026</title>
+<title>Pedido da lojinha · hoje × com agentes · 16/11/2026</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Figtree:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
   --bg:oklch(0.205 0.012 250);
@@ -19,522 +19,120 @@
   --amber:oklch(0.80 0.12 72);
   --amber-bg:oklch(0.80 0.12 72 / 0.12);
   --green:oklch(0.78 0.11 155);
-  --green-bg:oklch(0.78 0.11 155 / 0.12);
-  --rose:oklch(0.74 0.12 25);
-  --rose-bg:oklch(0.74 0.12 25 / 0.12);
-  --blue:oklch(0.76 0.08 240);
-  --blue-bg:oklch(0.76 0.08 240 / 0.12);
   --s1:4px;--s2:8px;--s3:12px;--s4:16px;--s5:24px;--s6:32px;--s7:48px;--s8:64px;
   --display:"Bricolage Grotesque",Georgia,serif;
   --body:"Figtree","Segoe UI",sans-serif;
 }
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.6;overflow-x:hidden}
-.wrap{max-width:1120px;margin:0 auto;padding:var(--s7) var(--s6) var(--s8)}
-@media (max-width:640px){.wrap{padding:var(--s5) 16px var(--s7)}}
-h1,h2,h3{font-family:var(--display);font-weight:700;line-height:1.15;letter-spacing:-0.01em;margin:0}
-h1{font-size:clamp(1.9rem,4.4vw,3rem);max-width:22ch}
-h2{font-size:clamp(1.35rem,2.6vw,1.75rem);margin-bottom:var(--s4)}
-h3{font-size:1.08rem;font-family:var(--body);font-weight:700;letter-spacing:0;margin:var(--s5) 0 var(--s2)}
-p{margin:0 0 var(--s3);max-width:72ch}
-ul,ol{margin:0 0 var(--s3);padding-left:1.25rem;max-width:76ch}
-li{margin-bottom:var(--s1)}
-strong{color:oklch(0.96 0.006 250);font-weight:600}
-code{font-family:ui-monospace,"Cascadia Mono",Consolas,monospace;font-size:0.86em;background:var(--bg-3);padding:1px 5px;border-radius:4px;color:oklch(0.88 0.04 72);overflow-wrap:anywhere}
-a{color:var(--amber)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55;overflow-x:hidden}
+.wrap{max-width:960px;margin:0 auto;padding:var(--s7) var(--s6) var(--s7)}
+@media (max-width:640px){.wrap{padding:var(--s5) 16px var(--s6)}}
+h1,h2{font-family:var(--display);font-weight:700;line-height:1.15;letter-spacing:-0.01em;margin:0}
+h1{font-size:clamp(1.8rem,4.2vw,2.6rem);max-width:24ch}
+h2{font-size:clamp(1.25rem,2.4vw,1.55rem);margin-bottom:var(--s4)}
+p{margin:0}
+.meta{color:var(--ink-3);font-size:0.88rem;margin-bottom:var(--s3)}
+.lede{color:var(--ink-2);font-size:1.08rem;margin-top:var(--s3);max-width:60ch}
 
-/* topo */
-.meta{display:flex;flex-wrap:wrap;gap:var(--s2) var(--s4);color:var(--ink-3);font-size:0.9rem;margin-bottom:var(--s4)}
-.meta span+span::before{content:"·";margin-right:var(--s4);color:var(--line)}
-.lede{color:var(--ink-2);font-size:1.08rem;margin-top:var(--s4)}
-.where{display:flex;gap:var(--s3);align-items:flex-start;margin-top:var(--s5);padding:var(--s3) var(--s4);background:var(--amber-bg);border:1px solid oklch(0.80 0.12 72 / 0.35);border-radius:10px;max-width:72ch}
-.where b{color:var(--amber);font-weight:700;white-space:nowrap}
+.nums{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--s5);margin-top:var(--s6);padding-bottom:var(--s6);border-bottom:1px solid var(--line)}
+@media (max-width:720px){.nums{grid-template-columns:minmax(0,1fr);gap:var(--s4)}}
+.n{font-family:var(--display);font-weight:700;font-size:clamp(2.4rem,6vw,3.4rem);line-height:1;color:var(--amber);letter-spacing:-0.03em;white-space:nowrap}
+.n .to{color:var(--ink-3);font-weight:500;font-size:0.55em;margin:0 0.2em}
+.nums .l{color:var(--ink-2);font-size:0.95rem;margin-top:var(--s2)}
 
-/* destaque agêntico */
-.score{margin-top:var(--s6);display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:var(--s6);align-items:end;padding-bottom:var(--s6);border-bottom:1px solid var(--line)}
-@media (max-width:800px){.score{grid-template-columns:minmax(0,1fr);gap:var(--s5)}}
-.big{font-family:var(--display);font-weight:700;font-size:clamp(4.5rem,13vw,8.5rem);line-height:0.9;color:var(--amber);letter-spacing:-0.04em}
-.big small{font-size:0.4em;letter-spacing:0;color:var(--ink-2);font-weight:500;margin-left:var(--s2)}
-.big-cap{color:var(--ink-2);margin-top:var(--s3)}
-.track{position:relative;height:12px;background:var(--bg-3);border-radius:99px;margin:var(--s7) 0 var(--s8)}
-.track .now{position:absolute;inset:0 65% 0 0;background:var(--amber);border-radius:99px}
-.track .m1{position:absolute;top:0;bottom:0;left:35%;right:30%;background:oklch(0.80 0.12 72 / 0.35)}
-.track .m2{position:absolute;top:0;bottom:0;left:70%;right:15%;background:oklch(0.80 0.12 72 / 0.15);border-radius:0 99px 99px 0}
-.tick{position:absolute;top:-34px;transform:translateX(-50%);font-size:0.8rem;color:var(--ink-2);white-space:nowrap;text-align:center;line-height:1.2}
-.tick b{display:block;color:var(--ink);font-size:0.95rem}
-.tick::after{content:"";position:absolute;left:50%;top:30px;width:1px;height:18px;background:var(--ink-3)}
-.tick.below{top:22px}
-.tick.below::after{top:-12px;height:10px}
-.legend-row{display:flex;justify-content:space-between;color:var(--ink-3);font-size:0.78rem}
-.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:var(--s4) var(--s5);margin-top:var(--s5)}
-.facts div{padding-top:var(--s3);border-top:1px solid var(--line)}
-.facts .n{font-family:var(--display);font-size:1.6rem;font-weight:700;line-height:1.1}
-.facts .l{color:var(--ink-2);font-size:0.92rem}
-
-/* índice */
-nav.toc{margin:var(--s6) 0 0;display:flex;flex-wrap:wrap;gap:var(--s2)}
-nav.toc a{color:var(--ink-2);text-decoration:none;font-size:0.88rem;padding:6px 12px;border:1px solid var(--line);border-radius:99px}
-nav.toc a:hover,nav.toc a:focus-visible{color:var(--ink);border-color:var(--ink-3)}
-
-section{padding-top:var(--s7);scroll-margin-top:var(--s4)}
-.num{font-family:var(--display);color:var(--ink-3);font-size:0.95rem;font-weight:500;display:block;margin-bottom:var(--s1)}
-
-/* tabelas */
-.tbl{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:var(--s3) 0 var(--s4);border:1px solid var(--line);border-radius:10px;background:var(--bg-2);max-width:100%}
-.tbl:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
-table{border-collapse:collapse;width:100%;font-size:0.92rem;line-height:1.5}
-th,td{text-align:left;vertical-align:top;padding:10px 14px;border-bottom:1px solid var(--line)}
-tr:last-child td{border-bottom:0}
-th{font-weight:600;color:var(--ink-2);font-size:0.8rem;letter-spacing:0.02em;background:var(--bg-3);position:sticky;top:0}
-td.k{font-weight:600;color:var(--ink);white-space:nowrap}
-td.r{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
-.wide table{min-width:1180px}
-.mid table{min-width:720px}
-.hint{display:none;color:var(--ink-3);font-size:0.8rem;margin-top:calc(var(--s2) * -1)}
-@media (max-width:900px){.hint{display:block}}
-
-.pill{display:inline-block;font-size:0.78rem;font-weight:600;padding:1px 8px;border-radius:99px;white-space:nowrap}
-.p-new{background:var(--green-bg);color:var(--green)}
-.p-evo{background:var(--blue-bg);color:var(--blue)}
-.p-out{background:var(--rose-bg);color:var(--rose)}
-
-/* escala de autonomia */
-.scale{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;margin:var(--s3) 0 var(--s5);border:1px solid var(--line);border-radius:10px;overflow:hidden}
-.scale div{padding:var(--s3) var(--s4);background:var(--bg-2)}
-.scale div+div{border-left:1px solid var(--line)}
-.scale b{font-family:var(--display);font-size:1.3rem;display:block}
-.scale div:nth-child(1) b{color:var(--ink-2)}
-.scale div:nth-child(2) b{color:var(--blue)}
-.scale div:nth-child(3) b{color:var(--amber)}
-.scale div:nth-child(4) b{color:var(--rose)}
-.scale span{color:var(--ink-2);font-size:0.9rem}
-@media (max-width:720px){.scale{grid-template-columns:repeat(2,minmax(0,1fr))}.scale div:nth-child(3){border-left:0}.scale div:nth-child(n+3){border-top:1px solid var(--line)}}
-
-.two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:var(--s6)}
-@media (max-width:800px){.two{grid-template-columns:minmax(0,1fr);gap:0}}
-
-.note{color:var(--ink-2);font-size:0.95rem}
-.callout{background:var(--rose-bg);border:1px solid oklch(0.74 0.12 25 / 0.35);border-radius:10px;padding:var(--s3) var(--s4);margin:var(--s4) 0;max-width:76ch}
-
-/* rollout */
-.waves{list-style:none;padding:0;margin:var(--s4) 0;max-width:none;display:grid;gap:0;counter-reset:w}
-.waves li{display:grid;grid-template-columns:150px minmax(0,1fr) minmax(0,0.8fr);gap:var(--s5);padding:var(--s4) 0;border-top:1px solid var(--line);margin:0}
-.waves li:last-child{border-bottom:1px solid var(--line)}
-.waves .w{font-family:var(--display);font-weight:700;font-size:1.1rem}
-.waves .w small{display:block;font-family:var(--body);font-weight:500;font-size:0.85rem;color:var(--amber)}
-.waves .c{color:var(--ink-2);font-size:0.92rem}
-.waves .c b{display:block;color:var(--ink-3);font-weight:600;font-size:0.78rem;margin-bottom:2px}
-@media (max-width:800px){.waves li{grid-template-columns:minmax(0,1fr);gap:var(--s2)}}
-
-/* decisões */
-.dec{list-style:none;padding:0;margin:var(--s4) 0;max-width:none;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:var(--s3) var(--s5)}
-.dec li{display:grid;grid-template-columns:36px minmax(0,1fr);gap:var(--s3);padding:var(--s3) 0;border-top:1px solid var(--line);margin:0}
-.dec .i{font-family:var(--display);font-weight:700;font-size:1.4rem;color:var(--amber);line-height:1.2}
-.dec p{margin:0;color:var(--ink-2)}
-.dec p strong{display:block;color:var(--ink);margin-bottom:2px}
-
-footer{margin-top:var(--s8);padding-top:var(--s5);border-top:1px solid var(--line);color:var(--ink-3);font-size:0.86rem}
-footer ul{padding-left:1.1rem}
-
-@media (prefers-reduced-motion:no-preference){
-  .reveal{animation:up .6s cubic-bezier(.22,1,.36,1) both}
-  .reveal.d2{animation-delay:.08s}.reveal.d3{animation-delay:.16s}
-  @keyframes up{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+section{padding-top:var(--s7)}
+.cols{display:grid;grid-template-columns:minmax(0,0.8fr) minmax(0,1fr) minmax(0,1fr);gap:0 var(--s5);font-size:0.78rem;color:var(--ink-3);letter-spacing:0.04em;text-transform:uppercase;padding:0 var(--s4) var(--s2)}
+.row{display:grid;grid-template-columns:minmax(0,0.8fr) minmax(0,1fr) minmax(0,1fr);gap:var(--s2) var(--s5);padding:var(--s4);border-top:1px solid var(--line);align-items:start}
+.row:last-child{border-bottom:1px solid var(--line)}
+.step{font-weight:700}
+.now{color:var(--ink-2)}
+.new{color:var(--ink)}
+.new::before{content:"→ ";color:var(--amber);font-weight:700}
+.tag{display:none;font-size:0.72rem;color:var(--ink-3);text-transform:uppercase;letter-spacing:0.04em;margin-bottom:2px}
+@media (max-width:720px){
+  .cols{display:none}
+  .row{grid-template-columns:minmax(0,1fr)}
+  .tag{display:block}
+  .new::before{content:""}
 }
-@media print{body{background:#fff;color:#111}.tbl{overflow:visible}}
+
+.two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--s6)}
+@media (max-width:720px){.two{grid-template-columns:minmax(0,1fr);gap:0}}
+ul{margin:0;padding-left:1.15rem}
+li{margin-bottom:var(--s2);color:var(--ink-2)}
+li strong{color:var(--ink);font-weight:600}
+
+ol.ask{margin:0;padding:0;list-style:none;counter-reset:q}
+ol.ask li{counter-increment:q;display:flex;gap:var(--s3);padding:var(--s3) 0;border-top:1px solid var(--line);margin:0;color:var(--ink)}
+ol.ask li:last-child{border-bottom:1px solid var(--line)}
+ol.ask li::before{content:counter(q);font-family:var(--display);font-weight:700;color:var(--amber);min-width:1.2em}
+ol.ask small{display:block;color:var(--ink-3);font-size:0.88rem;margin-top:2px}
+
+footer{margin-top:var(--s7);padding-top:var(--s4);border-top:1px solid var(--line);color:var(--ink-3);font-size:0.9rem}
 </style>
 </head>
 <body>
 <main class="wrap">
+  <header>
+    <p class="meta">Processo agêntico · 16/11/2026</p>
+    <h1>Pedido da lojinha, de ponta a ponta</h1>
+    <p class="lede">O pedido sai da franquia, passa pelo fornecedor e chega pago e entregue sem ninguém precisar empurrar. O link de pagamento continua sendo gerado pelo fornecedor; o agente só cobra e registra.</p>
 
-<header>
-  <div class="meta reveal"><span>Processo agêntico · TO-BE final</span><span>16/11/2026</span><span>Backoffice · Fornecedores e Compras</span></div>
-  <h1 class="reveal d2">Pedido da lojinha, de ponta a ponta, rodando na fábrica do Azir</h1>
-  <p class="lede reveal d3">Franquia → fornecedor → pagamento → envio → recebido. 6 fluxos de negócio e 3 transversais, com 5 agentes especialistas novos com LLM, 5 máquinas sem LLM portadas do Olimpo e 4 peças de infraestrutura sem LLM.</p>
-  <div class="where reveal d3"><b>Onde roda</b><span>Os agentes novos rodam no Azir, na VPS do time (não no Olimpo). Nenhum agente novo vai para o Olimpo.</span></div>
-</header>
-
-<div class="score">
-  <div>
-    <div class="big">35%<small>agêntico hoje</small></div>
-    <p class="big-cap">Faixa de 30 a 40%, contada sobre uma base única: transições desde 01/10.</p>
-  </div>
-  <div>
-    <div class="track" role="img" aria-label="Hoje 35%, realista no 1º mês 65 a 70%, alvo cerca de 85%">
-      <div class="now"></div><div class="m1"></div><div class="m2"></div>
-      <span class="tick" style="left:35%"><b>35%</b>hoje</span>
-      <span class="tick" style="left:67.5%"><b>65–70%</b>1º mês</span>
-      <span class="tick below" style="left:85%"><b>~85%</b>alvo</span>
+    <div class="nums">
+      <div><div class="n">35%<span class="to">→</span>85%</div><p class="l">do processo rodando sozinho, hoje e no alvo (65 a 70% já no 1º mês)</p></div>
+      <div><div class="n">200<span class="to">→</span>15</div><p class="l">ações manuais por mês da Wania e do Henry</p></div>
+      <div><div class="n">17<span class="to">→</span>10</div><p class="l">dias do pedido feito ao pedido concluído</p></div>
     </div>
-    <div class="legend-row"><span>0%</span><span>100%</span></div>
-    <p class="note" style="margin-top:var(--s3)">O alvo de cerca de 85% depende de P3 (SIA), P8 (Total na VPS), P10 (rastreio por transportadora) e das decisões 4 e 6.</p>
-  </div>
-</div>
+  </header>
 
-<div class="facts">
-  <div><div class="n">~200 → &lt;15</div><div class="l">ações humanas de gestão por mês (Wania e Henry)</div></div>
-  <div><div class="n">5 + 5 + 4</div><div class="l">especialistas com LLM, máquinas sem LLM e peças de infraestrutura</div></div>
-  <div><div class="n">até 30/11</div><div class="l">Black Friday: só fundação, ações internas e sombra. Nada de A3 ou A4 com terceiros</div></div>
-</div>
+  <section>
+    <h2>Hoje × O que muda</h2>
+    <div class="cols" aria-hidden="true"><span>Etapa</span><span>Hoje</span><span>Com agentes</span></div>
+    <div class="row"><p class="step">Pedido chega</p><div><span class="tag">Hoje</span><p class="now">Um robô já separa metade; o resto a Wania confere na mão.</p></div><div><span class="tag">Com agentes</span><p class="new">Pedido grátis segue direto; duplicado, o agente pergunta à franquia antes de cancelar.</p></div></div>
+    <div class="row"><p class="step">Link do fornecedor</p><div><span class="tag">Hoje</span><p class="now">Ninguém cobra. Tem pedido parado há 24 dias sem link.</p></div><div><span class="tag">Com agentes</span><p class="new">O agente cobra cada fornecedor duas vezes por dia, numa mensagem só.</p></div></div>
+    <div class="row"><p class="step">Pagamento</p><div><span class="tag">Hoje</span><p class="now">Lembretes saem sozinhos, mas 6% falham; a validação é quase toda manual.</p></div><div><span class="tag">Com agentes</span><p class="new">Uma mensagem por pedido e o comprovante conferido sozinho; diferença pequena passa.</p></div></div>
+    <div class="row"><p class="step">Cancelamento</p><div><span class="tag">Hoje</span><p class="now">A Wania cancela quase tudo na mão.</p></div><div><span class="tag">Com agentes</span><p class="new">Não pagou em 7 dias, cancela sozinho, só se a franquia foi avisada.</p></div></div>
+    <div class="row"><p class="step">Envio do fornecedor</p><div><span class="tag">Hoje</span><p class="now">Nota e rastreio chegam quando chegam; ninguém acompanha.</p></div><div><span class="tag">Com agentes</span><p class="new">O agente cobra nota e rastreio quando o prazo de envio aperta.</p></div></div>
+    <div class="row"><p class="step">Envio da Seazone</p><div><span class="tag">Hoje</span><p class="now">Sem fila: alguns pedidos esperam mais de 15 dias.</p></div><div><span class="tag">Com agentes</span><p class="new">A Alexia recebe todo dia às 9h a lista do que mandar, do mais antigo pro mais novo.</p></div></div>
+    <div class="row"><p class="step">Entrega e conclusão</p><div><span class="tag">Hoje</span><p class="now">A Wania conclui um por um; 57 pedidos estão parados em "Enviado".</p></div><div><span class="tag">Com agentes</span><p class="new">Conclui sozinho com prova: rastreio "entregue" ou "chegou, sim" da franquia.</p></div></div>
+    <div class="row"><p class="step">Casos difíceis</p><div><span class="tag">Hoje</span><p class="now">Chegam soltos no Slack e no DM.</p></div><div><span class="tag">Com agentes</span><p class="new">Viram uma fila única, já com o caso montado; basta um clique para aprovar.</p></div></div>
+  </section>
 
-<nav class="toc" aria-label="Seções">
-  <a href="#mapa">Mapa atual</a><a href="#fluxos">Fluxos e agentes</a><a href="#maos">Mãos humanas</a><a href="#sia">SIA e mensagens</a><a href="#metricas">Métricas</a><a href="#rollout">Rollout</a><a href="#prereq">Pré-requisitos</a><a href="#riscos">Riscos</a><a href="#decisoes">Decisões do Henry</a>
-</nav>
-
-<!-- 2 -->
-<section id="mapa">
-  <span class="num">02</span>
-  <h2>Mapa atual resumido</h2>
-  <p class="note">16/11, export das 12:52 + log da VPS.</p>
-
-  <div class="two">
+  <section class="two">
     <div>
-      <h3>Volume</h3>
+      <h2>Continua com gente</h2>
       <ul>
-        <li>224 cards desde 01/10, de 87 franquias, com 1,19 card por pedido.</li>
-        <li>Média de cerca de 34 cards por semana, mas <strong>pico de 60 na semana 46</strong> (Black Friday, 38 pedidos em novembro).</li>
-        <li>Cancelamento: era cerca de 40% e agora está em cerca de 24%.</li>
+        <li><strong>Alexia:</strong> embalar e despachar o que sai da Seazone.</li>
+        <li><strong>Fornecedor:</strong> gerar o link, emitir a nota e despachar.</li>
+        <li><strong>Henry:</strong> dinheiro fora da regra (estorno, pago a cancelar, reenvio) e fornecedor problemático, como a IZY.</li>
+        <li><strong>Wania:</strong> primeira a olhar os casos difíceis e revisar uma amostra.</li>
       </ul>
     </div>
     <div>
-      <h3>Demanda real de exceção</h3>
-      <p class="note">Medida pela fase em que o card está, e não pelas etiquetas que ficaram nele.</p>
+      <h2>Para começar precisa de</h2>
       <ul>
-        <li>Capacho, chaveiro ou duplicado: cerca de 1 a 2 por semana.</li>
-        <li>Comprovante divergente: cerca de 1,5 por semana.</li>
-        <li>Chamados citando "lojinha" no Suporte Unificado: cerca de 1 por semana.</li>
-        <li>409 da SIA: 12 de 188 pedidos (6%).</li>
+        <li>Trocar as 4 chaves que vazaram no Slack.</li>
+        <li>Um usuário próprio do agente na lojinha, para nada sair como Henry.</li>
+        <li>Mensagens novas aprovadas no WhatsApp (SIA).</li>
+        <li>SIA e navegador do agente funcionando na VPS.</li>
+        <li>E-mail fornecedores@ conectado para cobrar por e-mail.</li>
       </ul>
     </div>
-  </div>
+  </section>
 
-  <h3>Fila aberta: 130 cards</h3>
-  <div class="tbl mid" tabindex="0" role="region" aria-label="Fila aberta por fase">
-  <table>
-    <thead><tr><th>Fase</th><th>Cards</th><th>O que está parado de fato</th></tr></thead>
-    <tbody>
-      <tr><td class="k">Enviado</td><td class="r">57</td><td>38 há mais de 15 dias, o mais velho com 61 dias. 7 já entregues pela Total. 4 com etiqueta "Produzindo"</td></tr>
-      <tr><td class="k">Aguardando envio</td><td class="r">42</td><td>Seazone 18 (15 de transportadora e 3 de retirada na sede; 3 há mais de 15 dias), Harus 12, Matinali 11</td></tr>
-      <tr><td class="k">Enviado ao fornecedor, sem link</td><td class="r">16</td><td><strong>Só 6 parados</strong>: IZY com 5 cards (24, 21, 19, 17 e 3 dias, R$ 5,5 mil) e Somar #1048 (4 dias). Os outros 10 estão dentro do SLA</td></tr>
-      <tr><td class="k">Aguardando pagamento</td><td class="r">13</td><td>Matinali #982 há 18 dias, fora do D7</td></tr>
-      <tr><td class="k">Validação</td><td class="r">1</td><td>–</td></tr>
-      <tr><td class="k">Inbox</td><td class="r">1</td><td>–</td></tr>
-    </tbody>
-  </table>
-  </div>
-  <p class="hint">Deslize a tabela para o lado →</p>
+  <section>
+    <h2>Você decide</h2>
+    <ol class="ask">
+      <li><div>Pedido de capacho até 20% acima da necessidade passa sozinho?</div></li>
+      <li><div>Comprovante com diferença de até R$ 15 passa sozinho?</div></li>
+      <li><div>"Chegou? Sim" da franquia, ou 5 dias úteis sem resposta, conclui o pedido?</div></li>
+      <li><div>Avisar a franquia quando o pedido for cancelado?</div></li>
+      <li><div>Trocar de fornecedor sozinho se não mandar link em 3 dias úteis?<small>Inclui decidir o que fazer com a IZY: 5 pedidos, R$ 5,5 mil.</small></div></li>
+    </ol>
+  </section>
 
-  <h3>Quem fez as transições desde 01/10</h3>
-  <div class="tbl mid" tabindex="0" role="region" aria-label="Transições por agente">
-  <table>
-    <thead><tr><th>Transição</th><th>Agente / total</th><th>% agente</th></tr></thead>
-    <tbody>
-      <tr><td class="k">Inbox → próxima fase</td><td>91/197</td><td class="r">46%</td></tr>
-      <tr><td class="k">Validação de pagamento</td><td>30/104</td><td class="r">29%</td></tr>
-      <tr><td class="k">Cancelamento</td><td>8/111 (Wania 64, Henry 11)</td><td class="r">7%</td></tr>
-      <tr><td class="k">Enviado → concluído</td><td>0/109 (Wania 100)</td><td class="r">0%</td></tr>
-      <tr><td class="k">Lembrete D0/D4/D7</td><td>111 automáticos, contra cerca de 30 manuais</td><td class="r">~79%</td></tr>
-      <tr><td class="k">Cobrança de link e despacho ao fornecedor</td><td>–</td><td class="r">0%</td></tr>
-      <tr><td class="k">Atendimento</td><td>–</td><td class="r">0%</td></tr>
-    </tbody>
-  </table>
-  </div>
-
-  <div class="two">
-    <div>
-      <h3>Ciclo e casos sem dono</h3>
-      <ul>
-        <li>Ciclo de criado a concluído: mediana de 415h (cerca de 17 dias).</li>
-        <li>Da entrega à conclusão: mediana de 238h.</li>
-        <li>Despacho da Seazone: mediana de 153h, p90 de 454h.</li>
-        <li>63 cards da Seazone são 100% grátis (kit e indicação).</li>
-        <li>11 cards de retirada na sede, hoje sem dono no processo.</li>
-      </ul>
-    </div>
-    <div>
-      <h3>Infraestrutura hoje</h3>
-      <ul>
-        <li>M1, M3, M4 e M5 rodam no Olimpo, em <strong>lab</strong>. Há 4 chaves expostas no Slack.</li>
-        <li>O MCP do Sapron está em 502.</li>
-        <li>O vigia roda na VPS (hoje às 9h02, exit 0), mas sem Chrome. O log dele diz: <code>127.0.0.1:9333 ConnectionRefused; 12 código(s) sem consulta</code>.</li>
-        <li>As planilhas Matinali e RM estão paradas desde agosto.</li>
-        <li>Não há Gmail <code>fornecedores@</code> no Composio. Estão conectados o <code>henry.matsumoto@</code> e o <code>NFXML@</code>.</li>
-        <li>Na VPS não há SIA nem <code>chrome-agente</code>. Lá estão <code>lojinha-admin</code>, <code>composio</code>, <code>suporte-unificado</code> e <code>sapron</code>.</li>
-        <li><strong>Toda escrita pelo <code>lojinha-admin</code> sai como o Henry</strong>, porque é ele o admin dono da chave.</li>
-      </ul>
-    </div>
-  </div>
-</section>
-
-<!-- 3 -->
-<section id="fluxos">
-  <span class="num">03</span>
-  <h2>Fluxos e agentes especialistas</h2>
-
-  <h3>Escala de autonomia</h3>
-  <div class="scale">
-    <div><b>A1</b><span>Lê e propõe.</span></div>
-    <div><b>A2</b><span>Escreve em sistema interno de forma reversível e comenta no card.</span></div>
-    <div><b>A3</b><span>Fala com terceiro por template ou texto da lista branca.</span></div>
-    <div><b>A4</b><span>Mexe em dinheiro ou faz ato irreversível, só dentro de regra aprovada. Fora da regra, vai para a mesa (T2).</span></div>
-  </div>
-
-  <h3>Onde tudo mora</h3>
-  <ul>
-    <li>Tudo roda no Azir, na VPS.</li>
-    <li>"Máquina" é código sem LLM, portado do Olimpo para um cron ou serviço do Azir.</li>
-    <li>Os especialistas são <code>.md</code> do Azir e incluem o <code>lojinha-base.md</code>, que é o <code>lojinha.md</code> atual com as armadilhas.</li>
-    <li>A carga foi calculada para o <strong>pico de 60 cards por semana</strong>.</li>
-  </ul>
-
-  <div class="tbl wide" tabindex="0" role="region" aria-label="Fluxos e agentes">
-  <table>
-    <thead><tr><th>Fluxo</th><th>Agente</th><th>Missão</th><th>Recebe (demanda)</th><th>Ferramentas</th><th>Autonomia</th><th>Carga/semana (pico)</th><th>Novo / evolução</th></tr></thead>
-    <tbody>
-      <tr><td class="k">F1 Admissão</td><td><strong>M1 Porteiro + regras de entrada</strong></td><td>Duplicado, capacho, chaveiro e Resgate por regra. Card 100% grátis vai direto para aguardando envio. Capacho até a necessidade +20% libera; duplicado <strong>pergunta antes</strong> (<code>pedido_duplicado_confirmar</code>) e só cancela com "sim"</td><td>Card em inbox (a cada 30 min, das 8h às 20h)</td><td>Edges <code>x-agent-key</code>, Sapron (fallback no Nekt <strong>testado</strong>), skill <code>analise-capacho-franquia</code>, <code>mover_card</code>, <code>comentar_card</code></td><td>A2; A3 para a pergunta; A4 para cancelar duplicado não pago com "sim"</td><td>60 cards, 2 a 3 exceções</td><td><span class="pill p-evo">Evolução</span> porta o <code>agente-validacao-inbox-lojinha</code> do Olimpo. <span class="pill p-out">O E1 sai</span> e vira regra + mesa</td></tr>
-      <tr><td class="k">F2 Link</td><td><strong>E2 Cobrador de Fornecedor</strong> (LLM só para ler a resposta)</td><td>Ninguém fica sem link. Batelada de 1 mensagem por fornecedor às 9h e às 15h</td><td>Card sem link há 4h, 24h e 48h úteis (visão F6, por fornecedor)</td><td>Base em <code>agente-cadencia-fornecedores</code> (cadência de 24h sem LLM), Porta-voz → SIA Fornecedores, Gmail <code>fornecedores@</code> (P13), <code>definir_link_pagamento</code>, <code>trocar_fornecedor</code></td><td>A3 para cobrar. <strong>A4 para gravar o link</strong> só se o domínio estiver na lista branca (P14) e o canal for conhecido; senão, mesa. A4 para trocar, com 3 travas</td><td>25 a 40 cards, 8 a 14 mensagens</td><td><span class="pill p-new">Novo</span> com código do Olimpo reaproveitado</td></tr>
-      <tr><td class="k">F3 Pagamento</td><td><strong>M3 Lembrete D0/D4/D7</strong></td><td>1 template por pedido (resolve o 409), cobrindo também Seazone, Reveev, Resgate e KIT. Relê a fase antes de enviar e pula card grátis</td><td>Marcas D0, D4 e D7</td><td>SIA HTTP, <code>marcar_cobranca</code></td><td>A3</td><td>cerca de 120 mensagens</td><td><span class="pill p-evo">Evolução</span> porta o <code>agente-lembrete-pagamento-lojinha</code></td></tr>
-      <tr><td class="k">F3</td><td><strong>M4 Validador + 2ª passada</strong></td><td>Comprovante × valor × data. Divergente até R$ 15 ou 2% (o menor) é aceito; frete faltando vira pedido de complemento (<code>comprovante_complemento</code>); acima do teto, mesa</td><td>Card em validação, de hora em hora no horário útil</td><td>Hub LLM, edge <code>payment-validation-action</code>, <code>confirmar_pagamento</code></td><td>A4 por regra; A3 para o complemento</td><td>50 a 60 cards, cerca de 2 divergentes</td><td><span class="pill p-evo">Evolução</span> porta o <code>agente-validacao-pagamento-lojinha</code>. <span class="pill p-out">O E3 sai</span> e vira um passo da M4</td></tr>
-      <tr><td class="k">F3</td><td><strong>M7 Sensor Rede</strong> (sem LLM)</td><td>Detecta o pagamento do Link Pix ou Crédito antes do comprovante</td><td>Card em aguardando pagamento com link Rede</td><td><code>agente-analise-pagamento</code> (navegador, depende de P8)</td><td>A1 → A2 (comenta e acelera a validação)</td><td>cerca de 30 consultas</td><td><span class="pill p-new">Novo</span> código do Olimpo</td></tr>
-      <tr><td class="k">F3</td><td><strong>M5 Cancelador D7</strong></td><td>Cancela no D7 o que não foi pago. <strong>Recuperação</strong> de card com D7 ou mais só se o D4 ou o D7 tiver entrega comprovada na SIA; senão, mesa</td><td>Todo dia às 20h</td><td>Edge <code>admin-cancel-card</code></td><td>A4 (não pago)</td><td>8 a 12 cards</td><td><span class="pill p-evo">Evolução</span> porta o <code>agente-cancelamento-lojinha</code></td></tr>
-      <tr><td class="k">F4 Despacho</td><td><strong>E2 Cobrador de Fornecedor</strong> (o mesmo do F2)</td><td>NF, transportadora e rastreio no card. Trata "Sem estoque" (troca antes do pagamento, dentro das travas; pago vai para a mesa) e "Produzindo" (cobra a data prevista)</td><td>SLA de despacho a 80%, 100% e 150% (Harus 2 dias úteis, RM 3, Matinali e Somar 5); NF faltando</td><td>Porta-voz, Gmail <code>fornecedores@</code>, <strong>caixa <code>NFXML@</code> para a NF</strong>, <code>atualizar_envio</code>. <strong>Sem as planilhas Matinali e RM</strong></td><td>A2 para gravar o que recebeu; A3 para cobrar</td><td>Entra no lote acima</td><td>–</td></tr>
-      <tr><td class="k">F4</td><td><strong>E4 Expedidor Seazone</strong></td><td>Fila diária do Suprimentos, ordenada por idade. <strong>Retirada na sede</strong>: confirma a retirada com a Alexia e passa para o E5</td><td>Lote às 9h</td><td>Slack/Composio (1 thread por dia para a Alexia), Total via P8, <code>atualizar_envio</code></td><td>A2 e A3 interno</td><td>1 lote por dia, com 8 a 15 cards</td><td><span class="pill p-new">Novo</span></td></tr>
-      <tr><td class="k">F5 Entrega</td><td><strong>E5 Conciliador de Entrega</strong></td><td>Conclui com evidência: rastreio "entregue", "Sim" da franquia ou retirada confirmada. "Produzindo" soma o prazo de produção. Silêncio só depois da decisão 4</td><td>Card em Enviado há o prazo da transportadora, ou há 7 dias corridos sem fonte</td><td><code>concluir_entregues_lote</code> (com prévia), <code>definir_data_recebimento</code>, rastreio por transportadora (P10), Porta-voz <code>pedido_chegou_confirmar</code></td><td>A2 com evidência; A3 para perguntar; A4 para concluir por silêncio (decisão 4)</td><td>40 a 60 cards + lote de estreia com 57</td><td><span class="pill p-new">Novo</span> <strong>O vigia continua só lendo</strong> (<code>VIGIA_ESCRITA</code> travada; decisão 8)</td></tr>
-      <tr><td class="k">F5</td><td><strong>M6 Vigia de SLA</strong></td><td>Sensor: os alertas viram demanda no S0, não só DM</td><td>Dias úteis, 9h e 15h</td><td>Postgres do Jornada (ro), lojinha, Total via P8</td><td>A1</td><td>2 rodadas por dia</td><td><span class="pill p-evo">Evolução</span> já está na VPS</td></tr>
-      <tr><td class="k">T1 Atendimento</td><td><strong>E6 Atendente</strong> (<strong>medir antes de construir</strong>)</td><td>"Cadê meu pedido", 2ª via de link e de comprovante. Resposta solta do fornecedor vai para o E2</td><td>Inbound da SIA (P3), chamado no Suporte Unificado, menção no Slack</td><td><code>ver_card</code>, <code>listar_cards</code>, Porta-voz, <code>suporte-unificado.get_card</code>/<code>add_comment</code></td><td>A3 só com fato lido do sistema; o resto vai para a mesa com ponte</td><td>Hipótese: 5 a 35. <strong>O comprovado é cerca de 1 chamado por semana</strong></td><td><span class="pill p-new">Novo</span> condicionado a P3 e P12</td></tr>
-      <tr><td class="k">T2 Mesa</td><td><strong>E7 Guardião da Mesa</strong></td><td>Monta o caso (pago para cancelar, estorno, reenvio, troca fora da regra, IZY, capacho fora da regra, divergência acima do teto) e executa depois do clique</td><td>Saída "precisa de humano" de qualquer estação</td><td>Azir (mesa), Vel'Koz Aprovar (Henry), thread da mesa para a Wania (decisão 7)</td><td>A1 sem OK; A4 com OK</td><td>5 a 12 casos</td><td><span class="pill p-new">Novo</span></td></tr>
-      <tr><td class="k">Transversais sem LLM</td><td><strong>S0 Sentinela</strong>, <strong>S1 Porta-voz</strong>, <strong>Pré-validador</strong>, <strong>T3 Supervisor</strong></td><td>Ver abaixo</td><td>–</td><td>–</td><td>–</td><td>–</td><td><span class="pill p-new">Novos</span> serviços do Azir</td></tr>
-    </tbody>
-  </table>
-  </div>
-  <p class="hint">Tabela larga: deslize para o lado →</p>
-
-  <h3>Peças sem LLM</h3>
-  <div class="tbl mid" tabindex="0" role="region" aria-label="Peças sem LLM">
-  <table>
-    <thead><tr><th>Peça</th><th>O que faz</th><th>Base de código</th></tr></thead>
-    <tbody>
-      <tr><td class="k">S0 Sentinela</td><td>Lê <code>listar_cards</code> a cada 15 min. Gera 1 demanda por <code>card_id:fase:evento</code>, com dedupe pelo <code>cards_origem(origem, origem_ref)</code> que já existe. Dispara por <strong>fase + etiqueta juntas</strong>. Também cuida da <strong>faxina de etiqueta</strong>: quando o card sai da fase, remove a etiqueta de exceção e comenta (A2)</td><td>Azir</td></tr>
-      <tr><td class="k">S1 Porta-voz</td><td>Única saída para terceiros: consolida por pedido e por fornecedor, cuida da janela de 24h, da trava pelo <code>agent_id</code>, dos limites, do opt-out e do horário, e mascara PII no log. Escopo enxuto: o 409 se resolve na própria M3</td><td><code>sia.py</code> do <code>agente-negociacao-recompra</code></td></tr>
-      <tr><td class="k">Pré-validador</td><td>Confere a prova antes de marcar como concluído: fase mudou, mensagem entregue (id), comentário gravado</td><td>Estado de prova do <code>central.ts</code></td></tr>
-      <tr><td class="k">T3 Supervisor</td><td>Tick de 5 min. Mede fila, idade, WIP, US$ por card e reversões. Faz transbordo para o Coringa (<code>generalista.md</code>) e rebaixa a estação depois de 2 reversões em 7 dias</td><td>–</td></tr>
-    </tbody>
-  </table>
-  </div>
-
-  <h3>Regras de fila</h3>
-  <ul>
-    <li>Prioridade: idade × R$ × risco. Pago e parado vem primeiro.</li>
-    <li>WIP de 3 por estação (<code>MAX_AUTO_ABERTAS</code> já existe).</li>
-    <li>Contato com terceiro só das 8h às 20h. O D7 sai às 7h e às 16h.</li>
-    <li>Lotes pesados rodam das 20h às 7h.</li>
-  </ul>
-</section>
-
-<!-- 4 -->
-<section id="maos">
-  <span class="num">04</span>
-  <h2>Mãos humanas restantes e a regra de cada</h2>
-  <div class="tbl mid" tabindex="0" role="region" aria-label="Mãos humanas restantes">
-  <table>
-    <thead><tr><th>Mão humana</th><th>Quem</th><th>Regra que diminui</th></tr></thead>
-    <tbody>
-      <tr><td class="k">Expedição física da Seazone (Total)</td><td>Alexia</td><td>Lote diário do E4, SLA de 3 dias úteis medido; retirada na sede com confirmação</td></tr>
-      <tr><td class="k">Fornecedor gerar link, NF e despachar</td><td>Terceiro</td><td>Batelada do E2; troca em 72h úteis só antes do pagamento, com o mesmo total com frete e com aviso à franquia; iPag/Rede quando sair</td></tr>
-      <tr><td class="k">IZY, multa, descredenciamento</td><td>Henry</td><td>Mesa com o dossiê do E2 (que também alimenta a <code>reuniao-mensal-fornecedor</code>). Sem fornecedor alternativo conhecido, então sempre mesa</td></tr>
-      <tr><td class="k">Capacho acima da necessidade +20%</td><td>Mesa (Wania)</td><td>A margem é a decisão 1</td></tr>
-      <tr><td class="k">Divergência acima de R$ 15 ou 2%, pagou a mais, comprovante de terceiro</td><td>Mesa</td><td>Teto da decisão 2</td></tr>
-      <tr><td class="k">Cancelar pedido pago, estorno, reenvio</td><td>Henry (dinheiro)</td><td>Mesa com 1 clique. A mesma decisão repetida 3 vezes vira proposta de regra</td></tr>
-      <tr><td class="k">Link recebido por canal novo ou fora da lista branca</td><td>Mesa</td><td>Lista branca de domínios (P14)</td></tr>
-      <tr><td class="k">Concluir sem evidência</td><td>Até a decisão 4</td><td>Silêncio de 5 dias úteis depois do prazo</td></tr>
-      <tr><td class="k">D7 sem aviso comprovado</td><td>Mesa</td><td>Recuperação só com entrega da SIA comprovada</td></tr>
-      <tr><td class="k">Reunião mensal com fornecedor</td><td>Henry</td><td>Deck automático</td></tr>
-      <tr><td class="k">Wania</td><td>Primeira linha da mesa e amostra semanal de 5%</td><td>Dinheiro fora de regra continua com o Henry</td></tr>
-    </tbody>
-  </table>
-  </div>
-</section>
-
-<!-- 5 -->
-<section id="sia">
-  <span class="num">05</span>
-  <h2>Onde a SIA e as mensagens entram</h2>
-  <div class="tbl mid" tabindex="0" role="region" aria-label="Canais de mensagem">
-  <table>
-    <thead><tr><th>Canal</th><th>Interlocutor</th><th>Quem fala</th><th>Mensagens</th></tr></thead>
-    <tbody>
-      <tr><td class="k">SIA "Loja Seazone"</td><td>Franquia</td><td>M3, M1 (duplicado), M4 (complemento), E5 ("chegou?"), E6</td><td>Templates: os 3 de pagamento (versão por pedido) + <code>pedido_duplicado_confirmar</code>, <code>pagamento_confirmado</code>, <code>comprovante_complemento</code>, <code>pedido_enviado_rastreio</code>, <code>pedido_chegou_confirmar</code>, <code>status_pedido</code> e <code>pedido_cancelado_d7</code> (decisão 5)</td></tr>
-      <tr><td class="k">SIA "Fornecedores Seazone"</td><td>Fornecedor</td><td>E2</td><td><code>fornecedor_link_pendente</code>, <code>fornecedor_despacho_pendente</code>, <code>fornecedor_nf_pendente</code></td></tr>
-      <tr><td class="k">Gmail <code>fornecedores@</code></td><td>Fornecedor</td><td>E2</td><td>Cobrança em lote (P13)</td></tr>
-      <tr><td class="k">Caixa <code>NFXML@</code></td><td>–</td><td>E2 (só leitura)</td><td>Fonte da NF</td></tr>
-      <tr><td class="k">Slack</td><td>Alexia, Wania, Henry</td><td>E4, E7, Supervisor</td><td>Thread diária e mesa</td></tr>
-    </tbody>
-  </table>
-  </div>
-
-  <h3>Regras de conversa</h3>
-  <ul>
-    <li>Pedido com N fornecedores sai em <strong>1 template com os N blocos em texto corrido num parâmetro só</strong>, ou com link para uma página de status. A Meta não aceita quebra de linha nem lista variável nos parâmetros, então isso precisa ser validado já na submissão.</li>
-    <li>Para abrir conversa, só template. Dentro da janela de 24h, texto livre, com resposta-ponte antes de 23h.</li>
-    <li>Se <code>agent_id</code> for diferente do usuário da chave (conversa com humano), o agente não escreve.</li>
-    <li>No máximo 2 mensagens proativas por pedido por dia e 3 por fase. No máximo 3 cobranças por fornecedor por semana.</li>
-    <li>Mensagem recebida é dado, não instrução. A intenção é classificada numa lista fechada.</li>
-    <li>Nada sai em nome do Henry. A assinatura é "Loja Seazone".</li>
-  </ul>
-</section>
-
-<!-- 6 -->
-<section id="metricas">
-  <span class="num">06</span>
-  <h2>Métricas e sobrecarga</h2>
-  <h3>Painel do processo</h3>
-  <div class="tbl mid" tabindex="0" role="region" aria-label="Painel do processo">
-  <table>
-    <thead><tr><th>Indicador</th><th>Hoje</th><th>Meta</th></tr></thead>
-    <tbody>
-      <tr><td class="k">Ciclo de criado a concluído</td><td>415h</td><td>Menos de 240h</td></tr>
-      <tr><td class="k">Da entrega à conclusão</td><td>238h</td><td>Menos de 96h</td></tr>
-      <tr><td class="k">Enviado há mais de 15 dias com entrega comprovada</td><td>38</td><td>Menos de 5</td></tr>
-      <tr><td class="k">Sem link há mais de 72h úteis</td><td>6</td><td>0 fora da mesa</td></tr>
-      <tr><td class="k">Despacho da Seazone (p90)</td><td>454h</td><td>Menos de 72h úteis</td></tr>
-      <tr><td class="k">Cancelamento</td><td>24%</td><td>Menos de 18 a 20%</td></tr>
-      <tr><td class="k">Ações humanas de gestão</td><td>cerca de 200 por mês</td><td>Menos de 15 por mês</td></tr>
-      <tr><td class="k">Taxa de 409</td><td>6% dos pedidos</td><td>0</td></tr>
-    </tbody>
-  </table>
-  </div>
-
-  <div class="two">
-    <div>
-      <h3>Métricas por agente</h3>
-      <div class="tbl" tabindex="0" role="region" aria-label="Métricas por agente">
-      <table>
-        <thead><tr><th>Agente</th><th>Métricas</th></tr></thead>
-        <tbody>
-          <tr><td class="k">E2</td><td>Taxa de resposta, trocas e p50/p90 por fornecedor</td></tr>
-          <tr><td class="k">M4</td><td>% divergente e % aceito por regra</td></tr>
-          <tr><td class="k">E5</td><td>% com evidência × % por regra</td></tr>
-          <tr><td class="k">E6</td><td>% que vai para humano (meta abaixo de 15%) e recontato em 48h</td></tr>
-          <tr><td class="k">E7</td><td>Tempo até o clique e regras novas por mês</td></tr>
-        </tbody>
-      </table>
-      </div>
-    </div>
-    <div>
-      <h3>Porta-voz</h3>
-      <ul>
-        <li>Mensagens por número por dia.</li>
-        <li>Falhas (409, 422, timeout).</li>
-        <li>Opt-out e bloqueio, com alerta acima de 1%.</li>
-        <li>Quality rating da Meta.</li>
-      </ul>
-      <h3>Sobrecarga (T3)</h3>
-      <ul>
-        <li>Fila acima de 2× a média, ou item mais velho acima do SLA: transbordo para o Coringa.</li>
-        <li>US$ por card acima de US$ 0,50: alerta.</li>
-        <li>As máquinas e peças sem LLM seguram o grosso do volume, o que protege o limite de 5h do Claude.</li>
-        <li>Dimensionado para 60 cards por semana. Na BF, o T3 congela A3/A4 com terceiros.</li>
-      </ul>
-    </div>
-  </div>
-</section>
-
-<!-- 7 -->
-<section id="rollout">
-  <span class="num">07</span>
-  <h2>Rollout em ondas</h2>
-  <p class="note">Semanas do calendário: S1 de 17 a 23/11, S2 de 24 a 30/11, e S3 começa em 01/12.</p>
-  <ol class="waves">
-    <li><div class="w">0 · Fundação<small>S1 e S2 (BF)</small></div><div class="c"><b>O que entra</b>Submeter os templates da Meta (caminho crítico); P1, P2 e P11; campos <code>estacao</code>, <code>modo</code>, <code>dono</code> NOT NULL e eventos; S0 com faxina de etiqueta; Supervisor; divisão do <code>lojinha.md</code>; <strong>lote dos 57 em Enviado com prévia e 1 OK</strong>; E4 só interno; regras de retirada e de card grátis</div><div class="c"><b>Critério de passagem</b>Templates aprovados, admin de serviço ativo, S0 sem demanda falsa por 5 dias seguidos</div></li>
-    <li><div class="w">1 · Sombra<small>S2 e S3</small></div><div class="c"><b>O que entra</b>E2 e E5 gravam no card o que teriam feito; o Supervisor compara com a pessoa</div><div class="c"><b>Critério de passagem</b>10 execuções por tipo de ação sem correção, amostra revisada pela Wania e <code>eval-agente</code> com gabarito</div></li>
-    <li><div class="w">2 · Assistido<small>a partir de 01/12 (depois da BF)</small></div><div class="c"><b>O que entra</b>E2 cobrando; M3 portada com 1 template por pedido; M4 com 2ª passada; M1 conversando; A3 e A4 por Aprovar (1 OK pode valer para N mensagens iguais)</div><div class="c"><b>Critério de passagem</b>20 aprovações seguidas sem edição por tipo de ação</div></li>
-    <li><div class="w">3 · Autônomo<small>por tipo de ação</small></div><div class="c"><b>O que entra</b>Lista branca. O OK só fica para a T2. Amostra de 5% por semana e rebaixamento automático</div><div class="c"><b>Critério de passagem</b>–</div></li>
-    <li><div class="w">4 · Condicionais<small>quando os pré-requisitos saírem</small></div><div class="c"><b>O que entra</b>E5 autônomo com a Total (P8) e por transportadora (P10); silêncio (decisão 4); M7 Rede (P8); E6 em sombra (P3, P12, volume medido)</div><div class="c"><b>Critério de passagem</b>Volume do E6 medido em mais de 5 conversas por semana; senão, ele fica como 1 regra dentro do Porta-voz</div></li>
-  </ol>
-  <p><strong>Portabilidade das máquinas.</strong> M1, M3, M4 e M5 continuam no Olimpo (lab) enquanto as versões do Azir na VPS rodam em paralelo, em sombra. Depois de 2 semanas de paridade, o CronJob do Olimpo é desligado.</p>
-</section>
-
-<!-- 8 -->
-<section id="prereq">
-  <span class="num">08</span>
-  <h2>Pré-requisitos e pedidos</h2>
-  <div class="tbl mid" tabindex="0" role="region" aria-label="Pré-requisitos">
-  <table>
-    <thead><tr><th>#</th><th>Pré-requisito</th><th>Como</th><th>Bloqueia</th></tr></thead>
-    <tbody>
-      <tr><td class="k">P1</td><td>Trocar as 4 chaves expostas</td><td>Skill <code>secrets-agente-olimpo</code></td><td>Tudo</td></tr>
-      <tr><td class="k">P2</td><td><strong>Admin de serviço na lojinha com o fornecedores@</strong> (REGRA 12/11) e uma chave por estação, para auditoria e revogação</td><td>PR / Alfred no <code>novalojaseazone</code></td><td>Qualquer escrita autônoma</td></tr>
-      <tr><td class="k">P3</td><td>SIA na VPS: chave por número (Loja e Fornecedores), inbound por webhook ou poll de <code>/conversations</code> (avaliar reaproveitar a leitura da edge do <code>sia-copiloto</code>), fila "Loja Seazone" para transferência</td><td><code>infra_geral</code></td><td>Porta-voz, E2, E5 ("chegou?"), E6</td></tr>
-      <tr><td class="k">P4</td><td>Templates da seção 5</td><td>Submissão à Meta na S1</td><td>Onda 2</td></tr>
-      <tr><td class="k">P5</td><td>Contato estruturado do fornecedor (WhatsApp e e-mail de cobrança)</td><td>Migration por PR</td><td>E2</td></tr>
-      <tr><td class="k">P6</td><td>Sapron de volta ou fallback Nekt testado</td><td>Chamado ao SRE</td><td>M1</td></tr>
-      <tr><td class="k">P7</td><td>Campos que faltam no Azir: <code>estacao</code>, <code>modo</code>, <code>dono</code> NOT NULL, eventos, Supervisor, mesa com digest. <strong>Mais de 2 semanas de trabalho</strong>, porque o Azir hoje é um quadro de sessões e não um motor de fila</td><td>Código do orquestrador</td><td>Fila toda</td></tr>
-      <tr><td class="k">P8</td><td><strong>Total e Rede acessíveis pela VPS</strong>: túnel reverso do Chrome do Agente (PC 9333 → VPS) ou Chrome headless na VPS com sessão. Fallback: a Alexia informa o rastreio e vale o "chegou?"</td><td>Infra local</td><td>M6, E4, E5-Total, M7</td></tr>
-      <tr><td class="k">P9</td><td>Lista branca de domínios de link de pagamento (ipag, rede e gateways dos fornecedores)</td><td>Config</td><td>E2 gravando link</td></tr>
-      <tr><td class="k">P10</td><td>Fonte de entrega por transportadora (<code>carrier</code> de Harus, Somar e Matinali)</td><td>Levantamento</td><td>E5 fora da Total</td></tr>
-      <tr><td class="k">P11</td><td>Testes de contrato do S0 contra as edges e o schema (app em migração com Gabriel e Marta)</td><td>Código</td><td>S0</td></tr>
-      <tr><td class="k">P12</td><td><code>sia-prod</code> autenticado para as sessões do Azir</td><td>–</td><td>E6 em leitura</td></tr>
-      <tr><td class="k">P13</td><td>Gmail <code>fornecedores@</code> conectado no Composio</td><td>Composio</td><td>E2 por e-mail</td></tr>
-      <tr><td class="k">P14</td><td>iPag/Rede destravado</td><td>Taskdex</td><td>Link automático (o E2 cobre enquanto isso)</td></tr>
-      <tr><td class="k">P15</td><td>Canal da mesa para a Wania (o Vel'Koz só atende o Henry)</td><td>Decisão 7</td><td>T2</td></tr>
-    </tbody>
-  </table>
-  </div>
-</section>
-
-<!-- 9 -->
-<section id="riscos">
-  <span class="num">09</span>
-  <h2>Riscos e mitigação</h2>
-  <div class="tbl mid" tabindex="0" role="region" aria-label="Riscos e mitigação">
-  <table>
-    <thead><tr><th>Risco</th><th>Mitigação</th></tr></thead>
-    <tbody>
-      <tr><td class="k">Link trocado ou phishing gravado no card</td><td>Lista branca (P9). Canal novo ou domínio fora da lista vai para a mesa</td></tr>
-      <tr><td class="k">Cancelar no D7 sem a franquia ter sido avisada</td><td>Recuperação só com o D4 ou o D7 entregue e comprovado na SIA</td></tr>
-      <tr><td class="k">Spam ou bloqueio do número da SIA</td><td>Porta-voz com tetos, horário, opt-out e quality rating; nada com terceiros durante a BF</td></tr>
-      <tr><td class="k">Cobrar franquia que já pagou</td><td>Reler a fase imediatamente antes de cada envio</td></tr>
-      <tr><td class="k">Escrita aparece como Henry</td><td>Admin de serviço (P2)</td></tr>
-      <tr><td class="k">Total e Rede indisponíveis na VPS</td><td>P8. Até lá o E5 usa o "Sim" da franquia e o E4 pega o rastreio com a Alexia</td></tr>
-      <tr><td class="k">Alarme falso por etiqueta velha</td><td>S0 olha fase + etiqueta e faz a faxina</td></tr>
-      <tr><td class="k">Troca de fornecedor gera custo ou despacho em dobro</td><td>3 travas (antes do pagamento, mesmo total com frete, aviso à franquia); M1 confere o substituto da mesma franquia</td></tr>
-      <tr><td class="k">Template N-fornecedores recusado pela Meta</td><td>Texto corrido ou link para página de status, validado na S1</td></tr>
-      <tr><td class="k">Construir o E6 sem demanda</td><td>Medir antes; se ficar abaixo de 5 por semana, vira regra</td></tr>
-      <tr><td class="k">Azir sem motor de fila</td><td>P7 com prazo realista; as máquinas seguem no lab até haver paridade</td></tr>
-      <tr><td class="k">App da lojinha em migração</td><td>Testes de contrato (P11); mudança só por PR / Alfred</td></tr>
-      <tr><td class="k">Regra errada em escala</td><td>Rebaixamento automático; toda ação comentada no card</td></tr>
-      <tr><td class="k">LGPD</td><td>Telefone e nome mascarados no log e no Slack</td></tr>
-      <tr><td class="k">Prompt injection pela mensagem recebida</td><td>Intenção em lista fechada; o texto nunca vira comando</td></tr>
-    </tbody>
-  </table>
-  </div>
-</section>
-
-<!-- 10 -->
-<section id="decisoes">
-  <span class="num">10</span>
-  <h2>Decisões do Henry</h2>
-  <ol class="dec">
-    <li><span class="i">1</span><p><strong>Margem de capacho liberada sozinha</strong>Proposta: necessidade +20%.</p></li>
-    <li><span class="i">2</span><p><strong>Tolerância de divergência de comprovante</strong>Proposta: até R$ 15 ou 2%, o menor. Frete faltando = pedir complemento.</p></li>
-    <li><span class="i">3</span><p><strong>Teto de <code>ajustar_frete</code> e <code>ajustar_preco_item</code> sem OK</strong>Proposta: até R$ 20 ou 5%, o menor.</p></li>
-    <li><span class="i">4</span><p><strong>Concluir pedido</strong>"Chegou? Sim" vale como <code>received_at</code>, e o silêncio de 5 dias úteis depois do prazo conclui o card: sim ou não.</p></li>
-    <li><span class="i">5</span><p><strong>Aviso de cancelamento à franquia</strong>Reverte a decisão de 16/10: sim ou não.</p></li>
-    <li><span class="i">6</span><p><strong>Troca automática de fornecedor sem link em 72h úteis</strong>Com as 3 travas, e o que fazer com a IZY (5 cards, R$ 5,5 mil): trocar, suspender ou cobrar.</p></li>
-    <li><span class="i">7</span><p><strong>Dono e canal da mesa</strong>Proposta: Wania na primeira linha, numa thread diária em #Fornecedores; Henry no dinheiro fora de regra, pelo Vel'Koz.</p></li>
-    <li><span class="i">8</span><p><strong><code>VIGIA_ESCRITA</code></strong>Proposta: mantém desligada (decisão atual, travada no script e no teste) e a conclusão sai pelo E5 com prévia.</p></li>
-    <li><span class="i">9</span><p><strong>Olimpo × regra do Bill</strong>Proposta: não abrir <code>infra_geral</code> para promover M1 a M5 para prd. Portar para o Azir na VPS e desligar no Olimpo depois de 2 semanas de paridade.</p></li>
-    <li><span class="i">10</span><p><strong>E6 Atendente</strong>Construir só depois de medir o inbound (P3 + P12), ou ficar desde já como regra de "status do pedido" dentro do Porta-voz.</p></li>
-  </ol>
-</section>
-
-<footer>
-  <p>Fontes lidas, todas só em leitura: ranking de processos do dossiê, export bruto da lojinha (<code>raw.json</code>), <code>orquestrador/src/db.ts</code> e <code>vigia-sla-fornecedores/scripts/rotina-vigia-sla-fornecedores.sh</code>.</p>
-  <p>O ranking do dossiê põe "captação de fornecedor por cidade" em 1º lugar. Este desenho trata o processo da lojinha, conforme pedido. Nada foi escrito em nenhum sistema.</p>
-  <p>16/11/2026</p>
-</footer>
-
+  <footer>Os agentes novos rodam no Azir, na VPS do time.</footer>
 </main>
 </body>
 </html>
