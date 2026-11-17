@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ConcertAI · Textos</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0f1426;--card:#171d35;--bd:#262e52;--fg:#e9ebf5;--fg2:#a7acc8;--brand:#5c90ff;--coral:#ff7a76;--ok:#3ccf7a}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.6 Inter,system-ui,sans-serif}
+main{max-width:820px;margin:0 auto;padding:32px 16px 64px}
+h1{font-size:26px;margin:0 0 4px}h2{font-size:18px;margin:28px 0 10px;color:var(--brand)}
+.sub{color:var(--fg2);margin:0 0 20px}.card{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:16px 18px;margin:10px 0}
+ul,ol{padding-left:20px;margin:6px 0}li{margin:4px 0}a{color:var(--brand);word-break:break-all}
+.tag{display:inline-block;font-size:12px;font-weight:600;padding:2px 10px;border-radius:999px;background:#2a1a2a;color:var(--coral);margin-left:6px}
+.ok{background:#11301f;color:var(--ok)}table{width:100%;border-collapse:collapse;font-size:14px}td{padding:8px 6px;border-top:1px solid var(--bd);vertical-align:top}
+details{margin-top:24px;color:var(--fg2)}summary{cursor:pointer}
+</style></head><body><main>
+<h1>ConcertAI · Textos do site, termos e comunicado</h1>
+<p class="sub">T633 · 16/11/2026 · sprint do site (T619)</p>
+
+<h2>O que foi feito</h2>
+<div class="card">Escrevi todos os textos que o site do ConcertAI precisa para o sprint, no tom simples da Seazone, e gravei no repositório (PR #10):
+<table>
+<tr><td><b>Site e telas</b><span class="tag ok">pronto</span></td><td>Página inicial, login e todas as telas do proprietário, da franquia e do prestador.</td></tr>
+<tr><td><b>Notificações</b><span class="tag ok">pronto</span></td><td>25 mensagens: pedido criado, aprovação, confirmado, lembretes, concluído e imprevistos comuns, para cada pessoa.</td></tr>
+<tr><td><b>Termos de uso</b><span class="tag">rascunho p/ Jurídico</span></td><td>Do comprador e do prestador, com preço e escopo claros, cancelamento, garantia de 90 dias, material à parte, reclamação pela SIA e prestador com NF. Cada ponto em aberto está marcado [JURÍDICO].</td></tr>
+<tr><td><b>Comunicado às franquias de Floripa</b><span class="tag">rascunho, não enviar</span></td><td>Texto completo, versão curta para WhatsApp e checklist do que falta antes de enviar.</td></tr>
+</table>
+Nada foi enviado a proprietário, franquia ou prestador.</div>
+
+<h2>Como usar</h2>
+<div class="card"><ol>
+<li>Abra a pasta <b>docs/textos</b> do PR: https://github.com/seazone-tech/concertai/pull/10</li>
+<li><b>Quem monta as telas:</b> copie de <code>site-e-telas.md</code>. Os textos com cadeado 🔒 são lidos pelos testes automáticos: não mude esses.</li>
+<li><b>Quem programa os avisos:</b> use <code>notificacoes.json</code> (cada mensagem com variáveis e botões).</li>
+<li><b>Jurídico:</b> leia <code>termos-comprador.md</code> e <code>termos-prestador.md</code>; o resumo das 7 dúvidas está no <code>README.md</code> da pasta.</li>
+<li><b>Lançamento:</b> o comunicado só sai depois do checklist no fim do arquivo (data do piloto, ganho da franquia, termos aprovados).</li>
+</ol></div>
+
+<h2>Pra que serve</h2>
+<div class="card"><ul>
+<li>O site do sprint sai com texto final, não "lorem ipsum".</li>
+<li>Os avisos de WhatsApp já estão no formato para pedir aprovação da Meta.</li>
+<li>O Jurídico recebe um rascunho pronto para revisar, em vez de começar do zero.</li>
+<li>O comunicado de Florianópolis fica pronto para quando o piloto tiver data.</li>
+</ul></div>
+
+<h2>Links</h2>
+<div class="card"><ul>
+<li>PR: https://github.com/seazone-tech/concertai/pull/10</li>
+<li>Protótipo: https://henrymatsumoto-cpu.github.io/html-tasks/concertai-prototipo.html</li>
+<li>Blueprint: https://henrymatsumoto-cpu.github.io/html-tasks/concertai-blueprint.html</li>
+</ul></div>
+
+<details><summary>Detalhe técnico</summary>
+<ul>
+<li>Branch <code>docs/t633-textos</code>; só arquivos em <code>docs/textos/</code>.</li>
+<li>Textos 🔒 = contrato do E2E do PR #8 (<code>tests/e2e/README.md</code>): "Buscar serviço", "Adicionar &lt;serviço&gt;", "Tem hóspede nesse dia", janelas "8h–9h", "Material e peças não estão inclusos", "Precisa da aprovação do proprietário", "Pedido confirmado", "Enviado ao proprietário", "Aprovar", "Confirmar presença", "Cheguei", "Concluir", aba "Pedidos".</li>
+<li>Pendências que dependem de outros: ganho da franquia (pergunta aberta com a Iara), CNPJ operador e pontos de CDC (Jurídico, CZT-030), aprovação dos templates na Meta.</li>
+</ul></details>
+</main></body></html>
