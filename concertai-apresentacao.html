@@ -272,7 +272,49 @@ h3{font-size:18px;line-height:1.3;font-weight:700}
 .extra p{font-size:14px;color:var(--fg-2)}
 .extra b{color:var(--fg)}
 
-/* 10 pronto */
+/* 11-14 anfitrião e fora da Seazone */
+.quem{display:flex;gap:14px;align-items:center;padding:16px 20px;margin-bottom:16px;background:var(--coral-100);border-radius:var(--r-card)}
+.quem p{font-size:15px;line-height:1.5;color:#5A1D19}
+.quem b{color:#3D0F0C}
+.quem .ico{background:#fff;color:var(--coral)}
+.fora{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.fora .card{padding:24px;display:flex;flex-direction:column;gap:12px}
+.fora .card p{font-size:15px;color:var(--fg-2)}
+.fora .ex{font-size:14px;color:var(--fg);background:var(--bg);border-radius:10px;padding:10px 14px;display:flex;gap:10px;align-items:center}
+.alt .fora .ex{background:var(--surface)}
+.fora .ex [data-lucide]{width:17px;height:17px;color:var(--blue)}
+.mini-fluxo{display:flex;gap:10px;align-items:stretch;margin-top:20px;flex-wrap:wrap}
+.mini-fluxo .pt{flex:1 1 180px;display:flex;gap:12px;align-items:center;padding:14px 16px;background:var(--surface);border-radius:var(--r-card);box-shadow:var(--shadow-card);font-size:14px;color:var(--fg-2)}
+.mini-fluxo .pt b{color:var(--fg);display:block;font-size:15px}
+.mini-fluxo .seta{display:grid;place-items:center;color:var(--fg-3)}
+.trilha.cinco{grid-template-columns:repeat(5,1fr)}
+.trilha.cinco::before{left:10%;right:10%}
+.etapa.ok .ico{background:var(--success);color:#fff}
+.etapa.cofre .ico{background:var(--navy);color:#fff}
+.divide{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:32px}
+.divide .card{display:flex;gap:14px;align-items:center;padding:18px 20px}
+.divide .v{font-size:22px;font-weight:800;letter-spacing:-.02em;line-height:1.1}
+.divide p{font-size:14px;color:var(--fg-2)}
+#s14 h2{max-width:none}
+.estimativa{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;padding:5px 12px;border-radius:var(--pill);background:#FFF4D6;color:#7A5200;text-transform:uppercase;letter-spacing:.05em;margin-left:10px;vertical-align:middle}
+.estimativa [data-lucide]{width:14px;height:14px}
+.cen .det{font-size:13px;color:var(--fg-2);margin-top:8px;line-height:1.45}
+.cen .det b{color:var(--fg)}
+.total-fora{display:flex;gap:16px;align-items:center;flex-wrap:wrap;margin-top:16px;padding:16px 20px;background:var(--navy);color:#fff;border-radius:var(--r-card)}
+.total-fora .ico{background:rgba(255,255,255,.1);color:var(--coral)}
+.total-fora p{font-size:15px;color:var(--on-dark-2);flex:1 1 300px}
+.total-fora b{color:#fff}
+.total-fora .nums{display:flex;gap:24px}
+.total-fora .nums div{font-size:13px;color:var(--on-dark-2)}
+.total-fora .nums strong{display:block;font-size:24px;color:#fff;font-weight:800;letter-spacing:-.02em}
+.prem-fora{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px}
+.prem-fora p{font-size:13px;color:var(--fg-2);line-height:1.45;display:flex;gap:8px}
+.prem-fora p [data-lucide]{width:16px;height:16px;color:var(--blue);margin-top:2px}
+.prem-fora b{color:var(--fg)}
+
+/* 15 pronto */
+.col li.construcao{outline:2px solid var(--coral);outline-offset:-2px}
+.col li.construcao [data-lucide]{color:var(--coral)}
 .status{display:grid;grid-template-columns:1fr 1fr;gap:24px}
 .col h3{display:flex;align-items:center;gap:10px;margin-bottom:14px;font-size:20px}
 .col ul{list-style:none;display:grid;gap:10px}
@@ -283,13 +325,13 @@ h3{font-size:18px;line-height:1.3;font-weight:700}
 .col.prox li [data-lucide]{color:var(--blue)}
 
 /* 11 fim */
-#s12 .wrap{text-align:center;display:flex;flex-direction:column;align-items:center}
+#s16 .wrap{text-align:center;display:flex;flex-direction:column;align-items:center}
 .fim-logo{display:flex;align-items:center;gap:14px;color:#fff;margin-bottom:28px}
 .fim-logo .logo-svg{height:24px;width:auto}
 .fim-logo .wm{font-size:24px;font-weight:800;letter-spacing:-.02em}
 .fim-logo .wm span{color:var(--coral)}
 .fim-logo .sep{width:1px;height:26px;background:rgba(255,255,255,.3)}
-#s12 h2{max-width:20ch;font-size:48px;margin:0 auto}
+#s16 h2{max-width:20ch;font-size:48px;margin:0 auto}
 .link-site{margin-top:32px;display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
 .url{margin-top:18px;font-size:15px;color:var(--on-dark-2);word-break:break-all}
 .feito-ia{margin-top:48px;display:inline-flex;align-items:center;gap:10px;padding:10px 18px;border-radius:var(--pill);background:rgba(255,255,255,.08);font-weight:600;font-size:14px}
@@ -307,7 +349,8 @@ h3{font-size:18px;line-height:1.3;font-weight:700}
   .passos{grid-template-columns:1fr 1fr}
   .trilha{grid-template-columns:repeat(3,1fr);row-gap:28px}
   .trilha::before{display:none}
-  .prem,.pontos-claros{grid-template-columns:1fr}
+  .prem,.pontos-claros,.prem-fora{grid-template-columns:1fr}
+  .trilha.cinco{grid-template-columns:repeat(3,1fr)}
   .pontos{display:none}
 }
 @media (max-width:720px){
@@ -333,7 +376,7 @@ h3{font-size:18px;line-height:1.3;font-weight:700}
   .faixa,.escala{grid-template-columns:92px 1fr}
   .setas{display:none}
   .btn-ic{width:42px;height:42px}
-  #s12 h2{font-size:34px}
+  #s16 h2{font-size:34px}
   .chat{max-width:none}
   .perfil{padding:16px}
   .tabela table{font-size:13.5px}
@@ -347,6 +390,13 @@ h3{font-size:18px;line-height:1.3;font-weight:700}
   .prest{flex-wrap:wrap}
   .prest .preco{margin-left:52px;text-align:left;width:100%;display:flex;align-items:baseline;gap:8px}
   .msg p{font-size:13.5px}
+  .fora,.divide{grid-template-columns:1fr}
+  .trilha.cinco{grid-template-columns:1fr 1fr}
+  .mini-fluxo{flex-direction:column;margin-top:16px}
+  .mini-fluxo .pt{flex:none}
+  .mini-fluxo .seta{transform:rotate(90deg);height:20px}
+  .estimativa{margin:8px 0 0 0}
+  .total-fora .nums{gap:16px;width:100%}
 }
 @media (max-height:820px) and (min-width:1025px){
   .slide{padding-top:calc(var(--bar-h) + 20px);padding-bottom:28px}
@@ -368,7 +418,7 @@ h3{font-size:18px;line-height:1.3;font-weight:700}
 
 <header class="topo escuro" id="topo">
   <a class="marca" href="#s1" aria-label="Início da apresentação"><svg class="logo-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 411 68" role="img" aria-label="Seazone"><path fill="currentColor" d="M33.856 52.5045C33.856 41.2633 0.620441 47.8249 0.620441 28.9865C0.620441 20.5619 9.06051 13.5835 21.1421 13.5835C33.9571 13.5835 41.1454 20.1451 41.1454 24.3131C41.1454 26.3846 39.4827 28.576 36.6693 28.576C35.0003 28.576 33.856 27.5339 32.8128 26.4919C30.7328 24.4079 26.2504 21.9133 21.0473 21.9133C13.4418 21.9133 9.8002 25.1404 9.8002 28.1591C9.8002 38.4594 43.5541 32.9461 43.5541 51.6709C43.5541 61.769 33.0341 67.7054 21.4646 67.7054C7.80872 67.6991 0.0957031 60.4113 0.0957031 56.5589C0.0957031 53.9634 2.08086 52.1888 4.47063 52.1888C6.13968 52.1888 7.28399 53.1297 8.01735 53.856C11.0393 57.0831 15.4143 59.2682 21.5657 59.2682C28.754 59.2682 33.8623 56.4579 33.8623 52.5045"/><path fill="currentColor" d="M60.8887 44.6989C62.1404 53.5402 69.6448 59.1608 78.597 59.1608C84.3249 59.1608 88.8073 56.8747 91.6206 55.3085C92.2465 55.0054 93.081 54.6896 94.1179 54.6896C96.6151 54.6896 98.3916 56.5589 98.3916 58.9587C98.3916 60.9354 97.1399 62.3942 96.2042 62.9184C94.1179 64.1688 87.6566 67.7054 78.5907 67.7054C62.9623 67.7054 51.083 56.0411 51.083 40.5434C51.083 25.0457 63.4807 13.5835 78.0659 13.5835C92.6511 13.5835 103.696 25.8667 103.696 38.352C103.696 41.5854 101.091 44.7052 97.8669 44.7052H60.876L60.8887 44.6989ZM60.8887 36.6785H94.7501C94.023 29.6053 87.0371 21.907 78.0786 21.907C69.1201 21.907 61.7232 28.3612 60.8887 36.6785Z"/><path fill="currentColor" d="M190.833 22.7668C188.02 22.7668 185.965 20.9354 185.965 18.1188C185.965 15.3022 188.02 13.5781 190.833 13.5781H223.81C227.388 13.5781 229.335 16.4958 229.335 18.984C229.335 20.9291 228.678 22.009 227.388 23.5184L198.3 58.4166H225.333C228.14 58.4166 230.309 60.469 230.309 63.172C230.309 65.8749 228.147 67.599 225.333 67.599H190.505C187.476 67.599 184.985 65.2244 184.985 62.0921C184.985 60.3617 185.529 59.3891 187.046 57.5514L215.92 22.7668H190.833Z"/><path fill="currentColor" d="M261.567 67.6991C246.147 67.6991 234.375 55.6243 234.375 40.5371C234.375 25.4499 246.356 13.5835 261.567 13.5835C276.778 13.5835 288.86 25.5573 288.86 40.5371C288.86 55.5169 276.772 67.6991 261.567 67.6991ZM261.567 22.2228C251.565 22.2228 243.543 30.6537 243.543 40.5371C243.543 50.4205 251.256 59.1671 261.567 59.1671C271.878 59.1671 279.484 50.4205 279.484 40.5371C279.484 30.6537 271.67 22.2228 261.567 22.2228Z"/><path fill="currentColor" d="M367.304 44.6989C368.556 53.5402 376.054 59.1608 385.012 59.1608C390.746 59.1608 395.229 56.8747 398.042 55.3085C398.655 55.0054 399.496 54.6896 400.533 54.6896C403.037 54.6896 404.8 56.5589 404.8 58.9587C404.8 60.9354 403.549 62.3942 402.626 62.9184C400.533 64.1688 394.078 67.7054 385.012 67.7054C369.371 67.7054 357.504 56.0411 357.504 40.5434C357.504 25.0457 369.902 13.5835 384.481 13.5835C399.06 13.5835 410.124 25.8667 410.124 38.352C410.124 41.5854 407.513 44.7052 404.282 44.7052H367.297L367.304 44.6989ZM367.304 36.6785H401.171C400.425 29.6053 393.452 21.907 384.487 21.907C375.523 21.907 368.138 28.3612 367.304 36.6785Z"/><path fill="currentColor" d="M325.206 13.698C321.343 13.3318 317.455 13.3065 313.579 13.357C309.862 13.4075 306.107 13.2876 302.396 13.4581C301.529 13.496 300.682 13.6475 299.898 14.0264C299.709 14.1149 299.525 14.2159 299.342 14.3296C298.552 14.8032 297.806 15.4853 297.313 16.2936C296.737 17.2472 296.737 18.1187 296.788 19.186C296.838 20.1965 296.788 21.2195 296.788 22.23C296.775 25.9055 296.769 29.5873 296.756 33.2691C296.75 35.6184 296.725 62.7046 296.725 62.7046C296.725 65.3065 299.02 67.7063 301.719 67.7063C304.419 67.7063 306.726 65.3065 306.726 62.7046V39.6096C306.726 28.9873 314.54 22.3247 323.183 22.3247C331.825 22.3247 339.646 28.9873 339.646 39.6096V62.7046C339.646 65.3065 341.846 67.7063 344.539 67.7063C347.232 67.7063 349.647 65.3065 349.647 62.7046V40.3296C349.647 26.5181 338.678 14.98 325.2 13.698"/><path fill="#FC6058" d="M174.96 20.973L163.2 14.0515C163.226 13.8873 163.302 13.7357 163.302 13.5715V3.13238C163.302 1.40199 161.898 0 160.166 0H153.894C152.162 0 150.758 1.40199 150.758 3.13238V6.77629L146.491 4.28176C144.759 3.24605 142.476 3.42288 140.871 4.61015L140.788 4.64173L113.736 20.3162C111.479 21.6614 110.537 24.7875 111.94 27.1304C113.395 29.5618 116.6 30.2186 118.851 28.8734L120.469 27.9388C118.553 31.6837 117.358 35.915 117.358 40.5314C117.358 47.8319 120.166 55.025 125.35 60.2098C127.385 62.2497 129.756 63.9548 132.355 65.2115C134.352 66.1778 136.464 66.9861 138.658 67.3903C141.566 67.9208 144.575 67.6492 147.515 67.6555C150.689 67.6555 153.869 67.6618 157.043 67.6682C159.919 67.6745 162.796 67.6871 165.704 67.6934C166.431 67.6934 167.145 67.504 167.79 67.1756C168.618 66.7524 169.112 66.2914 169.655 65.5652C170.275 64.7442 170.705 63.7527 170.705 62.6917V29.827C172.861 30.6038 175.478 29.9281 176.761 27.7809C178.165 25.4379 177.223 22.3119 174.96 20.9667M161.43 41.0493C161.43 51.04 154.659 59.1615 144.449 59.1615C134.239 59.1615 126.734 50.5222 126.734 40.5314C126.734 30.5407 134.239 22.2171 144.449 22.2171C154.659 22.2171 161.43 29.9218 161.43 39.8052V41.0556V41.0493Z"/></svg><span class="sep"></span><span class="wm">Concert<span>AI</span></span></a>
-  <div class="topo-dir"><span class="contador num" id="contador">01 / 12</span></div>
+  <div class="topo-dir"><span class="contador num" id="contador">01 / 16</span></div>
   <div class="progresso" id="progresso"></div>
 </header>
 <nav class="pontos escuro" id="pontos" aria-label="Seções"></nav>
@@ -618,7 +668,7 @@ h3{font-size:18px;line-height:1.3;font-weight:700}
     <div class="extra">
       <div class="card rv"><span class="ico verde"><i data-lucide="receipt"></i></span><p><b>Resultado</b> = comissão (R$ 56,70) menos ~R$ 17 por pedido de imposto e custos (atendimento, perdas e reserva da garantia) = R$ 39,30.</p></div>
       <div class="card rv"><span class="ico verde"><i data-lucide="layers"></i></span><p><b>Fase 2</b> soma ~216 pedidos por mês de outros serviços, com comissão menor (~R$ 35).</p></div>
-      <div class="card rv"><span class="ico coral"><i data-lucide="globe"></i></span><p><b>Anfitrião de fora é ganho extra:</b> cada 100 pedidos por mês dão ~R$ 36 mil por ano. Ainda sem teste.</p></div>
+      <div class="card rv"><span class="ico coral"><i data-lucide="globe"></i></span><p><b>Anfitrião e imóveis de fora da Seazone são ganho extra</b>, fora destes números. A conta deles está no slide 14.</p></div>
     </div>
     <div class="pontos-claros">
       <div class="pc rv"><i data-lucide="info"></i><p><b>O "23% menor" é contra a primeira proposta de preço do ConcertAI.</b> Hoje a Seazone paga em média R$ 155 por pedido direto ao prestador; no ConcertAI vira R$ 211, com garantia, prova por foto e sem procurar profissional.</p></div>
@@ -628,32 +678,148 @@ h3{font-size:18px;line-height:1.3;font-weight:700}
   </div>
 </section>
 
-<!-- 10 STATUS -->
-<section class="slide alt" id="s11" data-titulo="Pronto e próximos passos">
+<!-- 11 ANFITRIÃO AVULSO -->
+<section class="slide alt" id="s11" data-titulo="Anfitrião de fora da Seazone">
   <div class="wrap">
     <div class="cab">
-      <span class="tag rv"><b>11</b>Onde estamos</span>
+      <span class="tag rv"><b>11</b>Público novo</span>
+      <h2 class="rv">Anfitrião de <em>fora da Seazone</em> também contrata</h2>
+    </div>
+    <div class="quem rv"><span class="ico"><i data-lucide="globe"></i></span><p><b>Quem é:</b> a pessoa que aluga 1 a 3 imóveis no Airbnb ou no Booking por conta própria, sem gestora. Hoje ela resolve conserto do mesmo jeito que a franquia: no WhatsApp e no improviso.</p></div>
+    <div class="passos">
+      <div class="card passo rv"><span class="n"></span><div><h3><i data-lucide="user-plus"></i>Cria a conta sozinho</h3><p>Nome, celular e CPF ou CNPJ. O celular é confirmado por código.</p></div></div>
+      <div class="card passo rv"><span class="n"></span><div><h3><i data-lucide="home"></i>Cadastra o imóvel</h3><p>Endereço pelo CEP, como entrar no imóvel e, se quiser, o calendário do Airbnb.</p></div></div>
+      <div class="card passo rv"><span class="n"></span><div><h3><i data-lucide="calendar-clock"></i>Serviço, dia e horário</h3><p>Escolhe igual ao proprietário, com preço fechado e pelo menos 3h antes.</p></div></div>
+      <div class="card passo rv"><span class="n"></span><div><h3><i data-lucide="star"></i>Só profissional livre</h3><p>Aparecem só os que atendem a região dele nesse horário, os melhores primeiro.</p></div></div>
+      <div class="card passo rv"><span class="n"></span><div><h3><i data-lucide="qr-code"></i>Paga na hora</h3><p>Pix ou cartão. O dinheiro fica guardado e só vai ao profissional quando o serviço termina, com foto e nota fiscal.</p></div></div>
+      <div class="card passo fim rv"><span class="n"></span><div><h3><i data-lucide="shield-check"></i>Mesma garantia</h3><p>WhatsApp com o profissional depois de confirmar, garantia de 90 dias (30 para limpeza) e reclamação pela SIA, como todos.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 12 IMÓVEIS FORA DA SEAZONE -->
+<section class="slide" id="s12" data-titulo="Imóveis fora da Seazone">
+  <div class="wrap">
+    <div class="cab">
+      <span class="tag rv"><b>12</b>Imóveis fora da Seazone</span>
+      <h2 class="rv">Proprietário e franquia contratam também para <em>imóveis de fora</em></h2>
+      <p class="sub rv">Quem já usa o ConcertAI pode chamar o mesmo profissional para um imóvel que não está na Seazone.</p>
+    </div>
+    <div class="fora">
+      <div class="card rv"><span class="ico"><i data-lucide="key-round"></i></span><h3>Proprietário</h3><p>Além dos imóveis que estão com a Seazone, contrata para os outros que são dele.</p><div class="ex"><i data-lucide="palmtree"></i>Ex.: a casa de praia da família, que ele não aluga.</div></div>
+      <div class="card rv"><span class="ico"><i data-lucide="building-2"></i></span><h3>Franquia</h3><p>Além da carteira Seazone, contrata para clientes e imóveis que ela atende por fora.</p><div class="ex"><i data-lucide="briefcase"></i>Ex.: um imóvel de cliente da franquia que não é gerido pela Seazone.</div></div>
+    </div>
+    <div class="mini-fluxo">
+      <div class="pt rv"><span class="ico"><i data-lucide="map-pin-plus"></i></span><div><b>Cadastra o imóvel</b>Endereço e como entrar.</div></div>
+      <span class="seta rv" aria-hidden="true"><i data-lucide="arrow-right"></i></span>
+      <div class="pt rv"><span class="ico"><i data-lucide="list-checks"></i></span><div><b>Contrata igual</b>Mesmo serviço, preço e profissional.</div></div>
+      <span class="seta rv" aria-hidden="true"><i data-lucide="arrow-right"></i></span>
+      <div class="pt rv"><span class="ico coral"><i data-lucide="qr-code"></i></span><div><b>Paga na hora</b>Sem repasse para descontar, paga como o anfitrião.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 13 COMO O DINHEIRO ANDA -->
+<section class="slide alt" id="s13" data-titulo="Como o dinheiro anda">
+  <div class="wrap">
+    <div class="cab">
+      <span class="tag rv"><b>13</b>Para quem paga na hora</span>
+      <h2 class="rv">Como o dinheiro anda, <em>sem planilha</em></h2>
+    </div>
+    <div class="trilha cinco">
+      <div class="etapa rv"><span class="ico"><i data-lucide="qr-code"></i></span><h3>Paga</h3><p>Pix ou cartão, na hora de contratar.</p></div>
+      <div class="etapa cofre rv"><span class="ico"><i data-lucide="lock"></i></span><h3>Fica guardado</h3><p>Ninguém recebe ainda.</p></div>
+      <div class="etapa rv"><span class="ico"><i data-lucide="camera"></i></span><h3>Serviço feito</h3><p>Com foto e prazo de 3 dias para reclamar.</p></div>
+      <div class="etapa rv"><span class="ico"><i data-lucide="receipt"></i></span><h3>Nota fiscal</h3><p>O profissional manda a nota do serviço.</p></div>
+      <div class="etapa ok rv"><span class="ico"><i data-lucide="hand-coins"></i></span><h3>Cada um recebe</h3><p>O profissional, a parte dele. A Seazone, a comissão.</p></div>
+    </div>
+    <div class="divide">
+      <div class="card rv"><span class="ico coral"><i data-lucide="undo-2"></i></span><p><b>Cancelou antes de o profissional chegar?</b> O dinheiro volta inteiro, sozinho.</p></div>
+      <div class="card rv"><span class="ico verde"><i data-lucide="zap"></i></span><p><b>Tudo automático.</b> Ninguém confere planilha nem faz transferência na mão.</p></div>
+      <div class="card rv"><span class="ico"><i data-lucide="tag"></i></span><p><b>Comissão fixa de R$ 30 a R$ 70</b> por serviço, já dentro do preço que a pessoa vê.</p></div>
+      <div class="card rv"><span class="ico"><i data-lucide="package"></i></span><p><b>Peça à parte</b> também é paga no app e segue o mesmo caminho, sem comissão.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 14 RECEITA FORA DA SEAZONE -->
+<section class="slide" id="s14" data-titulo="Receita de fora da Seazone">
+  <div class="wrap">
+    <div class="cab">
+      <span class="tag rv"><b>14</b>Ganho extra</span>
+      <h2 class="rv">Quanto vem de <em>fora da carteira</em><span class="estimativa"><i data-lucide="triangle-alert"></i>Estimativa</span></h2>
+    </div>
+    <div class="cenarios">
+      <div class="card cen rv">
+        <div class="topo-cen"><b>Pessimista</b></div>
+        <p class="ped num"><strong>16</strong> pedidos por mês</p>
+        <p class="det num"><b>50</b> anfitriões × 3 pedidos no ano + <b>20</b> imóveis de fora × 2</p>
+        <div class="linha-v num"><span>Comissão no ano</span><strong>R$ 10,8 mil</strong></div>
+        <div class="barra-v"><i style="width:10.3%"></i></div>
+        <div class="linha-v num"><span>Resultado no ano</span><strong>R$ 7,5 mil</strong></div>
+        <div class="barra-v res"><i style="width:7.1%"></i></div>
+        <p class="mes num">Por mês: R$ 0,9 mil de comissão · R$ 0,6 mil de resultado</p>
+      </div>
+      <div class="card cen real rv">
+        <div class="topo-cen"><b>Realista</b><span class="pill azul">Mais provável</span></div>
+        <p class="ped num"><strong>60</strong> pedidos por mês</p>
+        <p class="det num"><b>150</b> anfitriões × 4 pedidos no ano + <b>60</b> imóveis de fora × 2</p>
+        <div class="linha-v num"><span>Comissão no ano</span><strong>R$ 40,8 mil</strong></div>
+        <div class="barra-v"><i style="width:38.9%"></i></div>
+        <div class="linha-v num"><span>Resultado no ano</span><strong>R$ 28,3 mil</strong></div>
+        <div class="barra-v res"><i style="width:27%"></i></div>
+        <p class="mes num">Por mês: R$ 3,4 mil de comissão · R$ 2,4 mil de resultado</p>
+      </div>
+      <div class="card cen rv">
+        <div class="topo-cen"><b>Otimista</b></div>
+        <p class="ped num"><strong>155</strong> pedidos por mês</p>
+        <p class="det num"><b>300</b> anfitriões × 5 pedidos no ano + <b>120</b> imóveis de fora × 3</p>
+        <div class="linha-v num"><span>Comissão no ano</span><strong>R$ 105 mil</strong></div>
+        <div class="barra-v"><i style="width:100%"></i></div>
+        <div class="linha-v num"><span>Resultado no ano</span><strong>R$ 73 mil</strong></div>
+        <div class="barra-v res"><i style="width:69.5%"></i></div>
+        <p class="mes num">Por mês: R$ 8,8 mil de comissão · R$ 6,1 mil de resultado</p>
+      </div>
+    </div>
+    <div class="total-fora rv">
+      <span class="ico"><i data-lucide="plus"></i></span>
+      <p><b>Carteira + fora da Seazone, cenário realista:</b> a rede toda no 1º lote de serviços (R$ 74 mil de comissão e R$ 51 mil de resultado) somada a este público novo.</p>
+      <div class="nums num"><div><strong>R$ 115 mil</strong>comissão no ano</div><div><strong>R$ 79 mil</strong>resultado no ano</div></div>
+    </div>
+    <div class="prem-fora">
+      <p class="rv"><i data-lucide="users"></i><span><b>Poucos anfitriões:</b> a Grande Florianópolis tem milhares de anúncios no Airbnb; 150 ativos é uma fração bem pequena.</span></p>
+      <p class="rv"><i data-lucide="calculator"></i><span><b>Mesma conta da carteira:</b> R$ 56,70 de comissão e R$ 39,30 de resultado por pedido. A taxa do Pix ou do cartão ainda sai disso.</span></p>
+      <p class="rv"><i data-lucide="calendar"></i><span><b>Ano cheio, já rodando:</b> o 1º ano real vem menor, porque o público cresce aos poucos. Ainda sem teste.</span></p>
+    </div>
+  </div>
+</section>
+
+<!-- 15 STATUS -->
+<section class="slide alt" id="s15" data-titulo="Pronto e próximos passos">
+  <div class="wrap">
+    <div class="cab">
+      <span class="tag rv"><b>15</b>Onde estamos</span>
       <h2 class="rv">O site já funciona. Agora é <em>testar de verdade</em></h2>
     </div>
     <div class="status">
       <div class="col feito">
         <h3 class="rv"><span class="ico verde"><i data-lucide="circle-check"></i></span>Já está pronto</h3>
         <ul>
-          <li class="rv"><i data-lucide="circle-check"></i><div><b>Site no ar</b><span>Página de visita e entrada para testar.</span></div></li>
-          <li class="rv"><i data-lucide="circle-check"></i><div><b>Todos os perfis</b><span>Proprietário, franquia, prestador e admin.</span></div></li>
-          <li class="rv"><i data-lucide="circle-check"></i><div><b>Contratação completa</b><span>Imóvel, serviço, dia, horário e profissional.</span></div></li>
-          <li class="rv"><i data-lucide="circle-check"></i><div><b>Confirmação em 1h e troca</b><span>Com a nota do prestador caindo na recusa.</span></div></li>
-          <li class="rv"><i data-lucide="circle-check"></i><div><b>Nota fiscal e garantia</b><span>Sem nota não recebe; até 90 dias de garantia.</span></div></li>
-          <li class="rv"><i data-lucide="circle-check"></i><div><b>Exemplos para testar</b><span>Mais de mil imóveis de exemplo da Grande Florianópolis.</span></div></li>
+          <li class="rv"><i data-lucide="circle-check"></i><div><b>Site no ar, com todos os perfis</b><span>Página de visita, proprietário, franquia, prestador e admin.</span></div></li>
+          <li class="rv"><i data-lucide="circle-check"></i><div><b>Conta admin com dados reais</b><span>Franquias, imóveis e prestadores reais; vê o que cada pessoa vê.</span></div></li>
+          <li class="rv"><i data-lucide="circle-check"></i><div><b>Contratação completa</b><span>Imóvel, serviço, dia, profissional livre e confirmação em 1h.</span></div></li>
+          <li class="rv"><i data-lucide="circle-check"></i><div><b>WhatsApp com o profissional</b><span>Mensagem pronta assim que ele confirma.</span></div></li>
+          <li class="rv"><i data-lucide="circle-check"></i><div><b>Preço com comissão fixa</b><span>R$ 30 a R$ 70 por serviço, já no preço fechado.</span></div></li>
+          <li class="rv"><i data-lucide="circle-check"></i><div><b>Nota fiscal e garantia</b><span>Sem nota não recebe; 90 dias de garantia (30 para limpeza).</span></div></li>
         </ul>
       </div>
       <div class="col prox">
-        <h3 class="rv"><span class="ico"><i data-lucide="rocket"></i></span>Próximos passos</h3>
+        <h3 class="rv"><span class="ico"><i data-lucide="rocket"></i></span>Em construção e próximos passos</h3>
         <ul>
+          <li class="rv construcao"><i data-lucide="hammer"></i><div><b>Anfitrião avulso, em construção hoje</b><span>Cadastro, telas e cobrança na hora (em teste, sem dinheiro real).</span></div></li>
           <li class="rv"><i data-lucide="map-pin"></i><div><b>Piloto em Florianópolis</b><span>Com franquias e imóveis reais.</span></div></li>
           <li class="rv"><i data-lucide="users"></i><div><b>Prestadores reais</b><span>Convite aos profissionais validados do Hub.</span></div></li>
-          <li class="rv"><i data-lucide="message-circle"></i><div><b>WhatsApp</b><span>Avisos e cadastro pelo celular.</span></div></li>
-          <li class="rv"><i data-lucide="wallet"></i><div><b>Pagamento de verdade</b><span>Repasse e pagamento na hora ligados.</span></div></li>
+          <li class="rv"><i data-lucide="wallet"></i><div><b>Pagamento de verdade</b><span>Desconto no repasse e Pix ou cartão ligados.</span></div></li>
           <li class="rv"><i data-lucide="flag"></i><div><b>Decisões da liderança</b><span>Como as franquias passam a usar e a regra na operação.</span></div></li>
         </ul>
       </div>
@@ -661,8 +827,8 @@ h3{font-size:18px;line-height:1.3;font-weight:700}
   </div>
 </section>
 
-<!-- 11 FIM -->
-<section class="slide navy" id="s12" data-titulo="Encerramento" data-escuro>
+<!-- 16 FIM -->
+<section class="slide navy" id="s16" data-titulo="Encerramento" data-escuro>
   <div class="wrap">
     <div class="fim-logo rv"><svg class="logo-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 411 68" role="img" aria-label="Seazone"><path fill="currentColor" d="M33.856 52.5045C33.856 41.2633 0.620441 47.8249 0.620441 28.9865C0.620441 20.5619 9.06051 13.5835 21.1421 13.5835C33.9571 13.5835 41.1454 20.1451 41.1454 24.3131C41.1454 26.3846 39.4827 28.576 36.6693 28.576C35.0003 28.576 33.856 27.5339 32.8128 26.4919C30.7328 24.4079 26.2504 21.9133 21.0473 21.9133C13.4418 21.9133 9.8002 25.1404 9.8002 28.1591C9.8002 38.4594 43.5541 32.9461 43.5541 51.6709C43.5541 61.769 33.0341 67.7054 21.4646 67.7054C7.80872 67.6991 0.0957031 60.4113 0.0957031 56.5589C0.0957031 53.9634 2.08086 52.1888 4.47063 52.1888C6.13968 52.1888 7.28399 53.1297 8.01735 53.856C11.0393 57.0831 15.4143 59.2682 21.5657 59.2682C28.754 59.2682 33.8623 56.4579 33.8623 52.5045"/><path fill="currentColor" d="M60.8887 44.6989C62.1404 53.5402 69.6448 59.1608 78.597 59.1608C84.3249 59.1608 88.8073 56.8747 91.6206 55.3085C92.2465 55.0054 93.081 54.6896 94.1179 54.6896C96.6151 54.6896 98.3916 56.5589 98.3916 58.9587C98.3916 60.9354 97.1399 62.3942 96.2042 62.9184C94.1179 64.1688 87.6566 67.7054 78.5907 67.7054C62.9623 67.7054 51.083 56.0411 51.083 40.5434C51.083 25.0457 63.4807 13.5835 78.0659 13.5835C92.6511 13.5835 103.696 25.8667 103.696 38.352C103.696 41.5854 101.091 44.7052 97.8669 44.7052H60.876L60.8887 44.6989ZM60.8887 36.6785H94.7501C94.023 29.6053 87.0371 21.907 78.0786 21.907C69.1201 21.907 61.7232 28.3612 60.8887 36.6785Z"/><path fill="currentColor" d="M190.833 22.7668C188.02 22.7668 185.965 20.9354 185.965 18.1188C185.965 15.3022 188.02 13.5781 190.833 13.5781H223.81C227.388 13.5781 229.335 16.4958 229.335 18.984C229.335 20.9291 228.678 22.009 227.388 23.5184L198.3 58.4166H225.333C228.14 58.4166 230.309 60.469 230.309 63.172C230.309 65.8749 228.147 67.599 225.333 67.599H190.505C187.476 67.599 184.985 65.2244 184.985 62.0921C184.985 60.3617 185.529 59.3891 187.046 57.5514L215.92 22.7668H190.833Z"/><path fill="currentColor" d="M261.567 67.6991C246.147 67.6991 234.375 55.6243 234.375 40.5371C234.375 25.4499 246.356 13.5835 261.567 13.5835C276.778 13.5835 288.86 25.5573 288.86 40.5371C288.86 55.5169 276.772 67.6991 261.567 67.6991ZM261.567 22.2228C251.565 22.2228 243.543 30.6537 243.543 40.5371C243.543 50.4205 251.256 59.1671 261.567 59.1671C271.878 59.1671 279.484 50.4205 279.484 40.5371C279.484 30.6537 271.67 22.2228 261.567 22.2228Z"/><path fill="currentColor" d="M367.304 44.6989C368.556 53.5402 376.054 59.1608 385.012 59.1608C390.746 59.1608 395.229 56.8747 398.042 55.3085C398.655 55.0054 399.496 54.6896 400.533 54.6896C403.037 54.6896 404.8 56.5589 404.8 58.9587C404.8 60.9354 403.549 62.3942 402.626 62.9184C400.533 64.1688 394.078 67.7054 385.012 67.7054C369.371 67.7054 357.504 56.0411 357.504 40.5434C357.504 25.0457 369.902 13.5835 384.481 13.5835C399.06 13.5835 410.124 25.8667 410.124 38.352C410.124 41.5854 407.513 44.7052 404.282 44.7052H367.297L367.304 44.6989ZM367.304 36.6785H401.171C400.425 29.6053 393.452 21.907 384.487 21.907C375.523 21.907 368.138 28.3612 367.304 36.6785Z"/><path fill="currentColor" d="M325.206 13.698C321.343 13.3318 317.455 13.3065 313.579 13.357C309.862 13.4075 306.107 13.2876 302.396 13.4581C301.529 13.496 300.682 13.6475 299.898 14.0264C299.709 14.1149 299.525 14.2159 299.342 14.3296C298.552 14.8032 297.806 15.4853 297.313 16.2936C296.737 17.2472 296.737 18.1187 296.788 19.186C296.838 20.1965 296.788 21.2195 296.788 22.23C296.775 25.9055 296.769 29.5873 296.756 33.2691C296.75 35.6184 296.725 62.7046 296.725 62.7046C296.725 65.3065 299.02 67.7063 301.719 67.7063C304.419 67.7063 306.726 65.3065 306.726 62.7046V39.6096C306.726 28.9873 314.54 22.3247 323.183 22.3247C331.825 22.3247 339.646 28.9873 339.646 39.6096V62.7046C339.646 65.3065 341.846 67.7063 344.539 67.7063C347.232 67.7063 349.647 65.3065 349.647 62.7046V40.3296C349.647 26.5181 338.678 14.98 325.2 13.698"/><path fill="#FC6058" d="M174.96 20.973L163.2 14.0515C163.226 13.8873 163.302 13.7357 163.302 13.5715V3.13238C163.302 1.40199 161.898 0 160.166 0H153.894C152.162 0 150.758 1.40199 150.758 3.13238V6.77629L146.491 4.28176C144.759 3.24605 142.476 3.42288 140.871 4.61015L140.788 4.64173L113.736 20.3162C111.479 21.6614 110.537 24.7875 111.94 27.1304C113.395 29.5618 116.6 30.2186 118.851 28.8734L120.469 27.9388C118.553 31.6837 117.358 35.915 117.358 40.5314C117.358 47.8319 120.166 55.025 125.35 60.2098C127.385 62.2497 129.756 63.9548 132.355 65.2115C134.352 66.1778 136.464 66.9861 138.658 67.3903C141.566 67.9208 144.575 67.6492 147.515 67.6555C150.689 67.6555 153.869 67.6618 157.043 67.6682C159.919 67.6745 162.796 67.6871 165.704 67.6934C166.431 67.6934 167.145 67.504 167.79 67.1756C168.618 66.7524 169.112 66.2914 169.655 65.5652C170.275 64.7442 170.705 63.7527 170.705 62.6917V29.827C172.861 30.6038 175.478 29.9281 176.761 27.7809C178.165 25.4379 177.223 22.3119 174.96 20.9667M161.43 41.0493C161.43 51.04 154.659 59.1615 144.449 59.1615C134.239 59.1615 126.734 50.5222 126.734 40.5314C126.734 30.5407 134.239 22.2171 144.449 22.2171C154.659 22.2171 161.43 29.9218 161.43 39.8052V41.0556V41.0493Z"/></svg><span class="sep"></span><span class="wm">Concert<span>AI</span></span></div>
     <h2 class="rv">Conserto sem correria, com preço que todo mundo entende</h2>
