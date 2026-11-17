@@ -1,0 +1,51 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ConcertAI · Anfitrião avulso</title>
+<style>:root{--bg:#14171c;--card:#1c2027;--tx:#e6e8eb;--mu:#9aa3ad;--ok:#4cc38a;--ac:#ff7a59;--am:#e6b450}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.55 Inter,system-ui,sans-serif}main{max-width:780px;margin:0 auto;padding:24px 16px}
+h1{font-size:22px;margin:0 0 4px}h2{font-size:17px;margin:26px 0 8px;color:var(--ac)}.card{background:var(--card);border-radius:12px;padding:14px 16px;margin:10px 0}
+.mu{color:var(--mu)}.ok{color:var(--ok);font-weight:600}.am{color:var(--am);font-weight:600}a{color:#7cb8ff;word-break:break-all}ol,ul{margin:6px 0;padding-left:20px}li{margin:3px 0}</style></head>
+<body><main>
+<h1>ConcertAI · Anfitrião avulso</h1><p class="mu">Pedido da Iara · T807 · 17/11/2026</p>
+
+<h2>O que foi feito</h2>
+<div class="card"><b>Hoje</b>: só proprietário e franquia da carteira Seazone contratavam, com o valor descontado do repasse.<br>
+<b>O que muda</b>: qualquer anfitrião, mesmo sem imóvel na Seazone, entra pelo site, se cadastra, cadastra o imóvel e contrata. Ele paga na hora (Pix ou cartão), e o valor fica guardado até o serviço terminar, a nota fiscal chegar e passarem 72h sem reclamação.</div>
+<div class="card"><span class="ok">No ar e testado</span>: o teste completo do anfitrião passou no site publicado, no computador (1366 px) e no celular (390 px), no demo e no real. Ele cobre cadastro, código do celular, imóvel pelo CEP, contratação, Pix simulado e pedido pago.<br>
+O admin vê tudo: no "ver como" escolhe o anfitrião (busca por nome ou celular) e, no painel, tem a lista de anfitriões com imóveis, pedidos e valor pago.</div>
+
+<h2>Como usar</h2>
+<div class="card"><ol>
+<li>Abra o site e clique em <b>"Sou anfitrião e quero contratar"</b>.</li>
+<li>Informe nome, celular, CPF ou CNPJ e aceite os termos. Depois digite o código do celular.</li>
+<li>Em <b>Meus imóveis</b>, cadastre o imóvel: o CEP preenche o endereço. Ajuste o pin no mapa e diga como o profissional entra.</li>
+<li><b>Contratar</b>: escolha imóvel, serviço, dia e horário (com 3h de antecedência) e o profissional livre.</li>
+<li>Pague com Pix ou cartão. <b>Hoje o pagamento é simulado</b>, sem dinheiro real, até chegar a chave do Asaas.</li>
+</ol>
+<p class="mu">Para só olhar, use o modo demo: https://seazone-tech.github.io/concertai/?demo=1 (conta de exemplo: anfitriao1@demo.concertai.dev).</p></div>
+
+<h2>Pra que serve</h2>
+<div class="card">Abre o ConcertAI para fora da carteira: anfitrião amador (Airbnb, Booking) contrata eletricista, encanador, ar-condicionado e afins com os mesmos profissionais e o mesmo preço do catálogo, pagando na hora.</div>
+
+<h2>O que ainda depende de outras áreas</h2>
+<div class="card">Cada item tem um padrão provisório, e o sistema já funciona com ele:
+<ul>
+<li><b>Iara</b>: o avulso paga mais? Por enquanto paga o preço do catálogo.</li>
+<li><b>Fiscal (Ana C. Benevenuto)</b>: nota da taxa para pessoa física e se o valor guardado fica em custódia ou é dividido (split).</li>
+<li><b>Jurídico</b>: termos do consumidor (arrependimento e cancelamento).</li>
+<li><b>TECH</b>: login com Google, chave do Google Maps e servidor de e-mail próprio. Hoje o servidor padrão manda só 2 e-mails por hora.</li>
+<li><b>Financeiro</b>: chave do Asaas. Já foi pedida no chamado fb9dbae2, com DM ao Bill.</li>
+<li><b>SIA</b>: mandar o código pelo WhatsApp. Hoje ele é simulado.</li>
+</ul></div>
+
+<h2>Próximos passos</h2>
+<div class="card"><ul>
+<li><span class="am">T866</span>: franquia e proprietário cadastrando imóvel fora da Seazone (já existe no demo; no real o banco ainda só deixa o anfitrião).</li>
+<li><span class="am">T817</span>: fluxo financeiro automático (cobrança, custódia/split, NF da comissão, conciliação).</li>
+</ul></div>
+
+<h2>Links</h2>
+<div class="card">Site: https://seazone-tech.github.io/concertai/<br>
+Spec: https://github.com/seazone-tech/concertai/blob/main/docs/spec-anfitriao-avulso.md<br>
+PRs: #104 (spec) · #114 e #117 (banco) · #121, #131, #133 e #134 (telas) · #135 (cobrança Asaas) · #136 (teste)<br>
+https://github.com/seazone-tech/concertai/pull/136</div>
+</main></body></html>
