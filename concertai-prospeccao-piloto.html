@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ConcertAI · Prospecção do piloto</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0B1030;--surface:#121A42;--border:#252E62;--fg:#F2F3F8;--fg2:#A9AECB;--brand:#5C90FF;--ok:#4ADE80;--warn:#FDBA74;--bad:#FF8A87}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 Inter,system-ui,sans-serif}
+main{max-width:760px;margin:0 auto;padding:32px 16px 64px}
+h1{font-size:26px;margin:0 0 4px}
+.sub{color:var(--fg2);margin:0 0 28px}
+h2{font-size:18px;margin:32px 0 12px;color:var(--brand)}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px 18px;margin:10px 0}
+.row{display:flex;justify-content:space-between;gap:12px;padding:8px 0;border-bottom:1px solid var(--border)}
+.row:last-child{border:0}
+.tag{font-size:13px;font-weight:600;padding:2px 10px;border-radius:999px;white-space:nowrap}
+.ok{background:#14532d55;color:var(--ok)}.warn{background:#7c2d1255;color:var(--warn)}.bad{background:#7f1d1d55;color:var(--bad)}
+ol,ul{padding-left:20px;margin:6px 0}li{margin:4px 0}
+a{color:var(--brand);word-break:break-all}
+details{color:var(--fg2);margin-top:28px}
+</style>
+</head>
+<body><main>
+<h1>Prospecção de prestadores do piloto</h1>
+<p class="sub">ConcertAI · Lote 1 em Florianópolis · 17/11/2026 · nada foi enviado a ninguém (só preparação)</p>
+
+<h2>O que foi feito</h2>
+<div class="card">Contei quantos prestadores com CNPJ ativo já temos no Hub para cada serviço do Lote 1 e montei o plano para chegar a pelo menos 3 por categoria antes do piloto: de onde tirar os contatos, em que ordem abordar, as mensagens prontas e as metas por semana.</div>
+
+<h2>Onde falta gente</h2>
+<div class="card">
+<div class="row"><span>Ar-condicionado · 11 com CNPJ ativo</span><span class="tag ok">tem oferta</span></div>
+<div class="row"><span>Elétrica · 20 com CNPJ ativo</span><span class="tag ok">tem oferta</span></div>
+<div class="row"><span>Hidráulica · 7 com CNPJ ativo</span><span class="tag warn">justo</span></div>
+<div class="row"><span>Desentupimento · só 1 (2º serviço mais pedido)</span><span class="tag bad">falta</span></div>
+<div class="row"><span>Marcenaria · só 1 marceneiro (11 pedidos/mês)</span><span class="tag bad">falta</span></div>
+<div class="row"><span>Vidraçaria · ~3 a confirmar</span><span class="tag bad">falta</span></div>
+</div>
+<p>Hoje: ar e elétrica têm gente, mas ninguém aceitou a tabela do ConcertAI ainda. O que muda: o trabalho nessas duas é converter quem já está no Hub; a prospecção nova é só nos 3 buracos.</p>
+
+<h2>Como usar</h2>
+<ol>
+<li>Abrir o plano no repositório (link abaixo).</li>
+<li>Quando o piloto for aprovado, rodar as consultas da seção 3 para tirar a lista do dia (não fica nome nem telefone no repositório).</li>
+<li>Mandar as mensagens da seção 4 na ordem: primeiro quem já está no Hub, depois indicação, por último empresas novas do Google e da Receita.</li>
+<li>Acompanhar o painel de cada categoria até 07/12: quem não tiver 3 prontos fica fora da vitrine do piloto.</li>
+</ol>
+
+<h2>Pra que serve</h2>
+<p>Garante que, quando o piloto abrir em dezembro, cada serviço do Lote 1 tenha pelo menos 3 profissionais com CNPJ que aceitaram o preço. Proposta das mensagens: volume de pedidos, Pix garantido em 1 dia útil, cerca de 80% do preço para o profissional e nota fiscal obrigatória.</p>
+
+<h2>Links</h2>
+<ul>
+<li>PR: https://github.com/seazone-tech/concertai/pull/30</li>
+<li>Plano: https://github.com/seazone-tech/concertai/blob/main/docs/prospeccao-piloto.md</li>
+</ul>
+
+<details><summary>Detalhe técnico</summary>
+<p>Fonte: Hub de Serviços (validados em Florianópolis, só contagens), situação do CNPJ conferida na Receita, volume do Sapron em data/volume-floripa.json. Conversões do funil são hipóteses (base fria ~1,1% hoje, meta 5%) e se recalculam na 1ª semana.</p>
+</details>
+</main></body></html>
