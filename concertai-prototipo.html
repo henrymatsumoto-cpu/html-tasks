@@ -119,7 +119,7 @@ svg.lucide{width:20px;height:20px;stroke-width:1.75;flex:none}
 .vercomo button{height:28px;padding:0 10px;border-radius:9999px;font-weight:600;color:var(--on-dark-a72);white-space:nowrap}
 .vercomo button:hover{color:var(--fg-on-dark)}
 .vercomo button[aria-pressed="true"]{background:var(--fg-on-dark);color:var(--navy)}
-@media (max-width:1023px){.vercomo:not(.open) button[aria-pressed="false"]{display:none}
+@media (max-width:1023px){.vercomo .tag .tx{display:none}
   .icbtn,.btn.sm,.add,.seg button,.hero .hchip,.pill{min-height:44px}.icbtn{min-width:44px}.vercomo button,.vercomo .tag{height:36px}}
 @media (min-width:1024px){.vercomo{left:12px;bottom:auto;top:auto;bottom:118px;width:calc(var(--side) - 24px);flex-wrap:wrap;border-radius:12px;background:var(--on-dark-a06);box-shadow:none;padding:6px}
   .vercomo .tag{width:100%;padding:2px 4px 6px}.vercomo button{flex:1 1 40%}}
@@ -450,7 +450,7 @@ select.inp{height:44px;border-radius:12px;padding:0 36px 0 14px;font-size:14px;f
 .job .info span{display:inline-flex;gap:6px;align-items:center}
 .job .acts{display:flex;gap:8px;flex-wrap:wrap}
 .foto{position:relative;display:flex;align-items:center;gap:10px;padding:12px 14px;border-radius:12px;border:1px dashed var(--border-strong);font-size:14px;color:var(--fg-2);cursor:pointer}
-.foto input{position:absolute;opacity:0;width:1px;height:1px}
+.foto input{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer}
 .foto:focus-within{outline:2px solid var(--brand);outline-offset:2px}
 .foto.ok{border-style:solid;border-color:var(--success);color:var(--success-ink);background:var(--success-100)}
 
@@ -517,7 +517,7 @@ const FRANQUIA="Franquia Norte da Ilha";
 const LIMITE=300;
 const IMOVEIS=[
  {code:"FLN0412",nome:"Apto Jurerê 2q",ph:PH.lagoa,dono:"Carla Mendes",bairro:"Jurerê",fechadura:false,res:[[1,4],[6,9],[13,17],[20,27]]},
- {code:"FLN0219",nome:"Apto Lagoa 2q",ph:PH.e26,dono:"Carla Mendes",bairro:"Lagoa da Conceição",fechadura:true,res:[[2,5],[9,14],[19,22]]},
+ {code:"FLN0219",nome:"Apto Lagoa 2q",ph:PH.e26,dono:"Márcia Lopes",bairro:"Lagoa da Conceição",fechadura:true,res:[[2,5],[9,14],[19,22]]},
  {code:"FLN0388",nome:"Apto Canasvieiras 1q",ph:PH.rosa,dono:"Paulo Reis",bairro:"Canasvieiras",fechadura:true,res:[[0,3],[8,12],[16,19],[24,30]]},
  {code:"FLN0631",nome:"Casa Campeche 3q",ph:PH.manh,dono:"Rui Tavares",bairro:"Campeche",fechadura:false,res:[[1,6],[7,10],[15,21],[25,29]]}
 ];
@@ -590,8 +590,8 @@ const S={
   {id:"PED-1044",buyer:"prop",imovel:"FLN0412",itens:["AR-01"],pro:"p1",dia:3,h:9,jan:2,status:"confirmado",fase:1},
   {id:"PED-1048",buyer:"fra",imovel:"FLN0412",itens:["HI-02","HI-04"],pro:"p3",dia:5,h:10,jan:2,status:"aguardando_aprovacao",fase:1},
   {id:"PED-1046",buyer:"fra",imovel:"FLN0219",itens:["VI-03"],pro:"p4",dia:2,h:13,jan:1,status:"confirmado",fase:2},
-  {id:"PED-1050",buyer:"fra",imovel:"FLN0388",itens:["EL-03"],pro:"p1",dia:0,h:10,jan:1,status:"em_execucao",fase:0},
-  {id:"PED-1051",buyer:"prop",imovel:"FLN0219",itens:["HI-01"],pro:"p4",dia:-1,h:9,jan:2,status:"prova_enviada",fase:1},
+  {id:"PED-1050",buyer:"fra",imovel:"FLN0388",itens:["EL-03"],pro:"p5",dia:0,h:10,jan:1,status:"em_execucao",fase:0},
+  {id:"PED-1051",buyer:"prop",imovel:"FLN0412",itens:["HI-01"],pro:"p4",dia:-1,h:9,jan:2,status:"prova_enviada",fase:1},
   {id:"PED-1052",buyer:"fra",imovel:"FLN0631",itens:["MA-01"],pro:"p6",dia:4,h:14,jan:1,status:"aguardando_prestador",fase:0},
   {id:"PED-1053",buyer:"fra",imovel:"FLN0631",itens:["AR-03"],pro:"p1",dia:1,h:15,jan:1,status:"aguardando_prestador",fase:8}
  ],
@@ -632,7 +632,7 @@ function casca(){
  $("#top").innerHTML=`${logo}<span class="sep" style="width:1px;height:18px;background:var(--navy-line)"></span><span class="prod" style="font-weight:600;font-size:16px">ConcertAI</span>
   <div class="who"><span>${S.perfil==="prop"?imv(S.propImovel).nome:papel}</span><button class="icbtn" data-act="tema" aria-label="Tema escuro" aria-pressed="${escuro()}">${ic(escuro()?"sun":"moon","i16")}</button><span class="av sm">${ini(nm)}</span></div>`;
  $("#bnav").innerHTML=L.map(([k,n,i,c])=>`<a href="#" data-rota="${k}" ${cur===k?'aria-current="page"':""}>${ic(i)}${n}${c?`<span class="ct">${c}<span class="sr"> pendentes</span></span>`:""}</a>`).join("");
- $("#vercomo").innerHTML=`<button class="tag" data-act="vercomo" aria-expanded="${$("#vercomo").classList.contains("open")}">${ic("eye","i14")}Protótipo · ver como</button>${[["prop","Proprietário"],["fra","Franquia"],["prest","Prestador"],["ops","Operação"]].map(([k,n])=>`<button data-papel="${k}" aria-pressed="${S.perfil===k}">${n}</button>`).join("")}`;
+ $("#vercomo").innerHTML=`<span class="tag" title="Protótipo">${ic("eye","i14")}<span class="tx">Protótipo · ver como</span></span>${[["prop","Proprietário"],["fra","Franquia"],["prest","Prestador"],["ops","Operação"]].map(([k,n])=>`<button data-papel="${k}" aria-pressed="${S.perfil===k}">${n}</button>`).join("")}`;
 }
 function focoSel(){const a=document.activeElement;if(!a||a===document.body) return null;if(a.id) return "#"+a.id;const ds=Object.entries(a.dataset);if(!ds.length) return null;return a.tagName.toLowerCase()+ds.map(([k,v])=>`[data-${k.replace(/[A-Z]/g,m=>"-"+m.toLowerCase())}="${v}"]`).join("");}
 function refoca(sel){if(!sel) return;const n=document.querySelector(sel);if(n&&n.offsetParent!==null) n.focus({preventScroll:true});}
@@ -667,7 +667,7 @@ function vContratar(){
 function hero(f){
  const im=imv(f.imovel);const nx=im.res.find(([a,b])=>b>=1);
  return `<section class="hero">${img(im.ph||PH.hero,"bg","")}<div class="in">
-  <button class="hchip" data-act="trocarImovel" aria-label="Trocar imóvel (agora: ${im.nome})">${ic("home","i14")}${im.nome} · ${im.bairro}${ic("chevron-down","i14")}</button>
+  <span class="hchip">${ic("home","i14")}${im.nome} · ${im.bairro}</span>
   <h1>O que precisa de conserto?</h1>
   <label class="search"><span class="sr">Buscar serviço</span>${ic("search")}<input type="search" id="q" aria-label="Buscar serviço" placeholder="Chuveiro, tomada, ar-condicionado…" value="${esc(f.q)}"></label>
   <div class="sub">${ic("badge-check","i14")}Preço fechado · garantia de 90 dias · descontado do seu repasse</div>
@@ -739,7 +739,7 @@ function stepRev(f){
   <div class="row"><span>Imóvel</span><div><b>${im.nome}</b><small>${im.code} · ${im.dono}</small></div><span></span></div>
   ${f.itens.map((c,i)=>`<div class="row"><span>${i?"":"Serviços"}</span><div><b>${item(c).nome}</b><small>${item(c).dur} · 90 dias de garantia</small></div><b class="tn">${brl(item(c).preco)}</b></div>`).join("")}
   <div class="row"><span>Profissional</span><div><b>${p.nome}</b><small>${ic("star","i14 star")} ${nota(p.nota)} · ${p.serv} serviços</small></div><button class="link" data-goto="2">Trocar</button></div>
-  <div class="row"><span>Quando</span><div><b>${fmtD(f.dia)} · ${jan(f.h,k)}</b><small>${g?"Tem hóspede nesse dia. A franquia combina o acesso.":"Chega dentro da janela."}</small></div><button class="link" data-goto="3">Trocar</button></div>
+  <div class="row"><span>Quando</span><div><b>${fmtD(f.dia)} · ${jan(f.h,k)}</b><small>${resOf(im.code,f.dia)?`Tem hóspede nesse dia.${g?" O serviço acontece durante a estadia.":""} A franquia combina o acesso.`:"Chega dentro da janela."}</small></div><button class="link" data-goto="3">Trocar</button></div>
   <div class="row"><span>Pagamento</span><div><b>${f.buyer==="prop"?"Descontado do seu próximo repasse":"Descontado do repasse do proprietário"}</b><small>Sem taxa extra, mensalidade nem assinatura.</small></div><span></span></div>
   <div class="row"><span>Total</span><div></div><b class="tn" style="font-size:20px">${brl(t)}</b></div>
  </div>
@@ -794,7 +794,7 @@ function vDone(f){
 
 /* ===================== pedidos ===================== */
 function stChip(o,viewer){
- const [n,c]=ST[o.status];const lbl=o.status==="aguardando_aprovacao"&&viewer==="prop"?"Aguardando sua aprovação":n;
+ const [n,c]=ST[o.status];const lbl=n;
  return `<span class="st"><i style="background:var(${c})"></i>${lbl}</span>`;
 }
 function oRow(o,viewer){
@@ -909,11 +909,11 @@ function job(o){
  const novo=o.status==="aguardando_prestador";
  let acts="";
  if(novo) acts=`<button class="btn pri sm" data-aceitar="${o.id}">Aceitar</button><button class="btn sec sm" data-recp="${o.id}">Recusar</button><span style="font-size:12px;color:var(--fg-2)">Recusar não tira ponto.</span>`;
- else if(o.status==="confirmado") acts=o.pres?`<button class="btn pri sm" id="pst-checkin" data-chegar="${o.id}">${ic("map-pin","i16")}Cheguei</button><span style="font-size:12px;color:var(--fg-2)">Usamos a sua localização só para registrar a chegada.</span>`:`<button class="btn pri sm" data-pres="${o.id}">Confirmar presença</button>`;
+ else if(o.status==="confirmado") acts=`${o.pres?"":`<button class="btn sec sm" data-pres="${o.id}">Confirmar presença</button>`}<button class="btn pri sm" id="pst-checkin" data-chegar="${o.id}">${ic("map-pin","i16")}Cheguei</button><span style="font-size:12px;color:var(--fg-2)">Usamos a sua localização só para registrar a chegada.</span>`;
  else if(o.status==="em_execucao") acts=`<label class="foto ${o.foto?"ok":""}">${ic(o.foto?"check-circle":"camera")}${o.foto?"Foto do depois anexada":"Anexar foto do depois"}<input type="file" accept="image/*" data-tipo="depois" data-foto="${o.id}"></label><button class="btn pri sm" id="pst-concluir" data-concp="${o.id}" ${o.foto?"":"disabled"}>Concluir</button><button class="btn sec sm" data-extra="${o.id}">${ic("package","i16")}Pedir item extra</button>`;
- else if(o.status==="prova_enviada") acts=`<div class="note info">${ic("clock")}<div>O cliente confere as fotos (ou confirma sozinho em 72h). Depois, o Pix cai em até 1 dia útil.</div></div>`;
+ else if(o.status==="prova_enviada") acts=`<div class="note info">${ic("clock")}<div><b>Aguardando confirmação do cliente</b>O cliente confere as fotos (ou confirma sozinho em 72h). Depois, o Pix cai em até 1 dia útil.</div></div>`;
  else acts=`<span class="chip ok">${ic("check","i14")}Pago · NF enviada</span>`;
- return `<article class="card job" role="article"><div class="hd"><div><b>${nomeItens(o.itens)}</b><span class="tn">${o.id} · ${novo?im.bairro:`${im.nome} · ${im.code}`}</span></div><div class="rec"><small>Você recebe</small><b class="tn">${brl(liquido(o))}</b></div></div>
+ return `<article class="card job" role="article"><div class="hd"><div><b>${nomeItens(o.itens)}</b><span class="tn">${o.id} · ${novo?im.bairro:`${im.nome} · ${im.code}`}</span><div style="margin-top:6px">${stChip(o,"prest")}${o.status==="em_execucao"?'<span class="chip ok" style="margin-left:8px">Check-in feito</span>':""}</div></div><div class="rec"><small>Você recebe</small><b class="tn">${brl(liquido(o))}</b></div></div>
  <div class="info"><span>${ic("calendar","i14")}<b class="tn" style="color:var(--fg)">${fmtD(o.dia)} · ${jan(o.h,o.jan)}</b></span><span>${ic("map-pin","i14")}${novo?"Endereço aparece depois do aceite":"Rua das Gaivotas, 120 · código de acesso na hora da visita"}</span>${r?`<span>${ic("bed-double","i14")}Tem hóspede · combine com a operação</span>`:""}</div>
  <div class="acts">${acts}</div></article>`;
 }
@@ -962,8 +962,7 @@ document.addEventListener("click",e=>{
  const d=t.dataset;const f=S.flow[S.perfil];
  if(t.tagName==="A"&&t.getAttribute("href")==="#") e.preventDefault();
  if(d.close&&(e.target===t||t.tagName==="BUTTON")){S.drawer=null;S.sheet=null;renderLayer();return;}
- if(d.act==="vercomo"){$("#vercomo").classList.toggle("open");casca();icons();return;}
- if(d.papel){$("#vercomo").classList.remove("open");S.perfil=d.papel;S.drawer=null;S.sheet=null;render();return;}
+ if(d.papel){S.perfil=d.papel;S.drawer=null;S.sheet=null;render();return;}
  if(d.rota){setRota(d.rota);return;}
  if(d.act==="tema"){document.documentElement.dataset.theme=escuro()?"light":"dark";render(true);return;}
  if(d.cat!==undefined){flow().cat=d.cat;render(true);return;}
