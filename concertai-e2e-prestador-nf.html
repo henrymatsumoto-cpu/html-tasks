@@ -1,0 +1,18 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ConcertAI · teste do prestador</title>
+<style>:root{--bg:#14171c;--card:#1c2027;--tx:#e6e8eb;--mu:#9aa3ad;--ok:#4cc38a;--ac:#ff7a59}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.55 Inter,system-ui,sans-serif}main{max-width:760px;margin:0 auto;padding:24px 16px}
+h1{font-size:22px;margin:0 0 4px}h2{font-size:17px;margin:24px 0 8px;color:var(--ac)}.card{background:var(--card);border-radius:12px;padding:14px 16px;margin:10px 0}
+.mu{color:var(--mu)}.ok{color:var(--ok);font-weight:600}a{color:#7cb8ff;word-break:break-all}code{background:#262b33;padding:1px 5px;border-radius:4px}</style></head>
+<body><main>
+<h1>ConcertAI · teste do prestador voltou a passar</h1><p class="mu">T822 · 17/11/2026</p>
+<h2>O que foi feito</h2>
+<div class="card"><b>Hoje</b>: o teste automático das telas parava no passo em que o prestador conclui o serviço. A tela mudou (agora pede a nota fiscal antes de liberar o pagamento) e o teste não sabia disso.<br><b>O que muda</b>: o teste aprendeu o passo novo. Ele conclui sem nota (valor fica bloqueado), depois manda a nota no dia do serviço e confere que o pagamento entra em conferência. A tela não mudou.</div>
+<div class="card"><span class="ok">Tudo verde</span>: 50 de 50 telas e os 7 fluxos, no celular (390 px) e no computador (1366 px), no site publicado.</div>
+<h2>Como usar</h2>
+<div class="card">Nada a fazer. Quem mexer nas telas roda o teste do jeito descrito no topo do arquivo <code>tests/ui-fluxos.e2e.mjs</code> do repositório.</div>
+<h2>Pra que serve</h2>
+<div class="card">Garante que proprietário, franquia e prestador conseguem fazer o caminho inteiro (contratar, executar, mandar nota, confirmar e avaliar) antes de qualquer mudança ir ao ar.</div>
+<h2>Links</h2>
+<div class="card">PR: <a href="https://github.com/seazone-tech/concertai/pull/116">https://github.com/seazone-tech/concertai/pull/116</a><br>Site: <a href="https://seazone-tech.github.io/concertai/">https://seazone-tech.github.io/concertai/</a></div>
+</main></body></html>
