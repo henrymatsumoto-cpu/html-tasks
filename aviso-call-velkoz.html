@@ -4,8 +4,11 @@
 <style>body{background:#14161b;color:#d9dce3;font:16px/1.6 system-ui,sans-serif;max-width:780px;margin:40px auto;padding:0 16px}h1{font-size:1.5rem;color:#fff}h2{font-size:1.1rem;color:#9ec1ff;margin-top:2rem}table{border-collapse:collapse;width:100%;font-size:.95rem}td,th{border-bottom:1px solid #2a2e38;padding:8px 6px;text-align:left;vertical-align:top}th{color:#9ec1ff}.q{background:#1d2028;border-left:3px solid #4b7bec;padding:10px 14px;border-radius:6px;white-space:pre-wrap}a{color:#8ab4ff;word-break:break-all}code{background:#1d2028;padding:1px 5px;border-radius:4px}details{margin-top:2rem;color:#aab}</style></head><body>
 <h1>Aviso de call 1 minuto antes (Vel'Koz)</h1>
 
+<h2>Respostas à validação</h2>
+<p>O seu teste das 21h05 não avisou porque a call foi criada em cima da hora e a rotina só lia a agenda a cada 5 min (leu às 21h01, a call surgiu depois e às 21h06 já tinha começado). Agora ela lê a cada 1 min. Novo teste: a "reunião teste" das 21h20 foi avisada pelo Vel'Koz às 21h19 no seu DM.</p>
+
 <h2>O que foi feito</h2>
-<p>Um serviço novo na VPS olha a sua agenda do Google a cada 5 minutos. Faltando 1 minuto pra cada call, o Vel'Koz manda no seu DM:</p>
+<p>Um serviço novo na VPS olha a sua agenda do Google a cada 1 minuto. Faltando 1 minuto pra cada call, o Vel'Koz manda no seu DM:</p>
 <div class="q"><b>Call em 1 min:</b> Daily - Fornecedores · 17:00–17:30
 Entrar na call (link do Meet)</div>
 <p>Já está ligado desde 16/11 às 20h20. O primeiro aviso deve chegar amanhã, 17/11, às 07h59 (Sala de Reunião das 8h).</p>
@@ -39,7 +42,7 @@ Entrar na call (link do Meet)</div>
 <details><summary>Detalhes técnicos</summary>
 <ul>
 <li>Serviço systemd user <code>aviso-call.service</code> na VPS (sempre no ar, reinicia sozinho). Script <code>~/.local/bin/rotina-aviso-call.sh</code> → <code>~/.local/share/rotinas/aviso-call/aviso_call.py</code>; pasta do padrão da VPS <code>~/rotinas/aviso-call/</code> (LEIAME).</li>
-<li>Lê o Google Calendar pelo MCP do Composio chamado direto por HTTP (sem <code>claude -p</code>, sem custo de modelo), com o login do Composio do Claude da VPS; token perto de vencer → <code>claude-sz mcp list</code> renova.</li>
+<li>Lê o Google Calendar a cada 1 min pelo MCP do Composio chamado direto por HTTP (sem <code>claude -p</code>, sem custo de modelo), com o login do Composio do Claude da VPS; token perto de vencer → <code>claude-sz mcp list</code> renova.</li>
 <li>Envio: bot do Vel'Koz; se falhar, Composio no seu DM (como você). 1 retry em rede/5xx/429. Não repete aviso; call remarcada avisa de novo no horário novo.</li>
 <li>Log: <code>~/.local/state/rotinas/aviso-call-AAAA-MM-DD.log</code>. Ver o que vai avisar agora: <code>python3 ~/.local/share/rotinas/aviso-call/aviso_call.py agora</code>. Pausar: <code>touch ~/.local/share/rotinas/aviso-call/estado/STOP</code>.</li>
 <li>8 testes (<code>tests/</code>), modo seco <code>ROTINA_DRY_RUN=1</code> testado com a agenda real (avisaria a Sala de Reunião 08:00 e a Daily - Fornecedores 17:00 de 17/11). Monitor do Azir: commit c4712f8.</li>
