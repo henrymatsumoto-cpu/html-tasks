@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Agentes que Contam</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@500;700;800&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:oklch(21% .012 255);
+  --bg2:oklch(24.5% .014 255);
+  --line:oklch(35% .016 255);
+  --line2:oklch(30% .014 255);
+  --ink:oklch(93% .008 85);
+  --ink2:oklch(80% .01 255);
+  --ink3:oklch(66% .014 255);
+  --acc:oklch(79% .115 72);
+  --acc-ink:oklch(25% .04 72);
+  --ok:oklch(77% .11 150);
+  --bad:oklch(72% .13 28);
+  --p1:oklch(76% .07 230);
+  --sp2:8px;--sp3:12px;--sp4:16px;--sp5:24px;--sp6:32px;--sp7:48px;--sp8:64px;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 "Hanken Grotesk",system-ui,sans-serif;font-variant-numeric:tabular-nums;overflow-x:hidden}
+.wrap{max-width:1000px;margin:0 auto;padding:0 16px}
+h1,h2,h3{font-family:"Schibsted Grotesk",sans-serif;line-height:1.15;margin:0;letter-spacing:-.01em}
+h2{font-size:clamp(22px,2.6vw,28px);font-weight:800;margin-bottom:var(--sp3)}
+h3{font-size:16.5px;font-weight:700}
+p{margin:0 0 var(--sp3);color:var(--ink2);max-width:72ch}
+strong{color:var(--ink);font-weight:700}
+code{font-size:.86em;background:var(--bg2);border:1px solid var(--line2);border-radius:5px;padding:1px 5px;color:var(--ink);overflow-wrap:anywhere}
+main > section{padding:var(--sp7) 0;border-top:1px solid var(--line2)}
+.lede{font-size:18px;color:var(--ink2);max-width:62ch}
+.eyebrow{font-size:13px;font-weight:600;color:var(--acc);letter-spacing:.06em;text-transform:uppercase;margin-bottom:var(--sp2)}
+
+header.top{padding:var(--sp8) 0 var(--sp6)}
+header.top h1{font-size:clamp(34px,5.4vw,56px);font-weight:800;max-width:18ch;margin:var(--sp2) 0 var(--sp4)}
+.meta{display:flex;flex-wrap:wrap;gap:var(--sp2) var(--sp5);color:var(--ink3);font-size:14px;margin-top:var(--sp4)}
+.nums{display:grid;grid-template-columns:1.3fr 1fr 1fr;margin-top:var(--sp6);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.num{padding:var(--sp5) var(--sp5) var(--sp5) 0}
+.num + .num{padding-left:var(--sp5);border-left:1px solid var(--line2)}
+.num b{display:block;font-family:"Schibsted Grotesk";font-weight:800;font-size:clamp(38px,5.6vw,60px);line-height:1;letter-spacing:-.02em}
+.num:first-child b{color:var(--acc)}
+.num span{display:block;margin-top:var(--sp2);color:var(--ink2);font-size:15px;max-width:30ch}
+
+nav.toc{position:sticky;top:0;z-index:5;background:color-mix(in oklch,var(--bg) 92%,transparent);border-bottom:1px solid var(--line2);backdrop-filter:blur(6px)}
+nav.toc .wrap{display:flex;gap:var(--sp4);overflow-x:auto;padding-top:10px;padding-bottom:10px;scrollbar-width:none}
+nav.toc a{color:var(--ink3);text-decoration:none;font-size:14px;white-space:nowrap}
+nav.toc a:hover{color:var(--ink)}
+
+.vs{display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--bg2)}
+.vs-h{font-size:12.5px;font-weight:700;color:var(--ink3);text-transform:uppercase;letter-spacing:.05em;padding:10px var(--sp5);border-bottom:1px solid var(--line)}
+.vs-h.m{color:var(--acc);border-left:1px solid var(--line)}
+.vs-a,.vs-b{padding:var(--sp3) var(--sp5);border-bottom:1px solid var(--line2);font-size:15.5px}
+.vs-a{color:var(--ink3)}
+.vs-b{color:var(--ink);border-left:1px solid var(--line)}
+.vs > :nth-last-child(-n+2){border-bottom:0}
+.note{font-size:14px;color:var(--ink3);margin-top:var(--sp4);max-width:80ch}
+
+/* ideias */
+.ideas{list-style:none;margin:var(--sp5) 0 0;padding:0;counter-reset:i}
+.ideas li{display:grid;grid-template-columns:44px 1fr auto;gap:var(--sp2) var(--sp4);padding:var(--sp4) 0;border-top:1px solid var(--line2);counter-increment:i}
+.ideas li:last-child{border-bottom:1px solid var(--line2)}
+.ideas li::before{content:counter(i,decimal-leading-zero);font-family:"Schibsted Grotesk";font-weight:800;font-size:20px;color:var(--ink3);line-height:1.3}
+.ideas li.top5::before{color:var(--acc)}
+.ideas p{margin:4px 0 0;font-size:15px}
+.ideas .onde{font-size:14px;color:var(--ink3);margin-top:4px}
+.tags{display:flex;gap:6px;align-items:flex-start;flex-wrap:wrap;justify-content:flex-end}
+.tag{font-size:12px;font-weight:700;padding:3px 9px;border-radius:999px;border:1px solid var(--line);color:var(--ink2);white-space:nowrap}
+.tag.alto{background:var(--acc);border-color:var(--acc);color:var(--acc-ink)}
+.tag.p{color:var(--ok);border-color:color-mix(in oklch,var(--ok) 45%,transparent)}
+
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:var(--sp5)}
+.box{background:var(--bg2);border:1px solid var(--line);border-radius:14px;padding:var(--sp5)}
+.box h3{margin-bottom:var(--sp3)}
+.box ol{margin:0;padding-left:20px;color:var(--ink2)}
+.box li{margin:4px 0}
+.box .note{margin-top:var(--sp3)}
+
+.out{display:grid;grid-template-columns:1fr 1fr;gap:var(--sp2) var(--sp5);margin-top:var(--sp4)}
+.out p{margin:0;font-size:15px}
+.out b{display:block;font-size:12.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--ink3);margin-bottom:2px}
+
+.decide{list-style:none;margin:var(--sp4) 0 0;padding:0}
+.decide li{padding:var(--sp4) 0;border-top:1px solid var(--line2)}
+.decide li:last-child{border-bottom:1px solid var(--line2)}
+.decide h3{margin-bottom:4px}
+.decide p{margin:0;font-size:15px}
+
+footer{padding:var(--sp6) 0 var(--sp7);color:var(--ink3);font-size:13.5px;border-top:1px solid var(--line2)}
+
+@media (max-width:760px){
+  .nums{grid-template-columns:1fr}
+  .num,.num + .num{padding:var(--sp4) 0;border-left:0}
+  .num + .num{border-top:1px solid var(--line2)}
+  .vs{grid-template-columns:1fr}
+  .vs-h.m{display:none}
+  .vs-a{border-bottom:0;padding-bottom:2px;font-size:14px}
+  .vs-a::before{content:"Hoje: ";font-weight:700}
+  .vs-b{border-left:0}
+  .vs-b::before{content:"Muda: ";font-weight:700;color:var(--acc)}
+  .ideas li{grid-template-columns:34px 1fr}
+  .tags{grid-column:2;justify-content:flex-start}
+  .cols,.out{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <div class="eyebrow">Para decidir · Uso de IA</div>
+    <h1>Ideias de agente que contam como linha</h1>
+    <p class="lede">O que o coletor conta de verdade como linha de agente, as 13 ideias que valem a pena e por onde começar.</p>
+    <div class="nums">
+      <div class="num"><b>≈8</b><span>rotinas viram pasta de agente só trocando a pasta onde o <code>claude -p</code> roda</span></div>
+      <div class="num"><b>0</b><span>linhas de agente no clone principal do orquestrador em 3 dias</span></div>
+      <div class="num"><b>4.056</b><span>linhas de agente nos worktrees <code>ag-*</code> no mesmo período</span></div>
+    </div>
+    <div class="meta">
+      <span>16/11/2026</span>
+      <span>Leitura de uns 2 minutos</span>
+      <span>Critério conferido no coletor v1.4.66</span>
+    </div>
+  </div>
+</header>
+
+<nav class="toc" aria-label="Seções">
+  <div class="wrap">
+    <a href="#conta">Como conta</a>
+    <a href="#ideias">As 13 ideias</a>
+    <a href="#ordem">Ordem</a>
+    <a href="#decide">Você decide</a>
+  </div>
+</nav>
+
+<main>
+<section id="conta" style="border-top:0;padding-top:var(--sp5)">
+  <div class="wrap">
+    <h2>Como conta, hoje × o que muda</h2>
+    <div class="vs">
+      <div class="vs-h">Hoje</div><div class="vs-h m">O que muda</div>
+      <div class="vs-a">Pôr a pasta em <code>pastas_agente</code> só dá nome a ela.</div><div class="vs-b">A pasta só conta se um <code>claude -p</code> trabalhou dentro dela, na mesma máquina.</div>
+      <div class="vs-a">O clone principal do orquestrador conta 0.</div><div class="vs-b">Código de agente vai sempre num worktree <code>ag-*</code> aberto por <code>claude -p</code>.</div>
+      <div class="vs-a">As rotinas rodam do hub e não contam.</div><div class="vs-b">Cada rotina roda na própria pasta, com <code>--add-dir</code> do hub ou um CLAUDE.md local. Vale na VPS.</div>
+      <div class="vs-a"><code>sia-copiloto</code>, <code>bot-gops-fotografo</code> e a pasta local da lojinha não contam.</div><div class="vs-b">Usar <code>olimpo/agents/&lt;x&gt;/</code> com <code>agent.yaml</code>, ou um worktree <code>ag-*</code>.</div>
+      <div class="vs-a">Os <code>.md</code> de especialistas e os <code>evals/*.json</code> não contam.</div><div class="vs-b">A régua vira <code>SKILL.md</code> ou <code>prompts/*.md</code>, que contam em qualquer pasta menos no hub.</div>
+    </div>
+    <p class="note">Não dá pra contar com o rótulo <code>~</code>: hoje ele faz tudo em <code>~/</code> contar, mas pode sumir num ajuste do coletor.</p>
+  </div>
+</section>
+
+<section id="ideias">
+  <div class="wrap">
+    <h2>As 13 ideias</h2>
+    <p>Em ordem de valor, já sem repetição. As 5 em âmbar são os ganhos rápidos desta semana.</p>
+    <ol class="ideas">
+      <li class="top5"><div><h3>Rotinas e Vel'Koz rodando na própria pasta</h3><p>O <code>claude -p</code> de cada rotina passa a rodar na pasta dela.</p><div class="onde">Conta em <code>~/.local/share/rotinas/&lt;nome&gt;</code>, na VPS.</div></div><div class="tags"><span class="tag alto">Alto</span><span class="tag p">Pequeno</span></div></li>
+      <li class="top5"><div><h3>Vigia SLA, 3 extensões</h3><p>Checa as planilhas Matinali/RM, faz o rascunho da cobrança e confere se o pedido foi mesmo concluído.</p><div class="onde">Conta em <code>vigia-sla-fornecedores</code>, sem ajuste.</div></div><div class="tags"><span class="tag alto">Alto</span><span class="tag p">P/M</span></div></li>
+      <li class="top5"><div><h3>Galio: confere antes do FUP</h3><p>Confere link, prazo, números e ajustes pendentes antes da Validação. Também acha linha parada há 7+ dias. É a causa nº 1 de DEVOLVIDO.</p><div class="onde">Conta no worktree <code>ag-galio</code> e no <code>SKILL.md</code> da régua.</div></div><div class="tags"><span class="tag alto">Alto</span><span class="tag p">P/M</span></div></li>
+      <li><div><h3>Ivern: relatório de sexta e backlog de agentes</h3><p>Tema que repete 3x vira proposta de agente. Toda sexta sai o relatório de agentes que a Ray pediu.</p><div class="onde">Conta no worktree <code>ag-ivern</code>.</div></div><div class="tags"><span class="tag alto">Alto</span><span class="tag">Médio</span></div></li>
+      <li><div><h3>Lojinha: pedidos da Alexia</h3><p>Duplicado, retirada e rastreio, com prévia e OK por botão. Tem pedido parado até 65h.</p><div class="onde">Conta em <code>olimpo/agents/agente-validacao-inbox-lojinha/</code>.</div></div><div class="tags"><span class="tag alto">Alto</span><span class="tag">Médio</span></div></li>
+      <li class="top5"><div><h3>Fotógrafo para grande operação</h3><p>Responde na thread do Perry se tem fotógrafo na região e qual valor GOPS vale. Foram 22 pedidos, todos repetíveis.</p><div class="onde">Conta num worktree <code>ag-*</code> ou no Olimpo.</div></div><div class="tags"><span class="tag alto">Alto</span><span class="tag p">P/M</span></div></li>
+      <li><div><h3>Enxoval: status e loop de pagamento</h3><p>Responde no #suporte-operação sobre devolução, link e prazo. São cerca de 54 mensagens por quinzena.</p><div class="onde">Conta em <code>olimpo/agents/agente-cancelamento-enxoval/</code>.</div></div><div class="tags"><span class="tag alto">Alto</span><span class="tag">M/G</span></div></li>
+      <li><div><h3>Kayle: juíza de evals</h3><p>Monta a prova dos 14 agentes sem eval e mostra uma tela pra você conferir. Hoje o Bard tem 0 de 87 conferidos.</p><div class="onde">Conta no worktree <code>ag-kayle</code> (os <code>casos.json</code> ficam de fora).</div></div><div class="tags"><span class="tag alto">Alto</span><span class="tag">Médio</span></div></li>
+      <li><div><h3>Conciliador de NF</h3><p>Pelo número da NF, diz se está paga, por quem e com qual evidência.</p><div class="onde">Conta numa pasta própria com <code>claude -p</code> rodando nela.</div></div><div class="tags"><span class="tag">Médio/alto</span><span class="tag">Médio</span></div></li>
+      <li><div><h3>Diana: fechamento mensal</h3><p>Do dia 1 ao 5, junta fechamento, comissão e prévia da cobrança num HTML só.</p><div class="onde">Conta em <code>agente-ciclo-mensal-fornecedor</code> com <code>claude -p</code> nela.</div></div><div class="tags"><span class="tag">Médio/alto</span><span class="tag">Médio</span></div></li>
+      <li><div><h3>Caitlyn: auditora de KPIs</h3><p>Aponta KPI sem fonte, divergência Hub × Nekt e regra temporária vencida.</p><div class="onde">Conta no worktree <code>ag-caitlyn</code> ou na pasta da skill de KPIs.</div></div><div class="tags"><span class="tag">Médio</span><span class="tag">Médio</span></div></li>
+      <li><div><h3>Taric: promotor de autonomia</h3><p>Depois de 10 execuções sem correção e com nota boa no eval, propõe subir o nível. Só sobe com seu OK.</p><div class="onde">Conta no worktree <code>ag-taric</code>.</div></div><div class="tags"><span class="tag">Médio</span><span class="tag">Médio</span></div></li>
+      <li class="top5"><div><h3>Skills rápidas</h3><p>Taxa de limpeza por imóvel e "como montei o Azir", que o Vel'Koz usa pra responder por você.</p><div class="onde">Conta como <code>SKILL.md</code>, fora do hub.</div></div><div class="tags"><span class="tag">Médio</span><span class="tag p">Pequeno</span></div></li>
+    </ol>
+    <div class="out">
+      <p><b>Também conta</b>Melhorias de Bard, Zilean, Viktor, Shaco e do painel do Pyke, todas em worktree <code>ag-*</code>. As subtasks do ConcertAI são o maior volume e já estão planejadas.</p>
+      <p><b>Fora</b>Captação e venda, o bot GOPs sem SDK, placar e conformidade dentro do <code>sia-copiloto</code>, o eval do Roteador (já feito), ambiente-sync e corte-vps.</p>
+    </div>
+  </div>
+</section>
+
+<section id="ordem">
+  <div class="wrap">
+    <h2>Ordem sugerida</h2>
+    <div class="cols">
+      <div class="box">
+        <h3>Esta semana</h3>
+        <ol>
+          <li>Rotinas rodando na própria pasta, na VPS</li>
+          <li>As 3 extensões do vigia</li>
+          <li>Galio e a linha parada</li>
+          <li>Skills rápidas</li>
+          <li>Fotógrafo para grande operação</li>
+        </ol>
+        <p class="note">O agente de fotógrafos com <code>claude -p</code> fica pra depois de 19/11, quando a rotina do contrato volta.</p>
+      </div>
+      <div class="box">
+        <h3>Próximas 2 semanas</h3>
+        <ol>
+          <li>Ivern, com o relatório de sexta</li>
+          <li>Lojinha</li>
+          <li>Enxoval</li>
+          <li>Kayle</li>
+          <li>Conciliador de NF</li>
+          <li>Diana, Caitlyn e Taric</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="decide">
+  <div class="wrap">
+    <h2>Você decide</h2>
+    <ol class="decide">
+      <li><h3>Pasta das rotinas na VPS</h3><p>Liberar a troca? Com <code>--add-dir</code> do hub ou com CLAUDE.md local? Ainda falta confirmar se o servidor junta as pastas do PC e da VPS pelo nome.</p></li>
+      <li><h3><code>claude-sz -p</code></h3><p>Pedir aos donos do coletor que reconheçam? Hoje ele não é visto como <code>claude -p</code>.</p></li>
+      <li><h3>Janna</h3><p>Trazer Gmail, GitHub e atas pra Recepção do Azir? A Seraphine (resposta de e-mail) depende disso.</p></li>
+      <li><h3>Orianna</h3><p>Fazer o painel de tokens e custo por agente e por card? Está fora da spec.</p></li>
+      <li><h3>Pyke</h3><p>Teto de 3 cobranças ou 1 por dia útil, como na regra de 12/11? E quando ele sai do modo sombra?</p></li>
+    </ol>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">16/11/2026 · Síntese de 4 fontes (ambiente, Taskdex, Azir, Slack), conferida no coletor v1.4.66. Só leitura: nada foi ligado nem alterado.</div>
+</footer>
+
+</body>
+</html>
