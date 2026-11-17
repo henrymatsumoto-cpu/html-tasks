@@ -1,0 +1,47 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>ConcertAI dados Floripa</title>
+<style>body{background:#14161b;color:#d9dce3;font:16px/1.6 system-ui,sans-serif;max-width:780px;margin:40px auto;padding:0 16px}h1{font-size:1.5rem;color:#fff}h2{font-size:1.1rem;color:#9ec1ff;margin-top:2rem}table{border-collapse:collapse;width:100%;font-size:.95rem}td,th{border-bottom:1px solid #2a2e38;padding:8px 6px;text-align:left;vertical-align:top}th{color:#9ec1ff}.q{background:#1d2028;border-left:3px solid #4b7bec;padding:10px 14px;border-radius:6px;white-space:pre-wrap}a{color:#8ab4ff;word-break:break-all}code{background:#1d2028;padding:1px 5px;border-radius:4px}details{margin-top:2rem;color:#aab}</style></head><body>
+<h1>ConcertAI · Dados reais de Florianópolis para o MVP</h1>
+
+<h2>O que foi feito</h2>
+<p>Juntei num lugar só, em arquivos prontos pro site usar, os dados reais de Floripa: o catálogo dos 14 serviços do Lote 1 (preço, duração, descrição, taxa e quanto o prestador recebe), quantos desses serviços as franquias já pagam por mês, as franquias da cidade, 40 imóveis de exemplo e as reservas deles pro calendário. Nada identifica pessoa nem imóvel: sem nomes, CPF, endereço nem hóspede.</p>
+<table>
+<tr><th>Número</th><th>Valor</th></tr>
+<tr><td>Serviços do Lote 1 pagos em Floripa (12 meses)</td><td><b>1.067 (~89 por mês)</b></td></tr>
+<tr><td>Mais pedido</td><td>Limpeza de ar (20/mês), desentupimento (9), torneira/sifão (8,5), chuveiro (8,4)</td></tr>
+<tr><td>Potencial se tudo passasse pelo ConcertAI</td><td>~R$ 24 mil/mês de venda · ~R$ 4,8 mil/mês de taxa</td></tr>
+<tr><td>Imóveis em Floripa</td><td>837 ativos + 133 em onboarding · 30 franquias + operação própria</td></tr>
+<tr><td>Ocupação</td><td>44% (junho) a 85% (janeiro) · estadia média 3,7 noites · sexta é o dia de mais check-in</td></tr>
+</table>
+
+<h2>Como usar</h2>
+<ol>
+<li>Os arquivos estão na pasta <code>data/</code> do repositório ConcertAI (PR #6, link abaixo).</li>
+<li>Quem monta o banco (T620) importa esses arquivos no lugar dos dados inventados: imóveis, franquias, serviços e reservas já se ligam pelos códigos (FLN-D001, fq-fln-01...).</li>
+<li>Pra ver os números com calma, abra <code>docs/dados-floripa.md</code> no repositório.</li>
+<li>Pra atualizar depois: o mesmo documento explica como gerar de novo a partir do Sapron.</li>
+</ol>
+
+<h2>Pra que serve / quando usar</h2>
+<ul>
+<li>A demonstração do site mostra Floripa de verdade: bairros reais, imóveis de 1 a 4 quartos e o aviso "tem hóspede nesse dia" com reservas reais.</li>
+<li>Dá pra priorizar o piloto pelo que mais sai (limpeza de ar e hidráulica) e saber o tamanho do prêmio em Floripa.</li>
+<li>Confirma a regra da agenda: em alta temporada quase todo dia tem hóspede, então ela avisa em vez de bloquear.</li>
+</ul>
+
+<h2>Links</h2>
+<ul>
+<li>PR com os arquivos: <a href="https://github.com/seazone-tech/concertai/pull/6">https://github.com/seazone-tech/concertai/pull/6</a></li>
+<li>Esta página: <a href="https://henrymatsumoto-cpu.github.io/html-tasks/concertai-dados-floripa.html">https://henrymatsumoto-cpu.github.io/html-tasks/concertai-dados-floripa.html</a></li>
+</ul>
+
+<details><summary>Detalhes técnicos</summary>
+<ul>
+<li>Fonte: Sapron produção, só leitura (financial_expenses, property_property, account_address, account_host, reservation_reservation), extraído em 16/11/2026.</li>
+<li>Arquivos: catalogo-lote1.json, volume-floripa.json, franquias-floripa.json, imoveis-floripa-amostra.json (40, estratificada por quartos), reservas-floripa-amostra.json (342 estadias de 01/11/2026 a 31/01/2027), ocupacao-floripa.json. Valores em centavos.</li>
+<li>AR-03 e VI-03 usam o grupo "outros" da categoria (aproximado, mesmo critério do catálogo). Volume conta reforma e dano de hóspede.</li>
+<li>Checagem automática: nenhum código real, nome de franqueado ou CPF nos arquivos. Scripts: scripts/gerar_catalogo_lote1.py e scripts/gerar_dados_floripa.py.</li>
+</ul>
+</details>
+</body></html>
