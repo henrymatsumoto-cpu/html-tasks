@@ -4,722 +4,1022 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>ConcertAI · Protótipo</title>
+<meta name="description" content="Protótipo navegável do ConcertAI: manutenção de imóveis Seazone com preço fechado, garantia de 90 dias e acompanhamento pelo app.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js"></script>
 <style>
+/* ===================== tokens (docs/design.md §1) ===================== */
 :root{
   --brand:#0055FF;--brand-hover:#0044CC;--brand-100:#E8F0FE;--brand-200:#C7DBFF;
-  --navy:#080E32;--navy-2:#00143D;--navy-3:#182052;
+  --navy:#080E32;--navy-2:#00143D;--navy-3:#182052;--navy-line:rgba(255,255,255,.10);
   --coral:#F1605D;--coral-hover:#DE5141;--coral-press:#D4403B;--coral-100:#FFE4E3;
-  --bg:#F6F7F9;--surface:#FFFFFF;--muted:#F3F3F5;--border:#E6E7EA;--border-strong:#E1E2E5;
-  --fg:#080E32;--fg-2:#595D6C;--fg-3:#7D7D80;--fg-on-dark:#FFFFFF;--fg-on-dark-2:#B8BCD6;
+  --bg:#F3F5F9;--surface:#FFFFFF;--muted:#F3F3F5;--muted-2:#EEF1F6;--border:#E6E7EA;--border-strong:#D9DBE1;
+  --fg:#080E32;--fg-2:#595D6C;--fg-3:#696C76;--fg-on-dark:#FFFFFF;--fg-on-dark-2:#B8BCD6;
   --success:#22C55E;--success-100:#E7F8EE;--success-ink:#15803D;
-  --warning:#F54A00;--warning-100:#FFF0E8;--error:#E7000B;--error-100:#FDE7E8;
-  --stay-fill:#C7DBFF;--stay-bar:#0055FF;--visit-fill:#FFE4E3;--visit-dot:#F1605D;--visit-ink:#AD2720;
+  --warning:#F54A00;--warning-100:#FFF0E8;--warning-ink:#B33600;
+  --error:#E7000B;--error-100:#FDE7E8;--error-ink:#B4000A;
+  --info-ink:#0044CC;
+  --stay-fill:#C7DBFF;--stay-bar:#0055FF;--visit-dot:#F1605D;
+  /* fases do pedido (barra da coluna e ponto da linha do tempo) */
+  --f-aprov:var(--navy-3);--f-prest:var(--brand-200);--f-conf:var(--brand);--f-exec:var(--brand-hover);--f-prova:var(--success-ink);--f-ok:var(--success);--f-no:var(--border-strong);
+  /* preenchimento com texto branco (contraste AA) */
+  --brand-solid:#0055FF;--brand-solid-hover:#0044CC;--coral-solid:#D4403B;--coral-solid-hover:#C93A36;
+  --border-input:#8A8D99;
+  --on-dark-a06:rgba(255,255,255,.06);--on-dark-a10:rgba(255,255,255,.10);--on-dark-a16:rgba(255,255,255,.16);--on-dark-a24:rgba(255,255,255,.24);--on-dark-a72:rgba(255,255,255,.72);
+  --scrim:rgba(8,14,50,.4);--navy-a70:rgba(8,14,50,.7);--navy-a92:var(--navy-a92);
   --shadow-card:0 1px 2px -1px #02061714,0 1px 3px #0206170f;
   --shadow-raise:0 0 6px -4px rgba(0,0,0,.1),0 4px 15px -3px rgba(0,0,0,.1);
-  --shadow-modal:0 8px 40px rgba(0,0,0,.12);
+  --shadow-modal:0 8px 40px rgba(8,14,50,.18);
   --ring:0 0 0 3px rgba(0,85,255,.35);
   --ease:150ms cubic-bezier(.2,.8,.2,1);
+  --side:248px;
   color-scheme:light;
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
-  --bg:#060A24;--surface:#0E1438;--muted:#151C45;--border:#232B5C;--border-strong:#2C356B;
+  --bg:#060A24;--surface:#0E1438;--muted:#151C45;--muted-2:#121941;--border:#232B5C;--border-strong:#2C356B;
   --fg:#F2F3F8;--fg-2:#A9AECB;--fg-3:#7E84A8;
   --brand:#3D7BFF;--brand-hover:#5C90FF;--brand-100:#13235C;--brand-200:#1C3378;
   --coral:#FF6F6B;--coral-hover:#FF8582;--coral-100:#3A1A2A;
-  --stay-fill:#1C3378;--stay-bar:#5C90FF;--visit-fill:#3A1A2A;--visit-dot:#FF6F6B;--visit-ink:#FFB4B1;
-  --success-100:#0F2E22;--success-ink:#4ADE80;--warning-100:#33190D;--error-100:#360B14;
-  --shadow-card:0 1px 2px rgba(0,0,0,.4);--shadow-raise:0 6px 20px rgba(0,0,0,.45);color-scheme:dark}}
+  --success-100:#0F2E22;--success-ink:#4ADE80;--warning-100:#33190D;--warning-ink:#FFA472;--error-100:#360B14;--error-ink:#FF8A8F;--info-ink:#8FB2FF;
+  --stay-fill:#1C3378;--stay-bar:#5C90FF;--visit-dot:#FF6F6B;
+  --navy:#040720;--navy-2:#0A1030;--brand-solid:#1F5EFF;--brand-solid-hover:#2A64F0;--border-input:#5B6396;--f-aprov:#5C67B0;
+  --shadow-card:0 1px 2px rgba(0,0,0,.4);--shadow-raise:0 6px 20px rgba(0,0,0,.45);--shadow-modal:0 8px 40px rgba(0,0,0,.6);
+  color-scheme:dark}}
 :root[data-theme="dark"]{
-  --bg:#060A24;--surface:#0E1438;--muted:#151C45;--border:#232B5C;--border-strong:#2C356B;
+  --bg:#060A24;--surface:#0E1438;--muted:#151C45;--muted-2:#121941;--border:#232B5C;--border-strong:#2C356B;
   --fg:#F2F3F8;--fg-2:#A9AECB;--fg-3:#7E84A8;
   --brand:#3D7BFF;--brand-hover:#5C90FF;--brand-100:#13235C;--brand-200:#1C3378;
   --coral:#FF6F6B;--coral-hover:#FF8582;--coral-100:#3A1A2A;
-  --stay-fill:#1C3378;--stay-bar:#5C90FF;--visit-fill:#3A1A2A;--visit-dot:#FF6F6B;--visit-ink:#FFB4B1;
-  --success-100:#0F2E22;--success-ink:#4ADE80;--warning-100:#33190D;--error-100:#360B14;
-  --shadow-card:0 1px 2px rgba(0,0,0,.4);--shadow-raise:0 6px 20px rgba(0,0,0,.45);color-scheme:dark}
+  --success-100:#0F2E22;--success-ink:#4ADE80;--warning-100:#33190D;--warning-ink:#FFA472;--error-100:#360B14;--error-ink:#FF8A8F;--info-ink:#8FB2FF;
+  --stay-fill:#1C3378;--stay-bar:#5C90FF;--visit-dot:#FF6F6B;
+  --navy:#040720;--navy-2:#0A1030;--brand-solid:#1F5EFF;--brand-solid-hover:#2A64F0;--border-input:#5B6396;--f-aprov:#5C67B0;
+  --shadow-card:0 1px 2px rgba(0,0,0,.4);--shadow-raise:0 6px 20px rgba(0,0,0,.45);--shadow-modal:0 8px 40px rgba(0,0,0,.6);
+  color-scheme:dark}
+
+/* ===================== base ===================== */
 *{box-sizing:border-box;margin:0;padding:0}
 html{-webkit-text-size-adjust:100%}
 body{font-family:Inter,"Helvetica Neue",Arial,sans-serif;font-size:16px;line-height:24px;color:var(--fg);background:var(--bg);min-height:100vh;overflow-x:hidden}
-button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
-button:focus-visible,a:focus-visible,input:focus-visible,[tabindex]:focus-visible{outline:none;box-shadow:var(--ring)}
+button,input,select,textarea{font:inherit;color:inherit}
+button{background:none;border:0;cursor:pointer}
+button:disabled{cursor:not-allowed}
+:focus-visible{outline:2px solid var(--brand);outline-offset:2px}
+.on-dark :focus-visible,.hero :focus-visible,.vercomo :focus-visible,.track :focus-visible{outline-color:var(--fg-on-dark)}
 .tn{font-feature-settings:"tnum"}
 svg.lucide{width:20px;height:20px;stroke-width:1.75;flex:none}
 .i14 svg.lucide,svg.lucide.i14{width:14px;height:14px}
-.app{max-width:480px;margin:0 auto;padding-bottom:180px;min-height:100vh}
-.wrap{padding:0 16px}
-/* header */
-.top{position:sticky;top:0;z-index:20;height:64px;display:flex;align-items:center;gap:12px;padding:0 16px;background:var(--surface);box-shadow:var(--shadow-card)}
-.top.over{position:absolute;left:0;right:0;background:transparent;box-shadow:none;color:#fff}
-.logo{display:flex;align-items:center;gap:10px;font-weight:600}
-.wm{font-size:22px;font-weight:800;letter-spacing:-.03em;color:var(--navy)}.wm span{color:var(--coral)}.top.over .wm,:root[data-theme="dark"] .wm{color:#fff}@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .wm{color:#fff}}
-.logo .sep{width:1px;height:20px;background:var(--border)}
-.top.over .logo .sep{background:rgba(255,255,255,.35)}
-.top .who{margin-left:auto;display:flex;align-items:center;gap:8px;font-size:14px;line-height:20px;font-weight:600;min-width:0}
-.top .who span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:140px}
-.av{width:36px;height:36px;border-radius:50%;background:var(--brand-200);color:var(--navy);display:grid;place-items:center;font-size:13px;font-weight:700;flex:none}
+.i16 svg.lucide,svg.lucide.i16{width:16px;height:16px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;animation:none!important}}
+
+/* ===================== casca: sidebar + topbar + bottom nav ===================== */
+.side{position:fixed;inset:0 auto 0 0;width:var(--side);background:var(--navy);color:var(--fg-on-dark);display:none;flex-direction:column;z-index:30}
+.side .brand{display:flex;align-items:center;gap:12px;padding:22px 20px 20px;border-bottom:1px solid var(--navy-line)}
+.logo-img{height:22px;width:auto;display:block}
+.on-dark .logo-img{filter:brightness(0) invert(1)}
+.brand .sep{width:1px;height:18px;background:var(--navy-line)}
+.brand .prod{font-size:16px;font-weight:600;letter-spacing:-.01em}
+.wm{font-size:20px;font-weight:800;letter-spacing:-.03em}
+.side .ctx{margin:16px 12px 4px;padding:12px;border-radius:12px;background:var(--on-dark-a06);display:flex;gap:10px;align-items:center}
+.side .ctx b{display:block;font-size:14px;line-height:20px;font-weight:600}
+.side .ctx div span{display:block;font-size:12px;line-height:16px;color:var(--fg-on-dark-2)}
+.side nav.menu{padding:12px;display:flex;flex-direction:column;gap:2px}
+.menu .lbl{font-size:12px;line-height:16px;font-weight:600;color:var(--fg-on-dark-2);padding:12px 12px 6px;letter-spacing:.02em}
+.menu a{display:flex;align-items:center;gap:12px;height:40px;padding:0 12px;border-radius:12px;font-size:14px;font-weight:500;color:var(--on-dark-a72);text-decoration:none;transition:background var(--ease),color var(--ease)}
+.menu a:hover{background:var(--on-dark-a10);color:var(--fg-on-dark)}
+.menu a[aria-current="page"]{background:var(--brand-solid);color:var(--fg-on-dark)}
+.menu a .ct{margin-left:auto;min-width:22px;height:22px;padding:0 7px;border-radius:9999px;background:var(--on-dark-a16);font-size:12px;font-weight:600;line-height:22px;text-align:center}
+.menu a[aria-current="page"] .ct{background:var(--on-dark-a24)}
+.side .foot{margin-top:auto;padding:16px 12px 20px;border-top:1px solid var(--navy-line);display:flex;flex-direction:column;gap:12px}
+.side .me{display:flex;align-items:center;gap:10px;padding:0 4px}
+.side .me b{font-size:14px;font-weight:600;line-height:20px;display:block}
+.side .me div span{font-size:12px;color:var(--fg-on-dark-2);line-height:16px;display:block}
+.side .me .icbtn{margin-left:auto}
+.icbtn{width:36px;height:36px;border-radius:9999px;display:grid;place-items:center;color:inherit;transition:background var(--ease)}
+.icbtn:hover{background:rgba(127,127,160,.16)}
+.top{position:sticky;top:0;z-index:25;height:56px;display:flex;align-items:center;gap:12px;padding:0 16px;background:var(--navy);color:var(--fg-on-dark)}
+.top .who{margin-left:auto;display:flex;align-items:center;gap:8px;font-size:14px;font-weight:600;min-width:0}
+.top .who span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:150px;color:var(--fg-on-dark-2)}
+.bnav{position:fixed;left:0;right:0;bottom:0;z-index:25;height:64px;padding-bottom:env(safe-area-inset-bottom);background:var(--surface);box-shadow:0 -1px 0 var(--border);display:flex}
+.bnav a{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-size:12px;font-weight:600;color:var(--fg-3);text-decoration:none;position:relative}
+.bnav a[aria-current="page"]{color:var(--brand)}
+.bnav a .ct{position:absolute;top:6px;left:calc(50% + 6px);min-width:20px;height:20px;border-radius:9999px;background:var(--brand-solid);color:var(--fg-on-dark);font-size:12px;line-height:20px;text-align:center;padding:0 5px}
+.main{min-height:100vh;padding:20px 16px 160px}
+.wrap{max-width:1200px;margin:0 auto}
+@media (min-width:1024px){
+  .side{display:flex}.top,.bnav{display:none}
+  .main{margin-left:var(--side);padding:32px 32px 64px}
+}
+
+/* ===================== "ver como" (demo) ===================== */
+.vercomo{position:fixed;z-index:40;left:12px;bottom:calc(76px + env(safe-area-inset-bottom));display:flex;align-items:center;gap:2px;padding:3px;border-radius:9999px;background:rgba(8,14,50,.92);color:var(--fg-on-dark);box-shadow:var(--shadow-raise);font-size:12px;line-height:16px;max-width:calc(100vw - 32px);overflow-x:auto;scrollbar-width:none}
+.vercomo .tag{height:28px;color:inherit;font-weight:500;display:flex;align-items:center;gap:4px;padding:0 8px 0 6px;color:var(--fg-on-dark-2);white-space:nowrap}
+.vercomo button{height:28px;padding:0 10px;border-radius:9999px;font-weight:600;color:var(--on-dark-a72);white-space:nowrap}
+.vercomo button:hover{color:var(--fg-on-dark)}
+.vercomo button[aria-pressed="true"]{background:var(--fg-on-dark);color:var(--navy)}
+@media (max-width:1023px){.vercomo:not(.open) button[aria-pressed="false"]{display:none}
+  .icbtn,.btn.sm,.add,.seg button,.hero .hchip,.pill{min-height:44px}.icbtn{min-width:44px}.vercomo button,.vercomo .tag{height:36px}}
+@media (min-width:1024px){.vercomo{left:12px;bottom:auto;top:auto;bottom:118px;width:calc(var(--side) - 24px);flex-wrap:wrap;border-radius:12px;background:var(--on-dark-a06);box-shadow:none;padding:6px}
+  .vercomo .tag{width:100%;padding:2px 4px 6px}.vercomo button{flex:1 1 40%}}
+
+/* ===================== cabeçalho de página ===================== */
+.ph{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:12px 24px;margin-bottom:24px}
+.eyebrow{display:inline-flex;align-items:center;gap:6px;font-size:12px;line-height:16px;font-weight:600;color:var(--fg-2);text-transform:uppercase;letter-spacing:.06em}
+.eyebrow::before{content:"";width:16px;height:2px;border-radius:2px;background:var(--brand)}
+.ph h1{font-size:28px;line-height:34px;font-weight:700;letter-spacing:-.015em;margin-top:6px}
+.ph p{font-size:14px;line-height:20px;color:var(--fg-2);margin-top:4px;max-width:62ch}
+.ph .act{display:flex;gap:8px;align-items:center}
+h2.sec{font-size:18px;line-height:24px;font-weight:700;display:flex;align-items:center;gap:8px}
+h2.sec small{font-size:14px;font-weight:500;color:var(--fg-2)}
+.sec-h{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin:32px 0 12px}
+
+/* ===================== botões, chips, inputs ===================== */
+.btn{height:44px;padding:0 20px;border-radius:9999px;display:inline-flex;align-items:center;justify-content:center;gap:8px;font-size:16px;font-weight:600;white-space:nowrap;transition:background var(--ease),color var(--ease),box-shadow var(--ease),transform var(--ease)}
+.btn:active:not(:disabled){transform:scale(.98)}
+.btn.sm{height:36px;padding:0 14px;font-size:14px}
+.btn.lg{height:52px;padding:0 24px;font-size:16px;font-weight:700}
+.btn.full{width:100%}
+.btn.cta{background:var(--coral-solid);color:var(--fg-on-dark)}.btn.cta:hover{background:var(--coral-solid-hover)}
+.btn.pri{background:var(--brand-solid);color:var(--fg-on-dark)}.btn.pri:hover{background:var(--brand-solid-hover)}
+.btn.sec{background:var(--surface);color:var(--fg);box-shadow:inset 0 0 0 1px var(--border-strong)}.btn.sec:hover{box-shadow:inset 0 0 0 1px var(--brand);color:var(--brand)}
+.btn.ghost{color:var(--fg-2)}.btn.ghost:hover{background:var(--muted);color:var(--fg)}
+.btn.dng{color:var(--error-ink);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--error) 40%,transparent)}.btn.dng:hover{background:var(--error-100)}
+.btn.white{background:var(--fg-on-dark);color:#080E32}.btn.white:hover{background:var(--brand-100);color:var(--fg)}
+.btn:disabled{opacity:.5}
+.btn.cta:disabled,.btn.pri:disabled{background:var(--border);color:var(--fg-3);opacity:1}
+.chip{display:inline-flex;align-items:center;gap:6px;height:24px;padding:0 10px;border-radius:9999px;font-size:12px;line-height:16px;font-weight:600;white-space:nowrap}
+.chip.n{background:var(--muted);color:var(--fg-2)}
+.chip.info{background:var(--brand-100);color:var(--info-ink)}
+.chip.ok{background:var(--success-100);color:var(--success-ink)}
+.chip.warn{background:var(--warning-100);color:var(--warning-ink)}
+.chip.no{background:var(--error-100);color:var(--error-ink)}
+.chip.dark{background:var(--on-dark-a16);color:var(--fg-on-dark)}
+.chip .dot{width:8px;height:8px;border-radius:50%;background:currentColor}
+.st{display:inline-flex;align-items:center;gap:6px;font-size:14px;line-height:18px;font-weight:600;color:var(--fg)}
+.st i{width:8px;height:8px;border-radius:50%;flex:none}
+.pills{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding:2px}
+.pill{height:40px;padding:0 16px;border-radius:9999px;display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:600;background:var(--surface);color:var(--fg-2);box-shadow:inset 0 0 0 1px var(--border-input);white-space:nowrap;transition:background var(--ease),color var(--ease),box-shadow var(--ease)}
+.pill:hover{color:var(--brand);box-shadow:inset 0 0 0 1px var(--brand)}
+.pill[aria-pressed="true"]{background:var(--navy);color:var(--fg-on-dark);box-shadow:none}
+:root[data-theme="dark"] .pill[aria-pressed="true"]{background:var(--brand-solid)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .pill[aria-pressed="true"]{background:var(--brand-solid)}}
+.seg{display:inline-flex;padding:4px;border-radius:9999px;background:var(--muted-2);gap:2px}
+.seg button:hover{color:var(--fg)}
+.seg button{height:36px;padding:0 16px;border-radius:9999px;font-size:14px;font-weight:600;color:var(--fg-2);display:inline-flex;align-items:center;gap:6px}
+.seg button[aria-pressed="true"]{background:var(--surface);color:var(--fg);box-shadow:var(--shadow-card)}
+.seg .ct{margin-left:2px;font-size:12px;color:var(--brand);font-weight:700}
+.search{position:relative;display:flex;align-items:center}
+.search svg{position:absolute;left:18px;color:var(--fg-3);pointer-events:none}
+.search input{width:100%;height:52px;border-radius:9999px;border:0;padding:0 20px 0 48px;background:var(--surface);color:var(--fg);font-size:16px;box-shadow:var(--shadow-raise)}
+.search input::placeholder{color:var(--fg-3)}
+.inp{width:100%;height:44px;padding:0 14px;border-radius:12px;border:1px solid var(--border-input);background:var(--surface);font-size:16px}
+textarea.inp{height:88px;padding:10px 14px;resize:vertical}
+.inp:focus{border-color:var(--brand);box-shadow:var(--ring);outline:none}
+select.inp{height:44px;border-radius:12px;padding:0 36px 0 14px;font-size:14px;font-weight:500;appearance:none;background:var(--surface) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='none' stroke='%237E84A8' stroke-width='2'%3E%3Cpath d='m4 6 4 4 4-4'/%3E%3C/svg%3E") no-repeat right 12px center}
+.av{width:40px;height:40px;border-radius:50%;background:var(--brand-200);color:var(--fg);display:grid;place-items:center;font-size:14px;font-weight:700;flex:none}
+.av.sm{width:32px;height:32px;font-size:12px}
 .av.lg{width:48px;height:48px;font-size:16px}
 .av.ok{box-shadow:0 0 0 2px var(--surface),0 0 0 4px var(--success)}
-/* tabs */
-.tabs{display:flex;gap:8px;padding:12px 16px;overflow-x:auto;scrollbar-width:none}
-.tab{height:36px;padding:0 16px;border-radius:9999px;font-size:14px;font-weight:600;color:var(--fg-2);background:var(--surface);box-shadow:var(--shadow-card);white-space:nowrap;display:flex;align-items:center;gap:6px;transition:background var(--ease),color var(--ease)}
-.tab[aria-selected="true"]{background:var(--brand);color:#fff}
-.tab .ct{min-width:20px;height:20px;border-radius:9999px;background:var(--brand-100);color:var(--brand);font-size:12px;line-height:20px;padding:0 6px}
-.tab[aria-selected="true"] .ct{background:rgba(255,255,255,.25);color:#fff}
-/* hero */
-.hero{position:relative;height:420px;color:#fff;overflow:hidden;background:var(--navy)}
-.hero img.bgimg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.hero:after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(8,14,50,.95) 0%,rgba(8,14,50,.6) 50%,rgba(8,14,50,.2) 100%)}
-.hero .in{position:absolute;left:16px;right:16px;bottom:32px;z-index:1;display:flex;flex-direction:column;gap:16px}
-.chip-w{align-self:flex-start;background:rgba(255,255,255,.14);font-size:12px;line-height:16px;font-weight:600;padding:6px 12px;border-radius:9999px}
-.hero h1{font-size:32px;line-height:36px;font-weight:800;letter-spacing:-.02em}
-.search{height:56px;border-radius:9999px;background:var(--surface);box-shadow:var(--shadow-raise);display:flex;align-items:center;gap:10px;padding:0 20px;color:var(--fg-3)}
-.search input{flex:1;border:0;background:none;font:inherit;color:var(--fg);min-width:0;outline:none}
-.hero .nx{font-size:14px;line-height:20px;color:var(--fg-on-dark-2);display:flex;gap:6px;align-items:center}
-/* type */
-h2.sec{font-size:22px;line-height:28px;font-weight:700;margin:32px 0 12px}
-h3{font-size:18px;line-height:24px;font-weight:700}
-.sub{font-size:14px;line-height:20px;color:var(--fg-2)}
-.cap{font-size:12px;line-height:16px;font-weight:500;color:var(--fg-2)}
-.code{font-size:12px;color:var(--fg-3);font-weight:500}
-/* categories */
-.cats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px 8px;margin-top:24px}
-.cat{display:flex;flex-direction:column;align-items:center;gap:8px;font-size:12px;line-height:16px;font-weight:600;text-align:center;color:var(--fg)}
-.cat .ci{width:56px;height:56px;border-radius:50%;background:var(--brand-100);color:var(--brand);display:grid;place-items:center;transition:transform var(--ease),background var(--ease)}
-.cat .ci svg{width:28px;height:28px}
-.cat[aria-pressed="true"] .ci{background:var(--brand);color:#fff}
-.mline{display:flex;gap:8px;align-items:center;font-size:12px;line-height:16px;font-weight:500;color:var(--fg-2);background:var(--muted);border-radius:12px;padding:8px 12px;margin-top:16px}
-/* service card */
-.list{display:flex;flex-direction:column;gap:8px}
-.card{background:var(--surface);border-radius:12px;box-shadow:var(--shadow-card);padding:16px}
-.svc{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:start;transition:transform var(--ease),box-shadow var(--ease);cursor:pointer}
-@media (hover:hover){.svc:hover,.pro:hover{transform:translateY(-2px);box-shadow:var(--shadow-raise)}}
-.svc .nm{font-weight:600;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.svc .ds{font-size:14px;line-height:20px;color:var(--fg-2);margin-top:2px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.meta{display:flex;flex-wrap:wrap;gap:4px 12px;margin-top:8px}
-.meta span{display:inline-flex;align-items:center;gap:4px;font-size:12px;line-height:16px;font-weight:500;color:var(--fg-2)}
-.meta svg.lucide{width:14px;height:14px}
-.pr{text-align:right;display:flex;flex-direction:column;align-items:flex-end;gap:8px}
-.pr .ap{font-size:12px;line-height:16px;color:var(--fg-2)}
-.pr b{font-size:20px;line-height:24px;font-weight:700;font-feature-settings:"tnum"}
-.plus{width:36px;height:36px;border-radius:50%;background:var(--coral);color:#fff;display:grid;place-items:center;transition:background var(--ease),transform 200ms}
-.plus:hover{background:var(--coral-hover)}.plus:active{transform:scale(.94)}
-.added{height:36px;border-radius:9999px;background:var(--coral-100);color:var(--visit-ink);display:flex;align-items:center;gap:6px;padding:0 12px;font-size:14px;font-weight:600}
-/* buttons */
-.btn{height:44px;padding:0 20px;border-radius:9999px;font-size:15px;font-weight:600;display:inline-flex;align-items:center;justify-content:center;gap:8px;transition:background var(--ease),transform var(--ease)}
-.btn:active{transform:scale(.98)}
-.btn.cta{background:var(--coral);color:#fff;height:52px;font-size:16px;font-weight:700;width:100%}
-.btn.cta:hover{background:var(--coral-hover)}
-.btn.cta[disabled]{opacity:.45;cursor:not-allowed}
-.btn.pri{background:var(--brand);color:#fff}.btn.pri:hover{background:var(--brand-hover)}
-.btn.out{box-shadow:inset 0 0 0 1px var(--border-strong);background:var(--surface)}
-.btn.sm{height:36px;padding:0 14px;font-size:14px}
-.btn.w{width:100%}
-.lnk{color:var(--brand);font-weight:600;font-size:14px;display:inline-flex;align-items:center;gap:4px}
-/* cart bar */
-.cartbar{position:fixed;left:0;right:0;bottom:0;z-index:30;display:flex;justify-content:center;pointer-events:none}
-.cartbar .in{pointer-events:auto;width:100%;max-width:480px;height:72px;background:var(--navy);color:#fff;display:flex;align-items:center;gap:12px;padding:0 16px;box-shadow:var(--shadow-raise);border-radius:16px 16px 0 0}
-.cartbar .tt{flex:1;min-width:0}
-.cartbar .tt b{font-size:18px;line-height:22px;display:block}
-.cartbar .tt span{font-size:12px;line-height:16px;color:var(--fg-on-dark-2)}
-.cartbar .btn.cta{width:auto;height:48px;padding:0 20px;font-size:15px}
-.bump{animation:bump 180ms}
-@keyframes bump{50%{transform:scale(1.04)}}
-/* step header */
-.steph{display:flex;align-items:center;gap:12px;padding:16px 16px 8px}
-.back{width:40px;height:40px;border-radius:50%;background:var(--surface);box-shadow:var(--shadow-card);display:grid;place-items:center;flex:none}
-.steph h1{font-size:22px;line-height:28px;font-weight:700}
-.dots{display:flex;gap:4px;padding:0 16px 16px}
-.dots i{height:4px;flex:1;border-radius:9999px;background:var(--border-strong)}
-.dots i.on{background:var(--brand)}
-/* pro card */
-.pro{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;position:relative;cursor:pointer;transition:transform var(--ease),box-shadow var(--ease)}
-.pro .n{font-weight:600;display:flex;align-items:center;gap:4px}
+.on-dark .av{background:var(--on-dark-a16);color:var(--fg-on-dark)}
+
+/* ===================== superfícies ===================== */
+.card{background:var(--surface);border-radius:12px;box-shadow:var(--shadow-card)}
+.pad{padding:20px}
+.note{display:flex;gap:12px;align-items:flex-start;padding:12px 14px;border-radius:12px;font-size:14px;line-height:20px}
+.note b{display:block;font-weight:600}
+.note.mat{background:var(--muted);color:var(--fg-2)}.note.mat b{color:var(--fg)}
+.note.info{background:var(--brand-100);color:var(--fg)}.note.info svg{color:var(--brand)}
+.note.ok{background:var(--success-100);color:var(--fg)}.note.ok svg{color:var(--success-ink)}
+.note.warn{background:var(--warning-100);color:var(--fg)}.note.warn svg{color:var(--warning-ink)}
+.grid{display:grid;gap:16px}
+.g-svc{grid-template-columns:repeat(auto-fill,minmax(min(300px,100%),1fr))}
+.g-kpi{grid-template-columns:repeat(2,1fr)}
+@media (min-width:760px){.g-kpi{grid-template-columns:repeat(4,1fr)}}
+.empty{display:flex;flex-direction:column;align-items:center;text-align:center;gap:8px;padding:40px 16px;border-radius:12px;background:var(--surface);box-shadow:var(--shadow-card);color:var(--fg-2);font-size:14px}
+.empty .c{width:64px;height:64px;border-radius:50%;background:var(--brand-100);color:var(--brand);display:grid;place-items:center;margin-bottom:4px}
+.empty .c svg{width:28px;height:28px}
+.empty b{font-size:16px;color:var(--fg)}
+.divider{height:1px;background:var(--border);margin:16px 0}
+
+/* ===================== hero do comprador ===================== */
+.hero{position:relative;border-radius:16px;overflow:hidden;min-height:300px;display:flex;align-items:flex-end;color:var(--fg-on-dark);background:var(--navy)}
+.hero .bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(8,14,50,.92) 0%,rgba(8,14,50,.62) 48%,rgba(8,14,50,.05) 85%)}
+.hero .in{position:relative;z-index:1;padding:40px;width:100%;max-width:640px;display:flex;flex-direction:column;gap:14px}
+.hero h1{font-size:40px;line-height:44px;font-weight:800;letter-spacing:-.02em}
+.hero .sub{font-size:14px;line-height:20px;color:var(--fg-on-dark);display:flex;gap:6px;align-items:center}
+.hero .hchip{align-self:flex-start;display:inline-flex;align-items:center;gap:8px;height:32px;padding:0 12px;border-radius:9999px;background:var(--on-dark-a16);font-size:14px;font-weight:600;color:var(--fg-on-dark)}
+.hero .hchip:hover{background:var(--on-dark-a24)}
+@media (max-width:700px){.hero{min-height:400px}.hero::after{background:linear-gradient(0deg,rgba(8,14,50,.95) 0%,rgba(8,14,50,.6) 60%,rgba(8,14,50,.15) 100%)}.hero .in{padding:24px 20px}.hero h1{font-size:32px;line-height:36px}}
+.perks{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:16px}
+.perk{display:flex;gap:12px;align-items:flex-start;font-size:14px;line-height:20px;color:var(--fg-2)}
+.perk b{display:block;color:var(--fg);font-size:14px;font-weight:600}
+.perk .ic{width:36px;height:36px;border-radius:12px;background:var(--brand-100);color:var(--brand);display:grid;place-items:center;flex:none}
+@media (max-width:760px){.perks{grid-template-columns:1fr;gap:12px}}
+
+/* ===================== card de serviço ===================== */
+.svc{display:grid;grid-template-columns:1fr auto;gap:12px 16px;padding:20px;transition:box-shadow var(--ease),transform var(--ease)}
+.svc:hover{box-shadow:var(--shadow-raise)}
+.svc.on{box-shadow:inset 0 0 0 2px var(--brand),var(--shadow-card)}
+.svc .nm{font-size:16px;line-height:22px;font-weight:600;text-align:left}
+.svc .nm:hover{color:var(--brand)}
+.svc .ds{font-size:14px;line-height:20px;color:var(--fg-2);margin-top:4px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.svc .meta{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:6px 14px;font-size:12px;line-height:16px;font-weight:500;color:var(--fg-2)}
+.svc .meta span{display:inline-flex;align-items:center;gap:4px}
+.svc .pr{text-align:right;display:flex;flex-direction:column;align-items:flex-end}
+.svc .pr small{font-size:12px;line-height:16px;color:var(--fg-2)}
+.svc .pr b{font-size:20px;line-height:24px;font-weight:700}
+.svc .foot{grid-column:1/-1;display:flex;justify-content:space-between;align-items:center;gap:8px;padding-top:12px;border-top:1px solid var(--border)}
+.add{height:36px;padding:0 14px;border-radius:9999px;display:inline-flex;align-items:center;gap:6px;font-size:14px;font-weight:600;color:var(--brand);box-shadow:inset 0 0 0 1px var(--brand-200);transition:background var(--ease),color var(--ease),box-shadow var(--ease)}
+.add:hover{background:var(--brand-100)}
+.add[aria-pressed="true"]{background:var(--brand-solid);color:var(--fg-on-dark);box-shadow:none}
+.link{color:var(--brand);font-size:14px;font-weight:600;display:inline-flex;align-items:center;gap:4px}
+.link:hover{text-decoration:underline}
+
+/* ===================== fluxo: passos + resumo ===================== */
+.flow{display:grid;grid-template-columns:minmax(0,1fr);gap:24px;align-items:start}
+@media (min-width:1180px){.flow{grid-template-columns:minmax(0,1fr) 360px}}
+.steps{list-style:none;display:flex;gap:4px;align-items:center;margin-bottom:20px;overflow-x:auto;scrollbar-width:none}
+.steps .s{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:600;color:var(--fg-3);white-space:nowrap}
+.steps .s i{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;font-style:normal;font-size:12px;background:var(--muted-2);color:var(--fg-2)}
+.steps .s.d i{background:var(--brand-100);color:var(--brand)}
+.steps .s.c{color:var(--fg)}.steps .s.c i{background:var(--brand-solid);color:var(--fg-on-dark)}
+.steps .ln{width:24px;height:2px;border-radius:2px;background:var(--border)}
+.steps .s.d+.ln{background:var(--brand-200)}
+.sum{background:var(--navy);color:var(--fg-on-dark);border-radius:16px;padding:24px;position:sticky;top:24px;display:none}
+@media (min-width:1180px){.sum{display:block}}
+.sum h3{font-size:16px;font-weight:700;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center}
+.sum .im{display:flex;gap:12px;align-items:center;padding-bottom:16px;border-bottom:1px solid var(--navy-line)}
+.sum .im img,.sum .im .fb{width:56px;height:56px;border-radius:12px;object-fit:cover}
+.sum .im b{font-size:14px;display:block}.sum .im span{font-size:12px;color:var(--fg-on-dark-2)}
+.sum .ln{display:flex;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1px solid var(--navy-line);font-size:14px;line-height:20px}
+.sum .ln span{color:var(--fg-on-dark-2)}
+.sum .ln small{display:block;font-size:12px;color:var(--fg-on-dark-2)}
+.sum .tot{display:flex;justify-content:space-between;align-items:baseline;padding:16px 0}
+.sum .tot b{font-size:24px;font-weight:700}
+.sum .note.mat{background:var(--on-dark-a06);color:var(--fg-on-dark-2);margin-bottom:16px}.sum .note.mat b{color:var(--fg-on-dark)}
+.on-dark .btn:disabled{background:var(--on-dark-a10);color:var(--fg-on-dark-2);opacity:1}
+.sum .vazio{font-size:14px;color:var(--fg-on-dark-2);padding:16px 0}
+.mbar{position:fixed;left:0;right:0;bottom:64px;z-index:24;background:var(--navy);color:var(--fg-on-dark);display:flex;align-items:center;gap:12px;padding:12px 16px;box-shadow:var(--shadow-raise)}
+.mbar .t b{font-size:18px;display:block;line-height:22px}.mbar .t span{font-size:12px;color:var(--fg-on-dark-2)}
+.mbar .btn{margin-left:auto}
+@media (min-width:1180px){.mbar{display:none}}
+@media (max-width:1023px){body:has(.mbar) .vercomo{bottom:calc(148px + env(safe-area-inset-bottom))}}
+@media (min-width:1024px) and (max-width:1179px){.mbar{left:var(--side);bottom:0}}
+
+/* profissional */
+.pro{display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:center;padding:16px 20px;text-align:left;width:100%;transition:box-shadow var(--ease)}
+.pro:hover{box-shadow:var(--shadow-raise)}
+.pro[aria-pressed="true"]{box-shadow:inset 0 0 0 2px var(--brand),var(--shadow-card)}
+.pro .n{font-size:16px;font-weight:600;display:flex;align-items:center;gap:6px}
 .pro .n svg{color:var(--brand);width:16px;height:16px}
-.pro .r{display:flex;align-items:center;gap:4px;font-size:14px;line-height:20px;color:var(--fg-2)}
-.star{color:var(--coral);fill:var(--coral);width:14px!important;height:14px!important}
-.okchip{display:inline-block;margin-top:6px;background:var(--success-100);color:var(--success-ink);font-size:12px;line-height:16px;font-weight:600;padding:2px 8px;border-radius:9999px}
-.pro .wnd{font-size:14px;line-height:20px;font-weight:600;text-align:right}
-.sel{box-shadow:inset 0 0 0 2px var(--brand),var(--shadow-card)}
-.sel .chk{position:absolute;top:-8px;right:-8px;color:var(--brand);background:var(--surface);border-radius:50%}
-/* calendar */
-.calh{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
-.calh b{font-size:16px;text-transform:capitalize}
-.calh button{width:36px;height:36px;border-radius:50%;display:grid;place-items:center}
-.calh button[disabled]{opacity:.3}
-.cal{display:grid;grid-template-columns:repeat(7,1fr);row-gap:4px}
-.cal .dw{font-size:12px;line-height:16px;font-weight:600;color:var(--fg-3);text-align:center;padding-bottom:4px}
-.day{position:relative;height:52px;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;font-size:14px;font-weight:500;font-feature-settings:"tnum"}
-.day .nb{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;position:relative;z-index:1;transition:background 120ms}
-.day.dis{color:var(--fg-3);opacity:.4;cursor:default}
-.day.today .nb{box-shadow:inset 0 0 0 1px var(--fg)}
-.day.on .nb{background:var(--brand);color:#fff}
-.day.stay:before{content:"";position:absolute;left:0;right:0;bottom:2px;height:16px;background:color-mix(in srgb,var(--stay-fill) 40%,transparent)}
-.day.stay:after{content:"";position:absolute;left:0;right:0;bottom:2px;height:6px;background:var(--stay-bar)}
-.day.s0:before,.day.s0:after{left:6px;border-radius:9999px 0 0 9999px}
-.day.s1:before,.day.s1:after{right:6px;border-radius:0 9999px 9999px 0}
-.day .bed{position:absolute;left:2px;bottom:0;width:14px;height:14px;border-radius:50%;background:var(--stay-bar);color:#fff;display:grid;place-items:center;z-index:2}
-.day .bed svg{width:10px;height:10px}
-.day .dot{position:absolute;bottom:9px;width:6px;height:6px;border-radius:50%;background:var(--visit-dot);z-index:1}
-.legend{display:flex;gap:16px;margin-top:8px}
-.legend span{display:flex;align-items:center;gap:6px;font-size:12px;font-weight:500;color:var(--fg-2)}
-.legend i{display:inline-block}
-.info{display:flex;gap:8px;align-items:flex-start;background:var(--brand-100);color:var(--fg);border-radius:12px;padding:12px;font-size:14px;line-height:20px;margin-top:12px}
-.info svg{color:var(--brand)}
-.slots{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}
-.slot{height:40px;border-radius:9999px;font-size:14px;font-weight:600;font-feature-settings:"tnum";background:var(--surface);box-shadow:inset 0 0 0 1px var(--border-strong);display:flex;align-items:center;justify-content:center;gap:4px;transition:background 120ms,color 120ms}
-.slot.on{background:var(--brand);color:#fff;box-shadow:none}
-.slot[disabled]{color:var(--fg-3);text-decoration:line-through;box-shadow:none;background:transparent;cursor:not-allowed}
-.slot .bd{width:6px;height:6px;border-radius:50%;background:var(--stay-bar)}
-.slot.on .bd{background:#fff}
-/* summary */
-.sumrow{display:flex;justify-content:space-between;gap:12px;font-size:14px;line-height:20px;padding:6px 0}
-.sumrow .l{min-width:0}
-.sumrow.tot{font-size:24px;line-height:30px;font-weight:700;border-top:1px solid var(--border);margin-top:8px;padding-top:12px}
-.mat{display:flex;gap:12px;align-items:flex-start;background:var(--muted);border-radius:12px;padding:12px;margin:16px 0}
-.mat svg{color:var(--fg-2)}
-.mat b{font-size:14px;line-height:20px;display:block}
-.mat p{font-size:14px;line-height:20px;color:var(--fg-2)}
-.warnbox{display:flex;gap:8px;align-items:flex-start;background:var(--warning-100);border-radius:12px;padding:12px;font-size:14px;line-height:20px}
-.warnbox svg{color:var(--warning)}
-.imgrow{display:flex;gap:12px;align-items:center;margin-bottom:12px}
-.imgrow img,.imgrow .fb{width:64px;height:64px;border-radius:12px;object-fit:cover;flex:none}
+.pro .r{font-size:14px;color:var(--fg-2);display:flex;align-items:center;gap:4px;margin-top:2px}
+.star{fill:var(--fg);stroke:var(--fg)}
+.pro .w{text-align:right;font-size:12px;color:var(--fg-2);line-height:16px}
+.pro .w b{display:block;font-size:14px;line-height:20px;color:var(--fg);font-weight:600}
+.pro .ck{grid-column:3;color:var(--brand)}
+
+/* calendário */
+.cal{padding:20px}
+@media (max-width:480px){.cal{padding:16px 10px}}
+.calh{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.calh b{font-size:16px;font-weight:700;text-transform:capitalize}
+.cgrid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));row-gap:6px}
+.cgrid .dw{font-size:12px;font-weight:600;color:var(--fg-3);text-align:center;padding-bottom:6px;text-transform:uppercase;letter-spacing:.04em}
+.day{position:relative;height:48px;display:grid;place-items:center;font-size:14px;font-weight:500}
+.day .n{width:min(38px,100%);aspect-ratio:1;height:auto;border-radius:50%;display:grid;place-items:center;position:relative;z-index:1;transition:background var(--ease)}
+.day:not(:disabled):hover .n{background:var(--muted)}
+.day:disabled{color:var(--fg-3);opacity:.45;cursor:default}
+.day.today .n{box-shadow:inset 0 0 0 1px var(--fg)}
+.day[aria-pressed="true"] .n{background:var(--brand-solid);color:var(--fg-on-dark)}
+.day.stay::after{content:"";position:absolute;left:0;right:0;bottom:2px;height:6px;background:var(--stay-fill)}
+.day.stay.s0::after{left:8px;border-radius:6px 0 0 6px;background:linear-gradient(90deg,var(--stay-bar) 0 6px,var(--stay-fill) 6px)}
+.day.stay.s1::after{right:8px;border-radius:0 6px 6px 0}
+.day.stay.s0.s1::after{border-radius:6px}
+.day.vis .n{background:radial-gradient(circle at 50% 86%,var(--visit-dot) 2.5px,transparent 3px)}
+.day.vis[aria-pressed="true"] .n{background:var(--brand) radial-gradient(circle at 50% 86%,var(--fg-on-dark) 2.5px,transparent 3px)}
+.legend{display:flex;gap:16px;font-size:12px;color:var(--fg-2);margin-top:12px}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend .bar{width:18px;height:6px;border-radius:3px;background:var(--stay-fill);box-shadow:inset 6px 0 0 var(--stay-bar)}
+.legend .pt{width:6px;height:6px;border-radius:50%;background:var(--visit-dot)}
+.slots{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+@media (min-width:640px){.slots{grid-template-columns:repeat(5,1fr)}}
+.slot{height:44px;border-radius:9999px;font-size:14px;font-weight:600;box-shadow:inset 0 0 0 1px var(--border-strong);background:var(--surface);display:inline-flex;align-items:center;justify-content:center;gap:6px;transition:background 120ms,color 120ms,box-shadow 120ms}
+.slot:hover:not(:disabled){box-shadow:inset 0 0 0 1px var(--brand);color:var(--brand)}
+.slot[aria-pressed="true"]{background:var(--brand-solid);color:var(--fg-on-dark);box-shadow:none}
+.slot:disabled{color:var(--fg-3);text-decoration:line-through;box-shadow:none;background:transparent}
+.slot .g{width:6px;height:6px;border-radius:50%;background:var(--brand)}
+.slot[aria-pressed="true"] .g{background:var(--fg-on-dark)}
+
+/* revisão */
+.rv{padding:0}
+.rv .row{display:grid;grid-template-columns:140px 1fr auto;gap:12px;padding:16px 20px;border-bottom:1px solid var(--border);font-size:14px;line-height:20px;align-items:start}
+.rv .row:last-child{border-bottom:0}
+.rv .row>span:first-child{color:var(--fg-2);font-weight:500}
+.rv .row small{display:block;color:var(--fg-2);font-size:12px}
+@media (max-width:600px){.rv .row{grid-template-columns:1fr auto}.rv .row>span:first-child{grid-column:1/-1}}
+.opt{display:flex;gap:12px;align-items:flex-start;padding:14px 16px;border-radius:12px;box-shadow:inset 0 0 0 1px var(--border-strong);cursor:pointer;font-size:14px;line-height:20px}
+.opt:has(input:checked){box-shadow:inset 0 0 0 2px var(--brand);background:var(--brand-100)}
+.opt input{margin-top:2px;accent-color:var(--brand);width:18px;height:18px;flex:none}
+.opt b{font-weight:600;display:block}
+.chk{display:flex;gap:10px;align-items:flex-start;font-size:14px;line-height:20px}
+.chk input{width:18px;height:18px;margin-top:1px;accent-color:var(--brand);flex:none}
+.chk a{color:var(--brand);font-weight:600}
+
+/* confirmação */
+.done{max-width:640px;margin:0 auto;text-align:center;display:flex;flex-direction:column;align-items:center;gap:12px}
+.done .ok{width:72px;height:72px;border-radius:50%;background:var(--success-ink);color:var(--fg-on-dark);display:grid;place-items:center;animation:pop 320ms cubic-bezier(.2,.8,.2,1)}
+.done .ok.ap{background:var(--brand-solid)}
+.done .ok svg{width:36px;height:36px}
+@keyframes pop{from{transform:scale(.6);opacity:0}}
+.done h1{font-size:28px;line-height:34px;font-weight:800;letter-spacing:-.015em}
+.done .code{font-size:14px;color:var(--fg-2)}
+.next{width:100%;text-align:left;margin-top:8px}
+.next li{list-style:none;display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--border);font-size:14px;line-height:20px}
+.next li:last-child{border-bottom:0}
+.next li i{width:24px;height:24px;border-radius:50%;background:var(--brand-200);color:var(--fg);font-style:normal;font-size:12px;font-weight:700;display:grid;place-items:center;flex:none}
+
+/* ===================== pedidos: linhas, kanban, drawer ===================== */
+.rows{display:flex;flex-direction:column}
+.orow{display:grid;grid-template-columns:auto 1fr auto auto;gap:14px;align-items:center;padding:14px 20px;border-bottom:1px solid var(--border);text-align:left;width:100%;transition:background var(--ease)}
+.orow:hover{background:var(--muted-2)}
+.orow:last-child{border-bottom:0}
+.cat{width:40px;height:40px;border-radius:12px;background:var(--brand-100);color:var(--brand);display:grid;place-items:center;flex:none}
+.orow .t{min-width:0}.orow .t b{display:block;font-size:16px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.orow .t span{display:block;font-size:12px;color:var(--fg-2)}
+.orow .v{text-align:right;font-size:14px;font-weight:700}
+.orow .v small{display:block;font-weight:500;font-size:12px;color:var(--fg-2)}
+@media (max-width:640px){.orow{grid-template-columns:auto 1fr auto}.orow .stw{grid-column:2/-1}}
+.aprov{display:grid;gap:12px;padding:20px}
+.aprov .hd{display:flex;gap:14px;align-items:flex-start}
+.aprov .hd b{font-size:16px;display:block}
+.aprov .hd span{font-size:14px;color:var(--fg-2)}
+.aprov .acts{display:flex;gap:8px;flex-wrap:wrap}
+.kanban{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:8px;min-height:420px}
+.col{flex:0 0 280px;scroll-snap-align:start;background:var(--muted-2);border-radius:12px;display:flex;flex-direction:column;overflow:hidden}
+.col .ch{display:flex;align-items:center;gap:8px;padding:14px 14px 10px;font-size:14px;line-height:20px;font-weight:600}.col .ch::before{content:"";width:10px;height:10px;border-radius:50%;background:var(--c);flex:none}
+.col .ch .n{margin-left:auto;font-size:12px;font-weight:700;color:var(--fg-2);background:var(--surface);border-radius:9999px;padding:1px 8px}
+.col .cl{display:flex;flex-direction:column;gap:10px;padding:4px 10px 12px}
+.kc{background:var(--surface);border-radius:12px;padding:14px;box-shadow:var(--shadow-card);text-align:left;width:100%;display:flex;flex-direction:column;gap:8px;transition:box-shadow var(--ease),transform var(--ease)}
+.kc:hover{box-shadow:var(--shadow-raise);transform:translateY(-1px)}
+.kc b{font-size:14px;line-height:20px;font-weight:600}
+.kc .m{display:block;font-size:12px;color:var(--fg-2);line-height:16px}
+.kc .f{width:100%;gap:8px;display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--fg-2)}
+.kc .f b{font-size:14px;color:var(--fg)}
+.kc .late{color:var(--error-ink);font-weight:600}
+.col .vz{font-size:14px;color:var(--fg-3);padding:16px 8px;text-align:center;border:1px dashed var(--border-strong);border-radius:12px}
+.drawer-bg{position:fixed;inset:0;z-index:50;background:var(--scrim);animation:fade 180ms}
+.drawer{position:fixed;top:0;right:0;bottom:0;z-index:51;width:min(520px,100vw);background:var(--bg);box-shadow:var(--shadow-modal);display:flex;flex-direction:column;animation:slide 220ms cubic-bezier(.2,.8,.2,1)}
+@keyframes fade{from{opacity:0}}@keyframes slide{from{transform:translateX(24px);opacity:0}}
+.drawer .dh{background:var(--surface);padding:20px 24px;border-bottom:1px solid var(--border);display:flex;gap:12px;align-items:flex-start}
+.drawer .dh h2{font-size:20px;line-height:26px;font-weight:700}
+.drawer .dh .code{font-size:12px;color:var(--fg-3);margin-top:2px}
+.drawer .dh .icbtn{margin-left:auto}
+.drawer .db{flex:1;overflow-y:auto;padding:20px 24px 32px;display:flex;flex-direction:column;gap:20px}
+.drawer .lbl{font-size:12px;font-weight:600;color:var(--fg-2);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px}
+.track{background:var(--navy);color:var(--fg-on-dark);border-radius:16px;padding:20px;display:flex;gap:14px;align-items:center}
+.track b{display:block;font-size:20px;line-height:26px;font-weight:700}
+.track span{font-size:14px;color:var(--fg-on-dark-2)}
+.tl{list-style:none;position:relative}
+.tl li{position:relative;padding:0 0 18px 28px;font-size:14px;line-height:20px;color:var(--fg-3)}
+.tl li::before{content:"";position:absolute;left:7px;top:14px;bottom:-4px;width:2px;background:var(--border)}
+.tl li:last-child::before{display:none}
+.tl li .p{position:absolute;left:2px;top:4px;width:12px;height:12px;border-radius:50%;background:var(--surface);box-shadow:inset 0 0 0 2px var(--fg-3);display:grid;place-items:center}
+.tl li.d{color:var(--fg-2)}.tl li.d .p{width:16px;height:16px;left:0;top:2px;box-shadow:none;background:var(--success-ink);color:var(--fg-on-dark)}.tl li.d .p svg{width:10px;height:10px;stroke-width:3}
+.tl li.d::before{background:var(--success)}
+.tl li.c{color:var(--fg);font-weight:700;font-size:16px;line-height:24px}.tl li.c .p{width:16px;height:16px;left:0;top:4px;background:var(--brand-solid);box-shadow:0 0 0 6px var(--brand-100);animation:halo 1.6s ease-in-out infinite}
+@keyframes halo{50%{box-shadow:0 0 0 6px transparent}}
+.tl li small{display:block;font-weight:400;font-size:12px;color:var(--fg-2)}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:8px 16px;font-size:14px;line-height:20px}
+.kv span{color:var(--fg-2)}.kv b{font-weight:600;text-align:right}
+.stars{display:flex;gap:4px}
+.stars button{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;color:var(--fg-3)}.stars button:hover{color:var(--fg-2)}
+.stars button svg{width:26px;height:26px}
+.stars button.on{color:var(--fg)}.stars button.on svg{fill:currentColor}
+
+/* ===================== franquia ===================== */
+.g-imv{grid-template-columns:repeat(auto-fill,minmax(min(260px,100%),1fr))}
+.imv{overflow:hidden;display:flex;flex-direction:column;text-align:left;transition:box-shadow var(--ease),transform var(--ease)}
+.imv:hover{box-shadow:var(--shadow-raise);transform:translateY(-2px)}
+.imv .ph{margin:0;aspect-ratio:4/3;position:relative;display:block}
+.imv .ph img,.imv .ph .fb{width:100%;height:100%;object-fit:cover;display:block}
+.imv .ph .chip,.chip.photo{position:absolute;left:12px;top:12px;background:var(--navy-a70);color:var(--fg-on-dark)}
+.imv .bd{padding:16px;display:flex;flex-direction:column;gap:4px}
+.imv .bd b{font-size:16px}
+.imv .bd .c{font-size:12px;color:var(--fg-3)}
+.imv .bd .o{font-size:14px;color:var(--fg-2)}
+.imv .bd .go{margin-top:8px}
 .fb{background:var(--brand-100);color:var(--brand);display:grid;place-items:center}
-.fb svg{width:32px;height:32px}
-/* done */
-.done{background:var(--navy);color:#fff;min-height:100vh;padding:48px 16px 140px;display:flex;flex-direction:column;align-items:center;gap:16px;text-align:center}
-.done .ok{width:88px;height:88px;border-radius:50%;background:var(--success);display:grid;place-items:center}
-.done .ok svg{width:44px;height:44px;color:#fff;stroke-width:2.5}
-.done h1{font-size:28px;line-height:34px;font-weight:800}
-.done .card{color:var(--fg);text-align:left;width:100%}
-.steps3{width:100%;text-align:left;display:flex;flex-direction:column;gap:12px;margin-top:8px}
-.steps3 div{display:flex;gap:12px;align-items:flex-start;font-size:14px;line-height:20px;color:var(--fg-on-dark-2)}
-.steps3 i{width:24px;height:24px;border-radius:50%;background:var(--brand-200);color:var(--navy);font-style:normal;font-weight:700;font-size:12px;display:grid;place-items:center;flex:none}
-/* orders */
-.ord{display:flex;flex-direction:column;gap:12px}
-.ord .hd{display:flex;justify-content:space-between;gap:8px;align-items:flex-start}
-.badge{font-size:12px;line-height:16px;font-weight:600;padding:4px 10px;border-radius:9999px;white-space:nowrap}
-.b-ok{background:var(--success-100);color:var(--success-ink)}
-.b-ap{background:var(--warning-100);color:var(--warning)}
-.b-in{background:var(--brand-100);color:var(--brand)}
-.b-no{background:var(--muted);color:var(--fg-3)}
-.vis{display:inline-flex;align-items:center;gap:6px;font-size:12px;line-height:16px;font-weight:600;background:var(--visit-fill);color:var(--visit-ink);padding:4px 10px;border-radius:9999px}
-.row{display:flex;gap:8px;flex-wrap:wrap}
-.tl{display:flex;flex-direction:column;gap:0;position:relative;margin-top:4px}
-.tl div{display:flex;gap:12px;align-items:center;font-size:14px;line-height:20px;padding:6px 0;position:relative;color:var(--fg-3)}
-.tl div:not(:last-child):after{content:"";position:absolute;left:7px;top:22px;bottom:-10px;width:2px;background:var(--border)}
-.tl .pt{width:16px;height:16px;border-radius:50%;display:grid;place-items:center;flex:none;background:var(--border-strong)}
-.tl .d .pt{background:var(--success)}.tl .d .pt svg{width:10px;height:10px;color:#fff;stroke-width:3}
-.tl .d{color:var(--fg)}
-.tl .c{color:var(--fg);font-weight:700}
-.tl .c .pt{background:var(--brand);box-shadow:0 0 0 5px var(--brand-100)}
-.divider{height:1px;background:var(--border)}
-.note{font-size:14px;line-height:20px;color:var(--fg-2)}
-/* notif */
-.ntf{display:flex;gap:12px;align-items:flex-start}
-.ntf .ic{width:40px;height:40px;border-radius:50%;background:var(--brand-100);color:var(--brand);display:grid;place-items:center;flex:none}
-.ntf.new .ic{background:var(--coral-100);color:var(--coral)}
-.ntf b{font-size:14px;line-height:20px;display:block}
-/* agent */
-.agent{background:var(--navy);color:#fff;border-radius:16px;padding:20px;display:flex;flex-direction:column;gap:8px}
-.agent .t{display:flex;align-items:center;gap:8px;font-weight:700}
-.agent p{font-size:14px;line-height:20px;color:var(--fg-on-dark-2)}
-.sug{display:flex;flex-direction:column;gap:12px}
-.sug .tx{font-size:15px;line-height:22px}
-.sug .tx b{font-weight:700}
-.kpis{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
-.kpi b{font-size:28px;line-height:34px;font-weight:800;font-feature-settings:"tnum";display:block}
-.kpi span{font-size:12px;line-height:16px;font-weight:500;color:var(--fg-2)}
-/* sheet */
-.backdrop{position:fixed;inset:0;background:rgba(8,14,50,.4);z-index:50;display:flex;align-items:flex-end;justify-content:center;animation:fade 220ms}
-.sheet{background:var(--surface);width:100%;max-width:480px;max-height:88vh;overflow:auto;border-radius:16px 16px 0 0;box-shadow:var(--shadow-modal);padding:8px 16px 24px;animation:up 220ms cubic-bezier(.2,.8,.2,1)}
-.sheet .grab{width:40px;height:4px;border-radius:9999px;background:var(--border-strong);margin:4px auto 12px}
-.sheet h2{font-size:22px;line-height:28px;font-weight:700}
-.sheet ul{list-style:none;display:flex;flex-direction:column;gap:6px;margin-top:6px}
+.vis{display:grid;grid-template-columns:64px 1fr;gap:16px;padding:20px}
+.dt{width:64px;border-radius:12px;background:var(--muted-2);text-align:center;padding:8px 0;align-self:start}
+.dt small{display:block;font-size:12px;font-weight:600;color:var(--fg-2);text-transform:uppercase}
+.dt b{display:block;font-size:24px;line-height:28px;font-weight:700}
+.dt span{display:block;font-size:12px;color:var(--fg-2)}
+.vis .vt{font-size:16px;font-weight:700;line-height:24px}
+.vis .m{font-size:14px;color:var(--fg-2);margin-top:2px}
+.todo{margin-top:12px;padding:12px 14px;border-radius:12px;background:var(--muted-2)}
+.todo>b{font-size:14px;font-weight:600}
+.todo ul{list-style:none;margin-top:6px;display:flex;flex-direction:column;gap:6px}
+.todo li{display:flex;gap:8px;font-size:14px;line-height:20px;align-items:flex-start}
+.todo li svg{width:16px;height:16px;margin-top:2px;color:var(--brand)}
+.vis .acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;align-items:center}
+.probl{margin-top:12px;display:flex;flex-direction:column;gap:8px}
+
+/* ===================== painel / prestador ===================== */
+.kpi{padding:16px 20px}
+.kpi small{font-size:12px;font-weight:600;color:var(--fg-2);text-transform:uppercase;letter-spacing:.06em;display:flex;align-items:center;gap:6px}
+.kpi b{display:block;font-size:28px;line-height:34px;font-weight:700;margin-top:6px}
+.kpi span{font-size:12px;color:var(--fg-2)}
+.kpi.hot{background:var(--navy);color:var(--fg-on-dark)}.kpi.hot small,.kpi.hot span{color:var(--fg-on-dark-2)}
+.sug{display:grid;grid-template-columns:auto 1fr auto;gap:16px;align-items:center;padding:16px 20px;border-bottom:1px solid var(--border)}
+.sug:last-child{border-bottom:0}
+.sug .q{font-size:14px;color:var(--fg-2);font-style:italic}
+.sug .t{font-size:16px;line-height:22px;margin-top:2px}
+.sug .t b{font-weight:600}
+.sug .m{font-size:12px;color:var(--fg-2);margin-top:4px;display:flex;flex-wrap:wrap;gap:4px 12px}
+.sug .acts{display:flex;gap:8px}
+@media (max-width:760px){.sug{grid-template-columns:auto 1fr}.sug .acts{grid-column:1/-1}}
+.job{padding:20px;display:flex;flex-direction:column;gap:12px}
+.job .hd{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
+.job .hd b{font-size:16px;display:block}
+.job .hd span{font-size:12px;color:var(--fg-2)}
+.job .rec{text-align:right}.job .rec small{display:block;font-size:12px;color:var(--fg-2)}.job .rec b{font-size:20px}
+.job .info{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:14px;color:var(--fg-2)}
+.job .info span{display:inline-flex;gap:6px;align-items:center}
+.job .acts{display:flex;gap:8px;flex-wrap:wrap}
+.foto{position:relative;display:flex;align-items:center;gap:10px;padding:12px 14px;border-radius:12px;border:1px dashed var(--border-strong);font-size:14px;color:var(--fg-2);cursor:pointer}
+.foto input{position:absolute;opacity:0;width:1px;height:1px}
+.foto:focus-within{outline:2px solid var(--brand);outline-offset:2px}
+.foto.ok{border-style:solid;border-color:var(--success);color:var(--success-ink);background:var(--success-100)}
+
+/* ===================== toast + sheet ===================== */
+.toast{position:fixed;top:16px;left:50%;transform:translate(-50%,-16px);z-index:60;background:var(--surface);color:var(--fg);border-radius:12px;padding:12px 16px;font-size:14px;font-weight:600;box-shadow:var(--shadow-modal);display:flex;gap:8px;align-items:center;opacity:0;pointer-events:none;transition:opacity 200ms,transform 200ms cubic-bezier(.22,1,.36,1);max-width:calc(100vw - 32px)}
+.toast svg{color:var(--success-ink)}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+.sheet-bg{position:fixed;inset:0;z-index:55;background:var(--scrim);display:flex;align-items:flex-end;justify-content:center;animation:fade 180ms}
+.sheet{background:var(--surface);width:min(560px,100%);max-height:88vh;overflow-y:auto;border-radius:16px 16px 0 0;padding:24px;box-shadow:var(--shadow-modal);animation:up 220ms cubic-bezier(.2,.8,.2,1)}
+@media (min-width:700px){.sheet-bg{align-items:center}.sheet{border-radius:16px}}
+@keyframes up{from{transform:translateY(24px);opacity:0}}
+.sheet h2{font-size:20px;line-height:26px;font-weight:700}
+.sheet .ds{font-size:14px;color:var(--fg-2);margin-top:6px}
+.sheet h4{font-size:14px;font-weight:600;color:var(--fg-2);text-transform:uppercase;letter-spacing:.06em;margin:20px 0 8px}
+.sheet ul{list-style:none;display:flex;flex-direction:column;gap:6px}
 .sheet li{display:flex;gap:8px;font-size:14px;line-height:20px}
 .sheet li svg{width:16px;height:16px;margin-top:2px}
-.sheet .yes svg{color:var(--success)}.sheet .no svg{color:var(--fg-3)}
-.sheet h4{font-size:14px;line-height:20px;font-weight:700;margin-top:16px}
-@keyframes up{from{transform:translateY(24px);opacity:0}}
-@keyframes fade{from{opacity:0}}
-/* pill + toast */
-.pill{position:fixed;left:12px;bottom:16px;z-index:40;display:flex;align-items:center;gap:2px;height:36px;padding:0 4px 0 10px;border-radius:9999px;background:rgba(8,14,50,.9);color:#fff;font-size:12px;line-height:16px;box-shadow:var(--shadow-raise);transition:bottom var(--ease)}
-body.hascart .pill{bottom:84px}
-.pill .lb{color:var(--fg-on-dark-2);margin-right:2px;white-space:nowrap;display:flex;align-items:center;gap:4px}.pill .lb svg{width:14px;height:14px}@media (max-width:480px){.pill .lbt{display:none}.pill button{padding:0 8px}}
-.pill button{height:28px;padding:0 10px;border-radius:9999px;font-weight:600;white-space:nowrap}
-.pill button[aria-pressed="true"]{background:#fff;color:var(--navy)}
-.toast{position:fixed;left:50%;bottom:96px;transform:translateX(-50%);z-index:60;background:var(--navy);color:#fff;font-size:14px;font-weight:600;padding:10px 18px;border-radius:9999px;box-shadow:var(--shadow-raise);opacity:0;pointer-events:none;transition:opacity 200ms;max-width:calc(100% - 32px);text-align:center}
-.toast.show{opacity:1}
-body.hascart .toast{bottom:160px}
-.empty{display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center;padding:32px 16px}
-.empty .c{width:80px;height:80px;border-radius:50%;background:var(--brand-100);color:var(--brand);display:grid;place-items:center}
-.empty .c svg{width:36px;height:36px}
-.gap8{display:flex;flex-direction:column;gap:8px}.gap16{display:flex;flex-direction:column;gap:16px}
-.sel-imv{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;cursor:pointer}
-.sel-imv img,.sel-imv .fb{width:56px;height:56px;border-radius:12px;object-fit:cover}
-.mt8{margin-top:8px}.mt16{margin-top:16px}.mt24{margin-top:24px}
-@media (min-width:960px){.app{padding-top:8px}.cats{grid-template-columns:repeat(8,1fr)}}
-@media (prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}}
+.sheet .in svg{color:var(--success-ink)}.sheet .out svg{color:var(--fg-3)}
+.sheet .bar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:24px;padding-top:16px;border-top:1px solid var(--border)}
+.sheet .bar b{font-size:22px}
 </style>
 </head>
 <body>
-<div id="app" class="app"></div>
-<div id="cart"></div>
-<nav class="pill" aria-label="Ver como (protótipo)" id="pill"></nav>
+<aside class="side on-dark" id="side"></aside>
+<header class="top on-dark" id="top"></header>
+<main class="main" id="main"><div class="wrap" id="tela"></div></main>
+<nav class="bnav" id="bnav" aria-label="Navegação"></nav>
+<div id="mbar"></div>
+<nav class="vercomo" id="vercomo" aria-label="Ver como"></nav>
+<div id="layer"></div>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
-<div id="sheet"></div>
 <script>
-"use strict";
-const ITENS = [{"cod":"AR-01","nome":"Limpeza de ar-condicionado até 12.000 BTU","preco":335,"desc":"Lavagem completa do aparelho para tirar mofo, poeira e mau cheiro e o ar voltar a gelar bem.","inc":["Lavagem da parte interna e do filtro com bomba","Produto bactericida e limpeza da bandeja","Teste de dreno e de funcionamento","Foto de antes e depois"],"exc":["Parte externa em altura sem acesso seguro","Recarga de gás","Conserto de defeito"],"dur":"60 a 90 min","jan":2},{"cod":"AR-03","nome":"Ar-condicionado pingando","preco":335,"desc":"Desentope a saída de água do aparelho para ele parar de pingar dentro do imóvel.","inc":["Limpeza da mangueira de saída de água","Limpeza da bandeja","Teste de escoamento"],"exc":["Troca de mangueira embutida na parede","Bomba de dreno","Limpeza completa do aparelho"],"dur":"45 a 60 min","jan":1},{"cod":"EL-01","nome":"Troca de resistência do chuveiro","preco":235,"desc":"Chuveiro sem esquentar? Troca a resistência e a água volta quente.","inc":["Desligamento do disjuntor","Troca da resistência","Teste com água"],"exc":["Chuveiro novo","Troca de fiação"],"dur":"30 a 45 min","jan":1},{"cod":"EL-02","nome":"Instalação ou troca de chuveiro elétrico","preco":235,"desc":"Tira o chuveiro antigo e instala o novo com segurança.","inc":["Retirada do chuveiro antigo","Instalação e vedação do novo","Teste e checagem do disjuntor"],"exc":["Fiação nova ou mais grossa","Troca de disjuntor","Chuveiro a gás"],"dur":"45 a 60 min","jan":1},{"cod":"EL-03","nome":"Troca de tomada ou interruptor","preco":265,"desc":"Troca uma tomada ou interruptor com defeito no mesmo lugar.","inc":["Troca da peça e do espelho no ponto que já existe","Teste de funcionamento"],"exc":["Ponto novo","Passagem de fio nova","Conserto de curto no circuito"],"dur":"20 a 40 min","jan":1},{"cod":"EL-06","nome":"Troca de disjuntor","preco":265,"desc":"Troca um disjuntor que desarma à toa ou não liga mais.","inc":["Troca de 1 disjuntor no quadro","Reaperto das conexões","Teste"],"exc":["Troca do quadro de luz","Instalação de DR"],"dur":"30 a 45 min","jan":1},{"cod":"HI-01","nome":"Conserto de vazamento aparente","preco":265,"desc":"Resolve vazamento que dá para ver: em cano, conexão ou mangueira.","inc":["Troca de vedação, conexão ou mangueira visível","Teste sem vazamento"],"exc":["Vazamento dentro da parede ou do piso (peça a Visita de diagnóstico)","Quebrar azulejo"],"dur":"45 a 90 min","jan":2},{"cod":"HI-02","nome":"Desentupimento de pia, ralo ou vaso","preco":270,"desc":"Desentope um ponto da casa e deixa a água descendo normal.","inc":["1 ponto (pia, ralo ou vaso)","Desentupidor ou mola manual","Teste de escoamento"],"exc":["Esgoto ou caixa de gordura","Cano geral do prédio"],"dur":"45 a 60 min","jan":1},{"cod":"HI-04","nome":"Troca de torneira ou sifão","preco":235,"desc":"Troca a torneira ou o sifão com defeito por um novo.","inc":["Retirada da peça antiga","Instalação e vedação","Teste"],"exc":["Troca de bancada ou cuba","Conserto de vazamento na parede"],"dur":"30 a 60 min","jan":1},{"cod":"HI-06","nome":"Instalação de ducha higiênica","preco":230,"desc":"Instala a ducha ao lado do vaso no ponto de água que já existe.","inc":["Instalação no ponto existente","Vedação","Teste"],"exc":["Ponto de água novo","Quebrar azulejo"],"dur":"30 a 45 min","jan":1},{"cod":"CH-01","nome":"Abertura de porta","preco":230,"desc":"Porta trancada ou chave perdida: abre sem estragar a fechadura.","inc":["Abertura sem dano","Teste da fechadura"],"exc":["Fechadura tetra ou multiponto","Cofre","Cópia de chave"],"dur":"20 a 60 min","jan":1},{"cod":"CH-02","nome":"Instalação ou troca de fechadura","preco":270,"desc":"Troca a fechadura ou o trinco da porta e entrega 2 chaves.","inc":["Retirada da fechadura antiga","Instalação e ajuste","2 chaves"],"exc":["Furar porta nova de madeira maciça","Fechadura eletrônica"],"dur":"45 a 60 min","jan":1},{"cod":"ED-03","nome":"Conserto de micro-ondas","preco":235,"desc":"Micro-ondas que não liga, não esquenta ou não fecha: conserta e testa.","inc":["Reparo de fusível, botão ou trava da porta","Teste"],"exc":["Troca de magnetron","Troca de placa"],"dur":"45 a 60 min","jan":1},{"cod":"MA-01","nome":"Ajuste de porta, dobradiça ou trilho","preco":225,"desc":"Porta arrastando, caída ou sem fechar: ajusta e deixa fechando bem.","inc":["Regulagem da porta","Troca de dobradiça ou roldana","Plaina quando precisar"],"exc":["Porta nova","Batente novo"],"dur":"45 a 60 min","jan":1},{"cod":"MA-02","nome":"Conserto simples de móvel","preco":230,"desc":"Conserta mecanismo de sofá, braço solto ou gaveta com problema.","inc":["Reaperto e cola","Troca de corrediça ou mecanismo simples"],"exc":["Reforma do móvel","Troca de estofado"],"dur":"45 a 60 min","jan":1},{"cod":"VI-02","nome":"Conserto de box do banheiro","preco":265,"desc":"Box que não corre, vaza ou está sem puxador: regula e troca as peças.","inc":["Regulagem","Troca de roldana, vedação ou puxador"],"exc":["Vidro novo","Box novo"],"dur":"45 a 60 min","jan":1},{"cod":"VI-03","nome":"Pequeno conserto em janela ou vidraça","preco":225,"desc":"Conserta fecho, vedação, silicone ou puxador de janela e vidraça.","inc":["Reparo no local","Troca de fecho, vedação ou puxador"],"exc":["Vidro novo","Esquadria nova"],"dur":"45 a 60 min","jan":1}];
-const CATS = {AR:["Ar-condicionado","air-vent"],EL:["Elétrica","zap"],HI:["Hidráulica","droplets"],CH:["Chaveiro","key-round"],ED:["Eletrodomésticos","refrigerator"],MA:["Marcenaria","hammer"],VI:["Vidraçaria","app-window"]};
-ITENS.forEach(i=>{ i.cat=i.cod.slice(0,2); i.min=Math.max(...(i.dur.match(/\d+/g)||["60"]).map(Number)); i.min=Math.ceil(i.min/30)*30; });
+/* ===================== dados (simulados) ===================== */
+const LOGO="https://spots.seazone.com.br/seazone/logo-seazone.png";
+const ITENS=[
+ {cod:"AR-01",cat:"AR",nome:"Limpeza de ar-condicionado até 12.000 BTU",preco:335,jan:2,dur:"60 a 90 min",desc:"Lavagem completa do aparelho para tirar mofo, poeira e mau cheiro e o ar voltar a gelar bem.",inc:["Lavagem da parte interna e do filtro com bomba","Produto bactericida e limpeza da bandeja","Teste de dreno e de funcionamento","Foto de antes e depois"],exc:["Parte externa em altura sem acesso seguro","Recarga de gás","Conserto de defeito"]},
+ {cod:"AR-03",cat:"AR",nome:"Ar-condicionado pingando",preco:335,jan:1,dur:"45 a 60 min",desc:"Desentope a saída de água do aparelho para ele parar de pingar dentro do imóvel.",inc:["Limpeza da mangueira de saída de água","Limpeza da bandeja","Teste de escoamento"],exc:["Troca de mangueira embutida na parede","Bomba de dreno","Limpeza completa do aparelho"]},
+ {cod:"EL-01",cat:"EL",nome:"Troca de resistência do chuveiro",preco:235,jan:1,dur:"30 a 45 min",desc:"Chuveiro sem esquentar? Troca a resistência e a água volta quente.",inc:["Desligamento do disjuntor","Troca da resistência","Teste com água"],exc:["Chuveiro novo","Troca de fiação"]},
+ {cod:"EL-02",cat:"EL",nome:"Instalação ou troca de chuveiro elétrico",preco:235,jan:1,dur:"45 a 60 min",desc:"Tira o chuveiro antigo e instala o novo com segurança.",inc:["Retirada do chuveiro antigo","Instalação e vedação do novo","Teste e checagem do disjuntor"],exc:["Fiação nova ou mais grossa","Troca de disjuntor","Chuveiro a gás"]},
+ {cod:"EL-03",cat:"EL",nome:"Troca de tomada ou interruptor",preco:265,jan:1,dur:"20 a 40 min",desc:"Troca uma tomada ou interruptor com defeito no mesmo lugar.",inc:["Troca da peça e do espelho no ponto que já existe","Teste de funcionamento"],exc:["Ponto novo","Passagem de fio nova","Conserto de curto no circuito"]},
+ {cod:"EL-06",cat:"EL",nome:"Troca de disjuntor",preco:265,jan:1,dur:"30 a 45 min",desc:"Troca um disjuntor que desarma à toa ou não liga mais.",inc:["Troca de 1 disjuntor no quadro","Reaperto das conexões","Teste"],exc:["Troca do quadro de luz","Instalação de DR"]},
+ {cod:"HI-01",cat:"HI",nome:"Conserto de vazamento aparente",preco:265,jan:2,dur:"45 a 90 min",desc:"Resolve vazamento que dá para ver: em cano, conexão ou mangueira.",inc:["Troca de vedação, conexão ou mangueira visível","Teste sem vazamento"],exc:["Vazamento dentro da parede ou do piso","Quebrar azulejo"]},
+ {cod:"HI-02",cat:"HI",nome:"Desentupimento de pia, ralo ou vaso",preco:270,jan:1,dur:"45 a 60 min",desc:"Desentope um ponto da casa e deixa a água descendo normal.",inc:["1 ponto (pia, ralo ou vaso)","Desentupidor ou mola manual","Teste de escoamento"],exc:["Esgoto ou caixa de gordura","Cano geral do prédio"]},
+ {cod:"HI-04",cat:"HI",nome:"Troca de torneira ou sifão",preco:235,jan:1,dur:"30 a 60 min",desc:"Troca a torneira ou o sifão com defeito por um novo.",inc:["Retirada da peça antiga","Instalação e vedação","Teste"],exc:["Troca de bancada ou cuba","Conserto de vazamento na parede"]},
+ {cod:"HI-05",cat:"HI",nome:"Conserto de descarga",preco:265,jan:2,dur:"45 a 75 min",desc:"Descarga vazando, fraca ou sem parar de correr: regula ou troca o reparo.",inc:["Regulagem da caixa ou da válvula","Troca do reparo interno","Teste de acionamento"],exc:["Troca do vaso ou da caixa","Válvula embutida com quebra de parede"]},
+ {cod:"HI-06",cat:"HI",nome:"Instalação de ducha higiênica",preco:230,jan:1,dur:"30 a 45 min",desc:"Instala a ducha ao lado do vaso no ponto de água que já existe.",inc:["Instalação no ponto existente","Vedação","Teste"],exc:["Ponto de água novo","Quebrar azulejo"]},
+ {cod:"MA-01",cat:"MA",nome:"Ajuste de porta, dobradiça ou trilho",preco:225,jan:1,dur:"45 a 60 min",desc:"Porta arrastando, caída ou sem fechar: ajusta e deixa fechando bem.",inc:["Regulagem da porta","Troca de dobradiça ou roldana","Plaina quando precisar"],exc:["Porta nova","Batente novo"]},
+ {cod:"MA-02",cat:"MA",nome:"Conserto simples de móvel",preco:230,jan:1,dur:"45 a 60 min",desc:"Conserta mecanismo de sofá, braço solto ou gaveta com problema.",inc:["Reaperto e cola","Troca de corrediça ou mecanismo simples"],exc:["Reforma do móvel","Troca de estofado"]},
+ {cod:"VI-03",cat:"VI",nome:"Pequeno conserto em janela ou vidraça",preco:225,jan:1,dur:"45 a 60 min",desc:"Conserta fecho, vedação, silicone ou puxador de janela e vidraça.",inc:["Reparo no local","Troca de fecho, vedação ou puxador"],exc:["Vidro novo","Esquadria nova"]}
+];
+const CATS={AR:["Ar-condicionado","air-vent"],EL:["Elétrica","zap"],HI:["Hidráulica","droplets"],MA:["Marcenaria","hammer"],VI:["Vidraçaria","app-window"]};
+const TAXA={AR:.20,EL:.18,HI:.18,MA:.20,VI:.20}; /* simulado: taxa da Seazone de 15% a 25% por categoria, mínimo R$ 20 */
 const PH={
-  lagoa:"https://jjdulakciihexvezfdcq.supabase.co/storage/v1/object/public/spots/lagoa-spot-ambiente-27.11.25-007-scaled.jpg",
-  rosa:"https://jjdulakciihexvezfdcq.supabase.co/storage/v1/object/public/spots/rosa-spot-ambiente-11-12-25-003-scaled.jpg",
-  manh:"https://jjdulakciihexvezfdcq.supabase.co/storage/v1/object/public/spots/manhattan-capa.jpg",
-  e26:"https://vqwgsgwbetfyoybdjmbs.supabase.co/storage/v1/object/public/spot-photos/covers/emp_26.jpg",
-  e21:"https://vqwgsgwbetfyoybdjmbs.supabase.co/storage/v1/object/public/spot-photos/covers/emp_21.jpg"
+ lagoa:"https://jjdulakciihexvezfdcq.supabase.co/storage/v1/object/public/spots/lagoa-spot-ambiente-27.11.25-007-scaled.jpg",
+ rosa:"https://jjdulakciihexvezfdcq.supabase.co/storage/v1/object/public/spots/rosa-spot-ambiente-11-12-25-003-scaled.jpg",
+ manh:"https://jjdulakciihexvezfdcq.supabase.co/storage/v1/object/public/spots/manhattan-capa.jpg",
+ e26:"https://vqwgsgwbetfyoybdjmbs.supabase.co/storage/v1/object/public/spot-photos/covers/emp_26.jpg",
+ hero:"https://seazone.com.br/images/hero/serra-catarinense.jpeg"
 };
-const TODAY=new Date(2026,10,16);
+const TODAY=new Date(2026,10,17);
 const DOW=["dom","seg","ter","qua","qui","sex","sáb"];
 const MES=["janeiro","fevereiro","março","abril","maio","junho","julho","agosto","setembro","outubro","novembro","dezembro"];
 const FRANQUIA="Franquia Norte da Ilha";
+const LIMITE=300;
 const IMOVEIS=[
-  {code:"FLN0412",nome:"Apto Jurerê 2q",ph:PH.lagoa,dono:"Carla Mendes",res:[[1,4],[6,9],[13,17],[20,27]]},
-  {code:"FLN0388",nome:"Apto Canasvieiras 1q",ph:PH.rosa,dono:"Paulo Reis",res:[[0,3],[8,12],[16,19],[24,30]]},
-  {code:"FLN0219",nome:"Apto Lagoa 2q",ph:PH.e26,dono:"Márcia Lopes",res:[[2,5],[9,14],[19,22]]},
-  {code:"FLN0631",nome:"Casa Campeche 3q",ph:PH.manh,dono:"Rui Tavares",res:[[1,6],[7,10],[15,21],[25,29]]}
+ {code:"FLN0412",nome:"Apto Jurerê 2q",ph:PH.lagoa,dono:"Carla Mendes",bairro:"Jurerê",fechadura:false,res:[[1,4],[6,9],[13,17],[20,27]]},
+ {code:"FLN0219",nome:"Apto Lagoa 2q",ph:PH.e26,dono:"Carla Mendes",bairro:"Lagoa da Conceição",fechadura:true,res:[[2,5],[9,14],[19,22]]},
+ {code:"FLN0388",nome:"Apto Canasvieiras 1q",ph:PH.rosa,dono:"Paulo Reis",bairro:"Canasvieiras",fechadura:true,res:[[0,3],[8,12],[16,19],[24,30]]},
+ {code:"FLN0631",nome:"Casa Campeche 3q",ph:PH.manh,dono:"Rui Tavares",bairro:"Campeche",fechadura:false,res:[[1,6],[7,10],[15,21],[25,29]]}
 ];
 const PROS=[
-  {id:"p1",nome:"Marcos T.",cats:["AR","EL"],nota:4.9,av:128,serv:312,motivo:"Responde em 15 min"},
-  {id:"p2",nome:"Rafaela S.",cats:["AR"],nota:4.8,av:96,serv:184,motivo:"Pontual em 98% das visitas"},
-  {id:"p3",nome:"Jonas P.",cats:["EL","HI","CH"],nota:4.7,av:71,serv:203,motivo:"Atende a região toda"},
-  {id:"p4",nome:"Elisa M.",cats:["HI","MA","VI"],nota:4.9,av:54,serv:97,motivo:"Fotos caprichadas"},
-  {id:"p5",nome:"Diego A.",cats:["ED","EL","HI"],nota:4.6,av:110,serv:256,motivo:"Pega urgência no dia"},
-  {id:"p6",nome:"Bruno L.",cats:["CH","VI","MA"],nota:4.6,av:62,serv:141,motivo:"Responde em 20 min"},
-  {id:"p7",nome:"Lúcia V.",cats:["ED","AR","EL"],nota:4.7,av:58,serv:119,motivo:"Explica tudo com calma"}
+ {id:"p1",nome:"Marcos T.",cats:["AR","EL"],nota:4.9,av:128,serv:312},
+ {id:"p2",nome:"Rafaela S.",cats:["AR"],nota:4.8,av:96,serv:184},
+ {id:"p3",nome:"Jonas P.",cats:["EL","HI"],nota:4.7,av:71,serv:203},
+ {id:"p4",nome:"Elisa M.",cats:["HI","MA","VI"],nota:4.9,av:54,serv:97},
+ {id:"p5",nome:"Diego A.",cats:["EL","HI"],nota:4.6,av:110,serv:256},
+ {id:"p6",nome:"Bruno L.",cats:["MA","VI","HI"],nota:5.0,av:3,serv:3,novo:true},
+ {id:"p7",nome:"Lúcia V.",cats:["AR","EL"],nota:4.7,av:58,serv:119}
 ];
-const STEPS=["Pedido recebido","Profissional confirmado","A caminho","Em atendimento","Concluído com fotos","Avaliado"];
-const LIMITE=300;
+/* máquina de estados (docs/regras-pedido.md) */
+const ST={
+ aguardando_aprovacao:["Aguardando aprovação do proprietário","--f-aprov"],
+ aguardando_prestador:["Aguardando o profissional confirmar","--f-prest"],
+ confirmado:["Confirmado","--f-conf"],
+ em_execucao:["Em andamento","--f-exec"],
+ prova_enviada:["Fotos enviadas, conferindo","--f-prova"],
+ concluido:["Concluído","--f-ok"],
+ recusado_proprietario:["Recusado pelo proprietário","--f-no"],
+ recusado_prestador:["Profissional não pode ir","--f-no"],
+ cancelado:["Cancelado","--f-no"]
+};
+const ETAPAS=["aguardando_prestador","confirmado","em_execucao","prova_enviada","concluido"];
+const COLS=["aguardando_aprovacao","aguardando_prestador","confirmado","em_execucao","prova_enviada","concluido"];
 
-/* util */
+/* ===================== util ===================== */
 const $=s=>document.querySelector(s);
 const item=c=>ITENS.find(i=>i.cod===c);
 const imv=c=>IMOVEIS.find(i=>i.code===c);
 const pro=id=>PROS.find(p=>p.id===id);
 const brl=v=>"R$ "+Math.round(v).toLocaleString("pt-BR");
+const nota=n=>n.toLocaleString("pt-BR",{minimumFractionDigits:1,maximumFractionDigits:1});
 const ic=(n,cls)=>`<i data-lucide="${n}"${cls?` class="${cls}"`:""}></i>`;
 const ini=n=>n.split(/\s+/).map(s=>s[0]).join("").slice(0,2).toUpperCase();
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const addD=n=>{const d=new Date(TODAY);d.setDate(d.getDate()+n);return d;};
 const dOff=d=>Math.round((new Date(d.getFullYear(),d.getMonth(),d.getDate())-TODAY)/864e5);
-const fmtD=n=>{const d=addD(n);return `${DOW[d.getDay()]} ${String(d.getDate()).padStart(2,"0")}/${String(d.getMonth()+1).padStart(2,"0")}`;};
-const fmtDia=n=>n===0?"hoje":n===1?"amanhã":fmtD(n);
-const hm=m=>{const h=Math.floor(m/60),r=m%60;return r?`${h}h${String(r).padStart(2,"0")}`:`${h}h`;};
-const durLbl=m=>m<60?`~${m} min`:`~${hm(m)}`;
-const janela=(h,min)=>`${h}h–${hm(h*60+min)}`;
-const img=(src,cls,alt)=>`<img src="${src}" class="${cls||""}" alt="${alt||""}" loading="lazy" onerror="fbImg(this)">`;
-window.fbImg=el=>{const d=document.createElement("div");d.className=(el.className||"")+" fb";d.innerHTML=ic("home");if(el.classList.contains("bgimg")){d.style.position="absolute";d.style.inset="0";}el.replaceWith(d);icons();};
-function icons(){ try{ window.lucide&&lucide.createIcons(); }catch(e){} }
-function resOf(code,n){ const im=imv(code); for(const [a,b] of im.res){ if(n>=a&&n<=b) return {a,b}; } return null; }
-function guestAt(code,n,h,min){ // janela cruza estadia? check-out 11h, check-in 15h
-  const im=imv(code); const s=h*60,e=s+min;
-  return im.res.some(([a,b])=> (n>a&&n<b) || (n===a&&e>15*60) || (n===b&&s<11*60));
-}
-function proBusy(p,n,h,min,skip){
-  const idx=PROS.indexOf(p);
-  if(addD(n).getDay()===0) return true;
-  for(let t=h*60;t<h*60+min;t+=60){ const hh=Math.floor(t/60); if((n*7+hh*3+idx*5)%6===0) return true; }
-  return S.orders.some(o=>o.id!==skip&&o.pro===p.id&&o.dia===n&&o.status!=="recusado"&&h*60<o.h*60+o.min&&o.h*60<h*60+min);
-}
-function nextSlot(p,min,from,prefH){
-  for(let n=from;n<=40;n++){
-    const hs=[]; for(let h=8;h<=16;h++) hs.push(h);
-    if(prefH) hs.sort((a,b)=>(a<prefH)-(b<prefH)||a-b);
-    for(const h of hs) if(!proBusy(p,n,h,min)) return {n,h};
-  }
-  return null;
-}
+const dd=n=>{const d=addD(n);return `${String(d.getDate()).padStart(2,"0")}/${String(d.getMonth()+1).padStart(2,"0")}`;};
+const fmtD=n=>`${DOW[addD(n).getDay()]} ${dd(n)}`;
+const fmtDia=n=>n===0?"hoje":n===1?"amanhã":n===-1?"ontem":fmtD(n);
+const jan=(h,n)=>`${h}h–${h+n}h`;
+const img=(src,cls,alt)=>`<img src="${src}" class="${cls||""}" alt="${esc(alt||"")}" loading="lazy" onerror="fbImg(this)">`;
+window.fbImg=el=>{const d=document.createElement("div");d.className=(el.className||"")+" fb";d.innerHTML=ic("home");el.replaceWith(d);icons();};
+function icons(){try{window.lucide&&lucide.createIcons({attrs:{"aria-hidden":"true",focusable:"false"}});}catch(e){}}
+const resOf=(code,n)=>{for(const [a,b] of imv(code).res) if(n>=a&&n<=b) return {a,b}; return null;};
+const nJan=its=>its.reduce((s,c)=>s+item(c).jan,0);
+const tot=its=>its.reduce((s,c)=>s+item(c).preco,0);
+const catsOf=its=>[...new Set(its.map(c=>item(c).cat))];
+const nomeItens=its=>its.map(c=>item(c).nome).join(" + ");
+const liquido=o=>o.itens.reduce((s,c)=>{const i=item(c);return s+i.preco-Math.max(20,Math.round(i.preco*TAXA[i.cat]));},0);
+function proBusy(p,n,h,k){const idx=PROS.indexOf(p);for(let t=h;t<h+k;t++){if((n*7+t*3+idx*5)%6===0) return true;}
+  return S.orders.some(o=>o.pro===p.id&&o.dia===n&&!["cancelado","recusado_prestador","recusado_proprietario"].includes(o.status)&&h<o.h+o.jan&&o.h<h+k);}
+function slotsDia(p,n,k){if(n<1||addD(n).getDay()===0) return [];const r=[];for(let h=8;h<=17-k;h++) if(!proBusy(p,n,h,k)) r.push(h);return r;}
+function prox(p,k){for(let n=1;n<45;n++){const s=slotsDia(p,n,k);if(s.length) return {n,h:s[0]};}return null;}
+const guestAt=(code,n,h,k)=>{const r=resOf(code,n);if(!r) return false;if(n>r.a&&n<r.b) return true;if(n===r.a) return h+k>15;if(n===r.b) return h<11;return false;};
 
-/* estado */
-let seq=1050;
+/* ===================== estado ===================== */
 const S={
-  perfil:"prop",tab:{prop:"comprar",fra:"comprar",prest:"agenda",painel:"agente"},
-  flow:{},
-  orders:[
-    {id:"PED-1038",buyer:"prop",imovel:"FLN0412",itens:["EL-01"],pro:"p3",dia:-6,h:14,min:60,total:235,status:"ok",step:5},
-    {id:"PED-1044",buyer:"prop",imovel:"FLN0412",itens:["AR-01"],pro:"p1",dia:3,h:9,min:90,total:335,status:"ok",step:1},
-    {id:"PED-1048",buyer:"fra",imovel:"FLN0412",itens:["HI-02","HI-04"],pro:"p3",dia:5,h:10,min:60,total:505,status:"aprovacao",step:0},
-    {id:"PED-1046",buyer:"fra",imovel:"FLN0219",itens:["VI-02"],pro:"p4",dia:2,h:13,min:60,total:265,status:"ok",step:1}
-  ],
-  notifs:[
-    {t:"Visita agendada · FLN0412",d:"Marcos T. vai em "+fmtD(3)+", 9h–10h30 · Limpeza de ar-condicionado. Pedido feito pelo proprietário.",novo:true},
-    {t:"Visita agendada · FLN0219",d:"Elisa M. vai em "+fmtD(2)+", 13h–14h · Conserto de box."}
-  ],
-  manut:[
-    {id:"m1",imovel:"FLN0412",titulo:"chuveiro",dias:2,cod:"EL-01",pro:"p1",pref:13,txt:"Hóspede avisou que o chuveiro não esquenta"},
-    {id:"m2",imovel:"FLN0388",titulo:"ar pingando",dias:1,cod:"AR-03",pro:"p2",pref:9,txt:"Ar da sala pingando no piso"},
-    {id:"m3",imovel:"FLN0631",titulo:"pia entupida",dias:3,cod:"HI-02",pro:"p4",pref:14,txt:"Pia da cozinha drenando devagar"}
-  ],
-  prest:"p1"
+ perfil:"prop",
+ rota:{prop:"contratar",fra:"carteira",prest:"pedidos",ops:"agente"},
+ propImovel:"FLN0412",
+ prest:"p1",prestAba:"novos",
+ flow:{},
+ termos:{prop:false,fra:false},
+ ped:1053,
+ orders:[
+  {id:"PED-1038",buyer:"prop",imovel:"FLN0412",itens:["EL-01"],pro:"p3",dia:-6,h:14,jan:1,status:"concluido",fase:5,nota:5,repasse:"12/26"},
+  {id:"PED-1044",buyer:"prop",imovel:"FLN0412",itens:["AR-01"],pro:"p1",dia:3,h:9,jan:2,status:"confirmado",fase:1},
+  {id:"PED-1048",buyer:"fra",imovel:"FLN0412",itens:["HI-02","HI-04"],pro:"p3",dia:5,h:10,jan:2,status:"aguardando_aprovacao",fase:1},
+  {id:"PED-1046",buyer:"fra",imovel:"FLN0219",itens:["VI-03"],pro:"p4",dia:2,h:13,jan:1,status:"confirmado",fase:2},
+  {id:"PED-1050",buyer:"fra",imovel:"FLN0388",itens:["EL-03"],pro:"p1",dia:0,h:10,jan:1,status:"em_execucao",fase:0},
+  {id:"PED-1051",buyer:"prop",imovel:"FLN0219",itens:["HI-01"],pro:"p4",dia:-1,h:9,jan:2,status:"prova_enviada",fase:1},
+  {id:"PED-1052",buyer:"fra",imovel:"FLN0631",itens:["MA-01"],pro:"p6",dia:4,h:14,jan:1,status:"aguardando_prestador",fase:0},
+  {id:"PED-1053",buyer:"fra",imovel:"FLN0631",itens:["AR-03"],pro:"p1",dia:1,h:15,jan:1,status:"aguardando_prestador",fase:8}
+ ],
+ visto:{},
+ manut:[
+  {id:"m1",imovel:"FLN0412",titulo:"chuveiro",dias:2,cod:"EL-01",pro:"p1",txt:"Hóspede avisou que o chuveiro não esquenta"},
+  {id:"m2",imovel:"FLN0388",titulo:"ar pingando",dias:1,cod:"AR-03",pro:"p2",txt:"Ar da sala pingando no piso"},
+  {id:"m3",imovel:"FLN0631",titulo:"pia entupida",dias:9,cod:"HI-02",pro:"p4",txt:"Pia da cozinha drenando devagar"}
+ ],
+ drawer:null,sheet:null
 };
-function newFlow(b){ return {buyer:b,step:b==="fra"?0:1,imovel:b==="prop"?"FLN0412":null,itens:[],cat:"",q:"",pro:null,dia:null,h:null,month:0,done:null}; }
+const newFlow=b=>({buyer:b,step:b==="fra"?0:1,imovel:b==="prop"?S.propImovel:null,itens:[],cat:"",q:"",pro:null,dia:null,h:null,mes:0,mat:"",done:null});
 const flow=()=>S.flow[S.perfil]||(S.flow[S.perfil]=newFlow(S.perfil));
-const fMin=f=>Math.ceil(f.itens.reduce((s,c)=>s+item(c).min,0)/30)*30;
-const fTot=f=>f.itens.reduce((s,c)=>s+item(c).preco,0);
-const fCats=f=>[...new Set(f.itens.map(c=>item(c).cat))];
+const ME={prop:["Carla Mendes","Proprietária"],fra:["Norte da Ilha",FRANQUIA],ops:["Operação","Seazone"]};
+const meuPerfil=()=>S.perfil==="prest"?[pro(S.prest).nome,"Profissional"]:ME[S.perfil];
 
-/* render */
-function render(keepScroll){
-  const y=window.scrollY;
-  const a=$("#app"); const p=S.perfil;
-  let html="";
-  if(p==="prop"||p==="fra") html=vBuyer(p);
-  else if(p==="prest") html=vPrest();
-  else html=vPainel();
-  a.innerHTML=html;
-  renderCart(); renderPill(); icons();
-  if(!keepScroll) window.scrollTo(0,0); else window.scrollTo(0,y);
+const escuro=()=>{const r=document.documentElement;return r.dataset.theme?r.dataset.theme==="dark":matchMedia("(prefers-color-scheme:dark)").matches;};
+/* ===================== navegação ===================== */
+function navItens(){
+ const p=S.perfil;
+ if(p==="prop"){const ap=S.orders.filter(o=>o.status==="aguardando_aprovacao"&&imv(o.imovel).dono==="Carla Mendes").length+S.orders.filter(o=>o.status==="prova_enviada"&&o.buyer==="prop").length;
+  return [["contratar","Contratar","search"],["pedidos","Pedidos","clipboard-list",ap],["extrato","Extrato","receipt-text"]];}
+ if(p==="fra"){const v=visitas().filter(x=>!S.visto[x.o.id]).length;
+  return [["carteira","Carteira","building-2"],["contratar","Contratar","search"],["visitas","Visitas","calendar-check",v],["pedidos","Pedidos","kanban-square"]];}
+ if(p==="prest"){const nv=S.orders.filter(o=>o.pro===S.prest&&o.status==="aguardando_prestador").length;
+  return [["pedidos","Pedidos","briefcase",nv],["ganhos","Ganhos","wallet"]];}
+ return [["agente","Manutenções","wrench",S.manut.filter(m=>!m.done).length],["pedidos","Pedidos","kanban-square"]];
 }
-function header(over){
-  const p=S.perfil; const f=S.flow[p];
-  const who= p==="prop"?["Carla Mendes",imv("FLN0412").nome]:p==="fra"?["Norte da Ilha",FRANQUIA]:p==="prest"?[pro(S.prest).nome,"Profissional"]:["Operação","Painel"];
-  return `<header class="top${over?" over":""}">
-    <div class="logo"><span class="wm" aria-label="Seazone">se<span>a</span>zone</span><span class="sep"></span><span>ConcertAI</span></div>
-    <div class="who"><span>${who[1]}</span><div class="av">${ini(who[0])}</div></div>
-  </header>`;
+function casca(){
+ const [nm,papel]=meuPerfil();const cur=S.rota[S.perfil];const L=navItens();
+ const ctx=S.perfil==="prop"?`<div class="ctx">${img(imv(S.propImovel).ph,"av","")}<div><b>${imv(S.propImovel).nome}</b><span>${imv(S.propImovel).bairro} · ${S.propImovel}</span></div></div>`
+  :S.perfil==="fra"?`<div class="ctx"><span class="av sm">${ic("building-2","i16")}</span><div><b>${FRANQUIA}</b><span>${IMOVEIS.length} imóveis · Florianópolis</span></div></div>`:"";
+ const logo=`<span class="wm" role="img" aria-label="Seazone">seazone</span>`;
+ $("#side").innerHTML=`<div class="brand">${logo}<span class="sep"></span><span class="prod">ConcertAI</span></div>${ctx}
+  <nav class="menu" aria-label="Menu"><div class="lbl">${S.perfil==="prest"?"Seu trabalho":S.perfil==="ops"?"Operação":"Manutenção"}</div>
+  ${L.map(([k,n,i,c])=>`<a href="#" data-rota="${k}" ${cur===k?'aria-current="page"':""}>${ic(i)}${n}${c?`<span class="ct">${c}<span class="sr"> pendentes</span></span>`:""}</a>`).join("")}</nav>
+  <div class="foot"><div class="me"><span class="av sm">${ini(nm)}</span><div><b>${nm}</b><span>${papel}</span></div><button class="icbtn" data-act="tema" aria-label="Tema escuro" aria-pressed="${escuro()}">${ic(escuro()?"sun":"moon","i16")}</button></div></div>`;
+ $("#top").innerHTML=`${logo}<span class="sep" style="width:1px;height:18px;background:var(--navy-line)"></span><span class="prod" style="font-weight:600;font-size:16px">ConcertAI</span>
+  <div class="who"><span>${S.perfil==="prop"?imv(S.propImovel).nome:papel}</span><button class="icbtn" data-act="tema" aria-label="Tema escuro" aria-pressed="${escuro()}">${ic(escuro()?"sun":"moon","i16")}</button><span class="av sm">${ini(nm)}</span></div>`;
+ $("#bnav").innerHTML=L.map(([k,n,i,c])=>`<a href="#" data-rota="${k}" ${cur===k?'aria-current="page"':""}>${ic(i)}${n}${c?`<span class="ct">${c}<span class="sr"> pendentes</span></span>`:""}</a>`).join("");
+ $("#vercomo").innerHTML=`<button class="tag" data-act="vercomo" aria-expanded="${$("#vercomo").classList.contains("open")}">${ic("eye","i14")}Protótipo · ver como</button>${[["prop","Proprietário"],["fra","Franquia"],["prest","Prestador"],["ops","Operação"]].map(([k,n])=>`<button data-papel="${k}" aria-pressed="${S.perfil===k}">${n}</button>`).join("")}`;
 }
-function tabs(list){
-  const cur=S.tab[S.perfil];
-  return `<div class="tabs" role="tablist">${list.map(([k,n,c])=>`<button class="tab" role="tab" aria-selected="${cur===k}" data-tab="${k}">${n}${c?`<span class="ct">${c}</span>`:""}</button>`).join("")}</div>`;
+function focoSel(){const a=document.activeElement;if(!a||a===document.body) return null;if(a.id) return "#"+a.id;const ds=Object.entries(a.dataset);if(!ds.length) return null;return a.tagName.toLowerCase()+ds.map(([k,v])=>`[data-${k.replace(/[A-Z]/g,m=>"-"+m.toLowerCase())}="${v}"]`).join("");}
+function refoca(sel){if(!sel) return;const n=document.querySelector(sel);if(n&&n.offsetParent!==null) n.focus({preventScroll:true});}
+function render(keep){
+ const fs=keep?focoSel():null;
+ const y=window.scrollY;casca();
+ const p=S.perfil,r=S.rota[p];let h="";
+ if(p==="prop") h=r==="pedidos"?vPedidosComprador("prop"):r==="extrato"?vExtrato():vContratar();
+ else if(p==="fra") h=r==="carteira"?vCarteira():r==="visitas"?vVisitas():r==="pedidos"?vKanban("fra"):vContratar();
+ else if(p==="prest") h=r==="ganhos"?vGanhos():vPrest();
+ else h=r==="pedidos"?vKanban("ops"):vAgente();
+ $("#tela").innerHTML=h;renderMbar();renderLayer();icons();
+ if(!keep) window.scrollTo(0,0);else{window.scrollTo(0,y);refoca(fs);}
 }
+const ph=(eb,t,d,act)=>`<div class="ph"><div>${eb?`<span class="eyebrow">${eb}</span>`:""}<h1>${t}</h1>${d?`<p>${d}</p>`:""}</div>${act?`<div class="act">${act}</div>`:""}</div>`;
 
-/* ===== comprador ===== */
-function vBuyer(b){
-  const f=flow();
-  const aprov=S.orders.filter(o=>o.status==="aprovacao"&&o.buyer==="fra"&&(b==="prop"?o.imovel==="FLN0412":true)).length;
-  const mat=S.orders.filter(o=>o.material&&o.material.st==="pendente"&&o.buyer===b).length;
-  const novos=S.notifs.filter(n=>n.novo).length;
-  const tl=[["comprar","Contratar"],["pedidos","Pedidos",(b==="prop"?aprov:0)+mat||""]];
-  if(b==="fra") tl.push(["avisos","Avisos",novos||""]);
-  const t=S.tab[b];
-  if(t==="pedidos") return header()+tabs(tl)+vPedidos(b);
-  if(t==="avisos") return header()+tabs(tl)+vAvisos();
-  if(f.done) return vDone(f);
-  if(f.step===0) return header()+tabs(tl)+stepImovel(f);
-  if(f.step===1) return (b==="prop"?heroProp(f)+tabs(tl):header()+tabs(tl)+imvBar(f))+catalogo(f);
-  if(f.step===2) return header()+stepPro(f);
-  if(f.step===3) return header()+stepData(f);
-  if(f.step===4) return header()+stepRevisar(f);
-  return "";
+/* ===================== comprador: contratar ===================== */
+function vContratar(){
+ const f=flow();
+ if(f.done) return vDone(f);
+ if(f.step===0) return ph(FRANQUIA,"Para qual imóvel?","Escolha o imóvel da carteira. O proprietário é avisado de todo pedido.")+gridImoveis(true);
+ const passos=["Serviços","Profissional","Data e horário","Revisar"];
+ const steps=`<ol class="steps" aria-label="Etapas">${passos.map((s,i)=>`${i?'<li class="ln" aria-hidden="true"></li>':""}<li class="s ${i+1<f.step?"d":i+1===f.step?"c":""}" ${i+1===f.step?'aria-current="step"':""}><i>${i+1<f.step?ic("check","i14"):i+1}</i>${i+1<f.step?'<span class="sr">concluída: </span>':""}${s}</li>`).join("")}</ol>`;
+ let body="";
+ if(f.step===1) body=catalogo(f);
+ else if(f.step===2) body=stepPro(f);
+ else if(f.step===3) body=stepData(f);
+ else body=stepRev(f);
+ const top=f.step===1&&f.buyer==="prop"?hero(f):(f.step===1?barImovel(f):"")+steps;
+ return `${top}<div class="flow ${f.step===1?"mt":""}" style="${f.step===1?"margin-top:24px":""}"><div>${f.step===1&&f.buyer==="prop"?steps:""}${body}</div>${resumo(f)}</div>`;
 }
-function heroProp(f){
-  const im=imv("FLN0412");
-  const nx=im.res.find(([a,b])=>b>=1);
-  return `<section class="hero">${img(im.ph,"bgimg","Apto Jurerê")}${header(true)}
-    <div class="in">
-      <span class="chip-w">Apto Jurerê · 2 quartos</span>
-      <h1>O que precisa de conserto?</h1>
-      <label class="search">${ic("search")}<input id="q" type="search" placeholder="Chuveiro, tomada, ar-condicionado…" value="${f.q}" aria-label="Buscar serviço"></label>
-      <div class="nx">${ic("bed-double","i14")}Próxima reserva: ${String(addD(nx[0]).getDate()).padStart(2,"0")}–${String(addD(nx[1]).getDate()).padStart(2,"0")}/nov · você pode agendar mesmo assim</div>
-    </div></section>`;
+function hero(f){
+ const im=imv(f.imovel);const nx=im.res.find(([a,b])=>b>=1);
+ return `<section class="hero">${img(im.ph||PH.hero,"bg","")}<div class="in">
+  <button class="hchip" data-act="trocarImovel" aria-label="Trocar imóvel (agora: ${im.nome})">${ic("home","i14")}${im.nome} · ${im.bairro}${ic("chevron-down","i14")}</button>
+  <h1>O que precisa de conserto?</h1>
+  <label class="search"><span class="sr">Buscar serviço</span>${ic("search")}<input type="search" id="q" aria-label="Buscar serviço" placeholder="Chuveiro, tomada, ar-condicionado…" value="${esc(f.q)}"></label>
+  <div class="sub">${ic("badge-check","i14")}Preço fechado · garantia de 90 dias · descontado do seu repasse</div>
+  ${nx?`<div class="sub">${ic("bed-double","i14")}Próxima reserva: ${dd(Math.max(nx[0],0))}–${dd(nx[1])} · você pode agendar mesmo assim</div>`:""}
+ </div></section>
+`;
 }
-function imvBar(f){
-  const im=imv(f.imovel);
-  return `<div class="wrap"><button class="card sel-imv" style="text-align:left;width:100%" data-act="trocaImv">${img(im.ph,"",im.nome)}<div><b>${im.nome}</b><div class="code">${im.code} · dono: ${im.dono}</div></div><span class="lnk">Trocar</span></button>
-  <label class="search mt16" style="box-shadow:var(--shadow-card)">${ic("search")}<input id="q" type="search" placeholder="Chuveiro, tomada, ar-condicionado…" value="${f.q}" aria-label="Buscar serviço"></label></div>`;
+function barImovel(f){
+ const im=imv(f.imovel);
+ return `<div class="card" style="display:flex;align-items:center;gap:14px;padding:12px 16px;margin-bottom:20px">${img(im.ph,"","")}<div style="flex:1;min-width:0"><b style="display:block;font-size:16px">${im.nome}</b><span style="font-size:12px;color:var(--fg-3)">${im.code} · ${im.dono}</span></div><button class="btn sec sm" data-act="trocarImovel">Trocar</button></div>`.replace('<img ','<img style="width:48px;height:48px;border-radius:12px;object-fit:cover" ');
 }
-function stepImovel(f){
-  return `<div class="wrap"><h2 class="sec" style="margin-top:8px">Para qual imóvel?</h2><p class="sub" style="margin-bottom:16px">Imóveis da ${FRANQUIA}.</p>
-  <div class="list">${IMOVEIS.map(im=>`<button class="card sel-imv" style="text-align:left" data-imv="${im.code}">${img(im.ph,"",im.nome)}<div><b>${im.nome}</b><div class="code">${im.code} · dono: ${im.dono}</div></div>${ic("chevron-right")}</button>`).join("")}</div></div>`;
-}
-const STOP=new Set(["de","do","da","no","na","com","sem","o","a","e","que","não","nao","meu","minha"]);
+const STOP=new Set(["de","do","da","no","na","com","sem","que","nao","meu","minha","esta","ta"]);
 function filtra(f){
-  const toks=f.q.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"").split(/\s+/).filter(t=>t.length>2&&!STOP.has(t));
-  return ITENS.filter(i=>{
-    if(f.cat&&i.cat!==f.cat) return false;
-    if(!toks.length) return true;
-    const hay=(i.nome+" "+i.desc+" "+CATS[i.cat][0]).toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"");
-    return toks.some(t=>hay.includes(t.slice(0,5)));
-  });
+ const toks=f.q.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"").split(/\s+/).filter(t=>t.length>2&&!STOP.has(t));
+ return ITENS.filter(i=>(!f.cat||i.cat===f.cat)&&(!toks.length||toks.some(t=>(i.nome+" "+i.desc+" "+CATS[i.cat][0]).toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"").includes(t))));
 }
 function catalogo(f){
-  const L=filtra(f);
-  return `<div class="wrap">
-    <div class="cats">${Object.entries(CATS).map(([k,[n,i]])=>`<button class="cat" data-cat="${k}" aria-pressed="${f.cat===k}"><span class="ci">${ic(i)}</span>${n}</button>`).join("")}
-      <button class="cat" data-cat="" aria-pressed="${!f.cat}"><span class="ci">${ic("layout-grid")}</span>Ver todas</button></div>
-    <div class="mline">${ic("package","i14")}Material e peças não estão inclusos: se precisar, o profissional informa o valor antes e você aprova.</div>
-    <h2 class="sec">${f.cat?CATS[f.cat][0]:"Serviços mais pedidos"}</h2>
-    <p class="sub" style="margin:-8px 0 12px">${L.length} serviço${L.length===1?"":"s"} · preço fechado · 90 dias de garantia</p>
-    <div class="list" id="lista">${L.length?L.map(i=>svcCard(i,f)).join(""):`<div class="empty"><span class="c">${ic("search-x")}</span><h3>Nada com esse nome</h3><p class="sub">Tente “chuveiro”, “tomada” ou “porta”.</p><button class="btn pri sm" data-act="limpa">Ver todos</button></div>`}</div>
-  </div>`;
+ const L=filtra(f);
+ const busca=f.buyer==="fra"?`<label class="search" style="margin-bottom:16px"><span class="sr">Buscar serviço</span>${ic("search")}<input type="search" id="q" aria-label="Buscar serviço" placeholder="Chuveiro, tomada, ar-condicionado…" value="${esc(f.q)}"></label>`:"";
+ const grupos=Object.keys(CATS).map(k=>[k,L.filter(i=>i.cat===k)]).filter(([,l])=>l.length);
+ return `${busca}<div class="pills" role="group" aria-label="Categorias"><button class="pill" data-cat="" aria-pressed="${!f.cat}">${ic("layout-grid","i16")}Todos</button>${Object.entries(CATS).map(([k,[n,i]])=>`<button class="pill" data-cat="${k}" aria-pressed="${f.cat===k}">${ic(i,"i16")}${n}</button>`).join("")}</div>
+ <div class="note mat" style="margin-top:16px">${ic("package")}<div><b>Material e peças não estão inclusos</b>Se precisar, o profissional informa o valor antes e você aprova.</div></div>
+ ${grupos.length?grupos.map(([k,l])=>`<div class="sec-h"><h2 class="sec">${ic(CATS[k][1])}${CATS[k][0]} <small>${l.length} ${l.length>1?"serviços":"serviço"}</small></h2></div><div class="grid g-svc">${l.map(i=>svcCard(i,f)).join("")}</div>`).join("")
+  :`<div class="empty" style="margin-top:24px"><span class="c">${ic("search-x")}</span><b>Nada com "${esc(f.q)}"</b>Tente outra palavra, como "chuveiro" ou "pia".<button class="btn sec sm" data-act="limparBusca" style="margin-top:8px">Limpar busca</button></div>`}`;
 }
 function svcCard(i,f){
-  const on=f.itens.includes(i.cod);
-  return `<article class="card svc" data-det="${i.cod}" tabindex="0" aria-label="${i.nome}, ${brl(i.preco)}">
-    <div><div class="nm">${i.nome}</div><div class="ds">${i.desc}</div>
-      <div class="meta"><span>${ic("clock")}${durLbl(i.min)}</span><span>${ic("shield-check")}90 dias de garantia</span></div></div>
-    <div class="pr"><span class="ap">preço fechado</span><b>${brl(i.preco)}</b>
-      ${on?`<button class="added" data-rem="${i.cod}" aria-label="Remover ${i.nome}">${ic("check","i14")}Adicionado</button>`:`<button class="plus" data-add="${i.cod}" aria-label="Adicionar ${i.nome}">${ic("plus")}</button>`}</div>
-  </article>`;
+ const on=f.itens.includes(i.cod);
+ return `<article class="card svc ${on?"on":""}"><div><button class="nm" data-det="${i.cod}">${i.nome}</button><p class="ds">${i.desc}</p></div>
+  <div class="pr"><b class="tn">${brl(i.preco)}</b></div>
+  <div class="meta"><span>${ic("clock","i14")}${i.dur}</span>${i.jan>1?`<span>${ic("calendar-range","i14")}ocupa 2 janelas</span>`:""}</div>
+  <div class="foot"><button class="link" data-det="${i.cod}">O que inclui${ic("chevron-right","i14")}</button>
+  <button class="add" data-add="${i.cod}" aria-pressed="${on}" aria-label="${on?"Remover":"Adicionar"} ${esc(i.nome)}">${ic(on?"check":"plus","i16")}${on?"Adicionado":"Adicionar"}</button></div></article>`;
 }
-function stepHead(f,title,n){
-  return `<div class="steph"><button class="back" data-act="voltar" aria-label="Voltar">${ic("arrow-left")}</button><h1 id="sh" tabindex="-1">${title}</h1></div>
-  <div class="dots" aria-hidden="true">${[1,2,3,4].map(i=>`<i class="${i<=n?"on":""}"></i>`).join("")}</div>`;
-}
-function prosFor(f){ const cs=fCats(f); return PROS.filter(p=>cs.every(c=>p.cats.includes(c))).sort((a,b)=>b.nota-a.nota||b.serv-a.serv); }
+const prosFor=f=>{const cs=catsOf(f.itens);return PROS.filter(p=>cs.every(c=>p.cats.includes(c))).sort((a,b)=>(a.novo?1:0)-(b.novo?1:0)||b.nota-a.nota||b.serv-a.serv).slice(0,3);};
 function stepPro(f){
-  const L=prosFor(f), min=fMin(f);
-  return stepHead(f,"Escolha o profissional",2)+`<div class="wrap">
-    <p class="sub" style="margin-bottom:12px">${f.itens.length} serviço${f.itens.length>1?"s":""} · ${durLbl(min)} · todos verificados pela Seazone</p>
-    <div class="list">${L.length?L.map(p=>{const s=nextSlot(p,min,1);return `<button class="card pro ${f.pro===p.id?"sel":""}" style="text-align:left" data-pro="${p.id}" aria-pressed="${f.pro===p.id}">
-      <div class="av lg ok">${ini(p.nome)}</div>
-      <div><div class="n">${p.nome}${ic("badge-check")}</div><div class="r">${ic("star","star")}${p.nota.toLocaleString("pt-BR")} (${p.av}) · ${p.serv} serviços</div><span class="okchip">${p.motivo}</span></div>
-      <div class="wnd tn">${s?`${fmtD(s.n).replace(/^\w/,c=>c.toUpperCase())}<br><span class="cap">${janela(s.h,min)}</span>`:"Sem agenda"}</div>
-      ${f.pro===p.id?`<span class="chk">${ic("check-circle")}</span>`:""}</button>`;}).join(""):`<div class="empty"><span class="c">${ic("user-x")}</span><h3>Ninguém faz tudo junto</h3><p class="sub">Esses serviços são de áreas diferentes. Faça em 2 pedidos.</p></div>`}</div>
-  </div>`;
+ const L=prosFor(f),k=nJan(f.itens);
+ return `<h2 class="sec" style="margin-bottom:4px">Escolha o profissional</h2><p style="font-size:14px;color:var(--fg-2);margin-bottom:16px">Mostramos primeiro quem tem melhor nota, está mais perto e tem agenda.</p>
+ <div class="grid">${L.length?L.map(p=>{const s=prox(p,k);return `<button class="card pro" data-pro="${p.id}" aria-pressed="${f.pro===p.id}"><span class="av lg ok">${ini(p.nome)}</span>
+  <div><div class="n">${p.nome}${ic("badge-check")}<span class="sr">verificado</span>${p.novo?'<span class="chip info" title="Profissional novo na ConcertAI, já verificado. Os primeiros serviços têm acompanhamento da nossa equipe.">Novo<span class="sr">: profissional novo, já verificado, com acompanhamento da equipe nos primeiros serviços</span></span>':""}</div>
+  <div class="r">${ic("star","i14 star")}<span class="tn">${nota(p.nota)} · ${p.serv} serviços</span></div></div>
+  <div class="w">${f.pro===p.id?ic("check-circle","ck"):`Próxima janela<b class="tn">${s?`${fmtDia(s.n)} · ${jan(s.h,k)}`:"sem agenda"}</b>`}</div></button>`;}).join("")
+  :`<div class="empty"><span class="c">${ic("users")}</span><b>Ninguém faz tudo junto</b>Separe os serviços em dois pedidos.<button class="btn sec sm" data-act="voltar" style="margin-top:8px">Voltar aos serviços</button></div>`}</div>`;
 }
 function stepData(f){
-  const min=fMin(f), p=pro(f.pro);
-  const base=new Date(TODAY.getFullYear(),TODAY.getMonth()+f.month,1);
-  const first=base.getDay(), dim=new Date(base.getFullYear(),base.getMonth()+1,0).getDate();
-  let cells=""; for(let i=0;i<first;i++) cells+=`<span></span>`;
-  for(let d=1;d<=dim;d++){
-    const n=dOff(new Date(base.getFullYear(),base.getMonth(),d));
-    const dis=n<1||n>45||addD(n).getDay()===0;
-    const r=resOf(f.imovel,n);
-    const cls=["day"]; if(dis) cls.push("dis"); if(n===0) cls.push("today"); if(f.dia===n) cls.push("on");
-    if(r){cls.push("stay"); if(n===r.a) cls.push("s0"); if(n===r.b) cls.push("s1");}
-    const has=S.orders.some(o=>o.imovel===f.imovel&&o.dia===n&&o.status!=="recusado");
-    cells+=`<button class="${cls.join(" ")}" ${dis?"disabled":""} data-dia="${n}" aria-label="${fmtD(n)}${r?", tem hóspede":""}${has?", tem agenda":""}" aria-pressed="${f.dia===n}"><span class="nb">${d}</span>${r&&n===r.a?`<span class="bed">${ic("bed-double")}</span>`:""}${has?`<span class="dot"></span>`:""}</button>`;
-  }
-  let slots="";
-  if(f.dia!=null){
-    for(let h=8;h<=16;h++){
-      const busy=proBusy(p,f.dia,h,min); const g=guestAt(f.imovel,f.dia,h,min);
-      slots+=`<button class="slot ${f.h===h?"on":""}" ${busy?"disabled":""} data-h="${h}" ${g?`title="Entra durante a estadia"`:""} aria-pressed="${f.h===h}">${g&&!busy?`<span class="bd"></span>`:""}${janela(h,min)}</button>`;
-    }
-  }
-  const r=f.dia!=null&&resOf(f.imovel,f.dia);
-  return stepHead(f,"Data e horário",3)+`<div class="wrap gap16">
-    <div class="card">
-      <div class="calh"><button data-mes="-1" ${f.month<=0?"disabled":""} aria-label="Mês anterior">${ic("chevron-left")}</button><b>${MES[base.getMonth()]} ${base.getFullYear()}</b><button data-mes="1" ${f.month>=1?"disabled":""} aria-label="Próximo mês">${ic("chevron-right")}</button></div>
-      <div class="cal">${["D","S","T","Q","Q","S","S"].map(x=>`<span class="dw">${x}</span>`).join("")}${cells}</div>
-      <div class="legend"><span><i style="width:16px;height:6px;border-radius:9999px;background:var(--stay-bar)"></i>Reserva</span><span><i style="width:6px;height:6px;border-radius:50%;background:var(--visit-dot)"></i>Tem agenda</span></div>
-      ${r?`<div class="info">${ic("info")}<span><b>Tem hóspede nesse dia.</b> O profissional combina o acesso com a operação.</span></div>`:""}
-    </div>
-    ${f.dia!=null?`<div><h3 style="font-size:16px">Horário</h3><p class="sub">Duração estimada: ${durLbl(min)} · com ${p.nome}</p><div class="slots">${slots}</div></div>`:`<p class="sub">Escolha um dia para ver os horários de ${p.nome}.</p>`}
-  </div>`;
+ const p=pro(f.pro),k=nJan(f.itens),im=imv(f.imovel);
+ const base=new Date(TODAY.getFullYear(),TODAY.getMonth()+f.mes,1);
+ const ini0=base.getDay(),dias=new Date(base.getFullYear(),base.getMonth()+1,0).getDate();
+ let cells="";for(let i=0;i<ini0;i++) cells+="<span></span>";
+ for(let d=1;d<=dias;d++){const n=dOff(new Date(base.getFullYear(),base.getMonth(),d));const r=resOf(im.code,n);const sl=slotsDia(p,n,k);
+  const vis=S.orders.some(o=>o.imovel===im.code&&o.dia===n&&!["cancelado"].includes(o.status));
+  const cls=["day",n===0?"today":"",r?"stay":"",r&&n===r.a?"s0":"",r&&n===r.b?"s1":"",vis?"vis":""].join(" ");
+  cells+=`<button class="${cls}" data-dia="${n}" ${!sl.length||n>44?"disabled":""} aria-pressed="${f.dia===n}" aria-label="${fmtD(n)}${r?", tem hóspede":""}${vis?", tem agenda":""}"><span class="n">${d}</span></button>`;}
+ const r=f.dia!=null&&resOf(im.code,f.dia);
+ const sl=f.dia!=null?slotsDia(p,f.dia,k):[];
+ return `<h2 class="sec" style="margin-bottom:4px">Data e horário</h2><p style="font-size:14px;color:var(--fg-2);margin-bottom:16px">${p.nome} · ${k>1?`ocupa ${k} janelas de 1h`:"janela de 1h"}, das 8h às 17h. O horário é a hora em que o profissional chega.</p>
+ <div class="card cal" id="ctr-cal"><div class="calh"><button class="icbtn" data-mes="-1" aria-label="Mês anterior" ${f.mes<=0?"disabled":""}>${ic("chevron-left")}</button><b>${MES[base.getMonth()]} ${base.getFullYear()}</b><button class="icbtn" data-mes="1" aria-label="Próximo mês" ${f.mes>=1?"disabled":""}>${ic("chevron-right")}</button></div>
+ <div class="cgrid">${["dom","seg","ter","qua","qui","sex","sáb"].map(x=>`<span class="dw">${x}</span>`).join("")}${cells}</div>
+ <div class="legend"><span><i class="bar"></i>Reserva</span><span><i class="pt"></i>Tem agenda</span></div>
+ ${r?`<div class="note info info-hosp" style="margin-top:16px">${ic("info")}<div><b>Tem hóspede nesse dia.</b>Dá para marcar mesmo assim (às vezes o conserto não pode esperar). A franquia combina o acesso.</div></div>`:""}</div>
+ ${f.dia!=null?`<div class="sec-h" style="margin-top:24px"><h2 class="sec">Horário <small>${fmtD(f.dia)}</small></h2></div>
+ <div class="slots" id="ctr-slots">${Array.from({length:18-k-8},(_,i)=>8+i).map(h=>{const ok=sl.includes(h),g=guestAt(im.code,f.dia,h,k);return `<button class="slot tn" data-janela="${h}" ${ok?"":"disabled"} aria-pressed="${f.h===h}" ${g?`title="Entra durante a estadia" aria-label="${jan(h,k)}, entra durante a estadia"`:""}>${g?'<span class="g"></span>':""}${jan(h,k)}</button>`;}).join("")}</div>`:""}`;
 }
-function resumo(f,o){
-  const src=o||f; const im=imv(src.imovel); const min=o?o.min:fMin(f);
-  return `<div class="imgrow">${img(im.ph,"",im.nome)}<div><b>${im.nome}</b><div class="code">${im.code}</div></div></div>
-    ${src.itens.map(c=>{const i=item(c);return `<div class="sumrow"><span class="l">${i.nome}<br><span class="cap">${durLbl(i.min)}</span></span><span class="tn">${brl(i.preco)}</span></div>`;}).join("")}
-    <div class="sumrow"><span class="l">Profissional</span><b>${pro(src.pro).nome}</b></div>
-    <div class="sumrow"><span class="l">Janela</span><b class="tn">${fmtD(src.dia)} · ${janela(src.h,min)}</b></div>
-    <div class="sumrow tot"><span>Total</span><span class="tn">${brl(o?o.total:fTot(f))}</span></div>`;
+function stepRev(f){
+ const im=imv(f.imovel),p=pro(f.pro),k=nJan(f.itens),t=tot(f.itens);
+ const ap=f.buyer==="fra"&&t>LIMITE;const primeira=!S.termos[f.buyer];
+ const g=guestAt(im.code,f.dia,f.h,k);
+ return `<h2 class="sec" style="margin-bottom:16px">Revisar pedido</h2>
+ <div class="card rv">
+  <div class="row"><span>Imóvel</span><div><b>${im.nome}</b><small>${im.code} · ${im.dono}</small></div><span></span></div>
+  ${f.itens.map((c,i)=>`<div class="row"><span>${i?"":"Serviços"}</span><div><b>${item(c).nome}</b><small>${item(c).dur} · 90 dias de garantia</small></div><b class="tn">${brl(item(c).preco)}</b></div>`).join("")}
+  <div class="row"><span>Profissional</span><div><b>${p.nome}</b><small>${ic("star","i14 star")} ${nota(p.nota)} · ${p.serv} serviços</small></div><button class="link" data-goto="2">Trocar</button></div>
+  <div class="row"><span>Quando</span><div><b>${fmtD(f.dia)} · ${jan(f.h,k)}</b><small>${g?"Tem hóspede nesse dia. A franquia combina o acesso.":"Chega dentro da janela."}</small></div><button class="link" data-goto="3">Trocar</button></div>
+  <div class="row"><span>Pagamento</span><div><b>${f.buyer==="prop"?"Descontado do seu próximo repasse":"Descontado do repasse do proprietário"}</b><small>Sem taxa extra, mensalidade nem assinatura.</small></div><span></span></div>
+  <div class="row"><span>Total</span><div></div><b class="tn" style="font-size:20px">${brl(t)}</b></div>
+ </div>
+ <div class="sec-h" style="margin-top:24px"><h2 class="sec">Material e peças</h2></div>
+ <div class="note mat" style="margin-bottom:12px">${ic("package")}<div><b>Material e peças não estão inclusos</b>Se precisar, o profissional informa o valor antes e você aprova. É custo adicional.</div></div>
+ <fieldset class="grid" style="gap:8px;border:0"><legend class="sr">Quem fornece a peça</legend>
+  <label class="opt"><input type="radio" name="mat" value="eu" ${f.mat==="eu"?"checked":""}><div><b>Eu deixo a peça no imóvel</b>O profissional só instala.</div></label>
+  <label class="opt"><input type="radio" name="mat" value="pro" ${f.mat==="pro"?"checked":""}><div><b>O profissional compra</b>Informa o valor antes, eu aprovo.</div></label>
+ </fieldset>
+ ${ap?`<div class="note info" style="margin-top:20px">${ic("user-check")}<div><b>Precisa da aprovação do proprietário.</b>Acima de R$ 300, o proprietário aprova antes. A data fica reservada por 48h.</div></div>`:""}
+ <div style="margin-top:20px;display:flex;flex-direction:column;gap:14px">
+  ${primeira?`<label class="chk"><input type="checkbox" id="termos" ${f.aceite?"checked":""}><span>Li e aceito os <a href="#" data-act="termosDoc">termos de uso</a> do ConcertAI${f.buyer==="fra"?` em nome da ${FRANQUIA}`:""}.</span></label>`:""}
+  <p style="font-size:14px;color:var(--fg-2)">Cancele sem custo até o profissional começar o serviço.</p>
+  <button class="btn cta lg full" id="ctr-confirmar" data-act="confirmar" ${(primeira&&!f.aceite)||!f.mat?"disabled":""}>${ap?"Enviar para aprovação":"Confirmar pedido"}</button>
+  ${!f.mat?`<p style="font-size:12px;color:var(--fg-3);text-align:center">Escolha quem fornece a peça para continuar.</p>`:""}
+ </div>`;
 }
-const MAT=`<div class="mat">${ic("package")}<div><b>Material e peças não estão inclusos</b><p>Se precisar, o profissional informa o valor antes e você aprova.</p></div></div>`;
-function stepRevisar(f){
-  const g=resOf(f.imovel,f.dia);
-  const ap=f.buyer==="fra"&&fTot(f)>LIMITE;
-  return stepHead(f,"Revisar pedido",4)+`<div class="wrap gap16">
-    <div class="card">${resumo(f)}</div>
-    ${g?`<div class="info" style="margin:0">${ic("bed-double")}<span>Tem hóspede nesse dia. O profissional combina o acesso com a operação.</span></div>`:""}
-    ${ap?`<div class="warnbox">${ic("user-check")}<span><b>Precisa da aprovação do proprietário.</b> Acima de ${brl(LIMITE)}, ${imv(f.imovel).dono} recebe o pedido e aprova. A data fica reservada até lá.</span></div>`:""}
-    ${MAT}
-    <button class="btn cta" data-act="confirmar">${ap?"Enviar para aprovação":"Confirmar pedido"}</button>
-  </div>`;
+function resumo(f){
+ const im=imv(f.imovel),k=nJan(f.itens),t=tot(f.itens);
+ const nxt=[null,["Escolher profissional",2],["Escolher data",3],["Revisar pedido",4],null][f.step];
+ const can=f.step===1?f.itens.length:f.step===2?!!f.pro:f.step===3?f.h!=null:false;
+ return `<aside class="sum on-dark" aria-label="Resumo do pedido"><h3>Seu pedido ${f.itens.length?`<span class="chip dark">${f.itens.length} ${f.itens.length>1?"serviços":"serviço"}</span>`:""}</h3>
+  <div class="im">${img(im.ph,"","")}<div><b>${im.nome}</b><span>${im.code}</span></div></div>
+  ${f.itens.length?f.itens.map(c=>`<div class="ln"><div>${item(c).nome}<small>${item(c).dur}</small></div><b class="tn">${brl(item(c).preco)}</b></div>`).join(""):`<p class="vazio">Adicione um ou mais serviços do catálogo.</p>`}
+  ${f.pro?`<div class="ln"><span>Profissional</span><b>${pro(f.pro).nome}</b></div>`:""}
+  ${f.h!=null?`<div class="ln"><span>Janela</span><b class="tn">${fmtD(f.dia)} · ${jan(f.h,k)}</b></div>`:""}
+  <div class="tot"><span style="color:var(--fg-on-dark-2);font-size:14px">Total</span><b class="tn">${brl(t)}</b></div>
+  ${f.step>1?`<div class="note mat">${ic("package")}<div><b>Material e peças não estão inclusos</b>O profissional mostra o orçamento e você aprova antes.</div></div>`:""}
+  ${nxt?`<button class="btn ${f.step===1?"cta":"white"} lg full" data-next="${nxt[1]}" ${can?"":"disabled"}>${nxt[0]}</button>`:""}
+  ${f.step>1?`<button class="btn ghost full" style="color:var(--fg-on-dark-2);margin-top:6px" data-act="voltar">Voltar</button>`:""}
+ </aside>`;
+}
+function renderMbar(){
+ const p=S.perfil;const f=S.flow[p];const el=$("#mbar");
+ if(!f||!(p==="prop"||p==="fra")||S.rota[p]!=="contratar"||f.done||f.step<1||f.step>3||!f.itens.length){el.innerHTML="";return;}
+ const nxt=[null,["Escolher profissional",2],["Escolher data",3],["Revisar pedido",4]][f.step];
+ const can=f.step===1?f.itens.length:f.step===2?!!f.pro:f.h!=null;
+ el.innerHTML=`<div class="mbar on-dark"><div class="t"><b class="tn">${brl(tot(f.itens))}</b><span>${f.itens.length} ${f.itens.length>1?"serviços":"serviço"} · ${nJan(f.itens)}h de janela</span></div><button class="btn ${f.step===1?"cta":"white"}" data-next="${nxt[1]}" ${can?"":"disabled"}>${nxt[0]}</button></div>`;
 }
 function vDone(f){
-  const o=S.orders.find(x=>x.id===f.done);
-  const ap=o.status==="aprovacao";
-  return `<section class="done" data-dark>
-    <div class="ok">${ic(ap?"send":"check")}</div>
-    <h1 id="sh" tabindex="-1">${ap?"Enviado ao proprietário":"Pedido confirmado"}</h1>
-    <p style="color:var(--fg-on-dark-2);font-size:14px">${o.id}${ap?` · ${imv(o.imovel).dono} aprova em até 48h`:""}</p>
-    <div class="card">${resumo(null,o)}</div>
-    <div class="steps3">
-      ${(ap?[`${imv(o.imovel).dono} recebe o pedido e aprova pelo app.`,"Aprovado, o profissional confirma a janela.","A franquia recebe o aviso da visita."]
-        :[`${pro(o.pro).nome} confirma a janela em até 2h.`,o.buyer==="prop"?"A franquia recebe o aviso da visita e combina o acesso.":"Você recebe o aviso da visita e combina o acesso.","Depois do serviço chegam as fotos de antes e depois."]).map((t,i)=>`<div><i>${i+1}</i><span>${t}</span></div>`).join("")}
-    </div>
-    <button class="btn cta mt16" data-act="novo">Contratar outro serviço</button>
-    <button class="btn sm" style="color:#fff" data-act="verPedidos">Ver meus pedidos</button>
-  </section>`;
-}
-function statusBadge(o){
-  if(o.status==="aprovacao") return `<span class="badge b-ap">Aguardando aprovação</span>`;
-  if(o.status==="recusado") return `<span class="badge b-no">Recusado</span>`;
-  if(o.step>=4) return `<span class="badge b-ok">Concluído</span>`;
-  return `<span class="badge b-in">${STEPS[o.step]}</span>`;
-}
-function orderCard(o,viewer){
-  const im=imv(o.imovel); const nm=o.itens.map(c=>item(c).nome).join(" + ");
-  const canAp=viewer==="prop"&&o.status==="aprovacao";
-  const matP=o.material&&o.material.st==="pendente"&&o.buyer===viewer;
-  return `<article class="card ord">
-    <div class="hd"><div><b>${nm}</b><div class="code">${o.id} · ${im.nome} · ${o.buyer==="prop"?"proprietário":"franquia"}</div></div>${statusBadge(o)}</div>
-    <div class="row"><span class="vis">${ic("calendar-check","i14")}${fmtD(o.dia)} · ${janela(o.h,o.min)}</span>${resOf(o.imovel,o.dia)?`<span class="badge b-in">${ic("bed-double","i14")} tem hóspede</span>`:""}</div>
-    <div class="sumrow" style="padding:0"><span class="l">${pro(o.pro).nome} · ${ic("star","star")} ${pro(o.pro).nota.toLocaleString("pt-BR")}</span><b class="tn">${brl(o.total)}</b></div>
-    ${canAp?`<div class="warnbox">${ic("user-check")}<span>A ${FRANQUIA} pediu esse serviço. Acima de ${brl(LIMITE)} precisa do seu OK.</span></div><div class="row"><button class="btn pri sm" data-ap="${o.id}">Aprovar</button><button class="btn out sm" data-rec="${o.id}">Recusar</button></div>`:""}
-    ${matP?`<div class="mat" style="margin:0">${ic("package")}<div><b>Material: ${brl(o.material.v)}</b><p>${o.material.d}. Aprova a compra?</p></div></div><div class="row"><button class="btn pri sm" data-mat="${o.id}" data-v="1">Aprovar</button><button class="btn out sm" data-mat="${o.id}" data-v="0">Recusar</button></div>`:""}
-    ${o.material&&o.material.st!=="pendente"?`<p class="note">Material ${brl(o.material.v)} · ${o.material.st}</p>`:""}
-    ${o.status==="ok"?`<div class="tl">${STEPS.map((s,i)=>`<div class="${i<o.step?"d":i===o.step?"c":""}"><span class="pt">${i<o.step?ic("check"):""}</span>${s}</div>`).join("")}</div>`:""}
-  </article>`;
-}
-function vPedidos(b){
-  const L=S.orders.filter(o=>b==="prop"?o.imovel==="FLN0412":true).sort((a,c)=>(a.status==="aprovacao"?-1:0)-(c.status==="aprovacao"?-1:0)||c.dia-a.dia);
-  return `<div class="wrap list">${L.length?L.map(o=>orderCard(o,b)).join(""):`<div class="empty"><span class="c">${ic("clipboard-list")}</span><h3>Nenhum pedido ainda</h3><p class="sub">Os pedidos aparecem aqui.</p></div>`}</div>`;
-}
-function vAvisos(){
-  S.notifs.forEach(n=>n.seen=true);
-  return `<div class="wrap list">${S.notifs.map(n=>`<div class="card ntf ${n.novo?"new":""}"><span class="ic">${ic("calendar-check")}</span><div><b>${n.t}</b><p class="note">${n.d}</p></div></div>`).join("")}</div>`;
+ const o=S.orders.find(x=>x.id===f.done);const ap=o.status==="aguardando_aprovacao";const p=pro(o.pro);
+ const passos=ap?[`${imv(o.imovel).dono} recebe o pedido e aprova pelo app.`,"Sem resposta em 48h, o pedido é cancelado e a data liberada.","Aprovado, o profissional confirma a janela."]
+  :[`${p.nome} confirma a janela em até 2h.`,o.buyer==="prop"?"A franquia recebe o aviso da visita e combina o acesso.":"O proprietário foi avisado.","Depois do serviço chegam as fotos de antes e depois."];
+ return `<section class="done"><span class="ok ${ap?"ap":""}">${ic(ap?"send":"check")}</span>
+  <h1 tabindex="-1" id="dh">${ap?"Enviado ao proprietário":"Pedido confirmado"}</h1><p class="code tn">${o.id} · ${nomeItens(o.itens)}</p>
+  <div class="card pad next"><div class="kv" style="margin-bottom:12px"><span>Quando</span><b class="tn">${fmtD(o.dia)} · ${jan(o.h,o.jan)}</b><span>Profissional</span><b>${p.nome}</b><span>Total</span><b class="tn">${brl(tot(o.itens))}</b></div>
+  <div class="lbl" style="font-size:12px;font-weight:600;color:var(--fg-2);text-transform:uppercase;letter-spacing:.06em;margin-top:8px">O que acontece agora</div>
+  <ol>${passos.map((t,i)=>`<li><i>${i+1}</i><span>${t}</span></li>`).join("")}</ol></div>
+  <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:8px"><button class="btn pri" data-abrir="${o.id}">Ver pedido</button><button class="btn sec" data-act="novo">Contratar outro serviço</button></div>
+ </section>`;
 }
 
-/* ===== prestador ===== */
+/* ===================== pedidos ===================== */
+function stChip(o,viewer){
+ const [n,c]=ST[o.status];const lbl=o.status==="aguardando_aprovacao"&&viewer==="prop"?"Aguardando sua aprovação":n;
+ return `<span class="st"><i style="background:var(${c})"></i>${lbl}</span>`;
+}
+function oRow(o,viewer){
+ const i=item(o.itens[0]);
+ return `<article class="orow" role="article"><span class="cat">${ic(CATS[i.cat][1])}</span><div class="t"><b>${nomeItens(o.itens)}</b><span class="tn">${o.id} · ${imv(o.imovel).nome} · ${fmtD(o.dia)}, ${jan(o.h,o.jan)}</span></div>
+  <div class="stw">${stChip(o,viewer)}</div><div class="v tn">${brl(tot(o.itens))}<small><button class="link" data-abrir="${o.id}" aria-label="Ver detalhes do ${o.id}">ver detalhes</button></small></div></article>`;
+}
+function vPedidosComprador(b){
+ const meus=S.orders.filter(o=>imv(o.imovel).dono==="Carla Mendes");
+ const aprovar=meus.filter(o=>o.status==="aguardando_aprovacao");
+ const conferir=meus.filter(o=>o.status==="prova_enviada");
+ const resto=meus.filter(o=>!aprovar.includes(o)).sort((a,c)=>c.dia-a.dia);
+ return ph("","Seus pedidos","Acompanhe cada serviço, aprove o que a franquia pediu e confira as fotos.",`<button class="btn cta" data-rota="contratar">${ic("plus","i16")}Contratar serviço</button>`)
+ +(aprovar.length?`<div class="sec-h" style="margin-top:0"><h2 class="sec">Pedidos para você aprovar <small>${aprovar.length}</small></h2></div>
+  <div class="grid">${aprovar.map(o=>`<article class="card aprov" role="article"><div class="hd"><span class="cat">${ic("user-check")}</span><div style="flex:1"><b>${nomeItens(o.itens)}</b><span class="tn">${o.id} · ${imv(o.imovel).nome} · ${fmtD(o.dia)}, ${jan(o.h,o.jan)} · ${pro(o.pro).nome}</span></div><b class="tn" style="font-size:20px">${brl(tot(o.itens))}</b></div>
+   <p style="font-size:14px;line-height:20px;color:var(--fg-2)">A ${FRANQUIA} pediu. Acima de R$ 300, precisa da sua aprovação. A data fica reservada por 48h. ${stChip(o,"prop")}</p>
+   <div class="acts"><button class="btn pri sm" data-ap="${o.id}">Aprovar</button><button class="btn sec sm" data-rec="${o.id}">Recusar</button></div></article>`).join("")}</div>`:"")
+ +(conferir.length?`<div class="sec-h"><h2 class="sec">Confira as fotos <small>${conferir.length}</small></h2></div><div class="grid">${conferir.map(o=>`<article class="card aprov" role="article"><div class="hd"><span class="cat">${ic("camera")}</span><div style="flex:1"><b>${nomeItens(o.itens)}</b><span class="tn">${o.id} · ${imv(o.imovel).nome} · ${pro(o.pro).nome} terminou ${fmtDia(o.dia)}</span></div></div><p style="font-size:14px;color:var(--fg-2)">Veja as fotos de antes e depois e confirme. Sem resposta, confirmamos sozinhos em 72h.</p><div class="acts"><button class="btn pri sm" data-abrir="${o.id}">Ver fotos e confirmar</button></div></article>`).join("")}</div>`:"")
+ +`<div class="sec-h"><h2 class="sec">Todos os pedidos</h2></div><div class="card rows">${resto.map(o=>oRow(o,"prop")).join("")}</div>`;
+}
+function vExtrato(){
+ const L=S.orders.filter(o=>imv(o.imovel).dono==="Carla Mendes"&&["concluido","prova_enviada","em_execucao","confirmado"].includes(o.status));
+ const tt=L.reduce((s,o)=>s+tot(o.itens),0);
+ return ph("","Descontos no repasse","Os serviços são descontados do repasse do mês. Nada de boleto novo.")
+ +`<div class="grid g-kpi" style="margin-bottom:24px"><div class="card kpi hot"><small>A descontar em 12/26</small><b class="tn">${brl(tt)}</b><span>${L.length} serviços</span></div></div>
+ <div class="card rows">${L.map(o=>`<div class="orow"><span class="cat">${ic("receipt-text")}</span><div class="t"><b>${nomeItens(o.itens)}</b><span class="tn">${o.id} · ${imv(o.imovel).nome} · pedido por ${o.buyer==="prop"?"você":FRANQUIA}</span></div><div class="stw">${stChip(o,"prop")}</div><div class="v tn">${brl(tot(o.itens))}</div></div>`).join("")}</div>`;
+}
+function vKanban(v){
+ const L=S.orders.filter(o=>!["cancelado","recusado_prestador","recusado_proprietario"].includes(o.status));
+ const nAt=S.orders.filter(o=>o.fase>=7&&!["concluido"].includes(o.status)).length;
+ const kpis=v==="ops"?`<div class="grid g-kpi" style="margin-bottom:24px">${[["Atrasados","alarm-clock",nAt,"7 dias ou mais na fase",true],["Esperando profissional","user-round",S.orders.filter(o=>o.status==="aguardando_prestador").length,"confirma em até 2h"],["Hoje","calendar-check",S.orders.filter(o=>o.dia===0).length,"visitas"],["Ticket médio","receipt-text",brl(S.orders.reduce((s,o)=>s+tot(o.itens),0)/S.orders.length),"por pedido"]].map(([t,i,n,d,h])=>`<div class="card kpi ${h?"hot":""}"><small>${ic(i,"i14")}${t}</small><b class="tn">${n}</b><span>${d}</span></div>`).join("")}</div>`:"";
+ return ph(v==="ops"?"Operação · Florianópolis":FRANQUIA,v==="ops"?"Pedidos da praça":"Pedidos da carteira",v==="ops"?"Todos os pedidos por fase. Atrasado = 7 dias ou mais na mesma fase.":"O que a franquia e os proprietários pediram, por fase.",`<label class="sr" for="fb">Buscar pedido</label><input class="inp" id="fb" placeholder="Buscar por imóvel ou PED…" style="border-radius:9999px;width:240px">`)
+ +kpis+`<div class="kanban" aria-label="Pedidos por fase">${COLS.map(c=>{const l=L.filter(o=>o.status===c);return `<section class="col" style="--c:var(${ST[c][1]})" aria-label="${ST[c][0]}"><div class="ch">${ST[c][0]}<span class="n">${l.length}</span></div>
+  <div class="cl">${l.length?l.map(o=>`<button class="kc" data-abrir="${o.id}"><b>${nomeItens(o.itens)}</b><span class="m tn">${o.id} · ${imv(o.imovel).nome}<br>${fmtD(o.dia)}, ${jan(o.h,o.jan)} · ${pro(o.pro).nome}</span>
+   <span class="f"><span class="${o.fase>=7&&c!=="concluido"?"late":""}">${o.fase===0?"entrou hoje":o.fase===1?"há 1 dia nesta fase":`há ${o.fase} dias nesta fase`}</span><b class="tn">${brl(tot(o.itens))}</b></span></button>`).join(""):`<p class="vz">Sem pedidos nesta fase</p>`}</div></section>`;}).join("")}</div>`;
+}
+
+/* ===================== drawer do pedido ===================== */
+function drawer(id){
+ const o=S.orders.find(x=>x.id===id);if(!o) return "";
+ const p=pro(o.pro),im=imv(o.imovel),v=S.perfil;
+ const atual=ETAPAS.indexOf(o.status);
+ const track=["confirmado","em_execucao"].includes(o.status)?`<div class="track on-dark"><span class="av lg">${ini(p.nome)}</span><div><span>${o.status==="em_execucao"?"Em atendimento agora":fmtDia(o.dia)}</span><b class="tn">${o.status==="em_execucao"?`${p.nome} está no imóvel`:`Chega entre ${o.h}h e ${o.h+1}h`}</b></div></div>`:"";
+ const tl=o.status.startsWith("recusado")||o.status==="cancelado"||o.status==="aguardando_aprovacao"?"":`<div><div class="lbl">Andamento</div><ol class="tl">${ETAPAS.map((e,i)=>`<li class="${i<atual||o.status==="concluido"?"d":i===atual?"c":""}"><span class="p">${i<atual||o.status==="concluido"?ic("check"):""}</span>${ST[e][0]}${i===atual&&e==="prova_enviada"?"<small>O cliente confere as fotos (ou confirmamos sozinhos em 72h).</small>":""}${e==="concluido"&&o.status==="concluido"?`<small>Na garantia até ${dd(o.dia+90)}</small>`:""}</li>`).join("")}</ol></div>`;
+ const fotos=o.status==="prova_enviada"||o.status==="concluido"?`<div><div class="lbl">Fotos</div><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">${[["Antes",PH.rosa],["Depois",PH.lagoa]].map(([t,s])=>`<figure style="position:relative;border-radius:12px;overflow:hidden;aspect-ratio:4/3;margin:0">${img(s,"","Foto "+t.toLowerCase())}<figcaption class="chip photo">${t}</figcaption></figure>`).join("").replace(/<img /g,'<img style="width:100%;height:100%;object-fit:cover" ')}</div></div>`:"";
+ const conf=o.status==="prova_enviada"&&v==="prop"?`<div class="card pad" style="display:flex;flex-direction:column;gap:12px"><b>Ficou bom?</b><div class="stars" role="group" aria-label="Sua nota">${[1,2,3,4,5].map(n=>`<button aria-pressed="${o.nt===n}" aria-label="${n} ${n>1?"estrelas":"estrela"}" data-nota="${n}" class="${o.nt>=n?"on":""}">${ic("star")}</button>`).join("")}</div>
+  <label style="font-size:14px;font-weight:600" for="prop-coment">Quer contar mais? <span style="font-weight:400;color:var(--fg-3)">(opcional)</span></label><textarea class="inp" id="prop-coment"></textarea>
+  <button class="btn pri" id="prop-concluir" data-concl="${o.id}" ${o.nt?"":"disabled"}>Confirmar conclusão</button><button class="btn ghost sm" data-act="reclamar">Tem um problema? Reclamar</button></div>`:"";
+ const cancel=["aguardando_aprovacao","aguardando_prestador","confirmado"].includes(o.status)&&v!=="prest"?`<button class="btn dng sm" data-cancel="${o.id}">Cancelar pedido</button>`:"";
+ return `<div class="drawer-bg" data-close="1"></div><aside class="drawer" role="dialog" aria-modal="true" aria-labelledby="dwt">
+ <div class="dh"><span class="cat">${ic(CATS[item(o.itens[0]).cat][1])}</span><div><h2 id="dwt">${nomeItens(o.itens)}</h2><div class="code tn">${o.id} · ${im.nome} · pedido por ${o.buyer==="prop"?im.dono:FRANQUIA}</div><div style="margin-top:8px">${stChip(o,v)}</div></div><button class="icbtn" data-close="1" aria-label="Fechar">${ic("x")}</button></div>
+ <div class="db">${track}${tl}${fotos}
+  <div><div class="lbl">Resumo</div><div class="card pad kv"><span>Quando</span><b class="tn">${fmtD(o.dia)} · ${jan(o.h,o.jan)}</b><span>Profissional</span><b>${p.nome} · ${ic("star","i14 star")} ${nota(p.nota)}</b><span>Imóvel</span><b>${im.nome}</b>
+   ${v==="prest"?`<span>Você recebe</span><b class="tn">${brl(liquido(o))}</b>`:`<span>Total</span><b class="tn">${brl(tot(o.itens))}</b><span>Pagamento</span><b>${o.status==="concluido"?`Lançado no repasse de ${o.repasse||"12/26"}`:"Desconto no repasse"}</b>`}</div></div>
+  ${conf}${cancel?`<div>${cancel}<p style="font-size:12px;color:var(--fg-2);margin-top:6px">Sem custo até o profissional começar o serviço.</p></div>`:""}
+ </div></aside>`;
+}
+const FUNDO=["#side","#top","#main","#bnav","#mbar","#vercomo"];
+function renderLayer(){
+ const L=$("#layer");const aberto=!!L.innerHTML;const fs=aberto?focoSel():null;
+ if(S.drawer) L.innerHTML=drawer(S.drawer);
+ else if(S.sheet) L.innerHTML=S.sheet;
+ else L.innerHTML="";
+ const tem=!!L.innerHTML;
+ FUNDO.forEach(x=>{const e=$(x);if(e) e.inert=tem;});
+ icons();
+ if(tem&&!aberto){if(!S.opener) S.opener=document.activeElement;const c=L.querySelector('[role=dialog] .icbtn[data-close], [role=dialog] h2');if(c){c.setAttribute("tabindex",c.getAttribute("tabindex")||"-1");c.focus();}}
+ else if(tem) refoca(fs);
+ else if(!tem&&aberto){const o=S.opener;S.opener=null;if(o&&o.isConnected) o.focus();}
+}
+
+/* ===================== franquia ===================== */
+function gridImoveis(contratar){
+ return `<div class="grid g-imv">${IMOVEIS.map(im=>{const nx=im.res.find(([a,b])=>b>=0);const ped=S.orders.filter(o=>o.imovel===im.code&&!["concluido","cancelado"].includes(o.status)).length;
+  return `<button class="card imv" data-imv="${im.code}" aria-label="Ver serviços do ${im.nome}"><span class="ph">${img(im.ph,"",im.nome)}${ped?`<span class="chip">${ped} ${ped>1?"pedidos abertos":"pedido aberto"}</span>`:""}</span>
+  <span class="bd"><b>${im.nome}</b><span class="c">${im.code} · ${im.bairro}</span><span class="o">${im.dono}${nx?` · ${nx[0]<=0?"com hóspede agora":"reserva "+dd(nx[0])}`:""}</span><span class="link go">${contratar?"Escolher":"Contratar serviço"}${ic("arrow-right","i14")}</span></span></button>`;}).join("")}</div>`;
+}
+function vCarteira(){
+ const v=visitas().filter(x=>!S.visto[x.o.id]).length;
+ return ph(FRANQUIA,"Sua carteira","Escolha o imóvel para contratar um serviço. Pedido acima de R$ 300 vai para o proprietário aprovar.",v?`<button class="btn sec" data-rota="visitas">${ic("calendar-check","i16")}${v} ${v>1?"visitas para confirmar":"visita para confirmar"}</button>`:"")+gridImoveis(false);
+}
+function visitas(){
+ return S.orders.filter(o=>["confirmado","aguardando_prestador","em_execucao"].includes(o.status)&&o.dia>=0).sort((a,b)=>a.dia-b.dia||a.h-b.h).map(o=>{const im=imv(o.imovel);const r=resOf(o.imovel,o.dia);const todo=[];
+  if(!im.fechadura) todo.push(["key-round","Liberar o acesso (o imóvel não tem fechadura eletrônica)"]);
+  if(r&&o.dia===r.b) todo.push(["sparkles","Avisar a limpeza: o serviço cai no dia do check-out"]);
+  if(r&&o.dia!==r.b) todo.push(["bed-double","Avisar o hóspede: tem reserva nesse dia"]);
+  return {o,im,todo};});
+}
+function vVisitas(){
+ const L=visitas();
+ return ph(FRANQUIA,"Visitas marcadas","Profissionais que vão aos imóveis da carteira. Confirme o que você precisa fazer em cada uma.")
+ +`<div class="grid">${L.map(({o,im,todo})=>{const d=addD(o.dia);const st=S.visto[o.id];return `<article class="card vis" role="article"><div class="dt"><small>${DOW[d.getDay()]}</small><b class="tn">${d.getDate()}</b><span>${MES[d.getMonth()].slice(0,3)}</span></div>
+  <div><h2 class="vt">${nomeItens(o.itens)}</h2><p class="m tn">${o.h}h–${o.h+o.jan}h · ${im.nome} (${im.code}) · ${pro(o.pro).nome} · ${o.id}</p>
+  ${todo.length?`<div class="todo"><b>O que você precisa fazer:</b><ul>${todo.map(([i,t])=>`<li>${ic(i)}<span>${t}</span></li>`).join("")}</ul></div>`:`<p class="m" style="margin-top:8px">Nada a fazer: o imóvel tem fechadura eletrônica e está livre.</p>`}
+  <div class="acts">${st==="ok"?`<span class="chip ok">${ic("check","i14")}Ciente</span>`:st==="prob"?`<span class="chip info">${ic("message-circle","i14")}Problema enviado à operação</span>`:`<button class="btn pri sm" data-ciente="${o.id}">Ciente</button><button class="btn sec sm" data-prob="${o.id}">Tem um problema</button>`}</div>
+  ${st==="abrindo"?`<fieldset class="probl" style="border:0"><legend style="font-size:14px;font-weight:600;margin-bottom:8px">O que aconteceu?</legend>${["Acesso não vai dar","Data não serve","Outro"].map((t,i)=>`<label class="opt"><input type="radio" name="pb-${o.id}" ${i===0?"checked":""}><div>${t}</div></label>`).join("")}<button class="btn pri sm" style="align-self:flex-start" data-envprob="${o.id}">Enviar</button></fieldset>`:""}
+  </div></article>`;}).join("")}</div>`;
+}
+
+/* ===================== prestador ===================== */
 function vPrest(){
-  const p=pro(S.prest);
-  const L=S.orders.filter(o=>o.pro===p.id&&o.status==="ok").sort((a,b)=>a.dia-b.dia||a.h-b.h);
-  return header()+`<div class="wrap">
-    <div class="row mt16" role="group" aria-label="Profissional">${PROS.filter((x,i)=>i<4||x.id===p.id||S.orders.some(o=>o.pro===x.id&&o.status==="ok")).map(x=>`<button class="tab" aria-selected="${x.id===p.id}" data-prest="${x.id}">${x.nome}</button>`).join("")}</div>
-    <h2 class="sec">Sua agenda</h2>
-    <div class="list">${L.length?L.map(o=>{const im=imv(o.imovel);const acts=[["Aceitar","Confirmar presença"],["A caminho","Saí para o serviço"],["Em atendimento","Cheguei"],["Concluído com fotos","Enviar fotos e concluir"]];
-      return `<article class="card ord"><div class="hd"><div><b>${o.itens.map(c=>item(c).nome).join(" + ")}</b><div class="code">${o.id} · ${im.nome} · ${im.code}</div></div>${statusBadge(o)}</div>
-      <div class="row"><span class="vis">${ic("clock","i14")}${fmtD(o.dia)} · ${janela(o.h,o.min)}</span>${resOf(o.imovel,o.dia)?`<span class="badge b-in">tem hóspede · combine com a operação</span>`:""}</div>
-      <div class="sumrow" style="padding:0"><span class="l">Você recebe</span><b class="tn">${brl(o.total*.8)}</b></div>
-      ${o.step<4?`<div class="row">${o.step===0?`<button class="btn pri sm" data-adv="${o.id}">Confirmar presença</button>`:`<button class="btn pri sm" data-adv="${o.id}">${acts[o.step][1]}</button>`}${o.step>=2&&!o.material?`<button class="btn out sm" data-pmat="${o.id}">${ic("package","i14")}Informar material</button>`:""}</div>`:""}
-      ${o.material?`<p class="note">Material ${brl(o.material.v)} · ${o.material.st}</p>`:""}</article>`;}).join(""):`<div class="empty"><span class="c">${ic("calendar")}</span><h3>Agenda livre</h3><p class="sub">Os pedidos novos aparecem aqui.</p></div>`}</div>
-  </div>`;
+ const p=pro(S.prest);const meus=S.orders.filter(o=>o.pro===p.id);
+ const novos=meus.filter(o=>o.status==="aguardando_prestador"),agenda=meus.filter(o=>["confirmado","em_execucao"].includes(o.status)).sort((a,b)=>a.dia-b.dia),feitos=meus.filter(o=>["prova_enviada","concluido"].includes(o.status));
+ const aba=S.prestAba;const L=aba==="novos"?novos:aba==="agenda"?agenda:feitos;
+ const hoje=agenda.filter(o=>o.dia===0).length;const rec=agenda.concat(feitos.filter(o=>o.status==="prova_enviada")).reduce((s,o)=>s+liquido(o),0);
+ return ph("",`Olá, ${p.nome.split(" ")[0]}`,`A receber: <b class="tn" style="color:var(--fg)">${brl(rec)}</b> · Pix em até 1 dia útil depois que conferimos fotos e NF · nota ${nota(p.nota)} (${p.av} avaliações)`,`<label class="sr" for="selp">Profissional</label><select class="inp" id="selp" aria-label="Profissional">${PROS.map(x=>`<option value="${x.id}" ${x.id===p.id?"selected":""}>${x.nome}</option>`).join("")}</select>`)
+ +`<div class="seg" role="group" aria-label="Filtrar pedidos">${[["novos","Novos",novos.length],["agenda","Agenda",agenda.length],["feitos","Concluídos",feitos.length]].map(([k,n,c])=>`<button data-paba="${k}" aria-pressed="${aba===k}">${n}${c?`<span class="ct">${c}<span class="sr"> pendentes</span></span>`:""}</button>`).join("")}</div>
+ <div class="grid" style="margin-top:16px">${L.length?L.map(o=>job(o)).join(""):`<div class="empty"><span class="c">${ic(aba==="novos"?"inbox":"calendar")}</span><b>${aba==="novos"?"Nenhum pedido novo":"Nada por aqui"}</b>Os pedidos novos aparecem aqui e chegam também por WhatsApp.</div>`}</div>`;
+}
+function job(o){
+ const im=imv(o.imovel),r=resOf(o.imovel,o.dia);
+ const novo=o.status==="aguardando_prestador";
+ let acts="";
+ if(novo) acts=`<button class="btn pri sm" data-aceitar="${o.id}">Aceitar</button><button class="btn sec sm" data-recp="${o.id}">Recusar</button><span style="font-size:12px;color:var(--fg-2)">Recusar não tira ponto.</span>`;
+ else if(o.status==="confirmado") acts=o.pres?`<button class="btn pri sm" id="pst-checkin" data-chegar="${o.id}">${ic("map-pin","i16")}Cheguei</button><span style="font-size:12px;color:var(--fg-2)">Usamos a sua localização só para registrar a chegada.</span>`:`<button class="btn pri sm" data-pres="${o.id}">Confirmar presença</button>`;
+ else if(o.status==="em_execucao") acts=`<label class="foto ${o.foto?"ok":""}">${ic(o.foto?"check-circle":"camera")}${o.foto?"Foto do depois anexada":"Anexar foto do depois"}<input type="file" accept="image/*" data-tipo="depois" data-foto="${o.id}"></label><button class="btn pri sm" id="pst-concluir" data-concp="${o.id}" ${o.foto?"":"disabled"}>Concluir</button><button class="btn sec sm" data-extra="${o.id}">${ic("package","i16")}Pedir item extra</button>`;
+ else if(o.status==="prova_enviada") acts=`<div class="note info">${ic("clock")}<div>O cliente confere as fotos (ou confirma sozinho em 72h). Depois, o Pix cai em até 1 dia útil.</div></div>`;
+ else acts=`<span class="chip ok">${ic("check","i14")}Pago · NF enviada</span>`;
+ return `<article class="card job" role="article"><div class="hd"><div><b>${nomeItens(o.itens)}</b><span class="tn">${o.id} · ${novo?im.bairro:`${im.nome} · ${im.code}`}</span></div><div class="rec"><small>Você recebe</small><b class="tn">${brl(liquido(o))}</b></div></div>
+ <div class="info"><span>${ic("calendar","i14")}<b class="tn" style="color:var(--fg)">${fmtD(o.dia)} · ${jan(o.h,o.jan)}</b></span><span>${ic("map-pin","i14")}${novo?"Endereço aparece depois do aceite":"Rua das Gaivotas, 120 · código de acesso na hora da visita"}</span>${r?`<span>${ic("bed-double","i14")}Tem hóspede · combine com a operação</span>`:""}</div>
+ <div class="acts">${acts}</div></article>`;
+}
+function vGanhos(){
+ const p=pro(S.prest);const L=S.orders.filter(o=>o.pro===p.id&&["concluido","prova_enviada","em_execucao","confirmado"].includes(o.status));
+ return ph("","Seus ganhos","Para receber, emita a NF no CNPJ da sua empresa (MEI ou ME). Conferimos as fotos e a NF e o Pix cai em até 1 dia útil.")
+ +(L.length?`<div class="card rows">${L.map(o=>`<div class="orow"><span class="cat">${ic("wallet")}</span><div class="t"><b>${nomeItens(o.itens)}</b><span class="tn">${o.id} · ${fmtD(o.dia)}</span></div><div class="stw">${stChip(o,"prest")}</div><div class="v tn">${brl(liquido(o))}<small>líquido</small></div></div>`).join("")}</div>`:`<div class="empty"><span class="c">${ic("wallet")}</span><b>Nenhum ganho ainda</b>Quando você concluir um serviço, o valor líquido aparece aqui.</div>`)
+ +`<p style="font-size:14px;color:var(--fg-2);margin-top:12px">Você recebe o valor líquido mostrado no pedido, já descontada a taxa da Seazone. A taxa só é cobrada quando você faz um serviço.</p>`;
 }
 
-/* ===== painel ===== */
-function sugestao(m){
-  const p=pro(m.pro), i=item(m.cod);
-  const s=nextSlot(p,i.min,1,m.pref);
-  return {p,i,s};
-}
-function vPainel(){
-  const t=S.tab.painel;
-  const ab=S.manut.filter(m=>!m.done);
-  const head=header()+tabs([["agente","Agente de manutenções",ab.length||""],["pedidos","Pedidos"]]);
-  if(t==="pedidos") return head+`<div class="wrap gap16"><div class="kpis">${[["Pedidos",S.orders.length],["Aguardando aprovação",S.orders.filter(o=>o.status==="aprovacao").length],["Confirmados",S.orders.filter(o=>o.status==="ok"&&o.step<4).length],["Concluídos",S.orders.filter(o=>o.step>=4).length]].map(([n,v])=>`<div class="card kpi"><b>${v}</b><span>${n}</span></div>`).join("")}</div>
-    <div class="list">${S.orders.slice().sort((a,b)=>b.dia-a.dia).map(o=>orderCard(o,"painel")).join("")}</div></div>`;
-  return head+`<div class="wrap gap16">
-    <div class="agent"><div class="t">${ic("bot")}Agente de manutenções</div><p>Lê as manutenções abertas das franquias, acha o serviço do catálogo e sugere o profissional com a primeira janela livre. Você contrata com um toque.</p></div>
-    <div class="list">${ab.length?ab.map(m=>{const {p,i,s}=sugestao(m);const im=imv(m.imovel);const ap=i.preco>LIMITE;
-      return `<article class="card sug"><div class="cap">${ic("wrench","i14")} ${im.code} · ${im.nome} · aberto há ${m.dias} dia${m.dias>1?"s":""}</div>
-        <p class="tx">Card do <b>${m.titulo}</b> do ${im.code} aberto há ${m.dias} dia${m.dias>1?"s":""}: <b>${p.nome.split(" ")[0]}</b> pode ir ${s?`<b>${fmtDia(s.n)} ${janela(s.h,i.min)}</b>`:"em breve"}, <b class="tn" style="white-space:nowrap">${brl(i.preco)}</b></p>
-        <p class="note">“${m.txt}” · ${i.cod} ${i.nome} · ${ic("star","star")} ${p.nota.toLocaleString("pt-BR")} · ${p.serv} serviços${s&&resOf(m.imovel,s.n)?" · tem hóspede nesse dia":""}${ap?` · acima de ${brl(LIMITE)}, vai para o proprietário aprovar`:""}</p>
-        <div class="row"><button class="btn pri sm" data-contr="${m.id}">Contratar</button><button class="btn out sm" data-ign="${m.id}">Ignorar</button></div></article>`;}).join(""):`<div class="empty"><span class="c">${ic("check-check")}</span><h3>Nada aberto</h3><p class="sub">Todas as manutenções viraram pedido.</p></div>`}</div>
-  </div>`;
+/* ===================== operação: agente de manutenções ===================== */
+function vAgente(){
+ const ab=S.manut.filter(m=>!m.done);
+ return ph("Operação","Manutenções sem pedido","O agente lê as manutenções abertas das franquias, acha o serviço do catálogo e sugere o profissional com a primeira janela livre. Você contrata com um toque.")
+ +`<p style="font-size:14px;color:var(--fg-2);margin:-8px 0 16px"><b style="color:var(--fg)">${ab.length} ${ab.length===1?"aberta":"abertas"}</b>${ab.filter(m=>m.dias>=7).length?` · <b style="color:var(--error-ink)">${ab.filter(m=>m.dias>=7).length} há 7 dias ou mais</b>`:""} · ${S.manut.filter(m=>m.done==="ok").length} viraram pedido hoje</p>`
+ +(ab.length?`<div class="card">${ab.sort((a,b)=>b.dias-a.dias).map(m=>{const i=item(m.cod),p=pro(m.pro),s=prox(p,i.jan),im=imv(m.imovel);const ap=i.preco>LIMITE;
+  return `<div class="sug"><span class="cat">${ic(CATS[i.cat][1])}</span><div><p class="q">“${m.txt}”</p><p class="t">${i.nome} · <b>${p.nome}</b> pode ir <b class="tn">${s?`${fmtDia(s.n)}, ${jan(s.h,i.jan)}`:"em breve"}</b> · <b class="tn">${brl(i.preco)}</b></p>
+  <div class="m"><span>${im.nome} (${im.code})</span><span class="${m.dias>=7?"late":""}" style="${m.dias>=7?"color:var(--error-ink);font-weight:600":""}">aberta há ${m.dias} ${m.dias>1?"dias":"dia"}</span><span>${ic("star","i14 star")} ${nota(p.nota)} · ${p.serv} serviços</span>${s&&resOf(m.imovel,s.n)?"<span>tem hóspede nesse dia</span>":""}${ap?"<span>acima de R$ 300: vai para o proprietário aprovar</span>":""}</div></div>
+  <div class="acts"><button class="btn pri sm" data-contr="${m.id}">Contratar</button><button class="btn ghost sm" data-ign="${m.id}">Ignorar</button></div></div>`;}).join("")}</div>`
+  :`<div class="empty"><span class="c">${ic("check-check")}</span><b>Nada aberto</b>Todas as manutenções viraram pedido.</div>`);
 }
 
-/* ===== cart / pill / toast / sheet ===== */
-function renderCart(){
-  const p=S.perfil, c=$("#cart");
-  const f=S.flow[p];
-  let show=(p==="prop"||p==="fra")&&S.tab[p]==="comprar"&&f&&!f.done&&f.step>=1&&f.step<=3&&f.itens.length;
-  if(!show){ c.innerHTML=""; document.body.classList.remove("hascart"); return; }
-  const lbl= f.step===1?"Escolher profissional":f.step===2?"Escolher data":"Revisar pedido";
-  const ok= f.step===1 || (f.step===2&&f.pro) || (f.step===3&&f.dia!=null&&f.h!=null);
-  c.innerHTML=`<div class="cartbar"><div class="in" id="cb"><div class="tt"><b class="tn">${brl(fTot(f))}</b><span>${f.itens.length} serviço${f.itens.length>1?"s":""} · ${durLbl(fMin(f))}</span></div><button class="btn cta" data-act="avancar" ${ok?"":"disabled"}>${lbl}</button></div></div>`;
-  document.body.classList.add("hascart");
-}
-function renderPill(){
-  const P=[["prop","Proprietário"],["fra","Franquia"],["prest","Prestador"],["painel","Painel"]];
-  $("#pill").innerHTML=`<span class="lb">${ic("eye","i14")}<span class="lbt">Protótipo · ver como</span></span>${P.map(([k,n])=>`<button aria-pressed="${S.perfil===k}" data-perfil="${k}">${n}</button>`).join("")}`;
-}
-let tT;
-function toast(t){ const el=$("#toast"); el.textContent=t; el.classList.add("show"); clearTimeout(tT); tT=setTimeout(()=>el.classList.remove("show"),3000); }
-function sheet(html){ $("#sheet").innerHTML=`<div class="backdrop" data-close="1"><div class="sheet" role="dialog" aria-modal="true"><div class="grab"></div>${html}</div></div>`; icons(); const b=$("#sheet .sheet button"); b&&b.focus(); }
-function closeSheet(){ $("#sheet").innerHTML=""; }
-function detalhe(cod){
-  const i=item(cod), f=flow(), on=f.itens.includes(cod);
-  sheet(`<span class="cap">${CATS[i.cat][0]} · ${i.cod}</span><h2>${i.nome}</h2>
-    <p class="sub mt8">${i.desc}</p>
-    <div class="meta"><span>${ic("clock")}${durLbl(i.min)} (${i.dur})</span><span>${ic("badge-check")}Preço fechado</span><span>${ic("shield-check")}90 dias de garantia</span></div>
-    <h4>Inclui</h4><ul>${i.inc.map(x=>`<li class="yes">${ic("check")}${x}</li>`).join("")}</ul>
-    <h4>Não inclui</h4><ul>${i.exc.map(x=>`<li class="no">${ic("x")}${x}</li>`).join("")}</ul>
-    ${MAT}
-    <div class="sumrow" style="font-size:20px;font-weight:700;margin-bottom:12px"><span>Preço</span><span class="tn">${brl(i.preco)}</span></div>
-    <button class="btn cta" data-${on?"rem":"add"}="${i.cod}" data-close-after="1">${on?"Remover do pedido":"Adicionar ao pedido"}</button>`);
-}
-function matSheet(id){
-  sheet(`<h2>Informar material</h2><p class="sub mt8">O comprador aprova antes de você comprar.</p>
-    <div class="gap8 mt16">${[[45,"Resistência 5.500W"],[85,"Sifão + engate flexível"],[120,"Disjuntor 40A + terminal"]].map(([v,d])=>`<button class="card sumrow" style="text-align:left" data-pmatv="${id}" data-v="${v}" data-d="${d}"><span>${d}</span><b class="tn">${brl(v)}</b></button>`).join("")}</div>`);
+/* ===================== sheet do serviço ===================== */
+function sheetServico(cod){
+ const i=item(cod),f=flow();const on=f.itens.includes(cod);
+ return `<div class="sheet-bg" data-close="1"><div class="sheet" role="dialog" aria-modal="true" aria-labelledby="sht" data-stop="1">
+  <div style="display:flex;justify-content:space-between;align-items:center"><span class="chip info">${ic(CATS[i.cat][1],"i14")}${CATS[i.cat][0]}</span><button class="icbtn" data-close="1" aria-label="Fechar">${ic("x")}</button></div><h2 id="sht" style="margin-top:10px">${i.nome}</h2><p class="ds">${i.desc}</p>
+  <div style="display:flex;gap:16px;flex-wrap:wrap;font-size:14px;color:var(--fg-2);margin-top:12px"><span style="display:inline-flex;gap:6px;align-items:center">${ic("clock","i14")}${i.dur}</span><span style="display:inline-flex;gap:6px;align-items:center">${ic("shield-check","i14")}90 dias de garantia</span></div>
+  <h4>Inclui</h4><ul class="in">${i.inc.map(t=>`<li>${ic("check")}${t}</li>`).join("")}</ul>
+  <h4>Não inclui</h4><ul class="out">${i.exc.map(t=>`<li>${ic("minus")}${t}</li>`).join("")}<li>${ic("package")}Material e peças (o profissional informa o valor antes e você aprova)</li></ul>
+  <div class="bar"><div><small style="font-size:12px;color:var(--fg-2);display:block">Preço fechado</small><b class="tn">${brl(i.preco)}</b></div><button class="btn ${on?"sec":"pri"}" data-add="${i.cod}" data-fecha="1" aria-label="${on?"Remover":"Adicionar"} ${esc(i.nome)}">${on?"Remover do pedido":"Adicionar ao pedido"}</button></div>
+ </div></div>`;
 }
 
-/* ===== ações ===== */
-function confirmar(f){
-  const ap=f.buyer==="fra"&&fTot(f)>LIMITE;
-  const o={id:"PED-"+(seq++),buyer:f.buyer,imovel:f.imovel,itens:f.itens.slice(),pro:f.pro,dia:f.dia,h:f.h,min:fMin(f),total:fTot(f),status:ap?"aprovacao":"ok",step:0};
-  S.orders.push(o); f.done=o.id;
-  if(!ap) notifVisita(o);
-  render();
-}
-function notifVisita(o){
-  S.notifs.unshift({t:`Visita agendada · ${o.imovel}`,d:`${pro(o.pro).nome} vai em ${fmtD(o.dia)}, ${janela(o.h,o.min)} · ${o.itens.map(c=>item(c).nome).join(" + ")}. Pedido feito ${o.buyer==="prop"?"pelo proprietário":"pela franquia"}.${resOf(o.imovel,o.dia)?" Tem hóspede: combine o acesso.":""}`,novo:true});
+/* ===================== ações ===================== */
+let tT;function toast(t){const el=$("#toast");el.innerHTML=ic("check-circle")+esc(t);icons();el.classList.add("show");clearTimeout(tT);tT=setTimeout(()=>el.classList.remove("show"),3000);}
+function setRota(r){S.rota[S.perfil]=r;S.drawer=null;S.sheet=null;if(r==="contratar"&&S.perfil==="fra"){const f=flow();if(f.done) S.flow.fra=newFlow("fra");}render();}
+function confirmar(){
+ const f=flow();const t=tot(f.itens);const ap=f.buyer==="fra"&&t>LIMITE;
+ const id="PED-"+(++S.ped);
+ S.orders.unshift({id,buyer:f.buyer,imovel:f.imovel,itens:[...f.itens],pro:f.pro,dia:f.dia,h:f.h,jan:nJan(f.itens),status:ap?"aguardando_aprovacao":"aguardando_prestador",fase:0});
+ S.termos[f.buyer]=true;f.done=id;render();setTimeout(()=>{const h=$("#dh");h&&h.focus();},50);
 }
 document.addEventListener("click",e=>{
-  const t=e.target.closest("button,[data-det],[data-close]"); if(!t) return;
-  const d=t.dataset, f=S.flow[S.perfil];
-  if(d.close&&e.target===t){ closeSheet(); return; }
-  if(d.perfil){ S.perfil=d.perfil; if(d.perfil==="prest"){ const nv=S.orders.filter(o=>o.status==="ok"&&o.step===0).pop(); if(nv) S.prest=nv.pro; } closeSheet(); render(); return; }
-  if(d.tab){ S.tab[S.perfil]=d.tab; if(d.tab==="avisos") setTimeout(()=>S.notifs.forEach(n=>n.novo=false),0); render(); return; }
-  if(d.add||d.rem){
-    e.stopPropagation(); const fl=flow();
-    if(d.add&&!fl.itens.includes(d.add)){ fl.itens.push(d.add); toast("Serviço adicionado"); }
-    if(d.rem) fl.itens=fl.itens.filter(x=>x!==d.rem);
-    fl.pro=null; fl.dia=null; fl.h=null;
-    if(d.closeAfter) closeSheet();
-    render(true); const cb=$("#cb"); if(cb&&d.add){ cb.classList.remove("bump"); void cb.offsetWidth; cb.classList.add("bump"); }
-    return;
-  }
-  if(d.det){ detalhe(d.det); return; }
-  if(d.cat!==undefined&&t.classList.contains("cat")){ f.cat=f.cat===d.cat?"":d.cat; render(true); return; }
-  if(d.imv){ f.imovel=d.imv; f.step=1; render(); return; }
-  if(d.pro){ f.pro=d.pro; f.dia=null; f.h=null; render(true); return; }
-  if(d.mes){ f.month+=Number(d.mes); render(true); return; }
-  if(d.dia!==undefined&&t.classList.contains("day")){ f.dia=Number(d.dia); f.h=null; render(true); return; }
-  if(d.h){ f.h=Number(d.h); render(true); return; }
-  if(d.ap||d.rec){ const o=S.orders.find(x=>x.id===(d.ap||d.rec)); if(d.ap){ o.status="ok"; o.step=0; notifVisita(o); toast("Aprovado. A franquia foi avisada"); } else { o.status="recusado"; toast("Recusado. A franquia foi avisada"); } render(true); return; }
-  if(d.mat){ const o=S.orders.find(x=>x.id===d.mat); o.material.st=d.v==="1"?"aprovado":"recusado"; toast(d.v==="1"?"Material aprovado":"Material recusado"); render(true); return; }
-  if(d.prest){ S.prest=d.prest; render(true); return; }
-  if(d.adv){ const o=S.orders.find(x=>x.id===d.adv); o.step=Math.min(o.step+1,4); toast(STEPS[o.step]); render(true); return; }
-  if(d.pmat){ matSheet(d.pmat); return; }
-  if(d.pmatv){ const o=S.orders.find(x=>x.id===d.pmatv); o.material={v:Number(d.v),d:d.d,st:"pendente"}; closeSheet(); toast("Enviado para o comprador aprovar"); render(true); return; }
-  if(d.contr||d.ign){
-    const m=S.manut.find(x=>x.id===(d.contr||d.ign)); m.done=true;
-    if(d.contr){ const {p,i,s}=sugestao(m); const ap=i.preco>LIMITE;
-      const o={id:"PED-"+(seq++),buyer:"fra",imovel:m.imovel,itens:[i.cod],pro:p.id,dia:s.n,h:s.h,min:i.min,total:i.preco,status:ap?"aprovacao":"ok",step:0};
-      S.orders.push(o); if(!ap) notifVisita(o);
-      toast(ap?`${o.id} enviado ao proprietário para aprovar`:`${o.id} contratado · franquia avisada`);
-    } else toast("Sugestão ignorada");
-    render(true); return;
-  }
-  switch(d.act){
-    case "avancar": if(f.step===1&&!prosFor(f).length){ f.step=2; } else f.step++; render(); break;
-    case "voltar": f.step--; if(f.buyer==="prop"&&f.step<1) f.step=1; render(); break;
-    case "confirmar": confirmar(f); break;
-    case "novo": S.flow[S.perfil]=newFlow(S.perfil); render(); break;
-    case "verPedidos": S.flow[S.perfil]=newFlow(S.perfil); S.tab[S.perfil]="pedidos"; render(); break;
-    case "trocaImv": f.step=0; render(); break;
-    case "limpa": f.q=""; f.cat=""; render(true); break;
-  }
-});
-document.addEventListener("keydown",e=>{
-  if(e.key==="Escape") closeSheet();
-  const c=e.target.closest&&e.target.closest("[data-det]");
-  if(c&&(e.key==="Enter"||e.key===" ")&&e.target===c){ e.preventDefault(); detalhe(c.dataset.det); }
+ const t=e.target.closest("button,a,[data-close]");if(!t) return;
+ const d=t.dataset;const f=S.flow[S.perfil];
+ if(t.tagName==="A"&&t.getAttribute("href")==="#") e.preventDefault();
+ if(d.close&&(e.target===t||t.tagName==="BUTTON")){S.drawer=null;S.sheet=null;renderLayer();return;}
+ if(d.act==="vercomo"){$("#vercomo").classList.toggle("open");casca();icons();return;}
+ if(d.papel){$("#vercomo").classList.remove("open");S.perfil=d.papel;S.drawer=null;S.sheet=null;render();return;}
+ if(d.rota){setRota(d.rota);return;}
+ if(d.act==="tema"){document.documentElement.dataset.theme=escuro()?"light":"dark";render(true);return;}
+ if(d.cat!==undefined){flow().cat=d.cat;render(true);return;}
+ if(d.det){S.sheet=sheetServico(d.det);renderLayer();icons();return;}
+ if(d.add){const fl=flow();const i=fl.itens.indexOf(d.add);if(i>=0) fl.itens.splice(i,1);else{fl.itens.push(d.add);toast("Serviço adicionado");}fl.pro=null;fl.dia=null;fl.h=null;if(d.fecha) S.sheet=null;render(true);return;}
+ if(d.next){const fl=flow();fl.step=+d.next;if(fl.step===2&&!fl.pro){const L=prosFor(fl);if(L.length) fl.pro=L[0].id;}if(fl.step===3&&fl.dia==null){const s=prox(pro(fl.pro),nJan(fl.itens));if(s){fl.dia=s.n;fl.h=null;}}render();return;}
+ if(d.goto){flow().step=+d.goto;render();return;}
+ if(d.act==="voltar"){const fl=flow();fl.step=Math.max(fl.buyer==="fra"?0:1,fl.step-1);render();return;}
+ if(d.pro){flow().pro=d.pro;flow().dia=null;flow().h=null;render(true);return;}
+ if(d.mes){const fl=flow();fl.mes=Math.max(0,Math.min(1,fl.mes+(+d.mes)));render(true);return;}
+ if(d.dia!==undefined){const fl=flow();fl.dia=+d.dia;fl.h=null;render(true);return;}
+ if(d.janela){flow().h=+d.janela;render(true);return;}
+ if(d.act==="confirmar"){confirmar();return;}
+ if(d.act==="novo"){S.flow[S.perfil]=newFlow(S.perfil);render();return;}
+ if(d.act==="trocarImovel"){if(S.perfil==="prop"){S.propImovel=S.propImovel==="FLN0412"?"FLN0219":"FLN0412";const fl=flow();fl.imovel=S.propImovel;fl.itens=[];fl.pro=null;fl.dia=null;fl.h=null;}else{flow().step=0;}render();return;}
+ if(d.act==="limparBusca"){flow().q="";render(true);return;}
+ if(d.act==="termosDoc"){toast("Termos de uso: abertos numa nova aba no app real");return;}
+ if(d.act==="reclamar"){toast("Abrimos a conversa com a SIA, com protocolo e prazo");return;}
+ if(d.imv){if(S.perfil==="fra"){S.rota.fra="contratar";S.flow.fra=newFlow("fra");S.flow.fra.imovel=d.imv;S.flow.fra.step=1;}render();return;}
+ if(d.abrir){S.drawer=d.abrir;S.sheet=null;renderLayer();icons();return;}
+ if(d.ap){const o=S.orders.find(x=>x.id===d.ap);o.status="aguardando_prestador";o.fase=0;render(true);toast("Aprovado. Avisamos a franquia e o profissional.");return;}
+ if(d.rec){const o=S.orders.find(x=>x.id===d.rec);o.status="recusado_proprietario";render(true);toast("Recusado. A franquia foi avisada.");return;}
+ if(d.nota){const o=S.orders.find(x=>x.id===S.drawer);o.nt=+d.nota;renderLayer();icons();return;}
+ if(d.concl){const o=S.orders.find(x=>x.id===d.concl);o.status="concluido";o.nota=o.nt;S.drawer=null;render(true);toast("Obrigado! Avaliação enviada.");return;}
+ if(d.cancel){const o=S.orders.find(x=>x.id===d.cancel);o.status="cancelado";S.drawer=null;render(true);toast("Pedido cancelado, sem custo.");return;}
+ if(d.ciente){S.visto[d.ciente]="ok";render(true);toast("Ciente registrado");return;}
+ if(d.prob){S.visto[d.prob]="abrindo";render(true);return;}
+ if(d.envprob){S.visto[d.envprob]="prob";render(true);toast("Enviado. A operação te chama em seguida.");return;}
+ if(d.paba){S.prestAba=d.paba;render(true);return;}
+ if(d.aceitar){const o=S.orders.find(x=>x.id===d.aceitar);o.status="confirmado";o.fase=0;S.prestAba="agenda";render(true);toast("Pedido aceito. O endereço já aparece.");return;}
+ if(d.recp){const o=S.orders.find(x=>x.id===d.recp);o.status="recusado_prestador";render(true);toast("Recusado. Procuramos outro profissional.");return;}
+ if(d.pres){S.orders.find(x=>x.id===d.pres).pres=true;render(true);toast("Presença confirmada");return;}
+ if(d.chegar){const o=S.orders.find(x=>x.id===d.chegar);o.status="em_execucao";o.fase=0;render(true);toast("Check-in feito");return;}
+ if(d.concp){const o=S.orders.find(x=>x.id===d.concp);o.status="prova_enviada";o.fase=0;S.prestAba="feitos";render(true);toast("Recebido. Conferimos as fotos e a NF e o Pix cai em até 1 dia útil.");return;}
+ if(d.extra){toast("Item extra enviado ao cliente para aprovar");return;}
+ if(d.contr){const m=S.manut.find(x=>x.id===d.contr);const i=item(m.cod),p=pro(m.pro),s=prox(p,i.jan);const ap=i.preco>LIMITE;S.orders.unshift({id:"PED-"+(++S.ped),buyer:"fra",imovel:m.imovel,itens:[m.cod],pro:m.pro,dia:s?s.n:1,h:s?s.h:9,jan:i.jan,status:ap?"aguardando_aprovacao":"aguardando_prestador",fase:0});m.done="ok";render(true);toast(ap?"Enviado ao proprietário para aprovar":"Pedido criado: "+S.orders[0].id);return;}
+ if(d.ign){S.manut.find(x=>x.id===d.ign).done="ign";render(true);return;}
 });
 document.addEventListener("input",e=>{
-  if(e.target.id!=="q") return;
-  const f=flow(); f.q=e.target.value;
-  const L=filtra(f); const el=$("#lista");
-  if(el){ el.innerHTML=L.length?L.map(i=>svcCard(i,f)).join(""):`<div class="empty"><span class="c">${ic("search-x")}</span><h3>Nada com esse nome</h3><p class="sub">Tente “chuveiro”, “tomada” ou “porta”.</p><button class="btn pri sm" data-act="limpa">Ver todos</button></div>`; icons(); }
+ if(e.target.id==="q"){const f=flow();f.q=e.target.value;const pos=e.target.selectionStart;render(true);const q=$("#q");if(q){q.focus();q.setSelectionRange(pos,pos);}}
+ if(e.target.id==="fb"){const v=e.target.value.toLowerCase();document.querySelectorAll(".kc").forEach(k=>{k.style.display=k.textContent.toLowerCase().includes(v)?"":"none";});}
 });
+document.addEventListener("change",e=>{
+ const t=e.target;
+ if(t.id==="termos"){flow().aceite=t.checked;render(true);}
+ if(t.name==="mat"){flow().mat=t.value;render(true);}
+ if(t.id==="selp"){S.prest=t.value;S.prestAba="novos";render();}
+ if(t.dataset.foto){S.orders.find(x=>x.id===t.dataset.foto).foto=true;render(true);}
+});
+document.addEventListener("keydown",e=>{
+ if(e.key==="Escape"&&(S.drawer||S.sheet)){S.drawer=null;S.sheet=null;renderLayer();return;}
+ if(e.key==="Tab"&&(S.drawer||S.sheet)){const d=$("#layer [role=dialog]");const f=[...d.querySelectorAll('button:not([disabled]),a[href],input,textarea,select,[tabindex="0"]')];if(!f.length) return;const a=f[0],z=f[f.length-1];
+  if(e.shiftKey&&document.activeElement===a||!d.contains(document.activeElement)&&e.shiftKey){e.preventDefault();z.focus();}else if(!e.shiftKey&&document.activeElement===z){e.preventDefault();a.focus();}}
+});
+/* deep link de demo: #ver=fra&rota=pedidos */
+(function(){const h=new URLSearchParams(location.hash.slice(1));const v=h.get("ver");if(v&&ME[v]||v==="prest") S.perfil=v;const r=h.get("rota");if(r) S.rota[S.perfil]=r;})();
 render();
 </script>
 </body>
