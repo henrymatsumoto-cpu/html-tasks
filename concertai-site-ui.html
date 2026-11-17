@@ -1,0 +1,36 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>ConcertAI site</title>
+<style>body{background:#14161b;color:#d9dce3;font:16px/1.6 system-ui,sans-serif;max-width:780px;margin:40px auto;padding:0 16px}h1{font-size:1.5rem;color:#fff}h2{font-size:1.1rem;color:#9ec1ff;margin-top:2rem}table{border-collapse:collapse;width:100%;font-size:.95rem}td,th{border-bottom:1px solid #2a2e38;padding:8px 6px;text-align:left;vertical-align:top}th{color:#9ec1ff}a{color:#8ab4ff;word-break:break-all}code{background:#1d2028;padding:1px 5px;border-radius:4px}details{margin-top:2rem;color:#aab}li{margin:4px 0}</style></head><body>
+<h1>ConcertAI · Telas do site (proprietário, franquia e prestador)</h1>
+
+<h2>O que foi feito</h2>
+<p>O site do ConcertAI ganhou todas as telas dos três lados, com o visual da Seazone e os textos oficiais (PR #10). Hoje ele roda com dados de exemplo; quando o banco está configurado, as mesmas telas usam o Supabase de verdade, sem refazer nada.</p>
+<table>
+<tr><th>Quem</th><th>O que dá pra fazer</th></tr>
+<tr><td>Proprietário</td><td>ver os imóveis, escolher um dos 14 serviços do Lote 1 (com descrição, preço e duração), o profissional, o dia (o calendário avisa "tem hóspede", mas não bloqueia) e a janela de 1h; aceitar os termos na 1ª compra; acompanhar os pedidos; aprovar o que a franquia pediu acima de R$ 300; confirmar e avaliar</td></tr>
+<tr><td>Franquia</td><td>ver a carteira, contratar pra qualquer imóvel, mandar pra aprovação do proprietário quando passa de R$ 300, ver as visitas marcadas (inclusive as que o proprietário marcou)</td></tr>
+<tr><td>Prestador</td><td>ver os pedidos, aceitar ou recusar, confirmar presença, fazer check-in ("Cheguei"), mandar fotos do antes e do depois e concluir</td></tr>
+</table>
+
+<h2>Como usar</h2>
+<ol>
+<li>Abra o site (no ar pelo deploy do sprint, T626) ou rode local: na pasta do repositório, <code>cd web && python3 -m http.server 4899</code> e abra <code>http://127.0.0.1:4899/#/proprietario</code>.</li>
+<li>Sem login configurado, use a pílula "Ver como", no canto de baixo, pra trocar entre Proprietário, Franquia e Prestador. O botão de girar volta os dados de exemplo ao início.</li>
+<li>Com o banco ligado, entra pelo login (T621) e cada pessoa vê só a sua parte.</li>
+</ol>
+
+<h2>Pra que serve</h2>
+<p>É a cara do ConcertAI no piloto de Florianópolis: o que o proprietário, a franquia e o profissional vão usar no dia a dia. Foi feita antes do banco pra que as outras frentes do sprint (login, banco, portal do prestador) só ligassem os fios. Os testes automáticos dos três fluxos (contratar, aprovar acima de R$ 300, executar com foto) passam nela.</p>
+
+<h2>Links</h2>
+<ul>
+<li>Repositório: https://github.com/seazone-tech/concertai</li>
+<li>PR desta entrega: https://github.com/seazone-tech/concertai/pull/34</li>
+<li>Como ligar no banco (pra quem programa): https://github.com/seazone-tech/concertai/blob/main/docs/ui-contrato-dados.md</li>
+</ul>
+
+<details><summary>Detalhe técnico</summary>
+<p>Site estático em <code>web/</code> (sem framework). Dados só por <code>web/js/api.js</code>; a demo fica em <code>dados-simulados.js</code> e o real em <code>fonte-supabase.js</code> (T623), escolhido pela <code>config.js</code> do build. Login real em <code>auth.js</code> (T621), extras do prestador em <code>prestador-extras.js</code> (T624). Testes: <code>node tests/ui-fluxos.e2e.mjs</code> e os specs do PR #8 em modo protótipo.</p>
+</details>
+</body></html>
