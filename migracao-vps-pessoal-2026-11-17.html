@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Migração para a VPS pessoal</title>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:dark;--bg:#080E32;--surf:#0F1742;--surf2:#18225A;--line:#232E6B;--ink:#EEF1FB;--ink2:#B4BBD9;--ink3:#8189B0;--blue:#4D85FF;--ok:oklch(78% .12 150);--bad:oklch(72% .13 30);--warn:oklch(82% .13 80)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 "Figtree",system-ui,sans-serif}
+main{max-width:880px;margin:0 auto;padding:56px 22px 96px}
+.eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink3);font-weight:700}
+h1{font-size:clamp(30px,5vw,44px);font-weight:800;letter-spacing:-.02em;line-height:1.1;margin:10px 0 6px}
+.sub{color:var(--ink2);margin:0 0 28px}
+h2{font-size:22px;font-weight:800;margin:48px 0 14px;letter-spacing:-.01em}
+p{margin:0 0 10px}
+.verdict{background:var(--surf);border:1px solid var(--line);border-left:4px solid var(--warn);border-radius:14px;padding:20px 22px}
+.verdict b.tag{color:var(--warn)}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin-top:16px}
+.kpi{background:var(--surf2);border-radius:12px;padding:12px 14px}
+.kpi .n{font-size:24px;font-weight:800}
+.kpi .l{font-size:13px;color:var(--ink2)}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:680px){.cols{grid-template-columns:1fr}}
+.box{background:var(--surf);border:1px solid var(--line);border-radius:14px;padding:16px 18px}
+.box h3{margin:0 0 8px;font-size:15px;font-weight:700}
+.box ul{margin:0;padding-left:18px;color:var(--ink2);font-size:15px}
+.box li{margin:3px 0}
+.risk{background:var(--surf);border:1px solid var(--line);border-radius:14px;padding:14px 18px;margin-bottom:10px}
+.risk .t{font-weight:700}
+.risk .m{color:var(--ink2);font-size:15px;margin-top:4px}
+.pill{display:inline-block;font-size:11.5px;font-weight:700;border-radius:999px;padding:1px 9px;margin-right:6px;vertical-align:2px}
+.alta{background:color-mix(in oklch,var(--bad) 22%,transparent);color:var(--bad)}
+.media{background:color-mix(in oklch,var(--warn) 20%,transparent);color:var(--warn)}
+.baixa{background:color-mix(in oklch,var(--ok) 20%,transparent);color:var(--ok)}
+details{background:var(--surf);border:1px solid var(--line);border-radius:14px;margin-bottom:10px}
+summary{cursor:pointer;padding:14px 18px;font-weight:700;list-style:none;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+summary::-webkit-details-marker{display:none}
+summary .d{color:var(--ink3);font-weight:500;font-size:14px}
+.fase{padding:0 18px 16px}
+.fase h4{margin:12px 0 4px;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--blue)}
+.fase ol,.fase ul{margin:0;padding-left:20px;color:var(--ink2);font-size:15px}
+.fase li{margin:4px 0}
+code{font-family:ui-monospace,Consolas,monospace;font-size:13px;background:var(--surf2);padding:1px 5px;border-radius:5px;color:var(--ink)}
+.list{margin:0;padding-left:20px;color:var(--ink2)}
+.list li{margin:6px 0}
+.list b{color:var(--ink)}
+.note{color:var(--ink3);font-size:13.5px;margin-top:10px}
+</style></head><body><main>
+
+<span class="eyebrow">Infra pessoal · 17/11/2026</span>
+<h1>Migração para a VPS pessoal</h1>
+<p class="sub">Risco, o que muda e o passo a passo para tirar Azir, Vel'Koz e o pessoal da VPS do time.</p>
+
+<div class="verdict">
+  <p><b class="tag">Risco médio no geral, baixo para as rotinas da área.</b> As rotinas da área não mudam de máquina e só dependem do <code>velkoz_dm.py</code>, do token e do <code>~/hub</code>, que continuam onde estão.</p>
+  <p>O perigo está na execução: duas cópias ligadas ao mesmo tempo, banco copiado com o serviço no ar, botão Aprovar sem efeito e sem erro, e alarme falso. Isso se evita com o código pronto antes, atrás de uma flag, e uma virada a frio em ordem fixa.</p>
+  <div class="kpis">
+    <div class="kpi"><div class="n">~45 min</div><div class="l">Azir fora do ar na virada</div></div>
+    <div class="kpi"><div class="n">~40 min</div><div class="l">Vel'Koz fora do ar na virada</div></div>
+    <div class="kpi"><div class="n">~20 min</div><div class="l">para voltar atrás no dia</div></div>
+    <div class="kpi"><div class="n">28/11</div><div class="l">corte mais cedo possível (sábado)</div></div>
+  </div>
+</div>
+
+<h2>O que muda</h2>
+<div class="cols">
+  <div class="box"><h3>Fica na VPS do time</h3><ul>
+    <li>Rotinas da área: KPIs, fotógrafos parados, link de pagamento, suporte enxoval, enxoval em loop, heartbeat, contribuições, BF, campanha, placar e conformidade SIA, vigia SLA, saúde da VPS, resumo semanal</li>
+    <li>A pasta <code>nao-respondidas/</code> com o <code>velkoz_dm.py</code> (8+ rotinas da área usam). Nunca apagar</li>
+    <li>Token do bot do Vel'Koz (só manda DM)</li>
+    <li>Coletor de uso de IA e sync (rodam nas duas)</li>
+  </ul></div>
+  <div class="box"><h3>Vai para a VPS nova (32 GB, só sua)</h3><ul>
+    <li>Azir: orquestrador, herdr, equipe, worktrees, workflows</li>
+    <li>Vel'Koz no modo escuta: Socket Mode, sessões por thread, botões Aprovar, pulso</li>
+    <li>Aviso de call</li>
+    <li>ConcertAI stg e os 8 crons dele</li>
+    <li>Slack e e-mails não respondidos</li>
+    <li>Coletor e sync (cópia própria, sem duplicar contagem)</li>
+  </ul></div>
+</div>
+<p class="note">Os botões Aprovar das rotinas da área (link de pagamento e heartbeat) continuam saindo da VPS do time, mas o pedido passa a ser gravado na nova por ssh.</p>
+
+<h2>Riscos principais</h2>
+<div class="risk"><div class="t"><span class="pill alta">alta</span>Botão Aprovar para de funcionar sem dar erro</div>
+<div class="m">Hoje o pedido fica no banco do Vel'Koz da máquina da rotina; o clique chegaria na outra. <b>Mitigação:</b> o <code>pedir-aprovacao</code> encaminha por ssh para a nova quando existir <code>VELKOZ_APROVACAO_SSH</code>; em modo seco nunca encaminha; o lado remoto carrega o <code>~/.env</code>, tem timeout e não posta duas vezes. "Pedido inexistente" passa a gerar log e aviso para quem clicou. Teste real no seu DM antes do corte.</div></div>
+<div class="risk"><div class="t"><span class="pill alta">alta</span>Dois Azir ou dois Vel'Koz respondendo como você</div>
+<div class="m"><b>Mitigação:</b> a <code>azir-vigia</code> é desligada primeiro (ela religa o Azir em 10 min). Matar o grupo inteiro de processos da unit (os painéis sobrevivem ao stop). <code>mask</code> só depois de tirar o arquivo da unit do lugar, senão falha com "File exists". O token de escuta do Vel'Koz existe só na máquina que escuta.</div></div>
+<div class="risk"><div class="t"><span class="pill alta">alta</span>Perder banco, sessões ou DMs da janela</div>
+<div class="m"><b>Mitigação:</b> copiar os bancos por <code>backup()</code> só com tudo parado; nenhum rsync leva <code>*.db*</code> cru. Levar <code>~/.claude/projects</code> inteiro (menos a vigia SLA, que é da área). Religar o Slack pelo quadro zera o cursor e pula as DMs da janela: gravar no banco o cursor de 15 min antes do desligamento.</div></div>
+<div class="risk"><div class="t"><span class="pill alta">alta</span>Login dividido entre as duas VPS derruba as rotinas da área</div>
+<div class="m">Copiar o <code>.credentials.json</code> e o <code>~/.mcp-auth</code> deixa as duas máquinas com o mesmo token; quando uma renova, a outra pode cair (Claude e Composio). <b>Mitigação:</b> login e <code>/mcp</code> próprios na nova. Conferir a do time 24h depois.</div></div>
+<div class="risk"><div class="t"><span class="pill alta">alta</span>Alarme falso em massa e Heimer duplicando rotinas</div>
+<div class="m">Hoje só existem os rótulos pc e vps. <b>Mitigação:</b> terceiro rótulo <code>vps-pessoal</code> no monitoramento, fixado no cabeçalho do crontab da nova; a saúde da VPS checa a própria máquina; espelho de logs do time para a nova; Heimer desligado até 48h de espelho estável.</div></div>
+<div class="risk"><div class="t"><span class="pill media">média</span>Sobras que quebram calado</div>
+<div class="m">Crons do ConcertAI rodando nas duas, PC apontando para a VPS velha (túnel 4777, <code>azir-sync</code>, exportador), <code>~/rotinas/*/rodar.sh</code> que o sync não leva, <code>corte.sh voltar</code> mexendo na máquina errada. <b>Mitigação:</b> troca do crontab numa tacada só, aliases <code>vps-time</code> e <code>vps-pessoal</code> no PC e na VPS do time, cópia manual das pastas de rotina, trava no <code>corte.sh</code>.</div></div>
+
+<h2>Passo a passo</h2>
+
+<details open><summary>F0 · Pedir a máquina <span class="d">agora · espera de 1 a 5 dias úteis · ~15 min seus</span></summary><div class="fase">
+<h4>Passos</h4><ol>
+<li>Abrir <code>infra_geral</code> no Suporte Plataforma: usuário <code>henrymatsumoto</code> com o mesmo HOME, linger, ssh na 2222, tailnet da Ray, earlyoom, cron, git, gh, sqlite3, node v26.13.0, python 3.12 + venv, claude 2.1.322 em <code>/usr/bin</code>.</li>
+<li>Pedir à Ray a entrada na tailnet e o OK para duas chaves ssh entre as VPS.</li>
+<li>Gerar as chaves. A do time para a nova só roda o script <code>velkoz-remoto</code>.</li>
+</ol>
+<h4>Confere</h4><ul><li>Do PC, um ssh devolve linger, IP da tailnet, versões e earlyoom ativos.</li></ul>
+<h4>Volta</h4><ul><li>Nada ligado. A máquina pode ser devolvida.</li></ul>
+</div></details>
+
+<details><summary>F1 · Preparar a nova sem ligar nada <span class="d">D-7 a D-4 · ~3h</span></summary><div class="fase">
+<h4>Passos</h4><ol>
+<li>Copiar <code>~/.env</code> sem o token de escuta do Vel'Koz, settings, <code>.claude.json</code>, os <code>*.env</code>, <code>~/.config/seazone-ia</code>, <code>.gitconfig</code>. Não copiar <code>.credentials.json</code> nem <code>~/.mcp-auth</code>: login e <code>/mcp</code> novos.</li>
+<li>Criar <code>~/hub</code>, copiar <code>~/.local/bin</code>, recriar as venvs dos MCPs.</li>
+<li>Copiar <code>~/rotinas/</code> das rotinas que vão (slack, e-mails, pulso, ConcertAI). O sync não leva.</li>
+<li>Rodar o <code>bootstrap-vps</code> do sync (primeiro em modo seco). Sem cron ainda.</li>
+<li>Units e crontab novo ficam guardados em <code>~/migracao</code>, sem instalar. Crontab só com o cabeçalho.</li>
+<li>Pré-cópia de projetos, orquestradora e <code>~/.claude/projects</code>, sem bancos.</li>
+</ol>
+<h4>Confere</h4><ul><li><code>claude -p</code> lista os 16 MCPs; rotina pessoal em modo seco passa; DM de teste chega; nenhum serviço habilitado; 4777 e 4810 fechadas.</li><li>Na VPS do time, <code>claude -p</code> segue logado 24h depois.</li></ul>
+<h4>Volta</h4><ul><li>Apagar o que foi copiado na nova.</li></ul>
+</div></details>
+
+<details><summary>F2 · Código pronto, atrás de flag <span class="d">começa já · 1,5 a 2 dias + 48h de observação</span></summary><div class="fase">
+<h4>Passos</h4><ol>
+<li>Fazer os ajustes de código (lista abaixo), em commits pequenos na branch <code>trabalho</code>.</li>
+<li>Commit de reclassificação separado: só entra no corte.</li>
+<li>Na VPS do time, criar <code>Host vps-pessoal</code> no <code>~/.ssh/config</code> e popular o <code>known_hosts</code>.</li>
+<li>Reiniciar o Azir na do time e conferir que o commit é mais novo que o processo. Só então contar as 48h.</li>
+</ol>
+<h4>Confere</h4><ul><li>Testes passam. 48h sem diferença: link de pagamento posta e o Aprovar funciona como hoje, saúde da VPS sem vermelho novo.</li><li><code>ssh vps-pessoal ping</code> funciona simulando o cron. Pedido real de teste só no seu DM.</li></ul>
+<h4>Volta</h4><ul><li><code>git revert</code>. Sem as variáveis novas, tudo segue o caminho de hoje.</li></ul>
+</div></details>
+
+<details><summary>F3 · Ensaio isolado <span class="d">D-2 · ~1h30</span></summary><div class="fase">
+<h4>Passos</h4><ol>
+<li>Cópia delta e <code>backup()</code> dos dois bancos. Cronometrar.</li>
+<li>Validar o banco do Azir por sqlite3 e rodar <code>npm test</code>. Não subir o Azir "de verdade": <code>ORQ_DESLIGADO</code> não existe como trava.</li>
+<li>Se quiser ver o quadro: no banco copiado, desligar o slack, apontar o estado para uma pasta de teste, porta 4778, todas as rodadas desligadas e o claude trocado por <code>/bin/false</code> (conferir cada flag no código antes).</li>
+<li>Vel'Koz sem o token de escuta tem que recusar subir.</li>
+<li>Instalar o coletor do zero (máquina nova, contagem a partir de D+1), sem cron.</li>
+<li>Apagar as cópias de estado do ensaio.</li>
+</ol>
+<h4>Confere</h4><ul><li>Contagens batem com a origem. Nada saiu no Slack. Delta + backup abaixo de 15 min.</li></ul>
+<h4>Volta</h4><ul><li>Parar o teste e apagar as cópias. A VPS do time não foi tocada.</li></ul>
+</div></details>
+
+<details><summary>F4 · Corte frio <span class="d">sábado 10h30 · ~1h45 (60 min de congelamento + ~45 min fora)</span></summary><div class="fase">
+<h4>Passos (nesta ordem)</h4><ol>
+<li>T-60: não despachar task; esperar o Fazendo zerar. T-15: cópia delta.</li>
+<li><b>Time:</b> salvar o crontab e comentar as 13 linhas que vão (azir-vigia, 8 do ConcertAI, slack, e-mails x2, pulso) numa troca só. A pasta <code>nao-respondidas/</code> não é tocada.</li>
+<li><b>Time:</b> desligar o slack no quadro e anotar a hora.</li>
+<li><b>Time:</b> matar o grupo de processos do Azir e do herdr, <code>disable --now</code>, tirar o arquivo da unit do lugar, depois <code>mask</code>.</li>
+<li><b>Time:</b> mesmo esquema no Vel'Koz e no aviso de call; apagar só o token de escuta do <code>~/.env</code>. ConcertAI stg <code>disable</code> + <code>mask</code>. Matar os 3 <code>http.server</code>. <b>PC:</b> mask do Vel'Koz e tirar as linhas de @reboot.</li>
+<li><b>Time:</b> conferir que nada do Azir/herdr ficou vivo e que 4777 e 4810 fecharam.</li>
+<li><b>Time → nova:</b> <code>backup()</code> dos dois bancos e cópia do resto do estado, sem <code>*.db*</code> cru e sem o <code>heartbeat.json</code>. <code>~/.claude/projects</code> inteiro, menos a vigia SLA. Marcas das rotinas que vão.</li>
+<li><b>Nova:</b> integridade e contagens iguais. Gravar slack ligado com o cursor 15 min antes da hora anotada.</li>
+<li><b>Nova:</b> aplicar o commit de reclassificação, devolver o token de escuta, instalar as units com <code>vps-pessoal</code> e Heimer desligado.</li>
+<li><b>Nova:</b> subir herdr → Azir → Vel'Koz → aviso de call → ConcertAI. Conferir cada um.</li>
+<li><b>Nova:</b> crontab com o cabeçalho (inclui <code>ROTINAS_MAQUINA=vps-pessoal</code>) e as 13 linhas, azir-vigia por último.</li>
+<li><b>Time:</b> ligar <code>VELKOZ_APROVACAO_SSH</code> e testar o ping.</li>
+<li><b>PC:</b> trocar o IP do alias <code>vps-pessoal</code> e reiniciar o túnel.</li>
+<li>DM de teste ao Azir e menção ao Vel'Koz numa thread antiga.</li>
+</ol>
+<h4>Confere</h4><ul>
+<li>Azir e Vel'Koz respondem uma vez só, com contexto. Heartbeat do Vel'Koz com hora nova e processo da nova.</li>
+<li>POST de observação do PC aparece no quadro novo. Stg responde e o deploy loga só na nova.</li>
+<li>Na do time: 13 linhas comentadas, rotinas da área ativas, <code>velkoz_dm.py</code> no lugar.</li></ul>
+<h4>Volta (~20 min)</h4><ul>
+<li>A partir do passo 10: com a nova parada, trazer de volta os bancos (por <code>backup()</code>), sessões, estado do Azir, Vel'Koz, aviso de call e marcas.</li>
+<li>Na nova: tudo desligado, crontab só com o cabeçalho, sem token de escuta.</li>
+<li>Na do time: unmask, devolver as units, crontab e <code>~/.env</code> de antes, mesmo truque do cursor do Slack.</li>
+<li>PC: alias de volta e túnel reiniciado. <code>git revert</code> da reclassificação e esperar um sync.</li></ul>
+</div></details>
+
+<details><summary>F5 · Ligar sync, espelho, coletor e saúde <span class="d">mesmo dia · ~20 min</span></summary><div class="fase">
+<h4>Passos</h4><ol>
+<li>Sync na nova em minutos defasados da do time.</li>
+<li>Espelho de logs time → nova a cada 10 min.</li>
+<li>Coletor na nova só depois do envio das 17h20 da do time, contando a partir de D+1.</li>
+<li>Saúde da VPS na nova, checando a própria máquina.</li>
+<li>PC espelha para a nova.</li>
+</ol>
+<h4>Confere</h4><ul><li>Aba Agentes sem vermelho falso. Healthcheck da do time não cobra Azir nem Vel'Koz. 1h de sync sem erro de push nas duas.</li></ul>
+<h4>Volta</h4><ul><li>Comentar os crons novos e voltar o espelho do PC.</li></ul>
+</div></details>
+
+<details><summary>F6 · Observar e limpar <span class="d">D+1 a D+7 · ~15 min/dia</span></summary><div class="fase">
+<h4>Passos</h4><ol>
+<li>1º dia útil: DM de não respondidas uma vez só. Link de pagamento 11h: clique real em Aprovar funciona.</li>
+<li>Quinta seguinte: botão do heartbeat funciona.</li>
+<li>D+1: tirar o Azir das pastas de agente do coletor da do time. D+2: religar o Heimer.</li>
+<li>D+7: limpar o que ficou masked na do time e restringir a chave nova → time a só ler logs. Nunca apagar <code>nao-respondidas/</code>.</li>
+<li>D+7: atualizar a REGRA 13/11 do CLAUDE.md, READMEs e skills com IP fixo (PR no marketplace).</li>
+</ol>
+<h4>Confere</h4><ul><li>Uma semana sem DM duplicado, sem "pedido inexistente" e sem vermelho falso. Memória da do time mais folgada.</li></ul>
+<h4>Volta</h4><ul><li>Até o D+7 vale a volta da F4. Depois, refazer a F4 ao contrário.</li></ul>
+</div></details>
+
+<h2>Ajustes de código antes do corte</h2>
+<ul class="list">
+<li><b>Vel'Koz:</b> <code>pedir-aprovacao</code> encaminha por ssh com a flag, nunca no modo seco; script <code>velkoz-remoto</code> carrega o ambiente, aceita só 2 comandos e recusa encaminhar de novo; timeout e id gerado na origem (sem post duplo).</li>
+<li><b>Vel'Koz:</b> "pedido inexistente" gera log e aviso para quem clicou.</li>
+<li><b>Monitoramento:</b> rótulo <code>vps-pessoal</code> em <code>maquinas.py</code> (whitelist, rótulo de exibição, "outra máquina"), <code>maquinas.json</code>, Azir (<code>config.ts</code>, <code>agentes.ts</code>) e testes.</li>
+<li><b>Saúde da VPS:</b> roda local fora do PC, lista de serviços vem do <code>maquinas.json</code>, nome da máquina no título do DM.</li>
+<li><b>Espelho de logs</b> time → nova (sem apagar nada do lado de lá).</li>
+<li><b>PC e VPS do time:</b> aliases <code>vps-time</code> e <code>vps-pessoal</code>; túnel, <code>azir-sync</code> e exportador de uso de IA usam o alias.</li>
+<li><b>Azir:</b> IP fixo em ~14 arquivos troca por variável só onde quer dizer "máquina do Azir".</li>
+<li><b>Travas:</b> <code>corte.sh voltar</code> exige a VPS explícita; aviso no <code>migracao-rotinas</code> e no comentário do crontab da do time.</li>
+<li><b>Antes de tudo:</b> commit + push dos 13 <code>.md</code> sujos do Azir e do commit à frente.</li>
+</ul>
+
+<h2>Decisões suas</h2>
+<ul class="list">
+<li><b>Data do corte:</b> sábado 28/11 às 10h30 (se a VPS chegar até ~20/11) ou sábado 05/12.</li>
+<li><b>Botões Aprovar:</b> encaminhar por ssh (plano atual) ou mover as 2 rotinas para a nova, sem código, se a Ray aceitar.</li>
+<li><b>Quem dá root e tailnet:</b> Ray ou Bill? E OK da Ray para as 2 chaves entre as VPS.</li>
+<li><b>ConcertAI stg:</b> a unit diz que mora na VPS do time. Pode sair?</li>
+<li><b>Sync, espelho e coletor do PC</b> estão desligados (<code>#MIGRACAO-OFF#</code>). Foi de propósito? Precisam voltar antes.</li>
+<li><b>Aba Uso de IA:</b> a VPS do time some dela ou ajusta o exportador?</li>
+<li><b>Sessões <code>custo-vps-henry</code> e <code>clicksign-fornecedores-henry</code></b> (usuário time-backoffice): são suas e vão junto?</li>
+<li><b>Resumo semanal das rotinas:</b> passa a rodar só na nova?</li>
+<li><b>Mais de 8 painéis na nova:</b> decidir depois de 1 semana estável.</li>
+</ul>
+
+</main></body></html>
