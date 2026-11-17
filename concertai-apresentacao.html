@@ -436,13 +436,46 @@ h3{font-size:18px;line-height:1.3;font-weight:700}
   .col h3{margin-bottom:10px}
 }
 @media print{.topo,.pontos,.setas{display:none}.slide{min-height:auto;page-break-after:always}}
+
+/* v2: prints e slides enxutos */
+.print{width:100%;display:block;border-radius:10px;border:1px solid var(--border);box-shadow:var(--shadow-raise);background:#fff}
+figure figcaption{font-size:13px;font-weight:600;color:var(--fg-2);margin-top:8px;text-align:center}
+.galeria{display:grid;grid-template-columns:repeat(3,1fr);gap:14px 16px}
+.galeria .print{aspect-ratio:1366/800;object-fit:cover;object-position:top}
+.cel{justify-self:center;text-align:center}
+.cel img{height:min(62vh,560px);width:auto;border-radius:26px;border:6px solid var(--navy);box-shadow:var(--shadow-raise);display:block}
+.perfis-mini,.quem2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:28px}
+.quem2{margin-top:0}
+.pm{display:flex;gap:12px;align-items:center;padding:12px 14px;background:var(--surface);border-radius:var(--r-card);box-shadow:var(--shadow-card)}
+.alt .pm{background:var(--surface)}
+.pm b{display:block;font-size:15px}.pm span{display:block;font-size:13px;color:var(--fg-2);line-height:1.35}
+.lado{display:grid;grid-template-columns:.8fr 1.2fr;gap:40px;align-items:center}
+.passos-l{list-style:none;display:grid;gap:10px}
+.passos-l li{display:flex;gap:12px;align-items:center}
+.passos-l .n{flex:none;width:30px;height:30px;border-radius:var(--pill);background:var(--navy);color:#fff;display:grid;place-items:center;font-weight:700;font-size:14px}
+.passos-l .fim .n{background:var(--coral)}
+.passos-l b{display:block;font-size:16px}.passos-l span{font-size:13.5px;color:var(--fg-2)}
+.fontes-l{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:28px}
+.fontes-l .rot{font-size:13px;font-weight:700;color:var(--fg-2);margin-right:4px}
+.fontes-l .chip [data-lucide]{width:15px;height:15px}
+.esteira{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-top:18px;position:relative}
+.et{display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px;padding:14px 10px;background:var(--surface);border-radius:var(--r-card);box-shadow:var(--shadow-card);position:relative}
+.et:not(:last-child)::after{content:"›";position:absolute;right:-9px;top:28px;font-size:20px;font-weight:700;color:var(--fg-3)}
+.et b{font-size:14px;line-height:1.25}.et span{font-size:12.5px;color:var(--fg-2);line-height:1.35}
+.et.ok{outline:2px solid var(--success);outline-offset:-2px}
+#s7 .frase-ag{margin-top:16px;padding:12px 18px}#s7 .frase-ag p{font-size:16px}#s7 .chips{margin-top:12px}
+.tabela.ganho table{font-size:17px}.tabela.ganho td{padding:14px 20px}.tabela.ganho th{padding:10px 20px}
+.tabela.ganho tr.real td{background:var(--blue-100)}
+@media (max-width:1024px){.lado{grid-template-columns:1fr}.esteira{grid-template-columns:repeat(3,1fr)}.et::after{display:none}.galeria{grid-template-columns:1fr 1fr}}
+@media (max-width:720px){.perfis-mini,.quem2,.galeria,.esteira{grid-template-columns:1fr}.cel img{height:auto;width:100%}.tabela.ganho table{font-size:13px}.tabela.ganho td,.tabela.ganho th{padding:8px}}
+@media (max-height:820px) and (min-width:1025px){.galeria{gap:10px 14px}.galeria figure figcaption{margin-top:4px}#s5 .cab{margin-bottom:14px}#s7 .cab{margin-bottom:14px}.cel img{height:min(66vh,540px)}}
 </style>
 </head>
 <body>
 
 <header class="topo escuro" id="topo">
   <a class="marca" href="#s1" aria-label="Início da apresentação"><svg class="logo-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 411 68" role="img" aria-label="Seazone"><path fill="currentColor" d="M33.856 52.5045C33.856 41.2633 0.620441 47.8249 0.620441 28.9865C0.620441 20.5619 9.06051 13.5835 21.1421 13.5835C33.9571 13.5835 41.1454 20.1451 41.1454 24.3131C41.1454 26.3846 39.4827 28.576 36.6693 28.576C35.0003 28.576 33.856 27.5339 32.8128 26.4919C30.7328 24.4079 26.2504 21.9133 21.0473 21.9133C13.4418 21.9133 9.8002 25.1404 9.8002 28.1591C9.8002 38.4594 43.5541 32.9461 43.5541 51.6709C43.5541 61.769 33.0341 67.7054 21.4646 67.7054C7.80872 67.6991 0.0957031 60.4113 0.0957031 56.5589C0.0957031 53.9634 2.08086 52.1888 4.47063 52.1888C6.13968 52.1888 7.28399 53.1297 8.01735 53.856C11.0393 57.0831 15.4143 59.2682 21.5657 59.2682C28.754 59.2682 33.8623 56.4579 33.8623 52.5045"/><path fill="currentColor" d="M60.8887 44.6989C62.1404 53.5402 69.6448 59.1608 78.597 59.1608C84.3249 59.1608 88.8073 56.8747 91.6206 55.3085C92.2465 55.0054 93.081 54.6896 94.1179 54.6896C96.6151 54.6896 98.3916 56.5589 98.3916 58.9587C98.3916 60.9354 97.1399 62.3942 96.2042 62.9184C94.1179 64.1688 87.6566 67.7054 78.5907 67.7054C62.9623 67.7054 51.083 56.0411 51.083 40.5434C51.083 25.0457 63.4807 13.5835 78.0659 13.5835C92.6511 13.5835 103.696 25.8667 103.696 38.352C103.696 41.5854 101.091 44.7052 97.8669 44.7052H60.876L60.8887 44.6989ZM60.8887 36.6785H94.7501C94.023 29.6053 87.0371 21.907 78.0786 21.907C69.1201 21.907 61.7232 28.3612 60.8887 36.6785Z"/><path fill="currentColor" d="M190.833 22.7668C188.02 22.7668 185.965 20.9354 185.965 18.1188C185.965 15.3022 188.02 13.5781 190.833 13.5781H223.81C227.388 13.5781 229.335 16.4958 229.335 18.984C229.335 20.9291 228.678 22.009 227.388 23.5184L198.3 58.4166H225.333C228.14 58.4166 230.309 60.469 230.309 63.172C230.309 65.8749 228.147 67.599 225.333 67.599H190.505C187.476 67.599 184.985 65.2244 184.985 62.0921C184.985 60.3617 185.529 59.3891 187.046 57.5514L215.92 22.7668H190.833Z"/><path fill="currentColor" d="M261.567 67.6991C246.147 67.6991 234.375 55.6243 234.375 40.5371C234.375 25.4499 246.356 13.5835 261.567 13.5835C276.778 13.5835 288.86 25.5573 288.86 40.5371C288.86 55.5169 276.772 67.6991 261.567 67.6991ZM261.567 22.2228C251.565 22.2228 243.543 30.6537 243.543 40.5371C243.543 50.4205 251.256 59.1671 261.567 59.1671C271.878 59.1671 279.484 50.4205 279.484 40.5371C279.484 30.6537 271.67 22.2228 261.567 22.2228Z"/><path fill="currentColor" d="M367.304 44.6989C368.556 53.5402 376.054 59.1608 385.012 59.1608C390.746 59.1608 395.229 56.8747 398.042 55.3085C398.655 55.0054 399.496 54.6896 400.533 54.6896C403.037 54.6896 404.8 56.5589 404.8 58.9587C404.8 60.9354 403.549 62.3942 402.626 62.9184C400.533 64.1688 394.078 67.7054 385.012 67.7054C369.371 67.7054 357.504 56.0411 357.504 40.5434C357.504 25.0457 369.902 13.5835 384.481 13.5835C399.06 13.5835 410.124 25.8667 410.124 38.352C410.124 41.5854 407.513 44.7052 404.282 44.7052H367.297L367.304 44.6989ZM367.304 36.6785H401.171C400.425 29.6053 393.452 21.907 384.487 21.907C375.523 21.907 368.138 28.3612 367.304 36.6785Z"/><path fill="currentColor" d="M325.206 13.698C321.343 13.3318 317.455 13.3065 313.579 13.357C309.862 13.4075 306.107 13.2876 302.396 13.4581C301.529 13.496 300.682 13.6475 299.898 14.0264C299.709 14.1149 299.525 14.2159 299.342 14.3296C298.552 14.8032 297.806 15.4853 297.313 16.2936C296.737 17.2472 296.737 18.1187 296.788 19.186C296.838 20.1965 296.788 21.2195 296.788 22.23C296.775 25.9055 296.769 29.5873 296.756 33.2691C296.75 35.6184 296.725 62.7046 296.725 62.7046C296.725 65.3065 299.02 67.7063 301.719 67.7063C304.419 67.7063 306.726 65.3065 306.726 62.7046V39.6096C306.726 28.9873 314.54 22.3247 323.183 22.3247C331.825 22.3247 339.646 28.9873 339.646 39.6096V62.7046C339.646 65.3065 341.846 67.7063 344.539 67.7063C347.232 67.7063 349.647 65.3065 349.647 62.7046V40.3296C349.647 26.5181 338.678 14.98 325.2 13.698"/><path fill="#FC6058" d="M174.96 20.973L163.2 14.0515C163.226 13.8873 163.302 13.7357 163.302 13.5715V3.13238C163.302 1.40199 161.898 0 160.166 0H153.894C152.162 0 150.758 1.40199 150.758 3.13238V6.77629L146.491 4.28176C144.759 3.24605 142.476 3.42288 140.871 4.61015L140.788 4.64173L113.736 20.3162C111.479 21.6614 110.537 24.7875 111.94 27.1304C113.395 29.5618 116.6 30.2186 118.851 28.8734L120.469 27.9388C118.553 31.6837 117.358 35.915 117.358 40.5314C117.358 47.8319 120.166 55.025 125.35 60.2098C127.385 62.2497 129.756 63.9548 132.355 65.2115C134.352 66.1778 136.464 66.9861 138.658 67.3903C141.566 67.9208 144.575 67.6492 147.515 67.6555C150.689 67.6555 153.869 67.6618 157.043 67.6682C159.919 67.6745 162.796 67.6871 165.704 67.6934C166.431 67.6934 167.145 67.504 167.79 67.1756C168.618 66.7524 169.112 66.2914 169.655 65.5652C170.275 64.7442 170.705 63.7527 170.705 62.6917V29.827C172.861 30.6038 175.478 29.9281 176.761 27.7809C178.165 25.4379 177.223 22.3119 174.96 20.9667M161.43 41.0493C161.43 51.04 154.659 59.1615 144.449 59.1615C134.239 59.1615 126.734 50.5222 126.734 40.5314C126.734 30.5407 134.239 22.2171 144.449 22.2171C154.659 22.2171 161.43 29.9218 161.43 39.8052V41.0556V41.0493Z"/></svg><span class="sep"></span><span class="wm">Concert<span>AI</span></span></a>
-  <div class="topo-dir"><span class="contador num" id="contador">01 / 17</span></div>
+  <div class="topo-dir"><span class="contador num" id="contador">01 / 11</span></div>
   <div class="progresso" id="progresso"></div>
 </header>
 <nav class="pontos escuro" id="pontos" aria-label="Seções"></nav>
@@ -452,7 +485,6 @@ h3{font-size:18px;line-height:1.3;font-weight:700}
 </div>
 
 <main>
-<!-- 1 CAPA -->
 <section class="slide navy" id="s1" data-titulo="Capa" data-escuro>
   <div class="halo" aria-hidden="true"></div>
   <div class="wrap capa">
@@ -512,147 +544,117 @@ h3{font-size:18px;line-height:1.3;font-weight:700}
   </div>
 </section>
 
-<!-- 3 O QUE É -->
-<section class="slide alt" id="s3" data-titulo="O que é">
-  <div class="wrap">
-    <span class="tag rv"><b>3</b>O que é o ConcertAI</span>
-    <p class="frase-grande rv">Um site onde a Seazone contrata conserto para os imóveis <mark>como quem pede uma corrida</mark>: escolhe o serviço, o dia e o profissional, com preço fechado.</p>
-    <div class="tres">
-      <div class="card rv"><span class="ico"><i data-lucide="tag"></i></span><h3>Preço fechado antes</h3><p>Sem orçamento e sem surpresa. Peça, se precisar, é sempre à parte e aprovada no app.</p></div>
-      <div class="card rv"><span class="ico"><i data-lucide="shield-check"></i></span><h3>Profissional avaliado</h3><p>Com CNPJ, nota dada por quem contratou, fotos do serviço feito e até 90 dias de garantia.</p></div>
-      <div class="card rv"><span class="ico"><i data-lucide="layout-dashboard"></i></span><h3>Tudo num lugar só</h3><p>Pedido, acompanhamento, pagamento e nota fiscal no mesmo lugar, à vista de todos.</p></div>
+<!-- 3 O QUE É + QUEM USA -->
+<section class="slide alt" id="s3" data-titulo="O que é e quem usa">
+  <div class="wrap dois">
+    <div>
+      <span class="tag rv"><b>3</b>O que é</span>
+      <p class="frase-grande rv" style="font-size:30px">Um site para contratar conserto no imóvel <mark>como quem pede uma corrida</mark>: serviço, dia e profissional, com preço fechado.</p>
+      <div class="perfis-mini">
+        <div class="pm rv"><span class="ico"><i data-lucide="key-round"></i></span><div><b>Proprietário</b><span>Contrata e aprova; paga no repasse.</span></div></div>
+        <div class="pm rv"><span class="ico"><i data-lucide="building-2"></i></span><div><b>Franquia</b><span>Contrata para toda a carteira.</span></div></div>
+        <div class="pm rv"><span class="ico coral"><i data-lucide="globe"></i></span><div><b>Anfitrião de fora</b><span>Público novo. Paga na hora.</span></div></div>
+        <div class="pm rv"><span class="ico"><i data-lucide="hard-hat"></i></span><div><b>Prestador</b><span>Com CNPJ. Recebe pela plataforma.</span></div></div>
+      </div>
     </div>
+    <figure class="cel rv"><img src="concertai-prints/08-cel-visita.jpg" alt="Página de visita do ConcertAI no celular" loading="lazy"><figcaption>Página de visita, no celular</figcaption></figure>
   </div>
 </section>
 
-<!-- 4 QUEM USA -->
-<section class="slide" id="s4" data-titulo="Quem pode usar">
+<!-- 4 COMO FUNCIONA -->
+<section class="slide" id="s4" data-titulo="Como funciona">
+  <div class="wrap lado">
+    <div>
+      <div class="cab">
+        <span class="tag rv"><b>4</b>Como funciona</span>
+        <h2 class="rv">Do pedido à garantia, <em>em 6 passos</em></h2>
+      </div>
+      <ol class="passos-l">
+        <li class="rv"><span class="n">1</span><div><b>Escolhe o imóvel</b><span>Só os que a pessoa pode usar.</span></div></li>
+        <li class="rv"><span class="n">2</span><div><b>Escolhe o serviço</b><span>Preço fechado e o que está incluso.</span></div></li>
+        <li class="rv"><span class="n">3</span><div><b>Dia e horário</b><span>Janela de 1h, pelo menos 3h antes.</span></div></li>
+        <li class="rv"><span class="n">4</span><div><b>Profissional livre</b><span>Só quem atende a região, melhores primeiro.</span></div></li>
+        <li class="rv"><span class="n">5</span><div><b>Confirma em 1h</b><span>Depois, WhatsApp com mensagem pronta.</span></div></li>
+        <li class="rv fim"><span class="n">6</span><div><b>Foto, nota e garantia</b><span>Antes e depois, nota fiscal, até 90 dias.</span></div></li>
+      </ol>
+    </div>
+    <figure class="rv"><img class="print" src="concertai-prints/04-profissionais-livres.jpg" alt="Lista de profissionais livres no horário escolhido" loading="lazy"><figcaption>Passo 4: só aparece quem está livre e atende o bairro</figcaption></figure>
+  </div>
+</section>
+
+<!-- 5 COMO FICA NA TELA -->
+<section class="slide alt" id="s5" data-titulo="Como fica na tela">
   <div class="wrap">
     <div class="cab">
-      <span class="tag rv"><b>4</b>Quem pode usar</span>
-      <h2 class="rv">Cinco perfis, cada um vê só o que é dele</h2>
+      <span class="tag rv"><b>5</b>Como fica na tela</span>
+      <h2 class="rv">O site já está no ar, <em>em todas as visões</em></h2>
     </div>
-    <div class="perfis">
-      <div class="card perfil rv"><span class="ico"><i data-lucide="key-round"></i></span><h3>Proprietário</h3><ul><li>Contrata para os imóveis dele</li><li>Também para imóvel fora da Seazone: cadastra e paga na hora</li><li>Aprova os pedidos da franquia acima de R$ 300</li><li>Paga descontado do repasse</li></ul></div>
-      <div class="card perfil rv"><span class="ico"><i data-lucide="building-2"></i></span><h3>Franquia</h3><ul><li>Contrata para qualquer imóvel da carteira</li><li>Também para imóvel fora da Seazone: cadastra e paga na hora</li><li>Recebe as sugestões prontas do agente</li><li>É avisada de cada visita</li></ul></div>
-      <div class="card perfil novo rv"><span class="pill">Público novo</span><span class="ico coral"><i data-lucide="globe"></i></span><h3>Anfitrião avulso</h3><ul><li>Quem não é da Seazone</li><li>Se cadastra e cadastra o imóvel</li><li>Paga na hora</li></ul></div>
-      <div class="card perfil rv"><span class="ico"><i data-lucide="hard-hat"></i></span><h3>Prestador</h3><ul><li>Empresa com CNPJ (MEI ou ME)</li><li>Emite nota do serviço</li><li>Recebe pela plataforma</li></ul></div>
-      <div class="card perfil rv"><span class="ico navy"><i data-lucide="user-cog"></i></span><h3>Admin Seazone</h3><ul><li>Vê tudo como qualquer perfil</li><li>Acompanha e resolve exceções</li></ul></div>
-    </div>
-  </div>
-</section>
-
-<!-- 5 COMO FUNCIONA -->
-<section class="slide alt" id="s5" data-titulo="Como funciona">
-  <div class="wrap">
-    <div class="cab">
-      <span class="tag rv"><b>5</b>Como funciona</span>
-      <h2 class="rv">Do pedido à garantia, em 9 passos</h2>
-    </div>
-    <div class="passos">
-      <div class="card passo rv"><span class="n"></span><div><h3><i data-lucide="home"></i>Escolhe o imóvel</h3><p>Só aparecem os imóveis que a pessoa pode usar.</p></div></div>
-      <div class="card passo rv"><span class="n"></span><div><h3><i data-lucide="list-checks"></i>Escolhe o serviço</h3><p>Com descrição clara do que está incluso e preço fechado.</p></div></div>
-      <div class="card passo rv"><span class="n"></span><div><h3><i data-lucide="calendar-clock"></i>Dia e horário</h3><p>Janela de 1h, pelo menos 3h antes. Avisa se tem hóspede, mas não bloqueia.</p></div></div>
-      <div class="card passo rv"><span class="n"></span><div><h3><i data-lucide="star"></i>Escolhe o profissional</h3><p>Só os livres e que atendem a região, com os melhores primeiro.</p></div></div>
-      <div class="card passo rv"><span class="n"></span><div><h3><i data-lucide="timer"></i>Confirmação em 1h</h3><p>Se não confirmar, dá para trocar. Confirmou: fala com ele direto no WhatsApp, com mensagem pronta (imóvel, endereço, dia e hora).</p></div></div>
-      <div class="card passo rv"><span class="n"></span><div><h3><i data-lucide="camera"></i>Serviço com prova</h3><p>Fotos de antes e depois e lista do que foi conferido.</p></div></div>
-      <div class="card passo rv"><span class="n"></span><div><h3><i data-lucide="package"></i>Peça à parte</h3><p>Se precisar de peça, o valor aparece no app e só vai com aprovação.</p></div></div>
-      <div class="card passo rv"><span class="n"></span><div><h3><i data-lucide="wallet"></i>Pagamento</h3><p>Descontado do repasse do proprietário. Anfitrião avulso paga na hora.</p></div></div>
-      <div class="card passo fim rv"><span class="n"></span><div><h3><i data-lucide="award"></i>Avaliação e garantia</h3><p>Nota para o profissional. Garantia: 90 dias para conserto e instalação, 30 dias para limpeza e desentupimento; cobre refazer o mesmo serviço, sem custo; mau uso de hóspede fica de fora.</p></div></div>
+    <div class="galeria">
+      <figure class="rv"><img class="print" src="concertai-prints/01-visita.jpg" alt="Página de visita" loading="lazy"><figcaption>Página de visita</figcaption></figure>
+      <figure class="rv"><img class="print" src="concertai-prints/02-proprietario-imovel.jpg" alt="Início do proprietário com a escolha do imóvel" loading="lazy"><figcaption>Proprietário escolhe o imóvel</figcaption></figure>
+      <figure class="rv"><img class="print" src="concertai-prints/03-dia-horario.jpg" alt="Escolha de dia e horário" loading="lazy"><figcaption>Dia e horário com profissional livre</figcaption></figure>
+      <figure class="rv"><img class="print" src="concertai-prints/05-detalhe-pedido.jpg" alt="Detalhe do pedido" loading="lazy"><figcaption>Detalhe do pedido, passo a passo</figcaption></figure>
+      <figure class="rv"><img class="print" src="concertai-prints/06-prestador-pedido-novo.jpg" alt="Prestador com pedido novo e prazo de 1h" loading="lazy"><figcaption>Prestador: pedido novo, confirma em 1h</figcaption></figure>
+      <figure class="rv"><img class="print" src="concertai-prints/07-prestador-ganhos.jpg" alt="Ganhos do prestador" loading="lazy"><figcaption>Prestador: ganhos e nota fiscal</figcaption></figure>
     </div>
   </div>
 </section>
 
-<!-- 6 CAPTAÇÃO AGÊNTICA -->
+<!-- 6 CAPTAÇÃO -->
 <section class="slide" id="s6" data-titulo="Captação de prestadores">
   <div class="wrap">
     <div class="cab">
       <span class="tag rv"><b>6</b>Captação de prestadores</span>
       <h2 class="rv">Prestador entra na rede <em>só com agentes</em></h2>
-      <p class="sub rv">Seis agentes em esteira. Cada um faz uma parte e passa para o próximo.</p>
     </div>
     <div class="trilha ag">
-      <div class="etapa rv"><span class="ico"><i data-lucide="radar"></i></span><span class="ag-n">Agente 1</span><h3>Radar</h3><p>Vê onde tem imóvel e pedido e falta prestador, por bairro e tipo de serviço, e abre a vaga sozinho.</p></div>
-      <div class="etapa rv"><span class="ico"><i data-lucide="user-search"></i></span><span class="ag-n">Agente 2</span><h3>Captação</h3><p>Busca candidatos e manda o convite pelo WhatsApp.</p></div>
-      <div class="etapa rv"><span class="ico"><i data-lucide="smartphone"></i></span><span class="ag-n">Agente 3</span><h3>Cadastro</h3><p>Conversa pelo WhatsApp e cadastra em cerca de 5 minutos.</p></div>
-      <div class="etapa rv"><span class="ico"><i data-lucide="shield-check"></i></span><span class="ag-n">Agente 4</span><h3>Qualificação</h3><p>Confere CNPJ ativo na Receita, documentos e antecedentes. Pede o que faltar.</p></div>
-      <div class="etapa rv"><span class="ico"><i data-lucide="signature"></i></span><span class="ag-n">Agente 5</span><h3>Contratação e teste</h3><p>Aceite dos termos por clique e 1º serviço acompanhado. Só depois entra na vitrine.</p></div>
-      <div class="etapa rv"><span class="ico"><i data-lucide="heart-handshake"></i></span><span class="ag-n">Agente 6</span><h3>Zelador</h3><p>Nota sobe e desce. Recusa ou atraso baixa a nota; quem cai abaixo do mínimo sai e o Radar repõe a vaga.</p></div>
+      <div class="etapa rv"><span class="ico"><i data-lucide="radar"></i></span><span class="ag-n">Agente 1</span><h3>Radar</h3><p>Vê onde falta prestador e abre a vaga.</p></div>
+      <div class="etapa rv"><span class="ico"><i data-lucide="user-search"></i></span><span class="ag-n">Agente 2</span><h3>Captação</h3><p>Busca candidatos e convida no WhatsApp.</p></div>
+      <div class="etapa rv"><span class="ico"><i data-lucide="smartphone"></i></span><span class="ag-n">Agente 3</span><h3>Cadastro</h3><p>Cadastra direto no ConcertAI em ~5 min.</p></div>
+      <div class="etapa rv"><span class="ico"><i data-lucide="shield-check"></i></span><span class="ag-n">Agente 4</span><h3>Qualificação</h3><p>Confere CNPJ ativo e documentos.</p></div>
+      <div class="etapa rv"><span class="ico"><i data-lucide="signature"></i></span><span class="ag-n">Agente 5</span><h3>Contrato e teste</h3><p>Aceite por clique e 1º serviço acompanhado.</p></div>
+      <div class="etapa rv"><span class="ico"><i data-lucide="heart-handshake"></i></span><span class="ag-n">Agente 6</span><h3>Zelador</h3><p>Cuida da nota; quem cai sai e a vaga reabre.</p></div>
     </div>
-    <div class="frase-ag rv"><span class="ico"><i data-lucide="users-round"></i></span><p><b>Nenhuma pessoa precisa ligar, cobrar ou cadastrar prestador.</b> A equipe só olha as exceções.</p></div>
+    <div class="fontes-l rv">
+      <span class="rot">Onde a Captação busca</span>
+      <span class="chip az"><i data-lucide="building-2"></i>Receita Federal (CNPJ do ramo)</span>
+      <span class="chip az"><i data-lucide="map-pin"></i>Google Maps</span>
+      <span class="chip az"><i data-lucide="share-2"></i>Indicação</span>
+      <span class="chip az"><i data-lucide="megaphone"></i>Anúncio no WhatsApp</span>
+    </div>
+    <div class="frase-ag rv"><span class="ico"><i data-lucide="users-round"></i></span><p><b>Ninguém liga, cobra ou cadastra prestador.</b> A equipe só olha as exceções.</p></div>
   </div>
 </section>
 
-<!-- 7 CAPTAÇÃO: COMO -->
-<section class="slide alt" id="s7" data-titulo="Captação: de onde vêm">
+<!-- 7 FORA DA SEAZONE + DINHEIRO -->
+<section class="slide alt" id="s7" data-titulo="Fora da Seazone e como o dinheiro anda">
   <div class="wrap">
     <div class="cab">
-      <span class="tag rv"><b>7</b>Captação: de onde vêm</span>
-      <h2 class="rv">Já começamos com <em>525 prestadores validados</em></h2>
+      <span class="tag rv"><b>7</b>Público novo · paga na hora</span>
+      <h2 class="rv" style="max-width:none">Quem é de fora também contrata. <em>O dinheiro anda sozinho</em></h2>
     </div>
-    <div class="kpis">
-      <div class="card kpi dest rv"><div class="v num">525</div><p>prestadores validados hoje no Hub de Serviços</p></div>
-      <div class="card kpi rv"><div class="v num">266</div><p>eletricistas na base</p></div>
-      <div class="card kpi rv"><div class="v num">94</div><p>de hidráulica na base</p></div>
-      <div class="card kpi rv"><div class="v num">5-10</div><p>meta do piloto: prestadores ativos em Florianópolis</p></div>
+    <div class="quem2">
+      <div class="pm rv"><span class="ico coral"><i data-lucide="globe"></i></span><div><b>Anfitrião avulso</b><span>Aluga 1 a 3 imóveis por conta própria. Cria a conta e cadastra o imóvel.</span></div></div>
+      <div class="pm rv"><span class="ico"><i data-lucide="home"></i></span><div><b>Imóveis fora da Seazone</b><span>Proprietário e franquia contratam também para os imóveis de fora.</span></div></div>
     </div>
-    <div class="cap-grid">
-      <div class="cap-bloco rv">
-        <h3><i data-lucide="search"></i>Onde a Captação busca</h3>
-        <div class="fontes">
-          <div class="card fonte"><i data-lucide="database"></i><p><b>Hub de Serviços</b>Base que a Seazone já tem.</p></div>
-          <div class="card fonte"><i data-lucide="building-2"></i><p><b>Receita Federal</b>Empresas abertas com CNPJ do ramo.</p></div>
-          <div class="card fonte"><i data-lucide="map-pin"></i><p><b>Google Maps</b>Negócios da região.</p></div>
-          <div class="card fonte"><i data-lucide="share-2"></i><p><b>Indicação</b>De quem já trabalha com a gente.</p></div>
-        </div>
-        <h3 style="margin-top:16px"><i data-lucide="hand"></i>O que ainda depende de gente</h3>
-        <div class="gente"><div class="pc"><i data-lucide="wallet"></i><p><b>Aprovar o orçamento</b> da indicação paga.</p></div><div class="pc"><i data-lucide="key-round"></i><p><b>Liberar a credencial</b> do WhatsApp oficial.</p></div></div>
-      </div>
-      <div class="cap-bloco rv">
-        <h3><i data-lucide="message-circle"></i>Convite educado</h3>
-        <div class="chips"><span class="chip az">No máximo 3 contatos em 30 dias</span><span class="chip az">Só em horário comercial</span><span class="chip az">Sempre com opção de sair</span></div>
-        <h3 style="margin-top:16px"><i data-lucide="clipboard-check"></i>O cadastro pega</h3>
-        <div class="chips"><span class="chip">Serviços que faz</span><span class="chip">Região</span><span class="chip">Horários</span><span class="chip">Aceite da tabela e da comissão</span><span class="chip">CNPJ</span><span class="chip">Pix</span><span class="chip">Foto</span></div>
-      </div>
+    <div class="esteira">
+      <div class="et rv"><span class="ico"><i data-lucide="mouse-pointer-click"></i></span><b>1. Contrata</b><span>O cliente escolhe e confirma.</span></div>
+      <div class="et rv"><span class="ico navy"><i data-lucide="bot"></i></span><b>2. Agente gera a cobrança</b><span>Pix, boleto ou cartão + nota fiscal da comissão.</span></div>
+      <div class="et rv"><span class="ico"><i data-lucide="send"></i></span><b>3. Disponibiliza</b><span>No app, WhatsApp e e-mail.</span></div>
+      <div class="et rv"><span class="ico"><i data-lucide="badge-check"></i></span><b>4. Cliente paga</b><span>Baixa sozinha; lembra quem não pagou.</span></div>
+      <div class="et rv"><span class="ico navy"><i data-lucide="lock"></i></span><b>5. Fica guardado</b><span>Até o serviço com foto e a nota do profissional.</span></div>
+      <div class="et ok rv"><span class="ico verde"><i data-lucide="hand-coins"></i></span><b>6. Cada um recebe</b><span>Profissional e comissão. Agente concilia e lança.</span></div>
     </div>
+    <div class="frase-ag rv"><span class="ico"><i data-lucide="repeat"></i></span><p><b>Igual receber de fornecedor: nota + forma de pagamento + cobrança, só que sem ninguém fazendo à mão.</b></p></div>
+    <div class="chips rv"><span class="chip"><i data-lucide="undo-2"></i>Cancelou? Estorno automático</span><span class="chip"><i data-lucide="package"></i>Peça à parte também pelo app</span></div>
   </div>
 </section>
 
-<!-- 8 AGENTE -->
-<section class="slide navy" id="s8" data-titulo="O agente que gera pedidos" data-escuro>
-  <div class="wrap agente">
-    <div>
-      <span class="tag rv"><b>8</b>O agente que gera pedidos</span>
-      <h2 class="rv">Antes de a franquia pedir, <em>a sugestão já chegou</em></h2>
-      <div class="fluxo-ag">
-        <div class="item rv"><span class="ico"><i data-lucide="clipboard-list"></i></span><p><b>Lê as manutenções abertas</b> das franquias, todo dia.</p></div>
-        <div class="item rv"><span class="ico"><i data-lucide="wand-sparkles"></i></span><p><b>Escolhe o serviço certo</b>, o profissional livre e o preço.</p></div>
-        <div class="item rv"><span class="ico"><i data-lucide="mouse-pointer-click"></i></span><p><b>Manda pronto com um botão</b>: a franquia só aperta Contratar.</p></div>
-      </div>
-      <p class="sub rv">É a principal fonte de pedidos: transforma o chamado que hoje fica parado em serviço agendado.</p>
-    </div>
-    <div class="fone rv" aria-hidden="true">
-      <div class="aviso"><i data-lucide="wrench"></i>Manutenção aberta há 2 dias · Chuveiro sem água quente</div>
-      <div class="msg">
-        <div class="de"><span class="bot"><i data-lucide="bot"></i></span><div>ConcertAI<small>para Franquia Floripa Norte</small></div></div>
-        <p>O imóvel <b>CNV0302</b> está com o chuveiro sem esquentar. Achei um profissional livre amanhã:</p>
-        <div class="prest">
-          <span class="av">JS</span>
-          <div><b>João S.</b><small>Eletricista</small><small><i data-lucide="star"></i>4,9 · 132 serviços</small></div>
-          <div class="preco"><small>Troca de resistência</small><b class="num">R$ 182</b></div>
-        </div>
-        <div class="horas"><span class="hora">8h–9h</span><span class="hora sel">10h–11h</span><span class="hora">14h–15h</span></div>
-        <button class="btn btn-cta" tabindex="-1">Contratar</button>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- 9 PREÇO -->
-<section class="slide" id="s9" data-titulo="Preço">
+<!-- 8 PREÇO -->
+<section class="slide" id="s8" data-titulo="Preço">
   <div class="wrap">
     <div class="cab">
-      <span class="tag rv"><b>9</b>Preço</span>
+      <span class="tag rv"><b>8</b>Preço</span>
       <h2 class="rv">Preço fechado, <em>23% menor</em> que a primeira proposta</h2>
     </div>
     <div class="preco-grid">
@@ -664,226 +666,71 @@ h3{font-size:18px;line-height:1.3;font-weight:700}
         </table>
       </div>
       <div>
-        <div class="comissao rv"><span class="ico"><i data-lucide="hand-coins"></i></span><p><b>Como o preço é feito:</b> o prestador recebe o mesmo que a Seazone já paga hoje, e a Seazone soma uma <b>comissão fixa de R$ 30 a R$ 70</b> por serviço.</p></div>
-        <div class="card barras rv">
-          <h3>Faixa de preço, mesmos serviços</h3>
-          <p class="mini">Do serviço mais barato ao mais caro.</p>
-          <div class="eixo">
-            <div class="faixa"><div class="nome">ConcertAI<small>R$ 167 a 272 · preço fechado</small></div><div class="trilho"><div class="seg cz num" style="left:19.1%;width:30%"></div></div></div>
-            <div class="faixa"><div class="nome">Houser e Porto<small>R$ 256 a 440 · preço fechado</small></div><div class="trilho"><div class="seg hp num" style="left:44.6%;width:52.6%"></div></div></div>
-            <div class="faixa"><div class="nome">GetNinjas e Triider<small>R$ 120 a 205 · orçamento</small></div><div class="trilho"><div class="seg gn num" style="left:5.7%;width:24.3%"></div></div></div>
-            <div class="escala num"><span></span><div class="marcas"><span style="left:0">R$ 100</span><span style="left:28.6%">200</span><span style="left:57.1%">300</span><span style="left:85.7%">400</span></div></div>
-          </div>
-          <div class="chips">
-            <span class="chip"><i data-lucide="trending-down"></i>12% a 40% abaixo do Houser</span>
-            <span class="chip"><i data-lucide="hand-coins"></i>Prestador recebe o mesmo</span>
-          </div>
+        <div class="comissao rv"><span class="ico"><i data-lucide="hand-coins"></i></span><p>O prestador recebe <b>o mesmo que a Seazone já paga hoje</b>. A Seazone soma uma <b>comissão fixa de R$ 30 a R$ 70</b> por serviço.</p></div>
+        <div class="chips rv">
+          <span class="chip"><i data-lucide="trending-down"></i>12% a 40% abaixo do Houser</span>
+          <span class="chip"><i data-lucide="shield-check"></i>Com garantia e foto</span>
+          <span class="chip"><i data-lucide="ban"></i>Sem mensalidade</span>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- 10 GANHO -->
-<section class="slide alt" id="s10" data-titulo="Quanto a Seazone ganha">
+<!-- 9 GANHO -->
+<section class="slide alt" id="s9" data-titulo="Quanto a Seazone ganha">
   <div class="wrap">
     <div class="cab">
-      <span class="tag rv"><b>10</b>Quanto a Seazone ganha</span>
-      <h2 class="rv">A conta é simples: <em>comissão × volume</em></h2>
+      <span class="tag rv"><b>9</b>Quanto a Seazone ganha</span>
+      <h2 class="rv" style="max-width:none">Comissão × volume <span class="estimativa"><i data-lucide="triangle-alert"></i>Estimativa, 1 ano</span></h2>
+      <p class="sub rv">R$ 56,70 de comissão por pedido · sobram R$ 39,30 depois de imposto e custos.</p>
     </div>
-    <div class="kpis">
-      <div class="card kpi dest rv"><div class="v num">R$ 56,70</div><p>de comissão média por pedido. Sobram <b style="color:#fff">R$ 39,30</b> depois de imposto e custos.</p></div>
-      <div class="card kpi rv"><div class="v num">314<small> /mês</small></div><p>pedidos desses 14 serviços que a Seazone já paga hoje. 89 em Florianópolis.</p></div>
-      <div class="card kpi rv"><div class="v num">~130<small> /mês</small></div><p>pedidos pagam um custo fixo de R$ 5 mil por mês. Para R$ 2 mil, bastam ~50.</p></div>
-      <div class="card kpi rv"><div class="v num">R$ 23 mil</div><p>de resultado no 1º ano, na rede toda e no cenário realista, já contando a subida aos poucos.</p></div>
+    <div class="tabela ganho rv">
+      <table>
+        <thead><tr><th>Cenário</th><th>Carteira Seazone</th><th>Fora da Seazone</th><th>Comissão total</th><th>Resultado</th></tr></thead>
+        <tbody class="num">
+          <tr><td>Pessimista</td><td>R$ 32 mil</td><td>R$ 11 mil</td><td>R$ 43 mil</td><td>R$ 30 mil</td></tr>
+          <tr class="real"><td><b>Realista</b> <span class="pill azul">Mais provável</span></td><td>R$ 74 mil</td><td>R$ 41 mil</td><td><b>R$ 115 mil</b></td><td><b>R$ 79 mil</b></td></tr>
+          <tr><td>Otimista</td><td>R$ 139 mil</td><td>R$ 105 mil</td><td>R$ 244 mil</td><td>R$ 169 mil</td></tr>
+        </tbody>
+      </table>
     </div>
-    <div class="rv">
-      <div class="abas" role="tablist" aria-label="Fase">
-        <button class="aba" role="tab" data-fase="floripa" aria-selected="false"><span class="f">Fase 1</span>Florianópolis</button>
-        <button class="aba" role="tab" data-fase="rede" aria-selected="true"><span class="f">Fase 1</span>Rede toda</button>
-        <button class="aba" role="tab" data-fase="f2" aria-selected="false"><span class="f">Fase 2</span>Catálogo completo</button>
-      </div>
-      <div class="cenarios" id="cenarios"></div>
-      <p class="nota-fase" id="notaFase"></p>
-    </div>
+    <p class="nota-fase rv"><i data-lucide="info"></i><span>Carteira = 14 serviços em toda a rede (~314 pedidos/mês hoje). O que decide o resultado é a franquia mandar os chamados pelo ConcertAI.</span></p>
   </div>
 </section>
 
-<!-- 9b PREMISSAS -->
-<section class="slide" id="s11" data-titulo="Premissas">
+<!-- 10 STATUS -->
+<section class="slide" id="s10" data-titulo="Pronto e próximos passos">
   <div class="wrap">
     <div class="cab">
-      <span class="tag rv"><b>11</b>De onde vêm os números</span>
-      <h2 class="rv">As premissas, em linguagem simples</h2>
-    </div>
-    <div class="prem">
-      <div class="card rv"><h3><span class="ico"><i data-lucide="cloud-rain"></i></span>Pessimista</h3><p>Só <b>15%</b> dos pedidos de hoje passam pelo ConcertAI. A franquia segue com o prestador dela e nada traz pedido novo.</p></div>
-      <div class="card rv" style="outline:2px solid var(--blue);outline-offset:-2px"><h3><span class="ico"><i data-lucide="target"></i></span>Realista</h3><p><b>30%</b> dos pedidos passam pelo ConcertAI, perto da meta do piloto (25% a 40%). O agente e o preço trazem <b>mais 15%</b>.</p></div>
-      <div class="card rv"><h3><span class="ico"><i data-lucide="sun"></i></span>Otimista</h3><p><b>Metade</b> dos pedidos passa pelo ConcertAI, com a regra na operação de que o chamado vai por ele. O agente e o preço trazem <b>mais 30%</b>.</p></div>
-    </div>
-    <div class="extra">
-      <div class="card rv"><span class="ico verde"><i data-lucide="receipt"></i></span><p><b>Resultado</b> = comissão (R$ 56,70) menos ~R$ 17 por pedido de imposto e custos (atendimento, perdas e reserva da garantia) = R$ 39,30.</p></div>
-      <div class="card rv"><span class="ico verde"><i data-lucide="layers"></i></span><p><b>Fase 2</b> soma ~216 pedidos por mês de outros serviços, com comissão menor (~R$ 35).</p></div>
-      <div class="card rv"><span class="ico coral"><i data-lucide="globe"></i></span><p><b>Anfitrião e imóveis de fora da Seazone são ganho extra</b>, fora destes números. A conta deles está no slide 15.</p></div>
-    </div>
-    <div class="pontos-claros">
-      <div class="pc rv"><i data-lucide="info"></i><p><b>O "23% menor" é contra a primeira proposta de preço do ConcertAI.</b> Hoje a Seazone paga em média R$ 155 por pedido direto ao prestador; no ConcertAI vira R$ 211, com garantia, prova por foto e sem procurar profissional.</p></div>
-      <div class="pc rv"><i data-lucide="building-2"></i><p><b>O que define o resultado é a franquia mandar os chamados pelo ConcertAI.</b> Hoje é ela quem recebe quase todas as despesas de manutenção.</p></div>
-      <div class="pc rv"><i data-lucide="ban"></i><p><b>Não há mensalidade para ninguém.</b> O que paga a estrutura é só o volume de pedidos.</p></div>
-    </div>
-  </div>
-</section>
-
-<!-- 12 ANFITRIÃO AVULSO -->
-<section class="slide alt" id="s12" data-titulo="Anfitrião de fora da Seazone">
-  <div class="wrap">
-    <div class="cab">
-      <span class="tag rv"><b>12</b>Público novo</span>
-      <h2 class="rv">Anfitrião de <em>fora da Seazone</em> também contrata</h2>
-    </div>
-    <div class="quem rv"><span class="ico"><i data-lucide="globe"></i></span><p><b>Quem é:</b> a pessoa que aluga 1 a 3 imóveis no Airbnb ou no Booking por conta própria, sem gestora. Hoje ela resolve conserto do mesmo jeito que a franquia: no WhatsApp e no improviso.</p></div>
-    <div class="passos">
-      <div class="card passo rv"><span class="n"></span><div><h3><i data-lucide="user-plus"></i>Cria a conta sozinho</h3><p>Nome, celular e CPF ou CNPJ. O celular é confirmado por código.</p></div></div>
-      <div class="card passo rv"><span class="n"></span><div><h3><i data-lucide="home"></i>Cadastra o imóvel</h3><p>Endereço pelo CEP, como entrar no imóvel e, se quiser, o calendário do Airbnb.</p></div></div>
-      <div class="card passo rv"><span class="n"></span><div><h3><i data-lucide="calendar-clock"></i>Serviço, dia e horário</h3><p>Escolhe igual ao proprietário, com preço fechado e pelo menos 3h antes.</p></div></div>
-      <div class="card passo rv"><span class="n"></span><div><h3><i data-lucide="star"></i>Só profissional livre</h3><p>Aparecem só os que atendem a região dele nesse horário, os melhores primeiro.</p></div></div>
-      <div class="card passo rv"><span class="n"></span><div><h3><i data-lucide="qr-code"></i>Paga na hora</h3><p>Pix ou cartão. O dinheiro fica guardado e só vai ao profissional quando o serviço termina, com foto e nota fiscal.</p></div></div>
-      <div class="card passo fim rv"><span class="n"></span><div><h3><i data-lucide="shield-check"></i>Mesma garantia</h3><p>WhatsApp com o profissional depois de confirmar, garantia de 90 dias (30 para limpeza) e reclamação pela SIA, como todos.</p></div></div>
-    </div>
-  </div>
-</section>
-
-<!-- 13 IMÓVEIS FORA DA SEAZONE -->
-<section class="slide" id="s13" data-titulo="Imóveis fora da Seazone">
-  <div class="wrap">
-    <div class="cab">
-      <span class="tag rv"><b>13</b>Imóveis fora da Seazone</span>
-      <h2 class="rv">Proprietário e franquia contratam também para <em>imóveis de fora</em></h2>
-      <p class="sub rv">Quem já usa o ConcertAI pode chamar o mesmo profissional para um imóvel que não está na Seazone.</p>
-    </div>
-    <div class="fora">
-      <div class="card rv"><span class="ico"><i data-lucide="key-round"></i></span><h3>Proprietário</h3><p>Além dos imóveis que estão com a Seazone, contrata para os outros que são dele.</p><div class="ex"><i data-lucide="palmtree"></i>Ex.: a casa de praia da família, que ele não aluga.</div></div>
-      <div class="card rv"><span class="ico"><i data-lucide="building-2"></i></span><h3>Franquia</h3><p>Além da carteira Seazone, contrata para clientes e imóveis que ela atende por fora.</p><div class="ex"><i data-lucide="briefcase"></i>Ex.: um imóvel de cliente da franquia que não é gerido pela Seazone.</div></div>
-    </div>
-    <div class="mini-fluxo">
-      <div class="pt rv"><span class="ico"><i data-lucide="map-pin-plus"></i></span><div><b>Cadastra o imóvel</b>Endereço e como entrar.</div></div>
-      <span class="seta rv" aria-hidden="true"><i data-lucide="arrow-right"></i></span>
-      <div class="pt rv"><span class="ico"><i data-lucide="list-checks"></i></span><div><b>Contrata igual</b>Mesmo serviço, preço e profissional.</div></div>
-      <span class="seta rv" aria-hidden="true"><i data-lucide="arrow-right"></i></span>
-      <div class="pt rv"><span class="ico coral"><i data-lucide="qr-code"></i></span><div><b>Paga na hora</b>Sem repasse para descontar, paga como o anfitrião.</div></div>
-    </div>
-  </div>
-</section>
-
-<!-- 14 COMO O DINHEIRO ANDA -->
-<section class="slide alt" id="s14" data-titulo="Como o dinheiro anda">
-  <div class="wrap">
-    <div class="cab">
-      <span class="tag rv"><b>14</b>Para quem paga na hora</span>
-      <h2 class="rv">Como o dinheiro anda, <em>sem planilha</em></h2>
-    </div>
-    <div class="trilha cinco">
-      <div class="etapa rv"><span class="ico"><i data-lucide="qr-code"></i></span><h3>Paga</h3><p>Pix ou cartão, na hora de contratar.</p></div>
-      <div class="etapa cofre rv"><span class="ico"><i data-lucide="lock"></i></span><h3>Fica guardado</h3><p>Ninguém recebe ainda.</p></div>
-      <div class="etapa rv"><span class="ico"><i data-lucide="camera"></i></span><h3>Serviço feito</h3><p>Com foto e prazo de 3 dias para reclamar.</p></div>
-      <div class="etapa rv"><span class="ico"><i data-lucide="receipt"></i></span><h3>Nota fiscal</h3><p>O profissional manda a nota do serviço.</p></div>
-      <div class="etapa ok rv"><span class="ico"><i data-lucide="hand-coins"></i></span><h3>Cada um recebe</h3><p>O profissional, a parte dele. A Seazone, a comissão.</p></div>
-    </div>
-    <div class="divide">
-      <div class="card rv"><span class="ico coral"><i data-lucide="undo-2"></i></span><p><b>Cancelou antes de o profissional chegar?</b> O dinheiro volta inteiro, sozinho.</p></div>
-      <div class="card rv"><span class="ico verde"><i data-lucide="zap"></i></span><p><b>Tudo automático.</b> Ninguém confere planilha nem faz transferência na mão.</p></div>
-      <div class="card rv"><span class="ico"><i data-lucide="tag"></i></span><p><b>Comissão fixa de R$ 30 a R$ 70</b> por serviço, já dentro do preço que a pessoa vê.</p></div>
-      <div class="card rv"><span class="ico"><i data-lucide="package"></i></span><p><b>Peça à parte</b> também é paga no app e segue o mesmo caminho, sem comissão.</p></div>
-    </div>
-  </div>
-</section>
-
-<!-- 15 RECEITA FORA DA SEAZONE -->
-<section class="slide" id="s15" data-titulo="Receita de fora da Seazone">
-  <div class="wrap">
-    <div class="cab">
-      <span class="tag rv"><b>15</b>Ganho extra</span>
-      <h2 class="rv">Quanto vem de <em>fora da carteira</em><span class="estimativa"><i data-lucide="triangle-alert"></i>Estimativa</span></h2>
-    </div>
-    <div class="cenarios">
-      <div class="card cen rv">
-        <div class="topo-cen"><b>Pessimista</b></div>
-        <p class="ped num"><strong>16</strong> pedidos por mês</p>
-        <p class="det num"><b>50</b> anfitriões × 3 pedidos no ano + <b>20</b> imóveis de fora × 2</p>
-        <div class="linha-v num"><span>Comissão no ano</span><strong>R$ 10,8 mil</strong></div>
-        <div class="barra-v"><i style="width:10.3%"></i></div>
-        <div class="linha-v num"><span>Resultado no ano</span><strong>R$ 7,5 mil</strong></div>
-        <div class="barra-v res"><i style="width:7.1%"></i></div>
-        <p class="mes num">Por mês: R$ 0,9 mil de comissão · R$ 0,6 mil de resultado</p>
-      </div>
-      <div class="card cen real rv">
-        <div class="topo-cen"><b>Realista</b><span class="pill azul">Mais provável</span></div>
-        <p class="ped num"><strong>60</strong> pedidos por mês</p>
-        <p class="det num"><b>150</b> anfitriões × 4 pedidos no ano + <b>60</b> imóveis de fora × 2</p>
-        <div class="linha-v num"><span>Comissão no ano</span><strong>R$ 40,8 mil</strong></div>
-        <div class="barra-v"><i style="width:38.9%"></i></div>
-        <div class="linha-v num"><span>Resultado no ano</span><strong>R$ 28,3 mil</strong></div>
-        <div class="barra-v res"><i style="width:27%"></i></div>
-        <p class="mes num">Por mês: R$ 3,4 mil de comissão · R$ 2,4 mil de resultado</p>
-      </div>
-      <div class="card cen rv">
-        <div class="topo-cen"><b>Otimista</b></div>
-        <p class="ped num"><strong>155</strong> pedidos por mês</p>
-        <p class="det num"><b>300</b> anfitriões × 5 pedidos no ano + <b>120</b> imóveis de fora × 3</p>
-        <div class="linha-v num"><span>Comissão no ano</span><strong>R$ 105 mil</strong></div>
-        <div class="barra-v"><i style="width:100%"></i></div>
-        <div class="linha-v num"><span>Resultado no ano</span><strong>R$ 73 mil</strong></div>
-        <div class="barra-v res"><i style="width:69.5%"></i></div>
-        <p class="mes num">Por mês: R$ 8,8 mil de comissão · R$ 6,1 mil de resultado</p>
-      </div>
-    </div>
-    <div class="total-fora rv">
-      <span class="ico"><i data-lucide="plus"></i></span>
-      <p><b>Carteira + fora da Seazone, cenário realista:</b> a rede toda no 1º lote de serviços (R$ 74 mil de comissão e R$ 51 mil de resultado) somada a este público novo.</p>
-      <div class="nums num"><div><strong>R$ 115 mil</strong>comissão no ano</div><div><strong>R$ 79 mil</strong>resultado no ano</div></div>
-    </div>
-    <div class="prem-fora">
-      <p class="rv"><i data-lucide="users"></i><span><b>Poucos anfitriões:</b> a Grande Florianópolis tem milhares de anúncios no Airbnb; 150 ativos é uma fração bem pequena.</span></p>
-      <p class="rv"><i data-lucide="calculator"></i><span><b>Mesma conta da carteira:</b> R$ 56,70 de comissão e R$ 39,30 de resultado por pedido. A taxa do Pix ou do cartão ainda sai disso.</span></p>
-      <p class="rv"><i data-lucide="calendar"></i><span><b>Ano cheio, já rodando:</b> o 1º ano real vem menor, porque o público cresce aos poucos. Ainda sem teste.</span></p>
-    </div>
-  </div>
-</section>
-
-<!-- 16 STATUS -->
-<section class="slide alt" id="s16" data-titulo="Pronto e próximos passos">
-  <div class="wrap">
-    <div class="cab">
-      <span class="tag rv"><b>16</b>Onde estamos</span>
+      <span class="tag rv"><b>10</b>Onde estamos</span>
       <h2 class="rv">O site já funciona. Agora é <em>testar de verdade</em></h2>
     </div>
     <div class="status">
       <div class="col feito">
         <h3 class="rv"><span class="ico verde"><i data-lucide="circle-check"></i></span>Já está pronto</h3>
         <ul>
-          <li class="rv"><i data-lucide="circle-check"></i><div><b>Site no ar, com todos os perfis</b><span>Página de visita, proprietário, franquia, prestador e admin.</span></div></li>
-          <li class="rv"><i data-lucide="circle-check"></i><div><b>Conta admin com dados reais</b><span>Franquias, imóveis e prestadores reais; vê o que cada pessoa vê.</span></div></li>
-          <li class="rv"><i data-lucide="circle-check"></i><div><b>Contratação completa</b><span>Imóvel, serviço, dia, profissional livre e confirmação em 1h.</span></div></li>
-          <li class="rv"><i data-lucide="circle-check"></i><div><b>WhatsApp com o profissional</b><span>Mensagem pronta assim que ele confirma.</span></div></li>
-          <li class="rv"><i data-lucide="circle-check"></i><div><b>Preço com comissão fixa</b><span>R$ 30 a R$ 70 por serviço, já no preço fechado.</span></div></li>
-          <li class="rv"><i data-lucide="circle-check"></i><div><b>Nota fiscal e garantia</b><span>Sem nota não recebe; 90 dias de garantia (30 para limpeza).</span></div></li>
+          <li class="rv"><i data-lucide="circle-check"></i><div><b>Site no ar, com todos os perfis</b></div></li>
+          <li class="rv"><i data-lucide="circle-check"></i><div><b>Contratação completa</b><span>Imóvel, serviço, dia, profissional e confirmação em 1h.</span></div></li>
+          <li class="rv"><i data-lucide="circle-check"></i><div><b>WhatsApp, preço fechado e comissão</b></div></li>
+          <li class="rv"><i data-lucide="circle-check"></i><div><b>Nota fiscal e garantia</b></div></li>
         </ul>
       </div>
       <div class="col prox">
-        <h3 class="rv"><span class="ico"><i data-lucide="rocket"></i></span>Em construção e próximos passos</h3>
+        <h3 class="rv"><span class="ico"><i data-lucide="rocket"></i></span>Próximos passos</h3>
         <ul>
-          <li class="rv construcao"><i data-lucide="hammer"></i><div><b>Anfitrião avulso, em construção hoje</b><span>Cadastro, telas e cobrança na hora (em teste, sem dinheiro real).</span></div></li>
-          <li class="rv"><i data-lucide="map-pin"></i><div><b>Piloto em Florianópolis</b><span>Com franquias e imóveis reais.</span></div></li>
-          <li class="rv"><i data-lucide="users"></i><div><b>Prestadores reais</b><span>Convite aos profissionais validados do Hub.</span></div></li>
-          <li class="rv"><i data-lucide="wallet"></i><div><b>Pagamento de verdade</b><span>Desconto no repasse e Pix ou cartão ligados.</span></div></li>
-          <li class="rv"><i data-lucide="flag"></i><div><b>Decisões da liderança</b><span>Como as franquias passam a usar e a regra na operação.</span></div></li>
+          <li class="rv construcao"><i data-lucide="hammer"></i><div><b>Anfitrião avulso, em construção</b></div></li>
+          <li class="rv"><i data-lucide="map-pin"></i><div><b>Piloto em Florianópolis</b><span>Franquias e imóveis reais.</span></div></li>
+          <li class="rv"><i data-lucide="bot"></i><div><b>Agentes captando os primeiros prestadores</b></div></li>
+          <li class="rv"><i data-lucide="wallet"></i><div><b>Cobrança e pagamento de verdade</b></div></li>
+          <li class="rv"><i data-lucide="flag"></i><div><b>Decisão da liderança</b><span>Chamados das franquias pelo ConcertAI.</span></div></li>
         </ul>
       </div>
     </div>
   </div>
 </section>
 
-<!-- 17 FIM -->
+<!-- 11 FIM -->
 <section class="slide navy" id="s17" data-titulo="Encerramento" data-escuro>
   <div class="wrap">
     <div class="fim-logo rv"><svg class="logo-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 411 68" role="img" aria-label="Seazone"><path fill="currentColor" d="M33.856 52.5045C33.856 41.2633 0.620441 47.8249 0.620441 28.9865C0.620441 20.5619 9.06051 13.5835 21.1421 13.5835C33.9571 13.5835 41.1454 20.1451 41.1454 24.3131C41.1454 26.3846 39.4827 28.576 36.6693 28.576C35.0003 28.576 33.856 27.5339 32.8128 26.4919C30.7328 24.4079 26.2504 21.9133 21.0473 21.9133C13.4418 21.9133 9.8002 25.1404 9.8002 28.1591C9.8002 38.4594 43.5541 32.9461 43.5541 51.6709C43.5541 61.769 33.0341 67.7054 21.4646 67.7054C7.80872 67.6991 0.0957031 60.4113 0.0957031 56.5589C0.0957031 53.9634 2.08086 52.1888 4.47063 52.1888C6.13968 52.1888 7.28399 53.1297 8.01735 53.856C11.0393 57.0831 15.4143 59.2682 21.5657 59.2682C28.754 59.2682 33.8623 56.4579 33.8623 52.5045"/><path fill="currentColor" d="M60.8887 44.6989C62.1404 53.5402 69.6448 59.1608 78.597 59.1608C84.3249 59.1608 88.8073 56.8747 91.6206 55.3085C92.2465 55.0054 93.081 54.6896 94.1179 54.6896C96.6151 54.6896 98.3916 56.5589 98.3916 58.9587C98.3916 60.9354 97.1399 62.3942 96.2042 62.9184C94.1179 64.1688 87.6566 67.7054 78.5907 67.7054C62.9623 67.7054 51.083 56.0411 51.083 40.5434C51.083 25.0457 63.4807 13.5835 78.0659 13.5835C92.6511 13.5835 103.696 25.8667 103.696 38.352C103.696 41.5854 101.091 44.7052 97.8669 44.7052H60.876L60.8887 44.6989ZM60.8887 36.6785H94.7501C94.023 29.6053 87.0371 21.907 78.0786 21.907C69.1201 21.907 61.7232 28.3612 60.8887 36.6785Z"/><path fill="currentColor" d="M190.833 22.7668C188.02 22.7668 185.965 20.9354 185.965 18.1188C185.965 15.3022 188.02 13.5781 190.833 13.5781H223.81C227.388 13.5781 229.335 16.4958 229.335 18.984C229.335 20.9291 228.678 22.009 227.388 23.5184L198.3 58.4166H225.333C228.14 58.4166 230.309 60.469 230.309 63.172C230.309 65.8749 228.147 67.599 225.333 67.599H190.505C187.476 67.599 184.985 65.2244 184.985 62.0921C184.985 60.3617 185.529 59.3891 187.046 57.5514L215.92 22.7668H190.833Z"/><path fill="currentColor" d="M261.567 67.6991C246.147 67.6991 234.375 55.6243 234.375 40.5371C234.375 25.4499 246.356 13.5835 261.567 13.5835C276.778 13.5835 288.86 25.5573 288.86 40.5371C288.86 55.5169 276.772 67.6991 261.567 67.6991ZM261.567 22.2228C251.565 22.2228 243.543 30.6537 243.543 40.5371C243.543 50.4205 251.256 59.1671 261.567 59.1671C271.878 59.1671 279.484 50.4205 279.484 40.5371C279.484 30.6537 271.67 22.2228 261.567 22.2228Z"/><path fill="currentColor" d="M367.304 44.6989C368.556 53.5402 376.054 59.1608 385.012 59.1608C390.746 59.1608 395.229 56.8747 398.042 55.3085C398.655 55.0054 399.496 54.6896 400.533 54.6896C403.037 54.6896 404.8 56.5589 404.8 58.9587C404.8 60.9354 403.549 62.3942 402.626 62.9184C400.533 64.1688 394.078 67.7054 385.012 67.7054C369.371 67.7054 357.504 56.0411 357.504 40.5434C357.504 25.0457 369.902 13.5835 384.481 13.5835C399.06 13.5835 410.124 25.8667 410.124 38.352C410.124 41.5854 407.513 44.7052 404.282 44.7052H367.297L367.304 44.6989ZM367.304 36.6785H401.171C400.425 29.6053 393.452 21.907 384.487 21.907C375.523 21.907 368.138 28.3612 367.304 36.6785Z"/><path fill="currentColor" d="M325.206 13.698C321.343 13.3318 317.455 13.3065 313.579 13.357C309.862 13.4075 306.107 13.2876 302.396 13.4581C301.529 13.496 300.682 13.6475 299.898 14.0264C299.709 14.1149 299.525 14.2159 299.342 14.3296C298.552 14.8032 297.806 15.4853 297.313 16.2936C296.737 17.2472 296.737 18.1187 296.788 19.186C296.838 20.1965 296.788 21.2195 296.788 22.23C296.775 25.9055 296.769 29.5873 296.756 33.2691C296.75 35.6184 296.725 62.7046 296.725 62.7046C296.725 65.3065 299.02 67.7063 301.719 67.7063C304.419 67.7063 306.726 65.3065 306.726 62.7046V39.6096C306.726 28.9873 314.54 22.3247 323.183 22.3247C331.825 22.3247 339.646 28.9873 339.646 39.6096V62.7046C339.646 65.3065 341.846 67.7063 344.539 67.7063C347.232 67.7063 349.647 65.3065 349.647 62.7046V40.3296C349.647 26.5181 338.678 14.98 325.2 13.698"/><path fill="#FC6058" d="M174.96 20.973L163.2 14.0515C163.226 13.8873 163.302 13.7357 163.302 13.5715V3.13238C163.302 1.40199 161.898 0 160.166 0H153.894C152.162 0 150.758 1.40199 150.758 3.13238V6.77629L146.491 4.28176C144.759 3.24605 142.476 3.42288 140.871 4.61015L140.788 4.64173L113.736 20.3162C111.479 21.6614 110.537 24.7875 111.94 27.1304C113.395 29.5618 116.6 30.2186 118.851 28.8734L120.469 27.9388C118.553 31.6837 117.358 35.915 117.358 40.5314C117.358 47.8319 120.166 55.025 125.35 60.2098C127.385 62.2497 129.756 63.9548 132.355 65.2115C134.352 66.1778 136.464 66.9861 138.658 67.3903C141.566 67.9208 144.575 67.6492 147.515 67.6555C150.689 67.6555 153.869 67.6618 157.043 67.6682C159.919 67.6745 162.796 67.6871 165.704 67.6934C166.431 67.6934 167.145 67.504 167.79 67.1756C168.618 66.7524 169.112 66.2914 169.655 65.5652C170.275 64.7442 170.705 63.7527 170.705 62.6917V29.827C172.861 30.6038 175.478 29.9281 176.761 27.7809C178.165 25.4379 177.223 22.3119 174.96 20.9667M161.43 41.0493C161.43 51.04 154.659 59.1615 144.449 59.1615C134.239 59.1615 126.734 50.5222 126.734 40.5314C126.734 30.5407 134.239 22.2171 144.449 22.2171C154.659 22.2171 161.43 29.9218 161.43 39.8052V41.0556V41.0493Z"/></svg><span class="sep"></span><span class="wm">Concert<span>AI</span></span></div>
@@ -898,37 +745,14 @@ h3{font-size:18px;line-height:1.3;font-weight:700}
 </section>
 </main>
 
+
 <script>
 document.documentElement.classList.add('js');
 // tabela de preço (Lote 1)
 const PRECOS=[['Limpeza de ar-condicionado',335,272],['Ar-condicionado pingando',335,241],['Troca de resistência',235,182],['Instalar chuveiro',235,233],['Tomada ou interruptor',265,180],['Disjuntor',265,200],['Vazamento aparente',265,187],['Desentupimento',270,183],['Torneira ou sifão',235,175],['Ducha higiênica',230,172],['Descarga',265,207],['Ajuste de porta',225,167],['Conserto de móvel',230,170],['Janela ou vidraça',225,177]];
 document.getElementById('tbPreco').innerHTML=PRECOS.map(([n,a,b])=>`<tr><td>${n}</td><td class="antes">R$ ${a}</td><td class="agora">R$ ${b}</td><td class="dif">−${Math.round((1-b/a)*100)}%</td></tr>`).join('');
 
-// cenários (números da conta do Henry, 17/11)
-const CEN={
-  floripa:{nota:'Só Florianópolis, onde começa o piloto (~89 pedidos por mês hoje).',d:[['Pessimista',13,'0,7','0,5','8,7','6,0',8.7,6],['Realista',31,'1,7','1,2','20','13,8',20,13.8],['Otimista',58,'3,1','2,2','37,7','26',37.7,26]]},
-  rede:{nota:'Os 14 serviços do primeiro lote em todas as franquias (~314 pedidos por mês hoje).',d:[['Pessimista',47,'2,7','1,9','32','22',32,22],['Realista',108,'6,1','4,3','74','51',74,51],['Otimista',204,'11,6','8,0','139','96',139,96]]},
-  f2:{nota:'Rede toda com o catálogo completo: o primeiro lote mais ~216 pedidos por mês de outros serviços.',d:[['Pessimista',80,'3,8','2,5','46','31',46,31],['Realista',183,'8,7','5,9','105','70',105,70],['Otimista',345,'16,5','11,0','198','132',198,132]]}
-};
-const MAX=198;
-function mostra(f){
-  document.querySelectorAll('.aba').forEach(b=>b.setAttribute('aria-selected',b.dataset.fase===f));
-  const c=CEN[f];
-  document.getElementById('cenarios').innerHTML=c.d.map(([n,p,cm,rm,ca,ra,cv,rv])=>`
-    <div class="card cen${n==='Realista'?' real':''}">
-      <div class="topo-cen"><b>${n}</b>${n==='Realista'?'<span class="pill azul">Mais provável</span>':''}</div>
-      <p class="ped num"><strong>${p}</strong> pedidos por mês</p>
-      <div class="linha-v num"><span>Comissão no ano</span><strong>R$ ${ca} mil</strong></div>
-      <div class="barra-v"><i style="width:${cv/MAX*100}%"></i></div>
-      <div class="linha-v num"><span>Resultado no ano</span><strong>R$ ${ra} mil</strong></div>
-      <div class="barra-v res"><i style="width:${rv/MAX*100}%"></i></div>
-      <p class="mes num">Por mês: R$ ${cm} mil de comissão · R$ ${rm} mil de resultado</p>
-    </div>`).join('');
-  document.getElementById('notaFase').innerHTML='<i data-lucide="info"></i><span>'+c.nota+'</span>';
-  if(window.lucide) lucide.createIcons();
-}
-document.querySelectorAll('.aba').forEach(b=>b.addEventListener('click',()=>mostra(b.dataset.fase)));
-mostra('rede');
+
 
 // navegação
 const S=[...document.querySelectorAll('.slide')];
