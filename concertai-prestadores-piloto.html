@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ConcertAI · Prestadores do piloto</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:dark;--bg:#0B1030;--surface:#121A42;--border:#252E62;--fg:#F2F3F8;--fg2:#A9AECB;--brand:#5C90FF;--ok:#4ADE80;--warn:#FDBA74;--bad:#FF8A87}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 Inter,system-ui,sans-serif}
+main{max-width:760px;margin:0 auto;padding:32px 16px 64px}
+h1{font-size:26px;margin:0 0 4px}
+.sub{color:var(--fg2);margin:0 0 28px}
+h2{font-size:18px;margin:32px 0 12px;color:var(--brand)}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px 18px;margin:10px 0}
+.row{display:flex;justify-content:space-between;gap:12px;padding:8px 0;border-bottom:1px solid var(--border)}
+.row:last-child{border:0}
+.tag{font-size:13px;font-weight:600;padding:2px 10px;border-radius:999px;white-space:nowrap}
+.ok{background:#14532d55;color:var(--ok)}.warn{background:#7c2d1255;color:var(--warn)}.bad{background:#7f1d1d55;color:var(--bad)}
+ol,ul{padding-left:20px;margin:6px 0}li{margin:4px 0}
+a{color:var(--brand);word-break:break-all}
+details{color:var(--fg2);margin-top:28px}
+</style>
+</head>
+<body><main>
+<h1>Prestadores do Hub para o piloto</h1>
+<p class="sub">ConcertAI · Florianópolis e região · 17/11/2026 · ninguém foi contatado (só preparação)</p>
+
+<h2>O que foi feito</h2>
+<div class="card">Separei os prestadores <b>já validados</b> no Hub de Serviços na Grande Florianópolis para os 5 tipos de serviço do Lote 1, conferi quem tem CNPJ ativo na Receita, montei a lista de quem convidar primeiro e listei o que falta no cadastro deles para entrarem no ConcertAI.</div>
+
+<h2>Hoje × O que muda</h2>
+<div class="card">
+<div class="row"><span>Ar-condicionado · 11 PJ ativos</span><span class="tag ok">dá pra convidar</span></div>
+<div class="row"><span>Elétrica · 20 PJ ativos</span><span class="tag ok">dá pra convidar</span></div>
+<div class="row"><span>Hidráulica · 7 PJ ativos (desentupimento só 1)</span><span class="tag warn">justo</span></div>
+<div class="row"><span>Marcenaria · 9 PJ ativos, quase todos montadores</span><span class="tag warn">confirmar</span></div>
+<div class="row"><span>Vidraçaria · 5 PJ ativos, todos já usados por franquias</span><span class="tag ok">suficiente</span></div>
+</div>
+<div class="card"><b>Hoje</b> o Hub não tem preço por serviço, nem raio, agenda, Pix ou foto. <b>O que muda:</b> esses campos entram no cadastro do prestador no ConcertAI; do Hub aproveitamos nome, contato, categoria e CNPJ.</div>
+
+<h2>Como usar</h2>
+<div class="card"><ol>
+<li>Abra o documento no repo (link abaixo), seção 3: lista de convite com <b>34 prestadores</b>, por categoria e em ordem de prioridade.</li>
+<li>Cada um aparece só pelo código do Hub (sem nome nem telefone). Na hora de convidar, a consulta da seção 5 traz o contato direto do Hub.</li>
+<li>As mensagens de convite e a cadência estão no plano de prospecção (T632).</li>
+<li>Os 51 validados sem CNPJ ficam para uma 2ª onda, com convite para abrir MEI.</li>
+</ol></div>
+
+<h2>Pra que serve</h2>
+<div class="card">É a lista de partida do piloto: quem chamar primeiro em cada serviço, onde vamos precisar prospectar gente nova (desentupimento e marcenaria) e o que o cadastro do prestador precisa pedir.</div>
+
+<h2>Links</h2>
+<div class="card"><ul>
+<li>Documento: https://github.com/seazone-tech/concertai/blob/main/docs/piloto-prestadores.md</li>
+<li>PR mergeado: https://github.com/seazone-tech/concertai/pull/31</li>
+<li>Plano de prospecção (T632): https://henrymatsumoto-cpu.github.io/html-tasks/concertai-prospeccao-piloto.html</li>
+</ul></div>
+
+<details><summary>Detalhe técnico</summary>
+<p>Fonte: Supabase do Hub (boaystsxsyntdvogdakn), leitura via Management API read-only em 17/11; status validado, SC, Florianópolis/São José/Biguaçu/Palhoça (193 validados, 106 nas 5 categorias). CNPJ conferido na BrasilAPI (83 ativos, 8 baixados/inaptos/não encontrados). Marcenaria e vidraçaria não existem como categoria no Hub: classificadas por Marido de aluguel/Montagem e por texto/categoria original da importação de 06/11.</p>
+</details>
+</main></body></html>
