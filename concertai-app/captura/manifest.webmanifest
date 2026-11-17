@@ -1,0 +1,13 @@
+{
+  "name": "ConcertAI · Dia do serviço",
+  "short_name": "ConcertAI",
+  "description": "Chegada e fotos do serviço, pelo link do pedido",
+  "lang": "pt-BR",
+  "start_url": "/captura/",
+  "scope": "/captura/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#080E32",
+  "theme_color": "#080E32",
+  "icons": [{ "src": "/captura/icone.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }]
+}
