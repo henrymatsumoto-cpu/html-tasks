@@ -1,0 +1,60 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ideias de skills · 16/11</title><style>
+:root{--bg:#16181d;--card:#1e2128;--line:#2a2e37;--tx:#d9dce3;--mut:#8b91a0;--ac:#7aa2f7}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.55 system-ui,-apple-system,Segoe UI,sans-serif}
+main{max-width:860px;margin:0 auto;padding:40px 20px 60px}h1{font-size:24px;margin:0 0 4px}.sub{color:var(--mut);margin:0 0 28px}
+article{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin-bottom:12px}
+article header{display:flex;align-items:center;gap:10px;margin-bottom:8px}h2{font-size:16px;margin:0;flex:1;font-family:ui-monospace,Consolas,monospace}
+.n{color:var(--mut);font-size:13px;width:20px}article p{margin:4px 0;color:var(--tx)}article p b{display:inline-block;width:74px;color:var(--mut);font-weight:500;font-size:13px}
+.esf{font-size:12px;padding:2px 10px;border-radius:999px}.baixo{background:#1f3a2c;color:#8fd6a8}.médio{background:#3a321f;color:#e0c07a}
+footer{margin-top:8px;display:flex;gap:8px;flex-wrap:wrap}.ev{font-size:13px;color:var(--ac)}.nota{font-size:12px;color:var(--mut);border:1px solid var(--line);border-radius:999px;padding:1px 8px}
+.fora{color:var(--mut);font-size:13px;margin-top:24px}
+article:first-of-type{border-color:#3d4f7a}</style></head><body><main>
+<h1>Ideias de skills novas</h1><p class="sub">16/11/2026 · 27 ideias → 15 depois de juntar repetidas · ordem = dor real primeiro, esforço desempata</p>
+<article><header><span class="n">1</span><h2>fechar-sessoes-concluidas</h2><span class="esf médio">Médio</span></header>
+<p><b>Hoje</b>Sessões e abas ficam abertas depois da task acabar; depois de trocar de conta você fecha na mão.</p><p><b>A skill</b>Lista as sessões que já entregaram (nada pendente, nada rodando), mostra 1 linha de cada, salva um handoff curto + o comando de retomar e fecha só as que você aprovar.</p>
+<footer><span class="ev">5 sessões abertas agora (uma há 5h40), ~450 MB cada</span><span class="nota">Junta 3 ideias + o handoff</span></footer></article>
+<article><header><span class="n">2</span><h2>uso-ia-placar</h2><span class="esf baixo">Baixo</span></header>
+<p><b>Hoje</b>Você pede pra forçar o envio e depois pergunta quanto falta e o que conta.</p><p><b>A skill</b>Força o envio e já mostra, por métrica, quanto falta pra próxima faixa e o que conta em cada uma.</p>
+<footer><span class="ev">34 pedidos em 14 dias</span><span class="nota">Estender a skill uso-ia</span></footer></article>
+<article><header><span class="n">3</span><h2>suporte-e-encaminhar</h2><span class="esf médio">Médio</span></header>
+<p><b>Hoje</b>Abrir o suporte, esperar a msg no canal e encaminhar pro Eos/Marta é feito em 3 passos manuais.</p><p><b>A skill</b>Abre o pedido com os links certos, espera aparecer no #suporte-plataforma, encaminha pra quem você disser e atualiza a task do Azir.</p>
+<footer><span class="ev">39 pedidos sobre suporte</span></footer></article>
+<article><header><span class="n">4</span><h2>o-que-falta</h2><span class="esf médio">Médio</span></header>
+<p><b>Hoje</b>Você se perde no que ficou pendente entre sessões e tasks.</p><p><b>A skill</b>Resume em poucos tópicos o que falta: do nosso lado × esperando terceiro, do simples ao complexo. No fim do dia, vira o resumo do dia.</p>
+<footer><span class="ev">32 pedidos (&quot;o q falta?&quot;)</span><span class="nota">Junta o fim-do-dia</span></footer></article>
+<article><header><span class="n">5</span><h2>copiar</h2><span class="esf baixo">Baixo</span></header>
+<p><b>Hoje</b>Cada pedido de área de transferência é improvisado de novo.</p><p><b>A skill</b>Copia pro Windows o texto, template ou valor de env pedido, sem mostrar segredo no chat.</p>
+<footer><span class="ev">18 pedidos</span></footer></article>
+<article><header><span class="n">6</span><h2>acompanhar-pr-deploy</h2><span class="esf médio">Médio</span></header>
+<p><b>Hoje</b>Você pergunta &quot;já deu merge? tá no stg?&quot; até acabar.</p><p><b>A skill</b>Acompanha o PR (Alfred, CI, merge autorizado, ArgoCD stg/prd) e avisa sozinho quando muda.</p>
+<footer><span class="ev">~20 pedidos</span></footer></article>
+<article><header><span class="n">7</span><h2>limpar-worktrees</h2><span class="esf médio">Médio</span></header>
+<p><b>Hoje</b>Worktrees e branches já mergeadas ficam acumulando.</p><p><b>A skill</b>Mostra o que já foi mergeado (pelo PR no GitHub), sem mudança pendente, e remove worktree + branch com OK, respeitando a regra das 17h.</p>
+<footer><span class="ev">21 worktrees; 80 branches mergeadas só no enxoval</span><span class="nota">Junta podar-branches</span></footer></article>
+<article><header><span class="n">8</span><h2>qual-link</h2><span class="esf baixo">Baixo</span></header>
+<p><b>Hoje</b>Você pergunta o link do stg, do Azir, da planilha...</p><p><b>A skill</b>Responde o link na hora, em URL crua, e testa se abre (pega 404 do Pages).</p>
+<footer><span class="ev">11 perguntas</span></footer></article>
+<article><header><span class="n">9</span><h2>conferir-preco-lavanderia</h2><span class="esf médio">Médio</span></header>
+<p><b>Hoje</b>Cada tabela de lavanderia é comparada na mão.</p><p><b>A skill</b>Lê o PDF da lavanderia, compara com o teto da Seazone, diz se a cidade segue atendida e sugere ganho/perda no funil 60.</p>
+<footer><span class="ev">14 pedidos</span></footer></article>
+<article><header><span class="n">10</span><h2>rotina-travada</h2><span class="esf médio">Médio</span></header>
+<p><b>Hoje</b>Um claude -p travado segura o flock e a rotina para sem ninguém saber.</p><p><b>A skill</b>Acha claude -p e processos órfãos passando do tempo, diz de qual rotina são e mata com OK.</p>
+<footer><span class="ev">2 claude -p sem dono agora</span><span class="nota">Junta processos órfãos</span></footer></article>
+<article><header><span class="n">11</span><h2>faxina-disco</h2><span class="esf baixo">Baixo</span></header>
+<p><b>Hoje</b>/tmp e caches crescem sem ninguém olhar.</p><p><b>A skill</b>Limpa lixo do Azir/Neeko no /tmp (mais de 24h) e caches de pip/uv/Playwright antigos, sem tocar em lock.</p>
+<footer><span class="ev">4,4 GB (907 MB /tmp + 3,5 GB cache)</span><span class="nota">Junta faxina-tmp e cache</span></footer></article>
+<article><header><span class="n">12</span><h2>arquivar-transcripts</h2><span class="esf médio">Médio</span></header>
+<p><b>Hoje</b>Transcripts de worktree e /tmp ocupam espaço pra sempre.</p><p><b>A skill</b>Mostra o tamanho por pasta e comprime os de projeto lixo em claude-arquivo, sem tirar nada que o coletor lê.</p>
+<footer><span class="ev">2,7 GB em ~/.claude/projects</span><span class="nota">Junta faxina-sessoes</span></footer></article>
+<article><header><span class="n">13</span><h2>rotinas-orfas-windows</h2><span class="esf baixo">Baixo</span></header>
+<p><b>Hoje</b>Sobraram tarefas do Windows de rotinas que já são da VPS.</p><p><b>A skill</b>Lista as duplicadas/desligadas que já têm dono na VPS e apaga com OK.</p>
+<footer><span class="ev">25 tarefas, só 1 ativa</span><span class="nota">Estender rotinas-cron-x-windows</span></footer></article>
+<article><header><span class="n">14</span><h2>avisar-sessao-esperando</h2><span class="esf baixo">Baixo</span></header>
+<p><b>Hoje</b>Sessão parada esperando você vira aba esquecida.</p><p><b>A skill</b>Avisa (toast no Windows ou DM do Vel&#x27;Koz) qual sessão terminou ou pede resposta.</p>
+<footer><span class="ev">Ideia da web (hook nativo)</span></footer></article>
+<article><header><span class="n">15</span><h2>achar-e-retomar-sessao</h2><span class="esf baixo">Baixo</span></header>
+<p><b>Hoje</b>O --resume só lista sessões da pasta atual.</p><p><b>A skill</b>Busca sessão de qualquer pasta por palavra/data e retoma no lugar certo.</p>
+<footer><span class="ev">Ideia da web; 9 dúvidas de &quot;retomar&quot;</span></footer></article>
+<p class="fora">Ficaram de fora: salvar-antes-do-compact (o handoff da #1 cobre), fechar-abas-do-chrome-agente (já fica minimizado, sem dor medida), organizar-desktop-downloads (sem dor medida; a triar-downloads da Contabilidade serve de base se precisar).</p>
+</main></body></html>
