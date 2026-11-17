@@ -1,0 +1,582 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ConcertAI · Blueprint do MVP</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --brand:#0055FF; --brand-hover:#0044CC; --brand-100:#E8F0FE; --brand-200:#C7DBFF;
+  --navy:#080E32; --navy-2:#00143D; --navy-3:#182052;
+  --coral:#F1605D; --coral-100:#FFE4E3;
+  --bg:#F6F7F9; --surface:#FFFFFF; --muted:#F3F3F5; --border:#E6E7EA; --border-strong:#E1E2E5;
+  --fg:#080E32; --fg-2:#595D6C; --fg-3:#7D7D80; --fg-on-dark:#FFFFFF; --fg-on-dark-2:#B8BCD6;
+  --success:#15803D; --success-100:#E7F8EE;
+  --warning:#C2410C; --warning-100:#FFF0E8;
+  --error:#B91C1C; --error-100:#FDE7E8;
+  --shadow-card:0 1px 2px -1px #02061714, 0 1px 3px #0206170f;
+  --shadow-raise:0 0 6px -4px rgba(0,0,0,.1), 0 4px 15px -3px rgba(0,0,0,.1);
+  --ring:0 0 0 3px rgba(0,85,255,.35);
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]){
+  --bg:#060A24; --surface:#0E1438; --muted:#151C45; --border:#232B5C; --border-strong:#2C356B;
+  --fg:#F2F3F8; --fg-2:#A9AECB; --fg-3:#7E84A8;
+  --brand:#3D7BFF; --brand-hover:#5C90FF; --brand-100:#13235C; --brand-200:#1C3378;
+  --coral:#FF6F6B; --coral-100:#3A1A2A;
+  --success:#4ADE80; --success-100:#0F2E22; --warning:#FB923C; --warning-100:#33190D; --error:#F87171; --error-100:#360B14;
+  --shadow-card:0 1px 2px rgba(0,0,0,.4); --shadow-raise:0 6px 20px rgba(0,0,0,.45);
+  color-scheme:dark;
+}}
+:root[data-theme="dark"]{
+  --bg:#060A24; --surface:#0E1438; --muted:#151C45; --border:#232B5C; --border-strong:#2C356B;
+  --fg:#F2F3F8; --fg-2:#A9AECB; --fg-3:#7E84A8;
+  --brand:#3D7BFF; --brand-hover:#5C90FF; --brand-100:#13235C; --brand-200:#1C3378;
+  --coral:#FF6F6B; --coral-100:#3A1A2A;
+  --success:#4ADE80; --success-100:#0F2E22; --warning:#FB923C; --warning-100:#33190D; --error:#F87171; --error-100:#360B14;
+  --shadow-card:0 1px 2px rgba(0,0,0,.4); --shadow-raise:0 6px 20px rgba(0,0,0,.45);
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--fg);font:400 16px/24px Inter,"Helvetica Neue",Arial,sans-serif;-webkit-font-smoothing:antialiased}
+.num,td.r,.price{font-feature-settings:"tnum"}
+a{color:var(--brand)}
+.wrap{max-width:1120px;margin:0 auto;padding:0 16px}
+@media(min-width:720px){.wrap{padding:0 24px}}
+
+/* topo */
+.top{background:var(--navy);color:var(--fg-on-dark)}
+.top .wrap{padding-top:32px;padding-bottom:0}
+.brand{display:flex;align-items:center;gap:10px;font-weight:600;font-size:14px;color:var(--fg-on-dark-2)}
+.brand b{color:#fff;font-weight:700;font-size:16px}
+.brand .dot{width:8px;height:8px;border-radius:50%;background:var(--coral)}
+.top h1{font-size:32px;line-height:36px;font-weight:800;letter-spacing:-.02em;margin:16px 0 8px}
+@media(min-width:720px){.top h1{font-size:40px;line-height:44px}}
+.top p.lead{margin:0;max-width:720px;color:var(--fg-on-dark-2)}
+.tabs{display:flex;gap:4px;margin-top:28px;overflow-x:auto}
+.tab{appearance:none;border:0;background:transparent;color:var(--fg-on-dark-2);font:600 15px/20px Inter,sans-serif;padding:12px 18px;border-radius:12px 12px 0 0;cursor:pointer;white-space:nowrap;transition:color .15s,background .15s}
+.tab:hover{color:#fff}
+.tab[aria-selected="true"]{background:var(--bg);color:var(--fg)}
+.tab:focus-visible{outline:none;box-shadow:var(--ring)}
+.theme{position:absolute;top:24px;right:16px;appearance:none;border:1px solid rgba(255,255,255,.2);background:transparent;color:var(--fg-on-dark-2);font:600 12px/16px Inter,sans-serif;padding:6px 12px;border-radius:9999px;cursor:pointer}
+@media(min-width:720px){.theme{right:24px}}
+.top{position:relative}
+
+main{padding:32px 0 48px}
+section{margin-bottom:40px}
+h2{font-size:22px;line-height:28px;font-weight:700;margin:0 0 4px}
+h3{font-size:16px;line-height:22px;font-weight:600;margin:0 0 6px}
+.sub{color:var(--fg-2);font-size:14px;line-height:20px;margin:0 0 16px}
+.eyebrow{font:600 12px/16px Inter,sans-serif;letter-spacing:.06em;text-transform:uppercase;color:var(--brand);margin-bottom:6px}
+
+.card{background:var(--surface);border-radius:12px;box-shadow:var(--shadow-card);padding:20px}
+.grid{display:grid;gap:16px}
+.g2{grid-template-columns:1fr}.g3{grid-template-columns:1fr}.g4{grid-template-columns:repeat(2,1fr)}
+@media(min-width:720px){.g2{grid-template-columns:repeat(2,1fr)}.g3{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(4,1fr)}}
+
+.kpi{padding:16px}
+.kpi .v{font-size:26px;line-height:32px;font-weight:800;font-feature-settings:"tnum";letter-spacing:-.01em}
+.kpi .l{font-size:13px;line-height:18px;color:var(--fg-2)}
+.kpi.est .v::after{content:" est.";font-size:12px;font-weight:600;color:var(--fg-3)}
+
+.what{font-size:18px;line-height:28px;max-width:820px}
+.what strong{font-weight:700}
+
+.list{margin:0;padding:0;list-style:none}
+.list li{padding:10px 0;border-top:1px solid var(--border);font-size:15px;line-height:22px}
+.list li:first-child{border-top:0;padding-top:0}
+.list li b{font-weight:600}
+
+.chip{display:inline-block;font:600 12px/16px Inter,sans-serif;padding:4px 10px;border-radius:9999px;background:var(--muted);color:var(--fg-2);margin:0 6px 6px 0;white-space:nowrap}
+.chip.b{background:var(--brand-100);color:var(--brand)}
+.chip.g{background:var(--success-100);color:var(--success)}
+.chip.w{background:var(--warning-100);color:var(--warning)}
+.chip.c{background:var(--coral-100);color:var(--coral)}
+
+.rule{display:flex;flex-direction:column;gap:4px}
+.rule .k{font-size:13px;color:var(--fg-2)}
+.rule .t{font-weight:600;font-size:15px;line-height:21px}
+
+.mer{background:var(--surface);border-radius:12px;box-shadow:var(--shadow-card);padding:16px;overflow-x:auto}
+.mer .mermaid{min-width:640px;text-align:center}
+.mer .mermaid svg{max-width:100%;height:auto}
+
+.tbl{width:100%;border-collapse:collapse;font-size:14px;line-height:20px}
+.tbl th{text-align:left;font-weight:600;color:var(--fg-2);font-size:12px;line-height:16px;text-transform:uppercase;letter-spacing:.04em;padding:10px 12px;border-bottom:1px solid var(--border-strong);white-space:nowrap}
+.tbl td{padding:10px 12px;border-bottom:1px solid var(--border);vertical-align:top}
+.tbl tr:last-child td{border-bottom:0}
+.tbl td.r,.tbl th.r{text-align:right;white-space:nowrap}
+.tbl .best{font-weight:700;color:var(--brand)}
+.tbl .code{font:600 12px/20px ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--fg-3);white-space:nowrap}
+.tbl .cathead td{background:var(--muted);font-weight:600;font-size:13px}
+.scroll{overflow-x:auto;background:var(--surface);border-radius:12px;box-shadow:var(--shadow-card)}
+.scroll .tbl{min-width:640px}
+
+.svc{display:grid;grid-template-columns:1fr auto;gap:4px 16px;padding:14px 16px;border-top:1px solid var(--border)}
+.svc:first-child{border-top:0}
+.svc .n{font-weight:600;font-size:15px;line-height:21px}
+.svc .d{font-size:14px;line-height:20px;color:var(--fg-2)}
+.svc .m{font-size:12px;line-height:16px;color:var(--fg-3);font-weight:500;margin-top:2px}
+.svc .p{text-align:right}
+.svc .p small{display:block;font-size:12px;color:var(--fg-2)}
+.svc .p b{font-size:20px;line-height:24px;font-weight:700;font-feature-settings:"tnum"}
+.l1{background:var(--surface);border-radius:12px;box-shadow:var(--shadow-card)}
+@media(min-width:900px){.l1{display:grid;grid-template-columns:1fr 1fr}.l1 .svc:nth-child(2){border-top:0}.l1 .svc:nth-child(odd){border-right:1px solid var(--border)}}
+
+.note{background:var(--muted);border-radius:12px;padding:12px 14px;font-size:14px;line-height:20px;color:var(--fg-2)}
+.note b{color:var(--fg)}
+
+details{margin-top:12px}
+summary{cursor:pointer;font-weight:600;font-size:14px;color:var(--brand);padding:8px 0;list-style:none}
+summary::-webkit-details-marker{display:none}
+summary::before{content:"";display:inline-block;width:8px;height:8px;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:rotate(-45deg);margin-right:10px;transition:transform .15s}
+details[open] > summary::before{transform:rotate(45deg)}
+summary:focus-visible{outline:none;box-shadow:var(--ring);border-radius:6px}
+
+.navy{background:var(--navy);color:#fff;border-radius:16px;padding:28px}
+.navy .grid{gap:24px}
+.navy h3{color:#fff}
+.navy p{margin:0;color:var(--fg-on-dark-2);font-size:14px;line-height:20px}
+.navy .big{font-size:30px;line-height:36px;font-weight:800;font-feature-settings:"tnum";color:#fff;margin-bottom:4px}
+
+.risk{border-left:3px solid var(--border-strong);padding:2px 0 2px 14px}
+.risk.hot{border-color:var(--warning)}
+.risk p{margin:4px 0 0;font-size:14px;line-height:20px;color:var(--fg-2)}
+
+.road{display:grid;gap:16px;grid-template-columns:1fr}
+@media(min-width:720px){.road{grid-template-columns:repeat(4,1fr)}}
+.step .when{font:700 12px/16px Inter,sans-serif;color:var(--brand);text-transform:uppercase;letter-spacing:.05em}
+.step h3{margin:6px 0}
+.step p{margin:0;font-size:14px;line-height:20px;color:var(--fg-2)}
+
+/* agentes */
+.ag{display:flex;flex-direction:column;gap:6px;padding:16px}
+.ag .h{display:flex;align-items:baseline;gap:8px}
+.ag .id{font:600 12px/16px ui-monospace,Menlo,monospace;color:var(--fg-3)}
+.ag .nm{font-weight:600;font-size:15px;line-height:20px}
+.ag .ms{font-size:14px;line-height:20px;color:var(--fg-2)}
+.ag .gt{font-size:12px;line-height:16px;color:var(--fg-3)}
+.ag .gt b{color:var(--fg-2);font-weight:600}
+.ag.new{box-shadow:0 0 0 2px var(--brand),var(--shadow-card)}
+.grp{margin:24px 0 10px;font-weight:700;font-size:15px;display:flex;align-items:center;gap:8px}
+.grp span{font-weight:500;color:var(--fg-3);font-size:13px}
+.seg{display:inline-flex;background:var(--muted);border-radius:9999px;padding:4px;gap:2px;margin-bottom:8px}
+.seg button{appearance:none;border:0;background:transparent;font:600 13px/18px Inter,sans-serif;color:var(--fg-2);padding:8px 16px;border-radius:9999px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--surface);color:var(--fg);box-shadow:var(--shadow-card)}
+.seg button:focus-visible{outline:none;box-shadow:var(--ring)}
+.filters{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:12px}
+select{font:500 14px/20px Inter,sans-serif;color:var(--fg);background:var(--surface);border:1px solid var(--border-strong);border-radius:9999px;padding:8px 14px}
+select:focus-visible{outline:none;box-shadow:var(--ring)}
+.count{font-size:13px;color:var(--fg-3)}
+.crit{color:var(--coral);font-weight:700}
+.newtag{font:700 11px/14px Inter,sans-serif;color:var(--brand);background:var(--brand-100);border-radius:9999px;padding:2px 8px;margin-left:6px;white-space:nowrap}
+.path{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:13px}
+.path .n{background:var(--surface);box-shadow:var(--shadow-card);border-radius:9999px;padding:4px 10px;font-weight:500}
+.path .n code{font:600 11px/14px ui-monospace,Menlo,monospace;color:var(--fg-3);margin-right:4px}
+.path .ar{color:var(--fg-3)}
+
+footer{border-top:1px solid var(--border);padding:20px 0 32px;color:var(--fg-3);font-size:13px}
+[hidden]{display:none!important}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<header class="top">
+  <button class="theme" id="themeBtn" type="button" aria-label="Alternar tema">Tema</button>
+  <div class="wrap">
+    <div class="brand"><span class="dot"></span><b>ConcertAI</b> · Seazone</div>
+    <h1>Blueprint do MVP</h1>
+    <p class="lead">Serviço de manutenção com preço fechado para os imóveis da carteira Seazone. Versão MVP: o essencial para decidir e começar.</p>
+    <nav class="tabs" role="tablist" aria-label="Seções">
+      <button class="tab" role="tab" id="t-bp" aria-controls="p-bp" aria-selected="true">Blueprint</button>
+      <button class="tab" role="tab" id="t-ag" aria-controls="p-ag" aria-selected="false">Agentes e tasks</button>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+<!-- ================= BLUEPRINT ================= -->
+<div id="p-bp" role="tabpanel" aria-labelledby="t-bp">
+
+<section>
+  <div class="eyebrow">O que é</div>
+  <p class="what">O ConcertAI é uma vitrine de serviços de manutenção com <strong>preço fechado definido pela Seazone</strong>, onde o proprietário ou a franquia escolhem serviço, profissional, dia e janela de 1h. Agentes cuidam do resto (confirmação, acesso, prova por foto, pagamento, garantia de 90 dias), e a Seazone só ganha uma taxa do prestador quando ele é contratado.</p>
+  <div class="grid g4" style="margin-top:20px">
+    <div class="card kpi"><div class="v">17</div><div class="l">serviços no Lote 1 (vitrine do piloto)</div></div>
+    <div class="card kpi"><div class="v">R$ 287</div><div class="l">preço médio por serviço (MVP)</div></div>
+    <div class="card kpi"><div class="v">R$ 35</div><div class="l">ganho líquido da Seazone por serviço</div></div>
+    <div class="card kpi"><div class="v">+48%</div><div class="l">a mais para o prestador que hoje</div></div>
+  </div>
+  <p class="sub" style="margin-top:12px">Assinatura fica fora do MVP.</p>
+</section>
+
+<section>
+  <div class="eyebrow">Como funciona</div>
+  <h2>De ponta a ponta</h2>
+  <p class="sub">Três portas de entrada, um fluxo. O comprador escolhe; os agentes executam. Preço, aprovação e pagamento são código, nunca IA.</p>
+  <div class="mer"><pre class="mermaid" id="mFlow"></pre></div>
+</section>
+
+<section>
+  <div class="eyebrow">Quem compra</div>
+  <h2>Proprietário e franquia</h2>
+  <p class="sub">Quem paga é sempre o proprietário, descontado no repasse como as despesas de hoje.</p>
+  <div class="grid g2">
+    <div class="card">
+      <h3>Proprietário</h3>
+      <ul class="list">
+        <li>Compra para os imóveis dele (vínculo do Sapron).</li>
+        <li>Não precisa aprovar nada: quem compra é ele.</li>
+        <li><b>A franquia é notificada</b> de toda compra: data, serviço, profissional e o que ela precisa fazer (acesso).</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Franquia</h3>
+      <ul class="list">
+        <li>Compra para qualquer imóvel ativo da carteira dela.</li>
+        <li><b>Até R$ 300:</b> segue direto e o proprietário é avisado.</li>
+        <li><b>Acima de R$ 300:</b> o proprietário aprova antes, por botão (data segura por 48h). Pedido partido em dois no mesmo imóvel em 7 dias soma.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="eyebrow">Regras</div>
+  <h2>O que vale para todo pedido</h2>
+  <div class="grid g3" style="margin-top:12px">
+    <div class="card rule"><span class="k">Preço</span><span class="t">~10% abaixo do menor entre Houser e Porto, definido pela Seazone</span><span class="k">Igual para proprietário e franquia; nunca acima de nenhum dos dois.</span></div>
+    <div class="card rule"><span class="k">Taxa</span><span class="t">Só do prestador, só quando ele é contratado</span><span class="k">18,5% em média, sai do repasse. O comprador não vê taxa.</span></div>
+    <div class="card rule"><span class="k">Nota fiscal</span><span class="t">Prestador PJ (CNPJ) emite a NFS-e</span><span class="k">Sem CNPJ, fora do MVP. Pix só com NF conferida.</span></div>
+    <div class="card rule"><span class="k">Agenda</span><span class="t">Avisa que tem reserva, não bloqueia</span><span class="k">O comprador vê o aviso e confirma a ciência.</span></div>
+    <div class="card rule"><span class="k">Horário</span><span class="t">Janelas de 1h, duração por serviço</span><span class="k">Serviço de até 1h ocupa 1 janela; de 90 min, 2.</span></div>
+    <div class="card rule"><span class="k">Material</span><span class="t">Sempre custo adicional</span><span class="k">Comprador fornece, ou o prestador compra com aprovação por botão e nota.</span></div>
+    <div class="card rule"><span class="k">Reclamação</span><span class="t">Pela SIA, com protocolo</span><span class="k">Garantia de 90 dias da mão de obra: retrabalho em até 72h.</span></div>
+    <div class="card rule"><span class="k">Urgência</span><span class="t">Itens urgentes em até 24h</span><span class="k">+30% no preço (premissa); emergência com risco segue a regra do MGO.</span></div>
+    <div class="card rule"><span class="k">Cancelamento</span><span class="t">Grátis até 12h antes</span><span class="k">Depois disso, R$ 50 de deslocamento perdido ao prestador (premissa).</span></div>
+  </div>
+</section>
+
+<section>
+  <div class="eyebrow">Catálogo</div>
+  <h2>O que se vende</h2>
+  <p class="sub">19 categorias + Visita de diagnóstico, 101 serviços e 6 kits. O MVP abre com o Lote 1: alto volume hoje, escopo fechado, baixo risco e quase tudo em 1 janela.</p>
+  <div id="cats" style="margin-bottom:16px"></div>
+  <h3 style="margin-top:8px">Lote 1 · 17 serviços</h3>
+  <p class="sub">De R$ 225 a R$ 335 (média R$ 256). 14 cabem em 1 janela. Material e peça não estão inclusos.</p>
+  <div class="l1" id="lote1"></div>
+
+  <h3 style="margin-top:28px">Kits (compra única, 10% abaixo da soma dos itens)</h3>
+  <div class="scroll"><table class="tbl">
+    <thead><tr><th>Kit</th><th>O que entra</th><th>Quando</th><th class="r">Preço</th></tr></thead>
+    <tbody>
+      <tr><td><b>Pré-temporada</b></td><td>Limpeza de ar + dedetização + checagem elétrica e hidráulica</td><td>ago-out</td><td class="r">R$ 800 a 1.400 <span class="count">(1 a 3 splits)</span></td></tr>
+      <tr><td><b>Ar completo</b></td><td>Limpeza + dreno + teste</td><td>abr-jul</td><td class="r">R$ 600 a 1.205</td></tr>
+      <tr><td><b>Imóvel novo</b></td><td>Checagem + fechadura digital + suporte de TV</td><td>na ativação</td><td class="r">R$ 675</td></tr>
+      <tr><td><b>Pós-temporada</b></td><td>Checagem + ralos + 1 estofado</td><td>mar-abr</td><td class="r">R$ 675</td></tr>
+      <tr><td><b>Elétrica em dia</b></td><td>Checagem + resistência + 2 tomadas</td><td>ano todo</td><td class="r">R$ 885</td></tr>
+      <tr><td><b>Hidráulica sem vazamento</b></td><td>Vazamento + desentupimento + descarga</td><td>ano todo</td><td class="r">R$ 720</td></tr>
+    </tbody>
+  </table></div>
+
+  <details>
+    <summary>Ver catálogo completo (101 serviços)</summary>
+    <div class="filters" style="margin-top:8px">
+      <select id="fCat" aria-label="Filtrar categoria"><option value="">Todas as categorias</option></select>
+      <select id="fLote" aria-label="Filtrar lote"><option value="">Lote 1 e 2</option><option value="1">Só Lote 1</option><option value="2">Só Lote 2</option></select>
+      <span class="count" id="catCount"></span>
+    </div>
+    <div class="scroll"><table class="tbl" id="catTbl">
+      <thead><tr><th>Cód</th><th>Serviço</th><th>Duração · janelas</th><th>Material</th><th class="r">Preço</th><th>Fase</th><th>Lote</th></tr></thead>
+      <tbody></tbody>
+    </table></div>
+    <p class="sub" style="margin-top:8px">F2 = só por Visita de diagnóstico até a fase 2. ED-04, CX-02 e DG-01 ficam no Lote 2 até o preço ser resolvido.</p>
+  </details>
+</section>
+
+<section>
+  <div class="eyebrow">Concorrentes</div>
+  <h2>Nosso preço contra o mercado</h2>
+  <p class="sub">Houser e Porto são a referência (tabela fechada, com garantia). GetNinjas é informativo: orçamento por profissional, só alguns itens com preço fechado.</p>
+  <div class="scroll"><table class="tbl">
+    <thead><tr><th>Serviço</th><th class="r">ConcertAI</th><th class="r">Houser</th><th class="r">Porto</th><th class="r">GetNinjas</th></tr></thead>
+    <tbody>
+      <tr><td>Limpeza de ar até 12.000 BTU</td><td class="r best">R$ 335</td><td class="r">R$ 376</td><td class="r">R$ 440</td><td class="r">R$ 250 <span class="count">média</span></td></tr>
+      <tr><td>Troca de resistência do chuveiro</td><td class="r best">R$ 235</td><td class="r">R$ 266</td><td class="r">R$ 300</td><td class="r">R$ 266 <span class="count">fechado</span></td></tr>
+      <tr><td>Conserto de vazamento aparente</td><td class="r best">R$ 265</td><td class="r">R$ 295</td><td class="r">R$ 300</td><td class="r">R$ 210 <span class="count">fechado</span></td></tr>
+      <tr><td>Troca de torneira ou sifão</td><td class="r best">R$ 235</td><td class="r">R$ 266</td><td class="r">R$ 300</td><td class="r">R$ 211 <span class="count">fechado</span></td></tr>
+      <tr><td>Abertura de porta</td><td class="r best">R$ 230</td><td class="r">R$ 256</td><td class="r">R$ 285</td><td class="r">R$ 240 <span class="count">fechado</span></td></tr>
+      <tr><td>Conserto de micro-ondas</td><td class="r best">R$ 235</td><td class="r">R$ 266</td><td class="r">R$ 300</td><td class="r">R$ 302 <span class="count">fechado</span></td></tr>
+    </tbody>
+  </table></div>
+  <details>
+    <summary>Como comparar</summary>
+    <ul class="list" style="margin-top:8px">
+      <li><b>Houser e Porto:</b> nenhum dos 53 itens com equivalente fica acima deles; ficamos de 10% a 12% abaixo do mais barato.</li>
+      <li><b>Taxa:</b> o Houser cobra do prestador (~20%) e do cliente (+1% a +21%); nós só do prestador.</li>
+      <li><b>Garantia:</b> 90 dias (Houser Essential dá 60; Porto, 90; GetNinjas, só no Preço Fechado).</li>
+      <li><b>GetNinjas e Triider</b> ficam abaixo na maioria (orçamento sem garantia) e não puxam o nosso preço.</li>
+    </ul>
+  </details>
+</section>
+
+<section>
+  <div class="eyebrow">Dinheiro</div>
+  <h2>Quanto cada serviço deixa</h2>
+  <div class="navy" style="margin-top:12px">
+    <div class="grid g4">
+      <div><div class="big">R$ 287</div><p>preço médio que o comprador paga</p></div>
+      <div><div class="big">R$ 53</div><p>taxa da Seazone (18,5%, sai do prestador)</p></div>
+      <div><div class="big">R$ 35</div><p>sobra depois de imposto (14,25%), operação e reserva</p></div>
+      <div><div class="big">R$ 234</div><p>fica com o prestador: +48% sobre o que recebe hoje</p></div>
+    </div>
+  </div>
+  <h3 style="margin-top:24px">Cenários no mês 24 <span class="chip w" style="margin-left:6px">estimativa</span></h3>
+  <p class="sub">Recalculado com o preço novo: R$ 35 por avulso e ~R$ 104 por kit, antes do custo fixo.</p>
+  <div class="scroll"><table class="tbl">
+    <thead><tr><th>Cenário</th><th class="r">Avulsos/mês</th><th class="r">Kits/mês</th><th class="r">Contribuição/mês</th></tr></thead>
+    <tbody>
+      <tr><td>Pessimista</td><td class="r">30</td><td class="r">12</td><td class="r">~R$ 2,3 mil</td></tr>
+      <tr><td><b>Base</b></td><td class="r">120</td><td class="r">33</td><td class="r"><b>~R$ 7,6 mil</b></td></tr>
+      <tr><td>Otimista</td><td class="r">220</td><td class="r">50</td><td class="r">~R$ 12,9 mil</td></tr>
+    </tbody>
+  </table></div>
+  <details>
+    <summary>De onde vêm os números</summary>
+    <ul class="list" style="margin-top:8px">
+      <li><b>Por serviço:</b> taxa R$ 53,1 − 14,25% de imposto − R$ 5 de operação − 2% do preço (perda e garantia) = R$ 34,8.</li>
+      <li><b>Volume:</b> o do estudo de receita (30 / 120 / 220 avulsos e 150 / 400 / 600 kits por ano). O estudo usava o preço antigo (1,0× a mediana), com R$ 18,9 por serviço; aqui só troquei o valor unitário.</li>
+      <li><b>Equilíbrio com R$ 5 mil/mês de fixo:</b> ~144 avulsos/mês só com avulso, ou ~45 com 33 kits/mês. Todo o elegível de hoje dá ~530 serviços/mês.</li>
+      <li><b>O risco é o volume:</b> o comprador paga em média 71% a mais do que paga hoje ao prestador local. O argumento vira "mais barato que Houser e Porto, com garantia e prova por foto".</li>
+    </ul>
+  </details>
+</section>
+
+<section>
+  <div class="eyebrow">Riscos e decisões</div>
+  <h2>O que precisa sair antes do piloto</h2>
+  <div class="grid g3" style="margin-top:12px">
+    <div class="card risk hot"><h3>Papel da franquia</h3><p>Ganha algo quando compra? Nada, comissão da taxa ou vira prestadora pela tabela. O card do ConcertAI sai da pontuação do MGO. <b>Bloqueia o piloto.</b></p></div>
+    <div class="card risk hot"><h3>Enquadramento fiscal</h3><p>Só dá lucro como intermediação: NF do prestador ao proprietário e imposto só sobre a taxa. Como revenda, o avulso zera. <b>Bloqueia o piloto.</b></p></div>
+    <div class="card risk hot"><h3>3 itens sem preço viável</h3><p>ED-04 (máquina de lavar), CX-02 (caixa d'água 2-4 mil L) e DG-01 (visita de diagnóstico): o concorrente cobra tão pouco que o prestador não ganha mais que hoje. Ficam fora até decidir.</p></div>
+  </div>
+  <details>
+    <summary>Outros riscos</summary>
+    <ul class="list" style="margin-top:8px">
+      <li><b>Volume:</b> preço médio +71% sobre o que se paga hoje; testar a conversão no piloto.</li>
+      <li><b>Teto de R$ 300:</b> com mediana de R$ 265, pedido da franquia com 2 itens já pede aprovação. Avaliar subir para ~R$ 450.</li>
+      <li><b>Sem Visita de diagnóstico no Lote 1:</b> problema que não cabe num item volta para a franquia.</li>
+      <li><b>Alta temporada:</b> dezembro tem poucos dias livres; a agenda avisa e o serviço curto vai no dia do check-out.</li>
+      <li><b>Cobertura:</b> Porto Seguro, gás e caixa d'água quase sem prestador no Hub.</li>
+      <li><b>Cancelamento:</b> 12h antes ou até o check-in do prestador: escolher uma.</li>
+    </ul>
+  </details>
+</section>
+
+<section>
+  <div class="eyebrow">Piloto e roadmap</div>
+  <h2>Do retiro à expansão</h2>
+  <div class="road" style="margin-top:12px">
+    <div class="card step"><div class="when">Semanas 1-2</div><h3>Retiro</h3><p>Decisões de franquia e fiscal, schema, catálogo carregado, vitrine com a agenda da Stays e QA em shadow.</p></div>
+    <div class="card step"><div class="when">Mês 1 · dez/26</div><h3>Piloto</h3><p>Grande Florianópolis, 1-2 franquias, 5-10 prestadores PJ, Lote 1. Meta: 30 a 60 pedidos.</p></div>
+    <div class="card step"><div class="when">Mês 3 · fev-mar/27</div><h3>Teste de demanda</h3><p>Catálogo aberto a toda a praça e kit Pós-temporada. Meta: ≥150 pedidos/mês.</p></div>
+    <div class="card step"><div class="when">Mês 6 · mai/27</div><h3>Expansão</h3><p>Itapema, Balneário Camboriú, Bombinhas e Penha onde houver 3+ prestadores. Kit Ar completo.</p></div>
+  </div>
+  <details>
+    <summary>Critérios de go/no-go</summary>
+    <ul class="list" style="margin-top:8px">
+      <li><b>Mês 1:</b> ≥90% dos pedidos sem humano (fora a aprovação do Pix), 0 divergência financeira, "não" no oráculo de foto ≤10%.</li>
+      <li><b>Mês 3:</b> ≥150 pedidos/mês e ≥R$ 15 por serviço. Abaixo de 50 pedidos ou R$ 10, para.</li>
+      <li><b>Mês 6:</b> contribuição cobre o fixo próprio e ≥30% dos pedidos vêm da franquia.</li>
+    </ul>
+  </details>
+</section>
+</div>
+
+<!-- ================= AGENTES E TASKS ================= -->
+<div id="p-ag" role="tabpanel" aria-labelledby="t-ag" hidden>
+
+<section>
+  <div class="eyebrow">Resumo</div>
+  <h2>Quem constrói e quem opera</h2>
+  <p class="sub">Construção em batelada por ondas (o que está livre numa onda roda em paralelo). Depois, piloto e expansão por calendário.</p>
+  <div class="grid g4">
+    <div class="card kpi"><div class="v">52</div><div class="l">agentes: 35 de operação, 17 de construção (51 + Indicação proativa)</div></div>
+    <div class="card kpi"><div class="v">132</div><div class="l">tasks (128 + 4 da Indicação proativa)</div></div>
+    <div class="card kpi"><div class="v">18</div><div class="l">ondas: 10 de construção, 8 de piloto e expansão</div></div>
+    <div class="card kpi"><div class="v">30</div><div class="l">tasks com gate humano (29 + 1 nova)</div></div>
+  </div>
+  <h3 style="margin-top:24px">Caminho crítico <span class="count">(18 tasks)</span></h3>
+  <p class="sub">O gargalo é WhatsApp → Cadastro → KYC → Contratação. Credencial da Meta atrasada empurra o piloto.</p>
+  <div class="path" id="crit"></div>
+</section>
+
+<section>
+  <div class="eyebrow">Agentes</div>
+  <h2>Catálogo de agentes</h2>
+  <div class="seg" role="group" aria-label="Tipo de agente">
+    <button type="button" data-k="op" aria-pressed="true">Operação (35)</button>
+    <button type="button" data-k="b" aria-pressed="false">Construção (17)</button>
+  </div>
+  <div id="agents"></div>
+</section>
+
+<section>
+  <div class="eyebrow">Backlog</div>
+  <h2>Ondas</h2>
+  <div class="mer"><pre class="mermaid" id="mWaves"></pre></div>
+  <h3 style="margin-top:24px">Tasks</h3>
+  <div class="filters">
+    <select id="fOnda" aria-label="Filtrar onda"><option value="">Todas as ondas</option></select>
+    <select id="fEp" aria-label="Filtrar épico"><option value="">Todos os épicos</option></select>
+    <span class="count" id="tCount"></span>
+  </div>
+  <div class="scroll"><table class="tbl" id="tTbl">
+    <thead><tr><th class="r">Onda</th><th>ID</th><th>Task</th><th>Épico</th><th>Agente</th><th>Humano</th></tr></thead>
+    <tbody></tbody>
+  </table></div>
+  <p class="sub" style="margin-top:8px"><span class="crit">●</span> caminho crítico</p>
+</section>
+
+<section>
+  <div class="eyebrow">Decisões humanas</div>
+  <h2>O que só pessoas decidem</h2>
+  <div class="grid g2" style="margin-top:12px">
+    <div class="card">
+      <h3>Bloqueiam o piloto</h3>
+      <ul class="list">
+        <li><b>Papel da franquia</b> e mudança no MGO · liderança + franquias</li>
+        <li><b>Enquadramento fiscal</b> e modelo de NF · liderança + contador</li>
+        <li><b>Pontos econômicos:</b> cancelamento, prazo do Pix, take por categoria · liderança</li>
+        <li><b>Termos</b> de comprador e prestador · Jurídico</li>
+        <li><b>Tabela de preços v1</b> · liderança</li>
+        <li><b>Endpoints e escrita no Sapron</b> · time do Sapron</li>
+        <li><b>Seleção do piloto</b> e plantão · liderança + franquias</li>
+        <li><b>1º deploy em prd</b> e ligar o piloto · liderança</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Ficam humanos na operação (até o eval liberar)</h3>
+      <ul class="list">
+        <li>Aprovar todo Pix no mês 1</li>
+        <li>Zona cinza do KYC (fila de 48h)</li>
+        <li>Reclamação acima da alçada e dano causado pelo prestador</li>
+        <li>Emergência noturna (plantão de 15 min)</li>
+        <li>Reajuste de preço acima de 10% e item novo</li>
+        <li>3 primeiras campanhas de massa e go/no-go dos meses 1, 3 e 6</li>
+      </ul>
+    </div>
+  </div>
+  <details>
+    <summary>Para decidir já (antes da onda 1)</summary>
+    <ul class="list" style="margin-top:8px">
+      <li><b>Fórmula do preço:</b> a tabela v1 e os termos precisam de uma só; o motor suporta as duas.</li>
+      <li><b>Uma reunião de liderança</b> para responder as 4 decisões da onda 1 juntas.</li>
+      <li><b>Pedir já a verificação da Meta</b> (WhatsApp): está no começo do caminho crítico e pode levar dias.</li>
+    </ul>
+  </details>
+</section>
+</div>
+</main>
+<footer><div class="wrap">ConcertAI · Seazone · Atualizado em 16/11/2026</div></footer>
+
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.min.js"></script>
+<script>
+const D={"cat": [["Ar-condicionado", "AR-01", "Higienização de split até 12.000 BTU (por aparelho)", "60–90 min (Houser 90) · 2 janelas", "não", "335", "MVP", "1"], ["Ar-condicionado", "AR-02", "Higienização de split 18.000 a 24.000 BTU (por aparelho)", "90–120 min · 2 janelas", "não", "335", "MVP", "2"], ["Ar-condicionado", "AR-03", "Desobstrução de dreno / split pingando", "45–60 min · 1 janela", "às vezes", "335", "MVP", "1"], ["Ar-condicionado", "AR-04", "Conserto de ar-condicionado (mão de obra)", "60–120 min · 2 janelas", "às vezes", "450", "MVP", "2"], ["Ar-condicionado", "AR-05", "Instalação de split até 12.000 BTU", "180–240 min · 4 janelas", "sim", "1.165", "F2", "2"], ["Ar-condicionado", "AR-06", "Mudança de condensadora", "180–240 min · 4 janelas", "às vezes", "1.430", "F2", "2"], ["Elétrica", "EL-01", "Troca de resistência de chuveiro", "30–45 min · 1 janela", "sim", "235", "MVP", "1"], ["Elétrica", "EL-02", "Instalação ou troca de chuveiro elétrico", "45–60 min · 1 janela", "sim", "235", "MVP", "1"], ["Elétrica", "EL-03", "Instalação ou troca de tomada ou interruptor (por ponto)", "20–40 min · 1 janela", "sim", "265", "MVP", "1"], ["Elétrica", "EL-04", "Instalação de luminária, plafon ou lustre simples", "40–75 min (Houser 45-75) · 2 janelas", "sim", "235", "MVP", "2"], ["Elétrica", "EL-05", "Curto-circuito: localizar e reparar", "60–120 min · 2 janelas", "às vezes", "265", "MVP", "2"], ["Elétrica", "EL-06", "Troca de disjuntor", "30–45 min · 1 janela", "sim", "265", "MVP", "1"], ["Elétrica", "EL-07", "Instalação de ventilador de teto", "60–90 min · 2 janelas", "sim", "310", "MVP", "2"], ["Elétrica", "EL-08", "Ponto elétrico novo ou reforma de ponto (por ponto)", "60–90 min · 2 janelas", "sim", "295", "MVP", "2"], ["Elétrica", "EL-09", "Fiação nova (por circuito)", "120–180 min · 3 janelas", "sim", "255", "F2", "2"], ["Elétrica", "EL-10", "Reparo de interfone do imóvel (aparelho interno, fiação até a parede, fixação)", "30–60 min · 1 janela", "às vezes", "150", "MVP", "2"], ["Hidráulica e desentupimento", "HI-01", "Reparo de vazamento aparente", "45–90 min (Houser 90) · 2 janelas", "às vezes", "265", "MVP", "1"], ["Hidráulica e desentupimento", "HI-02", "Desentupimento simples (pia, ralo ou vaso)", "45–60 min (Houser 60) · 1 janela", "não", "270", "MVP", "1"], ["Hidráulica e desentupimento", "HI-03", "Desentupimento de esgoto ou caixa de gordura", "90–120 min (Houser 120) · 2 janelas", "não", "390", "MVP", "2"], ["Hidráulica e desentupimento", "HI-04", "Troca de torneira ou sifão", "30–60 min (Houser 60) · 1 janela", "sim", "235", "MVP", "1"], ["Hidráulica e desentupimento", "HI-05", "Reparo ou troca de válvula de descarga ou caixa acoplada", "45–75 min (Houser 75) · 2 janelas", "às vezes", "265", "MVP", "1"], ["Hidráulica e desentupimento", "HI-06", "Instalação de ducha higiênica", "30–45 min (Houser 45) · 1 janela", "sim", "230", "MVP", "1"], ["Hidráulica e desentupimento", "HI-07", "Troca de boia da caixa d'água", "45–60 min (Houser 60) · 1 janela", "sim", "265", "MVP", "2"], ["Hidráulica e desentupimento", "HI-08", "Troca de registro", "45–60 min (Houser 60) · 1 janela", "sim", "265", "MVP", "2"], ["Hidráulica e desentupimento", "HI-09", "Reparo de bomba d'água ou pressurizador (imóvel com poço, cabana, casa)", "60–90 min · 2 janelas", "às vezes", "390", "MVP", "2"], ["Hidráulica e desentupimento", "HI-10", "Limpeza de fossa séptica", "90–150 min · 3 janelas", "não", "390", "F2", "2"], ["Gás", "GA-01", "Instalação ou manutenção de ponto de gás (fogão, cooktop ou chapa a gás, com teste de vazamento)", "45–60 min · 1 janela", "às vezes", "230", "MVP", "2"], ["Gás", "GA-02", "Manutenção de aquecedor a gás", "60–90 min · 2 janelas", "às vezes", "330", "MVP", "2"], ["Chaveiro", "CH-01", "Abertura de porta (fechadura simples)", "20–60 min (Houser 60) · 1 janela", "não", "230", "MVP", "1"], ["Chaveiro", "CH-02", "Instalação ou troca de fechadura ou trinco", "45–60 min · 1 janela", "sim", "270", "MVP", "2"], ["Chaveiro", "CH-03", "Troca de segredo (cilindro)", "30–45 min · 1 janela", "sim", "280", "MVP", "2"], ["Fechadura eletrônica", "FE-01", "Instalação de fechadura eletrônica de sobrepor", "60–90 min · 2 janelas", "sim", "295", "MVP", "2"], ["Fechadura eletrônica", "FE-02", "Instalação de fechadura eletrônica de embutir", "90–150 min (Houser 90 (mecânica)) · 3 janelas", "sim", "375", "MVP", "2"], ["Fechadura eletrônica", "FE-03", "Abertura emergencial de fechadura eletrônica (sem bateria/travada)", "20–40 min · 1 janela", "às vezes", "230", "MVP", "2"], ["Assistência técnica de eletrodomésticos", "ED-01", "Reparo simples de geladeira ou frigobar (borracha, dreno)", "30–60 min · 1 janela", "às vezes", "280", "MVP", "2"], ["Assistência técnica de eletrodomésticos", "ED-02", "Conserto de geladeira, lava-louças, secadora ou cooktop elétrico/indução (cooktop a gás é GA-01)", "60–120 min · 2 janelas", "às vezes", "255", "MVP", "2"], ["Assistência técnica de eletrodomésticos", "ED-03", "Conserto de micro-ondas (fusível, botão, trava)", "45–60 min · 1 janela", "às vezes", "235", "MVP", "1"], ["Assistência técnica de eletrodomésticos", "ED-04", "Conserto de máquina de lavar (motor, bomba ou placa)", "60–120 min · 2 janelas", "às vezes", "255", "MVP", "2"], ["Assistência técnica de eletrodomésticos", "ED-05", "Conserto de fogão (botão, resistência ou timer)", "45–75 min · 2 janelas", "às vezes", "255", "MVP", "2"], ["Assistência técnica de eletrodomésticos", "ED-06", "Troca de resistência de forno elétrico", "45–60 min · 1 janela", "sim", "255", "MVP", "2"], ["Assistência técnica de eletrodomésticos", "ED-07", "Conserto de TV", "60–120 min · 2 janelas", "às vezes", "280", "MVP", "2"], ["Assistência técnica de eletrodomésticos", "ED-08", "Instalação de forno ou micro-ondas embutido", "45–60 min · 1 janela", "não", "230", "MVP", "2"], ["Assistência técnica de eletrodomésticos", "ED-09", "Instalação de máquina de lavar ou lava-louças", "45–60 min · 1 janela", "às vezes", "255", "MVP", "2"], ["Assistência técnica de eletrodomésticos", "ED-10", "Troca de borracha (gaxeta) da máquina", "30–45 min · 1 janela", "sim", "255", "MVP", "2"], ["Assistência técnica de eletrodomésticos", "ED-11", "Desobstrução de mangueira de dreno da máquina", "30–45 min · 1 janela", "não", "255", "MVP", "2"], ["Instalação, fixação e montagem", "IF-01", "Instalação de suporte de TV até 55\" (ou micro-ondas, quadro grande)", "60–75 min (Houser 75) · 2 janelas", "sim", "240", "MVP", "2"], ["Instalação, fixação e montagem", "IF-02", "Instalação de suporte de TV acima de 55\"", "75–120 min (Houser 90-120) · 2 janelas", "sim", "270", "MVP", "2"], ["Instalação, fixação e montagem", "IF-03", "Instalação de cortina ou persiana (por janela)", "45–90 min (Houser 60-90) · 2 janelas", "sim", "265", "MVP (classe F: vendido mais no kit)", "2"], ["Instalação, fixação e montagem", "IF-04", "Fixações diversas (até 3 itens: espelho pequeno, varal, nicho, barra de apoio)", "45–60 min · 1 janela", "não (o item a fixar é do comprador)", "265", "MVP (classe F)", "2"], ["Instalação, fixação e montagem", "IF-05", "Montagem de móvel (por móvel até 6 portas)", "60–300 min (guarda-roupa 6 portas até 5 h) · 5 janelas", "não", "270", "MVP", "2"], ["Instalação, fixação e montagem", "IF-06", "Instalação de prateleira", "30–45 min · 1 janela", "sim", "265", "MVP", "2"], ["Instalação, fixação e montagem", "IF-07", "Instalação de cabeceira", "45–60 min · 1 janela", "sim", "270", "MVP", "2"], ["Instalação, fixação e montagem", "IF-08", "Tela de proteção (por janela até 2 m²)", "60–90 min · 2 janelas", "sim", "190", "MVP", "2"], ["Instalação, fixação e montagem", "IF-09", "Conserto de persiana (rolô, horizontal ou vertical, por peça)", "45–60 min · 1 janela", "às vezes", "270", "MVP", "2"], ["Marcenaria", "MA-01", "Ajuste ou reparo de porta, dobradiça ou trilho", "45–60 min · 1 janela", "às vezes", "225", "MVP", "1"], ["Marcenaria", "MA-02", "Reparo simples de móvel (mecanismo de sofá, braço solto, gaveta)", "45–60 min · 1 janela", "às vezes", "230", "MVP", "1"], ["Marcenaria", "MA-03", "Reparo de armário (porta, gaveta, corrediça, prateleira)", "60–120 min · 2 janelas", "às vezes", "250", "MVP", "2"], ["Marcenaria", "MA-04", "Troca de puxador ou fechadura de armário (até 5)", "30–45 min · 1 janela", "sim", "220", "MVP (classe F)", "2"], ["Serralheria", "SE-01", "Reparo de portão ou grade", "90–120 min · 2 janelas", "às vezes", "555", "MVP", "2"], ["Serralheria", "SE-02", "Solda simples no local", "45–60 min · 1 janela", "não", "135", "MVP", "2"], ["Serralheria", "SE-03", "Instalação de mola hidráulica de porta", "45–60 min · 1 janela", "sim", "405", "MVP", "2"], ["Serralheria", "SE-04", "Regulagem de portão eletrônico de garagem (casa)", "45–60 min · 1 janela", "às vezes", "275", "MVP", "2"], ["Vidraçaria", "VI-01", "Troca de roldana ou trilho de porta/janela de correr", "60–90 min · 2 janelas", "sim", "265", "MVP", "2"], ["Vidraçaria", "VI-02", "Ajuste ou reparo de box (roldana, vedação, puxador)", "45–60 min · 1 janela", "às vezes", "265", "MVP", "1"], ["Vidraçaria", "VI-03", "Reparo de vidraçaria (fecho, vedação, silicone, puxador)", "45–60 min · 1 janela", "às vezes", "225", "MVP", "1"], ["Vidraçaria", "VI-04", "Instalação de espelho (por m²)", "45–60 min · 1 janela", "sim", "265", "MVP", "2"], ["Vidraçaria", "VI-05", "Troca de vidro comum (até 1 m²)", "90–120 min (2 visitas: medição 30 + instalação 60-90 = 1 + 2 janelas) · 3 janelas", "sim", "455", "F2", "2"], ["Vidraçaria", "VI-06", "Box novo ou vidro temperado", "120–240 min (por orçamento, 2 visitas) · 4 janelas", "sim", "800", "F2 (por orçamento)", "2"], ["Dedetização e sanitização", "DS-01", "Dedetização corretiva (baratas, formigas, insetos gerais), apartamento até 3 quartos", "60–120 min · 2 janelas", "não (produto incluso)", "320", "MVP", "2"], ["Dedetização e sanitização", "DS-02", "Dedetização preventiva, apartamento até 3 quartos", "60–120 min · 2 janelas", "não (produto incluso)", "335", "MVP", "2"], ["Dedetização e sanitização", "DS-03", "Sanitização de cômodo com ozônio", "45–60 min (+ ventilação) · 1 janela", "não", "370", "MVP", "2"], ["Dedetização e sanitização", "DS-04", "Tratamento de mofo (por cômodo)", "60–120 min · 2 janelas", "não (fungicida incluso)", "345", "MVP", "2"], ["Dedetização e sanitização", "DS-05", "Limpeza e desinfecção de ralos e sifões (até 4)", "30–45 min · 1 janela", "não (enzimático incluso)", "220", "MVP", "2"], ["Higienização de estofados e colchão", "HE-01", "Higienização de peça padrão (colchão até casal, sofá até 3 lugares, poltrona)", "60–120 min (Houser 90-120) · 2 janelas", "não", "310", "MVP", "2"], ["Higienização de estofados e colchão", "HE-02", "Higienização de peça grande (sofá retrátil ou acima de 3 lugares, colchão king)", "90–150 min (Houser 150) · 3 janelas", "não", "420", "MVP", "2"], ["Higienização de estofados e colchão", "HE-03", "Higienização de até 6 cadeiras estofadas", "120–180 min (Houser 180) · 3 janelas", "não", "315", "MVP", "2"], ["Caixa d'água e filtro de água", "CX-01", "Limpeza e desinfecção de caixa d'água até 2.000 L", "120–180 min (Houser 120) · 3 janelas", "não", "325", "MVP", "2"], ["Caixa d'água e filtro de água", "CX-02", "Limpeza e desinfecção de caixa d'água de 2.000 a 4.000 L", "180–240 min (Houser 180) · 4 janelas", "não", "350", "MVP", "2"], ["Caixa d'água e filtro de água", "CX-03", "Troca de refil ou instalação de filtro/purificador", "30–45 min · 1 janela", "sim", "245", "MVP", "2"], ["TV, antena e Wi-Fi", "TW-01", "Instalação de ponto de antena digital", "60–120 min · 2 janelas", "sim", "555", "MVP", "2"], ["TV, antena e Wi-Fi", "TW-02", "Instalação ou troca de roteador/modem", "30–45 min · 1 janela", "sim", "275", "MVP", "2"], ["TV, antena e Wi-Fi", "TW-03", "Instalação de repetidor Wi-Fi", "20–30 min · 1 janela", "sim", "220", "MVP", "2"], ["Pintura", "PI-01", "Retoque de pintura, mancha ou descascado (até 1 parede)", "180–240 min · 4 janelas", "sim", "480", "MVP", "2"], ["Pintura", "PI-02", "Pintura de cômodo até 10 m² de piso", "480–960 min (1 a 2 diárias) · 1 a 2 diárias (8 a 16)", "sim", "740", "F2", "2"], ["Pintura", "PI-03", "Pintura de porta ou janela", "120–180 min · 3 janelas", "sim", "130", "F2 (rever preço)", "2"], ["Pintura", "PI-04", "Papel de parede (por rolo)", "45–60 min (por rolo) · 1 janela", "sim", "275", "F2", "2"], ["Alvenaria e pequenos reparos", "AL-01", "Tapar furos na parede (até 5, massa e lixa)", "60–120 min · 2 janelas", "não", "285", "MVP", "2"], ["Alvenaria e pequenos reparos", "AL-02", "Reparo de reboco ou trinca (até 1 m²)", "120–180 min · 3 janelas", "às vezes", "285", "MVP", "2"], ["Alvenaria e pequenos reparos", "AL-03", "Fixação ou troca de rodapé (até 3 m)", "45–60 min · 1 janela", "sim", "200", "MVP", "2"], ["Alvenaria e pequenos reparos", "AL-04", "Troca de piso ou azulejo (até 1 m²)", "120–180 min · 3 janelas", "sim", "240", "F2 (rever preço)", "2"], ["Alvenaria e pequenos reparos", "AL-05", "Pequeno reparo de alvenaria (soleira, peitoril, canto quebrado, até 1 ponto)", "60–120 min · 2 janelas", "às vezes", "245", "MVP", "2"], ["Alvenaria e pequenos reparos", "AL-06", "Refazer rejunte e vedação de box ou área molhada (até 1 box ou 3 m²)", "150–180 min · 3 janelas", "sim", "255", "MVP", "2"], ["Alvenaria e pequenos reparos", "AL-07", "Reparo de telhado com goteira e desobstrução de calha (casa, até 10 telhas)", "120–180 min · 3 janelas", "às vezes", "285", "MVP", "2"], ["Jardinagem", "JA-01", "Corte de grama (até 200 m²)", "90–120 min · 2 janelas", "não", "295", "MVP", "2"], ["Jardinagem", "JA-02", "Limpeza de jardim e folhas", "90–120 min · 2 janelas", "não", "275", "MVP", "2"], ["Jardinagem", "JA-03", "Poda simples (até 3 m de altura)", "90–120 min · 2 janelas", "não", "275", "MVP", "2"], ["Jardinagem", "JA-04", "Adubação e cuidado básico de plantas", "45–60 min · 1 janela", "sim", "520", "F2 (rever preço)", "2"], ["Piscina e hidromassagem", "PS-01", "Limpeza de piscina (até 40 m³)", "60–90 min · 2 janelas", "sim", "370", "MVP", "2"], ["Piscina e hidromassagem", "PS-02", "Tratamento de água verde (até 40 m³)", "150 min (2 visitas: 90 + 60 = 2 + 1 janelas) · 3 janelas", "sim", "575", "MVP", "2"], ["Piscina e hidromassagem", "PS-03", "Manutenção de hidromassagem ou jacuzzi", "60–90 min · 2 janelas", "às vezes", "370", "MVP", "2"], ["Visita de diagnóstico", "DG-01", "Visita de diagnóstico (qualquer categoria)", "30–60 min · 1 janela", "não", "105", "MVP", "2"]], "T": [{"id": "CZT-001", "crit": false, "t": "Dossiê da decisão 1: papel da franquia", "pronto": "Dossiê com 3 opções, R$ por pedido em cada uma e recomendação; decisão gravada no ADR", "ep": "Decisões", "ag": "B2 Analista de produto", "dep": "–", "tam": "M", "hum": "Liderança + franquias", "o": 1}, {"id": "CZT-002", "crit": false, "t": "Dossiê da decisão 2: enquadramento fiscal", "pronto": "Conta por pedido nos 2 regimes e nos 2 modelos de NF; decisão gravada no ADR", "ep": "Decisões", "ag": "B2 Analista de produto", "dep": "–", "tam": "M", "hum": "Liderança + fiscal", "o": 1}, {"id": "CZT-003", "crit": false, "t": "Fechar os 4 pontos econômicos", "pronto": "4 valores numéricos gravados no ADR, prontos para cz_politicas", "ep": "Decisões", "ag": "B2 Analista de produto", "dep": "–", "tam": "M", "hum": "Liderança", "o": 1}, {"id": "CZT-004", "crit": false, "t": "Pacote das decisões operacionais", "pronto": "Uma resposta por decisão, com dono e data, no ADR", "ep": "Decisões", "ag": "B2 Analista de produto", "dep": "–", "tam": "M", "hum": "Liderança", "o": 1}, {"id": "CZT-005", "crit": false, "t": "Credenciais e contas externas", "pronto": "Script de checklist faz 1 chamada de leitura por chave nos 2 ambientes: 100% verde; segredos só em env (${VAR})", "ep": "Fundação", "ag": "B15 DevOps e release", "dep": "–", "tam": "M", "hum": "Liderança aprova contas e custo", "o": 1}, {"id": "CZT-006", "crit": true, "t": "ADR: máquina de estados e catálogo de eventos", "pronto": "Tabela estado × evento → estado completa; teste gera o grafo e não acha estado sem saída nem inalcançável", "ep": "Fundação", "ag": "B1 Arquiteto", "dep": "–", "tam": "M", "hum": "Não", "o": 1}, {"id": "CZT-007", "crit": false, "t": "Threat model, segredos e kill switches", "pronto": "Documento mergeado; checklist no template de PR; 1 teste especificado por kill switch", "ep": "Fundação", "ag": "B13 Segurança", "dep": "–", "tam": "M", "hum": "Não", "o": 1}, {"id": "CZT-008", "crit": false, "t": "Spec da jornada A: oferta (prestador)", "pronto": "Aceite em Dado/Quando/Então; 0 dúvida aberta sem dono", "ep": "Fundação", "ag": "B2 Analista de produto", "dep": "–", "tam": "M", "hum": "Não", "o": 1}, {"id": "CZT-009", "crit": false, "t": "Repo, CLAUDE.md, CI e ambientes", "pronto": "PR de exemplo passa lint + teste no CI; merge faz deploy em stg", "ep": "Fundação", "ag": "B15 DevOps e release", "dep": "–", "tam": "M", "hum": "Não", "o": 1}, {"id": "CZT-019", "crit": false, "t": "Medianas do Sapron por item e cidade", "pronto": "Tabela com n por item × cidade; 20 itens sorteados recalculados batem 100%", "ep": "Catálogo e preço", "ag": "B10 Dados", "dep": "–", "tam": "M", "hum": "Não", "o": 1}, {"id": "CZT-020", "crit": false, "t": "Coleta Houser e concorrentes (script)", "pronto": "≥90% dos itens com fonte e data; script reexecutável", "ep": "Catálogo e preço", "ag": "B10 Dados", "dep": "–", "tam": "M", "hum": "Não", "o": 1}, {"id": "CZT-024", "crit": false, "t": "Mapa de acesso e vínculo dos imóveis da praça", "pronto": "Lista por imóvel com tipo de acesso; % coberto conhecido", "ep": "Dados", "ag": "B10 Dados", "dep": "–", "tam": "P", "hum": "Franquias informam onde o Sapron não tem o dado", "o": 1}, {"id": "CZT-103", "crit": false, "t": "Spec da jornada B: compra", "pronto": "Aceite em Dado/Quando/Então; 0 dúvida aberta sem dono", "ep": "Fundação", "ag": "B2 Analista de produto", "dep": "–", "tam": "M", "hum": "Não", "o": 1}, {"id": "CZT-104", "crit": false, "t": "Spec da jornada C: execução", "pronto": "Aceite em Dado/Quando/Então; 0 dúvida aberta sem dono", "ep": "Fundação", "ag": "B2 Analista de produto", "dep": "–", "tam": "M", "hum": "Não", "o": 1}, {"id": "CZT-016", "crit": false, "t": "Infra do Juiz e gate de eval no CI", "pronto": "PR de prompt que piora a nota é bloqueado no CI", "ep": "Qualidade", "ag": "B11 Prompt e eval", "dep": "CZT-009", "tam": "M", "hum": "Não", "o": 2}, {"id": "CZT-030", "crit": false, "t": "Ficha de fatos dos termos ao Jurídico", "pronto": "Solicitação aberta com a ficha completa; o agente não redige cláusula", "ep": "Jurídico", "ag": "B2 Analista de produto", "dep": "CZT-001, CZT-002, CZT-003, CZT-103", "tam": "M", "hum": "Jurídico", "o": 2}, {"id": "CZT-045", "crit": false, "t": "Design: comprador", "pronto": "Auditoria frontend-design e revisão Bluezone aprovadas", "ep": "Compra", "ag": "B3 Design", "dep": "CZT-103", "tam": "M", "hum": "Não", "o": 2}, {"id": "CZT-072", "crit": false, "t": "Parecer do contador", "pronto": "Parecer anexado ao ADR fiscal", "ep": "Jurídico", "ag": "B2 Analista de produto", "dep": "CZT-002", "tam": "P", "hum": "Contador", "o": 2}, {"id": "CZT-075", "crit": false, "t": "Procuração para reparo emergencial", "pronto": "Resposta do Jurídico registrada e refletida na regra D6", "ep": "Jurídico", "ag": "B2 Analista de produto", "dep": "CZT-004", "tam": "P", "hum": "Jurídico", "o": 2}, {"id": "CZT-101", "crit": true, "t": "ADR: Command tipado, alçadas e limites por agente", "pronto": "Teste de contrato valida 1 exemplo válido e 1 inválido por Command", "ep": "Fundação", "ag": "B1 Arquiteto", "dep": "CZT-006", "tam": "M", "hum": "Não", "o": 2}, {"id": "CZT-102", "crit": false, "t": "ADR: contratos das integrações e login do comprador", "pronto": "Mocks gerados a partir das interfaces passam no teste de contrato; ADR de autenticação mergeado", "ep": "Fundação", "ag": "B1 Arquiteto", "dep": "CZT-006", "tam": "M", "hum": "Time do Sapron confirma os endpoints (vínculo, card, despesa no repasse)", "o": 2}, {"id": "CZT-105", "crit": false, "t": "Spec da jornada D: exceções D1-D17", "pronto": "Cada D com aceite testável e dono", "ep": "Fundação", "ag": "B2 Analista de produto", "dep": "CZT-103, CZT-104", "tam": "M", "hum": "Não", "o": 2}, {"id": "CZT-106", "crit": false, "t": "Dataset de eval 2: oferta, dinheiro e conteúdo", "pronto": "Dataset versionado com gabarito; ≥5 casos por agente", "ep": "Qualidade", "ag": "B11 Prompt e eval", "dep": "CZT-008, CZT-103, CZT-104", "tam": "M", "hum": "Não", "o": 2}, {"id": "CZT-109", "crit": false, "t": "Design: franquia", "pronto": "Auditoria frontend-design e revisão Bluezone aprovadas", "ep": "Compra", "ag": "B3 Design", "dep": "CZT-103", "tam": "M", "hum": "Não", "o": 2}, {"id": "CZT-110", "crit": false, "t": "Design: prestador", "pronto": "Auditoria aprovada; teste em tela de 360 px", "ep": "Execução", "ag": "B3 Design", "dep": "CZT-008, CZT-104", "tam": "M", "hum": "Não", "o": 2}, {"id": "CZT-010", "crit": true, "t": "Schema concertai e migrações", "pronto": "Migração roda do zero em stg; role sem service_role; teste de permissão verde", "ep": "Fundação", "ag": "B5 Backend core", "dep": "CZT-101, CZT-007", "tam": "G", "hum": "Não", "o": 3}, {"id": "CZT-017", "crit": false, "t": "Dataset de eval 1: compra, execução e exceções", "pronto": "Dataset versionado com gabarito; ≥8 casos por agente", "ep": "Qualidade", "ag": "B11 Prompt e eval", "dep": "CZT-103, CZT-104, CZT-105", "tam": "M", "hum": "Não", "o": 3}, {"id": "CZT-027", "crit": false, "t": "Integração KYC e CNPJ", "pronto": "Mocks + 3 casos reais em stg", "ep": "Prestadores", "ag": "B9 Integrações auxiliares", "dep": "CZT-005, CZT-007, CZT-102", "tam": "M", "hum": "Não", "o": 3}, {"id": "CZT-031", "crit": false, "t": "Agente Termos e políticas: gate CDC (constrói A28)", "pronto": "Tela sem preço antes da compra e opt-in pré-marcado são barrados em teste", "ep": "Jurídico", "ag": "B11 Prompt e eval", "dep": "CZT-103, CZT-106", "tam": "M", "hum": "Não", "o": 3}, {"id": "CZT-042", "crit": false, "t": "Integração NFS-e", "pronto": "Consulta valida NF real; emissão em homologação", "ep": "Pagamento e NF", "ag": "B9 Integrações auxiliares", "dep": "CZT-005, CZT-102", "tam": "M", "hum": "Não", "o": 3}, {"id": "CZT-043", "crit": false, "t": "Integração Maps e fechadura/cofre", "pronto": "Código gerado expira no fim da janela em teste", "ep": "Execução", "ag": "B9 Integrações auxiliares", "dep": "CZT-005, CZT-024, CZT-102", "tam": "M", "hum": "Não", "o": 3}, {"id": "CZT-111", "crit": false, "t": "Design: painel interno de exceções", "pronto": "Auditoria aprovada", "ep": "Operação", "ag": "B3 Design", "dep": "CZT-105", "tam": "P", "hum": "Não", "o": 3}, {"id": "CZT-115", "crit": false, "t": "Decisões gravadas em cz_politicas", "pronto": "Teste de configuração confere cada valor de prd contra o ADR", "ep": "Decisões", "ag": "B2 Analista de produto", "dep": "CZT-001, CZT-002, CZT-003, CZT-004, CZT-072, CZT-075", "tam": "P", "hum": "Não", "o": 3}, {"id": "CZT-011", "crit": false, "t": "Roteador e máquina de estados (constrói A12)", "pronto": "Teste de todas as transições permitidas e negadas; 0 transição inválida", "ep": "Fundação", "ag": "B5 Backend core", "dep": "CZT-010", "tam": "G", "hum": "Não", "o": 4}, {"id": "CZT-012", "crit": false, "t": "Policy engine", "pronto": "≥50 casos de policy verdes; nenhum valor aceito de LLM", "ep": "Fundação", "ag": "B5 Backend core (Opus)", "dep": "CZT-010", "tam": "G", "hum": "Não", "o": 4}, {"id": "CZT-014", "crit": true, "t": "Inbox/outbox e webhooks", "pronto": "HMAC inválido é recusado; fila drena após queda simulada", "ep": "Fundação", "ag": "B5 Backend core", "dep": "CZT-010", "tam": "M", "hum": "Não", "o": 4}, {"id": "CZT-018", "crit": false, "t": "Carga do catálogo e dos kits (estrutura)", "pronto": "Script confere 100% das linhas contra o catalogo.md", "ep": "Catálogo e preço", "ag": "B10 Dados", "dep": "CZT-010", "tam": "M", "hum": "Não", "o": 4}, {"id": "CZT-025", "crit": false, "t": "Requalificação dos prestadores da praça", "pronto": "Lista de aptos a convite com CNPJ ativo conferido pela API", "ep": "Prestadores", "ag": "B10 Dados", "dep": "CZT-027", "tam": "M", "hum": "Não", "o": 4}, {"id": "CZT-026", "crit": false, "t": "Integração Hub de Serviços", "pronto": "Leitura e escrita em stg; migração sem perda (contagem antes = depois)", "ep": "Prestadores", "ag": "B6 Integração Seazone", "dep": "CZT-010, CZT-102", "tam": "M", "hum": "Dono do Hub aprova a migração em hub_prestadores", "o": 4}, {"id": "CZT-039", "crit": false, "t": "Integração Stays (leitura)", "pronto": "Snapshot de 20 imóveis de Floripa bate com o painel da Stays", "ep": "Agenda", "ag": "B6 Integração Seazone", "dep": "CZT-005, CZT-010, CZT-102", "tam": "M", "hum": "Não", "o": 4}, {"id": "CZT-040", "crit": false, "t": "Base técnica de LGPD", "pronto": "Varredura de logs com 0 dado pessoal; expurgo roda em stg", "ep": "Jurídico", "ag": "B13 Segurança", "dep": "CZT-007, CZT-010", "tam": "M", "hum": "Não", "o": 4}, {"id": "CZT-041", "crit": false, "t": "Integração Sapron: leitura", "pronto": "Leitura de 20 imóveis em stg bate com a tela do Sapron", "ep": "Fundação", "ag": "B6 Integração Seazone", "dep": "CZT-005, CZT-010, CZT-102", "tam": "M", "hum": "Não", "o": 4}, {"id": "CZT-071", "crit": false, "t": "Aceite versionado (mecanismo)", "pronto": "Aceite grava a versão vigente; trocar o texto gera versão nova", "ep": "Jurídico", "ag": "B5 Backend core", "dep": "CZT-010", "tam": "M", "hum": "Não", "o": 4}, {"id": "CZT-013", "crit": false, "t": "Executor idempotente com kill switches (constrói A13)", "pronto": "Reenvio do mesmo Command não duplica; switch desligado barra 100%", "ep": "Fundação", "ag": "B5 Backend core (Opus)", "dep": "CZT-011, CZT-012", "tam": "G", "hum": "Não", "o": 5}, {"id": "CZT-021", "crit": false, "t": "Motor de preço e take", "pronto": "Testes de propriedade verdes nas 2 fórmulas possíveis da CZT-003", "ep": "Catálogo e preço", "ag": "B5 Backend core", "dep": "CZT-012, CZT-018", "tam": "M", "hum": "Não", "o": 5}, {"id": "CZT-028", "crit": true, "t": "WhatsApp: envio", "pronto": "Envio de template em stg; rate limit respeitado em teste de carga", "ep": "Fundação", "ag": "B8 Integração WhatsApp", "dep": "CZT-005, CZT-014, CZT-102", "tam": "M", "hum": "Não", "o": 5}, {"id": "CZT-032", "crit": false, "t": "Agente Radar de cobertura (constrói A1)", "pronto": "Rodada em stg lista as células de Floripa iguais à conferência manual", "ep": "Prestadores", "ag": "B5 Backend core", "dep": "CZT-026", "tam": "M", "hum": "Não", "o": 5}, {"id": "CZT-038", "crit": false, "t": "Integração Asaas", "pronto": "Pix sandbox ponta a ponta; webhook repetido não paga 2x", "ep": "Pagamento e NF", "ag": "B7 Integração Asaas", "dep": "CZT-005, CZT-007, CZT-014, CZT-102", "tam": "G", "hum": "Não", "o": 5}, {"id": "CZT-044", "crit": false, "t": "Integração SIA", "pronto": "Protocolo criado e lido em stg", "ep": "Execução", "ag": "B9 Integrações auxiliares", "dep": "CZT-005, CZT-014, CZT-102", "tam": "M", "hum": "Não", "o": 5}, {"id": "CZT-047", "crit": false, "t": "Agente Agenda (constrói A8)", "pronto": "100% dos conflitos simulados geram aviso + ciência", "ep": "Agenda", "ag": "B5 Backend core", "dep": "CZT-011, CZT-039", "tam": "M", "hum": "Não", "o": 5}, {"id": "CZT-050", "crit": false, "t": "Agente Intake e triagem (constrói A10)", "pronto": "Acurácia ≥90% no eval; baixa confiança vira DG-01", "ep": "Compra", "ag": "B11 Prompt e eval", "dep": "CZT-017, CZT-018, CZT-041", "tam": "M", "hum": "Não", "o": 5}, {"id": "CZT-056", "crit": false, "t": "PWA de captura (constrói A17, parte 1)", "pronto": "Foto da galeria é recusada; check-in fora do raio é recusado", "ep": "Execução", "ag": "B4 Frontend", "dep": "CZT-011, CZT-110", "tam": "M", "hum": "Não", "o": 5}, {"id": "CZT-074", "crit": false, "t": "Agente Compliance LGPD (constrói A29)", "pronto": "Pedido simulado atendido no prazo; campanha sem base legal é barrada", "ep": "Jurídico", "ag": "B13 Segurança", "dep": "CZT-040", "tam": "M", "hum": "Não", "o": 5}, {"id": "CZT-091", "crit": false, "t": "Seleção do piloto", "pronto": "Lista fechada de franquias, imóveis e prestadores", "ep": "Piloto", "ag": "B2 Analista de produto", "dep": "CZT-001, CZT-024, CZT-025", "tam": "P", "hum": "Liderança + franquias", "o": 5}, {"id": "CZT-112", "crit": false, "t": "Autenticação do comprador e vínculo", "pronto": "Imóvel sem vínculo é negado em teste; sessão expira", "ep": "Compra", "ag": "B5 Backend core", "dep": "CZT-041, CZT-102", "tam": "M", "hum": "Não", "o": 5}, {"id": "CZT-114", "crit": false, "t": "Publicar o texto aprovado dos termos", "pronto": "Hash do texto publicado = hash do texto aprovado", "ep": "Jurídico", "ag": "B5 Backend core", "dep": "CZT-030, CZT-071", "tam": "P", "hum": "Jurídico aprova o texto", "o": 5}, {"id": "CZT-125", "crit": false, "t": "Massa de teste em stg", "pronto": "Script recria a massa do zero em <5 min", "ep": "Qualidade", "ag": "B10 Dados", "dep": "CZT-018, CZT-026, CZT-041", "tam": "P", "hum": "Não", "o": 5}, {"id": "CZT-015", "crit": false, "t": "Supervisor, painel de exceções e fila do Slack (constrói A34)", "pronto": "Alerta em <5 min para fila parada simulada; clique grava a decisão como caso de eval", "ep": "Operação", "ag": "B5 Backend core", "dep": "CZT-005, CZT-011, CZT-013, CZT-014, CZT-111", "tam": "M", "hum": "Não", "o": 6}, {"id": "CZT-022", "crit": false, "t": "Tabela de preços v1", "pronto": "v1 publicada em cz_precos_tabela; 0 item acima de 0,9 × concorrente; líquido ≥ piso", "ep": "Catálogo e preço", "ag": "B10 Dados", "dep": "CZT-003, CZT-019, CZT-020, CZT-021", "tam": "M", "hum": "Liderança aprova a tabela", "o": 6}, {"id": "CZT-029", "crit": false, "t": "Biblioteca de templates da Meta", "pronto": "≥80% aprovados de 1ª; 100% dos do caminho feliz aprovados", "ep": "Divulgação", "ag": "B8 Integração WhatsApp", "dep": "CZT-028, CZT-031", "tam": "M", "hum": "Não", "o": 6}, {"id": "CZT-037", "crit": false, "t": "Agente Zelador da rede (constrói A6)", "pronto": "Cron em stg gera lembretes e o aviso de teto em caso simulado", "ep": "Prestadores", "ag": "B5 Backend core", "dep": "CZT-013, CZT-026, CZT-028", "tam": "M", "hum": "Não", "o": 6}, {"id": "CZT-046", "crit": false, "t": "Agente Vitrine e matching (constrói A7)", "pronto": "Divergência de preço = 0 em teste; ranking explicável", "ep": "Compra", "ag": "B5 Backend core", "dep": "CZT-021, CZT-026, CZT-043, CZT-112", "tam": "M", "hum": "Não", "o": 6}, {"id": "CZT-048", "crit": false, "t": "Agente Pedido: checkout (constrói A9, parte 1)", "pronto": "D16 e hold de 15 min passam em teste", "ep": "Compra", "ag": "B5 Backend core", "dep": "CZT-012, CZT-021, CZT-047, CZT-071, CZT-112", "tam": "M", "hum": "Não", "o": 6}, {"id": "CZT-053", "crit": false, "t": "Agente Notificação (constrói A14)", "pronto": "Sem Ciente em 24h reenvia e abre exceção em teste", "ep": "Execução", "ag": "B5 Backend core", "dep": "CZT-011, CZT-013, CZT-028", "tam": "M", "hum": "Não", "o": 6}, {"id": "CZT-055", "crit": false, "t": "Agente Acesso ao imóvel (constrói A16)", "pronto": "Código revogado após a janela; pedido à franquia sai em teste", "ep": "Execução", "ag": "B5 Backend core", "dep": "CZT-013, CZT-043", "tam": "M", "hum": "Não", "o": 6}, {"id": "CZT-057", "crit": false, "t": "Validação: checagens em código (constrói A18, parte 1)", "pronto": "Fraudes de foto do dataset detectadas", "ep": "Qualidade", "ag": "B5 Backend core", "dep": "CZT-056", "tam": "M", "hum": "Não", "o": 6}, {"id": "CZT-061", "crit": false, "t": "Agente Reclamação SIA (constrói A21)", "pronto": "Prazo ≥95% em simulação; risco jurídico escala", "ep": "Exceções", "ag": "B11 Prompt e eval", "dep": "CZT-017, CZT-044", "tam": "M", "hum": "Não", "o": 6}, {"id": "CZT-089", "crit": false, "t": "Deploy em stg e rollback", "pronto": "Rollback em <10 min comprovado", "ep": "Operação", "ag": "B15 DevOps e release", "dep": "CZT-009, CZT-013, CZT-014", "tam": "M", "hum": "Não", "o": 6}, {"id": "CZT-107", "crit": true, "t": "WhatsApp: entrada e botões", "pronto": "Clique ponta a ponta em stg; HMAC inválido recusado", "ep": "Fundação", "ag": "B8 Integração WhatsApp", "dep": "CZT-028", "tam": "M", "hum": "Não", "o": 6}, {"id": "CZT-108", "crit": false, "t": "Integração Sapron: escrita", "pronto": "Despesa e estorno em stg conferidos na carteira do proprietário", "ep": "Pagamento e NF", "ag": "B6 Integração Seazone", "dep": "CZT-013, CZT-041", "tam": "M", "hum": "Time do Sapron libera a escrita em stg e prd", "o": 6}, {"id": "CZT-113", "crit": false, "t": "Links do prestador", "pronto": "Link de uso único expira; troca de Pix só vale após 72h em teste", "ep": "Prestadores", "ag": "B4 Frontend", "dep": "CZT-013, CZT-071, CZT-110", "tam": "M", "hum": "Não", "o": 6}, {"id": "CZT-119", "crit": false, "t": "PWA: checklist, aditivo e NF da peça (A17, parte 2)", "pronto": "Prova completa grava cz_evidencias; aditivo vira pedido de aprovação", "ep": "Execução", "ag": "B4 Frontend", "dep": "CZT-018, CZT-056", "tam": "M", "hum": "Não", "o": 6}, {"id": "CZT-023", "crit": false, "t": "Agente Revisão de preços (constrói A25)", "pronto": "Rodada em stg gera proposta e relatório; reajuste >10% cai na fila humana", "ep": "Catálogo e preço", "ag": "B11 Prompt e eval", "dep": "CZT-016, CZT-020, CZT-022, CZT-106", "tam": "M", "hum": "Não", "o": 7}, {"id": "CZT-033", "crit": false, "t": "Agente Captação de prestadores (constrói A2)", "pronto": "Teste de cadência e de opt-out; pausa automática com bloqueio ≥2%", "ep": "Prestadores", "ag": "B11 Prompt e eval", "dep": "CZT-013, CZT-029, CZT-040, CZT-106, CZT-107", "tam": "M", "hum": "Não", "o": 7}, {"id": "CZT-034", "crit": true, "t": "Agente Cadastro (constrói A3)", "pronto": "N1 completo em ≤5 min; ≥90% dos casos do dataset", "ep": "Prestadores", "ag": "B11 Prompt e eval", "dep": "CZT-013, CZT-026, CZT-106, CZT-107", "tam": "G", "hum": "Não", "o": 7}, {"id": "CZT-049", "crit": false, "t": "Frontend: vitrine e checkout", "pronto": "E2E de compra em stg; Lighthouse ≥90 em mobile", "ep": "Compra", "ag": "B4 Frontend", "dep": "CZT-045, CZT-046, CZT-048", "tam": "M", "hum": "Não", "o": 7}, {"id": "CZT-051", "crit": false, "t": "Agente Conversador (constrói A11)", "pronto": "0 injection com sucesso; ≥85% resolvido sem humano no eval", "ep": "Compra", "ag": "B11 Prompt e eval", "dep": "CZT-017, CZT-107", "tam": "M", "hum": "Não", "o": 7}, {"id": "CZT-052", "crit": false, "t": "Agente Ofertador (constrói A26)", "pronto": "Gatilhos em stg geram ofertas respeitando o limite", "ep": "Divulgação", "ag": "B5 Backend core", "dep": "CZT-018, CZT-041, CZT-053", "tam": "P", "hum": "Não", "o": 7}, {"id": "CZT-054", "crit": false, "t": "Agente Despacho e confirmação (constrói A15)", "pronto": "Recusa abre reescolha por botão para o comprador em teste", "ep": "Execução", "ag": "B5 Backend core", "dep": "CZT-013, CZT-046, CZT-107", "tam": "M", "hum": "Não", "o": 7}, {"id": "CZT-058", "crit": false, "t": "Card espelho fora da pontuação do MGO", "pronto": "Card de teste criado sem afetar a pontuação", "ep": "Piloto", "ag": "B6 Integração Seazone", "dep": "CZT-001, CZT-108", "tam": "P", "hum": "Liderança + franquias (mudança no MGO)", "o": 7}, {"id": "CZT-060", "crit": false, "t": "Reserva nova na data (D2)", "pronto": "Reserva simulada gera aviso e opções em ≤15 min", "ep": "Exceções", "ag": "B5 Backend core", "dep": "CZT-044, CZT-047, CZT-053", "tam": "M", "hum": "Não", "o": 7}, {"id": "CZT-064", "crit": false, "t": "Pagamento: NF e repasse (constrói A22, parte 1)", "pronto": "0 lançamento sem NF conferida no teste", "ep": "Pagamento e NF", "ag": "B5 Backend core", "dep": "CZT-002, CZT-042, CZT-108", "tam": "M", "hum": "Não", "o": 7}, {"id": "CZT-070", "crit": false, "t": "Agente Juiz (constrói A33)", "pronto": "Concordância com humano ≥90% na amostra", "ep": "Qualidade", "ag": "B11 Prompt e eval", "dep": "CZT-015, CZT-016, CZT-017, CZT-106", "tam": "M", "hum": "Não", "o": 7}, {"id": "CZT-076", "crit": false, "t": "Página pública do catálogo e FAQ", "pronto": "Página em stg passa no gate CDC (CZT-031)", "ep": "Divulgação", "ag": "B4 Frontend", "dep": "CZT-022, CZT-031, CZT-045", "tam": "M", "hum": "Não", "o": 7}, {"id": "CZT-082", "crit": false, "t": "BI: modelo analítico e placar (constrói A31)", "pronto": "Placar de stg publicado no Slack", "ep": "Operação", "ag": "B10 Dados", "dep": "CZT-011, CZT-015, CZT-019", "tam": "M", "hum": "Não", "o": 7}, {"id": "CZT-084", "crit": false, "t": "Runbooks e documentação", "pronto": "Um runbook por alerta do Supervisor", "ep": "Operação", "ag": "B16 Documentação", "dep": "CZT-013, CZT-015", "tam": "M", "hum": "Não", "o": 7}, {"id": "CZT-085", "crit": false, "t": "Plantão e alçadas configurados", "pronto": "Escala publicada; alerta simulado chega a quem está de plantão", "ep": "Operação", "ag": "B15 DevOps e release", "dep": "CZT-004, CZT-015", "tam": "P", "hum": "Liderança (Operação absorve)", "o": 7}, {"id": "CZT-116", "crit": false, "t": "Agente Pedido: aprovação e emergência (A9, parte 2)", "pronto": "0 pedido da franquia > R$ 300 sem aprovação nos testes (fora emergência)", "ep": "Compra", "ag": "B5 Backend core", "dep": "CZT-048, CZT-053", "tam": "M", "hum": "Não", "o": 7}, {"id": "CZT-120", "crit": false, "t": "Validação: visão e oráculo (A18, parte 2)", "pronto": "Falso positivo <2% no eval", "ep": "Qualidade", "ag": "B11 Prompt e eval", "dep": "CZT-017, CZT-041, CZT-057, CZT-119", "tam": "M", "hum": "Não", "o": 7}, {"id": "CZT-124", "crit": false, "t": "Agente Divulgação e conteúdo (constrói A27)", "pronto": "Campanha de teste em stg passa nos gates CDC e LGPD", "ep": "Divulgação", "ag": "B11 Prompt e eval", "dep": "CZT-013, CZT-029, CZT-031, CZT-074", "tam": "M", "hum": "Não", "o": 7}, {"id": "CZT-035", "crit": true, "t": "Agente Qualificação e KYC (constrói A4)", "pronto": "Casos objetivos do eval aprovados e reprovados certo; zona cinza cai na fila", "ep": "Prestadores", "ag": "B11 Prompt e eval", "dep": "CZT-027, CZT-034", "tam": "M", "hum": "Não", "o": 8}, {"id": "CZT-059", "crit": false, "t": "Agente Exceções 1: prestador e visita (constrói A19)", "pronto": "≥80% dos casos do eval sem humano; nunca escolhe pelo comprador", "ep": "Exceções", "ag": "B11 Prompt e eval (Opus)", "dep": "CZT-017, CZT-054, CZT-055, CZT-116", "tam": "M", "hum": "Não", "o": 8}, {"id": "CZT-063", "crit": false, "t": "Casos de borda em código", "pronto": "Um teste por caso, todos verdes", "ep": "Exceções", "ag": "B5 Backend core", "dep": "CZT-013, CZT-116", "tam": "M", "hum": "Não", "o": 8}, {"id": "CZT-068", "crit": false, "t": "Agente Notas e reputação (constrói A24)", "pronto": "Score recalculado bate com a fórmula; ranking explicável (art. 20)", "ep": "Qualidade", "ag": "B5 Backend core", "dep": "CZT-026, CZT-040, CZT-053, CZT-120", "tam": "M", "hum": "Não", "o": 8}, {"id": "CZT-073", "crit": false, "t": "Revisão de claims do lançamento", "pronto": "Gate CDC ok; claims novos aprovados pelo Jurídico", "ep": "Jurídico", "ag": "A28 Termos e políticas", "dep": "CZT-031, CZT-076", "tam": "P", "hum": "Jurídico (só claims novos)", "o": 8}, {"id": "CZT-079", "crit": false, "t": "Recrutamento de prestadores em Floripa", "pronto": "≥20 leads por vaga nas células abertas", "ep": "Divulgação", "ag": "A2 Captação de prestadores", "dep": "CZT-032, CZT-033", "tam": "M", "hum": "Liderança aprova o orçamento", "o": 8}, {"id": "CZT-080", "crit": false, "t": "Calendário de campanhas sazonais", "pronto": "Calendário com público e kit por campanha", "ep": "Divulgação", "ag": "A27 Divulgação e conteúdo", "dep": "CZT-022, CZT-124", "tam": "P", "hum": "Não", "o": 8}, {"id": "CZT-083", "crit": false, "t": "Painel de go/no-go", "pronto": "Painel com todas as métricas da seção 11 do blueprint", "ep": "Operação", "ag": "A31 BI e métricas", "dep": "CZT-082", "tam": "P", "hum": "Não", "o": 8}, {"id": "CZT-087", "crit": false, "t": "Revisão de segurança pré-piloto", "pronto": "0 achado alto aberto", "ep": "Fundação", "ag": "B13 Segurança", "dep": "CZT-013, CZT-015, CZT-038, CZT-051, CZT-056, CZT-074, CZT-107, CZT-108", "tam": "M", "hum": "Não", "o": 8}, {"id": "CZT-117", "crit": false, "t": "Frontend: área do proprietário", "pronto": "Aprovação por botão em stg; Lighthouse ≥90", "ep": "Compra", "ag": "B4 Frontend", "dep": "CZT-045, CZT-116", "tam": "M", "hum": "Não", "o": 8}, {"id": "CZT-118", "crit": false, "t": "Frontend: painel da franquia", "pronto": "Fluxo da franquia em stg; Lighthouse ≥90", "ep": "Compra", "ag": "B4 Frontend", "dep": "CZT-109, CZT-116", "tam": "M", "hum": "Não", "o": 8}, {"id": "CZT-122", "crit": false, "t": "Pagamento: Pix e peça (A22, parte 2)", "pronto": "0 Pix sem NF; aprovação humana ligada", "ep": "Pagamento e NF", "ag": "B5 Backend core", "dep": "CZT-015, CZT-038, CZT-064", "tam": "M", "hum": "Não", "o": 8}, {"id": "CZT-036", "crit": true, "t": "Contratação e ativação (constrói A5)", "pronto": "Prestador de teste ativado em sandbox; Pix com titular divergente bloqueado", "ep": "Prestadores", "ag": "B5 Backend core", "dep": "CZT-035, CZT-038, CZT-071, CZT-113", "tam": "M", "hum": "Não", "o": 9}, {"id": "CZT-062", "crit": false, "t": "Garantia e retrabalho (constrói A20)", "pronto": "Fluxo de retrabalho e débito passa em teste de integração", "ep": "Exceções", "ag": "B5 Backend core", "dep": "CZT-054, CZT-061, CZT-122", "tam": "M", "hum": "Não", "o": 9}, {"id": "CZT-065", "crit": false, "t": "Financeiro: conciliação (constrói A23, parte 1)", "pronto": "1 semana simulada com divergência 0; divergência plantada é achada", "ep": "Pagamento e NF", "ag": "B5 Backend core", "dep": "CZT-122", "tam": "M", "hum": "Não", "o": 9}, {"id": "CZT-066", "crit": false, "t": "Agente Compliance fiscal e trabalhista (constrói A30)", "pronto": "Alerta de concentração em teste; caso novo vai ao SeaJuri", "ep": "Pagamento e NF", "ag": "B11 Prompt e eval", "dep": "CZT-002, CZT-106, CZT-122", "tam": "M", "hum": "Não", "o": 9}, {"id": "CZT-067", "crit": false, "t": "Agente Suporte ao prestador (constrói A32)", "pronto": "≥85% resolvido sem humano no eval", "ep": "Pagamento e NF", "ag": "B11 Prompt e eval", "dep": "CZT-106, CZT-107, CZT-113, CZT-122", "tam": "M", "hum": "Não", "o": 9}, {"id": "CZT-069", "crit": false, "t": "Pedido de avaliação e moderação", "pronto": "Moderação ≥95% de acerto no eval", "ep": "Qualidade", "ag": "B11 Prompt e eval", "dep": "CZT-068, CZT-106", "tam": "P", "hum": "Não", "o": 9}, {"id": "CZT-077", "crit": false, "t": "Kit de lançamento para franquias", "pronto": "Kit aprovado e chamado de comunicado pronto", "ep": "Divulgação", "ag": "A27 Divulgação e conteúdo", "dep": "CZT-001, CZT-073, CZT-124", "tam": "M", "hum": "Franquias aprovam", "o": 9}, {"id": "CZT-121", "crit": false, "t": "Agente Exceções 2: escopo, emergência, sem opção", "pronto": "≥80% dos casos do eval sem humano; estorno acima da alçada vai à fila", "ep": "Exceções", "ag": "B11 Prompt e eval (Opus)", "dep": "CZT-059, CZT-108", "tam": "M", "hum": "Não", "o": 9}, {"id": "CZT-126", "crit": false, "t": "E2E jornada B: compra", "pronto": "Suíte E2E verde em stg", "ep": "Qualidade", "ag": "B12 QA e testes", "dep": "CZT-049, CZT-117, CZT-118, CZT-125", "tam": "M", "hum": "Não", "o": 9}, {"id": "CZT-127", "crit": false, "t": "E2E jornada C: execução", "pronto": "Suíte E2E verde em stg", "ep": "Qualidade", "ag": "B12 QA e testes", "dep": "CZT-054, CZT-055, CZT-120, CZT-122, CZT-125", "tam": "M", "hum": "Não", "o": 9}, {"id": "CZT-078", "crit": false, "t": "Convite aos proprietários do piloto", "pronto": "Público com base legal; régua agendada", "ep": "Divulgação", "ag": "A27 Divulgação e conteúdo", "dep": "CZT-073, CZT-077, CZT-091", "tam": "M", "hum": "Não", "o": 10}, {"id": "CZT-086", "crit": true, "t": "E2E jornada A: oferta", "pronto": "Suíte E2E verde em stg", "ep": "Qualidade", "ag": "B12 QA e testes", "dep": "CZT-033, CZT-036, CZT-037, CZT-125", "tam": "M", "hum": "Não", "o": 10}, {"id": "CZT-088", "crit": false, "t": "Gate de eval de todos os agentes com LLM", "pronto": "Relatório do gate com a nota por agente, todas ≥ meta", "ep": "Qualidade", "ag": "B11 Prompt e eval", "dep": "CZT-023, CZT-031, CZT-033, CZT-034, CZT-035, CZT-050, CZT-051, CZT-059, CZT-061, CZT-066, CZT-067, CZT-069, CZT-070, CZT-120, CZT-121, CZT-124", "tam": "M", "hum": "Não", "o": 10}, {"id": "CZT-123", "crit": false, "t": "Financeiro: NF da taxa, MEI e reserva (A23, parte 2)", "pronto": "NF da taxa emitida em homologação; alerta de teto em caso simulado", "ep": "Pagamento e NF", "ag": "B5 Backend core", "dep": "CZT-002, CZT-042, CZT-065", "tam": "M", "hum": "Fiscal valida o 1º relatório", "o": 10}, {"id": "CZT-128", "crit": false, "t": "E2E jornada D + carga", "pronto": "Suíte E2E verde; p95 dentro do SLA", "ep": "Qualidade", "ag": "B12 QA e testes", "dep": "CZT-060, CZT-061, CZT-062, CZT-063, CZT-121, CZT-125", "tam": "M", "hum": "Não", "o": 10}, {"id": "CZT-090", "crit": true, "t": "Deploy em prd com escrita desligada", "pronto": "Prd no ar com os 4 switches confirmados desligados", "ep": "Piloto", "ag": "B15 DevOps e release", "dep": "CZT-022, CZT-052, CZT-084, CZT-086, CZT-087, CZT-088, CZT-089, CZT-123, CZT-126, CZT-127, CZT-128", "tam": "M", "hum": "Liderança (1º deploy em prd)", "o": 11}, {"id": "CZT-092", "crit": true, "t": "Onboarding dos prestadores do piloto", "pronto": "≥5 prestadores ativos em sandbox", "ep": "Piloto", "ag": "A3 Cadastro (+A4, A5)", "dep": "CZT-029, CZT-036, CZT-090, CZT-091, CZT-114", "tam": "M", "hum": "Não", "o": 12}, {"id": "CZT-093", "crit": false, "t": "Shadow em Florianópolis (2 semanas)", "pronto": "Concordância agente × humano ≥90% em Intake e Validação; 100% dos conflitos de agenda avisados; senão reabre a task do agente", "ep": "Piloto", "ag": "A33 Juiz + B12 QA", "dep": "CZT-090", "tam": "M", "hum": "Não", "o": 12}, {"id": "CZT-094", "crit": true, "t": "Ligar o piloto", "pronto": "1º pedido real pago ponta a ponta", "ep": "Piloto", "ag": "B15 DevOps e release", "dep": "CZT-058, CZT-078, CZT-085, CZT-092, CZT-093, CZT-114, CZT-115", "tam": "P", "hum": "Liderança", "o": 13}, {"id": "CZT-095", "crit": true, "t": "Operação do mês 1 (30-60 pedidos)", "pronto": "30+ pedidos encerrados; placar diário no Slack", "ep": "Piloto", "ag": "A34 Supervisor + A31 BI", "dep": "CZT-082, CZT-094", "tam": "G", "hum": "Não", "o": 14}, {"id": "CZT-096", "crit": true, "t": "Go/no-go do mês 1", "pronto": "Decisão registrada com o painel", "ep": "Piloto", "ag": "A31 BI e métricas", "dep": "CZT-083, CZT-095", "tam": "P", "hum": "Liderança", "o": 15}, {"id": "CZT-081", "crit": true, "t": "Campanha do kit Pós-temporada", "pronto": "Pedidos por campanha aparecem no placar", "ep": "Expansão", "ag": "A27 Divulgação e conteúdo", "dep": "CZT-080, CZT-096", "tam": "M", "hum": "OK humano na 1ª campanha de massa", "o": 16}, {"id": "CZT-097", "crit": false, "t": "Subir degrau de autonomia", "pronto": "Juiz mostra N casos seguidos abaixo do limiar", "ep": "Expansão", "ag": "A33 Juiz", "dep": "CZT-096", "tam": "M", "hum": "Liderança aprova o degrau", "o": 16}, {"id": "CZT-098", "crit": false, "t": "Revisão de preços pós-piloto", "pronto": "Tabela v2 proposta com margem por item", "ep": "Expansão", "ag": "A25 Revisão de preços", "dep": "CZT-096", "tam": "M", "hum": "Liderança se reajuste >10%", "o": 16}, {"id": "CZT-099", "crit": true, "t": "Teste de demanda (mês 3)", "pronto": "≥150 pedidos/mês ou decisão de rever preço", "ep": "Expansão", "ag": "A31 BI + A27 Divulgação", "dep": "CZT-081, CZT-097, CZT-098", "tam": "G", "hum": "Liderança (go/no-go do mês 3)", "o": 17}, {"id": "CZT-100", "crit": true, "t": "Expansão por densidade (mês 6)", "pronto": "1º pedido em cada praça nova", "ep": "Expansão", "ag": "A1 Radar + A2 Captação", "dep": "CZT-079, CZT-099", "tam": "G", "hum": "Liderança (go/no-go do mês 6)", "o": 18}, {"id": "CZT-129", "t": "Leitura da Central de Manutenção do Sapron", "pronto": "Lista as manutenções abertas por franquia e imóvel; 20 cards sorteados batem 100% com a tela", "ep": "Compra", "ag": "B6 Integração Seazone", "dep": "CZT-041", "tam": "M", "hum": "Time do Sapron libera o endpoint", "o": 5, "crit": false, "novo": true}, {"id": "CZT-130", "t": "Casamento manutenção × catálogo (constrói A35, parte 1)", "pronto": "Acurácia ≥90% no dataset de eval; sem item do catálogo → sugere DG-01 ou devolve à franquia", "ep": "Compra", "ag": "B11 Prompt e eval", "dep": "CZT-129, CZT-050, CZT-046", "tam": "M", "hum": "Não", "o": 7, "crit": false, "novo": true}, {"id": "CZT-131", "t": "Indicação pela SIA com botão Contratar (constrói A35, parte 2)", "pronto": "Mensagem com prestador, preço, duração e 3 janelas; o botão abre o checkout já preenchido; 1 indicação por manutenção", "ep": "Compra", "ag": "B5 Backend core", "dep": "CZT-130, CZT-044, CZT-047, CZT-048", "tam": "M", "hum": "Não", "o": 8, "crit": false, "novo": true}, {"id": "CZT-132", "t": "Card do pedido e baixa da manutenção no Sapron", "pronto": "Contratou → card criado e manutenção vinculada; serviço validado → manutenção baixada; teste em stg sem card duplicado", "ep": "Compra", "ag": "B6 Integração Seazone", "dep": "CZT-131, CZT-108", "tam": "M", "hum": "Não", "o": 9, "crit": false, "novo": true}], "A": [{"k": "op", "g": "Oferta: rede de prestadores", "id": "A1", "n": "Radar de cobertura", "m": "Achar célula cidade × categoria com <3 aptos, agenda curta ou comprador sem opção", "gat": "Cron 6h + evento \"sem opção\"", "mod": "Código"}, {"k": "op", "g": "Oferta: rede de prestadores", "id": "A2", "n": "Captação de prestadores", "m": "Puxar leads por risco (abandonos, indicação, click-to-WhatsApp, Places, Receita), dedupe, cadência e campanhas de atração nas células abertas", "gat": "Célula aberta; célula aberta há >7 dias → campanha", "mod": "Código + Haiku 5.5"}, {"k": "op", "g": "Oferta: rede de prestadores", "id": "A3", "n": "Cadastro de prestador", "m": "Onboarding em até 8 perguntas: serviços, pin, raio, agenda, aceite da tabela e do take, CNPJ, Pix do titular, foto", "gat": "Lead respondeu", "mod": "Sonnet 5.5"}, {"k": "op", "g": "Oferta: rede de prestadores", "id": "A4", "n": "Qualificação, KYC e CNPJ", "m": "CNPJ ativo e CNAE, MEI/ME, liveness com face match, antecedentes, licença sanitária (RDC 622), prova prática", "gat": "N1 completo; revisão mensal", "mod": "Código + API + Sonnet 5.5 visão"}, {"k": "op", "g": "Oferta: rede de prestadores", "id": "A5", "n": "Contratação e ativação", "m": "Termos por clique (hash, IP, versão), sandbox nos 5 primeiros jobs (teto R$ 300, máx. 2 abertos), DICT do titular do Pix", "gat": "Prestador apto", "mod": "Código"}, {"k": "op", "g": "Oferta: rede de prestadores", "id": "A6", "n": "Zelador da rede", "m": "Agenda semanal em dia, reativação após 30 dias, rebaixamento por no-show, CNPJ mensal, aviso do teto do MEI (cálculo é do Financeiro)", "gat": "Cron semanal + no-show", "mod": "Código + Haiku 5.5"}, {"k": "op", "g": "Compra: vitrine, agenda e pedido", "id": "A7", "n": "Vitrine e matching", "m": "Imóveis do vínculo do Sapron, catálogo e kits com preço da tabela, até 3 profissionais por ranking publicado", "gat": "Comprador abre a vitrine", "mod": "Código"}, {"k": "op", "g": "Compra: vitrine, agenda e pedido", "id": "A8", "n": "Agenda e calendário", "m": "Janelas de 1h; avisa dia/hora com hóspede (não bloqueia) e registra a ciência; vigia reserva nova na data", "gat": "Escolha de data; varredura da Stays a cada 15 min", "mod": "Código"}, {"k": "op", "g": "Compra: vitrine, agenda e pedido", "id": "A9", "n": "Pedido e checkout", "m": "Pedido em dobro (30 dias), termos na 1ª compra, aprovação do proprietário (franquia >R$ 300, soma de 7 dias), emergência do MGO, holds de 15 min/48h, material como adicional", "gat": "Comprador confirma", "mod": "Código"}, {"k": "op", "g": "Compra: vitrine, agenda e pedido", "id": "A10", "n": "Intake e triagem", "m": "Texto livre, vistoria, limpeza e card do Sapron viram item do catálogo sugerido", "gat": "Mensagem ou card novo", "mod": "Sonnet 5.5 → Haiku 5.5 após eval"}, {"k": "op", "g": "Compra: vitrine, agenda e pedido", "id": "A11", "n": "Conversador (comprador)", "m": "Tirar dúvida de preço, escopo e garantia e levar ao botão certo", "gat": "Mensagem recebida", "mod": "Sonnet 5.5 (low)"}, {"k": "op", "g": "Execução do pedido", "id": "A12", "n": "Roteador", "m": "Leva estado + evento ao próximo passo; único que muda estado", "gat": "Evento em cz_inbox ou timer de 1 min", "mod": "Código"}, {"k": "op", "g": "Execução do pedido", "id": "A13", "n": "Executor", "m": "Único com chaves externas: card espelho, despesa no repasse, mensagens, Asaas, fechadura", "gat": "Command com ALLOW", "mod": "Código"}, {"k": "op", "g": "Execução do pedido", "id": "A14", "n": "Notificação", "m": "Avisar a outra parte de toda compra, lembretes D-1 e 2h, Ciente/Tem um problema", "gat": "Mudança de estado", "mod": "Código + Haiku 5.5"}, {"k": "op", "g": "Execução do pedido", "id": "A15", "n": "Despacho e confirmação", "m": "Pedido ao prestador escolhido (líquido, data, janela, Aceitar/Recusar), confirmação no D-1, reescolha", "gat": "AGUARDANDO_PRESTADOR; D-1", "mod": "Código"}, {"k": "op", "g": "Execução do pedido", "id": "A16", "n": "Acesso ao imóvel", "m": "Código da fechadura/cofre só na janela; sem fechadura, pede à franquia", "gat": "CONFIRMADO → 2h antes", "mod": "Código"}, {"k": "op", "g": "Execução do pedido", "id": "A17", "n": "Captura e prova", "m": "Link único: check-in GPS, fotos ao vivo com código, ângulo aleatório, checklist, aditivo, NF da peça", "gat": "Check-in", "mod": "Código (PWA)"}, {"k": "op", "g": "Execução do pedido", "id": "A18", "n": "Validação de qualidade", "m": "Evidência × checklist (pHash, GPS, desafio, visão) e oráculo (limpeza/vistoria seguinte); não paga", "gat": "PROVA_ENVIADA; limpeza seguinte", "mod": "Código + Sonnet 5.5 visão (Opus nos duvidosos)"}, {"k": "op", "g": "Execução do pedido", "id": "A19", "n": "Exceções", "m": "D1, D3, D4, D6, D10, D15, D17: monta opções, o comprador escolhe", "gat": "Gatilho de desvio", "mod": "Opus 5.5"}, {"k": "op", "g": "Execução do pedido", "id": "A20", "n": "Garantia e retrabalho", "m": "Retrabalho em 72h com o mesmo prestador; se ele recusar, outro faz e o custo sai do repasse futuro do primeiro; garantia do fabricante", "gat": "Contestação (D5); \"não\" no oráculo", "mod": "Código + Sonnet 5.5"}, {"k": "op", "g": "Execução do pedido", "id": "A21", "n": "Reclamação (SIA)", "m": "Protocolo, prazo (parâmetro), histórico; resolve na alçada (D8)", "gat": "Mensagem classificada como reclamação", "mod": "Sonnet 5.5 + código"}, {"k": "op", "g": "Dinheiro, NF e fiscal", "id": "A22", "n": "Pagamento, repasse e NF", "m": "Conferir a NFS-e (tomador = proprietário, modelo da decisão 2), lançar a despesa no repasse, reembolsar a peça pelo custo, pagar (1 − take) por Pix no prazo de cz_politicas", "gat": "VALIDADO", "mod": "Código + Haiku 5.5 (ler NF/cupom)"}, {"k": "op", "g": "Dinheiro, NF e fiscal", "id": "A23", "n": "Financeiro", "m": "Conciliação diária Asaas × cz_repasses × Sapron, NF da taxa da Seazone, cálculo do teto do MEI, reserva de 1%, exposição por proprietário, relatório mensal", "gat": "Diário + mensal", "mod": "Código + Sonnet 5.5 (relatório)"}, {"k": "op", "g": "Qualidade e reputação", "id": "A24", "n": "Notas e reputação", "m": "Notas (franquia: acesso e pontualidade; proprietário: resultado; oráculo), score, níveis, selo Novo, regra pública do ranking, moderação", "gat": "ENCERRADO/PAGO; cron diário", "mod": "Código + Haiku 5.5"}, {"k": "op", "g": "Crescimento: preço, oferta e divulgação", "id": "A25", "n": "Revisão de preços", "m": "Monitorar Houser e concorrentes (GetNinjas, Doutor Resolve, Triider), manter o preço ~10% abaixo, conferir margem (take, mínimo R$ 20) e o líquido contra a mediana do Sapron (piso)", "gat": "Coleta semanal + revisão mensal + item novo", "mod": "Sonnet 5.5 (equivalência) + código (conta)"}, {"k": "op", "g": "Crescimento: preço, oferta e divulgação", "id": "A26", "n": "Ofertador", "m": "Momento e imóvel certos para oferecer kit ou item (estação, vistoria, limpeza, card parado)", "gat": "Eventos do Sapron + calendário", "mod": "Código"}, {"k": "op", "g": "Crescimento: preço, oferta e divulgação", "id": "A27", "n": "Divulgação e conteúdo", "m": "Comunicados, campanhas sazonais de kits, régua WhatsApp/e-mail, peças, FAQ, biblioteca e recusas de templates da Meta, página pública", "gat": "Calendário; pedido do BI ou do Radar; template recusado", "mod": "Sonnet 5.5 + código (disparo) + skill de criativos"}, {"k": "op", "g": "Jurídico e compliance", "id": "A28", "n": "Termos e políticas (CDC)", "m": "Versionar termos; gate do checklist CDC em toda tela, template e comunicado (preço e escopo antes da compra, arrependimento, garantia de 90 dias, opt-in sem pré-marcação, intermediação, material à parte)", "gat": "Mudança de termo, tela, campanha ou política", "mod": "Opus 5.5"}, {"k": "op", "g": "Jurídico e compliance", "id": "A29", "n": "Compliance LGPD", "m": "Retenção de fotos e conversas, hash em logs, base legal de campanha, opt-out global, pedido de titular, ranking explicável (art. 20)", "gat": "Cron semanal + pedido de titular + campanha nova", "mod": "Sonnet 5.5 + código"}, {"k": "op", "g": "Jurídico e compliance", "id": "A30", "n": "Compliance fiscal e trabalhista", "m": "Auditoria mensal: sinais de vínculo (concentração num tomador, recusa punida, agenda imposta, exclusividade), regime e risco do MEI. A checagem NF × CNPJ × valor × tomador de cada Pix é regra do policy, não deste agente", "gat": "Cron mensal", "mod": "Código + Sonnet 5.5"}, {"k": "op", "g": "Gestão, suporte e controle", "id": "A31", "n": "BI e métricas", "m": "Funil por estado, SLA, margem por item e kit, % da franquia, ocupação dos prestadores, conversão por campanha, go/no-go; placar no Slack", "gat": "Cron diário + segunda 9h", "mod": "Código + Sonnet 5.5 (narrativa)"}, {"k": "op", "g": "Gestão, suporte e controle", "id": "A32", "n": "Suporte ao prestador", "m": "Pagamento, NF, agenda, nível, uso do link; guia da NFS-e; troca de Pix por link (carência de 72h)", "gat": "Mensagem do prestador", "mod": "Sonnet 5.5 (low)"}, {"k": "op", "g": "Gestão, suporte e controle", "id": "A33", "n": "Juiz (eval contínuo)", "m": "Nota cega de 10% dos pedidos e conversas; regressão no CI; decisão humana vira caso; libera degrau", "gat": "Diário (Batch) + PR de prompt", "mod": "Haiku/Sonnet 5.5 em Batch, prompt diferente do avaliado"}, {"k": "op", "g": "Gestão, suporte e controle", "id": "A34", "n": "Supervisor (sem IA)", "m": "Watchdog: fila parada, SLA, dependência fora, custo de LLM, quality rating da Meta; kill switch e plantão; painel Aprovar/Reprovar", "gat": "Cron 1 min", "mod": "Código"}, {"k": "b", "g": "Construção", "id": "B0", "n": "Orquestrador de batelada", "m": "Despachar o DAG da seção 3, controlar carga, rodar a síntese, reabrir task reprovada. Não é dono de task de conteúdo", "gat": "Ordenar, despachar, reabrir", "mod": "Opus 5.5"}, {"k": "b", "g": "Construção", "id": "B1", "n": "Arquiteto", "m": "ADRs: máquina de estados, Command e alçadas, contratos das integrações, login do comprador", "gat": "Decidir dentro do blueprint", "mod": "Opus 5.5"}, {"k": "b", "g": "Construção", "id": "B2", "n": "Analista de produto", "m": "Specs A-D, dossiês das decisões, fichas de fatos ao Jurídico (SeaJuri), seleção do piloto, gravação das decisões", "gat": "Escrever e revisar", "mod": "Sonnet 5.5"}, {"k": "b", "g": "Construção", "id": "B3", "n": "Design", "m": "Telas de comprador, franquia, prestador e painel interno a partir de direcao-visual.md + Bluezone (botão rounded-full, shadcn), com auditoria anti-\"estética de IA\"", "gat": "Desenhar e auditar", "mod": "Sonnet 5.5"}, {"k": "b", "g": "Construção", "id": "B4", "n": "Frontend", "m": "Vitrine, checkout, área do proprietário, painel da franquia, PWA, links do prestador, página pública", "gat": "PR com teste", "mod": "Sonnet 5.5"}, {"k": "b", "g": "Construção", "id": "B5", "n": "Backend core", "m": "Schema, roteador, policy, executor, inbox, Supervisor, motor de preço e os agentes \"só código\"", "gat": "PR com teste", "mod": "Sonnet 5.5 (Opus no policy/executor)"}, {"k": "b", "g": "Construção", "id": "B6", "n": "Integração Seazone", "m": "Leitura da Stays, leitura e escrita do Sapron, campos novos no Hub", "gat": "PR com mock + teste em stg", "mod": "Sonnet 5.5"}, {"k": "b", "g": "Construção", "id": "B7", "n": "Integração Asaas", "m": "Pix, TRANSFER_DONE, DICT, extrato", "gat": "PR com teste em sandbox", "mod": "Sonnet 5.5"}, {"k": "b", "g": "Construção", "id": "B8", "n": "Integração WhatsApp", "m": "Envio, entrada com HMAC, botões, biblioteca de templates", "gat": "PR + submissão de template", "mod": "Sonnet 5.5"}, {"k": "b", "g": "Construção", "id": "B9", "n": "Integrações auxiliares", "m": "SIA, KYC, NFS-e, Maps, fechadura/cofre", "gat": "PR com mock", "mod": "Sonnet 5.5"}, {"k": "b", "g": "Construção", "id": "B10", "n": "Dados", "m": "Medianas, coleta de concorrentes, catálogo, tabela v1, massa de teste, BI", "gat": "Ler (só SELECT) e carregar no schema próprio", "mod": "Sonnet 5.5"}, {"k": "b", "g": "Construção", "id": "B11", "n": "Prompt e eval", "m": "Datasets, juízes, gate no CI e os agentes de operação com LLM", "gat": "Ajustar prompt até passar no gate", "mod": "Opus 5.5"}, {"k": "b", "g": "Construção", "id": "B12", "n": "QA e testes", "m": "E2E por jornada, máquina de estados, carga, shadow", "gat": "Bloquear merge com teste vermelho", "mod": "Sonnet 5.5"}, {"k": "b", "g": "Construção", "id": "B13", "n": "Segurança", "m": "Threat model, LGPD técnico, revisão pré-piloto", "gat": "Bloquear merge inseguro", "mod": "Opus 5.5"}, {"k": "b", "g": "Construção", "id": "B14", "n": "Revisor de código", "m": "Revisa todo PR (correção > simplicidade > legibilidade), Conventional Commits, nenhum valor vindo de LLM", "gat": "Aprovar ou recusar", "mod": "Opus 5.5"}, {"k": "b", "g": "Construção", "id": "B15", "n": "DevOps e release", "m": "Credenciais em env, repo e CI, stg/prd, rollback, plantão, ligar o piloto", "gat": "Deploy em stg", "mod": "Sonnet 5.5"}, {"k": "b", "g": "Construção", "id": "B16", "n": "Documentação", "m": "README, CLAUDE.md, runbooks, catálogo de agentes vivo", "gat": "Escrever a cada merge", "mod": "Haiku 5.5"}, {"k": "op", "g": "Compra: vitrine, agenda e pedido", "id": "A35", "novo": true, "n": "Indicação proativa", "m": "Lê as manutenções abertas das franquias na Central de Manutenção do Sapron, casa cada uma com um item do catálogo e manda à franquia pela SIA o prestador, o preço, a duração e as janelas livres, com botão Contratar. Cria o card do pedido e dá baixa na manutenção quando o serviço fecha.", "gat": "Manutenção nova ou parada >24h na Central (varredura a cada 30 min)", "mod": "Código + Sonnet 5.5 (casamento com o catálogo)"}], "L1": [["AR-01", "Limpeza de ar-condicionado até 12.000 BTU", 335, "60 a 90 min", "2", "Lavagem completa do aparelho para tirar mofo, poeira e mau cheiro e o ar voltar a gelar bem."], ["AR-03", "Ar-condicionado pingando", 335, "45 a 60 min", "1", "Desentope a saída de água do aparelho para ele parar de pingar dentro do imóvel."], ["EL-01", "Troca de resistência do chuveiro", 235, "30 a 45 min", "1", "Chuveiro sem esquentar? Troca a resistência e a água volta quente."], ["EL-02", "Instalação ou troca de chuveiro elétrico", 235, "45 a 60 min", "1", "Tira o chuveiro antigo e instala o novo com segurança."], ["EL-03", "Troca de tomada ou interruptor", 265, "20 a 40 min", "1", "Troca uma tomada ou interruptor com defeito no mesmo lugar."], ["EL-06", "Troca de disjuntor", 265, "30 a 45 min", "1", "Troca um disjuntor que desarma à toa ou não liga mais."], ["HI-01", "Conserto de vazamento aparente", 265, "45 a 90 min", "2", "Resolve vazamento que dá para ver: em cano, conexão ou mangueira."], ["HI-02", "Desentupimento de pia, ralo ou vaso", 270, "45 a 60 min", "1", "Desentope um ponto da casa e deixa a água descendo normal."], ["HI-04", "Troca de torneira ou sifão", 235, "30 a 60 min", "1", "Troca a torneira ou o sifão com defeito por um novo."], ["HI-06", "Instalação de ducha higiênica", 230, "30 a 45 min", "1", "Instala a ducha ao lado do vaso no ponto de água que já existe."], ["HI-05", "Conserto de descarga", 265, "45 a 75 min", "2", "Descarga que não para ou não funciona: conserta ou troca o mecanismo."], ["CH-01", "Abertura de porta", 230, "20 a 60 min", "1", "Porta trancada ou chave perdida: abre sem estragar a fechadura."], ["MA-01", "Ajuste de porta, dobradiça ou trilho", 225, "45 a 60 min", "1", "Porta arrastando, caída ou sem fechar: ajusta e deixa fechando bem."], ["MA-02", "Conserto simples de móvel", 230, "45 a 60 min", "1", "Conserta mecanismo de sofá, braço solto ou gaveta com problema."], ["VI-02", "Conserto de box do banheiro", 265, "45 a 60 min", "1", "Box que não corre, vaza ou está sem puxador: regula e troca as peças."], ["VI-03", "Pequeno conserto em janela ou vidraça", 225, "45 a 60 min", "1", "Conserta fecho, vedação, silicone ou puxador de janela e vidraça."], ["ED-03", "Conserto de micro-ondas", 235, "45 a 60 min", "1", "Micro-ondas que não liga, não esquenta ou não fecha: conserta e testa."]]};
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const store={get(k){try{return localStorage.getItem(k)}catch(e){return null}},set(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
+
+/* tema */
+(function(){const t=store.get('cz-theme');if(t)document.documentElement.dataset.theme=t;
+$('#themeBtn').onclick=()=>{const dark=isDark();const n=dark?'light':'dark';document.documentElement.dataset.theme=n;store.set('cz-theme',n);rerender();};})();
+function isDark(){const t=document.documentElement.dataset.theme;if(t)return t==='dark';return matchMedia('(prefers-color-scheme: dark)').matches}
+
+/* catálogo */
+const cats=[...new Set(D.cat.map(r=>r[0]))];
+$('#cats').innerHTML=cats.map(c=>`<span class="chip ${c==='Visita de diagnóstico'?'':'b'}">${esc(c)}</span>`).join('');
+$('#lote1').innerHTML=D.L1.map(r=>`<div class="svc"><div><div class="n">${esc(r[1])}</div><div class="d">${esc(r[5])}</div><div class="m">${r[3]} · ${r[4]} janela${r[4]>1?'s':''} de 1h · ${r[0]}</div></div><div class="p"><small>preço fechado</small><b>R$ ${r[2]}</b></div></div>`).join('');
+const fCat=$('#fCat');cats.forEach(c=>fCat.add(new Option(c,c)));
+function drawCat(){const c=fCat.value,l=$('#fLote').value;let html='',last='',n=0;
+ D.cat.forEach(r=>{if(c&&r[0]!==c)return;if(l&&r[7]!==l)return;n++;
+  if(r[0]!==last){html+=`<tr class="cathead"><td colspan="7">${esc(r[0])}</td></tr>`;last=r[0]}
+  const warn=['ED-04','CX-02','DG-01'].includes(r[1]);
+  html+=`<tr><td class="code">${r[1]}</td><td>${esc(r[2])}${warn?' <span class="chip w" style="margin:0">sem preço viável</span>':''}</td><td>${esc(r[3])}</td><td>${esc(r[4])}</td><td class="r">R$ ${esc(r[5])}</td><td>${esc(r[6])}</td><td>${r[7]==='1'?'<span class="chip g" style="margin:0">1</span>':'2'}</td></tr>`});
+ $('#catTbl tbody').innerHTML=html;$('#catCount').textContent=n+' serviços';}
+fCat.onchange=drawCat;$('#fLote').onchange=drawCat;drawCat();
+
+/* agentes */
+let kind='op';
+function drawAgents(){const list=D.A.filter(a=>a.k===kind);const groups=[...new Set(list.map(a=>a.g))];
+ $('#agents').innerHTML=groups.map(g=>{const it=list.filter(a=>a.g===g);
+  return `<div class="grp">${esc(kind==='b'?'Construção':g)} <span>${it.length}</span></div><div class="grid g3">`+it.map(a=>`<div class="card ag${a.novo?' new':''}"><div class="h"><span class="id">${a.id}</span><span class="nm">${esc(a.n)}</span>${a.novo?'<span class="newtag">novo</span>':''}</div><div class="ms">${esc(a.m)}</div><div class="gt"><b>${kind==='b'?'Escala ao humano':'Gatilho'}:</b> ${esc(a.gat)}</div></div>`).join('')+'</div>'}).join('');}
+document.querySelectorAll('.seg button').forEach(b=>b.onclick=()=>{kind=b.dataset.k;document.querySelectorAll('.seg button').forEach(x=>x.setAttribute('aria-pressed',x===b));drawAgents()});
+drawAgents();
+
+/* caminho crítico */
+const crit=D.T.filter(t=>t.crit).sort((a,b)=>a.o-b.o);
+$('#crit').innerHTML=crit.map((t,i)=>`${i?'<span class="ar">→</span>':''}<span class="n"><code>${t.id.replace('CZT-','')}</code>${esc(t.t.replace(/\s*\(constrói A\d+\)/,''))}</span>`).join('');
+
+/* backlog */
+const ondas=[...new Set(D.T.map(t=>t.o))].sort((a,b)=>a-b);
+ondas.forEach(o=>$('#fOnda').add(new Option('Onda '+o,o)));
+[...new Set(D.T.map(t=>t.ep))].sort().forEach(e=>$('#fEp').add(new Option(e,e)));
+function drawTasks(){const o=$('#fOnda').value,e=$('#fEp').value;
+ const rows=D.T.filter(t=>(!o||t.o==o)&&(!e||t.ep===e)).sort((a,b)=>a.o-b.o||a.id.localeCompare(b.id));
+ $('#tTbl tbody').innerHTML=rows.map(t=>`<tr><td class="r num">${t.o}</td><td class="code">${t.crit?'<span class="crit">●</span> ':''}${t.id}</td><td><b style="font-weight:600">${esc(t.t)}</b>${t.novo?'<span class="newtag">novo</span>':''}<div class="count">${esc(t.pronto)}</div></td><td>${esc(t.ep)}</td><td>${esc(t.ag)}</td><td>${esc(t.hum==='Não'?'–':t.hum)}</td></tr>`).join('');
+ $('#tCount').textContent=rows.length+' tasks';}
+$('#fOnda').onchange=drawTasks;$('#fEp').onchange=drawTasks;drawTasks();
+
+/* mermaid */
+const FLOW=`flowchart TD
+  subgraph OF["Oferta: rede de prestadores"]
+    R1["Radar acha buraco"] --> R2["Captação e cadastro"] --> R3["KYC + CNPJ + contratação"] --> R4["Prestador PJ na vitrine"]
+  end
+  P["Proprietário<br/>imóveis dele"] --> V
+  F["Franquia<br/>carteira dela"] --> V
+  IP["Indicação proativa<br/>manutenção aberta no Sapron<br/>vira oferta na SIA com botão Contratar"] --> V
+  R4 --> V
+  V["Vitrine: serviço, preço Seazone,<br/>duração e até 3 profissionais"] --> AG["Agenda: janela de 1h<br/>avisa reserva, não bloqueia"]
+  AG --> Q{"Franquia e<br/>pedido acima de R$ 300?"}
+  Q -- sim --> AP["Proprietário aprova por botão"]
+  Q -- não --> OK["Pedido confirmado"]
+  AP --> OK
+  OK -.-> NT["Notificação: franquia ou<br/>proprietário avisado"]
+  OK --> DS["Despacho: prestador aceita<br/>e confirma no D-1"]
+  DS --> AC["Acesso: código só na janela"]
+  AC --> CP["Captura: check-in GPS + fotos"]
+  CP --> QA["Validação de qualidade"]
+  QA --> PG["NFS-e do prestador + Pix<br/>preço menos a taxa"]
+  PG --> RP["Débito no repasse do proprietário"]
+  RP --> NO["Avaliação + garantia 90 dias"]
+  NO -.-> SIA["Reclamação pela SIA<br/>retrabalho em 72h"]`;
+function wavesSrc(){const lab={1:'Decisões e ADR',2:'Contratos e design',3:'Schema',4:'Roteador e policy',5:'Executor e preço',6:'Vitrine e checkout',7:'Agentes de oferta',8:'KYC e Pix',9:'Garantia e financeiro',10:'E2E e eval',11:'Prd sem escrita',12:'Onboarding + shadow',13:'Ligar o piloto',14:'Mês 1',15:'Go/no-go',16:'Pós-temporada',17:'Mês 3',18:'Mês 6'};
+ const c={};D.T.forEach(t=>c[t.o]=(c[t.o]||0)+1);
+ let s='flowchart LR\n subgraph B["Construção em batelada"]\n  direction LR\n';
+ for(let i=1;i<=10;i++)s+=`  W${i}["Onda ${i} · ${c[i]}<br/>${lab[i]}"]\n`;
+ s+=' end\n subgraph P["Piloto e expansão"]\n  direction LR\n';
+ for(let i=11;i<=18;i++)s+=`  W${i}["Onda ${i} · ${c[i]}<br/>${lab[i]}"]\n`;
+ s+=' end\n';for(let i=1;i<18;i++)s+=` W${i} --> W${i+1}\n`;
+ s+=' classDef hot fill:#FFE4E3,stroke:#F1605D,color:#080E32\n class W13 hot\n';return s;}
+const done=new Set();
+function mcfg(){const d=isDark();mermaid.initialize({startOnLoad:false,securityLevel:'strict',theme:'base',fontFamily:'Inter, sans-serif',flowchart:{padding:14,nodeSpacing:30,rankSpacing:40,curve:'basis'},
+ themeVariables:d?{primaryColor:'#13235C',primaryTextColor:'#F2F3F8',primaryBorderColor:'#3D7BFF',lineColor:'#7E84A8',secondaryColor:'#151C45',tertiaryColor:'#0E1438',clusterBkg:'#0E1438',clusterBorder:'#2C356B',edgeLabelBackground:'#0E1438',fontSize:'14px'}
+ :{primaryColor:'#E8F0FE',primaryTextColor:'#080E32',primaryBorderColor:'#0055FF',lineColor:'#595D6C',secondaryColor:'#F3F3F5',tertiaryColor:'#FFFFFF',clusterBkg:'#F6F7F9',clusterBorder:'#E1E2E5',edgeLabelBackground:'#FFFFFF',fontSize:'14px'}});}
+async function draw(id,src){const el=document.getElementById(id);if(!window.mermaid||!el||el.offsetParent===null)return;
+ try{const {svg}=await mermaid.render(id+'-svg-'+Date.now(),src);el.innerHTML=svg;done.add(id)}catch(e){el.textContent='Diagrama indisponível.'}}
+async function drawVisible(){if(!window.mermaid)return;try{await document.fonts.load('400 14px Inter');await document.fonts.ready}catch(e){}mcfg();if(!done.has('mFlow'))draw('mFlow',FLOW);if(!done.has('mWaves'))draw('mWaves',wavesSrc());}
+function rerender(){done.clear();drawVisible();}
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change',()=>{if(!document.documentElement.dataset.theme)rerender()});
+
+/* abas */
+function show(id){document.querySelectorAll('.tab').forEach(t=>{const on=t.id===id;t.setAttribute('aria-selected',on);document.getElementById(t.getAttribute('aria-controls')).hidden=!on});store.set('cz-tab',id);drawVisible();}
+document.querySelectorAll('.tab').forEach(t=>t.onclick=()=>show(t.id));
+show(store.get('cz-tab')==='t-ag'?'t-ag':'t-bp');
+window.addEventListener('load',drawVisible);
+</script>
+</body>
+</html>
