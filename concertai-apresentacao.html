@@ -1,0 +1,750 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>ConcertAI · Apresentação</title>
+<meta name="description" content="ConcertAI: conserto no imóvel com preço fechado e profissional avaliado. Projeto do retiro de IA da Operação da Seazone.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js"></script>
+<style>
+:root{
+  --navy:#00143D; --navy-2:#0A2257; --navy-3:#182052; --ink:#080E32;
+  --coral:#FC6058; --coral-hover:#E84E46; --coral-100:#FFE7E5;
+  --blue:#0055FF; --blue-hover:#0044CC; --blue-100:#E8F0FE; --blue-200:#C7DBFF;
+  --bg:#F6F7F9; --surface:#FFFFFF; --muted:#F0F1F4; --border:#E6E7EA;
+  --fg:#080E32; --fg-2:#595D6C; --fg-3:#7D7D80; --on-dark:#FFFFFF; --on-dark-2:#B8BCD6;
+  --success:#16A34A; --success-100:#E7F8EE;
+  --shadow-card:0 1px 2px -1px #02061714, 0 1px 3px #0206170f;
+  --shadow-raise:0 0 6px -4px rgba(0,0,0,.1), 0 4px 15px -3px rgba(0,0,0,.1);
+  --ring:0 0 0 3px rgba(0,85,255,.35);
+  --r-card:12px; --r-big:16px; --pill:9999px;
+  --bar-h:64px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-snap-type:y proximity;scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{font-family:Inter,"Helvetica Neue",Arial,sans-serif;color:var(--fg);background:var(--bg);font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased}
+.num{font-feature-settings:"tnum";font-variant-numeric:tabular-nums}
+a{color:var(--blue)}
+:focus-visible{outline:none;box-shadow:var(--ring);border-radius:6px}
+[data-lucide]{width:20px;height:20px;stroke-width:2;flex:none}
+
+/* barra de topo */
+.topo{position:fixed;inset:0 0 auto 0;height:var(--bar-h);z-index:20;display:flex;align-items:center;justify-content:space-between;padding:0 24px;background:rgba(255,255,255,.92);backdrop-filter:saturate(1.4) blur(8px);-webkit-backdrop-filter:saturate(1.4) blur(8px);border-bottom:1px solid var(--border);transition:background .3s,border-color .3s,color .3s}
+.topo.escuro{background:rgba(0,20,61,.85);border-color:rgba(255,255,255,.08);color:#fff}
+.marca{display:flex;align-items:center;gap:12px;color:var(--navy);text-decoration:none}
+.topo.escuro .marca{color:#fff}
+.marca .logo-svg{height:18px;width:auto;display:block}
+.marca .sep{width:1px;height:20px;background:currentColor;opacity:.25}
+.marca .wm{font-weight:800;letter-spacing:-.02em;font-size:17px}
+.marca .wm span{color:var(--coral)}
+.topo-dir{display:flex;align-items:center;gap:16px}
+.contador{font-size:13px;font-weight:600;color:var(--fg-2)}
+.topo.escuro .contador{color:var(--on-dark-2)}
+.progresso{position:absolute;left:0;bottom:-1px;height:3px;background:var(--coral);width:0;transition:width .3s}
+
+/* pontos de navegação */
+.pontos{position:fixed;right:20px;top:50%;transform:translateY(-50%);z-index:20;display:flex;flex-direction:column;gap:10px}
+.pontos button{width:10px;height:10px;border-radius:var(--pill);border:0;background:#C9CCD6;cursor:pointer;padding:0;transition:height .25s,background .25s}
+.pontos button[aria-current="true"]{background:var(--coral);height:26px}
+.pontos.escuro button{background:rgba(255,255,255,.35)}
+.pontos.escuro button[aria-current="true"]{background:var(--coral)}
+
+/* setas */
+.setas{position:fixed;right:20px;bottom:20px;z-index:20;display:flex;gap:8px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font:600 15px/1 Inter,sans-serif;border-radius:var(--pill);border:0;cursor:pointer;text-decoration:none;transition:background .2s,transform .2s}
+.btn-ic{width:44px;height:44px;background:var(--surface);color:var(--navy);box-shadow:var(--shadow-raise)}
+.btn-ic:hover{background:var(--blue-100)}
+.btn-ic:disabled{opacity:.35;cursor:default}
+.btn-cta{background:var(--coral);color:#fff;padding:14px 24px}
+.btn-cta:hover{background:var(--coral-hover)}
+.btn-sec{background:rgba(255,255,255,.1);color:#fff;padding:14px 22px;border:1px solid rgba(255,255,255,.25)}
+.btn-sec:hover{background:rgba(255,255,255,.18)}
+
+/* slides */
+.slide{min-height:100vh;min-height:100svh;scroll-snap-align:start;display:flex;align-items:center;padding:calc(var(--bar-h) + 32px) 72px 48px;position:relative}
+.wrap{width:100%;max-width:1120px;margin:0 auto}
+.slide.alt{background:var(--surface)}
+.slide.navy{background:var(--navy);color:#fff}
+.tag{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--blue);margin-bottom:12px}
+.tag b{display:inline-grid;place-items:center;width:24px;height:24px;border-radius:var(--pill);background:var(--blue-100);color:var(--blue);font-size:12px;letter-spacing:0}
+.navy .tag{color:#9DB8FF}
+.navy .tag b{background:rgba(255,255,255,.1);color:#fff}
+h1,h2{letter-spacing:-.02em;text-wrap:balance}
+.aba .f::after{content:" · "}
+h2{font-size:40px;line-height:1.1;font-weight:800;max-width:26ch}
+h2 em{font-style:normal;color:var(--coral)}
+h3{font-size:18px;line-height:1.3;font-weight:700}
+.sub{font-size:18px;line-height:1.55;color:var(--fg-2);max-width:60ch;margin-top:14px}
+.navy .sub{color:var(--on-dark-2)}
+.cab{margin-bottom:32px}
+.mini{font-size:13px;color:var(--fg-2);line-height:1.45}
+.card{background:var(--surface);border-radius:var(--r-card);box-shadow:var(--shadow-card);padding:20px}
+.alt .card{background:var(--bg);box-shadow:none}
+.ico{display:inline-grid;place-items:center;width:44px;height:44px;border-radius:12px;background:var(--blue-100);color:var(--blue);flex:none}
+.ico.coral{background:var(--coral-100);color:var(--coral)}
+.ico.navy{background:var(--navy);color:#fff}
+.ico.verde{background:var(--success-100);color:var(--success)}
+
+/* animação de entrada */
+.js .rv{opacity:0;transform:translateY(14px);transition:opacity .55s ease,transform .55s cubic-bezier(.2,.7,.2,1)}
+.js .vis .rv{opacity:1;transform:none}
+.js .vis .rv:nth-child(2){transition-delay:.06s}.js .vis .rv:nth-child(3){transition-delay:.12s}.js .vis .rv:nth-child(4){transition-delay:.18s}.js .vis .rv:nth-child(5){transition-delay:.24s}.js .vis .rv:nth-child(6){transition-delay:.3s}
+@media (prefers-reduced-motion:reduce){.js .rv{opacity:1;transform:none;transition:none}}
+
+/* 1 capa */
+#s1{overflow:hidden}
+.capa{display:grid;grid-template-columns:1.15fr .85fr;gap:48px;align-items:center}
+.capa .logo-grande{color:#fff;margin-bottom:28px;display:flex;align-items:center;gap:14px}
+.capa .logo-grande .logo-svg{height:26px;width:auto}
+.capa h1{font-size:76px;line-height:1;font-weight:800;letter-spacing:-.035em}
+.capa h1 span{color:var(--coral)}
+.capa .frase{font-size:26px;line-height:1.3;font-weight:600;margin-top:20px;max-width:20ch}
+.capa .rodape-capa{margin-top:32px;display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.selo{display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border-radius:var(--pill);background:rgba(255,255,255,.08);color:var(--on-dark-2);font-size:13px;font-weight:600}
+.selo [data-lucide]{width:16px;height:16px;color:var(--coral)}
+.ilu-capa{position:relative;aspect-ratio:1/1;max-width:420px;justify-self:end;width:100%}
+.ilu-capa svg{width:100%;height:100%}
+.halo{position:absolute;inset:-25% -40% auto auto;width:520px;height:520px;border-radius:50%;background:radial-gradient(closest-side,rgba(0,85,255,.35),transparent);pointer-events:none}
+
+/* 2 problema */
+.dois{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
+.lista-prob{display:grid;gap:12px}
+.prob{display:flex;gap:16px;align-items:flex-start}
+.prob p{color:var(--fg-2);font-size:15px;margin-top:2px}
+.chat{background:var(--surface);border-radius:var(--r-big);box-shadow:var(--shadow-raise);padding:20px;display:flex;flex-direction:column;gap:10px;max-width:420px;justify-self:center;width:100%}
+.chat-topo{display:flex;align-items:center;gap:10px;padding-bottom:12px;border-bottom:1px solid var(--border);font-weight:700;font-size:14px}
+.chat-topo .av{width:32px;height:32px;border-radius:50%;background:var(--muted);display:grid;place-items:center;color:var(--fg-2)}
+.chat-topo small{display:block;font-weight:500;color:var(--fg-3);font-size:12px}
+.bolha{max-width:82%;padding:10px 14px;border-radius:14px;font-size:14px;line-height:1.4}
+.bolha.eu{align-self:flex-end;background:var(--blue-100);border-bottom-right-radius:4px}
+.bolha.ele{align-self:flex-start;background:var(--muted);border-bottom-left-radius:4px}
+.bolha small{display:block;font-size:11px;color:var(--fg-3);margin-top:4px}
+.chat .espera{align-self:center;font-size:12px;font-weight:600;color:var(--coral);background:var(--coral-100);padding:4px 12px;border-radius:var(--pill)}
+
+/* 3 o que é */
+.frase-grande{font-size:34px;line-height:1.25;font-weight:700;letter-spacing:-.02em;max-width:30ch}
+.frase-grande mark{background:none;color:var(--coral)}
+.tres{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:40px}
+.tres .card{padding:24px}
+.tres h3{margin:16px 0 6px}
+.tres p{color:var(--fg-2);font-size:15px}
+
+/* 4 quem usa */
+.perfis{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+.perfil{display:flex;flex-direction:column;gap:10px;padding:20px}
+.perfil h3{font-size:17px}
+.perfil ul{list-style:none;display:grid;gap:8px}
+.perfil li{font-size:14px;color:var(--fg-2);line-height:1.4;display:flex;gap:8px}
+.perfil li::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--blue);margin-top:7px;flex:none}
+.perfil.novo{outline:2px solid var(--coral);outline-offset:-2px}
+.perfil{position:relative}.perfil .pill{position:absolute;top:14px;right:14px}
+.pill{display:inline-flex;align-self:flex-start;align-items:center;gap:6px;font-size:11px;font-weight:700;padding:4px 10px;border-radius:var(--pill);background:var(--coral-100);color:#B5322B;text-transform:uppercase;letter-spacing:.04em}
+.pill.azul{background:var(--blue-100);color:var(--blue)}
+
+/* 5 passo a passo */
+.passos{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;counter-reset:p}
+.passo{display:flex;gap:14px;align-items:flex-start;padding:16px 18px}
+.passo .n{counter-increment:p;flex:none;width:32px;height:32px;border-radius:var(--pill);background:var(--navy);color:#fff;display:grid;place-items:center;font-weight:700;font-size:14px}
+.passo .n::before{content:counter(p)}
+.passo h3{font-size:16px;display:flex;align-items:center;gap:8px}
+.passo h3 [data-lucide]{width:17px;height:17px;color:var(--blue)}
+.passo p{font-size:13.5px;color:var(--fg-2);margin-top:4px;line-height:1.45}
+.passo.fim .n{background:var(--coral)}
+
+/* 6 prestadores */
+.trilha{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;position:relative}
+.trilha::before{content:"";position:absolute;top:30px;left:8%;right:8%;height:2px;background:repeating-linear-gradient(90deg,var(--blue-200) 0 8px,transparent 8px 14px)}
+.etapa{position:relative;text-align:center;display:flex;flex-direction:column;align-items:center;gap:10px}
+.etapa .ico{width:60px;height:60px;border-radius:50%;background:var(--surface);box-shadow:var(--shadow-raise);color:var(--blue)}
+.alt .etapa .ico{background:var(--surface)}
+.etapa .ico [data-lucide]{width:26px;height:26px}
+.etapa h3{font-size:15px}
+.etapa p{font-size:13px;color:var(--fg-2);line-height:1.4}
+.regras{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:36px}
+.regra{display:flex;gap:12px;align-items:center;padding:16px}
+.regra p{font-size:14px;color:var(--fg-2)}
+.regra b{color:var(--fg)}
+
+/* 7 agente */
+.agente{display:grid;grid-template-columns:.95fr 1.05fr;gap:48px;align-items:center}
+.fluxo-ag{display:grid;gap:14px;margin-top:28px}
+.fluxo-ag .item{display:flex;gap:14px;align-items:center}
+.fluxo-ag p{font-size:15px;color:var(--on-dark-2)}
+.fluxo-ag p b{color:#fff}
+.fluxo-ag .ico{background:rgba(255,255,255,.08);color:#fff}
+.fone{background:#fff;color:var(--fg);border-radius:24px;padding:18px;box-shadow:0 20px 60px rgba(0,0,0,.35);max-width:400px;width:100%;justify-self:center}
+.fone .aviso{display:flex;gap:10px;align-items:center;font-size:12px;font-weight:600;color:var(--fg-2);padding:8px 10px;background:var(--muted);border-radius:10px}
+.fone .aviso [data-lucide]{width:16px;height:16px;color:var(--coral)}
+.msg{margin-top:12px;background:var(--bg);border-radius:14px;padding:16px}
+.msg .de{display:flex;gap:10px;align-items:center;font-size:13px;font-weight:700}
+.msg .de .bot{width:30px;height:30px;border-radius:50%;background:var(--navy);color:#fff;display:grid;place-items:center}
+.msg .de .bot [data-lucide]{width:16px;height:16px}
+.msg .de small{display:block;font-weight:500;color:var(--fg-3)}
+.msg p{font-size:14px;margin-top:10px;line-height:1.45}
+.prest{display:flex;gap:12px;align-items:center;background:#fff;border-radius:12px;padding:12px;margin-top:12px;box-shadow:var(--shadow-card)}
+.prest .av{width:40px;height:40px;border-radius:50%;background:var(--blue-200);display:grid;place-items:center;font-weight:700;color:var(--navy)}
+.prest b{font-size:14px;display:block}
+.prest small{font-size:12px;color:var(--fg-2);display:flex;align-items:center;gap:4px}
+.prest small [data-lucide]{width:13px;height:13px;color:#F5A524;fill:#F5A524}
+.prest .preco{margin-left:auto;text-align:right}
+.prest .preco small{display:block}
+.prest .preco b{font-size:18px}
+.horas{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.hora{font-size:13px;font-weight:600;padding:7px 12px;border-radius:var(--pill);background:#fff;border:1px solid var(--border)}
+.hora.sel{border:2px solid var(--blue);color:var(--blue);padding:6px 11px}
+.fone .btn-cta{width:100%;margin-top:14px}
+
+/* 8 preço */
+.preco-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:32px;align-items:start}
+.tabela{background:var(--surface);border-radius:var(--r-card);box-shadow:var(--shadow-card);padding:8px 0;overflow:hidden}
+.tabela table{width:100%;border-collapse:collapse;font-size:14px}
+.tabela th{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--fg-3);font-weight:700;text-align:right;padding:8px 18px}
+.tabela th:first-child,.tabela td:first-child{text-align:left}
+.tabela td:not(:first-child){white-space:nowrap}
+.tabela td{padding:5px 18px;text-align:right;border-top:1px solid var(--border)}
+.tabela td.antes{color:var(--fg-3);text-decoration:line-through;text-decoration-color:rgba(125,125,128,.6)}
+.tabela td.agora{font-weight:700}
+.tabela td.dif{color:var(--success);font-weight:600;font-size:13px}
+.tabela tfoot td{font-weight:700;background:var(--blue-100);border-top:0}
+.tabela tfoot td.antes{text-decoration:none;color:var(--fg-2)}
+.comissao{display:flex;gap:14px;align-items:flex-start;padding:18px 20px;background:var(--navy);color:#fff;border-radius:var(--r-card);margin-bottom:20px}
+.comissao .ico{background:rgba(255,255,255,.1);color:var(--coral)}
+.comissao p{font-size:15px;line-height:1.5;color:var(--on-dark-2)}
+.comissao b{color:#fff}
+.barras h3{font-size:15px;margin-bottom:4px}
+.eixo{position:relative;margin-top:18px}
+.faixa{display:grid;grid-template-columns:170px 1fr;gap:12px;align-items:center;margin-bottom:16px}
+.faixa .nome{font-size:13px;font-weight:600;line-height:1.3}
+.faixa .nome small{display:block;font-weight:500;color:var(--fg-3);font-size:11.5px}
+.trilho{position:relative;height:22px;background:var(--muted);border-radius:var(--pill)}
+.seg{position:absolute;top:0;bottom:0;border-radius:var(--pill);display:flex;align-items:center;justify-content:space-between;padding:0 10px;font-size:12px;font-weight:700;color:#fff;white-space:nowrap}
+.seg.cz{background:var(--coral)}
+.seg.hp{background:var(--navy)}
+.seg.gn{background:#9AA0B4}
+.escala{display:grid;grid-template-columns:170px 1fr;gap:12px}
+.escala .marcas{position:relative;height:16px;font-size:11px;color:var(--fg-3)}.escala .marcas span{position:absolute;top:0;transform:translateX(-50%)}.escala .marcas span:first-child{transform:none}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.chip{display:inline-flex;gap:6px;align-items:center;font-size:13px;font-weight:600;padding:8px 14px;border-radius:var(--pill);background:var(--success-100);color:#11743A}
+.chip [data-lucide]{width:15px;height:15px}
+
+/* 9 ganho */
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px}
+.kpi{padding:18px 20px}
+.kpi .v{font-size:32px;font-weight:800;letter-spacing:-.02em;line-height:1.05}
+.kpi .v small{font-size:16px;font-weight:700;color:var(--fg-2)}
+.kpi p{font-size:13px;color:var(--fg-2);margin-top:6px;line-height:1.4}
+.kpi.dest{background:var(--navy);color:#fff}
+.kpi.dest p,.kpi.dest .v small{color:var(--on-dark-2)}
+.abas{display:inline-flex;gap:4px;padding:4px;background:var(--muted);border-radius:var(--pill);margin-bottom:18px;flex-wrap:wrap}
+.aba{font:600 14px/1 Inter,sans-serif;padding:10px 16px;border-radius:var(--pill);border:0;background:none;color:var(--fg-2);cursor:pointer}
+.aba[aria-selected="true"]{background:var(--surface);color:var(--blue);box-shadow:var(--shadow-card)}
+.cenarios{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.cen{padding:20px;position:relative}
+.cen.real{outline:2px solid var(--blue);outline-offset:-2px}
+.cen .topo-cen{display:flex;justify-content:space-between;align-items:center}
+.cen .topo-cen b{font-size:15px}
+.cen .ped{font-size:13px;color:var(--fg-2);margin-top:10px}
+.cen .ped strong{font-size:22px;color:var(--fg)}
+.linha-v{display:flex;justify-content:space-between;align-items:baseline;margin-top:12px;font-size:13px;color:var(--fg-2)}
+.linha-v strong{font-size:20px;color:var(--fg)}
+.barra-v{height:8px;border-radius:var(--pill);background:var(--muted);margin-top:6px;overflow:hidden}
+.barra-v i{display:block;height:100%;border-radius:var(--pill);background:var(--blue);transition:width .5s cubic-bezier(.2,.7,.2,1)}
+.barra-v.res i{background:var(--coral)}
+.cen .mes{font-size:12px;color:var(--fg-3);margin-top:12px;padding-top:10px;border-top:1px solid var(--border)}
+.nota-fase{font-size:14px;color:var(--fg-2);margin-top:14px;display:flex;gap:8px;align-items:flex-start}
+.nota-fase [data-lucide]{width:17px;height:17px;color:var(--blue);margin-top:2px}
+
+/* 9b premissas */
+.prem{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.prem .card h3{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.prem .card p{font-size:14px;color:var(--fg-2);line-height:1.5}
+.pontos-claros{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:20px}
+.pc{display:flex;gap:12px;padding:18px;background:var(--coral-100);border-radius:var(--r-card)}
+.pc [data-lucide]{color:#B5322B;margin-top:2px}
+.pc p{font-size:14px;line-height:1.5;color:#5A1D19}
+.pc b{color:#3D0F0C}
+.extra{display:flex;gap:16px;flex-wrap:wrap;margin-top:20px}
+.extra .card{flex:1 1 240px;display:flex;gap:12px;align-items:center;padding:16px}
+.extra p{font-size:14px;color:var(--fg-2)}
+.extra b{color:var(--fg)}
+
+/* 10 pronto */
+.status{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.col h3{display:flex;align-items:center;gap:10px;margin-bottom:14px;font-size:20px}
+.col ul{list-style:none;display:grid;gap:10px}
+.col li{display:flex;gap:12px;align-items:center;padding:14px 16px;background:var(--surface);border-radius:var(--r-card);box-shadow:var(--shadow-card);font-size:15px}
+.col li span{color:var(--fg-2);font-size:13.5px;display:block}
+.col li b{display:block;font-size:15px}
+.col.feito li [data-lucide]{color:var(--success)}
+.col.prox li [data-lucide]{color:var(--blue)}
+
+/* 11 fim */
+#s12 .wrap{text-align:center;display:flex;flex-direction:column;align-items:center}
+.fim-logo{display:flex;align-items:center;gap:14px;color:#fff;margin-bottom:28px}
+.fim-logo .logo-svg{height:24px;width:auto}
+.fim-logo .wm{font-size:24px;font-weight:800;letter-spacing:-.02em}
+.fim-logo .wm span{color:var(--coral)}
+.fim-logo .sep{width:1px;height:26px;background:rgba(255,255,255,.3)}
+#s12 h2{max-width:20ch;font-size:48px;margin:0 auto}
+.link-site{margin-top:32px;display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
+.url{margin-top:18px;font-size:15px;color:var(--on-dark-2);word-break:break-all}
+.feito-ia{margin-top:48px;display:inline-flex;align-items:center;gap:10px;padding:10px 18px;border-radius:var(--pill);background:rgba(255,255,255,.08);font-weight:600;font-size:14px}
+.feito-ia [data-lucide]{color:var(--coral)}
+
+/* responsivo */
+@media (max-width:1180px){
+  .perfis{grid-template-columns:repeat(3,1fr)}
+  .kpis{grid-template-columns:repeat(2,1fr)}
+}
+@media (max-width:1024px){
+  .slide{padding:calc(var(--bar-h) + 28px) 40px 56px}
+  .capa,.dois,.agente,.preco-grid{grid-template-columns:1fr}
+  .ilu-capa{display:none}
+  .passos{grid-template-columns:1fr 1fr}
+  .trilha{grid-template-columns:repeat(3,1fr);row-gap:28px}
+  .trilha::before{display:none}
+  .prem,.pontos-claros{grid-template-columns:1fr}
+  .pontos{display:none}
+}
+@media (max-width:720px){
+  :root{--bar-h:56px}
+  .slide{padding:calc(var(--bar-h) + 24px) 16px 88px;scroll-snap-align:start;align-items:flex-start}
+  .topo{padding:0 16px}
+  .marca .logo-svg{height:15px}
+  .marca .wm{font-size:15px}
+  h2{font-size:30px}
+  .sub{font-size:16px}
+  .cab{margin-bottom:24px}
+  .capa h1{font-size:52px}
+  .capa .frase{font-size:21px}
+  #s1{align-items:center}
+  .frase-grande{font-size:24px}
+  .tres,.perfis,.passos,.regras,.cenarios,.status{grid-template-columns:1fr}
+  .tres{margin-top:24px}
+  .trilha{grid-template-columns:1fr 1fr}
+  .kpis{grid-template-columns:1fr 1fr}
+  .kpi .v{font-size:26px}
+  .tabela td,.tabela th{padding-left:12px;padding-right:12px}
+  .tabela td.dif,.tabela th.dif{display:none}
+  .faixa,.escala{grid-template-columns:92px 1fr}
+  .setas{right:12px;bottom:12px}
+  .btn-ic{width:42px;height:42px}
+  #s12 h2{font-size:34px}
+  .chat{max-width:none}
+  .perfil{padding:16px}
+  .tabela table{font-size:13.5px}
+  .faixa,.escala{grid-template-columns:1fr;gap:6px}
+  .escala>span:first-child{display:none}
+  .faixa{margin-bottom:14px}
+  .abas{display:flex;width:100%;flex-wrap:nowrap}
+  .aba{flex:1;padding:9px 6px;font-size:13px;line-height:1.25}
+  .aba .f{display:block;font-size:11px;font-weight:500;opacity:.8}
+  .aba .f::after{content:none}
+  .prest{flex-wrap:wrap}
+  .prest .preco{margin-left:52px;text-align:left;width:100%;display:flex;align-items:baseline;gap:8px}
+  .msg p{font-size:13.5px}
+}
+@media (max-height:820px) and (min-width:1025px){
+  .slide{padding-top:calc(var(--bar-h) + 20px);padding-bottom:28px}
+  .cab{margin-bottom:22px}
+  h2{font-size:34px}
+  .sub{font-size:16px;margin-top:10px}
+  .passo{padding:12px 16px}
+  .kpis{margin-bottom:16px}
+  .kpi{padding:14px 18px}
+  .kpi .v{font-size:28px}
+  .tabela td{padding-top:4px;padding-bottom:4px}
+  .col li{padding:10px 16px}
+  .col h3{margin-bottom:10px}
+}
+@media print{.topo,.pontos,.setas{display:none}.slide{min-height:auto;page-break-after:always}}
+</style>
+</head>
+<body>
+
+<header class="topo escuro" id="topo">
+  <a class="marca" href="#s1" aria-label="Início da apresentação"><svg class="logo-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 411 68" role="img" aria-label="Seazone"><path fill="currentColor" d="M33.856 52.5045C33.856 41.2633 0.620441 47.8249 0.620441 28.9865C0.620441 20.5619 9.06051 13.5835 21.1421 13.5835C33.9571 13.5835 41.1454 20.1451 41.1454 24.3131C41.1454 26.3846 39.4827 28.576 36.6693 28.576C35.0003 28.576 33.856 27.5339 32.8128 26.4919C30.7328 24.4079 26.2504 21.9133 21.0473 21.9133C13.4418 21.9133 9.8002 25.1404 9.8002 28.1591C9.8002 38.4594 43.5541 32.9461 43.5541 51.6709C43.5541 61.769 33.0341 67.7054 21.4646 67.7054C7.80872 67.6991 0.0957031 60.4113 0.0957031 56.5589C0.0957031 53.9634 2.08086 52.1888 4.47063 52.1888C6.13968 52.1888 7.28399 53.1297 8.01735 53.856C11.0393 57.0831 15.4143 59.2682 21.5657 59.2682C28.754 59.2682 33.8623 56.4579 33.8623 52.5045"/><path fill="currentColor" d="M60.8887 44.6989C62.1404 53.5402 69.6448 59.1608 78.597 59.1608C84.3249 59.1608 88.8073 56.8747 91.6206 55.3085C92.2465 55.0054 93.081 54.6896 94.1179 54.6896C96.6151 54.6896 98.3916 56.5589 98.3916 58.9587C98.3916 60.9354 97.1399 62.3942 96.2042 62.9184C94.1179 64.1688 87.6566 67.7054 78.5907 67.7054C62.9623 67.7054 51.083 56.0411 51.083 40.5434C51.083 25.0457 63.4807 13.5835 78.0659 13.5835C92.6511 13.5835 103.696 25.8667 103.696 38.352C103.696 41.5854 101.091 44.7052 97.8669 44.7052H60.876L60.8887 44.6989ZM60.8887 36.6785H94.7501C94.023 29.6053 87.0371 21.907 78.0786 21.907C69.1201 21.907 61.7232 28.3612 60.8887 36.6785Z"/><path fill="currentColor" d="M190.833 22.7668C188.02 22.7668 185.965 20.9354 185.965 18.1188C185.965 15.3022 188.02 13.5781 190.833 13.5781H223.81C227.388 13.5781 229.335 16.4958 229.335 18.984C229.335 20.9291 228.678 22.009 227.388 23.5184L198.3 58.4166H225.333C228.14 58.4166 230.309 60.469 230.309 63.172C230.309 65.8749 228.147 67.599 225.333 67.599H190.505C187.476 67.599 184.985 65.2244 184.985 62.0921C184.985 60.3617 185.529 59.3891 187.046 57.5514L215.92 22.7668H190.833Z"/><path fill="currentColor" d="M261.567 67.6991C246.147 67.6991 234.375 55.6243 234.375 40.5371C234.375 25.4499 246.356 13.5835 261.567 13.5835C276.778 13.5835 288.86 25.5573 288.86 40.5371C288.86 55.5169 276.772 67.6991 261.567 67.6991ZM261.567 22.2228C251.565 22.2228 243.543 30.6537 243.543 40.5371C243.543 50.4205 251.256 59.1671 261.567 59.1671C271.878 59.1671 279.484 50.4205 279.484 40.5371C279.484 30.6537 271.67 22.2228 261.567 22.2228Z"/><path fill="currentColor" d="M367.304 44.6989C368.556 53.5402 376.054 59.1608 385.012 59.1608C390.746 59.1608 395.229 56.8747 398.042 55.3085C398.655 55.0054 399.496 54.6896 400.533 54.6896C403.037 54.6896 404.8 56.5589 404.8 58.9587C404.8 60.9354 403.549 62.3942 402.626 62.9184C400.533 64.1688 394.078 67.7054 385.012 67.7054C369.371 67.7054 357.504 56.0411 357.504 40.5434C357.504 25.0457 369.902 13.5835 384.481 13.5835C399.06 13.5835 410.124 25.8667 410.124 38.352C410.124 41.5854 407.513 44.7052 404.282 44.7052H367.297L367.304 44.6989ZM367.304 36.6785H401.171C400.425 29.6053 393.452 21.907 384.487 21.907C375.523 21.907 368.138 28.3612 367.304 36.6785Z"/><path fill="currentColor" d="M325.206 13.698C321.343 13.3318 317.455 13.3065 313.579 13.357C309.862 13.4075 306.107 13.2876 302.396 13.4581C301.529 13.496 300.682 13.6475 299.898 14.0264C299.709 14.1149 299.525 14.2159 299.342 14.3296C298.552 14.8032 297.806 15.4853 297.313 16.2936C296.737 17.2472 296.737 18.1187 296.788 19.186C296.838 20.1965 296.788 21.2195 296.788 22.23C296.775 25.9055 296.769 29.5873 296.756 33.2691C296.75 35.6184 296.725 62.7046 296.725 62.7046C296.725 65.3065 299.02 67.7063 301.719 67.7063C304.419 67.7063 306.726 65.3065 306.726 62.7046V39.6096C306.726 28.9873 314.54 22.3247 323.183 22.3247C331.825 22.3247 339.646 28.9873 339.646 39.6096V62.7046C339.646 65.3065 341.846 67.7063 344.539 67.7063C347.232 67.7063 349.647 65.3065 349.647 62.7046V40.3296C349.647 26.5181 338.678 14.98 325.2 13.698"/><path fill="#FC6058" d="M174.96 20.973L163.2 14.0515C163.226 13.8873 163.302 13.7357 163.302 13.5715V3.13238C163.302 1.40199 161.898 0 160.166 0H153.894C152.162 0 150.758 1.40199 150.758 3.13238V6.77629L146.491 4.28176C144.759 3.24605 142.476 3.42288 140.871 4.61015L140.788 4.64173L113.736 20.3162C111.479 21.6614 110.537 24.7875 111.94 27.1304C113.395 29.5618 116.6 30.2186 118.851 28.8734L120.469 27.9388C118.553 31.6837 117.358 35.915 117.358 40.5314C117.358 47.8319 120.166 55.025 125.35 60.2098C127.385 62.2497 129.756 63.9548 132.355 65.2115C134.352 66.1778 136.464 66.9861 138.658 67.3903C141.566 67.9208 144.575 67.6492 147.515 67.6555C150.689 67.6555 153.869 67.6618 157.043 67.6682C159.919 67.6745 162.796 67.6871 165.704 67.6934C166.431 67.6934 167.145 67.504 167.79 67.1756C168.618 66.7524 169.112 66.2914 169.655 65.5652C170.275 64.7442 170.705 63.7527 170.705 62.6917V29.827C172.861 30.6038 175.478 29.9281 176.761 27.7809C178.165 25.4379 177.223 22.3119 174.96 20.9667M161.43 41.0493C161.43 51.04 154.659 59.1615 144.449 59.1615C134.239 59.1615 126.734 50.5222 126.734 40.5314C126.734 30.5407 134.239 22.2171 144.449 22.2171C154.659 22.2171 161.43 29.9218 161.43 39.8052V41.0556V41.0493Z"/></svg><span class="sep"></span><span class="wm">Concert<span>AI</span></span></a>
+  <div class="topo-dir"><span class="contador num" id="contador">01 / 12</span></div>
+  <div class="progresso" id="progresso"></div>
+</header>
+<nav class="pontos escuro" id="pontos" aria-label="Seções"></nav>
+<div class="setas">
+  <button class="btn btn-ic" id="ant" aria-label="Seção anterior"><i data-lucide="arrow-up"></i></button>
+  <button class="btn btn-ic" id="prox" aria-label="Próxima seção"><i data-lucide="arrow-down"></i></button>
+</div>
+
+<main>
+<!-- 1 CAPA -->
+<section class="slide navy" id="s1" data-titulo="Capa" data-escuro>
+  <div class="halo" aria-hidden="true"></div>
+  <div class="wrap capa">
+    <div>
+      <div class="logo-grande rv"><svg class="logo-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 411 68" role="img" aria-label="Seazone"><path fill="currentColor" d="M33.856 52.5045C33.856 41.2633 0.620441 47.8249 0.620441 28.9865C0.620441 20.5619 9.06051 13.5835 21.1421 13.5835C33.9571 13.5835 41.1454 20.1451 41.1454 24.3131C41.1454 26.3846 39.4827 28.576 36.6693 28.576C35.0003 28.576 33.856 27.5339 32.8128 26.4919C30.7328 24.4079 26.2504 21.9133 21.0473 21.9133C13.4418 21.9133 9.8002 25.1404 9.8002 28.1591C9.8002 38.4594 43.5541 32.9461 43.5541 51.6709C43.5541 61.769 33.0341 67.7054 21.4646 67.7054C7.80872 67.6991 0.0957031 60.4113 0.0957031 56.5589C0.0957031 53.9634 2.08086 52.1888 4.47063 52.1888C6.13968 52.1888 7.28399 53.1297 8.01735 53.856C11.0393 57.0831 15.4143 59.2682 21.5657 59.2682C28.754 59.2682 33.8623 56.4579 33.8623 52.5045"/><path fill="currentColor" d="M60.8887 44.6989C62.1404 53.5402 69.6448 59.1608 78.597 59.1608C84.3249 59.1608 88.8073 56.8747 91.6206 55.3085C92.2465 55.0054 93.081 54.6896 94.1179 54.6896C96.6151 54.6896 98.3916 56.5589 98.3916 58.9587C98.3916 60.9354 97.1399 62.3942 96.2042 62.9184C94.1179 64.1688 87.6566 67.7054 78.5907 67.7054C62.9623 67.7054 51.083 56.0411 51.083 40.5434C51.083 25.0457 63.4807 13.5835 78.0659 13.5835C92.6511 13.5835 103.696 25.8667 103.696 38.352C103.696 41.5854 101.091 44.7052 97.8669 44.7052H60.876L60.8887 44.6989ZM60.8887 36.6785H94.7501C94.023 29.6053 87.0371 21.907 78.0786 21.907C69.1201 21.907 61.7232 28.3612 60.8887 36.6785Z"/><path fill="currentColor" d="M190.833 22.7668C188.02 22.7668 185.965 20.9354 185.965 18.1188C185.965 15.3022 188.02 13.5781 190.833 13.5781H223.81C227.388 13.5781 229.335 16.4958 229.335 18.984C229.335 20.9291 228.678 22.009 227.388 23.5184L198.3 58.4166H225.333C228.14 58.4166 230.309 60.469 230.309 63.172C230.309 65.8749 228.147 67.599 225.333 67.599H190.505C187.476 67.599 184.985 65.2244 184.985 62.0921C184.985 60.3617 185.529 59.3891 187.046 57.5514L215.92 22.7668H190.833Z"/><path fill="currentColor" d="M261.567 67.6991C246.147 67.6991 234.375 55.6243 234.375 40.5371C234.375 25.4499 246.356 13.5835 261.567 13.5835C276.778 13.5835 288.86 25.5573 288.86 40.5371C288.86 55.5169 276.772 67.6991 261.567 67.6991ZM261.567 22.2228C251.565 22.2228 243.543 30.6537 243.543 40.5371C243.543 50.4205 251.256 59.1671 261.567 59.1671C271.878 59.1671 279.484 50.4205 279.484 40.5371C279.484 30.6537 271.67 22.2228 261.567 22.2228Z"/><path fill="currentColor" d="M367.304 44.6989C368.556 53.5402 376.054 59.1608 385.012 59.1608C390.746 59.1608 395.229 56.8747 398.042 55.3085C398.655 55.0054 399.496 54.6896 400.533 54.6896C403.037 54.6896 404.8 56.5589 404.8 58.9587C404.8 60.9354 403.549 62.3942 402.626 62.9184C400.533 64.1688 394.078 67.7054 385.012 67.7054C369.371 67.7054 357.504 56.0411 357.504 40.5434C357.504 25.0457 369.902 13.5835 384.481 13.5835C399.06 13.5835 410.124 25.8667 410.124 38.352C410.124 41.5854 407.513 44.7052 404.282 44.7052H367.297L367.304 44.6989ZM367.304 36.6785H401.171C400.425 29.6053 393.452 21.907 384.487 21.907C375.523 21.907 368.138 28.3612 367.304 36.6785Z"/><path fill="currentColor" d="M325.206 13.698C321.343 13.3318 317.455 13.3065 313.579 13.357C309.862 13.4075 306.107 13.2876 302.396 13.4581C301.529 13.496 300.682 13.6475 299.898 14.0264C299.709 14.1149 299.525 14.2159 299.342 14.3296C298.552 14.8032 297.806 15.4853 297.313 16.2936C296.737 17.2472 296.737 18.1187 296.788 19.186C296.838 20.1965 296.788 21.2195 296.788 22.23C296.775 25.9055 296.769 29.5873 296.756 33.2691C296.75 35.6184 296.725 62.7046 296.725 62.7046C296.725 65.3065 299.02 67.7063 301.719 67.7063C304.419 67.7063 306.726 65.3065 306.726 62.7046V39.6096C306.726 28.9873 314.54 22.3247 323.183 22.3247C331.825 22.3247 339.646 28.9873 339.646 39.6096V62.7046C339.646 65.3065 341.846 67.7063 344.539 67.7063C347.232 67.7063 349.647 65.3065 349.647 62.7046V40.3296C349.647 26.5181 338.678 14.98 325.2 13.698"/><path fill="#FC6058" d="M174.96 20.973L163.2 14.0515C163.226 13.8873 163.302 13.7357 163.302 13.5715V3.13238C163.302 1.40199 161.898 0 160.166 0H153.894C152.162 0 150.758 1.40199 150.758 3.13238V6.77629L146.491 4.28176C144.759 3.24605 142.476 3.42288 140.871 4.61015L140.788 4.64173L113.736 20.3162C111.479 21.6614 110.537 24.7875 111.94 27.1304C113.395 29.5618 116.6 30.2186 118.851 28.8734L120.469 27.9388C118.553 31.6837 117.358 35.915 117.358 40.5314C117.358 47.8319 120.166 55.025 125.35 60.2098C127.385 62.2497 129.756 63.9548 132.355 65.2115C134.352 66.1778 136.464 66.9861 138.658 67.3903C141.566 67.9208 144.575 67.6492 147.515 67.6555C150.689 67.6555 153.869 67.6618 157.043 67.6682C159.919 67.6745 162.796 67.6871 165.704 67.6934C166.431 67.6934 167.145 67.504 167.79 67.1756C168.618 66.7524 169.112 66.2914 169.655 65.5652C170.275 64.7442 170.705 63.7527 170.705 62.6917V29.827C172.861 30.6038 175.478 29.9281 176.761 27.7809C178.165 25.4379 177.223 22.3119 174.96 20.9667M161.43 41.0493C161.43 51.04 154.659 59.1615 144.449 59.1615C134.239 59.1615 126.734 50.5222 126.734 40.5314C126.734 30.5407 134.239 22.2171 144.449 22.2171C154.659 22.2171 161.43 29.9218 161.43 39.8052V41.0556V41.0493Z"/></svg></div>
+      <h1 class="rv">Concert<span>AI</span></h1>
+      <p class="frase rv">Conserto no imóvel com preço fechado e profissional avaliado.</p>
+      <p class="sub rv">Proprietário e franquia escolhem o serviço, o dia e o profissional. A inteligência artificial cuida do resto.</p>
+      <div class="rodape-capa rv">
+        <button class="btn btn-cta" data-ir="2">Começar <i data-lucide="arrow-down"></i></button>
+        <span class="selo"><i data-lucide="sparkles"></i>Projeto do retiro de IA da Operação</span>
+      </div>
+    </div>
+    <div class="ilu-capa rv" aria-hidden="true">
+      <svg viewBox="0 0 400 400" fill="none">
+        <rect x="70" y="150" width="260" height="190" rx="18" fill="#0A2257"/>
+        <path d="M50 165 200 60l150 105" stroke="#FC6058" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/>
+        <rect x="170" y="240" width="60" height="100" rx="10" fill="#182052"/>
+        <rect x="100" y="190" width="54" height="48" rx="8" fill="#C7DBFF" opacity=".9"/>
+        <rect x="246" y="190" width="54" height="48" rx="8" fill="#C7DBFF" opacity=".9"/>
+        <circle cx="300" cy="110" r="46" fill="#FC6058"/>
+        <path d="m282 110 12 12 24-26" stroke="#fff" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+        <g transform="translate(36 268) rotate(-30)">
+          <rect x="0" y="0" width="104" height="22" rx="11" fill="#fff"/>
+          <circle cx="104" cy="11" r="20" fill="#fff"/><circle cx="110" cy="11" r="9" fill="#0A2257"/>
+        </g>
+        <rect x="236" y="300" width="128" height="52" rx="26" fill="#fff"/>
+        <text x="300" y="333" text-anchor="middle" font-family="Inter,Arial" font-weight="800" font-size="20" fill="#00143D">R$ 182</text>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- 2 PROBLEMA -->
+<section class="slide" id="s2" data-titulo="O problema hoje">
+  <div class="wrap dois">
+    <div>
+      <div class="cab">
+        <span class="tag rv"><b>1</b>O problema hoje</span>
+        <h2 class="rv">Conserto ainda se resolve <em>na base da mensagem</em></h2>
+      </div>
+      <div class="lista-prob">
+        <div class="prob rv"><span class="ico coral"><i data-lucide="messages-square"></i></span><div><h3>Tudo por conversa solta</h3><p>Pedido, preço e horário se combinam no WhatsApp, um por um.</p></div></div>
+        <div class="prob rv"><span class="ico coral"><i data-lucide="badge-dollar-sign"></i></span><div><h3>Preço muda a cada vez</h3><p>O mesmo serviço custa diferente conforme o dia e o profissional.</p></div></div>
+        <div class="prob rv"><span class="ico coral"><i data-lucide="search"></i></span><div><h3>A franquia corre atrás</h3><p>Achar quem atende, cobrar retorno e conferir o serviço toma o dia da equipe.</p></div></div>
+        <div class="prob rv"><span class="ico coral"><i data-lucide="eye-off"></i></span><div><h3>O proprietário não vê nada</h3><p>Não sabe quem foi, o que foi feito nem quanto vai custar até a cobrança chegar.</p></div></div>
+      </div>
+    </div>
+    <div class="chat rv" aria-hidden="true">
+      <div class="chat-topo"><span class="av"><i data-lucide="user"></i></span><div>Eletricista (indicação)<small>visto por último ontem</small></div></div>
+      <div class="bolha eu">Oi! O chuveiro do apto 302 parou de esquentar. Consegue ir hoje?<small>09:12</small></div>
+      <div class="bolha eu">Quanto fica?<small>11:40</small></div>
+      <span class="espera">5 horas sem resposta</span>
+      <div class="bolha ele">Só amanhã de tarde. Valor eu vejo lá<small>16:55</small></div>
+      <div class="bolha eu">Tem hóspede chegando hoje...<small>16:58</small></div>
+    </div>
+  </div>
+</section>
+
+<!-- 3 O QUE É -->
+<section class="slide alt" id="s3" data-titulo="O que é">
+  <div class="wrap">
+    <span class="tag rv"><b>2</b>O que é o ConcertAI</span>
+    <p class="frase-grande rv">Um site onde a Seazone contrata conserto para os imóveis <mark>como quem pede uma corrida</mark>: escolhe o serviço, o dia e o profissional, com preço fechado.</p>
+    <div class="tres">
+      <div class="card rv"><span class="ico"><i data-lucide="tag"></i></span><h3>Preço fechado antes</h3><p>Sem orçamento e sem surpresa. Peça, se precisar, é sempre à parte e aprovada no app.</p></div>
+      <div class="card rv"><span class="ico"><i data-lucide="shield-check"></i></span><h3>Profissional avaliado</h3><p>Com CNPJ, nota dada por quem contratou, fotos do serviço feito e garantia de 90 dias.</p></div>
+      <div class="card rv"><span class="ico"><i data-lucide="layout-dashboard"></i></span><h3>Tudo num lugar só</h3><p>Pedido, acompanhamento, pagamento e nota fiscal no mesmo lugar, à vista de todos.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 4 QUEM USA -->
+<section class="slide" id="s4" data-titulo="Quem pode usar">
+  <div class="wrap">
+    <div class="cab">
+      <span class="tag rv"><b>3</b>Quem pode usar</span>
+      <h2 class="rv">Cinco perfis, cada um vê só o que é dele</h2>
+    </div>
+    <div class="perfis">
+      <div class="card perfil rv"><span class="ico"><i data-lucide="key-round"></i></span><h3>Proprietário</h3><ul><li>Contrata para os imóveis dele</li><li>Aprova os pedidos da franquia acima de R$ 300</li><li>Paga descontado do repasse</li></ul></div>
+      <div class="card perfil rv"><span class="ico"><i data-lucide="building-2"></i></span><h3>Franquia</h3><ul><li>Contrata para qualquer imóvel da carteira</li><li>Recebe as sugestões prontas do agente</li><li>É avisada de cada visita</li></ul></div>
+      <div class="card perfil novo rv"><span class="pill">Público novo</span><span class="ico coral"><i data-lucide="globe"></i></span><h3>Anfitrião avulso</h3><ul><li>Quem não é da Seazone</li><li>Se cadastra e cadastra o imóvel</li><li>Paga na hora</li></ul></div>
+      <div class="card perfil rv"><span class="ico"><i data-lucide="hard-hat"></i></span><h3>Prestador</h3><ul><li>Empresa com CNPJ (MEI ou ME)</li><li>Emite nota do serviço</li><li>Recebe pela plataforma</li></ul></div>
+      <div class="card perfil rv"><span class="ico navy"><i data-lucide="user-cog"></i></span><h3>Admin Seazone</h3><ul><li>Vê tudo como qualquer perfil</li><li>Acompanha e resolve exceções</li></ul></div>
+    </div>
+  </div>
+</section>
+
+<!-- 5 COMO FUNCIONA -->
+<section class="slide alt" id="s5" data-titulo="Como funciona">
+  <div class="wrap">
+    <div class="cab">
+      <span class="tag rv"><b>4</b>Como funciona</span>
+      <h2 class="rv">Do pedido à garantia, em 9 passos</h2>
+    </div>
+    <div class="passos">
+      <div class="card passo rv"><span class="n"></span><div><h3><i data-lucide="home"></i>Escolhe o imóvel</h3><p>Só aparecem os imóveis que a pessoa pode usar.</p></div></div>
+      <div class="card passo rv"><span class="n"></span><div><h3><i data-lucide="list-checks"></i>Escolhe o serviço</h3><p>Com descrição clara do que está incluso e preço fechado.</p></div></div>
+      <div class="card passo rv"><span class="n"></span><div><h3><i data-lucide="calendar-clock"></i>Dia e horário</h3><p>Janela de 1h, pelo menos 3h antes. Avisa se tem hóspede, mas não bloqueia.</p></div></div>
+      <div class="card passo rv"><span class="n"></span><div><h3><i data-lucide="star"></i>Escolhe o profissional</h3><p>Só os livres e que atendem a região, com os melhores primeiro.</p></div></div>
+      <div class="card passo rv"><span class="n"></span><div><h3><i data-lucide="timer"></i>Confirmação em 1h</h3><p>Se o profissional não confirmar, dá para trocar por outro.</p></div></div>
+      <div class="card passo rv"><span class="n"></span><div><h3><i data-lucide="camera"></i>Serviço com prova</h3><p>Fotos de antes e depois e lista do que foi conferido.</p></div></div>
+      <div class="card passo rv"><span class="n"></span><div><h3><i data-lucide="package"></i>Peça à parte</h3><p>Se precisar de peça, o valor aparece no app e só vai com aprovação.</p></div></div>
+      <div class="card passo rv"><span class="n"></span><div><h3><i data-lucide="wallet"></i>Pagamento</h3><p>Descontado do repasse do proprietário. Anfitrião avulso paga na hora.</p></div></div>
+      <div class="card passo fim rv"><span class="n"></span><div><h3><i data-lucide="award"></i>Avaliação e garantia</h3><p>Nota para o profissional e 90 dias de garantia. Reclamação pela SIA.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 6 PRESTADORES -->
+<section class="slide" id="s6" data-titulo="Prestadores">
+  <div class="wrap">
+    <div class="cab">
+      <span class="tag rv"><b>5</b>Prestadores</span>
+      <h2 class="rv">A IA acha, convida e cuida dos profissionais</h2>
+    </div>
+    <div class="trilha">
+      <div class="etapa rv"><span class="ico"><i data-lucide="map"></i></span><h3>Acha os buracos</h3><p>Vê as regiões sem profissional suficiente.</p></div>
+      <div class="etapa rv"><span class="ico"><i data-lucide="user-search"></i></span><h3>Busca</h3><p>No Hub de Serviços, por indicação e em buscas.</p></div>
+      <div class="etapa rv"><span class="ico"><i data-lucide="send"></i></span><h3>Convida</h3><p>Manda o convite com as regras e os preços.</p></div>
+      <div class="etapa rv"><span class="ico"><i data-lucide="smartphone"></i></span><h3>Cadastra</h3><p>Pelo WhatsApp, em poucos minutos.</p></div>
+      <div class="etapa rv"><span class="ico"><i data-lucide="file-check-2"></i></span><h3>Confere</h3><p>Checa o CNPJ antes de liberar.</p></div>
+      <div class="etapa rv"><span class="ico"><i data-lucide="trending-up"></i></span><h3>Acompanha</h3><p>Nota que sobe e desce com cada serviço.</p></div>
+    </div>
+    <div class="regras">
+      <div class="card regra rv"><span class="ico coral"><i data-lucide="thumbs-down"></i></span><p><b>Recusou ou não respondeu?</b> A nota baixa um pouco, sozinha.</p></div>
+      <div class="card regra rv"><span class="ico coral"><i data-lucide="receipt"></i></span><p><b>Sem nota fiscal, não recebe.</b> Todo serviço tem nota.</p></div>
+      <div class="card regra rv"><span class="ico verde"><i data-lucide="hand-coins"></i></span><p><b>Recebe o mesmo que hoje</b> e tem um fluxo de pedidos novo.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 7 AGENTE -->
+<section class="slide navy" id="s7" data-titulo="O agente que gera pedidos" data-escuro>
+  <div class="wrap agente">
+    <div>
+      <span class="tag rv"><b>6</b>O agente que gera pedidos</span>
+      <h2 class="rv">Antes de a franquia pedir, <em>a sugestão já chegou</em></h2>
+      <div class="fluxo-ag">
+        <div class="item rv"><span class="ico"><i data-lucide="clipboard-list"></i></span><p><b>Lê as manutenções abertas</b> das franquias, todo dia.</p></div>
+        <div class="item rv"><span class="ico"><i data-lucide="wand-sparkles"></i></span><p><b>Escolhe o serviço certo</b>, o profissional livre e o preço.</p></div>
+        <div class="item rv"><span class="ico"><i data-lucide="mouse-pointer-click"></i></span><p><b>Manda pronto com um botão</b>: a franquia só aperta Contratar.</p></div>
+      </div>
+      <p class="sub rv">É a principal fonte de pedidos: transforma o chamado que hoje fica parado em serviço agendado.</p>
+    </div>
+    <div class="fone rv" aria-hidden="true">
+      <div class="aviso"><i data-lucide="wrench"></i>Manutenção aberta há 2 dias · Chuveiro sem água quente</div>
+      <div class="msg">
+        <div class="de"><span class="bot"><i data-lucide="bot"></i></span><div>ConcertAI<small>para Franquia Floripa Norte</small></div></div>
+        <p>O imóvel <b>CNV0302</b> está com o chuveiro sem esquentar. Achei um profissional livre amanhã:</p>
+        <div class="prest">
+          <span class="av">JS</span>
+          <div><b>João S.</b><small>Eletricista</small><small><i data-lucide="star"></i>4,9 · 132 serviços</small></div>
+          <div class="preco"><small>Troca de resistência</small><b class="num">R$ 182</b></div>
+        </div>
+        <div class="horas"><span class="hora">8h–9h</span><span class="hora sel">10h–11h</span><span class="hora">14h–15h</span></div>
+        <button class="btn btn-cta" tabindex="-1">Contratar</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 8 PREÇO -->
+<section class="slide" id="s8" data-titulo="Preço">
+  <div class="wrap">
+    <div class="cab">
+      <span class="tag rv"><b>7</b>Preço</span>
+      <h2 class="rv">Preço fechado, <em>23% menor</em> que a tabela anterior</h2>
+    </div>
+    <div class="preco-grid">
+      <div class="tabela rv">
+        <table>
+          <thead><tr><th>Serviço</th><th>Antes</th><th>Agora</th><th class="dif">Diferença</th></tr></thead>
+          <tbody class="num" id="tbPreco"></tbody>
+          <tfoot class="num"><tr><td>Média por pedido</td><td class="antes">R$ 275</td><td class="agora">R$ 211</td><td class="dif">−23%</td></tr></tfoot>
+        </table>
+      </div>
+      <div>
+        <div class="comissao rv"><span class="ico"><i data-lucide="hand-coins"></i></span><p><b>Como o preço é feito:</b> o prestador recebe o mesmo que a Seazone já paga hoje, e a Seazone soma uma <b>comissão fixa de R$ 30 a R$ 70</b> por serviço.</p></div>
+        <div class="card barras rv">
+          <h3>Faixa de preço, mesmos serviços</h3>
+          <p class="mini">Do serviço mais barato ao mais caro.</p>
+          <div class="eixo">
+            <div class="faixa"><div class="nome">ConcertAI<small>R$ 167 a 272 · preço fechado</small></div><div class="trilho"><div class="seg cz num" style="left:19.1%;width:30%"></div></div></div>
+            <div class="faixa"><div class="nome">Houser e Porto<small>R$ 256 a 440 · preço fechado</small></div><div class="trilho"><div class="seg hp num" style="left:44.6%;width:52.6%"></div></div></div>
+            <div class="faixa"><div class="nome">GetNinjas e Triider<small>R$ 120 a 205 · orçamento</small></div><div class="trilho"><div class="seg gn num" style="left:5.7%;width:24.3%"></div></div></div>
+            <div class="escala num"><span></span><div class="marcas"><span style="left:0">R$ 100</span><span style="left:28.6%">200</span><span style="left:57.1%">300</span><span style="left:85.7%">400</span></div></div>
+          </div>
+          <div class="chips">
+            <span class="chip"><i data-lucide="trending-down"></i>12% a 40% abaixo do Houser</span>
+            <span class="chip"><i data-lucide="hand-coins"></i>Prestador recebe o mesmo</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 9 GANHO -->
+<section class="slide alt" id="s9" data-titulo="Quanto a Seazone ganha">
+  <div class="wrap">
+    <div class="cab">
+      <span class="tag rv"><b>8</b>Quanto a Seazone ganha</span>
+      <h2 class="rv">A conta é simples: <em>comissão × volume</em></h2>
+    </div>
+    <div class="kpis">
+      <div class="card kpi dest rv"><div class="v num">R$ 56,70</div><p>de comissão média por pedido. Sobram <b style="color:#fff">R$ 39,30</b> depois de imposto e custos.</p></div>
+      <div class="card kpi rv"><div class="v num">314<small> /mês</small></div><p>pedidos desses 14 serviços que a Seazone já paga hoje. 89 em Florianópolis.</p></div>
+      <div class="card kpi rv"><div class="v num">~130<small> /mês</small></div><p>pedidos pagam um custo fixo de R$ 5 mil por mês. Para R$ 2 mil, bastam ~50.</p></div>
+      <div class="card kpi rv"><div class="v num">R$ 23 mil</div><p>de resultado no 1º ano realista, já contando a subida aos poucos.</p></div>
+    </div>
+    <div class="rv">
+      <div class="abas" role="tablist" aria-label="Fase">
+        <button class="aba" role="tab" data-fase="floripa" aria-selected="false"><span class="f">Fase 1</span>Florianópolis</button>
+        <button class="aba" role="tab" data-fase="rede" aria-selected="true"><span class="f">Fase 1</span>Rede toda</button>
+        <button class="aba" role="tab" data-fase="f2" aria-selected="false"><span class="f">Fase 2</span>Catálogo completo</button>
+      </div>
+      <div class="cenarios" id="cenarios"></div>
+      <p class="nota-fase" id="notaFase"></p>
+    </div>
+  </div>
+</section>
+
+<!-- 9b PREMISSAS -->
+<section class="slide" id="s10" data-titulo="Premissas">
+  <div class="wrap">
+    <div class="cab">
+      <span class="tag rv"><b>9</b>De onde vêm os números</span>
+      <h2 class="rv">As premissas, em linguagem simples</h2>
+    </div>
+    <div class="prem">
+      <div class="card rv"><h3><span class="ico"><i data-lucide="cloud-rain"></i></span>Pessimista</h3><p>Só <b>15%</b> dos pedidos de hoje passam pelo ConcertAI. A franquia segue com o prestador dela e nada traz pedido novo.</p></div>
+      <div class="card rv" style="outline:2px solid var(--blue);outline-offset:-2px"><h3><span class="ico"><i data-lucide="target"></i></span>Realista</h3><p><b>30%</b> dos pedidos passam pelo ConcertAI, perto da meta do piloto (25% a 40%). O agente e o preço trazem <b>mais 15%</b>.</p></div>
+      <div class="card rv"><h3><span class="ico"><i data-lucide="sun"></i></span>Otimista</h3><p><b>Metade</b> dos pedidos passa pelo ConcertAI, com a regra na operação de que o chamado vai por ele. O agente e o preço trazem <b>mais 30%</b>.</p></div>
+    </div>
+    <div class="extra">
+      <div class="card rv"><span class="ico verde"><i data-lucide="receipt"></i></span><p><b>Resultado</b> = comissão menos imposto (~R$ 8) e custos por pedido (~R$ 9: atendimento, perdas e reserva da garantia).</p></div>
+      <div class="card rv"><span class="ico verde"><i data-lucide="layers"></i></span><p><b>Fase 2</b> soma ~216 pedidos por mês de outros serviços, com comissão menor (~R$ 35).</p></div>
+      <div class="card rv"><span class="ico coral"><i data-lucide="globe"></i></span><p><b>Anfitrião de fora é ganho extra:</b> cada 100 pedidos por mês dão ~R$ 36 mil por ano. Ainda sem teste.</p></div>
+    </div>
+    <div class="pontos-claros">
+      <div class="pc rv"><i data-lucide="info"></i><p><b>O "23% mais barato" é contra a tabela anterior do ConcertAI.</b> Hoje se paga em média R$ 155 por pedido; no ConcertAI vira R$ 211, com garantia, prova por foto e sem procurar profissional.</p></div>
+      <div class="pc rv"><i data-lucide="building-2"></i><p><b>O que define o resultado é a franquia mandar os chamados pelo ConcertAI.</b> Hoje é ela quem recebe quase todas as despesas de manutenção.</p></div>
+      <div class="pc rv"><i data-lucide="ban"></i><p><b>Não há mensalidade para ninguém.</b> O que paga a estrutura é só o volume de pedidos.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 10 STATUS -->
+<section class="slide alt" id="s11" data-titulo="Pronto e próximos passos">
+  <div class="wrap">
+    <div class="cab">
+      <span class="tag rv"><b>10</b>Onde estamos</span>
+      <h2 class="rv">O site já funciona. Agora é <em>testar de verdade</em></h2>
+    </div>
+    <div class="status">
+      <div class="col feito">
+        <h3 class="rv"><span class="ico verde"><i data-lucide="circle-check"></i></span>Já está pronto</h3>
+        <ul>
+          <li class="rv"><i data-lucide="circle-check"></i><div><b>Site no ar</b><span>Página de visita e entrada para testar.</span></div></li>
+          <li class="rv"><i data-lucide="circle-check"></i><div><b>Todos os perfis</b><span>Proprietário, franquia, prestador e admin.</span></div></li>
+          <li class="rv"><i data-lucide="circle-check"></i><div><b>Contratação completa</b><span>Imóvel, serviço, dia, horário e profissional.</span></div></li>
+          <li class="rv"><i data-lucide="circle-check"></i><div><b>Confirmação em 1h e troca</b><span>Com a nota do prestador caindo na recusa.</span></div></li>
+          <li class="rv"><i data-lucide="circle-check"></i><div><b>Nota fiscal e garantia</b><span>Sem nota não recebe; 90 dias de garantia.</span></div></li>
+          <li class="rv"><i data-lucide="circle-check"></i><div><b>Exemplos para testar</b><span>Mais de mil imóveis de exemplo da Grande Florianópolis.</span></div></li>
+        </ul>
+      </div>
+      <div class="col prox">
+        <h3 class="rv"><span class="ico"><i data-lucide="rocket"></i></span>Próximos passos</h3>
+        <ul>
+          <li class="rv"><i data-lucide="map-pin"></i><div><b>Piloto em Florianópolis</b><span>Com franquias e imóveis reais.</span></div></li>
+          <li class="rv"><i data-lucide="users"></i><div><b>Prestadores reais</b><span>Convite aos profissionais validados do Hub.</span></div></li>
+          <li class="rv"><i data-lucide="message-circle"></i><div><b>WhatsApp</b><span>Avisos e cadastro pelo celular.</span></div></li>
+          <li class="rv"><i data-lucide="wallet"></i><div><b>Pagamento de verdade</b><span>Repasse e pagamento na hora ligados.</span></div></li>
+          <li class="rv"><i data-lucide="flag"></i><div><b>Decisões da liderança</b><span>Como as franquias passam a usar e a regra na operação.</span></div></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 11 FIM -->
+<section class="slide navy" id="s12" data-titulo="Encerramento" data-escuro>
+  <div class="wrap">
+    <div class="fim-logo rv"><svg class="logo-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 411 68" role="img" aria-label="Seazone"><path fill="currentColor" d="M33.856 52.5045C33.856 41.2633 0.620441 47.8249 0.620441 28.9865C0.620441 20.5619 9.06051 13.5835 21.1421 13.5835C33.9571 13.5835 41.1454 20.1451 41.1454 24.3131C41.1454 26.3846 39.4827 28.576 36.6693 28.576C35.0003 28.576 33.856 27.5339 32.8128 26.4919C30.7328 24.4079 26.2504 21.9133 21.0473 21.9133C13.4418 21.9133 9.8002 25.1404 9.8002 28.1591C9.8002 38.4594 43.5541 32.9461 43.5541 51.6709C43.5541 61.769 33.0341 67.7054 21.4646 67.7054C7.80872 67.6991 0.0957031 60.4113 0.0957031 56.5589C0.0957031 53.9634 2.08086 52.1888 4.47063 52.1888C6.13968 52.1888 7.28399 53.1297 8.01735 53.856C11.0393 57.0831 15.4143 59.2682 21.5657 59.2682C28.754 59.2682 33.8623 56.4579 33.8623 52.5045"/><path fill="currentColor" d="M60.8887 44.6989C62.1404 53.5402 69.6448 59.1608 78.597 59.1608C84.3249 59.1608 88.8073 56.8747 91.6206 55.3085C92.2465 55.0054 93.081 54.6896 94.1179 54.6896C96.6151 54.6896 98.3916 56.5589 98.3916 58.9587C98.3916 60.9354 97.1399 62.3942 96.2042 62.9184C94.1179 64.1688 87.6566 67.7054 78.5907 67.7054C62.9623 67.7054 51.083 56.0411 51.083 40.5434C51.083 25.0457 63.4807 13.5835 78.0659 13.5835C92.6511 13.5835 103.696 25.8667 103.696 38.352C103.696 41.5854 101.091 44.7052 97.8669 44.7052H60.876L60.8887 44.6989ZM60.8887 36.6785H94.7501C94.023 29.6053 87.0371 21.907 78.0786 21.907C69.1201 21.907 61.7232 28.3612 60.8887 36.6785Z"/><path fill="currentColor" d="M190.833 22.7668C188.02 22.7668 185.965 20.9354 185.965 18.1188C185.965 15.3022 188.02 13.5781 190.833 13.5781H223.81C227.388 13.5781 229.335 16.4958 229.335 18.984C229.335 20.9291 228.678 22.009 227.388 23.5184L198.3 58.4166H225.333C228.14 58.4166 230.309 60.469 230.309 63.172C230.309 65.8749 228.147 67.599 225.333 67.599H190.505C187.476 67.599 184.985 65.2244 184.985 62.0921C184.985 60.3617 185.529 59.3891 187.046 57.5514L215.92 22.7668H190.833Z"/><path fill="currentColor" d="M261.567 67.6991C246.147 67.6991 234.375 55.6243 234.375 40.5371C234.375 25.4499 246.356 13.5835 261.567 13.5835C276.778 13.5835 288.86 25.5573 288.86 40.5371C288.86 55.5169 276.772 67.6991 261.567 67.6991ZM261.567 22.2228C251.565 22.2228 243.543 30.6537 243.543 40.5371C243.543 50.4205 251.256 59.1671 261.567 59.1671C271.878 59.1671 279.484 50.4205 279.484 40.5371C279.484 30.6537 271.67 22.2228 261.567 22.2228Z"/><path fill="currentColor" d="M367.304 44.6989C368.556 53.5402 376.054 59.1608 385.012 59.1608C390.746 59.1608 395.229 56.8747 398.042 55.3085C398.655 55.0054 399.496 54.6896 400.533 54.6896C403.037 54.6896 404.8 56.5589 404.8 58.9587C404.8 60.9354 403.549 62.3942 402.626 62.9184C400.533 64.1688 394.078 67.7054 385.012 67.7054C369.371 67.7054 357.504 56.0411 357.504 40.5434C357.504 25.0457 369.902 13.5835 384.481 13.5835C399.06 13.5835 410.124 25.8667 410.124 38.352C410.124 41.5854 407.513 44.7052 404.282 44.7052H367.297L367.304 44.6989ZM367.304 36.6785H401.171C400.425 29.6053 393.452 21.907 384.487 21.907C375.523 21.907 368.138 28.3612 367.304 36.6785Z"/><path fill="currentColor" d="M325.206 13.698C321.343 13.3318 317.455 13.3065 313.579 13.357C309.862 13.4075 306.107 13.2876 302.396 13.4581C301.529 13.496 300.682 13.6475 299.898 14.0264C299.709 14.1149 299.525 14.2159 299.342 14.3296C298.552 14.8032 297.806 15.4853 297.313 16.2936C296.737 17.2472 296.737 18.1187 296.788 19.186C296.838 20.1965 296.788 21.2195 296.788 22.23C296.775 25.9055 296.769 29.5873 296.756 33.2691C296.75 35.6184 296.725 62.7046 296.725 62.7046C296.725 65.3065 299.02 67.7063 301.719 67.7063C304.419 67.7063 306.726 65.3065 306.726 62.7046V39.6096C306.726 28.9873 314.54 22.3247 323.183 22.3247C331.825 22.3247 339.646 28.9873 339.646 39.6096V62.7046C339.646 65.3065 341.846 67.7063 344.539 67.7063C347.232 67.7063 349.647 65.3065 349.647 62.7046V40.3296C349.647 26.5181 338.678 14.98 325.2 13.698"/><path fill="#FC6058" d="M174.96 20.973L163.2 14.0515C163.226 13.8873 163.302 13.7357 163.302 13.5715V3.13238C163.302 1.40199 161.898 0 160.166 0H153.894C152.162 0 150.758 1.40199 150.758 3.13238V6.77629L146.491 4.28176C144.759 3.24605 142.476 3.42288 140.871 4.61015L140.788 4.64173L113.736 20.3162C111.479 21.6614 110.537 24.7875 111.94 27.1304C113.395 29.5618 116.6 30.2186 118.851 28.8734L120.469 27.9388C118.553 31.6837 117.358 35.915 117.358 40.5314C117.358 47.8319 120.166 55.025 125.35 60.2098C127.385 62.2497 129.756 63.9548 132.355 65.2115C134.352 66.1778 136.464 66.9861 138.658 67.3903C141.566 67.9208 144.575 67.6492 147.515 67.6555C150.689 67.6555 153.869 67.6618 157.043 67.6682C159.919 67.6745 162.796 67.6871 165.704 67.6934C166.431 67.6934 167.145 67.504 167.79 67.1756C168.618 66.7524 169.112 66.2914 169.655 65.5652C170.275 64.7442 170.705 63.7527 170.705 62.6917V29.827C172.861 30.6038 175.478 29.9281 176.761 27.7809C178.165 25.4379 177.223 22.3119 174.96 20.9667M161.43 41.0493C161.43 51.04 154.659 59.1615 144.449 59.1615C134.239 59.1615 126.734 50.5222 126.734 40.5314C126.734 30.5407 134.239 22.2171 144.449 22.2171C154.659 22.2171 161.43 29.9218 161.43 39.8052V41.0556V41.0493Z"/></svg><span class="sep"></span><span class="wm">Concert<span>AI</span></span></div>
+    <h2 class="rv">Conserto sem correria, com preço que todo mundo entende</h2>
+    <div class="link-site rv">
+      <a class="btn btn-cta" href="https://seazone-tech.github.io/concertai/" target="_blank" rel="noopener">Abrir o site <i data-lucide="external-link"></i></a>
+      <button class="btn btn-sec" data-ir="1"><i data-lucide="rotate-ccw"></i>Ver de novo</button>
+    </div>
+    <p class="url rv">https://seazone-tech.github.io/concertai/</p>
+    <span class="feito-ia rv"><i data-lucide="bot"></i>Feito por agentes de IA · Retiro de IA da Operação Seazone</span>
+  </div>
+</section>
+</main>
+
+<script>
+document.documentElement.classList.add('js');
+// tabela de preço (Lote 1)
+const PRECOS=[['Limpeza de ar-condicionado',335,272],['Ar-condicionado pingando',335,241],['Troca de resistência',235,182],['Instalar chuveiro',235,233],['Tomada ou interruptor',265,180],['Disjuntor',265,200],['Vazamento aparente',265,187],['Desentupimento',270,183],['Torneira ou sifão',235,175],['Ducha higiênica',230,172],['Descarga',265,207],['Ajuste de porta',225,167],['Conserto de móvel',230,170],['Janela ou vidraça',225,177]];
+document.getElementById('tbPreco').innerHTML=PRECOS.map(([n,a,b])=>`<tr><td>${n}</td><td class="antes">R$ ${a}</td><td class="agora">R$ ${b}</td><td class="dif">−${Math.round((1-b/a)*100)}%</td></tr>`).join('');
+
+// cenários (números da conta do Henry, 17/11)
+const CEN={
+  floripa:{nota:'Só Florianópolis, onde começa o piloto (~89 pedidos por mês hoje).',d:[['Pessimista',13,'0,7','0,5','8,7','6,0',8.7,6],['Realista',31,'1,7','1,2','20','13,8',20,13.8],['Otimista',58,'3,1','2,2','37,7','26',37.7,26]]},
+  rede:{nota:'Os 14 serviços do primeiro lote em todas as franquias (~314 pedidos por mês hoje).',d:[['Pessimista',47,'2,7','1,9','32','22',32,22],['Realista',108,'6,1','4,3','74','51',74,51],['Otimista',204,'11,6','8,0','139','96',139,96]]},
+  f2:{nota:'Rede toda com o catálogo completo: o primeiro lote mais ~216 pedidos por mês de outros serviços.',d:[['Pessimista',80,'3,8','2,5','46','31',46,31],['Realista',183,'8,7','5,9','105','70',105,70],['Otimista',345,'16,5','11,0','198','132',198,132]]}
+};
+const MAX=198;
+function mostra(f){
+  document.querySelectorAll('.aba').forEach(b=>b.setAttribute('aria-selected',b.dataset.fase===f));
+  const c=CEN[f];
+  document.getElementById('cenarios').innerHTML=c.d.map(([n,p,cm,rm,ca,ra,cv,rv])=>`
+    <div class="card cen${n==='Realista'?' real':''}">
+      <div class="topo-cen"><b>${n}</b>${n==='Realista'?'<span class="pill azul">Mais provável</span>':''}</div>
+      <p class="ped num"><strong>${p}</strong> pedidos por mês</p>
+      <div class="linha-v num"><span>Comissão no ano</span><strong>R$ ${ca} mil</strong></div>
+      <div class="barra-v"><i style="width:${cv/MAX*100}%"></i></div>
+      <div class="linha-v num"><span>Resultado no ano</span><strong>R$ ${ra} mil</strong></div>
+      <div class="barra-v res"><i style="width:${rv/MAX*100}%"></i></div>
+      <p class="mes num">Por mês: R$ ${cm} mil de comissão · R$ ${rm} mil de resultado</p>
+    </div>`).join('');
+  document.getElementById('notaFase').innerHTML='<i data-lucide="info"></i><span>'+c.nota+'</span>';
+  if(window.lucide) lucide.createIcons();
+}
+document.querySelectorAll('.aba').forEach(b=>b.addEventListener('click',()=>mostra(b.dataset.fase)));
+mostra('rede');
+
+// navegação
+const S=[...document.querySelectorAll('.slide')];
+const pontos=document.getElementById('pontos');
+S.forEach((s,i)=>{const b=document.createElement('button');b.setAttribute('aria-label',`${i+1}. ${s.dataset.titulo}`);b.title=s.dataset.titulo;b.onclick=()=>ir(i);pontos.appendChild(b)});
+let atual=0;
+function ir(i){i=Math.max(0,Math.min(S.length-1,i));S[i].scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});}
+function marca(i){
+  atual=i;
+  document.getElementById('contador').textContent=String(i+1).padStart(2,'0')+' / '+S.length;
+  document.getElementById('progresso').style.width=((i+1)/S.length*100)+'%';
+  [...pontos.children].forEach((b,j)=>b.setAttribute('aria-current',j===i));
+  const esc=S[i].hasAttribute('data-escuro');
+  document.getElementById('topo').classList.toggle('escuro',esc);
+  pontos.classList.toggle('escuro',esc);
+  document.getElementById('ant').disabled=i===0;
+  document.getElementById('prox').disabled=i===S.length-1;
+}
+function atualiza(){
+  const meio=innerHeight*0.4;let idx=0;
+  S.forEach((s,i)=>{if(s.getBoundingClientRect().top<=meio)idx=i});
+  if(idx!==atual||!pontos.children[0].hasAttribute('aria-current'))marca(idx);
+  S.forEach(s=>{const r=s.getBoundingClientRect();if(r.top<innerHeight*0.85&&r.bottom>0)s.classList.add('vis')});
+}
+addEventListener('scroll',atualiza,{passive:true});addEventListener('resize',atualiza);
+document.getElementById('ant').onclick=()=>ir(atual-1);
+document.getElementById('prox').onclick=()=>ir(atual+1);
+document.querySelectorAll('[data-ir]').forEach(b=>b.addEventListener('click',()=>ir(+b.dataset.ir-1)));
+addEventListener('keydown',e=>{
+  if(e.altKey||e.ctrlKey||e.metaKey)return;
+  const t=e.target.tagName;if(t==='INPUT'||t==='TEXTAREA')return;
+  if(['ArrowDown','PageDown','ArrowRight'].includes(e.key)||(e.key===' '&&t!=='BUTTON'&&t!=='A')){e.preventDefault();ir(atual+1)}
+  else if(['ArrowUp','PageUp','ArrowLeft'].includes(e.key)){e.preventDefault();ir(atual-1)}
+  else if(e.key==='Home'){e.preventDefault();ir(0)}
+  else if(e.key==='End'){e.preventDefault();ir(S.length-1)}
+});
+if(window.lucide) lucide.createIcons();
+marca(0);atualiza();
+</script>
+</body>
+</html>
