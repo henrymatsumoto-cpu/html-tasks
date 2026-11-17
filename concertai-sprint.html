@@ -1,0 +1,19 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ConcertAI no ar</title>
+<style>:root{--bg:#14161c;--card:#1d2029;--tx:#e6e8ee;--mut:#9aa1b2;--ac:#6fb3ff;--ok:#5fd39a}body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.55 system-ui,sans-serif}main{max-width:760px;margin:0 auto;padding:28px 16px}h1{font-size:26px;margin:0 0 4px}h2{font-size:18px;margin:28px 0 8px;color:var(--ac)}.sub{color:var(--mut)}.c{background:var(--card);border-radius:12px;padding:14px 16px;margin:10px 0}a{color:var(--ac);word-break:break-all}td{padding:6px 8px;vertical-align:top}table{border-collapse:collapse;width:100%}tr+tr td{border-top:1px solid #2a2e3a}.ok{color:var(--ok);font-weight:600}details{color:var(--mut);margin-top:24px}</style></head><body><main>
+<h1>ConcertAI: site funcionando</h1><p class="sub">Sprint do retiro · 17/11/2026</p>
+<h2>O que foi feito</h2>
+<div class="c">O ConcertAI saiu de protótipo e virou um sistema de verdade, publicado num link. Proprietário e franquia contratam serviços do Lote 1, o prestador recebe, confirma, faz check-in, manda fotos e conclui. Pedido acima de R$ 300 feito pela franquia espera o OK do proprietário. Tudo grava num banco real, com dados fictícios.<br><br><span class="ok">Prova de hoje: os 3 fluxos testados no site público passaram (3 de 3).</span></div>
+<h2>Como usar</h2>
+<div class="c">1. Abra <a href="https://seazone-tech.github.io/concertai/">https://seazone-tech.github.io/concertai/</a> (celular ou computador).<br>2. Entre com uma conta de teste e a senha demo (única, pedir ao Henry; não fica no site).<br>
+<table><tr><td><b>Proprietário</b></td><td>proprietaria1@demo.concertai.dev</td><td>Contratar → serviço → profissional → dia (avisa se tem hóspede) → janela de 1h → aviso de material → pedido criado. Aprovações acima de R$ 300.</td></tr>
+<tr><td><b>Franquia</b></td><td>franquia.norte@demo.concertai.dev</td><td>Carteira de imóveis, contratar, agenda de visitas, aprovar material.</td></tr>
+<tr><td><b>Prestador</b></td><td>prestador4@demo.concertai.dev</td><td>Aceitar, check-in, checklist, fotos antes/depois, pedir material, ver quanto recebe.</td></tr></table>
+3. Pra trocar de papel: botão Sair no topo e entra com outra conta. Roteiro de 5 minutos no README do repo.<br>Sem login: adicione <b>?demo=1</b> no fim do link pra ver a demonstração simulada.</div>
+<h2>Pra que serve</h2>
+<div class="c">Mostrar à Iara e ao time um primeiro sistema que já funciona ponta a ponta, pra validar o fluxo antes do piloto em Floripa. Ficam de fora por enquanto: WhatsApp, Pix, NF real e escrita no Sapron (pagamento = "a descontar no repasse"; avisos só no site).</div>
+<h2>O que ainda falta</h2>
+<div class="c">• E-mail de aviso desligado até ter um serviço de e-mail próprio.<br>• Decisões da Iara (papel da franquia, pontos econômicos) seguem sem resposta.<br>• Prestadores reais: lista de convite pronta (34 empresas), nada enviado; buracos em desentupimento, marcenaria e vidraçaria.</div>
+<h2>Links</h2>
+<div class="c">Site: <a href="https://seazone-tech.github.io/concertai/">https://seazone-tech.github.io/concertai/</a><br>Repo e guia de teste: <a href="https://github.com/seazone-tech/concertai">https://github.com/seazone-tech/concertai</a><br>Testes ponta a ponta: <a href="https://github.com/seazone-tech/concertai/blob/main/tests/e2e/README.md">tests/e2e/README.md</a></div>
+<details><summary>Detalhe técnico</summary><p>Supabase boaystsxsyntdvogdakn, schema concertai (16 tabelas, RLS por papel e imóvel, Storage privado, cron de aprovação vencida em 48h). Front estático em web/, publicado pelo workflow deploy-front no GitHub Pages. Subtasks T620–T627; PRs principais #9, #21, #25, #27, #28, #33, #34, #35, #38, #40, #41, #42, todos mergeados; main bf8dadd com CI e deploy verdes. E2E: 3/3 em 1,4 min contra o site (proprietaria3, franquia.sul, prestador3).</p></details>
+</main></body></html>
