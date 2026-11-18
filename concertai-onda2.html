@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ConcertAI · Onda 2</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0B1030;--surface:#121A42;--border:#252E62;--fg:#F2F3F8;--fg2:#A9AECB;--brand:#5C90FF;--ok:#4ADE80;--warn:#FDBA74;--bad:#FF8A87}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 Inter,system-ui,sans-serif}
+main{max-width:760px;margin:0 auto;padding:32px 16px 64px}
+h1{font-size:26px;margin:0 0 4px}
+.sub{color:var(--fg2);margin:0 0 28px}
+h2{font-size:18px;margin:32px 0 12px;color:var(--brand)}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px 18px;margin:10px 0}
+.row{display:flex;justify-content:space-between;gap:12px;padding:8px 0;border-bottom:1px solid var(--border)}
+.row:last-child{border:0}
+.tag{font-size:13px;font-weight:600;padding:2px 10px;border-radius:999px;white-space:nowrap;align-self:flex-start}
+.ok{background:#14532d55;color:var(--ok)}.warn{background:#7c2d1255;color:var(--warn)}
+ol,ul{padding-left:20px;margin:6px 0}li{margin:4px 0}
+a{color:var(--brand);word-break:break-all}
+details{color:var(--fg2);margin-top:28px}
+</style>
+</head>
+<body><main>
+<h1>ConcertAI · Onda 2 (1/2)</h1>
+<p class="sub">Contratos, design, datasets e Jurídico · 17/11/2026 · nada foi enviado a prestador nem proprietário</p>
+
+<h2>O que foi feito</h2>
+<div class="card">
+<div class="row"><span><b>Nota automática dos agentes (CZT-016)</b>: um "juiz" de outro modelo dá nota aos agentes, e mudança de prompt que piora a nota é barrada antes de entrar</span><span class="tag ok">pronto</span></div>
+<div class="row"><span><b>Telas de quem compra (CZT-045)</b>: vitrine, checkout e área do proprietário revisadas no padrão visual da Seazone; 35 problemas corrigidos</span><span class="tag ok">no site</span></div>
+<div class="row"><span><b>Conserto de emergência (CZT-075)</b>: decisão do Henry, sem procuração nem Jurídico. Até R$ 300 segue o manual; acima disso, sem resposta do proprietário, volta pra franquia</span><span class="tag ok">decidido</span></div>
+<div class="row"><span><b>Integrações e login (CZT-102)</b>: o contrato de cada sistema (Sapron, Stays, Asaas, WhatsApp...) e o login do comprador. Sapron fica só leitura no MVP</span><span class="tag ok">pronto</span></div>
+<div class="row"><span><b>Prova dos agentes (CZT-106)</b>: 63 casos com a resposta certa, 7 por agente (cadastro, KYC, captação, fiscal, termos...)</span><span class="tag ok">pronto</span></div>
+<div class="row"><span><b>Telas do prestador (CZT-110)</b>: aceitar/recusar, termos, foto de prova, nota fiscal e troca de Pix; testado em celular pequeno (360 px)</span><span class="tag ok">pronto</span></div>
+</div>
+
+<h2>O que muda</h2>
+<ul>
+<li>Agente que piorar não entra mais no ar sem ninguém ver.</li>
+<li>Comprador e prestador já têm as telas no padrão final.</li>
+<li>O ConcertAI só lê o Sapron: sem card espelho nem despesa no repasse.</li>
+</ul>
+
+<h2>Falta (fora desta onda)</h2>
+<ul>
+<li><b>Chave do LiteLLM</b> pro gate novo (PR #122): é o Henry quem cria, no AI Portal → Minhas Keys → Nova Key do tipo Aplicação (stg e prd); depois aprova no #ai-key-approvals e grava o secret <code>LITELLM_API_KEY</code> no repo.</li>
+<li>Chave de leitura do Sapron (chamado af16a343) segue com o SRE.</li>
+</ul>
+
+<h2>Como usar</h2>
+<ol>
+<li>Ver as telas: https://seazone-tech.github.io/concertai/</li>
+<li>Rodar a nota dos agentes: <code>npm run eval</code> no repo (o CI faz sozinho em todo PR).</li>
+<li>Abrir os documentos de cada peça nos links abaixo.</li>
+</ol>
+
+<h2>Pra que serve</h2>
+<p>Garante que as próximas ondas (agentes, pagamento, piloto) partam de telas aprovadas, integrações combinadas e uma prova que mede se cada agente responde certo.</p>
+
+<h2>Links</h2>
+<ul>
+<li>https://github.com/seazone-tech/concertai/pull/46</li>
+<li>https://github.com/seazone-tech/concertai/pull/50</li>
+<li>https://github.com/seazone-tech/concertai/pull/105</li>
+<li>https://github.com/seazone-tech/concertai/pull/110</li>
+<li>https://github.com/seazone-tech/concertai/pull/44</li>
+<li>https://github.com/seazone-tech/concertai/pull/47</li>
+<li>https://github.com/seazone-tech/concertai/blob/main/docs/adr/CZT-075-procuracao-emergencial.md</li>
+</ul>
+</main></body></html>
