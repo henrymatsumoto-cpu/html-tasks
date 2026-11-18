@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ConcertAI · Onda 4</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0B1030;--surface:#121A42;--border:#252E62;--fg:#F2F3F8;--fg2:#A9AECB;--brand:#5C90FF;--ok:#4ADE80;--warn:#FDBA74;--bad:#FF8A87}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 Inter,system-ui,sans-serif}
+main{max-width:760px;margin:0 auto;padding:32px 16px 64px}
+h1{font-size:26px;margin:0 0 4px}
+.sub{color:var(--fg2);margin:0 0 28px}
+h2{font-size:18px;margin:32px 0 12px;color:var(--brand)}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px 18px;margin:10px 0}
+.row{display:flex;justify-content:space-between;gap:12px;padding:8px 0;border-bottom:1px solid var(--border)}
+.row:last-child{border:0}
+.tag{font-size:13px;font-weight:600;padding:2px 10px;border-radius:999px;white-space:nowrap;align-self:flex-start}
+.ok{background:#14532d55;color:var(--ok)}.warn{background:#7c2d1255;color:var(--warn)}
+ol,ul{padding-left:20px;margin:6px 0}li{margin:4px 0}
+a{color:var(--brand);word-break:break-all}
+code{font-size:14px;background:#0003;padding:1px 5px;border-radius:5px}
+details{color:var(--fg2);margin-top:28px}
+</style>
+</head>
+<body><main>
+<h1>ConcertAI · Onda 4 (2/2)</h1>
+<p class="sub">Regras de permissão, catálogo, Hub, LGPD e aceite dos termos · 17/11/2026 · nada foi enviado a prestador nem proprietário</p>
+
+<h2>O que foi feito</h2>
+<div class="card">
+<div class="row"><span><b>Regras de permissão (CZT-012)</b>: antes de qualquer ação (cobrar, estornar, aprovar), o sistema responde "pode", "não pode" ou "chama uma pessoa". O valor nunca vem da IA; 96 situações testadas (meta era 50)</span><span class="tag ok">pronto</span></div>
+<div class="row"><span><b>Catálogo e kits (CZT-018)</b>: 20 categorias, 102 serviços e 11 kits no banco, com o que cada serviço inclui e o que a foto de prova precisa mostrar. Ainda sem preço; serviço novo fica fora da venda até ter preço</span><span class="tag ok">pronto</span></div>
+<div class="row"><span><b>Hub de Serviços (CZT-026)</b>: cópia dos prestadores do Hub dentro do ConcertAI, sem mexer no Hub. Nada se perdeu: 1039 prestadores, 1258 serviços, 14 tipos e 3 avaliações, iguais nos dois lados</span><span class="tag ok">pronto</span></div>
+<div class="row"><span><b>Proteção de dados (CZT-040)</b>: telefone, CPF e e-mail não aparecem mais nos registros do sistema; quem pede pra sair não recebe mais nada; dados velhos são apagados toda segunda de madrugada</span><span class="tag ok">no stg</span></div>
+<div class="row"><span><b>Aceite dos termos (CZT-071)</b>: cada aceite guarda qual versão a pessoa aceitou, de onde e quando. Mudou o texto, nasce versão nova e todo mundo aceita de novo</span><span class="tag ok">pronto</span></div>
+</div>
+
+<h2>O que muda</h2>
+<ul>
+<li>Nenhum agente consegue mexer em dinheiro fora das regras: na dúvida, chama uma pessoa.</li>
+<li>O catálogo do banco bate 100% com o documento oficial (133 de 133 linhas).</li>
+<li>O ConcertAI não depende mais de escrever no Hub; quando o Hub for desligado, os dados já estão aqui.</li>
+<li>Os termos aceitos viram prova: dá pra mostrar quem aceitou qual texto.</li>
+</ul>
+
+<h2>Falta (fora desta onda)</h2>
+<ul>
+<li>Prazos de guarda de dados são provisórios até o Jurídico responder.</li>
+<li>Texto final dos termos: hoje está o provisório.</li>
+<li>Ligar o arquivo do Hub ao pedido de titular da LGPD (CZT-074) e trocar a fonte quando o Hub sair.</li>
+</ul>
+
+<h2>Como usar</h2>
+<ol>
+<li>Conferir o catálogo: <code>node scripts/catalogo-estrutura.mjs --banco</code> no repo (deve dar 100%).</li>
+<li>Conferir o Hub: <code>node scripts/migrar-hub.mjs --seco</code> (deve dar "PROVA OK").</li>
+<li>Rodar tudo: <code>npm run verificar</code> (o mesmo do CI, hoje 1212 ok e 0 falha).</li>
+</ol>
+
+<h2>Pra que serve</h2>
+<p>É a base de segurança do ConcertAI: as próximas ondas (agentes de venda, pagamento, piloto) já nascem com as travas de dinheiro, o catálogo certo, os prestadores do Hub e a LGPD resolvida.</p>
+
+<h2>Links</h2>
+<ul>
+<li>https://github.com/seazone-tech/concertai/pull/67</li>
+<li>https://github.com/seazone-tech/concertai/pull/63</li>
+<li>https://github.com/seazone-tech/concertai/pull/143</li>
+<li>https://github.com/seazone-tech/concertai/pull/68</li>
+<li>https://github.com/seazone-tech/concertai/pull/70</li>
+<li>https://github.com/seazone-tech/concertai/pull/148</li>
+<li>https://github.com/seazone-tech/concertai/tree/main/docs/adr</li>
+</ul>
+
+<details><summary>Detalhe técnico</summary>
+<p>PRs mergeados: #63, #67, #68, #69, #70, #143, #144. Na síntese, o teste do aceite contra o stg deu 12/13: o perfil demo já tinha um aceite real da v2 gravado por outra task. O teste passou a contar só o que ele mesmo grava (PR #148), e agora dá 13/13. ADRs: CZT-012, CZT-018, CZT-026, CZT-040, CZT-071 em docs/adr/.</p>
+</details>
+</main></body></html>
