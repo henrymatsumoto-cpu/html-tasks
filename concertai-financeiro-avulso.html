@@ -1,0 +1,41 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ConcertAI · Financeiro</title>
+<style>:root{--bg:#14171c;--card:#1c2027;--tx:#e6e8eb;--mu:#9aa3ad;--ok:#4cc38a;--ac:#ff7a59;--am:#e6b450}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.55 Inter,system-ui,sans-serif}main{max-width:780px;margin:0 auto;padding:24px 16px}
+h1{font-size:22px;margin:0 0 4px}h2{font-size:17px;margin:26px 0 8px;color:var(--ac)}.card{background:var(--card);border-radius:12px;padding:14px 16px;margin:10px 0}
+.mu{color:var(--mu)}.ok{color:var(--ok);font-weight:600}.am{color:var(--am);font-weight:600}a{color:#7cb8ff;word-break:break-all}ol,ul{margin:6px 0;padding-left:20px}li{margin:3px 0}</style></head>
+<body><main>
+<h1>ConcertAI · Fluxo financeiro automático</h1><p class="mu">T817 · 18/11/2026 · tudo em modo simulado, sem dinheiro real</p>
+<h2>O que foi feito</h2>
+<div class="card"><b>Hoje (antes)</b>: o anfitrião pagava, mas o resto do dinheiro (repasse, nota da comissão, contabilidade) dependia de alguém fazer à mão.<br>
+<b>O que muda</b>: o caminho inteiro roda sozinho, sem ninguém tocar:</div>
+<div class="card"><ol>
+<li>O comprador paga com <b>Pix, cartão em até 3x sem juros ou boleto</b>.</li>
+<li>O valor fica <b>guardado</b> até o serviço terminar, a nota do prestador ser aprovada e passarem 72h sem reclamação.</li>
+<li>Aí o sistema faz o <b>split</b>: o líquido vai para o prestador e a comissão fixa fica com a Seazone.</li>
+<li>A <b>nota fiscal da comissão</b> é emitida sozinha (simulada) e o comprador é avisado.</li>
+<li>Cada passo vira um <b>lançamento contábil</b> automático, e a conta fecha em zero.</li>
+<li>Todo dia às 7h10 a <b>conciliação</b> confere os lançamentos com o extrato. Se algo não bate, vira alerta com instrução de o que fazer.</li>
+<li>Sai um <b>arquivo diário</b> (CSV e JSON) pronto para o sistema financeiro.</li>
+<li>Cancelou: o <b>estorno</b> é automático pela política.</li>
+</ol></div>
+<div class="card"><span class="ok">Testado de ponta a ponta</span> no banco real, no computador e no celular: 134 checagens, 0 falhas (rodado de novo ao fechar). Os dados de teste foram apagados no fim.</div>
+<h2>Como usar</h2>
+<div class="card">Nada a fazer no dia a dia: roda sozinho. Para ver, entre no site (https://seazone-tech.github.io/concertai/) como anfitrião e pague um pedido. O arquivo do dia fica na VPS do time em <code>~/.local/share/concertai/financeiro/&lt;dia&gt;/</code>.</div>
+<h2>Pra que serve</h2>
+<div class="card">Deixa o ConcertAI cobrar e repassar sem trabalho manual. Também deixa o Financeiro com os números conferidos todo dia. E isso vale para qualquer comprador, não só para o anfitrião.</div>
+<h2>O que falta (decisão de outras pessoas)</h2>
+<div class="card"><ul>
+<li><span class="am">Gateway</span>: o Bill disse que a Seazone trocou o Asaas pelo Tuna. Por isso tudo foi feito com uma “porta” neutra, em que o Tuna (ou o Asaas) se encaixa depois. Quem decide: Henry, Bill e Financeiro.</li>
+<li><span class="am">Conta e chave do gateway de produção</span>: o Financeiro, depois da decisão acima.</li>
+<li><span class="am">Parecer fiscal</span>: custódia × split e a nota da comissão para pessoa física. Quem responde: Ana C. Benevenuto.</li>
+<li><span class="am">Sistema de destino do arquivo diário</span>: SpotSis, Sienge ou financeiro.seazone.dev. Quem decide: o Financeiro.</li>
+<li><span class="am">Cobrança direta também para proprietário e franquia</span>: falta a Iara confirmar.</li>
+<li><span class="am">Limite de estorno manual</span>: hoje R$ 100 por estorno e R$ 1.000 no mês. Quem decide: Henry.</li>
+<li><span class="am">Quem paga a tarifa do cartão em 3x</span>: hoje a Seazone. Quem decide: o Financeiro.</li>
+</ul></div>
+<h2>Links</h2>
+<div class="card">Spec: https://github.com/seazone-tech/concertai/blob/main/docs/spec-financeiro-avulso.md<br>
+PRs: #158/#159 (spec) · #164 (lançamentos) · #169 (split e meios) · #173 (nota da comissão) · #175 (conciliação) · #180 (teste)<br>
+https://github.com/seazone-tech/concertai/pull/180</div>
+</main></body></html>
