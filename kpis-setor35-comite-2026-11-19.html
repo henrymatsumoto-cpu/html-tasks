@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>KPIs Fornecedores · Comitê</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#080E32;--surf:#0F1742;--surf2:#18225A;--line:#232E6B;--ink:#EEF1FB;--ink2:#B4BBD9;--ink3:#8189B0;--blue:#4D85FF;--ok:oklch(78% .12 150);--bad:oklch(72% .13 30);--warn:oklch(82% .13 80);color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 Figtree,system-ui,sans-serif}
+main{max-width:920px;margin:0 auto;padding:40px 16px 64px}
+h1{font-size:30px;font-weight:800;margin:0 0 6px;letter-spacing:-.01em}
+.sub{color:var(--ink2);margin:0 0 28px}
+h2{font-size:19px;font-weight:700;margin:36px 0 12px}
+p{margin:0 0 12px;color:var(--ink2)}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px}
+.kpi{background:var(--surf);border:1px solid var(--line);border-radius:14px;padding:16px 18px}
+.kpi .v{font-size:28px;font-weight:800;font-variant-numeric:tabular-nums}
+.kpi .l{color:var(--ink3);font-size:13px}
+.kpi.bad .v{color:var(--bad)} .kpi.ok .v{color:var(--ok)} .kpi.warn .v{color:var(--warn)}
+.ops{display:grid;gap:12px}
+.op{background:var(--surf);border:1px solid var(--line);border-radius:14px;padding:16px 20px}
+.op h3{margin:0 0 8px;font-size:17px}
+.op .row{display:grid;grid-template-columns:110px 1fr;gap:4px 12px;color:var(--ink2);font-size:15px}
+.op .row b{color:var(--ink3);font-weight:600}
+.tag{display:inline-block;font-size:12px;font-weight:700;padding:2px 10px;border-radius:999px;margin-left:8px;vertical-align:middle}
+.t-ok{background:color-mix(in oklch,var(--ok) 22%,transparent);color:var(--ok)}
+.t-warn{background:color-mix(in oklch,var(--warn) 22%,transparent);color:var(--warn)}
+.t-bad{background:color-mix(in oklch,var(--bad) 22%,transparent);color:var(--bad)}
+footer{margin-top:40px;color:var(--ink3);font-size:13px}
+@media(max-width:560px){.op .row{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<main>
+<h1>KPIs Fornecedores e Compras · novembro</h1>
+<p class="sub">Setor 35 · de 01 a 18/11/2026 · resumo para o comitê de 19/11</p>
+
+<div class="kpis">
+  <div class="kpi ok"><div class="v">R$ 11.328</div><div class="l">Comissão enxovais · 79% da meta do mês</div></div>
+  <div class="kpi ok"><div class="v">R$ 12.426</div><div class="l">Comissão total · 76% da meta do mês</div></div>
+  <div class="kpi ok"><div class="v">58,7%</div><div class="l">Enxoval comprado conosco · meta 45%</div></div>
+  <div class="kpi bad"><div class="v">36</div><div class="l">Pedidos travados · meta 25</div></div>
+  <div class="kpi bad"><div class="v">27</div><div class="l">Aguardando envio · meta 14</div></div>
+  <div class="kpi warn"><div class="v">40</div><div class="l">Fotógrafos ativos · meta 50</div></div>
+</div>
+
+<h2>Fora da meta</h2>
+<div class="ops">
+  <div class="op"><h3>Pedidos travados e aguardando envio<span class="tag t-bad">pior do mês</span></h3>
+    <div class="row"><b>Hoje</b><span>36 travados (meta 25) e 27 aguardando envio (meta 14). Pico de 49 e 40 entre 13 e 15/11. Harus e Matinali concentram a maior parte.</span>
+    <b>O que muda</b><span>Cobrar Harus e Matinali pelos pedidos parados. Os envios melhoraram na 2ª quinzena: de 1,8 para 6,3 por dia útil.</span></div></div>
+  <div class="op"><h3>Comissão Harus<span class="tag t-warn">abaixo do ritmo</span></h3>
+    <div class="row"><b>Hoje</b><span>R$ 228 de R$ 500. Faltam R$ 272 em 12 dias, mas acelerou: 12 notas entre 16 e 18/11.</span>
+    <b>O que muda</b><span>Os 12 pedidos Harus travados viram comissão quando saírem.</span></div></div>
+  <div class="op"><h3>Fotógrafos e lavanderias<span class="tag t-warn">parado</span></h3>
+    <div class="row"><b>Hoje</b><span>40 fotógrafos ativos (meta 50), com 55 cadastrados. 64 cidades com lavanderia (meta 66), sem homologação nova no mês.</span>
+    <b>O que muda</b><span>Reativar parte dos 15 fotógrafos inativos e fechar 2 lavanderias da lista de 16 cidades pendentes.</span></div></div>
+  <div class="op"><h3>Kits de enxoval e Guarda pó<span class="tag t-bad">zerado</span></h3>
+    <div class="row"><b>Hoje</b><span>0 kits com enxoval (meta 7) e nenhuma nota do Guarda pó (meta R$ 15).</span>
+    <b>O que muda</b><span>Rever se a meta ainda faz sentido ou puxar campanha na lojinha.</span></div></div>
+  <div class="op"><h3>Tickets da Wania<span class="tag t-warn">volta de férias</span></h3>
+    <div class="row"><b>Hoje</b><span>De 1 a 15/11 ela estava de férias. Na volta, 4, 5 e 8 tickets fechados por dia (meta 15). A 1ª resposta está dentro da meta: média de 9 min.</span>
+    <b>O que muda</b><span>Acompanhar a subida esta semana.</span></div></div>
+</div>
+
+<h2>Dado que estava errado e foi corrigido hoje</h2>
+<div class="ops">
+  <div class="op"><h3>Comissão de enxovais caiu no meio do mês<span class="tag t-ok">corrigido</span></h3>
+    <div class="row"><b>Por quê</b><span>A Matinali preenche a nota fiscal no app em lote, a cada 1 a 2 semanas, e não no dia em que emite. 44 notas de 05 a 13/11 só entraram entre 16 e 18/11. Por isso o KPI ficou parado em R$ 2.980 quando o real era R$ 8.927. Acontece desde setembro, mas em novembro o volume foi maior. A RM preenche no mesmo dia.</span>
+    <b>O que muda</b><span>Combinar com a Matinali o preenchimento até 1 dia útil depois da nota, e criar um alerta de pedido pago sem nota no app. O valor do mês não se perde: era só atraso. De 09 a 18/11 já foi relançado.</span></div></div>
+  <div class="op"><h3>Mercado Livre e Wania sem lançamento<span class="tag t-ok">corrigido</span></h3>
+    <div class="row"><b>Por quê</b><span>O PC ficou desligado de 15 a 18/11 e a SIA estava sem login na VPS.</span>
+    <b>O que muda</b><span>Os dias foram lançados hoje. Falta o login da SIA na VPS para não repetir.</span></div></div>
+</div>
+
+<h2>Dado com ressalva</h2>
+<div class="ops">
+  <div class="op"><h3>Ainda não refletem a realidade</h3>
+    <div class="row">
+      <b>AB Card</b><span>R$ 350 é o valor de outubro repetido. Novembro ainda não tem valor.</span>
+      <b>Prospecção</b><span>Os 3 KPIs de prospecção estão zerados o mês todo, porque a fonte antiga (Pipefy) saiu de uso.</span>
+      <b>Suporte</b><span>A meta de 18 cards finalizados por dia parece errada: entram menos de 1 por dia.</span>
+      <b>Auditorias</b><span>Ficam sempre em 0 pela regra, com meta 2, então aparecem sempre vermelhas.</span>
+      <b>Lojinha</b><span>De 13 a 15/11 ficaram de fora pedidos feitos depois das 21h. A diferença é de 1 venda por dia.</span>
+    </div></div>
+</div>
+
+<footer>Fonte: Hub de KPIs (kpi-system), conferido em 19/11/2026 contra lojinha, app Jornada, Suporte Unificado, Sapron, SIA e painel do Mercado Livre.</footer>
+</main>
+</body>
+</html>
