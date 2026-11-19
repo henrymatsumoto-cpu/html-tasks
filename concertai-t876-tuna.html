@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ConcertAI · cobrança pelo Tuna</title>
+<style>
+:root{color-scheme:dark}
+body{margin:0;background:#080E32;color:#E6E9F5;font:16px/1.65 system-ui,-apple-system,"Segoe UI",sans-serif}
+main{max-width:780px;margin:0 auto;padding:40px 18px 60px}
+h1{font-size:1.6rem;margin:0 0 6px}h2{font-size:1.15rem;margin:32px 0 8px;color:#9FB4FF}
+.sub{color:#9AA3C7;margin:0 0 22px}
+.card{background:#111a4a;border:1px solid #23306e;border-radius:14px;padding:16px 20px;margin:12px 0}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:600px){.grid{grid-template-columns:1fr}}
+.rot{font-size:.8rem;text-transform:uppercase;letter-spacing:.06em;color:#9AA3C7;margin:0 0 4px}
+a{color:#7FD1FF;word-break:break-all}li{margin:5px 0}
+.ok{color:#7BE3A6}.dica{color:#FFD27F}
+details{margin-top:28px;color:#9AA3C7}summary{cursor:pointer}
+code{background:#0b1340;border:1px solid #23306e;border-radius:6px;padding:1px 6px;font-size:.9em}
+</style></head><body><main>
+<h1>ConcertAI: cobrança pelo Tuna, sem Asaas</h1>
+<p class="sub">T876 · 19/11/2026</p>
+
+<h2>O que foi feito</h2>
+<div class="grid">
+<div class="card"><p class="rot">Antes</p>A cobrança do cliente e o Pix ao prestador saíam pelo Asaas, que a Seazone não usa mais (aviso do Bill em 17/11).</div>
+<div class="card"><p class="rot">Agora</p><span class="ok">O Asaas saiu do código.</span> A cobrança gera um <b>link de pagamento do Tuna</b>, e o pagamento é confirmado relendo o status no próprio Tuna.</div>
+</div>
+<div class="card">O jeito de gerar o link foi combinado com o atendimento ao hóspede. A Vanessa explicou como elas fazem hoje no console, e o ConcertAI segue o mesmo caminho pela API: o ID do pedido no Tuna é a cobrança do ConcertAI. Se a API não for liberada, o plano B é o atendimento gerar o link à mão.</div>
+
+<h2>Como usar</h2>
+<div class="card"><ol>
+<li>Hoje tudo roda no <b>modo simulado</b>: dá pra testar o fluxo inteiro sem cobrar ninguém.</li>
+<li>Para cobrar de verdade, faltam 2 coisas:
+<ul>
+<li><b>Credencial do Tuna</b> (token e conta). Quem libera é o Bill. <span class="dica">Não mandei nada a ele, como você pediu.</span></li>
+<li><b>Ajuste no banco</b> para aceitar cobrança do Tuna (migration e leitor do aviso de pagamento). Fica com a Zeri.</li>
+</ul></li>
+<li>Com as duas prontas, é só ligar <code>GATEWAY=tuna</code>. Nenhuma regra de preço ou de repasse muda.</li>
+</ol></div>
+
+<h2>Pra que serve</h2>
+<div class="card">O ConcertAI passa a cobrar o cliente pelo mesmo gateway que a Seazone já usa, sem conta nova nem fornecedor que saiu. <b>Atenção:</b> o Tuna não faz Pix avulso para o prestador. O repasse ainda depende de uma decisão do Financeiro: usar o split do Tuna ou outro meio.</div>
+
+<h2>Links</h2>
+<div class="card"><ul>
+<li>Asaas fora (código): https://github.com/seazone-tech/concertai/pull/202</li>
+<li>Asaas fora (banco e docs): https://github.com/seazone-tech/concertai/pull/203</li>
+<li>Adaptador do Tuna: https://github.com/seazone-tech/concertai/pull/204</li>
+<li>Correção da validade do link: https://github.com/seazone-tech/concertai/pull/205</li>
+<li>Fluxo combinado com o atendimento: https://github.com/seazone-tech/concertai/pull/206</li>
+<li>Conversa com a Vanessa e a Nathalia: https://seazone-fund.slack.com/archives/C0CKX9MHT6U/p1795097274823639?thread_ts=1795048657.024559</li>
+</ul></div>
+
+<details><summary>Detalhe técnico</summary>
+<ul>
+<li>Porta neutra: <code>src/financeiro/gateway.ts</code>. Adaptador: <code>src/financeiro/gateway-tuna.ts</code>. Contrato: <code>src/integracoes/tuna.ts</code>. Cliente real e mock: <code>tuna-http.ts</code>.</li>
+<li>Sem <code>TUNA_ACCOUNT</code> ou <code>TUNA_APP_TOKEN</code>, o adaptador falha fechado. O aviso do Tuna é relido em Payment/Status, e só o paymentKey do corpo é usado.</li>
+<li>A palavra "asaas" no código ficou só em comentários históricos e no valor antigo do banco.</li>
+<li>Falta do banco (ADR T817): funções e gatilhos que ainda olham só <code>gateway='asaas'</code>, a política <code>pagamento.tuna</code> e o worker da inbox.</li>
+<li>Faltam também as 4 confirmações da Nathalia. E o Tuna aceita uma URL de webhook por conta: confirmar se a conta <code>seazone-link-de-pagamento</code> já aponta para outro sistema.</li>
+</ul></details>
+</main></body></html>
