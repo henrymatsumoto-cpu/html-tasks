@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Links Matinali automáticos · 20/11</title>
+<style>
+:root{--bg:#14161a;--card:#1d2026;--tx:#e6e6e6;--mut:#9aa3ad;--ac:#d9a441;--ok:#5fb98a;--warn:#e0a640;--bad:#e06a5f}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.55 system-ui,Segoe UI,sans-serif}
+main{max-width:860px;margin:0 auto;padding:28px 16px 60px}
+h1{font-size:24px;margin:0 0 4px}h2{font-size:17px;color:var(--ac);margin:28px 0 8px}
+.mut{color:var(--mut)}
+.num{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:16px}
+@media(max-width:640px){.num{grid-template-columns:1fr 1fr}}
+.num div{background:var(--card);border-radius:10px;padding:10px 14px;border-top:3px solid var(--c);font-size:13px;color:var(--mut)}
+.num b{font-size:24px;display:block;color:var(--c)}
+.card{background:var(--card);border-radius:10px;padding:12px 16px;margin:10px 0}
+.hx{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:640px){.hx{grid-template-columns:1fr}}
+.lb{font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:var(--mut);display:block;margin-bottom:2px}
+ol,ul{margin:4px 0;padding-left:20px}li{margin:6px 0}b{color:#fff}
+code{background:#262a31;padding:1px 5px;border-radius:4px;font-size:13px;word-break:break-all}
+.ok{border-left:3px solid var(--ok)}.warn{border-left:3px solid var(--warn)}
+a{color:var(--ac)}
+details{background:var(--card);border-radius:10px;padding:10px 16px;margin-top:24px}
+summary{cursor:pointer;color:var(--mut)}
+footer{margin-top:32px;font-size:13px;color:var(--mut);text-align:center}
+</style></head><body><main>
+<h1>Links de pagamento da Matinali, automáticos</h1>
+<p class="mut">Um agente gera sozinho os links de pagamento da Matinali (Licenzi) para os pedidos do app Jornada do Enxoval, sem ninguém esperar a Matinali mandar.</p>
+
+<div class="num">
+<div style="--c:var(--ok)"><b>~1 min</b>do pedido parado até os links no card</div>
+<div style="--c:var(--ok)"><b>2 links</b>crédito (1x a 10x) e Pix (7% off)</div>
+<div style="--c:var(--warn)"><b>só "Henry"</b>trava de teste ligada</div>
+<div style="--c:var(--ok)"><b>171</b>testes passando</div>
+</div>
+
+<h2>1. O que foi feito</h2>
+<div class="card ok"><ul>
+<li>Quando um pedido da <b>Matinali</b> entra em <b>Aguardando Link</b> ou <b>Link Expirado</b>, o agente cria dois links na Licenzi: <b>crédito</b> no valor do pedido (o cliente escolhe de 1x a 10x sem juros) e <b>Pix</b> com 7% de desconto.</li>
+<li>Ele cola os links nos campos <b>Link Pix</b> e <b>Link Crédito</b> do card e move o card para <b>Aguardando pagamento</b>.</li>
+<li>Os links valem 15 dias e só podem ser pagos uma vez. O título traz o número do pedido e "Black Friday" quando o pedido está na promoção.</li>
+<li>Não gera link duas vezes para o mesmo pedido. Em Link Expirado, cria links novos e guarda os antigos.</li>
+<li><b>Por enquanto só atua em pedidos de teste com proprietário "Henry".</b> Os pedidos reais seguem do jeito de hoje.</li>
+</ul></div>
+
+<h2>2. Prova (teste de hoje)</h2>
+<div class="card ok">Pedido de teste <b>P-50341</b> (Henry, Matinali, Black Friday): às 12:40 o agente criou crédito <b>R$ 3.984,49</b> (até 10x) e Pix <b>R$ 3.705,58</b>, preencheu os dois campos e moveu o card para Aguardando pagamento, tudo em 2 segundos. Os 7 pedidos reais da Matinali que estavam esperando link foram ignorados, como deve ser.</div>
+
+<h2>3. Como usar</h2>
+<div class="card"><ol>
+<li><b>Não precisa fazer nada:</b> roda sozinho a cada minuto na VPS do time.</li>
+<li>Para testar: crie um pedido Matinali com proprietário <b>Henry</b> e deixe em Aguardando Link. Em até ~2 min os links aparecem no card.</li>
+<li>Para <b>valer para todos os pedidos</b>: o Henry avisa e a trava de teste sai (uma linha no script da rotina).</li>
+<li>Se algo der errado (erro na Licenzi, dado faltando, 3 falhas seguidas), chega um DM do Vel'Koz para o Henry.</li>
+</ol></div>
+
+<h2>4. Pra que serve / quando usar</h2>
+<div class="card">Hoje a Matinali gera os links à mão, e isso leva de horas a 1–3 dias (o pedido fica parado em Aguardando Link). Com o agente, o link sai em cerca de 1 minuto e o pedido já vai para Aguardando pagamento. Isso vale também quando o link expira.</div>
+
+<h2>5. O que ainda falta (decisão do Henry)</h2>
+<div class="card warn"><ul>
+<li><b>Dados do comprador de teste:</b> sem eles, o link sai sem nome/CPF pré-preenchido (o cliente digita no checkout).</li>
+<li><b>Tirar a trava</b> para valer para os pedidos reais. Antes disso, confirmar com a Matinali o desconto do Pix (7% no pedido, mas houve menção a 6% em maio).</li>
+<li><b>Acompanhar o pagamento</b> dos links da Licenzi (o agente de pagamento de hoje só lê links da Rede).</li>
+<li><b>Recompra:</b> quando o card vai para Aguardando pagamento com 2 links, o agente de negociação manda os links ao proprietário pela SIA.</li>
+<li>Trocar o token pessoal do Henry por um token do fornecedores@.</li>
+</ul></div>
+
+<h2>6. Links</h2>
+<div class="card"><ul>
+<li>Código: <a href="https://github.com/seazone-tech/link-matinali-enxoval">github.com/seazone-tech/link-matinali-enxoval</a></li>
+<li>Card de teste no app: pedido P-50341 (board Pedidos)</li>
+</ul></div>
+
+<details><summary>Detalhe técnico</summary><ul>
+<li>VPS do time, cron <code>* * * * *</code> → <code>~/.local/bin/rotina-link-matinali-enxoval.sh</code> (flock), código em <code>~/projetos/link-matinali-enxoval</code> (TypeScript no Node 26).</li>
+<li>Gatilho: <code>enxoval.pedidos_kanban</code>, board pedidos, fase aguardando-link/link-expirado, fornecedor Matinali (leitura sempre filtrada por fase).</li>
+<li>Licenzi: <code>POST /service/v2/payment_links</code>, sem <code>fixed_installment</code>, <code>stock_limit 1</code>, <code>external_code JCE-&lt;pedido&gt;-CRED|PIX-&lt;n&gt;</code>, busca antes por external_code (idempotência).</li>
+<li>Gravação pelo MCP do Jornada (<code>atualizar_campos</code> + <code>mover_card</code>). Estado em SQLite (<code>~/.local/state/link-matinali-enxoval/estado.db</code>).</li>
+<li>Trava: <code>TRAVA_NOME</code> no wrapper (vazio = sem trava). Modos: <code>ROTINA_DRY_RUN=1</code>, <code>ROTINA_CARD=&lt;id&gt;</code>.</li>
+<li>Log: <code>~/.local/state/rotinas/link-matinali-enxoval-AAAA-MM-DD.log</code> (sem dado pessoal). Contrato no healthcheck (última rodada &lt; 10 min) e no maquinas.json.</li>
+</ul></details>
+<footer>T919 · 20/11/2026</footer>
+</main></body></html>
