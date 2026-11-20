@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Saúde dos agentes do Azir · 20/11</title>
+<style>
+:root{--bg:#14161a;--card:#1d2026;--tx:#e6e6e6;--mut:#9aa3ad;--ac:#d9a441;--ok:#5fb98a;--warn:#e0a640;--bad:#e06a5f;--pause:#8a96a8}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.55 system-ui,Segoe UI,sans-serif}
+main{max-width:860px;margin:0 auto;padding:28px 16px 60px}
+h1{font-size:24px;margin:0 0 4px}h2{font-size:17px;color:var(--ac);margin:28px 0 8px}
+.mut{color:var(--mut)}
+.num{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:16px}
+@media(max-width:640px){.num{grid-template-columns:1fr 1fr}}
+.num div{background:var(--card);border-radius:10px;padding:10px 14px;border-top:3px solid var(--c)}
+.num b{font-size:26px;display:block;color:var(--c)}
+.card{background:var(--card);border-radius:10px;padding:12px 16px;margin:10px 0}
+ol,ul{margin:4px 0;padding-left:20px}li{margin:6px 0}b{color:#fff}
+.chip{display:inline-block;font-size:12px;padding:1px 9px;border-radius:99px;margin-right:6px;white-space:nowrap}
+.s{background:#1f3b2c;color:#a9e6c4}.a{background:#4a3a1c;color:#ffd99a}.p{background:#4a2420;color:#ffb3ab}.i{background:#283040;color:#c3cddb}
+.ag{list-style:none;padding:0}.ag li{background:var(--card);border-radius:8px;padding:8px 12px;margin:6px 0}
+.ag .n{font-weight:600;color:#fff}
+footer{margin-top:32px;font-size:13px;color:var(--mut);text-align:center}
+</style></head><body><main>
+<h1>Saúde dos agentes do Azir</h1>
+<p class="mut">20/11/2026 · 30 itens conferidos (29 agentes e serviços + o grupo de rotinas). Vale o status da checagem cética, não o do laudo.</p>
+
+<div class="num">
+<div style="--c:var(--ok)"><b>17</b>saudáveis</div>
+<div style="--c:var(--warn)"><b>9</b>pedem atenção</div>
+<div style="--c:var(--bad)"><b>1</b>com problema</div>
+<div style="--c:var(--pause)"><b>3</b>parados de propósito</div>
+</div>
+
+<h2>Precisa de você</h2>
+<div class="card"><ol>
+<li><b>Heimer travado desde 18/11:</b> a melhoria T874 (revisar a Miss Fortune) nunca sai do Backlog, porque o executor recusa a Miss Fortune, e ele não abre outra enquanto ela estiver aberta. Feche ou mova a T874 pra destravar.</li>
+<li><b>contrato-fotografo religada e falhando a cada 15 min:</b> está no crontab do PC sem o <code>#MIGRACAO-OFF#</code>, mas a conta fornecedores@ não está logada no Chrome do Agente (o relogin do ClickSign pelo Google é recusado). Logar a conta ou desligar de novo; o contrato da Roxana segue em 3/4 sem acompanhamento.</li>
+<li><b>T917 (segurança da lojinha, prazo hoje):</b> apagar a função loja-full-export no Lovable, alerta alto do SRE. Está Travado esperando sua decisão.</li>
+<li><b>Promessa do Ezreal à Carol vence hoje:</b> retorno sobre as compras de enxoval fora da RM/Matinali (FLN-001-CEN, FLN-004-CAN, FLN-008-CAM, FLN-001-CON), sem card de acompanhamento.</li>
+<li><b>KPIs da Wania (501, 502 e 503) de 19/11 não foram lançados:</b> na VPS do time o sia-prod está sem login e não há Nekt. O RayAI cobra todo dia.</li>
+<li><b>T909 e T910 travados (o painel não respondeu logo após o corte):</b> ocupam 2 das 3 vagas de análise da Yummi/Ornn. Clicar em "Tentar de novo" ou fechar, porque as duas falhas já se resolveram sozinhas.</li>
+<li><b>T899, T914, T915 e T911 travados esperando decisão:</b> Wania (cobrança Harus de outubro), Nevine (cadastrar 6 franquias), Vinicius (pedido 781) e Ray (Onda 0 do kpis-mercado-livre).</li>
+<li><b>checkup-claude sem OK recente:</b> a rodada de 19/11 caiu por "OAuth session expired". O incidente "Login do Claude venceu" (T896) segue aberto, e a T036 mostra "consertado" sem que o conserto tenha sido confirmado.</li>
+<li><b>Rodadas perdidas em 19/11 na VPS do time:</b> fotógrafos parados (17h), report da Black Friday (18h) e conformidade da SIA (18h30). O crontab ficou vazio depois do reboot e só foi religado por volta das 21h30, e essas rodadas não foram recuperadas.</li>
+</ol></div>
+
+<h2>Melhorias no Azir</h2>
+<div class="card"><ul>
+<li>O monitor da VPS pessoal não lê os logs do PC nem da VPS do time: <b>16 rotinas</b> aparecem como "desconhecido", mesmo rodando bem.</li>
+<li>O coletor de uso de IA aparece como "atrasado" por engano: o Azir espera 9h, mas o cron real roda às 9h18.</li>
+<li>Há uma brecha no Rengar: a T579 (tela do painel da franquia) foi pra Concluído sem passar pelo QA, porque herdou o especialista da mãe (Seraphine).</li>
+<li>O Heimer não tem timeout nem alerta: um card que nunca saiu do Backlog fica como "trabalhando" sem prazo, e nem o Zilean nem a DM avisam.</li>
+<li>A /api/carga mostra a T865 com <code>naFila: true</code> enquanto o banco diz o contrário, e por isso o dev aparece como "cheio" sem estar.</li>
+<li>Nenhum eval foi rodado ainda: Camille, Jayce, Zeri, Viktor e Seraphine não têm caso conferido, e Diana, Ezreal, Lillia, Quinn, Galio e Gangplank nem têm eval.</li>
+<li>O Ekko não tem gatilho: o poll do GitHub que a ficha dele descreve não existe no código, e os cards de CI continuam indo pro Viktor.</li>
+<li>O aviso-call depende de uma credencial do Composio que vence. Ele ficou cerca de 3h sem ler a agenda em 19/11 (também houve falha de DNS) e cerca de 45 min em 18/11.</li>
+<li>No desktop, o ambiente-sync dá exit 1 por "raiz ausente", por causa do caminho do hub (henry × compu).</li>
+</ul></div>
+
+<h2>Por agente</h2>
+<ul class="ag">
+<li><span class="chip p">problema</span><span class="n">Heimerdinger · Revisor de agentes</span>: travado desde 18/11 pela T874, sem nenhum alerta.</li>
+<li><span class="chip a">atenção</span><span class="n">Rotinas monitoradas</span>: a contrato-fotografo falha, o checkup-claude caiu por OAuth, 3 rodadas de 19/11 se perderam e 16 rotinas aparecem sem log no Azir.</li>
+<li><span class="chip a">atenção</span><span class="n">Ryze · Homologação & Cadastro</span>: está ocioso no Azir, mas a rotina de contrato do fotógrafo, que é da área dele, falha a cada 15 min.</li>
+<li><span class="chip a">atenção</span><span class="n">Caitlyn · KPIs & Auditoria</span>: as rotinas rodam bem, mas os KPIs 501 a 503 da Wania de 19/11 estão pendentes e a T911 está travada.</li>
+<li><span class="chip a">atenção</span><span class="n">Ezreal · Dados</span>: está saudável, mas a promessa à Carol vence hoje sem card.</li>
+<li><span class="chip a">atenção</span><span class="n">Yummi · Conserto de rotinas</span>: tem 4 cards travados (T909, T910, T285 e T896), e 2 deles ocupam vagas.</li>
+<li><span class="chip a">atenção</span><span class="n">Ornn · Guardião de rotinas</span>: a T909 e a T910 estão travadas, e a Oficina automática está desligada desde 18/11.</li>
+<li><span class="chip a">atenção</span><span class="n">Seraphine · Caixa de Entrada</span>: a auto-resposta funciona, mas a T899 (Wania) e a T914 (Nevine) esperam você.</li>
+<li><span class="chip a">atenção</span><span class="n">Vel'Koz · Escuta, pulso, vigia e aviso-call</span>: tudo no ar na VPS pessoal, mas o aviso-call ficou cerca de 3h sem ler a agenda em 19/11.</li>
+<li><span class="chip a">atenção</span><span class="n">Rengar · Caçador de bugs</span>: rodou bem, mas a T579 passou sem QA, e a checagem subiu o status dele de saudável para atenção.</li>
+<li><span class="chip i">de propósito</span><span class="n">Shaco · Coringa</span>: só assume cards, com a execução desligada por regra, e não chegou card sem dono desde 18/11.</li>
+<li><span class="chip i">de propósito</span><span class="n">Miss Fortune · Financeiro</span>: está em sombra com dados de exemplo, e o eval ficou desatualizado depois que o prompt mudou.</li>
+<li><span class="chip i">de propósito</span><span class="n">Pyke · Cobrador</span>: está em sombra e sem erro, mas a T466 está com o tipo errado (alfred-ci, quando quem ele espera é a Iara).</li>
+<li><span class="chip s">saudável</span><span class="n">Viktor · Programador</span>: entregou a T918 hoje e tem 6 entregas em Validação esperando você (a checagem baixou o status de atenção para saudável).</li>
+<li><span class="chip s">saudável</span><span class="n">Sivir · Lojinha & Campanhas</span>: está em sombra e verifica a fila a cada 10 min; a T915 e a T917 esperam você.</li>
+<li><span class="chip s">saudável</span><span class="n">Lillia · Compras 1ª linha & NF</span>: fechou 2 cards ontem; a T016 vence hoje e ainda está no Backlog.</li>
+<li><span class="chip s">saudável</span><span class="n">Gangplank · Compras pontuais</span>: a T010 (Doti) está em Validação esperando você.</li>
+<li><span class="chip s">saudável</span><span class="n">Quinn · Prospecção & Pipedrive</span>: está ocioso, e a T632 está em Validação desde 17/11.</li>
+<li><span class="chip s">saudável</span><span class="n">Camille · Integrações</span>: fechou 5 cards do ConcertAI com CI verde, mas o eval dela nunca rodou.</li>
+<li><span class="chip s">saudável</span><span class="n">Jayce · Front</span>: fechou 3 cards em 18/11 e agora está ocioso, com o eval sem rodar.</li>
+<li><span class="chip s">saudável</span><span class="n">Zeri · Banco</span>: fechou 4 cards em 18/11 e agora está ocioso, com o eval sem rodar.</li>
+<li><span class="chip s">saudável</span><span class="n">Diana · Ciclo Mensal do Fornecedor</span>: está sem demanda desde 16/11; o fechamento de novembro chega em dezembro.</li>
+<li><span class="chip s">saudável</span><span class="n">Braum · Recepção</span>: está ocioso porque não entrou card manual nem do Taskdex desde 17/11.</li>
+<li><span class="chip s">saudável</span><span class="n">Bard · Roteador</span>: todos os cards das últimas 48h ganharam dono, e só uma triagem passou do tempo na semana.</li>
+<li><span class="chip s">saudável</span><span class="n">Zilean · Supervisor de Carga</span>: verifica a cada 5 min; dos 14 alertas abertos, 12 são de prazo vencido em cards parados.</li>
+<li><span class="chip s">saudável</span><span class="n">Galio · Portão de Saída</span>: a vigia do Taskdex roda a cada 10 min sem falha.</li>
+<li><span class="chip s">saudável</span><span class="n">Ivern · Jardineiro de agentes</span>: rodou em 17, 18 e 19/11; hoje é feriado, e ele pula de propósito.</li>
+<li><span class="chip s">saudável</span><span class="n">Neeko · Aprendizado semanal</span>: a W46 terminou ok e a W47 está marcada para hoje às 15h.</li>
+<li><span class="chip s">saudável</span><span class="n">Ekko · Fila Técnica</span>: está ligado e sem erro, mas nunca pegou trabalho real porque não tem gatilho.</li>
+<li><span class="chip s">saudável</span><span class="n">Crons do EKS/Olimpo</span>: os 13 crons deram ok na última execução, e as falhas da semana foram consertadas.</li>
+</ul>
+
+<footer>Levantamento só leitura · 20/11/2026 · 30 workflows (coleta + checagem cética)</footer>
+</main></body></html>
