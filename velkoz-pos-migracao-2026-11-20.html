@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Vel'Koz pós-migração · 20/11</title>
+<style>
+:root{--bg:#14161a;--card:#1d2026;--tx:#e6e6e6;--mut:#9aa3ad;--ac:#d9a441;--ok:#5fb98a;--warn:#e0a640;--bad:#e06a5f;--pause:#8a96a8}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.55 system-ui,Segoe UI,sans-serif}
+main{max-width:860px;margin:0 auto;padding:28px 16px 60px}
+h1{font-size:24px;margin:0 0 4px}h2{font-size:17px;color:var(--ac);margin:28px 0 8px}
+.mut{color:var(--mut)}
+.num{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:16px}
+@media(max-width:640px){.num{grid-template-columns:1fr 1fr}}
+.num div{background:var(--card);border-radius:10px;padding:10px 14px;border-top:3px solid var(--c);font-size:13px;color:var(--mut)}
+.num b{font-size:26px;display:block;color:var(--c)}
+.card{background:var(--card);border-radius:10px;padding:12px 16px;margin:10px 0}
+.card h3{margin:0 0 6px;font-size:15px;color:#fff}
+.hx{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:640px){.hx{grid-template-columns:1fr}}
+.hx p{margin:0}.lb{font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:var(--mut);display:block;margin-bottom:2px}
+ol,ul{margin:4px 0;padding-left:20px}li{margin:6px 0}b{color:#fff}
+code{background:#262a31;padding:1px 5px;border-radius:4px;font-size:13px}
+.ok{border-left:3px solid var(--ok)}.bad{border-left:3px solid var(--bad)}.warn{border-left:3px solid var(--warn)}
+footer{margin-top:32px;font-size:13px;color:var(--mut);text-align:center}
+</style></head><body><main>
+<h1>Vel'Koz depois da migração</h1>
+<p class="mut">Por que ele "não resolve / não manda msg direito" desde o corte de 19/11 ~15h20 pra VPS pessoal.</p>
+
+<div class="num">
+<div style="--c:var(--ok)"><b>6 de 6</b>pedidos no DM respondidos após o corte</div>
+<div style="--c:var(--bad)"><b>94 min</b>sem credencial do Composio no corte</div>
+<div style="--c:var(--warn)"><b>5</b>conversas travadas esperando você</div>
+<div style="--c:var(--bad)"><b>~6h</b>VPS do time sem crontab em 19/11</div>
+</div>
+
+<h2>1. Resumo</h2>
+<div class="card ok"><ol>
+<li><b>Enviar no seu nome funciona hoje.</b> O Vel'Koz responde no DM e a auto-resposta do Azir manda pelo Composio sem erro desde 19/11 à noite.</li>
+<li><b>O que quebrou veio do corte:</b> a credencial do Composio faltou por 94 min na pessoal (15h18–16h52), o seu "pode subir" das 15h09 se perdeu na troca, o <code>corte.sh</code> abortou e deixou o Aprovar das rotinas do time quebrado, o crontab do time sumiu no reboot e faltam <code>JORNADA_MCP_TOKEN</code>/<code>PIPEDRIVE_API_TOKEN</code> na pessoal.</li>
+<li><b>O que dá a sensação de "parado":</b> card travado prende a conversa da pessoa o dia todo, o Azir travou a Ray achando que "não tem SSH pro time" (tem, pelo IP) e o Workflow em segundo plano morre quando o turno acaba.</li>
+</ol></div>
+
+<h2>Por tema</h2>
+
+<div class="card bad"><h3>Credencial do Composio no corte</h3><div class="hx">
+<p><span class="lb">Hoje</span>Já está ok. Mas de 15h18 a 16h52 de 19/11 a pessoal não tinha o token: o post na thread da Iara falhou e o aviso-call errou 94 vezes sem ninguém avisar.</p>
+<p><span class="lb">O que muda</span>O corte passa a copiar e testar essa credencial antes de ligar o serviço, e o saúde-vps avisa se ela sumir.</p>
+</div></div>
+
+<div class="card bad"><h3>Mensagem perdida na troca</h3><div class="hx">
+<p><span class="lb">Hoje</span>Seu "pode subir" das 15h09 caiu entre um listener e outro: não está em nenhuma das duas VPS. Você só repetiu às 16h00.</p>
+<p><span class="lb">O que muda</span>Ao conectar, o Vel'Koz lê o DM desde o último evento e processa o que faltou.</p>
+</div></div>
+
+<div class="card bad"><h3>Botão Aprovar das rotinas do time</h3><div class="hx">
+<p><span class="lb">Hoje</span>O <code>corte.sh</code> parou às 15h19 (a VPS do time não alcança a pessoal). Botão postado pelo time grava o pedido lá, mas o clique cai na pessoal, que não o conhece. Ainda não apareceu: o link-pagamento quebra na segunda 23/11 às 11h.</p>
+<p><span class="lb">O que muda</span>A pessoal busca os pedidos do time por SSH (esse lado funciona) ou as duas entram na mesma rede; depois rodar o resto do corte.</p>
+</div></div>
+
+<div class="card warn"><h3>Crontab do time sumiu no reboot</h3><div class="hx">
+<p><span class="lb">Hoje</span>Reboot às 15h02 de 19/11 zerou o crontab até ~21h32. Não saíram link de pagamento 17h, suporte enxoval 17h, fotógrafos parados, conformidade SIA e vigia SLA das 15h; KPIs rodaram atrasados.</p>
+<p><span class="lb">O que muda</span>Cópia do crontab em arquivo e reinstalação sozinha no boot (ou pelo saúde-vps).</p>
+</div></div>
+
+<div class="card warn"><h3>Card travado prende a conversa</h3><div class="hx">
+<p><span class="lb">Hoje</span>Com um card travado, toda mensagem nova da mesma pessoa no dia fica guardada. A Wania tem 8 msgs sem resposta. Nenhuma decisão sua no quadro desde 19/11 20h20, e a rotina que decidia por você ficou mais restrita desde 18/11.</p>
+<p><span class="lb">O que muda</span>Assunto novo numa DM travada abre card próprio (ou ganha resposta curta) em vez de só esperar.</p>
+</div></div>
+
+<div class="card warn"><h3>"Sem SSH pro time" (premissa falsa)</h3><div class="hx">
+<p><span class="lb">Hoje</span>O Azir tentou pelo apelido <code>vps-time-backoffice</code>, que não resolve na pessoal, e travou o pedido da Ray. Pelo IP funciona.</p>
+<p><span class="lb">O que muda</span>Host no <code>~/.ssh/config</code> da pessoal e a regra corrigida no conhecimento do Azir: pessoal → time funciona; só time → pessoal não.</p>
+</div></div>
+
+<div class="card warn"><h3>Workflow morre no fim do turno</h3><div class="hx">
+<p><span class="lb">Hoje</span>Ele diz "já comecei", dispara em segundo plano e o processo do turno encerra junto. Foi assim com o sync de franquias da lojinha (sobrou só o PR #122). Já acontecia antes da migração.</p>
+<p><span class="lb">O que muda</span>No prompt do Vel'Koz: esperar o Workflow dentro do turno, ou mandar trabalho longo pra um card do Azir.</p>
+</div></div>
+
+<div class="card warn"><h3>Tokens que faltam na pessoal</h3><div class="hx">
+<p><span class="lb">Hoje</span><code>JORNADA_MCP_TOKEN</code> e <code>PIPEDRIVE_API_TOKEN</code> existiam no time e não foram pra pessoal. Ainda não falhou, mas pedido de Jornada/Pipedrive vai travar.</p>
+<p><span class="lb">O que muda</span>Copiar as duas pro <code>mcp-secrets.env</code> da pessoal e incluir na conferência do corte.</p>
+</div></div>
+
+<p class="mut" style="font-size:13px">Descartado nas checagens: mensagens suas descartadas como "subtipo" (todas eram do próprio bot) e diferença de MCP, permissão ou hub entre as VPS (iguais).</p>
+
+<h2>2. Pendências que ficaram</h2>
+<div class="card"><ul>
+<li><b>Resposta da Iara</b> (tasks #101, #206, #260–#264, thread no #comite-szs) nunca foi postada. Basta mandar "posta" na thread do DM.</li>
+<li><b>T899 · Wania</b>: travado desde 19/11 10h12 (boleto Harus), com 8 mensagens guardadas (senha do fornecedores@, contrato do drone no ClickSign).</li>
+<li><b>T911 · Ray</b>: Onda 0 na VPS do time travada pela premissa de "sem SSH".</li>
+<li><b>Aprovações duplicadas</b> <code>304ce7e8215f</code> e <code>81bb5701fc80</code> (6 e 7 franquias): perderam o sentido, dá pra descartar.</li>
+<li><b>PR #122</b> (novalojaseazone) aberto pelo Workflow que morreu: conferir se ficou obsoleto depois do #123.</li>
+</ul></div>
+
+<h2>3. Correções sugeridas (ordem de impacto)</h2>
+<div class="card"><ol>
+<li>Postar a resposta da Iara e decidir os 5 travados (T899, T911, T914, T915, T917).</li>
+<li>Consertar o Aprovar das rotinas do time antes de segunda 23/11 11h (ou fazer o link-pagamento mandar sem botão enquanto isso).</li>
+<li>Copiar <code>JORNADA_MCP_TOKEN</code> e <code>PIPEDRIVE_API_TOKEN</code> pra pessoal.</li>
+<li>Criar o Host <code>vps-time-backoffice</code> na pessoal e corrigir a regra no Azir; reabrir o T911.</li>
+<li>Crontab do time à prova de reboot.</li>
+<li>Vel'Koz não deixar Workflow em segundo plano morrer no fim do turno.</li>
+<li>DM travada: assunto novo abre card próprio.</li>
+<li>Checklist do corte com credencial do Composio + leitura do DM ao reconectar (pra próxima troca).</li>
+</ol></div>
+
+<footer>Investigação só leitura · 20/11/2026 · 4 workflows + síntese</footer>
+</main></body></html>
