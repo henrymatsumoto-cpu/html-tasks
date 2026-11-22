@@ -1,0 +1,104 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Agente de prospecção de fornecedores · como fica o processo</title>
+<style>
+:root{--bg:#080E32;--card:#111a4a;--line:#23306e;--tx:#E6E9F5;--mut:#9AA3C7;--acc:#9FB4FF;--ag:#4FD1A5;--wa:#F6C177}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.6 system-ui,"Segoe UI",sans-serif}
+main{max-width:860px;margin:0 auto;padding:40px 22px 60px}
+h1{font-size:1.55rem;margin:0 0 6px}h2{font-size:1.1rem;margin:30px 0 10px;color:var(--acc)}
+.sub{color:var(--mut);margin:0 0 18px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;margin:14px 0}
+.k{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+.k b{display:block;font-size:1.5rem;color:#fff}.k span{color:var(--mut);font-size:.88rem}
+.flow{position:relative;margin:10px 0 0;padding-left:30px}
+.flow:before{content:"";position:absolute;left:11px;top:6px;bottom:6px;width:2px;background:var(--line)}
+.st{position:relative;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin:0 0 12px}
+.st:before{content:attr(data-n);position:absolute;left:-30px;top:14px;width:24px;height:24px;border-radius:50%;background:var(--bg);border:2px solid var(--ag);color:var(--ag);font-size:.8rem;font-weight:700;display:flex;align-items:center;justify-content:center}
+.st.w:before{border-color:var(--wa);color:var(--wa)}
+.st h3{margin:0 0 4px;font-size:1rem}
+.tag{display:inline-block;font-size:.72rem;font-weight:700;padding:2px 9px;border-radius:999px;margin-left:6px;vertical-align:2px}
+.tag.a{background:rgba(79,209,165,.15);color:var(--ag)}.tag.wa{background:rgba(246,193,119,.15);color:var(--wa)}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:6px}
+.row div{font-size:.93rem}.row .h{color:var(--mut)}
+.row b{display:block;font-size:.75rem;letter-spacing:.04em;text-transform:uppercase;color:var(--mut);margin-bottom:2px}
+.row .n b{color:var(--ag)}
+ul{margin:6px 0;padding-left:20px}li{margin:4px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 18px;margin:12px 0}
+.m{color:var(--mut)}
+table{width:100%;border-collapse:collapse;font-size:.92rem}td,th{padding:6px 8px;border-bottom:1px solid var(--line);text-align:left}th{color:var(--mut);font-weight:600}
+@media(max-width:620px){.row{grid-template-columns:1fr}}
+</style></head><body><main>
+
+<h1>Agente de prospecção de lavanderias e fotógrafos</h1>
+<p class=sub>Proposta, 22/11/2026. Nada foi implementado. O agente cuida de tudo, da cidade do funil 61 até o "sim" do fornecedor. A Wania só entra no fim, para cadastrar. Esta é a versão simples da proposta de 19/11.</p>
+
+<div class=kpis>
+<div class=k><b>3,3%</b><span>dos deals do funil 60 viram Ganho (30 de 903 fechados)</span></div>
+<div class=k><b>73%</b><span>das perdas são falta de resposta ou contato inválido, não recusa</span></div>
+<div class=k><b>58%</b><span>das sugestões do copiloto ficaram sem ação (481 de 830)</span></div>
+<div class=k><b>19</b><span>conversas em negociação, paradas há cerca de 10 dias</span></div>
+</div>
+
+<h2>Como fica o processo</h2>
+<div class=flow>
+
+<div class=st data-n=1><h3>Escolhe a cidade <span class="tag a">AGENTE</span></h3>
+<div class=row><div class=h><b>Hoje</b>Alguém roda a skill e move o card. São 17 cidades paradas em Análise, 5 há cerca de 28 dias em Prospecção e 5 cidades com card duplicado.</div>
+<div class=n><b>O que muda</b>Todo dia o agente lê o funil 61, junta os duplicados e põe até 2 cidades por dia em Prospecção, priorizando quem tem mais imóveis ativos ou em onboarding.</div></div></div>
+
+<div class=st data-n=2><h3>Acha os leads <span class="tag a">AGENTE</span></h3>
+<div class=row><div class=h><b>Hoje</b>As skills rodam na mão (Receita, Instagram, Google). 19% das perdas são contato inválido, e isso só aparece depois do disparo.</div>
+<div class=n><b>O que muda</b>As mesmas skills rodam à noite, sozinhas. Antes de virar card, o agente confere se o número tem WhatsApp e descarta o que é ruim (self-service, telefone fixo, quem está fora do polígono, quem já foi contatado). Cria até 30 cards por cidade no funil 60, sem duplicar.</div></div></div>
+
+<div class=st data-n=3><h3>Faz a cadência <span class="tag a">AGENTE</span></h3>
+<div class=row><div class=h><b>Hoje</b>A cadência do Olimpo dispara 3 templates e para quando o fornecedor responde. A partir daí alguém precisa mover o card na mão.</div>
+<div class=n><b>O que muda</b>Mesmos 3 templates e mesmos números (1962 fotógrafo, 1938 lavanderia), com cota diária por número. Quando o fornecedor responde, o agente assume a conversa no mesmo minuto. Sem resposta depois do 3º contato, o card vai para Perda "Sem Retorno".</div></div></div>
+
+<div class=st data-n=4><h3>Conversa e negocia <span class="tag a">AGENTE</span></h3>
+<div class=row><div class=h><b>Hoje</b>O copiloto sugere e a Wania aprova ou reescreve. Ele trava quando o assunto é valor, repete mensagem e depende do Chrome dela aberto.</div>
+<div class=n><b>O que muda</b>O agente responde sozinho, em dia útil das 8h30 às 18h30. O código decide valor e passo, e a IA só escreve o texto. Ele lê a tabela que a lavanderia manda, em foto ou PDF, e registra as perdas com o motivo certo.</div></div></div>
+
+<div class="st w" data-n=5><h3>Fechou: manda para a Wania <span class="tag wa">WANIA</span></h3>
+<div class=row><div class=h><b>Hoje</b>A Wania negocia, fecha, coleta os dados e cadastra.</div>
+<div class=n><b>O que muda</b>Com o "sim" por escrito, o card vai para uma etapa nova, "Aceite – cadastro". A Wania recebe uma ficha pronta (dados, valores aceitos, resumo da conversa) e só cadastra: lavanderia no Hub de Serviços, fotógrafo no stay-sync-shine.</div></div></div>
+
+<div class=st data-n=6><h3>Fecha os cards <span class="tag a">AGENTE</span></h3>
+<div class=row><div class=h><b>Hoje</b>Os cards ficam abertos até alguém lembrar de fechar.</div>
+<div class=n><b>O que muda</b>Quando o cadastro aparece no Hub ou no artefato, o agente marca Ganho no 60 e, se a cidade ficou coberta, Concluído no 61.</div></div></div>
+</div>
+
+<h2>Regras da negociação (já existem no copiloto)</h2>
+<div class=card><table>
+<tr><th></th><th>Fotógrafo</th><th>Lavanderia</th></tr>
+<tr><td class=m>Filtro</td><td>Câmera DSLR ou mirrorless, grande-angular, tripé e Lightroom. Sem CNPJ, oferece o MEI (não é perda).</td><td>Tem que cobrar por peça, ter calandra ou ferro profissional e não ser autoatendimento.</td></tr>
+<tr><td class=m>Abre com</td><td>Tabela inicial: avulso de R$ 180 a 300, GOP de R$ 120 a 210.</td><td>Pede a tabela dela. Nunca mostra a nossa.</td></tr>
+<tr><td class=m>Concede</td><td>Se ele reclamar, sobe uma vez para a tabela final (teto): avulso até R$ 350, GOP até R$ 245.</td><td>Pede desconto só nas peças acima do teto. Até 10% acima, insiste uma vez.</td></tr>
+<tr><td class=m>Perde</td><td>Pediu acima da tabela final.</td><td>Mais de 10% acima do teto.</td></tr>
+<tr><td class=m>Nunca</td><td>Prometer volume, oferecer deslocamento ou falar de vídeo.</td><td>Prometer volume ou dizer o teto sem ser perguntado.</td></tr>
+</table></div>
+
+<h2>O que se aproveita</h2>
+<div class=card><ul>
+<li><b>Agente de negociação da recompra (Olimpo):</b> o molde em que o código decide e a IA escreve, a escada de concessão, o vigia de conversa travada e as travas de envio.</li>
+<li><b>Cadência atual:</b> templates aprovados, números, a leitura e escrita no Pipedrive e o calendário de dias úteis.</li>
+<li><b>Copiloto:</b> só as regras (tabelas, lente, teto, objeções) e as conversas antigas, que viram prova para testar o agente. A extensão e o painel são desligados.</li>
+<li><b>Skills:</b> cidades-sem-fornecedor, prospeccao-lavanderia e prospeccao-fotografos.</li>
+</ul></div>
+
+<h2>Como liga, sem risco</h2>
+<div class=card><ul>
+<li><b>Preparo:</b> chave da SIA que lê e responde conversa (hoje só existe a de disparo), os IDs dos 2 números e a etapa nova no Pipedrive.</li>
+<li><b>Sombra (1 a 2 semanas):</b> o agente lê as conversas reais e registra o que responderia, sem enviar nada. Só avança com 90% de acerto e zero quebra de regra.</li>
+<li><b>Piloto:</b> 1 categoria (lavanderia) em 1 ou 2 cidades. A cadência do Olimpo e o copiloto saem no mesmo dia, para não ter dois robôs no mesmo card.</li>
+<li><b>Tudo:</b> as duas categorias em todas as cidades.</li>
+</ul></div>
+
+<h2>Decisões suas</h2>
+<div class=card><ul>
+<li><b>Caso fora da regra</b> (ofensa, pedido de deslocamento, lente duvidosa): recomendo que venha para você com botão Aprovar/Reprovar, sem passar pela Wania.</li>
+<li><b>Onde roda:</b> recomendo a VPS do time, como processo da área (o Olimpo está fechado para agente novo).</li>
+<li><b>Identidade:</b> recomendo assinar como "time de Fornecedores Seazone" e admitir que é um assistente se perguntarem.</li>
+<li><b>OK da Ray antes do piloto.</b></li>
+</ul></div>
+
+<p class=m>Fontes: Pipedrive dos funis 60 e 61 (lido em 22/11), auditoria do copiloto (14/10 a 10/11), repositórios sia-copiloto e olimpo (agente-cadencia-fornecedores e agente-negociacao-recompra) e skills de prospecção.</p>
+</main></body></html>
