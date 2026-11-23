@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ConcertAI Onda 1 (1/2)</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0B1030;--surface:#121A42;--border:#252E62;--fg:#F2F3F8;--fg2:#A9AECB;--brand:#5C90FF;--ok:#4ADE80;--warn:#FDBA74;--bad:#FF8A87}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 Inter,system-ui,sans-serif}
+main{max-width:760px;margin:0 auto;padding:32px 16px 64px}
+h1{font-size:26px;margin:0 0 4px}
+.sub{color:var(--fg2);margin:0 0 28px}
+h2{font-size:18px;margin:32px 0 12px;color:var(--brand)}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px 18px;margin:10px 0}
+.row{display:flex;justify-content:space-between;gap:12px;padding:8px 0;border-bottom:1px solid var(--border)}
+.row:last-child{border:0}
+.tag{font-size:13px;font-weight:600;padding:2px 10px;border-radius:999px;white-space:nowrap;align-self:flex-start}
+.ok{background:#14532d55;color:var(--ok)}.warn{background:#7c2d1255;color:var(--warn)}
+ol,ul{padding-left:20px;margin:6px 0}li{margin:4px 0}
+a{color:var(--brand);word-break:break-all}
+details{color:var(--fg2);margin-top:28px}
+</style>
+</head>
+<body><main>
+<h1>ConcertAI · Onda 1 (1/2)</h1>
+<p class="sub">Decisões, segurança, specs e dados da praça · atualizado 22/11/2026 · nada foi enviado a prestador nem proprietário</p>
+<h2>O que foi feito</h2>
+<div class="card">7 das 8 peças estão prontas e no repositório; as duas decisões da liderança (franquia e economia) foram aprovadas pela Iara em 22/11. Falta só obter as chaves das contas externas (WhatsApp, Stays, Sapron, mapas, nota fiscal), que dependem de liderança, SRE e outras áreas.</div>
+<div class="card"><div class="row"><span><b>Papel da franquia (CZT-001)</b>: a Iara aprovou a opção (b) em 22/11: a franquia fica com 25% da taxa da Seazone (~R$ 14 por pedido). Sem card espelho no Sapron</span><span class="tag ok">aprovado</span></div><div class="row"><span><b>4 pontos econômicos (CZT-003)</b>: cancelamento grátis até o check-in, Pix D+1 útil (retenção de 72h nos 5 primeiros), preço = valor do meio + comissão fixa de R$ 30 a R$ 70. Iara: "Ok nos 4 pontos"</span><span class="tag ok">aprovado</span></div><div class="row"><span><b>Chaves das contas externas (CZT-005)</b>: o script que confere cada chave está pronto, mas as contas ainda não existem: 0 de 18 conferências verdes (teste e produção)</span><span class="tag warn">faltam as contas</span></div><div class="row"><span><b>Segurança (CZT-007)</b>: ameaças por integração, travas que desligam mensagens, pagamentos e marketing, checklist em todo PR</span><span class="tag ok">pronto</span></div><div class="row"><span><b>Repositório e ambientes (CZT-009)</b>: todo PR passa por testes; cada merge sobe sozinho no ambiente de teste em ~4 min</span><span class="tag ok">pronto</span></div><div class="row"><span><b>Preços dos concorrentes (CZT-020)</b>: script reexecutável cobre 100 de 101 serviços com fonte e data (99%)</span><span class="tag ok">pronto</span></div><div class="row"><span><b>Jornada de compra (CZT-103)</b>: 52 cenários escritos; as 8 dúvidas têm dono</span><span class="tag ok">pronto</span></div><div class="row"><span><b>Acesso e login (CZT-X02)</b>: como proprietário, franquia e prestador entram, o que cada um pode fazer; Sapron só leitura</span><span class="tag ok">pronto</span></div></div>
+<h2>O que muda</h2>
+<ul>
+<li>A franquia passa a ganhar 25% da taxa da Seazone em todo pedido (antes: nada definido).</li>
+<li>Regras de cancelamento, Pix e preço viraram números fixos, prontos para a tabela de regras do sistema.</li>
+<li>Toda mudança de código passa por teste e sobe sozinha no ambiente de teste.</li>
+</ul>
+<h2>Como usar</h2>
+<ol>
+<li>Abra o documento de cada peça nos links abaixo.</li>
+<li>Para conferir as chaves: <code>bash scripts/checklist-credenciais.sh</code> no repositório (mostra quais estão verdes).</li>
+<li>Para atualizar os preços dos concorrentes: rode de novo o script de coleta (CZT-020).</li>
+</ol>
+<h2>Pra que serve</h2>
+<div class="card">É a base de decisão do ConcertAI: quanto cada um ganha, como o pedido é comprado, quem entra como, e as travas de segurança. As próximas ondas (banco, telas, agentes) usam essas regras.</div>
+<h2>Links</h2>
+<ul>
+<li>Repositório: https://github.com/seazone-tech/concertai</li>
+<li>Decisão da franquia: https://github.com/seazone-tech/concertai/blob/main/docs/adr/ADR-001-papel-da-franquia.md</li>
+<li>4 pontos econômicos: https://github.com/seazone-tech/concertai/blob/main/docs/adr/CZT-003-pontos-economicos.md</li>
+<li>Contas externas: https://github.com/seazone-tech/concertai/blob/main/docs/credenciais.md</li>
+<li>Segurança: https://github.com/seazone-tech/concertai/blob/main/docs/seguranca.md</li>
+<li>Ambientes: https://github.com/seazone-tech/concertai/blob/main/docs/ambientes.md</li>
+<li>Jornada de compra: https://github.com/seazone-tech/concertai/blob/main/docs/spec-jornada-b-compra.md</li>
+<li>Acesso e login: https://github.com/seazone-tech/concertai/blob/main/docs/spec-acesso-login.md</li>
+<li>PRs: #214 (franquia), #209 (economia), #3, #11, #5, #29, #12, #215 (textos alinhados)</li>
+</ul>
+<details><summary>O que ainda está em aberto (sem travar o MVP)</summary>
+<ul>
+<li>Chaves das contas: SIA, Stays, Sapron (Attendant), Didit/consulta de CNPJ (custo a aprovar), Omie (Financeiro), Google Maps, LiteLLM, app do Slack.</li>
+<li>Confirmar com a Iara a cobrança direta do proprietário (no lugar do desconto no repasse).</li>
+<li>Carregar os números no banco (CZT-115). Quem pode religar as travas em produção (Henry + 1 suplente).</li>
+<li>Coleta de preços: ajustar 2 itens (EL-07 e PS-03).</li>
+</ul></details>
+</main></body></html>
