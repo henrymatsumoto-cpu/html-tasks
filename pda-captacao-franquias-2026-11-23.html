@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>PDA Projeto Captação Franquias · Finalização</title>
+<style>
+  :root{--bg:#1b1f24;--card:#232930;--line:#323a44;--txt:#d9dee4;--mut:#9aa4b0;--acc:#7fb4e6;--ok:#86c99a;--warn:#e3c07a}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--txt);font:15px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+  main{max-width:760px;margin:0 auto;padding:36px 20px 60px}
+  h1{font-size:22px;margin:0 0 4px}
+  .sub{color:var(--mut);font-size:13px;margin:0 0 28px}
+  h2{font-size:16px;margin:30px 0 12px;color:var(--acc)}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:12px}
+  .q{color:var(--mut);font-size:13px;margin:0 0 10px;font-style:italic}
+  dl{margin:0;display:grid;grid-template-columns:120px 1fr;gap:6px 12px}
+  dt{color:var(--mut)}
+  dd{margin:0}
+  .tag{display:inline-block;padding:1px 10px;border-radius:999px;font-size:12px;background:#2f3d2f;color:var(--ok)}
+  ul{margin:0;padding-left:20px}
+  li{margin:4px 0}
+  .d{color:var(--mut);font-size:13px}
+  .hx{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .hx h3{font-size:13px;margin:0 0 6px;color:var(--mut);text-transform:uppercase;letter-spacing:.04em}
+  .k{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+  .k div{flex:1;min-width:150px;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 14px}
+  .k b{display:block;font-size:22px;color:var(--txt)}
+  .k span{color:var(--mut);font-size:13px}
+  a{color:var(--acc)}
+  @media(max-width:600px){.hx{grid-template-columns:1fr}dl{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<main>
+  <h1>PDA Projeto Captação Franquias</h1>
+  <p class="sub">Atividades Operação Iara · projeto Comercial Franquias · prazo 06/11/2026 · co-responsáveis Henry, David Soares e Vinicius Satores · finalização em 23/11/2026</p>
+
+  <h2>Respostas à validação de 19/11</h2>
+  <div class="card">
+    <p class="q">Ray: "está concluída sem HTML de finalização. Anexa o HTML com o resultado."</p>
+    <dl>
+      <dt>Resposta</dt><dd>Segue o HTML de finalização. A parte do Henry no projeto foi o Kanban/Funil de Cidades do Sonar, que está em produção desde 28/07. Depois o projeto passou para o repositório captacao-franquias, tocado por outras pessoas.</dd>
+      <dt>Status</dt><dd><span class="tag">Concluído</span></dd>
+      <dt>Dono</dt><dd>Henry</dd>
+    </dl>
+  </div>
+
+  <h2>Resultado</h2>
+  <div class="k">
+    <div><b>21</b><span>PRs do Henry no Sonar, todos mergeados</span></div>
+    <div><b>28/07</b><span>Kanban de Cidades em produção</span></div>
+    <div><b>27/07 a 06/08</b><span>período da entrega</span></div>
+  </div>
+  <p class="d" style="margin:-4px 0 12px">Fonte: <a href="https://github.com/seazone-tech/sonar/pulls?q=is%3Apr+author%3Ahenrymatsumoto-cpu">https://github.com/seazone-tech/sonar/pulls?q=is%3Apr+author%3Ahenrymatsumoto-cpu</a> (conferido em 23/11: 21 PRs, 21 mergeados, de 27/07 a 06/08)</p>
+
+  <div class="card">
+    <h3 style="margin:0 0 10px;font-size:15px">Kanban/Funil de Cidades (Sonar)</h3>
+    <div class="hx">
+      <div><h3>Hoje</h3>O funil de cidades do Sonar está em produção. Os cards andam entre as etapas arrastando, e o card da Análise de Abertura abre a cidade e mostra as prioridades (P) de cada polígono.</div>
+      <div><h3>O que mudou</h3>Agora o funil volta de etapa, tem busca por cidade, mostra as prioridades sem repetir franquia e decide o polígono separado da cidade. Também ganhou uma bancada de teste com a base de produção, que começou por Brasília/DF.</div>
+    </div>
+    <p class="d" style="margin:12px 0 0">Apoio: <a href="https://github.com/seazone-tech/sonar/pull/563">https://github.com/seazone-tech/sonar/pull/563</a> (promoção para produção) · <a href="https://github.com/seazone-tech/sonar/pull/586">https://github.com/seazone-tech/sonar/pull/586</a> (polígono × cidade) · <a href="https://github.com/seazone-tech/sonar/pull/658">https://github.com/seazone-tech/sonar/pull/658</a> (bancada de teste)</p>
+  </div>
+
+  <div class="card">
+    <h3 style="margin:0 0 10px;font-size:15px">Continuidade do projeto</h3>
+    <div class="hx">
+      <div><h3>Hoje</h3>A captação de franquias continua no repositório captacao-franquias, criado em 06/08 como "sucessor do Sonar" e tocado por outras pessoas.</div>
+      <div><h3>O que mudou</h3>A entrega do Henry fechou em 06/08. Desde 10/11, por decisão do Henry, o Sonar não está mais com ele.</div>
+    </div>
+    <p class="d" style="margin:12px 0 0">Apoio: <a href="https://github.com/seazone-tech/captacao-franquias">https://github.com/seazone-tech/captacao-franquias</a></p>
+  </div>
+</main>
+</body>
+</html>
