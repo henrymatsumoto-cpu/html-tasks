@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ConcertAI · Onda 3</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0B1030;--surface:#121A42;--border:#252E62;--fg:#F2F3F8;--fg2:#A9AECB;--brand:#5C90FF;--ok:#4ADE80;--warn:#FDBA74;--bad:#FF8A87}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 Inter,system-ui,sans-serif}
+main{max-width:760px;margin:0 auto;padding:32px 16px 64px}
+h1{font-size:26px;margin:0 0 4px}
+.sub{color:var(--fg2);margin:0 0 28px}
+h2{font-size:18px;margin:32px 0 12px;color:var(--brand)}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px 18px;margin:10px 0}
+.row{display:flex;justify-content:space-between;gap:12px;padding:8px 0;border-bottom:1px solid var(--border)}
+.row:last-child{border:0}
+.tag{font-size:13px;font-weight:600;padding:2px 10px;border-radius:999px;white-space:nowrap;align-self:flex-start}
+.ok{background:#14532d55;color:var(--ok)}.warn{background:#7c2d1255;color:var(--warn)}
+ol,ul{padding-left:20px;margin:6px 0}li{margin:4px 0}
+a{color:var(--brand);word-break:break-all}
+code{background:#0006;padding:1px 6px;border-radius:6px;font-size:14px}
+details{color:var(--fg2);margin-top:28px}
+</style>
+</head>
+<body><main>
+<h1>ConcertAI · Onda 3</h1>
+<p class="sub">Banco, conferência de eval, termos de consumo, integrações e decisões gravadas · 23/11/2026 · nada foi enviado a prestador nem a proprietário, nada foi cobrado</p>
+
+<h2>O que foi feito</h2>
+<div class="card">
+<div class="row"><span><b>Banco do sistema (CZT-010)</b>: 36 tabelas novas e 5 "usuários" de robô, cada um só com o acesso que precisa e nenhum com acesso total. Um teste monta tudo do zero e confere as permissões</span><span class="tag ok">pronto</span></div>
+<div class="row"><span><b>Prova dos agentes (CZT-017)</b>: 60 situações com a resposta certa, 12 para cada agente (pedido, conversa, conferência da foto, exceções e reclamação), incluindo tentativa de fraude e de enganar o robô</span><span class="tag ok">pronto</span></div>
+<div class="row"><span><b>Checagem do Código do Consumidor (CZT-031)</b>: o sistema barra sozinho tela sem preço antes da compra e caixinha de aceite que já vem marcada</span><span class="tag ok">pronto</span></div>
+<div class="row"><span><b>Maps e fechadura (CZT-043)</b>: o sistema calcula o prestador mais perto e gera o código da fechadura que vence no fim do horário marcado. Testado</span><span class="tag ok">pronto</span></div>
+<div class="row"><span><b>Painel de exceções (CZT-111)</b>: o desenho da fila com Aprovar/Reprovar, 24 telas, aprovado em 2 rodadas de revisão</span><span class="tag ok">pronto</span></div>
+<div class="row"><span><b>Consulta de CNPJ e identidade (CZT-027)</b>: pronto e testado no simulado. Falta rodar 3 casos reais</span><span class="tag warn">falta a chave</span></div>
+<div class="row"><span><b>Nota fiscal (CZT-042)</b>: consulta da nota do prestador e emissão da nota da taxa prontas no simulado. O parecer do contador já foi incorporado. Falta testar com nota real</span><span class="tag warn">falta a chave</span></div>
+<div class="row"><span><b>Decisões no banco (CZT-115)</b>: as regras aprovadas (cancelamento, Pix, comissão) estão gravadas e conferidas contra os documentos no ambiente de teste. As outras ficam como "proposta" até a aprovação</span><span class="tag warn">falta prd e OK</span></div>
+</div>
+
+<h2>O que ainda depende de alguém</h2>
+<div class="card"><ul>
+<li><b>Liderança (Iara):</b> aprovar o custo da consulta de CNPJ (Direct Data, ~R$ 0,16 por consulta) e da Didit, e as decisões ainda em proposta (prazos, alçadas, procuração, metas).</li>
+<li><b>Financeiro e Contabilidade:</b> certificado digital da SZS e acesso de teste do Omie para testar a nota fiscal de verdade.</li>
+<li><b>Primeira subida em produção (CZT-090):</b> repetir a conferência das decisões no ambiente real.</li>
+</ul></div>
+
+<h2>Como usar</h2>
+<div class="card"><ol>
+<li>O andamento de cada task da onda está na tabela "Estado da Onda 3" em <code>docs/agentes-e-tasks.md</code> do repositório.</li>
+<li>Para conferir as decisões gravadas: <code>node scripts/politicas.ts</code> (deve dizer "conferência ok").</li>
+<li>Para testar um texto ou tela contra o Código do Consumidor: <code>node scripts/gate-cdc.ts textos</code>.</li>
+<li>O painel de exceções pode ser aberto no protótipo <code>prototipo/design-painel-excecoes.html</code>.</li>
+</ol></div>
+
+<h2>Pra que serve</h2>
+<div class="card">É a base onde o resto do ConcertAI se apoia: o banco seguro, a prova que mede se cada agente responde certo, a trava que impede tela ou mensagem fora da lei do consumidor e as ligações com CNPJ, nota fiscal, mapa e fechadura. Quando as chaves chegarem, basta rodar os testes reais, sem mudar código.</div>
+
+<h2>Links</h2>
+<div class="card"><ul>
+<li>Síntese (docs): https://github.com/seazone-tech/concertai/pull/222</li>
+<li>Banco: https://github.com/seazone-tech/concertai/pull/58</li>
+<li>Prova dos agentes: https://github.com/seazone-tech/concertai/pull/57</li>
+<li>Consumidor: https://github.com/seazone-tech/concertai/pull/52 · /56 · /59</li>
+<li>CNPJ: https://github.com/seazone-tech/concertai/pull/123</li>
+<li>Nota fiscal: https://github.com/seazone-tech/concertai/pull/129</li>
+<li>Maps e fechadura: https://github.com/seazone-tech/concertai/pull/126</li>
+<li>Painel: https://github.com/seazone-tech/concertai/pull/62 · /64</li>
+<li>Decisões: https://github.com/seazone-tech/concertai/pull/217 · /219</li>
+</ul></div>
+
+<details><summary>Detalhe técnico</summary>
+<p>Conferência feita com um verificador por task contra a origin/main. Pendências técnicas registradas: default <code>tomador_tipo</code> = <code>prestador</code> (Modelo A do parecer, migration da Zeri); desarmar o T_DEBITO e alinhar <code>liberar_apos</code> ao Pix do CZT-003 (Zeri); registrar o A28 em <code>evals/agentes.json</code> (a chave do CI existe desde 18/11). O schema ficou <code>concertai</code> (não <code>cuidazone</code>), decisão da CZT-010.</p>
+</details>
+</main></body></html>
