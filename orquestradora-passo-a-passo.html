@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Orquestradora com autonomia · passo a passo</title>
+<style>
+body{margin:0;background:#080E32;color:#E6E9F5;font:16px/1.65 system-ui,-apple-system,"Segoe UI",sans-serif}
+main{max-width:780px;margin:0 auto;padding:40px 18px 60px}
+h1{font-size:1.6rem;margin:0 0 6px}h2{font-size:1.15rem;margin:36px 0 8px;color:#9FB4FF}
+h3{font-size:1rem;margin:4px 0 6px;color:#CFE0FF}
+.sub{color:#9AA3C7;margin:0 0 24px}
+.card{background:#111a4a;border:1px solid #23306e;border-radius:14px;padding:16px 20px;margin:12px 0}
+.passo{display:flex;gap:14px;align-items:flex-start}
+.num{flex:0 0 34px;height:34px;border-radius:999px;background:#2b3a8f;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700}
+.passo>div{flex:1;min-width:0}
+a{color:#7FD1FF}li{margin:5px 0}
+code{background:#0b1340;border:1px solid #23306e;border-radius:6px;padding:1px 6px;font-size:.92em}
+.prompt{position:relative;background:#0b1340;border:1px solid #2f3f8a;border-radius:10px;padding:14px 16px;margin:10px 0;white-space:pre-wrap;font:14px/1.55 ui-monospace,Consolas,monospace;color:#DDE6FF;overflow-x:auto}
+.copiar{position:absolute;top:8px;right:8px;background:#2b3a8f;color:#fff;border:0;border-radius:999px;padding:4px 12px;font-size:12px;cursor:pointer}
+.copiar:hover{background:#3a4cb0}
+.dica{color:#FFD27F}
+table{width:100%;border-collapse:collapse;font-size:.95em}td,th{border-bottom:1px solid #23306e;padding:6px 8px;text-align:left;vertical-align:top}th{color:#9FB4FF}
+</style></head><body><main>
+<h1>Orquestradora com autonomia, passo a passo</h1>
+<p class="sub">Como montar no seu Claude um quadro de tasks que roda sozinho · leva umas 2 horas pra primeira versão</p>
+
+<h2>A ideia em 3 linhas</h2>
+<div class="card">
+<ul>
+<li><b>Quadro</b>: Backlog → Fazendo → Validação → Concluído (e Travado). Cada task é uma linha numa planilha/arquivo.</li>
+<li><b>Orquestradora</b>: uma sessão do Claude que <b>só anota e repassa</b>. Ela não faz o trabalho: abre uma sessão nova do Claude pra cada task e acompanha.</li>
+<li><b>Autonomia</b>: cada sessão roda com permissão total, mas com uma lista clara do que pode fazer sozinha e do que precisa parar e pedir seu OK.</li>
+</ul>
+</div>
+
+<h2>O que você precisa</h2>
+<div class="card">
+<ul>
+<li>Claude Code no Linux (Ubuntu no Windows serve; uma VPS é melhor porque fica ligada 24h).</li>
+<li>Skills do marketplace seazone-skills: <code>geral:criar-agente-duravel</code> (sessão que volta sozinha) e <code>geral:rede-de-maquinas-tailscale-herdr</code> (painéis pra ver as sessões rodando).</li>
+<li>O treinamento do Bill de <b>sessão orquestradora</b>: é a base de tudo que está aqui.</li>
+</ul>
+</div>
+
+<h2>Passo a passo</h2>
+
+<div class="card passo"><span class="num">1</span><div>
+<h3>Crie a pasta e o caderno da orquestradora</h3>
+<p>Abra o Claude no Ubuntu e cole:</p>
+<div class="prompt"><button class="copiar">copiar</button>Crie a pasta ~/orquestradora pra uma sessão orquestradora de tasks. Dentro dela:
+1. tarefas.tsv com as colunas: ID, tarefa, pronto quando, dono/sessão, estado, ponto atual / pergunta da IA, minha resposta, evidência. Estados: backlog, fazendo, validacao, travado, concluido.
+2. CLAUDE.md dizendo que esta sessão SÓ anota e repassa: lê o tarefas.tsv, abre uma sessão nova do Claude para cada task em "fazendo", acompanha, e atualiza a linha com o estado e a evidência. Nunca faz o trabalho da task ela mesma.
+3. regras.md com duas listas: "pode fazer sozinho" e "para e me pergunta" (vou preencher no passo 2).
+4. aprendizados.md vazio, onde cada task termina anotando em 1 linha o que aprendeu.
+Me mostre os arquivos no fim.</div>
+</div></div>
+
+<div class="card passo"><span class="num">2</span><div>
+<h3>Escreva as regras de autonomia (o mais importante)</h3>
+<p>É isso que deixa rodar sozinho sem medo. Edite o <code>regras.md</code> com o seu dia a dia. Um modelo pra começar:</p>
+<table>
+<tr><th>Pode fazer sozinho</th><th>Para e me pergunta</th></tr>
+<tr><td>Ler Slack, e-mail, planilhas, sistemas</td><td>Dinheiro (pagar, aprovar, preço, desconto)</td></tr>
+<tr><td>Rodar skill, montar relatório, HTML</td><td>RH, jurídico, conflito, dado pessoal</td></tr>
+<tr><td>Mandar mensagem a colega sobre a task</td><td>Falar com pessoa de fora da Seazone</td></tr>
+<tr><td>Abrir chamado no suporte</td><td>Apagar, cancelar, revogar qualquer coisa</td></tr>
+<tr><td>Código: PR e merge com review e CI verdes</td><td>Pedido ambíguo (não dá pra saber o que querem)</td></tr>
+</table>
+<p class="dica">Regra de ouro: travar é a última opção. Antes de travar, a sessão tenta pelo menos outros caminhos ou pergunta direto pra pessoa que pediu.</p>
+</div></div>
+
+<div class="card passo"><span class="num">3</span><div>
+<h3>Ensine como cada task termina</h3>
+<p>Cada sessão de task fecha com um bloco que a orquestradora lê. Cole no Claude:</p>
+<div class="prompt"><button class="copiar">copiar</button>No CLAUDE.md da orquestradora, acrescente: toda sessão de task recebe o regras.md no prompt e termina a última mensagem com UM bloco JSON:
+{"status":"validacao|aguardando|travado|concluido","resumo":"1-3 linhas","evidencia":"link, arquivo ou comando que prova","pergunta":"só se travado: a decisão com opções A/B/C e a recomendada"}
+A orquestradora copia o status, o resumo e a evidência pra linha da task no tarefas.tsv. "Pronto" sem evidência não conta.
+"aguardando" = esperando alguém responder; a orquestradora volta nela depois de 1h pra conferir.</div>
+</div></div>
+
+<div class="card passo"><span class="num">4</span><div>
+<h3>Uma sessão por task, que volta se cair</h3>
+<p>Use a skill <code>geral:criar-agente-duravel</code>: ela te guia passo a passo pra cada task rodar numa sessão própria com <code>--session-id</code> (dá pra retomar de onde parou com <code>--resume</code>). Com a <code>geral:rede-de-maquinas-tailscale-herdr</code>, cada sessão vira um painel que você pode abrir e espiar ou responder no meio.</p>
+<p class="dica">Comece com no máximo 2 tasks ao mesmo tempo. Aumenta depois que estiver confiando.</p>
+</div></div>
+
+<div class="card passo"><span class="num">5</span><div>
+<h3>Ligue a permissão total (com trava no destrutivo)</h3>
+<ul>
+<li>No <code>~/.claude/settings.json</code>: <code>"permissions": {"defaultMode": "bypassPermissions"}</code>. Assim a sessão não para pedindo "posso?" a cada comando.</li>
+<li>Peça ao Claude um <b>hook</b> (PreToolUse) que bloqueie só o destrutivo: apagar, cancelar, revogar, force push, drop. O resto passa.</li>
+<li>Segredo (token, senha) nunca vai no prompt nem no CLAUDE.md: fica num arquivo <code>.env</code> com permissão 600.</li>
+</ul>
+</div></div>
+
+<div class="card passo"><span class="num">6</span><div>
+<h3>Faça rodar sozinha</h3>
+<p>Coloque a orquestradora pra acordar a cada 10-15 min (crontab na VPS, ou a própria skill de agente durável). Em cada rodada ela: pega tasks novas do backlog que você liberou, confere as "aguardando", e te avisa (Slack/DM) só quando algo trava ou vai pra Validação.</p>
+</div></div>
+
+<div class="card passo"><span class="num">7</span><div>
+<h3>Use no dia a dia</h3>
+<ol>
+<li>Escreva a task numa linha do tarefas.tsv com o <b>pronto quando</b> (como saber que acabou).</li>
+<li>Mude o estado pra <b>fazendo</b>.</li>
+<li>Volte quando ela pedir: Validação (confere e aprova) ou Travado (responde só a letra A/B/C).</li>
+<li>A cada correção sua, peça pra virar uma linha no regras.md. É assim que a autonomia cresce com o tempo.</li>
+</ol>
+</div></div>
+
+<h2>Pra que serve</h2>
+<div class="card">Tirar da sua mão o trabalho repetido (levantar dado, cobrar alguém, montar relatório, abrir chamado, pequenos consertos) e deixar você só nas decisões. Várias tasks andam em paralelo enquanto você faz outra coisa.</div>
+
+</main>
+<script>
+document.querySelectorAll('.copiar').forEach(b=>b.addEventListener('click',()=>{
+ const t=b.parentElement.innerText.replace(/^copiar\s*/,'');
+ navigator.clipboard.writeText(t).then(()=>{b.textContent='copiado';setTimeout(()=>b.textContent='copiar',1500)});
+}));
+</script>
+</body></html>
