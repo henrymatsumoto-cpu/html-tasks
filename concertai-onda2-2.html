@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ConcertAI · Onda 2 (2/2)</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0B1030;--surface:#121A42;--border:#252E62;--fg:#F2F3F8;--fg2:#A9AECB;--brand:#5C90FF;--ok:#4ADE80;--warn:#FDBA74;--bad:#FF8A87}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 Inter,system-ui,sans-serif}
+main{max-width:760px;margin:0 auto;padding:32px 16px 64px}
+h1{font-size:26px;margin:0 0 4px}
+.sub{color:var(--fg2);margin:0 0 28px}
+h2{font-size:18px;margin:32px 0 12px;color:var(--brand)}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px 18px;margin:10px 0}
+.row{display:flex;justify-content:space-between;gap:12px;padding:8px 0;border-bottom:1px solid var(--border)}
+.row:last-child{border:0}
+.tag{font-size:13px;font-weight:600;padding:2px 10px;border-radius:999px;white-space:nowrap;align-self:flex-start}
+.ok{background:#14532d55;color:var(--ok)}.warn{background:#7c2d1255;color:var(--warn)}
+ol,ul{padding-left:20px;margin:6px 0}li{margin:4px 0}
+a{color:var(--brand);word-break:break-all}
+code{background:#0006;padding:1px 6px;border-radius:6px;font-size:14px}
+details{color:var(--fg2);margin-top:28px}
+</style>
+</head>
+<body><main>
+<h1>ConcertAI · Onda 2 (2/2)</h1>
+<p class="sub">Termos ao Jurídico, parecer fiscal, regras dos agentes, exceções, telas da franquia e novo visual · 23/11/2026 · nada foi enviado a prestador nem a proprietário</p>
+
+<h2>O que foi feito</h2>
+<div class="card">
+<div class="row"><span><b>Termos ao Jurídico (CZT-030)</b>: os fatos dos termos foram enviados ao SeaJuri: preço, escopo, arrependimento, garantia de 90 ou 30 dias, intermediação e material à parte. Não foi escrita nenhuma cláusula. O Jurídico dividiu em dois pedidos: nº 911 (comprador) e nº 912 (prestador)</span><span class="tag warn">na fila do Jurídico</span></div>
+<div class="row"><span><b>Parecer do contador (CZT-072)</b>: a Contabilidade confirmou o modelo de intermediação. A Seazone emite nota só da taxa, com 12,25% de imposto (ISS de 3%). O parecer está anexado ao documento fiscal</span><span class="tag ok">pronto</span></div>
+<div class="row"><span><b>Regras do que cada agente pode fazer (CZT-101)</b>: 62 ações, cada uma com um limite por agente. Na dúvida, a ação nunca é liberada. Há um teste com 1 exemplo certo e 1 errado por ação: 249 de 249 passaram</span><span class="tag ok">pronto</span></div>
+<div class="row"><span><b>Exceções da jornada (CZT-105)</b>: 17 casos fora do normal, como prestador que some ou cliente ausente. Cada caso tem dono, botões, escalada, prazo e cenários de teste. Os 37 testes passaram</span><span class="tag ok">pronto</span></div>
+<div class="row"><span><b>Telas da franquia (CZT-109)</b>: painel, aprovação, "Ciente" e "Tem um problema". A auditoria de design e a revisão do padrão Seazone acharam 34 pontos, e todos foram corrigidos</span><span class="tag ok">pronto</span></div>
+<div class="row"><span><b>Visual novo (CZT-X01)</b>: o protótipo foi refeito no estilo do Jornada do Enxoval e está publicado. Os componentes estão descritos no guia de design</span><span class="tag warn">você valida</span></div>
+</div>
+
+<h2>O que muda</h2>
+<ul>
+<li>O Jurídico já tem tudo o que precisa para escrever os termos. Não é preciso abrir outra ficha.</li>
+<li>A conta de imposto deixou de ser estimativa: foi confirmada pela Contabilidade.</li>
+<li>Agente nenhum faz ação fora da própria alçada, e caso fora do normal sempre tem dono.</li>
+</ul>
+
+<h2>Falta (fora desta onda)</h2>
+<ul>
+<li><b>Você:</b> olhar o protótipo e dizer se o visual ficou bom.</li>
+<li><b>Jurídico:</b> devolver os termos dos pedidos 911 e 912. Quem acompanha é a CZT-114.</li>
+<li><b>Contabilidade (Ana):</b> duas respostas paradas desde 18/11. A primeira é se o texto dos termos basta para a operação não virar revenda. A segunda é quando fecham a retenção do ISS em Florianópolis, que precisa sair antes do piloto.</li>
+<li><b>Liderança:</b> dar o OK na intermediação. O lado fiscal já está confirmado.</li>
+</ul>
+
+<h2>Como usar</h2>
+<ol>
+<li>Ver o protótipo novo: https://henrymatsumoto-cpu.github.io/html-tasks/concertai-prototipo.html</li>
+<li>Ver os pedidos ao Jurídico: https://juridico.seazone.dev (nº 911 e nº 912)</li>
+<li>Abrir cada documento pelos links abaixo.</li>
+</ol>
+
+<h2>Pra que serve</h2>
+<p>É a base legal, fiscal e de regras das próximas ondas: agentes, pagamento e piloto. Com ela, o código parte de termos encaminhados, de imposto confirmado e de limites claros para cada agente.</p>
+
+<h2>Links</h2>
+<ul>
+<li>https://henrymatsumoto-cpu.github.io/html-tasks/concertai-prototipo.html</li>
+<li>https://github.com/seazone-tech/concertai/blob/main/docs/adr/CZT-072-parecer-contador.md</li>
+<li>https://github.com/seazone-tech/concertai/blob/main/docs/adr/CZT-101-commands-alcadas.md</li>
+<li>https://github.com/seazone-tech/concertai/blob/main/docs/spec-jornada-d-excecoes.md</li>
+<li>https://github.com/seazone-tech/concertai/blob/main/docs/design-franquia.md</li>
+<li>https://github.com/seazone-tech/concertai/blob/main/docs/design.md</li>
+<li>https://github.com/seazone-tech/concertai/pull/216 (registro desta síntese)</li>
+</ul>
+
+<details><summary>Detalhe técnico</summary>
+<ul>
+<li>PRs: #49 (X01), #53 (105), #54 e #55 (101), #61 (109), #197 e #199 (072), #216 (docs desta síntese).</li>
+<li>Prova: <code>node --test tests/commands-contrato.test.ts</code> (249/249) e <code>node --test tests/spec-jornada-d.test.mjs</code> (37/37) na main 5c7f789. O protótipo publicado é idêntico (md5) ao <code>prototipo/concertai-prototipo.html</code> da main.</li>
+<li>Ressalvas: as mudanças P1-P16 na máquina de estados ficam para a CZT-006. O E2E da franquia não foi reproduzido na VPS, que não tem Playwright: vale o registro do PR #61. O design.md ainda descreve a sidebar navy, mas a REGRA de 17/11 pede cabeçalho no computador.</li>
+</ul>
+</details>
+</main></body></html>
