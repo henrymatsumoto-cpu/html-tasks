@@ -1,0 +1,48 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Proposta: Hub de lavanderias para a régua nova</title>
+<style>:root{--bg:#16181d;--card:#1f232b;--tx:#e6e8ec;--mu:#9aa3b2;--bd:#2c313b;--ok:#8fd6a8}body{background:var(--bg);color:var(--tx);font:15px/1.55 system-ui,sans-serif;margin:0;padding:24px 16px}main{max-width:900px;margin:auto}h1{font-size:22px;margin-bottom:4px}h2{font-size:17px;margin:0 0 8px}.c{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:16px;margin:14px 0}table{width:100%;border-collapse:collapse}td,th{border-bottom:1px solid var(--bd);padding:8px;vertical-align:top;text-align:left}th{color:var(--mu);font-weight:500}.s{color:var(--mu);font-size:13px}.aviso{border-color:#4d4120;background:#2a2618}ol,ul{margin:6px 0;padding-left:20px}li{margin:3px 0}</style></head><body><main>
+<h1>Proposta: Hub de lavanderias para a régua nova</h1>
+<div class="s">23/11/2026 · Henry → Ray · só proposta</div>
+
+<div class="c aviso"><b>Nada muda ainda.</b> O Hub e a calculadora seguem como estão. Só mexo depois que você e eu aprovarmos esta proposta.</div>
+
+<div class="c"><h2>Hoje × Como fica (Hub)</h2>
+<table><tr><th>Ponto</th><th>Hoje</th><th>Como fica</th></tr>
+<tr><td>Unidade</td><td>Todo preço é lido como "por peça".</td><td>Campo <b>cobra por</b>: peça, kg ou pacote. Se for kg/pacote, guarda o valor do kg/pacote.</td></tr>
+<tr><td>Mínimo</td><td>Só no texto da observação.</td><td>Campo <b>mínimo do pedido</b> (ex.: 40 kg, 50 peças).</td></tr>
+<tr><td>Entrega</td><td>Só sim/não de coleta.</td><td>Campo <b>taxa de entrega</b> em R$ (0 se já incluso).</td></tr>
+<tr><td>Ativa</td><td>"Validada" = conta pra sempre.</td><td>Campo <b>atende hoje</b> (sim/não), separado de validada.</td></tr>
+<tr><td>Cidade</td><td>Texto livre (entra bairro/distrito).</td><td><b>Município</b> oficial + bairro/distrito à parte. Na tela continua aparecendo "Trancoso", "Barra Grande".</td></tr>
+<tr><td>Confirmação</td><td>Não se sabe quando o preço foi conferido.</td><td><b>Preço confirmado em</b> (data) + por quem.</td></tr>
+</table>
+<div class="s">Campos novos começam vazios e opcionais: nada quebra no dia da subida.</div></div>
+
+<div class="c"><h2>Regras da régua (decidir juntos, ficam na calculadora)</h2>
+<ul>
+<li>Cidade com 2+ lavanderias: usar a <b>cesta inteira</b> de uma lavanderia (a mais barata ou a que a franquia usa), não o menor preço peça a peça.</li>
+<li>Só entra lavanderia <b>ativa</b> e com <b>preço confirmado</b>.</li>
+<li>Peça acima de tabela + 25%: entra inteira e a cidade ganha aviso, ou corta no limite?</li>
+<li>Cidade sem lavanderia ativa (ex.: Chapecó): mantém a taxa de hoje.</li>
+<li>Régua usa uma <b>foto do Hub com data</b>, e só recalcula quando a gente trocar a foto.</li>
+</ul></div>
+
+<div class="c"><h2>O que muda pra você (Ray)</h2>
+<ul>
+<li>A régua passa a ler dado arrumado, não texto livre.</li>
+<li>Você decide as regras acima (cesta, limite +25%, cidade sem lavanderia).</li>
+<li>Recebe a foto do Hub com data; o número de cada cidade diz de qual lavanderia veio.</li>
+</ul></div>
+
+<div class="c"><h2>O que muda pra mim (Henry)</h2>
+<ul>
+<li>Criar os campos no Hub (PR com Alfred, staging → homologação → produção).</li>
+<li>Formulário de cadastro e edição ganha as perguntas novas.</li>
+<li>Preencher as 90 lavanderias: o que já está na observação eu pré-preencho; as 17 sem informação precisam confirmar com a lavanderia.</li>
+<li>Calculadora passa a ler os campos novos e a foto com data; fechar as 36 PRs de semente antigas.</li>
+</ul></div>
+
+<div class="c"><h2>Ordem, depois do OK dos dois</h2>
+<ol><li>Você e eu aprovamos (ou ajustamos) esta proposta.</li>
+<li>Subo os campos no Hub, vazios.</li>
+<li>Preenchemos e confirmamos com as lavanderias.</li>
+<li>Calculadora passa a ler, com a foto do Hub datada.</li></ol></div>
+</main></body></html>
