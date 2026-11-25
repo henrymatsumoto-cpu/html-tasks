@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Calculadora e polígono de fotógrafo</title>
+<style>
+  :root{--bg:#1b1f24;--card:#232930;--line:#323a44;--txt:#d9dee4;--mut:#9aa4b0;--acc:#7fb4e6;--ok:#86c99a;--warn:#e3c07a}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--txt);font:15px/1.6 system-ui,-apple-system,"Segoe UI",sans-serif}
+  main{max-width:760px;margin:0 auto;padding:36px 16px 60px}
+  h1{font-size:22px;margin:0 0 4px}
+  .sub{color:var(--mut);font-size:13px;margin:0 0 24px}
+  h2{font-size:16px;margin:28px 0 10px;color:var(--acc)}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 18px;margin-bottom:12px}
+  ul{margin:0;padding-left:20px}
+  li{margin:4px 0}
+  .d{color:var(--mut);font-size:13px}
+  .tag{display:inline-block;padding:1px 10px;border-radius:999px;font-size:12px;background:#3d3624;color:var(--warn)}
+  .prazo{color:var(--ok);font-weight:600}
+  a{color:var(--acc);word-break:break-all}
+  details{margin-top:28px;color:var(--mut);font-size:14px}
+  summary{cursor:pointer;color:var(--txt)}
+</style>
+</head>
+<body>
+<main>
+  <h1>Calculadora e polígono de fotógrafo</h1>
+  <p class="sub">Atividades Operação Iara · dona Ana Carolina, co-responsável Henry · prazo original 13/10/2026 · atualizado em 25/11/2026</p>
+
+  <h2>O que foi feito</h2>
+  <div class="card">
+    <ul>
+      <li>20/10: alinhamento Ana + Adami + Henry sobre a calculadora (PDF na thread do #squad-implantacao).</li>
+      <li>10/11: Ana conferiu o app: a tela de agendar já mostra valor, nº de serviços e nota de cada fotógrafo, mas ainda não diz quem chamar primeiro.</li>
+      <li>09-10/11: pedido do polígono de fotógrafo feito ao Cesar e ao Bernardo (Tech). Cesar: prioridade média, sem data.</li>
+      <li>12/11: calculadora levada de volta ao #squad-implantacao, pedindo alguém do squad para assumir a ordenação da lista.</li>
+    </ul>
+  </div>
+
+  <h2>Como usar / onde está</h2>
+  <div class="card">
+    <ul>
+      <li>Hoje a escolha é manual na tela <b>Agendar imóvel</b> do app de fotos: a lista mostra os fotógrafos da cidade do imóvel, com valor, serviços e nota.</li>
+      <li>Enquanto o polígono não existe, a <b>cidade atendida</b> do cadastro do fotógrafo é o critério de localização.</li>
+    </ul>
+  </div>
+
+  <h2>Pra que serve</h2>
+  <div class="card">
+    <ul>
+      <li><b>Calculadora:</b> quando a região tem mais de um fotógrafo, o app indica quem chamar primeiro.</li>
+      <li><b>Polígono:</b> mostrar no mapa (Szone Host) a área que cada fotógrafo atende, por cor e tag.</li>
+    </ul>
+  </div>
+
+  <h2>Status e próximo passo</h2>
+  <div class="card">
+    <p style="margin:0 0 8px"><span class="tag">Atrasada · depende de Tech</span></p>
+    <ul>
+      <li>As duas partes dependem de Tech: a ordenação no app (squad de implantação) e o polígono no Sapron (Cesar). Nenhuma tem data.</li>
+      <li>A Ana está de férias até 01/12, então o alinhamento com ela fica pra volta.</li>
+      <li><b>Prazo novo proposto:</b> <span class="prazo">12/12/2026</span> para a parte nossa: até 05/12 alinhar com a Ana a regra da calculadora (cidade, depois nota com mínimo de avaliações, depois nº de serviços e valor) e até 12/12 entregar a regra fechada ao squad com o pedido de ordenação.</li>
+      <li>Polígono: cobrar previsão do Cesar no comitê de 03/12 (encaminhamento #101). A entrega depende de Tech.</li>
+    </ul>
+  </div>
+
+  <h2>Links</h2>
+  <div class="card">
+    <ul>
+      <li>Tela de agendar: https://stay-sync-shine.lovable.app/agendar-imovel</li>
+      <li>Post no #squad-implantacao (12/11): https://seazone-fund.slack.com/archives/C0B4RQ6291B/p1794493813033119</li>
+      <li>Thread do comitê com o Cesar: https://seazone-fund.slack.com/archives/C05ES0LFS3G/p1794263540736059?thread_ts=1793905910.675719</li>
+    </ul>
+  </div>
+
+  <details>
+    <summary>Detalhe técnico</summary>
+    <ul>
+      <li>App de fotos: lista de agendar filtra só por cidade e vem em ordem alfabética (src/pages/AgendarImovel.tsx); sem mudança de código desde 22/10 (commit ac61bdf), conforme comentário da Ana de 10/11.</li>
+      <li>Cadastro de fotógrafos: só lista de cidades (campo regions), sem área no mapa.</li>
+      <li>Sapron (geo_polygon): tipos risco, atuação, prospecção, sem interesse e referência externa; não há tipo fotógrafo nem lavanderia.</li>
+      <li>Comitê de 19/11 foi cancelado; o próximo é 03/12.</li>
+    </ul>
+  </details>
+</main>
+</body>
+</html>

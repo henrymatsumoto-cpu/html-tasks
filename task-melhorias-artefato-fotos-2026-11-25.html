@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Artefato de Fotos · status</title>
+<style>
+/* Layout: coluna única de leitura, blocos curtos por seção */
+:root{
+  --bg:#1b1e24; --surface:#232730; --line:#323845; --fg:#e4e7ee; --muted:#9aa3b4;
+  --accent:#7fb3e8; --ok:#7cc79a; --warn:#e3c06f;
+  --sans:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.6 var(--sans)}
+main{max-width:720px;margin:0 auto;padding-block:32px 48px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;flex-direction:column;gap:22px}
+h1{font-size:1.5rem;margin:0;text-wrap:balance}
+.meta{color:var(--muted);font-size:.85rem}
+h2{font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin:0 0 6px}
+section{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+ul{margin:0;padding-left:18px}
+li{margin:3px 0}
+.pill{display:inline-block;padding:1px 10px;border-radius:999px;font-size:.8rem;font-weight:600;background:var(--line)}
+.pill.ok{color:var(--ok)} .pill.warn{color:var(--warn)}
+a{color:var(--accent);word-break:break-all}
+details{color:var(--muted);font-size:.85rem}
+summary{cursor:pointer}
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>Melhorias no artefato de fotos</h1>
+    <div class="meta">Atividades Operação Iara · prazo 30/10/2026 · responsável Henry · atualizado 25/11/2026</div>
+  </header>
+
+  <section>
+    <h2>Respostas à validação de 19/11 (reenviada em 25/11)</h2>
+    <p style="margin:0 0 6px;color:var(--muted);font-style:italic">Ray: "venceu em 30/10 e está sem nenhum comentário. Me diz o status e anexa o HTML."</p>
+    <ul>
+      <li><b>Resposta:</b> foi feito. As abas foram reduzidas e entraram as melhorias abaixo. O FUP de 23/11 com o HTML já está na task.</li>
+      <li><b>Status:</b> Validação.</li>
+      <li><b>Dono:</b> Henry.</li>
+      <li><b>Próximo passo:</b> Ray valida no artefato e a task vai para Concluído. As 5 subatividades em aberto viram uma task nova (fase 2).</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Hoje × O que muda</h2>
+    <ul>
+      <li><b>Hoje:</b> menos abas, cadastro com campos obrigatórios e histórico, acesso só do time, e o artefato é a fonte do alerta de parados e do contrato.</li>
+      <li><b>O que muda na fase 2:</b> MCP do artefato (e no IA Hub), materiais e contratos dos fotógrafos no cadastro.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>O que foi feito</h2>
+    <ul>
+      <li>Menos abas: as telas foram reorganizadas e cada etapa ficou no seu lugar.</li>
+      <li>Cadastro com campos obrigatórios, histórico por fase e motivo ao inativar fotógrafo.</li>
+      <li>Agendamento com filtro de pagamento, botões de WhatsApp e envio de NF.</li>
+      <li>Dados dos fotógrafos protegidos: só o time acessa (publicado em 14/11).</li>
+      <li>O artefato virou a fonte do alerta de fotógrafos parados e do contrato do fotógrafo.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Como usar / onde está</h2>
+    <p style="margin:0">No artefato de Fotógrafos (link abaixo). O time entra com o login de sempre e encontra cadastro, teste prático, agendamento e monitoramento nas abas.</p>
+  </section>
+
+  <section>
+    <h2>Pra que serve</h2>
+    <p style="margin:0">Acompanhar o fotógrafo do cadastro até a homologação num lugar só, com dados confiáveis para o alerta de parados e para montar o contrato.</p>
+  </section>
+
+  <section>
+    <h2>Status e próximo passo</h2>
+    <ul>
+      <li><span class="pill ok">Feito</span> FUP de 23/11 já está na task, com o HTML de finalização.</li>
+      <li><span class="pill warn">Aberto</span> As 5 subatividades criadas em 20/10 seguem como "não iniciado": MCP, MCP no IA Hub, materiais dos fotógrafos (tripé, câmera, lente), contratos dos fotógrafos e revisão do cadastro com esses dados.</li>
+      <li>Próximo passo: Ray valida o que foi entregue. Proposta: as 5 subatividades viram uma task nova (fase 2), para esta poder fechar.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Links</h2>
+    <ul>
+      <li>Artefato: https://stay-sync-shine.lovable.app</li>
+      <li>HTML de finalização (23/11): https://henrymatsumoto-cpu.github.io/html-tasks/melhorias-artefato-fotos-2026-11-23.html</li>
+    </ul>
+  </section>
+
+  <details>
+    <summary>Detalhes</summary>
+    <p>Fontes: linha c4837c4dcaf8b40b8b1340b2e no Taskdex (comentário FUP 23/11 e 5 subatividades), DM da Ray no Slack (cobrança de 19/11 reenviada em 25/11), HTML de 23/11 publicado no GitHub Pages.</p>
+  </details>
+</main>
+</body>
+</html>

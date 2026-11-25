@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Links Matinali pelo iPag</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+/* Layout: coluna única de leitura, seções em sequência, status em destaque discreto */
+:root{
+  --bg:#161a22; --surface:#1e2330; --line:#2c3344;
+  --fg:#e4e7ee; --muted:#9aa2b5; --accent:#7aa2ff;
+  --ok:#5fcf8f; --warn:#f0a35a;
+  --font-display:"Helvetica Neue",Helvetica,Arial,sans-serif;
+  --font-body:"Helvetica Neue",Helvetica,Arial,sans-serif;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.6 var(--font-body);
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:40px 56px}
+main{max-width:680px;margin:0 auto;display:flex;flex-direction:column;gap:28px}
+header{display:flex;flex-direction:column;gap:8px}
+.eyebrow{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+h1{font:600 28px/1.2 var(--font-display);margin:0;text-wrap:balance}
+h2{font:600 18px/1.3 var(--font-display);margin:0 0 8px;color:var(--accent)}
+p{margin:0}
+ul{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px}
+.pill{display:inline-block;padding:2px 12px;border-radius:9999px;font-size:13px;font-weight:600}
+.pill.ok{background:color-mix(in oklch,var(--ok) 18%,transparent);color:var(--ok)}
+.pill.warn{background:color-mix(in oklch,var(--warn) 18%,transparent);color:var(--warn)}
+.status{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px 18px;display:flex;flex-direction:column;gap:10px}
+.row{display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}
+.num{font-variant-numeric:tabular-nums}
+a{color:var(--accent);word-break:break-all}
+a:focus-visible,summary:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+details{border-top:1px solid var(--line);padding-top:16px;color:var(--muted);font-size:14px}
+summary{cursor:pointer;color:var(--fg)}
+details ul{margin-top:10px}
+.small{font-size:14px;color:var(--muted)}
+</style>
+</head>
+<body>
+<main>
+<header>
+  <span class="eyebrow">Taskdex · Atividades Operação Iara · FUP 25/11</span>
+  <h1>Links de pagamento da Matinali saem sozinhos pelo iPag</h1>
+  <p class="small">Task: Avaliar a viabilidade de automatizar o link dos pedidos faturados da Loja Seazone. Responsável: Henry.</p>
+</header>
+
+<section>
+  <h2>O que foi feito</h2>
+  <ul>
+    <li>A Matinali contratou o iPag (no painel aparece como Licenzi). A conta de produção já está ativa e tem links reais da Matinali.</li>
+    <li>Um agente cria os 2 links (Pix com 7% de desconto e cartão em até 10x) sozinho e já coloca no card do pedido.</li>
+    <li>Vale para todos os pedidos da Matinali desde 23/11. O time de implantação foi avisado no canal no mesmo dia.</li>
+    <li>Hoje (25/11), até 19h, saíram links para <span class="num">20</span> pedidos, todos movidos para Aguardando pagamento.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Como usar / onde está</h2>
+  <ul>
+    <li>Ninguém precisa pedir link. Quando o pedido da Matinali cai em <b>Aguardando link de pagamento</b> ou <b>Link expirado</b> no app Jornada, os links aparecem no card em cerca de 1 minuto.</li>
+    <li>O pagamento é conferido sozinho pelo iPag. Se foi pago, o card vai para Pagamento confirmado.</li>
+    <li>O pedido precisa ser pago só pelos links do card. Pagamento fora disso: a implantação anexa o comprovante e move o card à mão.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Pra que serve</h2>
+  <p>Antes, a Matinali gerava os links à mão e o pedido ficava de horas a 1–3 dias parado esperando. Agora o link sai em cerca de 1 minuto, inclusive quando expira.</p>
+</section>
+
+<section>
+  <h2>Status e próximo passo</h2>
+  <div class="status">
+    <div class="row"><span class="pill ok">No ar</span><span>Links automáticos para todos os pedidos da Matinali desde 23/11.</span></div>
+    <div class="row"><span class="pill warn">Em aberto</span><span>Aguardando o iPag responder sobre um problema na geração do link Pix. Previsão de retorno: <b>sexta, 27/11</b>.</span></div>
+    <div class="row"><span class="pill warn">Ajuste</span><span>Pedido em Aguardando link que ainda tem link antigo da Rede no card não é trocado sozinho; nesse caso basta limpar o link antigo (se não foi pago) e o novo sai em ~1 min.</span></div>
+  </div>
+  <p class="small" style="margin-top:10px">Próximo passo: com o retorno do iPag até 27/11, fechar o problema do Pix e mover a task para Validação.</p>
+</section>
+
+<section>
+  <h2>Links</h2>
+  <ul>
+    <li>Aviso ao time (23/11): https://seazone-fund.slack.com/archives/C0A6YSD9H19/p1795465659981769</li>
+    <li>Entrega do agente (20/11): https://henrymatsumoto-cpu.github.io/html-tasks/link-matinali-licenzi-2026-11-20.html</li>
+    <li>Código: https://github.com/seazone-tech/link-matinali-enxoval</li>
+  </ul>
+</section>
+
+<details>
+  <summary>Detalhe técnico</summary>
+  <ul>
+    <li>Agente <code>link-matinali-enxoval</code> na VPS do time, a cada 1 min. Licenzi = conta white-label do iPag (API <code>api.ipag.com.br</code>).</li>
+    <li>Status de 25/11 19:02 (<code>node src/status.ts</code>): 20 pares de links gerados e movidos; 18 falhas de leitura do Jornada por timeout entre 10h34 e 10h55, sem perda de pedido; 17 divergências abertas na conciliação para conferir.</li>
+    <li>Em Aguardando link, card com link da Rede é pulado de propósito (<code>pulado_link_rede</code>); pela regra de 24/11, em Link expirado o link é trocado para iPag mesmo por cima do da Rede.</li>
+    <li>Histórico: aditivo jurídico enviado para assinatura (09/10), Rede sem API (out), iPag validado em sandbox com o Gabriel (23/10), agente no ar com trava de teste (20/11), trava retirada (23/11).</li>
+  </ul>
+</details>
+</main>
+</body>
+</html>
