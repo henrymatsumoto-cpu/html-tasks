@@ -1,0 +1,40 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ConcertAI · Onda 5 (2/2)</title>
+<style>body{background:#16181d;color:#e6e6e6;font-family:system-ui,sans-serif;max-width:820px;margin:auto;padding:16px;line-height:1.5}h1,h2{color:#9ecbff}a{color:#7cc4ff;word-break:break-all}li{margin:4px 0}.ok{color:#7ddc8a}details{margin-top:24px;color:#bbb}</style></head><body>
+<h1>ConcertAI · Onda 5 (2/2)</h1>
+<h2>O que foi feito</h2>
+<p>As 7 partes da onda estão prontas e na versão principal do projeto (conferido em 26/11):</p>
+<ul>
+<li class="ok">Motor de preço: calcula preço, taxa (mínimo R$ 20, teto mensal) e kit só com as regras aprovadas. Já testado contra os 101 serviços do catálogo.</li>
+<li class="ok">Radar de cobertura: mostra onde faltam prestadores em Florianópolis (5 buracos: elétrica, ar, marcenaria, hidráulica e vidraçaria). Roda sozinho das 6h às 20h e bateu com a conferência manual.</li>
+<li class="ok">Reclamação pela SIA: abre o protocolo (CZ-xxxxxx) com prazo de 7 dias e resposta em 1 dia útil, e depois lê esse protocolo. Testado no banco de stg. O PR estava travado em conflito desde 17/11: foi destravado nesta síntese.</li>
+<li class="ok">Triagem de pedidos: o texto livre ou o card do Sapron vira o serviço sugerido. Acertou 96% (meta: 90%); quando fica em dúvida, manda pra avaliação.</li>
+<li class="ok">LGPD: atende o pedido do titular em até 15 dias e barra campanha sem base legal (simulado em stg).</li>
+<li class="ok">Login do comprador: o vínculo com o imóvel é conferido no Sapron a cada pedido. Imóvel sem vínculo é negado e a sessão expira.</li>
+<li class="ok">Massa de teste: 26 pedidos de mentira cobrindo os 17 casos difíceis, recriados do zero em cerca de 10 segundos.</li>
+</ul>
+<h2>Como usar</h2>
+<p>Por enquanto nada muda pra ninguém: tudo fica em teste até o piloto (onda 13). Pra recriar a massa de teste: <code>node scripts/massa-stg.mjs</code>. Pra conferir: <code>node scripts/massa-stg.mjs --conferir</code>, que deve dar 17/17.</p>
+<h2>Pra que serve</h2>
+<p>É o miolo do produto: o preço certo, onde falta prestador, como entra o pedido, quem pode comprar, como fica registrada a reclamação e as regras de LGPD. A massa de teste deixa todo mundo testar sem usar dado real.</p>
+<h2>O que falta (não bloqueia)</h2>
+<ul>
+<li>SIA: a chave, as filas e os templates foram pedidos ao #suporte-ia. Sem eles, o protocolo funciona no nosso banco, mas a mensagem ainda não sai pela SIA de verdade.</li>
+<li>Os valores de taxa são provisórios até a Iara aprovar o ADR CZT-003. Os prazos da LGPD também são provisórios, até o parecer do Jurídico.</li>
+</ul>
+<h2>Links</h2>
+<ul>
+<li>https://github.com/seazone-tech/concertai/pull/75</li>
+<li>https://github.com/seazone-tech/concertai/pull/152</li>
+<li>https://github.com/seazone-tech/concertai/pull/124</li>
+<li>https://github.com/seazone-tech/concertai/pull/238</li>
+<li>https://github.com/seazone-tech/concertai/pull/229</li>
+<li>https://github.com/seazone-tech/concertai/pull/232</li>
+<li>https://github.com/seazone-tech/concertai/pull/74</li>
+<li>https://github.com/seazone-tech/concertai/pull/112</li>
+<li>https://github.com/seazone-tech/concertai/pull/230</li>
+<li>https://github.com/seazone-tech/concertai/pull/233</li>
+</ul>
+<details><summary>Detalhe técnico</summary>
+<p>PR #124: o conflito vinha do <code>src/integracoes/sia-http.ts</code>, criado pelo #130 (envio pelo WhatsApp). O cliente do protocolo foi para o <code>src/integracoes/sia-protocolo-http.ts</code>, sem duplicar o envio. A tabela de contratos foi gerada de novo. Resultado: <code>npm run verificar</code> com 1984 testes e 0 falhas, e o <code>tests/protocolo-sia-banco.test.mjs</code> verde no stg.</p>
+</details>
+</body></html>
