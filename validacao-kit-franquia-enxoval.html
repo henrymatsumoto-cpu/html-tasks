@@ -75,6 +75,14 @@ td.hl{font-weight:700;color:var(--ink)}
 #lb.on{display:flex}
 #lb img{max-width:100%;max-height:100%;border-radius:8px}
 @media (max-width:720px){.rule,.shots{grid-template-columns:1fr}header{padding-top:36px}}
+/* atualizacao 26/11 */
+.upd{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.ucard{background:var(--surf);border:1px solid var(--line);border-left:3px solid var(--blue);border-radius:12px;padding:20px}
+.ucard h3{margin:0 0 8px;font-size:16px}
+.ucard p{margin:8px 0 0;color:var(--ink2);font-size:14px}
+.ucard b{color:var(--ink)}
+.tbd{color:var(--warn);font-weight:700}
+@media (max-width:720px){.upd{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -84,7 +92,7 @@ td.hl{font-weight:700;color:var(--ink)}
   <p class="lead">O Welcome Kit – Comercial passou a incluir 3 mudas de enxoval para cama queen. A franquia não paga: fora do Nordeste a Matinali doa os itens, no Nordeste a Seazone paga a RM.</p>
   <div class="meta">
     <span><b>Task:</b> Kit roupa de cama na entrada da jornada do franqueado</span>
-    <span><b>Atualizado:</b> 09/11/2026</span>
+    <span><b>Atualizado:</b> 26/11/2026</span>
     <span><b>Responsável:</b> Henry Yudi</span>
   </div>
   <div class="vol">
@@ -96,6 +104,39 @@ td.hl{font-weight:700;color:var(--ink)}
 </div></header>
 
 <main class="wrap">
+<section id="atualizacao-2611">
+  <span class="eyebrow">FUP · resposta à validação de 26/11</span>
+  <h2 style="margin-top:8px">Atualização 26/11</h2>
+  <p class="sub">Um bloco por ajuste pedido pela Ray. Dados conferidos hoje na lojinha, no Sapron e no Hub de KPIs. O que ainda depende de decisão aparece como <span class="tbd">[A DEFINIR]</span>.</p>
+  <div class="upd">
+    <div class="ucard">
+      <h3>1. HTML e campo Link</h3>
+      <p><b>Hoje:</b> este HTML voltou a abrir em 26/11 (o repositório voltou ao GitHub Pages).</p>
+      <p><b>O que muda:</b> o link desta página vai no campo Link da task junto com este FUP.</p>
+    </div>
+    <div class="ucard">
+      <h3>2. Kit #952 (piloto, Nordeste)</h3>
+      <p><b>Hoje:</b> o enxoval da RM foi enviado em 30/10 e o card foi para Concluído em 18/11. A caixa da Seazone (camisetas, placas, capachos etc.) foi despachada em 11/11 e ainda não tem baixa de entregue na lojinha.</p>
+      <p><b>Feedback da franquia</b> (item faltando ou errado): sem confirmação até 26/11.</p>
+      <p><b>O que muda:</b> perguntar direto à franquia BPS-006-ADJ se tudo chegou e se faltou algo; resposta registrada no próximo FUP.</p>
+    </div>
+    <div class="ucard">
+      <h3>3. Franquias de outubro e novembro (KPI2912)</h3>
+      <p><b>Outubro:</b> das franquias que estavam sem kit, FLN-001-CAC (#1087, Matinali) e SSA-010-BRR (#1086, RM) pediram o kit com enxoval em 19/11. FLN-007-CAM segue sem kit. O Sapron mostra 6 franqueados criados em outubro, não 7, então a 4ª franquia do levantamento de 09/11 precisa ser conferida.</p>
+      <p><b>Novembro:</b> 7 de 8 franqueados novos já pediram o Welcome Kit – Comercial com enxoval (a 8ª foi criada hoje). Somando os 2 de outubro, são 9 pedidos de kit com enxoval em novembro: 6 Matinali aguardando envio e 3 RM aguardando pagamento.</p>
+      <p><b>O que muda:</b> o KPI2912 está lançado como 0 no Hub porque conta só a tag KIT FRANQUIA, que esses pedidos não têm. A contagem passa a usar o item "Welcome Kit – Comercial" com enxoval, e o mês será relançado. Plano para as franquias de outubro ainda sem kit: <span class="tbd">[A DEFINIR]</span>.</p>
+    </div>
+    <div class="ucard">
+      <h3>4. Metas no Hub e prazo</h3>
+      <p><b>Hoje:</b> as metas estão cadastradas no Hub para novembro: KPI2291 R$ 14.297/mês e KPI2292 45%. Até 25/11: KPI2291 em R$ 12.616 (88% da meta) e KPI2292 em 60,9%, acima da meta.</p>
+      <p><b>Quem validou as metas:</b> <span class="tbd">[A DEFINIR]</span> (o Hub não guarda quem alterou a meta).</p>
+      <p><b>Prazo novo:</b> <span class="tbd">[A DEFINIR]</span>.</p>
+      <p><b>Obs.:</b> o KPI2126 é da CS Onboarding (dono Samuel Peixoto); os desta task são KPI2291, KPI2292 e KPI2912.</p>
+    </div>
+  </div>
+</section>
+
+
 <section>
   <h2>Regra de fornecedor</h2>
   <p class="sub">No pedido do kit, o fornecedor de cada item de enxoval é escolhido de acordo com a região da franquia.</p>
