@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Corte da validação de inbox — Lojinha</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Space+Grotesk:wght@500;700&display=swap">
+<style>
+:root{
+  --bg:#101418; --painel:#171d24; --painel2:#1d2530; --texto:#e7edf3; --texto2:#9fb0bf;
+  --verde:#5fd39a; --azul:#6db3f2; --borda:#27303a; --ambar:#e8b45f;
+  color-scheme: dark;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--texto);font-family:Inter,system-ui,sans-serif;line-height:1.55;
+  padding:0 max(16px,env(safe-area-insert-left,0px)) max(16px,env(safe-area-inset-right,0px))}
+.wrap{max-width:880px;margin:0 auto;padding:36px 0 48px}
+h1{font-family:Space Grotesk,Inter,sans-serif;font-size:clamp(1.5rem,4vw,2.1rem);margin:0 0 6px;text-wrap:balance}
+h2{font-family:Space Grotesk,Inter,sans-serif;font-size:1.05rem;margin:30px 0 10px;color:var(--texto);letter-spacing:.02em}
+.sub{color:var(--texto2);font-size:.95rem;margin:0 0 4px}
+.tag{display:inline-block;background:var(--painel2);border:1px solid var(--borda);color:var(--verde);
+  border-radius:999px;padding:2px 12px;font-size:.8rem;font-weight:600;margin-bottom:14px}
+.hoje{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-top:14px}
+.kpi{background:var(--painel);border:1px solid var(--borda);border-radius:14px;padding:14px 16px;min-width:0}
+.kpi b{display:block;font-family:Space Grotesk,sans-serif;font-size:1.45rem;color:var(--verde)}
+.kpi span{color:var(--texto2);font-size:.82rem}
+ul{margin:8px 0;padding-left:20px}
+li{margin:6px 0}
+.card{background:var(--painel);border:1px solid var(--borda);border-radius:14px;padding:16px 18px;margin:10px 0}
+code{background:var(--painel2);border-radius:6px;padding:1px 6px;font-size:.85em;color:var(--azul)}
+a{color:var(--azul)}
+details{background:var(--painel);border:1px solid var(--borda);border-radius:14px;padding:12px 16px;margin-top:22px}
+summary{cursor:pointer;font-weight:600;color:var(--texto2)}
+table{width:100%;border-collapse:collapse;font-size:.9rem;min-width:420px}
+td,th{padding:7px 10px;border-bottom:1px solid var(--borda);text-align:left;vertical-align:top}
+th{color:var(--texto2);font-weight:600}
+.ok{color:var(--verde);font-weight:600}
+.av{color:var(--ambar)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <span class="tag">Concluído · 26/11/2026 · T1104</span>
+  <h1>Validação da Caixa de Entrada da lojinha agora roda na VPS</h1>
+  <p class="sub">O robô que analisa os pedidos das franquias (duplicado, capacho, chaveiro e resgate) saiu do cluster EKS e passou a rodar na VPS do time, no mesmo molde das outras migrações da semana. Mesmo comportamento, mesmos horários.</p>
+
+  <div class="hoje">
+    <div class="kpi"><b>EKS ⏸️</b><span>CronJob suspenso (PR #4750)</span></div>
+    <div class="kpi"><b>9h · 12h · 15h · 18h</b><span>seg–sex, pelo crontab da VPS</span></div>
+    <div class="kpi"><b>0 falhas</b><span>1ª rodada real já com escrita</span></div>
+  </div>
+
+  <h2>O que foi feito</h2>
+  <ul>
+    <li>A chave de acesso que faltava foi recuperada do histórico (é a mesma que o agente já usava no EKS) e validada — sem troca, sem chamado e sem depender de ninguém.</li>
+    <li>Ensaio geral (só leitura) na VPS: leu os 1.209 cards e terminou sem erro.</li>
+    <li>CronJob suspenso no EKS pelo PR <a href="https://github.com/seazone-tech/gitops-seazone/pull/4750">#4750</a> e rodada transferida pro crontab da VPS do time — nunca os dois escrevendo ao mesmo tempo.</li>
+    <li>1ª rodada real (26/11 23h35): aprovou o pedido #1135 da Harus, que saiu da Caixa de Entrada para "Enviado ao Fornecedor", registrado no histórico pelo próprio agente.</li>
+  </ul>
+
+  <h2>Como usar</h2>
+  <ul>
+    <li>Não precisa fazer nada: o agente segue automático, nos mesmos horários de sempre.</li>
+    <li>Ver como está: log na VPS do time em <code>~/.local/state/rotinas/validacao-inbox-lojinha.log</code> (ou aba Agentes do Azir).</li>
+    <li>Instruções e rollback (voltar pro EKS): <code>~/rotinas/agente-validacao-inbox-lojinha/LEIAME.md</code> na VPS do time — primeiro tira a linha do crontab, depois reativa o CronJob no gitops.</li>
+  </ul>
+
+  <h2>Pra que serve</h2>
+  <p>Pedidos de franquia na Caixa de Entrada não ficam esperando pessoa: o agente barra duplicado, confere capacho e chaveiro contra o nº de imóveis da franquia e avisa no canal #fornecedores quando precisa de atenção humana. Com a migração, toda a fila da lojinha roda na VPS do time, mais barata e fora do cluster compartilhado.</p>
+
+  <h2>Links</h2>
+  <ul>
+    <li>PR da suspensão: https://github.com/seazone-tech/gitops-seazone/pull/4750</li>
+    <li>Pasta do agente (VPS do time): <code>~/rotinas/agente-validacao-inbox-lojinha</code></li>
+  </ul>
+
+  <details>
+    <summary>Detalhe técnico</summary>
+    <table>
+      <tr><th>Item</th><th>Estado</th></tr>
+      <tr><td>CronJob EKS <code>validacao-inbox-lojinha-rodada</code></td><td class="ok">⏸️ suspenso (values-lab, ns lab-olimpo; imagem 0.5.0-gf5e0583; código da VPS = olimpo 871f43d, sem diferença na pasta do agente)</td></tr>
+      <tr><td>Crontab VPS do time</td><td class="ok"><code>0 9,12,15,18 * * 1-5</code> → rodar.sh (flock, timeout 900 s, log JSON)</td></tr>
+      <tr><td>Segredos</td><td class="ok">.env 600 com CF_ACCESS_*, LOJINHA_EXPORT_KEY, INBOX_AGENT_KEY, SLACK_BOT_TOKEN e *_URL do app novo (ohmsfdrrtobvtkpscvlf)</td></tr>
+      <tr><td>INBOX_AGENT_KEY</td><td class="ok">mesmo valor do Supabase novo desde 30/10; teste 400/401 confirmou; recuperação sem rotação</td></tr>
+      <tr><td>Escrita</td><td class="ok">EXTERNAL_WRITES_ENABLED=true (ligada só depois do ⏸️ confirmado)</td></tr>
+      <tr><td>1ª rodada real</td><td class="ok">simulado:false · caixa 1 · aprovados 1 · erros 0 · exit 0 · card 4a4c8640 (#1135, Harus) inbox → sent_to_supplier</td></tr>
+      <tr><td>Chave exposta em DMs antigas</td><td class="av">o valor aparece em texto puro em 2 mensagens de out/10; trocar depois, combinando com o Gabriel, se o Henry quiser</td></tr>
+    </table>
+  </details>
+</div>
+</body>
+</html>
