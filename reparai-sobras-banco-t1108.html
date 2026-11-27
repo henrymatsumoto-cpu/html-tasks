@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex, nofollow">
+<title>ReparAI sobras banco</title>
+<style>
+:root{--bg:#15171c;--card:#1e2128;--tx:#e6e8ec;--mut:#9aa1ad;--ac:#7cc4a4;--warn:#e0b35c}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.55 system-ui,sans-serif}
+main{max-width:760px;margin:0 auto;padding:24px 16px}
+h1{font-size:1.5rem}h2{font-size:1.1rem;color:var(--ac);margin-top:28px}
+.c{background:var(--card);border-radius:12px;padding:14px 16px;margin:10px 0}
+.w{border-left:3px solid var(--warn)}a{color:var(--ac);word-break:break-all}li{margin:4px 0}small{color:var(--mut)}
+</style></head><body><main>
+<h1>ReparAI · sobras de banco da revisão geral</h1>
+<small>T1108 · 27/11/2026</small>
+
+<h2>O que foi feito</h2>
+<div class="c"><ul>
+<li><b>Nota da comissão:</b> o tomador passa a ser o prestador, e as notas antigas não são reescritas (PR #252).</li>
+<li><b>Teste do anfitrião:</b> voltou a rodar contra o banco atual (PR #272).</li>
+<li><b>Presença do prestador, garantia vencida e celular:</b> o prestador pode confirmar a presença pelo painel, a garantia vencida mostra as datas certas e o banco recusa telefone fixo (PR #269).</li>
+<li><b>Aviso de expiração:</b> não fala mais em queda de nota, porque essa penalidade não existe (PR #251).</li>
+<li><b>Textos 911/912:</b> já tinham sido publicados por outra task. Não foram publicados de novo.</li>
+</ul></div>
+
+<h2>O que ainda falta</h2>
+<div class="c w"><ul>
+<li>Fazer o merge dos 4 PRs e aplicar no banco. Nesta rodada isso estava proibido: o banco é o mesmo para teste e produção, e uma das mudanças mexe em nota fiscal. Por isso depende do seu OK.</li>
+<li>Esconder da vitrine o prestador com termos pendentes: falta a regra no banco (proposta pronta) e o ajuste na tela, que é da Jayce.</li>
+<li>Alinhar o código da nota fiscal: fica com a T1107.</li>
+<li>Pendências novas: o limite de R$ 300 ainda está fixo no banco, e o Pix do cadastro e o Pix do repasse ficam em tabelas diferentes.</li>
+</ul></div>
+
+<h2>Como usar</h2>
+<div class="c">Aprove pelo botão do card. Aí eu faço o merge na ordem 56 → 57 → 58, aplico todas as migrations e confiro cada item com os testes de banco.</div>
+
+<h2>Para que serve</h2>
+<div class="c">Fecha as correções de banco que a revisão geral achou antes do piloto: nota da comissão certa, garantia com as datas certas, celular válido para o WhatsApp e avisos sem promessa falsa.</div>
+
+<h2>Links</h2>
+<div class="c"><ul>
+<li>https://github.com/seazone-tech/concertai/pull/252</li>
+<li>https://github.com/seazone-tech/concertai/pull/272</li>
+<li>https://github.com/seazone-tech/concertai/pull/269</li>
+<li>https://github.com/seazone-tech/concertai/pull/251</li>
+</ul></div>
+</main></body></html>
