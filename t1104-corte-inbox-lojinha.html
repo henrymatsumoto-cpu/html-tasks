@@ -15,7 +15,7 @@
 }
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--texto);font-family:Inter,system-ui,sans-serif;line-height:1.55;
-  padding:0 max(16px,env(safe-area-insert-left,0px)) max(16px,env(safe-area-inset-right,0px))}
+  padding-block:0; padding-left:max(16px,env(safe-area-inset-left,0px)); padding-right:max(16px,env(safe-area-inset-right,0px))}
 .wrap{max-width:880px;margin:0 auto;padding:36px 0 48px}
 h1{font-family:Space Grotesk,Inter,sans-serif;font-size:clamp(1.5rem,4vw,2.1rem);margin:0 0 6px;text-wrap:balance}
 h2{font-family:Space Grotesk,Inter,sans-serif;font-size:1.05rem;margin:30px 0 10px;color:var(--texto);letter-spacing:.02em}
@@ -33,7 +33,10 @@ code{background:var(--painel2);border-radius:6px;padding:1px 6px;font-size:.85em
 a{color:var(--azul)}
 details{background:var(--painel);border:1px solid var(--borda);border-radius:14px;padding:12px 16px;margin-top:22px}
 summary{cursor:pointer;font-weight:600;color:var(--texto2)}
-table{width:100%;border-collapse:collapse;font-size:.9rem;min-width:420px}
+table{width:100%;border-collapse:collapse;font-size:.9rem;overflow-wrap:anywhere}
+code{overflow-wrap:anywhere}
+li{overflow-wrap:anywhere}
+a:focus-visible,summary:focus-visible{outline:2px solid var(--azul);outline-offset:4px}
 td,th{padding:7px 10px;border-bottom:1px solid var(--borda);text-align:left;vertical-align:top}
 th{color:var(--texto2);font-weight:600}
 .ok{color:var(--verde);font-weight:600}
@@ -63,7 +66,7 @@ th{color:var(--texto2);font-weight:600}
   <h2>Como usar</h2>
   <ul>
     <li>Não precisa fazer nada: o agente segue automático, nos mesmos horários de sempre.</li>
-    <li>Ver como está: log na VPS do time em <code>~/.local/state/rotinas/validacao-inbox-lojinha.log</code> (ou aba Agentes do Azir).</li>
+    <li>Ver como está: log na VPS do time em <code>~/.local/state/rotinas/validacao-inbox-lojinha.log</code> (o monitor do Azir ainda precisa ser atualizado para o novo executor).</li>
     <li>Instruções e rollback (voltar pro EKS): <code>~/rotinas/agente-validacao-inbox-lojinha/LEIAME.md</code> na VPS do time — primeiro tira a linha do crontab, depois reativa o CronJob no gitops.</li>
   </ul>
 
