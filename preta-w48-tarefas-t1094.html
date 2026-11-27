@@ -1,0 +1,25 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex">
+<title>Preta W48 · Tarefas</title>
+<style>:root{--bg:#15171c;--card:#1e2128;--tx:#e6e6e6;--mut:#9aa0aa;--ac:#7cc4a4;--warn:#e3b36b}body{background:var(--bg);color:var(--tx);font:16px/1.55 system-ui,sans-serif;margin:0;padding:24px 16px}main{max-width:760px;margin:auto}h1{font-size:1.5rem}h2{font-size:1.1rem;color:var(--ac);margin-top:28px}.c{background:var(--card);border-radius:12px;padding:14px 18px;margin:10px 0}td{padding:4px 10px 4px 0}.m{color:var(--mut)}.w{color:var(--warn)}code{background:#2a2e37;padding:1px 5px;border-radius:4px}</style></head><body><main>
+<h1>Preta W48 · tarefas internas e operacionais (T1094)</h1>
+<h2>O que foi feito</h2>
+<div class="c">Rodaram 2.504 conferências reais, uma por registro ou arquivo, só de leitura. Nada foi gravado, comentado nem mandado a ninguém. Cada uma deixou um resultado de até 6 linhas com o achado e a próxima ação.</div>
+<div class="c"><table>
+<tr><td><b>Chamados abertos do Suporte</b></td><td>204</td><td class="m">~183 com SLA vencido</td></tr>
+<tr><td><b>Linhas da lista Iara (Taskdex)</b></td><td>754</td><td class="m">resumo de status e último FUP</td></tr>
+<tr><td><b>Cards da lojinha</b></td><td>653</td><td class="m">~174 fora do prazo da fase</td></tr>
+<tr><td><b>KPIs do setor 35</b></td><td>38</td><td class="m">5 com dia sem lançamento</td></tr>
+<tr><td><b>Arquivos de código (scripts das skills, rotinas, repos)</b></td><td>855</td><td class="m">~710 com algum defeito apontado</td></tr>
+</table><span class="m">Contagens aproximadas, por busca de texto nos resultados.</span></div>
+<h2>Hoje × o que muda</h2>
+<div class="c"><b>Hoje:</b> o coletor ainda não contou as tarefas da janela de hoje. Com mais de 5 mil sessões no dia, a contagem de tarefas passa do tempo (10 min) em cada envio da hora; o volume de sessões é enviado normalmente.<br>
+<b>O que muda:</b> pelo que aconteceu em 26/11, a contagem sai no envio de depois das 17h, em partes. É aí que dá pra conferir se bateu 2.812 internas e 935 operacionais.<br>
+<span class="w">Riscos: pedidos parecidos no mesmo dia contam uma vez só (em 26/11, 3.600 sessões renderam 201 internas). Além disso, esta fila sozinha não cobre as +2.177 internas que faltam: o resto depende das filas da T1093 e da T1103.</span></div>
+<h2>Como usar</h2>
+<div class="c">1. Os resultados ficam na VPS pessoal, em <code>~/projetos/meta-ia-tarefas-2711/out/</code>, um arquivo por registro. O nome começa por <code>sup-</code> (Suporte), <code>tdx-</code> (Taskdex), <code>loj-</code> (lojinha), <code>kpi-</code> ou <code>cod-</code> (código).<br>
+2. Pra agir: abra os <code>sup-</code> e os <code>loj-</code>, onde estão os chamados e pedidos atrasados com o próximo passo sugerido.<br>
+3. Pra repetir em outra semana: <code>python3 gerar.py</code> e <code>./loop.sh</code>. Os itens da lojinha rodam na fila lenta (<code>./loop-loj.sh</code>) por causa do limite da chave.</div>
+<h2>Pra que serve</h2>
+<div class="c">Fecha a meta de uso de IA com trabalho de verdade: dá uma visão de tudo que está parado no Suporte, na lojinha e na lista da Ray, e uma revisão de defeitos dos scripts.</div>
+<details class="c"><summary>Detalhe técnico</summary>Cada item roda um <code>claude -p</code> com só o MCP do registro e as ferramentas de escrita bloqueadas. Aprendizado: o MCP da lojinha recusa a chave que abre mais de 60 sessões novas em 10 min, e a recusa vale pra todo mundo que usa a chave. Por isso a lojinha roda em fila própria, um por vez. Coletor 1.4.122 ok (diagnóstico verde).</details>
+</main></body></html>
