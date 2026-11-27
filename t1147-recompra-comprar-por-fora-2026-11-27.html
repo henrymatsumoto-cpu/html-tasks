@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Recompra: Comprar por Fora sem transbordo</title>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:dark;--bg:#080E32;--surf:#0F1742;--surf2:#18225A;--line:#232E6B;--ink:#EEF1FB;--ink2:#B4BBD9;--ink3:#8189B0;--blue:#4D85FF;--green:oklch(76% .14 155);--amber:oklch(82% .13 80)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Figtree,system-ui,sans-serif;line-height:1.55;padding:40px 20px}
+main{max-width:820px;margin:0 auto}
+h1{font-size:28px;font-weight:800;margin:0 0 6px}
+.sub{color:var(--ink2);margin:0 0 28px}
+h2{font-size:18px;font-weight:700;margin:30px 0 10px}
+.card{background:var(--surf);border:1px solid var(--line);border-radius:14px;padding:14px 18px;margin-bottom:10px}
+.tag{display:inline-block;border-radius:999px;padding:2px 10px;font-size:12px;font-weight:700;background:var(--surf2)}
+.ok{color:var(--green)} .wait{color:var(--amber)}
+ul,ol{margin:6px 0 6px 20px;padding:0} li{margin:4px 0}
+a{color:var(--blue)}
+code{background:var(--surf2);padding:1px 6px;border-radius:6px;font-size:13px}
+details{margin-top:28px;color:var(--ink2)} summary{cursor:pointer;color:var(--ink)}
+footer{margin-top:36px;color:var(--ink3);font-size:12px;border-top:1px solid var(--line);padding-top:14px}
+</style>
+</head>
+<body>
+<main>
+<h1>Recompra: Comprar por Fora sem transbordo</h1>
+<p class="sub">Pedido da Raquel (26/11) · task T1147 · 27/11/2026</p>
+
+<h2>O que foi feito</h2>
+<div class="card">
+  <p>Quando o proprietário diz, no meio da negociação, que <b>vai comprar por conta própria</b> (ex.: "achei caro, vou comprar por fora"), o agente agora move o card sozinho para a coluna <b>Comprar por Fora</b>, <b>sem passar para o CS</b> e sem transferir a conversa.</p>
+  <ul>
+    <li><b>Comprar por Fora</b> = intenção futura (ainda vai comprar). Coluna nova, aberta, sem pedido e sem contagem de 2 anos.</li>
+    <li><b>Comprado por Fora</b> = compra já feita. Continua como estava (caso "já comprou" de 25/11, conferido com a franquia). Não mexi nisso.</li>
+    <li>Se o Jornada ainda não tiver a coluna nova quando o agente rodar, ele volta ao jeito antigo (comentário + Ação de CS, sem transferir). O caso nunca se perde.</li>
+    <li>Proprietário com vários imóveis no mesmo telefone: segue a regra de hoje (CS confirma qual imóvel).</li>
+  </ul>
+</div>
+
+<h2>Acompanhamento com a franquia <span class="tag wait">bloqueado, desligado</span></h2>
+<div class="card">
+  <p>A Raquel pediu para validar com a franquia, depois de X dias, se a compra foi feita e os itens entregues. <b>O prazo X ainda não foi definido</b>: 15 dias foi só sugestão, e a Raquel lembrou que compra online pode demorar mais.</p>
+  <ul>
+    <li>Não inventei prazo e <b>não ativei nenhuma rotina</b>.</li>
+    <li>Deixei pronto um interruptor (<code>ACOMPANHAMENTO_COMPRAR_POR_FORA_DIAS</code>), vazio = desligado. Nada no agente usa isso ainda.</li>
+    <li><b>Para ligar:</b> definir o prazo X, depois fazer 3 passos pequenos (o Jornada listar a coluna para o agente, abrir o chamado à franquia como no "já comprou" e marcar o card para não repetir).</li>
+  </ul>
+</div>
+
+<h2>Como usar</h2>
+<ol>
+  <li>Nada a fazer no dia a dia: o agente decide pela fala do proprietário.</li>
+  <li>No kanban de Recompra, a coluna <b>Comprar por Fora</b> aparece depois de <b>Em Negociação</b>. O CS pode arrastar o card dali (para Comprado por Fora quando a compra for confirmada, ou de volta à negociação).</li>
+  <li>Para o acompanhamento: responder qual é o prazo X (Raquel e Henry).</li>
+</ol>
+
+<h2>Pra que serve</h2>
+<div class="card">
+  <p>Evita transbordo desnecessário quando o proprietário já decidiu comprar por fora, e separa "vai comprar" de "já comprou" para não zerar a regra dos 2 anos por engano.</p>
+</div>
+
+<h2>Estado e links</h2>
+<div class="card">
+  <ul>
+    <li>Jornada (coluna nova): <a href="https://github.com/seazone-tech/jornada-completa-enxoval/pull/291">PR #291</a> <span class="tag ok">mergeado em staging</span> (Alfred 9,2). Produção só com a promoção de staging para main, não feita.</li>
+    <li>Agente (Olimpo): <a href="https://github.com/seazone-tech/olimpo/pull/2737">PR #2737</a> <span class="tag wait">aguardando CI e Alfred</span>.</li>
+    <li>Ordem para ir ao ar: primeiro o Jornada em produção, depois o agente. Fora de ordem, o agente cai no jeito antigo.</li>
+    <li>Pedido original: <a href="https://seazone-fund.slack.com/archives/C0CAMHY7GF7/p1795695439168139">Raquel, 26/11</a> e <a href="https://seazone-fund.slack.com/archives/C0CAMHY7GF7/p1795701125882209">observação sobre sem transbordo</a>.</li>
+  </ul>
+  <p>Não foi feito: deploy em produção, migration, mudança em pedido real, mensagem no Slack.</p>
+</div>
+
+<details>
+<summary>Detalhe técnico</summary>
+<ul>
+  <li>Jornada: fase <code>comprar-por-fora</code> em <code>RECOMPRA_FASES</code> (não final), destino permitido do <code>mover</code> do agente e do MCP; o agente não pega o card de volta (fora de <code>FASES_ORIGEM_NEGOCIACAO</code>); <code>mover</code> repetido é idempotente; fora de "em andamento" no relatório; conta como recompra aberta no aviso de duplicidade; o job dos 2 anos só olha <code>comprado-por-fora</code>. Sem migration. 484 testes + testes novos (puro e Postgres efêmero no CI).</li>
+  <li>Agente: intenção <code>compra_por_fora</code> → ação <code>comprar_por_fora</code> (<code>mover</code> com <code>fase: comprar-por-fora</code>, <code>transferir=False</code>); fallback para Ação de CS sem transferir se o Jornada recusar; desfecho gravado como <code>comprado_por_fora</code>. 558 testes; mutações derrubam os testes.</li>
+  <li>Acompanhamento: <code>acompanhamento.py</code> (regra pura <code>devido</code>) + <code>config.acompanhamento_comprar_por_fora_dias</code>; teste garante que a rodada não o chama.</li>
+</ul>
+</details>
+<footer>T1147 · Viktor (Oficina) · 27/11/2026</footer>
+</main>
+</body>
+</html>
