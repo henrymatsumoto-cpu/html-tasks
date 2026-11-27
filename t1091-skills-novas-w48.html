@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>17 skills novas</title>
+<style>
+:root{--bg:#16181d;--surf:#1e2128;--line:#2c313b;--ink:#e6e8ec;--ink2:#a3a9b5;--brand:#7aa7ff;--ok:#6fcf97}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 system-ui,-apple-system,"Segoe UI",sans-serif}
+main{max-width:860px;margin:0 auto;padding:48px 16px 80px}
+h1{font-size:clamp(26px,5vw,38px);line-height:1.1;margin:8px 0 12px}
+h2{font-size:20px;margin:36px 0 10px;color:var(--brand)}
+p,li{color:var(--ink2)}
+.eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink2);font-weight:700}
+.kpi{display:flex;gap:12px;flex-wrap:wrap;margin:18px 0}
+.kpi div{background:var(--surf);border:1px solid var(--line);border-radius:12px;padding:12px 16px}
+.kpi b{display:block;font-size:26px;color:var(--ok)}
+table{width:100%;border-collapse:collapse;background:var(--surf);border-radius:12px;overflow:hidden}
+td{border-top:1px solid var(--line);padding:10px 12px;vertical-align:top;font-size:15px}
+td:first-child{white-space:nowrap;color:var(--ink);font-family:ui-monospace,monospace;font-size:14px}
+code{background:var(--surf);padding:1px 6px;border-radius:6px;color:var(--ink)}
+details{margin-top:30px;color:var(--ink2)}
+a{color:var(--brand)}
+@media (max-width:560px){td:first-child{white-space:normal}}
+</style></head><body><main>
+<span class="eyebrow">T1091 · Meta Preta W48 · 26/11</span>
+<h1>17 skills novas, tiradas do que você pede toda semana</h1>
+
+<h2>O que foi feito</h2>
+<p>Li as suas conversas, os cards do Azir, as regras do hub e as rotinas atrás de pedidos que se repetem e ainda não tinham skill. Saíram 34 ideias; ficaram as 17 mais úteis. Cada uma virou uma skill com o passo a passo que já funcionou e as armadilhas conhecidas. Nenhum nome repete os 573 que já existem (locais + marketplace).</p>
+<div class="kpi"><div><b>17</b>skills novas</div><div><b>13 → 30</b>esperado na semana</div><div><b>573</b>nomes conferidos</div></div>
+
+<h2>Como usar</h2>
+<p>Peça do jeito de sempre (ex.: "analisa e conserta a rotina X") ou digite <code>/nome-da-skill</code> numa sessão do Claude. Elas estão em <code>~/.claude/skills</code> da VPS pessoal.</p>
+
+<h2>As 17 e pra que serve cada uma</h2>
+<table>
+<tr><td>consertar-rotina</td><td>Rotina falhou ou faltou: vê se é PC desligado ou falha de verdade, acha a causa e conserta.</td></tr>
+<tr><td>buscar-slack-sem-composio</td><td>Lê o Slack quando o Composio dá limite (429), pelo token do Vel'Koz.</td></tr>
+<tr><td>cobrar-loop-enxoval</td><td>Enxoval preso entre "aguardando pagamento" e "link expirado": abre o chamado pedindo data e cancela o que venceu (nunca o que foi pago).</td></tr>
+<tr><td>chamado-suporte-unificado</td><td>Acha um chamado pelo assunto falado e diz como está; cobra o responsável se você pedir.</td></tr>
+<tr><td>repassar-para-wania</td><td>Passa uma demanda pra Wania com o contexto conferido e avisa na origem.</td></tr>
+<tr><td>publicar-html-pages</td><td>Publica um HTML no GitHub Pages e devolve o link já testado.</td></tr>
+<tr><td>ajustar-regra-agente</td><td>"Para de mandar esse aviso" / "não responde fulano": muda no código certo e confere que parou de verdade.</td></tr>
+<tr><td>destravar-azir</td><td>Azir não respondeu ou card parado: acha o motivo e destrava o que der.</td></tr>
+<tr><td>parabens-colega</td><td>Monta a mensagem de parabéns pra um colega com o que ele fez no dia.</td></tr>
+<tr><td>migrar-agente-eks-vps</td><td>Leva um agente do Olimpo pra VPS do time sem rodar em dobro, parando pro seu OK antes do corte.</td></tr>
+<tr><td>provar-rodada-cron-olimpo</td><td>O agente do Olimpo rodou mesmo? Prova pelo dado gravado antes de mexer.</td></tr>
+<tr><td>onde-roda-cada-agente</td><td>Lista onde roda cada agente/rotina (PC, VPS do time, VPS pessoal, Olimpo) e o que divergiu.</td></tr>
+<tr><td>velkoz-esta-vivo</td><td>"O Vel'Koz tá aí?": confere serviço, batida e pulso, e diz o que fazer.</td></tr>
+<tr><td>estado-ambiente-sync</td><td>A skill/conserto chegou na outra máquina? Mostra o sync e como destravar.</td></tr>
+<tr><td>kit-orquestradora-colega</td><td>Monta e manda pra um colega o guia da orquestradora dele, sem segredos.</td></tr>
+<tr><td>tratar-alerta-sre</td><td>Alerta de custo/segurança do SRE: mede, corrige ou propõe desligar com seu OK.</td></tr>
+<tr><td>localizar-pedido-enxoval</td><td>Acha (ou prova que não existe) o pedido de enxoval de um imóvel em todos os canais.</td></tr>
+</table>
+
+<h2>Pra que serve</h2>
+<p>Esses pedidos voltavam toda semana e cada vez o Claude redescobria o caminho (e repetia erros já vistos). Agora o caminho certo fica escrito e qualquer sessão, rotina ou agente usa direto. Também fecham a meta de skills da semana (Marrom 15 e Preta 30).</p>
+
+<details><summary>Detalhe técnico</summary>
+<p>Fontes do levantamento: transcrições da VPS pessoal (06-26/11), Azir (aprendizados, cards "Analisar e consertar"), ~/hub/CLAUDE.md + memória, rotinas em ~/.local/share/rotinas. Cada SKILL.md tem name + description + corpo de 1.100-2.800 caracteres, criado por Write. Um verificador cético conferiu caminhos, comandos e regras contra os arquivos reais. A contagem no coletor aparece no próximo envio diário.</p>
+</details>
+</main></body></html>
